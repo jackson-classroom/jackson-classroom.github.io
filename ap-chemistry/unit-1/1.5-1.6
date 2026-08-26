@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AP Chemistry 1.5 &amp; 1.6 — Electron Configuration &amp; Photoelectron Spectroscopy</title>
+<meta name="description" content="Interactive review of AP Chemistry topics 1.5 (atomic structure and electron configuration) and 1.6 (photoelectron spectroscopy), with practice questions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Franklin:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============ tokens ============ */
+:root{
+  --paper:#eceef2;
+  --card:#ffffff;
+  --ink:#151d2e;
+  --muted:#5b6577;
+  --rule:#c9d0da;
+  --grid:#dfe4eb;
+  --s:#1d5fa8;          /* s subshells */
+  --p:#a63d6b;          /* p subshells */
+  --amber:#c98a10;      /* cursor / highlight */
+  --good:#20724f;
+  --bad:#a8342b;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --body:"Libre Franklin",system-ui,-apple-system,sans-serif;
+  --r:3px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:16px;line-height:1.6;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px 90px}
+a{color:var(--s)}
+
+/* ============ type ============ */
+.eyebrow{font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--mono);font-weight:600;letter-spacing:-.02em;line-height:1.05;margin:.35em 0 0;font-size:clamp(1.9rem,5.5vw,3rem)}
+h2{font-family:var(--mono);font-weight:600;font-size:1.15rem;letter-spacing:.01em;margin:0 0 .2em}
+h3{font-family:var(--mono);font-weight:600;font-size:.82rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0 0 .7em}
+.lede{max-width:62ch;color:var(--muted);margin:.9em 0 0}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* ============ header ============ */
+header{border-bottom:2px solid var(--ink);padding:44px 0 0;margin-bottom:0}
+.topbar{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.hero-trace{margin:26px 0 0;border-top:1px solid var(--rule);padding-top:14px}
+.hero-trace svg{width:100%;height:auto;display:block}
+.hero-cap{font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.04em;margin:6px 0 22px}
+
+/* ============ tabs ============ */
+nav.tabs{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--rule);
+  display:flex;gap:0;overflow-x:auto;margin-bottom:30px;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+.tab{font-family:var(--mono);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);
+  padding:15px 16px;cursor:pointer;white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--amber)}
+.tab .idx{color:var(--rule);margin-right:7px}
+.tab[aria-selected="true"] .idx{color:var(--amber)}
+
+/* ============ panels & cards ============ */
+.panel{display:none}
+.panel.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:20px 22px;margin-bottom:20px}
+.card.flush{padding:20px 14px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+
+/* ============ element picker ============ */
+.picker{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px}
+@media(max-width:560px){.picker{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.el{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:7px 2px 5px;
+  cursor:pointer;text-align:center;font-family:var(--mono);line-height:1.15;transition:background .12s,border-color .12s}
+.el:hover{border-color:var(--ink)}
+.el .z{display:block;font-size:.6rem;color:var(--muted)}
+.el .sy{display:block;font-size:1rem;font-weight:600}
+.el[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--card)}
+.el[aria-pressed="true"] .z{color:#9fb0c9}
+
+/* ============ config readout ============ */
+.cfg{font-family:var(--mono);font-size:1.15rem;font-weight:500;letter-spacing:.01em;word-spacing:.35em;margin:0}
+.cfg sup{font-size:.62em;vertical-align:super}
+.sub-s{color:var(--s)}
+.sub-p{color:var(--p)}
+.chip{display:inline-block;font-family:var(--mono);font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;
+  border:1px solid var(--rule);border-radius:99px;padding:2px 9px;color:var(--muted)}
+.stat{display:flex;gap:26px;flex-wrap:wrap;margin-top:14px}
+.stat div{min-width:0}
+.stat .k{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.stat .v{font-family:var(--mono);font-size:1.05rem;font-weight:600}
+
+/* ============ orbital boxes ============ */
+.orbrow{display:flex;align-items:center;gap:10px;margin:0 0 7px;flex-wrap:wrap}
+.orblabel{font-family:var(--mono);font-size:.8rem;font-weight:600;width:2.4em}
+.boxes{display:flex;gap:3px}
+.box{width:30px;height:26px;border:1.5px solid var(--rule);border-radius:2px;background:var(--card);
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.95rem;letter-spacing:-.12em;
+  transition:border-color .15s,background .15s}
+.box.lit-s{border-color:var(--s);color:var(--s)}
+.box.lit-p{border-color:var(--p);color:var(--p)}
+.orbrow.flash .box{background:#fdf6e3;border-color:var(--amber)}
+.tag{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* ============ spectrum ============ */
+.spec{position:relative}
+.spec svg{width:100%;height:auto;display:block;overflow:visible}
+.axisline{stroke:var(--ink);stroke-width:1.4}
+.tickline{stroke:var(--grid);stroke-width:1}
+.ticktext{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+.axtitle{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;fill:var(--muted)}
+.trace{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round}
+.peaklabel{font-family:var(--mono);font-size:12.5px;font-weight:600}
+.peakval{font-family:var(--mono);font-size:10.5px;fill:var(--muted)}
+.hit{fill:transparent;cursor:pointer}
+.cursorline{stroke:var(--amber);stroke-width:1.2;stroke-dasharray:3 3}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 14px}
+.btn{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:8px 13px;cursor:pointer;color:var(--ink)}
+.btn:hover{border-color:var(--ink)}
+.btn[aria-pressed="true"],.btn.solid{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.btn.solid:hover{background:#000}
+.readout{border-left:3px solid var(--amber);background:#fdfaf1;padding:11px 14px;margin-top:14px;font-size:.92rem}
+.readout .hd{font-family:var(--mono);font-weight:600;font-size:.85rem;letter-spacing:.06em}
+.note{font-size:.87rem;color:var(--muted);margin:12px 0 0}
+
+/* ============ challenge ============ */
+.peakinputs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 0}
+.pk{border:1px solid var(--rule);border-radius:var(--r);padding:8px 10px;background:var(--card);min-width:88px}
+.pk label{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.pk input,select,input[type=number]{font-family:var(--mono);font-size:.95rem;border:1px solid var(--rule);border-radius:2px;padding:5px 6px;width:100%;background:var(--paper);color:var(--ink)}
+.pk input:focus,select:focus{outline:2px solid var(--amber);outline-offset:1px}
+.verdict{margin-top:14px;padding:12px 14px;border-radius:var(--r);font-size:.93rem;border-left:3px solid}
+.verdict.ok{border-color:var(--good);background:#f0f7f3}
+.verdict.no{border-color:var(--bad);background:#fbf1f0}
+.verdict strong{font-family:var(--mono);letter-spacing:.03em}
+.score{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+/* ============ Zeff slider ============ */
+.slider-row{display:flex;align-items:center;gap:12px;margin:10px 0}
+.slider-row label{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);width:11em}
+input[type=range]{flex:1;accent-color:var(--s)}
+.bar{height:12px;background:var(--paper);border:1px solid var(--rule);border-radius:99px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--s);transition:width .2s}
+
+/* ============ questions ============ */
+.q{border-top:1px solid var(--rule);padding:20px 0}
+.q:first-of-type{border-top:0;padding-top:4px}
+.qnum{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;color:var(--amber);font-weight:600}
+.qtext{margin:.35em 0 .9em}
+.choices{display:grid;gap:7px}
+.choice{text-align:left;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);
+  padding:10px 13px;cursor:pointer;font-family:var(--body);font-size:.95rem;color:var(--ink);display:flex;gap:10px}
+.choice:hover:not([disabled]){border-color:var(--ink)}
+.choice .ltr{font-family:var(--mono);font-weight:600;color:var(--muted)}
+.choice.picked{border-color:var(--ink)}
+.choice.right{border-color:var(--good);background:#f0f7f3}
+.choice.right .ltr{color:var(--good)}
+.choice.wrong{border-color:var(--bad);background:#fbf1f0}
+.choice.wrong .ltr{color:var(--bad)}
+.expl{margin-top:11px;font-size:.9rem;border-left:3px solid var(--rule);padding-left:12px;color:var(--muted)}
+.expl b{color:var(--ink)}
+details.model{margin-top:10px;border:1px solid var(--rule);border-radius:var(--r);background:var(--card)}
+details.model summary{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:10px 13px;cursor:pointer;color:var(--muted)}
+details.model summary:hover{color:var(--ink)}
+details.model[open] summary{border-bottom:1px solid var(--rule)}
+.model .body{padding:12px 14px;font-size:.93rem}
+textarea{width:100%;min-height:82px;font-family:var(--body);font-size:.95rem;border:1px solid var(--rule);
+  border-radius:var(--r);padding:9px;background:var(--paper);color:var(--ink);resize:vertical}
+textarea:focus{outline:2px solid var(--amber);outline-offset:1px}
+
+table.data{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.8rem}
+table.data th,table.data td{border-bottom:1px solid var(--rule);padding:6px 8px;text-align:right}
+table.data th:first-child,table.data td:first-child{text-align:left}
+table.data th{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.scrollx{overflow-x:auto}
+
+footer{border-top:1px solid var(--rule);margin-top:40px;padding-top:18px;font-size:.83rem;color:var(--muted)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="topbar">
+    <div>
+      <p class="eyebrow">AP Chemistry &middot; Unit 1 &middot; Topics 1.5 + 1.6</p>
+      <h1>Where the electrons<br>actually are</h1>
+    </div>
+    <p class="eyebrow" style="text-align:right">Mr. Jackson<br>Regis Jesuit</p>
+  </div>
+  <p class="lede">You already know how to write <span class="num">1s&sup2;2s&sup2;2p&#8310;</span>. What you probably haven't seen is the experiment that proves it. Photoelectron spectroscopy fires high-energy photons at atoms, measures how much energy each ejected electron needed, and hands you back a graph. Every peak is a subshell. Every peak height is an electron count. Start with the trace below &mdash; that's neon.</p>
+
+  <div class="hero-trace">
+    <svg id="hero" viewBox="0 0 900 120" role="img" aria-label="Photoelectron spectrum of neon showing three peaks"></svg>
+    <p class="hero-cap">Ne &mdash; 3 peaks, heights 2 : 2 : 6. Binding energy increases to the left.</p>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true"  data-p="p1" aria-controls="p1"><span class="idx">1.5</span>Configuration lab</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p2" aria-controls="p2"><span class="idx">1.6</span>Spectrometer</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p3" aria-controls="p3"><span class="idx">&#9635;</span>Identify the element</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p4" aria-controls="p4"><span class="idx">&#10003;</span>Practice</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p5" aria-controls="p5"><span class="idx">&#8801;</span>Data table</button>
+</nav>
+
+<!-- ================= 1.5 ================= -->
+<section class="panel on" id="p1" role="tabpanel">
+  <div class="card">
+    <h2>Build a ground-state configuration</h2>
+    <p class="note" style="margin-top:2px">Pick an element. Watch the orbitals fill in Aufbau order, one electron at a time, following Hund's rule. This is review from sophomore year &mdash; the point is to get fast at it, because topic 1.6 is unreadable without it.</p>
+    <div class="picker" id="pick1" style="margin-top:16px"></div>
+  </div>
+
+  <div class="two">
+    <div class="card">
+      <h3>Orbital diagram</h3>
+      <div id="orb"></div>
+      <div class="controls" style="margin:16px 0 0">
+        <button class="btn" id="replay">Replay filling</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Configuration</h3>
+      <p class="cfg" id="cfgFull"></p>
+      <p class="cfg" id="cfgNoble" style="font-size:.98rem;color:var(--muted);margin-top:8px"></p>
+      <div class="stat">
+        <div><div class="k">Element</div><div class="v" id="stName"></div></div>
+        <div><div class="k">Total e&#8315;</div><div class="v num" id="stZ"></div></div>
+        <div><div class="k">Valence e&#8315;</div><div class="v num" id="stVal"></div></div>
+        <div><div class="k">Subshells occupied</div><div class="v num" id="stSub"></div></div>
+      </div>
+      <p class="note" id="cfgNote"></p>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="card">
+      <h3>Why order matters: Coulomb's law</h3>
+      <p style="margin-top:0">Every energy question in Unit 1 traces back to one relationship. The force pulling an electron toward the nucleus grows with nuclear charge and shrinks fast with distance:</p>
+      <p class="cfg" style="text-align:center;margin:16px 0">F &#8733; (Z<sub style="font-size:.6em">eff</sub> &times; e) / r&sup2;</p>
+      <p style="margin-bottom:0">So an electron is held tightly when it is <b>close to the nucleus</b> and when it <b>feels a large effective nuclear charge</b>. Core electrons win on both counts, which is why they are so hard to remove. Valence electrons sit farther out <em>and</em> get shielded by everything underneath them.</p>
+    </div>
+    <div class="card">
+      <h3>Shielding calculator</h3>
+      <p class="note" style="margin-top:0">Slide the inner-shell electron count and watch what the outermost electron actually feels. (Simple approximation: Z<sub>eff</sub> &asymp; Z &minus; core electrons.)</p>
+      <div class="slider-row">
+        <label for="zp">Protons (Z)</label>
+        <input type="range" id="zp" min="1" max="20" value="11">
+        <span class="v num" id="zpv" style="width:2.2em;text-align:right;font-family:var(--mono);font-weight:600">11</span>
+      </div>
+      <div class="slider-row">
+        <label for="zs">Core e&#8315; shielding</label>
+        <input type="range" id="zs" min="0" max="19" value="10">
+        <span class="v num" id="zsv" style="width:2.2em;text-align:right;font-family:var(--mono);font-weight:600">10</span>
+      </div>
+      <div class="stat">
+        <div><div class="k">Z<sub>eff</sub> felt by outer e&#8315;</div><div class="v num" id="zeff">+1</div></div>
+      </div>
+      <div class="bar"><i id="zbar" style="width:5%"></i></div>
+      <p class="note" id="znote"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 1.6 ================= -->
+<section class="panel" id="p2" role="tabpanel">
+  <div class="card">
+    <h2>Read a photoelectron spectrum</h2>
+    <p class="note" style="margin-top:2px">Pick an element, then <b>click any peak</b>. The matching orbitals light up in the diagram below, so you can see exactly which electrons produced that signal.</p>
+    <div class="picker" id="pick2" style="margin-top:16px"></div>
+  </div>
+
+  <div class="card flush">
+    <div class="controls" style="padding:0 8px">
+      <span class="chip" id="specTitle">Neon</span>
+      <button class="btn" id="axLog" aria-pressed="true">Log axis</button>
+      <button class="btn" id="axLin" aria-pressed="false">Linear axis</button>
+      <button class="btn" id="lblToggle" aria-pressed="true">Labels on</button>
+      <button class="btn" id="ghostBtn" aria-pressed="false">Compare with previous element</button>
+    </div>
+    <div class="spec"><svg id="spectrum" viewBox="0 0 780 350" role="img" aria-label="Interactive photoelectron spectrum"></svg></div>
+    <div style="padding:0 8px">
+      <div class="readout" id="peakRead"><span class="hd">Click a peak</span><br>The readout will tell you which subshell it is, its binding energy, and how many electrons it represents.</div>
+      <p class="note" id="axNote"></p>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="card">
+      <h3>Linked orbital diagram</h3>
+      <div id="orb2"></div>
+      <p class="cfg" id="cfg2" style="margin-top:14px;font-size:1rem"></p>
+    </div>
+    <div class="card">
+      <h3>Four rules that answer almost every PES question</h3>
+      <p style="margin-top:0"><b>1. One peak = one subshell.</b> Count the peaks and you know how many subshells are occupied. Never count peaks as shells &mdash; nitrogen has two shells but three peaks.</p>
+      <p><b>2. Peak height &#8733; electrons in that subshell.</b> A peak three times as tall holds three times as many electrons, not electrons of higher energy. Height and position are independent.</p>
+      <p><b>3. Binding energy increases to the left.</b> The 1s peak is always farthest left. Check the axis on every exam graph, because it is drawn reversed compared to almost every other graph you have seen.</p>
+      <p style="margin-bottom:0"><b>4. Add up the heights to get Z.</b> For a neutral atom, total electrons = atomic number. For an ion, the total will not match the element you were told &mdash; that's the whole trick of those questions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= challenge ================= -->
+<section class="panel" id="p3" role="tabpanel">
+  <div class="card">
+    <h2>Identify the element</h2>
+    <p class="note" style="margin-top:2px">An unlabeled spectrum, straight off the instrument. Read the electron count from each peak, left to right, then name the element. This is the exact task the AP exam gives you.</p>
+    <p class="score" id="chScore" style="margin:12px 0 0">Attempted 0 &middot; Correct 0</p>
+  </div>
+
+  <div class="card flush">
+    <div class="spec"><svg id="chSpec" viewBox="0 0 780 330" role="img" aria-label="Unlabeled photoelectron spectrum to identify"></svg></div>
+    <div style="padding:0 8px">
+      <div class="peakinputs" id="chInputs"></div>
+      <div class="peakinputs">
+        <div class="pk" style="min-width:170px">
+          <label for="chEl">The element is&hellip;</label>
+          <select id="chEl"></select>
+        </div>
+      </div>
+      <div class="controls" style="margin-top:16px">
+        <button class="btn solid" id="chCheck">Check answer</button>
+        <button class="btn" id="chNew">New spectrum</button>
+        <button class="btn" id="chHint">Hint</button>
+      </div>
+      <div id="chVerdict"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= practice ================= -->
+<section class="panel" id="p4" role="tabpanel">
+  <div class="card">
+    <h2>Practice questions</h2>
+    <p class="note" style="margin-top:2px">Eight multiple choice, then four written-response prompts in AP language. Written answers aren't graded here &mdash; type yours first, then open the model answer and compare. If your answer doesn't mention Coulombic attraction, distance, or shielding somewhere, it probably wouldn't earn the point.</p>
+    <p class="score" id="mcScore" style="margin:12px 0 0">Answered 0 of 8 &middot; Correct 0</p>
+  </div>
+  <div class="card" id="mcHost"></div>
+  <div class="card" id="frqHost"></div>
+</section>
+
+<!-- ================= data ================= -->
+<section class="panel" id="p5" role="tabpanel">
+  <div class="card">
+    <h2>Binding energies, H through Ca</h2>
+    <p class="note" style="margin-top:2px">Values in MJ/mol, the units the AP exam uses. Two patterns worth staring at: every value in a column grows as you go down (more protons, stronger pull), and the outermost value in each row is that element's first ionization energy.</p>
+    <div class="scrollx" style="margin-top:16px"><table class="data" id="dataTable"></table></div>
+    <p class="note">Look at sulfur's 3p value against phosphorus's. It goes <em>down</em> even though sulfur has an extra proton &mdash; the fourth 3p electron has to pair up in an already-occupied orbital, and electron&ndash;electron repulsion costs more than the extra proton gains. Same reason the first ionization energy of sulfur dips below phosphorus.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Built for AP Chemistry Unit 1, topics 1.5 (Atomic Structure and Electron Configuration) and 1.6 (Photoelectron Spectroscopy). Binding energies follow the standard AP reference table; spectra are simulated from those values, so peak widths are illustrative rather than instrumental.</p>
+</footer>
+
+</div>
+
+<script>
+"use strict";
+/* ============================================================
+   DATA
+   ============================================================ */
+const ORDER = ["1s","2s","2p","3s","3p","4s"];
+const CAP = {s:2,p:6};
+const NOBLE = [[2,"He"],[10,"Ne"],[18,"Ar"]];
+
+/* binding energies in MJ/mol, listed in ORDER for each element */
+const BE = {
+  1:[1.31], 2:[2.37],
+  3:[6.26,0.52], 4:[11.5,0.90],
+  5:[19.3,1.36,0.80], 6:[28.6,1.72,1.09], 7:[40.2,2.45,1.40],
+  8:[52.6,3.12,1.31], 9:[67.4,3.88,1.68], 10:[84.0,4.68,2.08],
+  11:[104,6.84,3.67,0.50], 12:[126,9.07,5.31,0.74],
+  13:[151,12.1,7.79,1.09,0.58], 14:[178,15.1,10.3,1.46,0.79],
+  15:[208,18.7,13.5,1.95,1.06], 16:[239,22.7,16.5,2.05,1.00],
+  17:[273,26.8,20.2,2.44,1.25], 18:[309,31.5,24.1,2.82,1.52],
+  19:[347,37.1,29.1,3.93,2.38,0.42], 20:[390,42.7,34.0,4.65,2.90,0.59]
+};
+const NAMES = ["","Hydrogen","Helium","Lithium","Beryllium","Boron","Carbon","Nitrogen","Oxygen",
+"Fluorine","Neon","Sodium","Magnesium","Aluminum","Silicon","Phosphorus","Sulfur","Chlorine",
+"Argon","Potassium","Calcium"];
+const SYM = ["","H","He","Li","Be","B","C","N","O","F","Ne","Na","Mg","Al","Si","P","S","Cl","Ar","K","Ca"];
+
+/* fill Z electrons in Aufbau order -> [{sub,type,n,e,be}] */
+function build(z){
+  let left = z, out = [], i = 0;
+  while(left > 0 && i < ORDER.length){
+    const sub = ORDER[i], type = sub[1], n = +sub[0];
+    const e = Math.min(left, CAP[type]);
+    out.push({sub, type, n, e, be: BE[z][i]});
+    left -= e; i++;
+  }
+  return out;
+}
+function noble(z){
+  let best = null;
+  for(const [nz,ns] of NOBLE) if(nz < z) best = [nz,ns];
+  if(!best) return null;
+  const full = build(z), core = build(best[0]).length;
+  return {sym:best[1], rest: full.slice(core)};
+}
+const cfgHTML = (peaks) => peaks.map(p =>
+  `<span class="sub-${p.type}">${p.sub}<sup>${p.e}</sup></span>`).join(" ");
+
+/* ============================================================
+   SPECTRUM RENDERING
+   ============================================================ */
+const LOG_DOMAIN = [0.30, 430];
+const SIG = 5.2;                 // peak half-width in px
+const YMAX = 6.7;                // electrons at full plot height
+const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function geom(vbW, vbH){
+  return {l:64, r:26, t:30, b:56, w:vbW, h:vbH,
+          get x0(){return this.l}, get x1(){return this.w-this.r},
+          get base(){return this.h-this.b}, get ph(){return this.h-this.b-this.t}};
+}
+function xOf(be, g, mode, dom){
+  let t;
+  if(mode === "log"){
+    const a = Math.log10(dom[0]), b = Math.log10(dom[1]);
+    t = (Math.log10(be) - a)/(b - a);
+  } else {
+    t = (be - dom[0])/(dom[1] - dom[0]);
+  }
+  return g.x0 + (1 - t)*(g.x1 - g.x0);          // reversed: high BE on the left
+}
+function bell(px, peaks){                        // summed gaussian in px space
+  let y = 0;
+  for(const p of peaks) y += p.e*Math.exp(-((px-p.px)**2)/(2*SIG*SIG));
+  return y;
+}
+function tracePts(peaks, g){
+  const out = [];
+  for(let px = g.x0; px <= g.x1; px += 1.5){
+    out.push(px.toFixed(1)+","+(g.base - Math.min(bell(px,peaks),YMAX)/YMAX*g.ph).toFixed(1));
+  }
+  return out.join(" ");
+}
+function onePeakPath(p, g){
+  const pts = [];
+  for(let px = p.px-3.6*SIG; px <= p.px+3.6*SIG; px += 1.2){
+    const y = p.e*Math.exp(-((px-p.px)**2)/(2*SIG*SIG));
+    pts.push(px.toFixed(1)+","+(g.base - y/YMAX*g.ph).toFixed(1));
+  }
+  return `M${(p.px-3.6*SIG).toFixed(1)},${g.base} L${pts.join(" L")} L${(p.px+3.6*SIG).toFixed(1)},${g.base} Z`;
+}
+const LOG_TICKS = [0.3,1,3,10,30,100,300];
+const fmtBE = v => v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v.toFixed(2);
+
+function drawSpectrum(svg, peaks, opt){
+  const o = Object.assign({mode:"log", labels:true, ghost:null, sweep:true, axes:true,
+                           interactive:false, onPeak:null, selected:null, compact:false}, opt);
+  const vb = svg.getAttribute("viewBox").split(" ").map(Number);
+  const g = geom(vb[2], vb[3]);
+  if(o.compact){ g.l = 30; g.r = 14; g.t = 8; g.b = 16; }
+  const dom = o.mode === "log" ? LOG_DOMAIN : [0, Math.max(...peaks.map(p=>p.be))*1.06];
+  const P = peaks.map(p => Object.assign({}, p, {px: xOf(p.be, g, o.mode, dom)}));
+  let s = "";
+
+  /* gridlines + ticks */
+  if(o.axes){
+    if(o.mode === "log"){
+      for(const t of LOG_TICKS){
+        const x = xOf(t, g, "log", dom);
+        s += `<line class="tickline" x1="${x}" y1="${g.t}" x2="${x}" y2="${g.base}"/>`
+           + `<text class="ticktext" x="${x}" y="${g.base+17}" text-anchor="middle">${t}</text>`;
+      }
+    } else {
+      const step = niceStep(dom[1]);
+      for(let t = 0; t <= dom[1]; t += step){
+        const x = xOf(t, g, "linear", dom);
+        s += `<line class="tickline" x1="${x}" y1="${g.t}" x2="${x}" y2="${g.base}"/>`
+           + `<text class="ticktext" x="${x}" y="${g.base+17}" text-anchor="middle">${+t.toFixed(1)}</text>`;
+      }
+    }
+    for(let e = 2; e <= 6; e += 2){
+      const y = g.base - e/YMAX*g.ph;
+      s += `<line class="tickline" x1="${g.x0}" y1="${y}" x2="${g.x1}" y2="${y}"/>`
+         + `<text class="ticktext" x="${g.x0-8}" y="${y+4}" text-anchor="end">${e}</text>`;
+    }
+    s += `<line class="axisline" x1="${g.x0}" y1="${g.base}" x2="${g.x1}" y2="${g.base}"/>`
+       + `<line class="axisline" x1="${g.x0}" y1="${g.t}" x2="${g.x0}" y2="${g.base}"/>`
+       + `<text class="axtitle" x="${(g.x0+g.x1)/2}" y="${g.base+40}" text-anchor="middle">binding energy, MJ/mol</text>`
+       + `<text class="ticktext" x="${g.x0}" y="${g.base+40}" text-anchor="start">&#9666; core</text>`
+       + `<text class="ticktext" x="${g.x1}" y="${g.base+40}" text-anchor="end">valence &#9656;</text>`
+       + `<text class="axtitle" x="${g.x0-46}" y="${g.t+g.ph/2}" text-anchor="middle" transform="rotate(-90 ${g.x0-46} ${g.t+g.ph/2})">electrons</text>`;
+  }
+
+  /* ghost comparison */
+  if(o.ghost){
+    const G = o.ghost.map(p => Object.assign({}, p, {px: xOf(p.be, g, o.mode, dom)}));
+    s += `<polyline points="${tracePts(G,g)}" fill="none" stroke="var(--muted)" stroke-width="1.4"
+           stroke-dasharray="4 3" opacity=".55"/>`;
+  }
+
+  /* peaks */
+  s += `<g clip-path="url(#sweep-${svg.id})">`;
+  for(const p of P){
+    const col = p.type === "s" ? "var(--s)" : "var(--p)";
+    const on = o.selected === p.sub;
+    s += `<path d="${onePeakPath(p,g)}" fill="${col}" opacity="${on?.34:.16}"/>`;
+  }
+  s += `<polyline class="trace" points="${tracePts(P,g)}"/>`;
+  s += `</g>`;
+
+  /* labels + hit targets */
+  for(const p of P){
+    const apex = g.base - Math.min(bell(p.px,P),YMAX)/YMAX*g.ph;
+    const col = p.type === "s" ? "var(--s)" : "var(--p)";
+    if(o.labels){
+      const lx = Math.min(Math.max(p.px, g.x0+18), g.x1-18);
+      s += `<text class="peaklabel" x="${lx}" y="${apex-13}" text-anchor="middle" fill="${col}">${p.sub}<tspan font-size="9.5" dy="-4">${p.e}</tspan></text>`
+         + `<text class="peakval" x="${lx}" y="${apex-3}" text-anchor="middle">${fmtBE(p.be)}</text>`;
+    }
+    if(o.selected === p.sub){
+      s += `<line class="cursorline" x1="${p.px}" y1="${g.t}" x2="${p.px}" y2="${g.base}"/>`
+         + `<circle cx="${p.px}" cy="${apex}" r="4" fill="var(--amber)"/>`;
+    }
+    if(o.interactive){
+      s += `<rect class="hit" data-sub="${p.sub}" x="${p.px-14}" y="${g.t}" width="28" height="${g.ph}"/>`;
+    }
+  }
+
+  const clipW = (o.sweep && !reduced) ? 0 : (g.x1 - g.x0 + 4);
+  svg.innerHTML = `<defs><clipPath id="sweep-${svg.id}">
+      <rect id="swr-${svg.id}" x="${g.x0-2}" y="0" width="${clipW}" height="${g.h}"/>
+    </clipPath></defs>` + s;
+
+  if(o.interactive && o.onPeak){
+    svg.querySelectorAll(".hit").forEach(r =>
+      r.addEventListener("click", () => o.onPeak(r.dataset.sub)));
+  }
+  if(o.sweep && !reduced){
+    const rect = svg.querySelector("#swr-"+svg.id), full = g.x1-g.x0+4, t0 = performance.now();
+    (function step(now){
+      const k = Math.min((now-t0)/620, 1);
+      rect.setAttribute("width", (full*(1-Math.pow(1-k,3))).toFixed(1));
+      if(k < 1) requestAnimationFrame(step);
+    })(t0);
+  }
+  return P;
+}
+function niceStep(max){
+  const raw = max/6, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  return [1,2,5,10].map(m=>m*mag).find(v=>v>=raw) || mag*10;
+}
+
+/* ============================================================
+   ORBITAL DIAGRAM
+   ============================================================ */
+function drawOrbitals(host, peaks, opt){
+  const o = Object.assign({lit:null, animate:false}, opt);
+  host.innerHTML = peaks.map(p => {
+    const nOrb = p.type === "s" ? 1 : 3;
+    const arr = new Array(nOrb).fill(0);
+    for(let i = 0; i < p.e; i++) arr[i % nOrb]++;      // Hund's rule
+    const boxes = arr.map(c =>
+      `<span class="box lit-${p.type}">${c===0?"":c===1?"&#8593;":"&#8593;&#8595;"}</span>`).join("");
+    const unpaired = arr.filter(c => c === 1).length;
+    const flash = o.lit === p.sub ? " flash" : "";
+    return `<div class="orbrow${flash}" data-sub="${p.sub}">
+        <span class="orblabel sub-${p.type}">${p.sub}</span>
+        <span class="boxes">${boxes}</span>
+        <span class="tag">${p.e} e&#8315;${unpaired?` &middot; ${unpaired} unpaired`:""}</span>
+      </div>`;
+  }).join("");
+  if(o.animate && !reduced){
+    const rows = [...host.querySelectorAll(".orbrow")];
+    rows.forEach(r => r.style.opacity = 0);
+    rows.forEach((r,i) => setTimeout(() => {
+      r.style.transition = "opacity .3s"; r.style.opacity = 1;
+    }, i*130));
+  }
+}
+
+/* ============================================================
+   TABS
+   ============================================================ */
+document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
+  document.querySelectorAll(".tab").forEach(x => x.setAttribute("aria-selected", x === t));
+  document.querySelectorAll(".panel").forEach(p => p.classList.toggle("on", p.id === t.dataset.p));
+  if(t.dataset.p === "p2") renderSpec();
+  if(t.dataset.p === "p3" && !chState) newChallenge();
+}));
+
+/* ============================================================
+   PICKERS
+   ============================================================ */
+function makePicker(host, onPick, get){
+  host.innerHTML = "";
+  for(let z = 1; z <= 20; z++){
+    const b = document.createElement("button");
+    b.className = "el"; b.type = "button";
+    b.innerHTML = `<span class="z">${z}</span><span class="sy">${SYM[z]}</span>`;
+    b.setAttribute("aria-pressed", z === get());
+    b.addEventListener("click", () => {
+      onPick(z);
+      host.querySelectorAll(".el").forEach((e,i) => e.setAttribute("aria-pressed", i+1 === z));
+    });
+    host.appendChild(b);
+  }
+}
+
+/* ---------- panel 1.5 ---------- */
+let z1 = 8;
+function render15(animate){
+  const p = build(z1), nb = noble(z1);
+  drawOrbitals(document.getElementById("orb"), p, {animate});
+  document.getElementById("cfgFull").innerHTML = cfgHTML(p);
+  document.getElementById("cfgNoble").innerHTML = nb
+    ? `[${nb.sym}] ${cfgHTML(nb.rest)}` : "&mdash; no noble-gas core";
+  document.getElementById("stName").textContent = NAMES[z1];
+  document.getElementById("stZ").textContent = z1;
+  const outerN = Math.max(...p.map(x => x.n));
+  const val = p.filter(x => x.n === outerN).reduce((a,b) => a+b.e, 0);
+  document.getElementById("stVal").textContent = val;
+  document.getElementById("stSub").textContent = p.length;
+  const notes = {
+    2:"Helium's 1s is full. That closed shell is why it is unreactive.",
+    7:"Nitrogen's three 2p electrons each sit alone in their own orbital &mdash; Hund's rule &mdash; because spreading out lowers repulsion.",
+    8:"Oxygen is where pairing starts in the 2p subshell. The fourth 2p electron must double up, and you can see the cost of that in the binding-energy data.",
+    19:"Potassium is the payoff question: 4s fills before 3d, so there is no 3d peak in its spectrum.",
+    20:"Calcium's spectrum has six peaks. Students who count shells instead of subshells always say four."
+  };
+  document.getElementById("cfgNote").innerHTML = notes[z1] ||
+    `${NAMES[z1]} occupies ${p.length} subshells, so its photoelectron spectrum will show ${p.length} peak${p.length>1?"s":""}.`;
+}
+makePicker(document.getElementById("pick1"), z => { z1 = z; render15(true); }, () => z1);
+render15(false);
+document.getElementById("replay").addEventListener("click", () => render15(true));
+
+/* Zeff */
+const zp = document.getElementById("zp"), zs = document.getElementById("zs");
+function zeffUpd(){
+  const Z = +zp.value; let S = Math.min(+zs.value, Z-1 < 0 ? 0 : Z-1);
+  zs.max = Math.max(0, Z-1); if(+zs.value > zs.max) zs.value = zs.max, S = +zs.value;
+  const eff = Z - S;
+  document.getElementById("zpv").textContent = Z;
+  document.getElementById("zsv").textContent = S;
+  document.getElementById("zeff").textContent = "+" + eff;
+  document.getElementById("zbar").style.width = Math.min(100, eff/20*100) + "%";
+  document.getElementById("znote").innerHTML =
+    `An outer electron in an atom with ${Z} proton${Z>1?"s":""} and ${S} core electron${S===1?"":"s"} behaves as though the nucleus carried a charge of only <b>+${eff}</b>. `
+    + (eff <= 2 ? "A pull that weak is why this electron comes off at a low binding energy &mdash; the far-right peak on a spectrum."
+               : "A pull this strong means high binding energy, so this electron shows up well to the left.");
+}
+zp.addEventListener("input", zeffUpd); zs.addEventListener("input", zeffUpd); zeffUpd();
+
+/* ---------- hero ---------- */
+drawSpectrum(document.getElementById("hero"), build(10),
+  {mode:"log", labels:false, axes:false, compact:true, sweep:true});
+
+/* ---------- panel 1.6 ---------- */
+let z2 = 10, prev2 = 8, mode = "log", labels = true, ghost = false, sel = null;
+function renderSpec(){
+  const peaks = build(z2);
+  document.getElementById("specTitle").textContent = NAMES[z2] + " (" + SYM[z2] + ")";
+  drawSpectrum(document.getElementById("spectrum"), peaks, {
+    mode, labels, selected: sel, sweep: true, interactive: true,
+    ghost: ghost ? build(prev2) : null,
+    onPeak: sub => { sel = sub; renderSpec(); showRead(sub); }
+  });
+  drawOrbitals(document.getElementById("orb2"), peaks, {lit: sel});
+  document.getElementById("cfg2").innerHTML = cfgHTML(peaks);
+  document.getElementById("axNote").innerHTML = mode === "log"
+    ? `Log axis. Each gridline is a &times;3 jump in energy, which is the only way to show a 1s peak at ${fmtBE(BE[z2][0])} and a valence peak at ${fmtBE(BE[z2][BE[z2].length-1])} on the same graph. AP diagrams usually squash the axis the same way &mdash; always read the numbers, never the spacing.`
+    : `Linear axis. Now the valence peaks pile up against the right edge and become unreadable. That collapse <em>is</em> the lesson: core electrons are held an order of magnitude more tightly than valence electrons.`
+    + (ghost ? "" : "");
+  if(ghost) document.getElementById("axNote").innerHTML +=
+    ` Dashed trace is ${NAMES[prev2]} &mdash; notice every one of its peaks sits to the right of ${NAMES[z2]}'s, because it has fewer protons pulling on its electrons.`;
+}
+function showRead(sub){
+  const p = build(z2).find(x => x.sub === sub);
+  const outerN = Math.max(...build(z2).map(x => x.n));
+  const isCore = p.n < outerN;
+  document.getElementById("peakRead").innerHTML =
+    `<span class="hd">${p.sub} &mdash; ${fmtBE(p.be)} MJ/mol &mdash; ${p.e} electron${p.e>1?"s":""}</span><br>`
+    + `${isCore ? "Core" : "Valence"} electrons. `
+    + (isCore
+        ? `They sit in shell n = ${p.n}, inside the outermost shell, so they are close to the nucleus and barely shielded. That strong Coulombic attraction puts this peak far to the left.`
+        : `Outermost shell, n = ${p.n}. These electrons are far from the nucleus and shielded by every electron beneath them, so the effective nuclear charge they feel is small and this peak sits to the right.`)
+    + ` Peak height is set by the ${p.e} electron${p.e>1?"s":""} in this subshell &mdash; nothing else.`;
+}
+makePicker(document.getElementById("pick2"), z => {
+  prev2 = z2; z2 = z; sel = null;
+  document.getElementById("peakRead").innerHTML =
+    '<span class="hd">Click a peak</span><br>The readout will tell you which subshell it is, its binding energy, and how many electrons it represents.';
+  renderSpec();
+}, () => z2);
+document.getElementById("axLog").addEventListener("click", () => {
+  mode = "log"; setPressed("axLog", true); setPressed("axLin", false); renderSpec();
+});
+document.getElementById("axLin").addEventListener("click", () => {
+  mode = "linear"; setPressed("axLog", false); setPressed("axLin", true); renderSpec();
+});
+document.getElementById("lblToggle").addEventListener("click", e => {
+  labels = !labels; setPressed("lblToggle", labels);
+  e.currentTarget.textContent = labels ? "Labels on" : "Labels off"; renderSpec();
+});
+document.getElementById("ghostBtn").addEventListener("click", () => {
+  ghost = !ghost; setPressed("ghostBtn", ghost); renderSpec();
+});
+const setPressed = (id, v) => document.getElementById(id).setAttribute("aria-pressed", v);
+renderSpec();
+
+/* ---------- challenge ---------- */
+let chState = null, chStats = {n:0, ok:0};
+const POOL = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,20];
+function newChallenge(){
+  const z = POOL[Math.floor(Math.random()*POOL.length)];
+  chState = {z, peaks: build(z)};
+  drawSpectrum(document.getElementById("chSpec"), chState.peaks,
+    {mode:"log", labels:false, sweep:true});
+  const host = document.getElementById("chInputs");
+  host.innerHTML = chState.peaks.map((p,i) =>
+    `<div class="pk"><label>Peak ${i+1}${i===0?" (left)":""}</label>
+      <input type="number" min="0" max="8" data-i="${i}" placeholder="e&#8315;"></div>`).join("");
+  const elSel = document.getElementById("chEl");
+  elSel.innerHTML = '<option value="">choose&hellip;</option>' +
+    Array.from({length:20}, (_,i) => `<option value="${i+1}">${SYM[i+1]} &mdash; ${NAMES[i+1]}</option>`).join("");
+  document.getElementById("chVerdict").innerHTML = "";
+}
+document.getElementById("chNew").addEventListener("click", newChallenge);
+document.getElementById("chHint").addEventListener("click", () => {
+  const n = chState.peaks.length;
+  document.getElementById("chVerdict").innerHTML =
+    `<div class="verdict"><strong>Hint.</strong> There are ${n} peaks, so ${n} occupied subshells: `
+    + `${chState.peaks.map(p => p.sub).join(", ")} in that order from left to right. `
+    + `Read each height off the vertical axis, add them up, and that total is the atomic number.</div>`;
+});
+document.getElementById("chCheck").addEventListener("click", () => {
+  const ins = [...document.querySelectorAll("#chInputs input")];
+  const guess = ins.map(i => i.value === "" ? null : +i.value);
+  const elGuess = +document.getElementById("chEl").value || null;
+  if(guess.some(v => v === null) || !elGuess){
+    document.getElementById("chVerdict").innerHTML =
+      `<div class="verdict no"><strong>Incomplete.</strong> Fill in an electron count for every peak and choose an element.</div>`;
+    return;
+  }
+  const truth = chState.peaks.map(p => p.e);
+  const heightsOK = guess.every((v,i) => v === truth[i]);
+  const elOK = elGuess === chState.z;
+  chStats.n++; if(heightsOK && elOK) chStats.ok++;
+  document.getElementById("chScore").textContent =
+    `Attempted ${chStats.n} \u00b7 Correct ${chStats.ok}`;
+  const cfg = cfgHTML(chState.peaks);
+  let msg;
+  if(heightsOK && elOK){
+    msg = `<div class="verdict ok"><strong>Correct.</strong> ${NAMES[chState.z]}, ${cfg}. `
+        + `Heights ${truth.join(" : ")} sum to ${chState.z} electrons, and a neutral atom with ${chState.z} electrons has ${chState.z} protons.</div>`;
+  } else if(heightsOK && !elOK){
+    msg = `<div class="verdict no"><strong>Peaks right, element wrong.</strong> Your counts (${guess.join(" : ")}) are correct and they add to ${truth.reduce((a,b)=>a+b,0)} electrons. `
+        + `For a neutral atom that total <em>is</em> the atomic number, so this is ${NAMES[chState.z]}. Configuration: ${cfg}.</div>`;
+  } else {
+    msg = `<div class="verdict no"><strong>Recheck the heights.</strong> Correct counts were ${truth.join(" : ")} (you had ${guess.join(" : ")}). `
+        + `Read each apex against the electron axis on the left. Total ${truth.reduce((a,b)=>a+b,0)} electrons makes this ${NAMES[chState.z]}, ${cfg}.</div>`;
+  }
+  document.getElementById("chVerdict").innerHTML = msg;
+  drawSpectrum(document.getElementById("chSpec"), chState.peaks,
+    {mode:"log", labels:true, sweep:false});
+});
+
+/* ---------- practice ---------- */
+const MC = [
+ {q:"In the photoelectron spectrum of magnesium, which peak appears at the highest binding energy?",
+  c:["The 3s peak, because those electrons are in the outermost shell",
+     "The 1s peak, because those electrons are closest to the nucleus and least shielded",
+     "The 2p peak, because it is the tallest peak in the spectrum",
+     "All peaks appear at the same binding energy because they belong to the same atom"],
+  a:1,
+  e:"Binding energy is set by how tightly the nucleus holds an electron. The 1s electrons are closest to the nucleus and have almost nothing shielding them, so they feel the largest effective nuclear charge and require the most energy to remove. <b>Peak height never tells you about energy</b> &mdash; only about how many electrons are in that subshell."},
+
+ {q:"A spectrum of a neutral atom shows five peaks with relative heights, from highest binding energy to lowest, of 2, 2, 6, 2, 3. Which element is it?",
+  c:["Aluminum","Silicon","Phosphorus","Chlorine"],
+  a:2,
+  e:"Five peaks means five occupied subshells, which in filling order are 1s, 2s, 2p, 3s, 3p. The heights give 1s&sup2;2s&sup2;2p&#8310;3s&sup2;3p&sup3;. Adding them: 2+2+6+2+3 = 15 electrons, and a neutral atom with 15 electrons has 15 protons &mdash; <b>phosphorus</b>."},
+
+ {q:"The 1s binding energy of neon (84.0 MJ/mol) is higher than that of fluorine (67.4 MJ/mol). The best explanation is that neon&hellip;",
+  c:["has more electrons, so its electrons repel each other more strongly",
+     "has one more proton, and its 1s electrons are shielded no better than fluorine's, so they feel a greater effective nuclear charge",
+     "has a completely full 2p subshell, which stabilizes the 1s electrons",
+     "has a larger atomic radius, placing the 1s electrons farther from the nucleus"],
+  a:1,
+  e:"Both atoms shield their 1s electrons about equally &mdash; there is essentially nothing between a 1s electron and the nucleus. Neon simply has an extra proton, so Z<sub>eff</sub> at the 1s level goes up, Coulombic attraction goes up, and the binding energy goes up. This is why every column in the data table increases as you move down."},
+
+ {q:"How many peaks appear in the photoelectron spectrum of a ground-state calcium atom?",
+  c:["Four","Five","Six","Twenty"],
+  a:2,
+  e:"Calcium is 1s&sup2;2s&sup2;2p&#8310;3s&sup2;3p&#8310;4s&sup2; &mdash; six occupied subshells, so <b>six peaks</b>. The classic error is answering four by counting shells (n = 1, 2, 3, 4). PES resolves subshells, not shells, and that is exactly the evidence that broke the simple Bohr picture."},
+
+ {q:"In the spectrum of argon, the 2p peak is three times as tall as the 3s peak. Why?",
+  c:["The 2p electrons are held three times as tightly as the 3s electrons",
+     "The 2p subshell contains six electrons while the 3s subshell contains two",
+     "Photons of higher energy eject electrons more efficiently",
+     "The 2p subshell has three orbitals and the 3s subshell has one"],
+  a:1,
+  e:"Peak height is proportional to the <b>number of electrons</b> in the subshell: 2p&#8310; against 3s&sup2; is a 6:2 = 3:1 ratio. Choice D gets the right ratio for the wrong reason &mdash; the signal tracks electrons, not orbitals, which is why a 2p&sup1; peak is short even though 2p still has three orbitals."},
+
+ {q:"Which claim about atomic structure is contradicted by photoelectron spectroscopy data?",
+  c:["Electrons occupy discrete energy levels",
+     "Core electrons are held more tightly than valence electrons",
+     "All electrons in the n = 2 shell have the same energy",
+     "Effective nuclear charge increases across a period"],
+  a:2,
+  e:"Every second-period element from boron onward shows <b>two separate peaks</b> for n = 2 &mdash; one for 2s and one for 2p, at clearly different binding energies. That splitting is direct experimental evidence for subshells and against a model in which a shell is a single energy level."},
+
+ {q:"A spectrum shows three peaks with heights 2, 2, 6, and the sample is known to be a singly charged cation. What is it?",
+  c:["Ne&#8314;","Na&#8314;","F&#8315;","Mg&sup2;&#8314;"],
+  a:1,
+  e:"The heights total 10 electrons. But a 1+ cation has one <em>more</em> proton than it has electrons, so Z = 11: this is <b>Na&#8314;</b>. Ion questions are the one place where 'add the heights to get the element' fails &mdash; the heights always give you the electron count, and you adjust for charge to get Z."},
+
+ {q:"The 3p binding energy of sulfur (1.00 MJ/mol) is slightly lower than that of phosphorus (1.06 MJ/mol), even though sulfur has one more proton. The best explanation is that in sulfur&hellip;",
+  c:["the extra 3p electron must pair up in an already-occupied orbital, and the added electron&ndash;electron repulsion outweighs the extra nuclear charge",
+     "the 3p subshell is farther from the nucleus than it is in phosphorus",
+     "the extra proton is shielded by the 1s electrons",
+     "the measurement is within experimental error and the difference is not real"],
+  a:0,
+  e:"Phosphorus has 3p&sup3;, one electron alone in each p orbital. Sulfur's fourth 3p electron has to double up, and two electrons crowded in the same orbital repel each other significantly. That repulsion raises the energy of the electron &mdash; making it easier to remove &mdash; by more than the extra proton tightens it. The same effect shows up as the well-known dip in first ionization energy from P to S."}
+];
+
+const FRQ = [
+ {q:"Using Coulomb's law, explain why the 1s electrons of a carbon atom have a binding energy of 28.6 MJ/mol while its 2p electrons require only 1.09 MJ/mol.",
+  m:"<p>The 1s electrons are in the n = 1 shell, much closer to the nucleus than the 2p electrons in n = 2. Coulombic attraction is inversely proportional to the square of the distance, so decreasing r sharply increases the force holding the electron.</p><p>In addition, the 1s electrons are shielded by essentially nothing, so they experience an effective nuclear charge close to the full +6. The 2p electrons are shielded by the 1s and 2s electrons, so they feel a much smaller Z<sub>eff</sub>.</p><p>Being both closer and less shielded, the 1s electrons are held far more strongly, and it takes about 26 times as much energy per mole to remove one.</p><p class='note'><b>Scoring watch-outs:</b> naming Coulomb's law without connecting it to <em>both</em> distance and effective nuclear charge usually loses a point. Saying the 1s electrons have 'lower energy' is fine, but you still have to say why.</p>"},
+
+ {q:"Describe how the photoelectron spectrum of oxygen differs from that of nitrogen, and account for each difference.",
+  m:"<p>Both spectra have three peaks, because both elements occupy the same three subshells: 1s, 2s, and 2p.</p><p><b>Peak heights.</b> Oxygen's 2p peak is taller &mdash; four electrons against nitrogen's three &mdash; because peak height is proportional to the number of electrons in the subshell. The 1s and 2s peaks are the same height in both, at two electrons each.</p><p><b>Peak positions.</b> Oxygen's 1s peak (52.6 MJ/mol) and 2s peak (3.12 MJ/mol) both sit at higher binding energy than nitrogen's (40.2 and 2.45), because oxygen has one more proton and comparable shielding, giving a larger effective nuclear charge.</p><p><b>The exception.</b> Oxygen's 2p peak (1.31) is at <em>lower</em> binding energy than nitrogen's (1.40). Oxygen's fourth 2p electron must pair in an orbital that already holds an electron, and the resulting repulsion makes it easier to remove despite the extra proton.</p>"},
+
+ {q:"A student claims that the photoelectron spectrum of sodium should have three peaks because sodium atoms have three shells. Explain what is wrong with the reasoning and give the correct answer.",
+  m:"<p>The student is counting shells, but photoelectron spectroscopy resolves <em>subshells</em>. Sodium is 1s&sup2;2s&sup2;2p&#8310;3s&sup1;, which is four occupied subshells, so its spectrum has <b>four peaks</b>, with relative heights 2 : 2 : 6 : 1.</p><p>The n = 2 shell alone produces two peaks, because 2s and 2p electrons have measurably different binding energies (6.84 and 3.67 MJ/mol). If shells were single energy levels, those electrons would appear as one peak. They don't &mdash; and that observation is the main experimental reason chemists describe electrons with subshells rather than simple Bohr shells.</p>"},
+
+ {q:"Explain why, moving left to right across the second period, the 1s binding energy rises steadily (from 6.26 MJ/mol in Li to 84.0 MJ/mol in Ne) while the valence binding energy rises much more gradually.",
+  m:"<p>Across the period, protons are added one at a time while electrons fill the n = 2 shell.</p><p>The 1s electrons lie inside the n = 2 shell, so the electrons being added do essentially nothing to shield them. Each added proton raises Z<sub>eff</sub> at the 1s level by very nearly one full unit, and the 1s binding energy climbs steeply.</p><p>Valence electrons are a different case. Each added proton pulls harder, but each added electron sits in the same shell and shields somewhat, partially canceling the increase. Electrons in the same shell shield each other poorly but not zero, so Z<sub>eff</sub> for the valence electrons rises &mdash; and with it binding energy and ionization energy &mdash; but far more slowly.</p><p class='note'><b>Connection to 1.7:</b> this is the mechanism behind the periodic trend in first ionization energy you'll meet next.</p>"}
+];
+
+let mcAns = 0, mcOk = 0;
+document.getElementById("mcHost").innerHTML = MC.map((q,i) => `
+  <div class="q" data-i="${i}">
+    <div class="qnum">Question ${i+1}</div>
+    <p class="qtext">${q.q}</p>
+    <div class="choices">${q.c.map((c,j) =>
+      `<button class="choice" data-j="${j}"><span class="ltr">${"ABCD"[j]}</span><span>${c}</span></button>`).join("")}</div>
+    <div class="expl" hidden></div>
+  </div>`).join("");
+
+document.querySelectorAll("#mcHost .choice").forEach(btn => btn.addEventListener("click", () => {
+  const q = btn.closest(".q"), i = +q.dataset.i, j = +btn.dataset.j;
+  if(q.dataset.done) return;
+  q.dataset.done = "1";
+  mcAns++; if(j === MC[i].a) mcOk++;
+  q.querySelectorAll(".choice").forEach((b,k) => {
+    b.disabled = true;
+    if(k === MC[i].a) b.classList.add("right");
+    else if(k === j) b.classList.add("wrong");
+  });
+  const ex = q.querySelector(".expl");
+  ex.hidden = false;
+  ex.innerHTML = (j === MC[i].a ? "<b>Correct. </b>" : "<b>Not quite. </b>") + MC[i].e;
+  document.getElementById("mcScore").textContent =
+    `Answered ${mcAns} of ${MC.length} \u00b7 Correct ${mcOk}`;
+}));
+
+document.getElementById("frqHost").innerHTML =
+  `<h3>Written response</h3>` + FRQ.map((f,i) => `
+  <div class="q">
+    <div class="qnum">Free response ${i+1}</div>
+    <p class="qtext">${f.q}</p>
+    <textarea placeholder="Write your answer here, then compare."></textarea>
+    <details class="model"><summary>Show model answer</summary><div class="body">${f.m}</div></details>
+  </div>`).join("");
+
+/* ---------- data table ---------- */
+(function(){
+  const fmt = fmtBE;
+  const cols = ORDER;
+  let h = `<thead><tr><th>Element</th><th>Z</th>${cols.map(c=>`<th>${c}</th>`).join("")}</tr></thead><tbody>`;
+  for(let z = 1; z <= 20; z++){
+    h += `<tr><td>${SYM[z]}</td><td>${z}</td>`
+      + cols.map((c,i) => `<td>${BE[z][i] !== undefined ? fmt(BE[z][i]) : "&mdash;"}</td>`).join("")
+      + `</tr>`;
+  }
+  document.getElementById("dataTable").innerHTML = h + "</tbody>";
+})();
+</script>
+</body>
+</html>
