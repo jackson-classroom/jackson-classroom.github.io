@@ -1,1 +1,172 @@
+/* ============================================================
+   Jackson Classroom — shared stylesheet
+   Palette and fonts match the interactive tools.
+   Change a value in :root and every page follows.
+   ============================================================ */
 
+:root{
+  --paper:#EDF1F4;      /* page background */
+  --card:#FBFCFD;       /* raised surfaces */
+  --ink:#16283C;        /* body text */
+  --ink-soft:#5A6B7C;   /* secondary text */
+  --accent:#1B6CA8;     /* links, rules */
+  --highlight:#F2A104;  /* focus outline */
+  --line:#CFDAE3;       /* borders */
+
+  --font-head:"Space Grotesk",system-ui,sans-serif;
+  --font-body:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+
+*{box-sizing:border-box}
+
+html,body{margin:0;padding:0}
+
+body{
+  background:var(--paper);
+  background-image:
+    linear-gradient(to right, rgba(150,178,199,.20) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(150,178,199,.20) 1px, transparent 1px);
+  background-size:26px 26px;
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:17px;
+  line-height:1.6;
+  -webkit-text-size-adjust:100%;
+}
+
+/* Centers content and keeps line length readable on wide monitors.
+   Everything on a page should sit inside <main class="wrap"> */
+.wrap{
+  max-width:760px;
+  margin:0 auto;
+  padding:34px 20px 80px;
+}
+
+/* ---------- headings ---------- */
+
+h1{
+  font-family:var(--font-head);
+  font-weight:700;
+  font-size:clamp(30px,6vw,44px);
+  line-height:1.05;
+  letter-spacing:-.02em;
+  margin:0 0 10px;
+}
+
+h2{
+  font-family:var(--font-head);
+  font-weight:700;
+  font-size:21px;
+  letter-spacing:-.01em;
+  margin:38px 0 4px;
+  padding-bottom:7px;
+  border-bottom:1px solid var(--line);
+}
+
+/* The one-line description under an h1 */
+.lede{
+  color:var(--ink-soft);
+  font-size:18px;
+  max-width:56ch;
+  margin:0 0 8px;
+}
+
+/* ---------- links ---------- */
+
+a{
+  color:var(--accent);
+  text-decoration-thickness:1px;
+  text-underline-offset:2px;
+}
+a:hover{text-decoration-thickness:2px}
+
+:focus-visible{
+  outline:3px solid var(--highlight);
+  outline-offset:2px;
+}
+
+/* ---------- tool lists ---------- */
+/* Use for the links under each unit heading:
+   <ul class="tools"><li><a href="...">Name</a><span>note</span></li></ul>
+   The <span> is optional. */
+
+ul.tools{
+  list-style:none;
+  margin:14px 0 0;
+  padding:0;
+}
+
+ul.tools li{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:9px;
+  margin-bottom:9px;
+}
+
+ul.tools li a{
+  display:block;
+  padding:14px 16px;
+  font-weight:600;
+  text-decoration:none;
+}
+
+ul.tools li:hover{border-color:var(--accent)}
+
+/* Optional grey note after the link text */
+ul.tools li span{
+  display:block;
+  font-weight:400;
+  font-size:14.5px;
+  color:var(--ink-soft);
+  margin-top:2px;
+}
+
+/* ---------- course index on the home page ---------- */
+/* Same markup as ul.tools, laid out two-across on wide screens */
+
+ul.courses{
+  list-style:none;
+  margin:14px 0 0;
+  padding:0;
+  display:grid;
+  gap:10px;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+}
+
+ul.courses li{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:9px;
+}
+
+ul.courses li a{
+  display:block;
+  padding:16px;
+  font-family:var(--font-head);
+  font-weight:700;
+  font-size:18px;
+  text-decoration:none;
+}
+
+ul.courses li:hover{border-color:var(--accent)}
+
+/* ---------- footer ---------- */
+
+footer{
+  margin-top:52px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+  font-family:var(--font-mono);
+  font-size:13px;
+  color:var(--ink-soft);
+}
+
+/* ---------- print ---------- */
+/* Drops the grid background so handouts don't waste toner */
+
+@media print{
+  body{background:#fff;background-image:none}
+  .wrap{padding:0}
+  footer{display:none}
+}
