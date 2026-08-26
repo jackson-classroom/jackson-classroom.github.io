@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1D Motion — Quiz Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EDF1F4;
+  --card:#FBFCFD;
+  --ink:#16283C;
+  --ink-soft:#5A6B7C;
+  --grid:#C3D2DD;
+  --grid-fine:#DDE6EC;
+  --trace:#1B6CA8;
+  --walker:#F2A104;
+  --good:#1E7F5C;
+  --miss:#A8199B;
+  --line:#CFDAE3;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper);
+  background-image:
+    linear-gradient(to right, rgba(150,178,199,.20) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(150,178,199,.20) 1px, transparent 1px);
+  background-size:26px 26px;
+  color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+  font-size:16px;
+  line-height:1.5;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:800px;margin:0 auto;padding:22px 16px 64px}
+
+/* ---------- header ---------- */
+header{margin:6px 0 22px}
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--ink-soft);
+}
+h1{
+  font-family:"Space Grotesk",sans-serif;font-weight:700;
+  font-size:clamp(30px,7vw,46px);line-height:1.02;letter-spacing:-.02em;
+  margin:8px 0 6px;
+}
+h1 em{font-style:normal;color:var(--trace)}
+.lede{max-width:56ch;color:var(--ink-soft);margin:0}
+
+/* ---------- tabs ---------- */
+nav.tabs{
+  display:flex;gap:4px;margin:22px 0 16px;flex-wrap:wrap;
+  border-bottom:1px solid var(--line);padding-bottom:0;
+}
+.tab{
+  appearance:none;background:none;border:1px solid transparent;border-bottom:none;
+  font:600 13.5px/1 "IBM Plex Sans",sans-serif;color:var(--ink-soft);
+  padding:11px 13px;border-radius:6px 6px 0 0;cursor:pointer;
+  position:relative;top:1px;
+}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{
+  background:var(--card);border-color:var(--line);color:var(--ink);
+}
+.tab .n{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--trace);margin-right:6px}
+
+/* ---------- panels ---------- */
+.panel{display:none}
+.panel.on{display:block}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:18px;margin-bottom:18px;
+}
+.card h2{
+  font-family:"Space Grotesk",sans-serif;font-size:19px;font-weight:700;
+  margin:0 0 4px;letter-spacing:-.01em;
+}
+.card .sub{color:var(--ink-soft);font-size:14.5px;margin:0 0 16px}
+.rowtop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.rowtop>div:first-child{flex:1 1 240px}
+.score{
+  font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-soft);
+  border:1px solid var(--line);border-radius:999px;padding:5px 11px;white-space:nowrap;
+}
+.score b{color:var(--ink)}
+
+/* ---------- the instrument (signature) ---------- */
+.rig{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+.rig .hall{display:block;width:100%;height:auto;background:#F3F7FA;border-bottom:1px dashed var(--grid)}
+.rig .plot{display:block;width:100%;height:auto}
+.readout{
+  display:flex;gap:0;border-top:1px solid var(--line);
+  font-family:"IBM Plex Mono",monospace;font-size:13px;flex-wrap:wrap;
+}
+.readout div{flex:1 1 33%;padding:8px 10px;border-right:1px solid var(--line);min-width:96px}
+.readout div:last-child{border-right:none}
+.readout span{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.readout b{font-weight:600;font-size:16px}
+.transport{display:flex;align-items:center;gap:10px;padding:10px;border-top:1px solid var(--line);flex-wrap:wrap}
+.transport input[type=range]{flex:1 1 140px;min-width:120px;accent-color:var(--trace)}
+.spd{display:flex;gap:2px}
+
+button{font-family:inherit}
+.btn{
+  appearance:none;border:1px solid var(--ink);background:var(--ink);color:#fff;
+  font:600 14px/1 "IBM Plex Sans",sans-serif;padding:10px 15px;border-radius:7px;cursor:pointer;
+}
+.btn:hover{background:#0d1b2b}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{background:#EEF3F7}
+.btn.sm{padding:7px 11px;font-size:13px}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.on{background:var(--trace);border-color:var(--trace);color:#fff}
+:focus-visible{outline:3px solid var(--walker);outline-offset:2px}
+
+/* ---------- questions ---------- */
+.qtext{font-size:17px;font-weight:600;margin:18px 0 12px}
+.opts{display:grid;gap:8px;margin:0 0 14px}
+.opt{
+  display:flex;gap:11px;align-items:flex-start;text-align:left;
+  background:#fff;border:1px solid var(--line);border-radius:8px;
+  padding:12px 13px;font-size:15px;cursor:pointer;color:var(--ink);width:100%;
+}
+.opt:hover{border-color:var(--trace)}
+.opt .k{
+  font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;color:var(--ink-soft);
+  border:1px solid var(--line);border-radius:4px;padding:1px 6px;flex:none;margin-top:1px;
+}
+.opt[aria-pressed="true"]{border-color:var(--trace);box-shadow:inset 0 0 0 1px var(--trace)}
+.opt.correct{border-color:var(--good);background:#F0F9F5}
+.opt.correct .k{border-color:var(--good);color:var(--good)}
+.opt.wrong{border-color:var(--miss);background:#FCF1FB}
+.opt.wrong .k{border-color:var(--miss);color:var(--miss)}
+.opt:disabled{cursor:default}
+
+.fields{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0}
+.field{flex:1 1 150px}
+.field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:5px}
+.field .inputrow{display:flex;align-items:baseline;gap:7px}
+.field input{
+  width:100%;font-family:"IBM Plex Mono",monospace;font-size:17px;
+  padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink);
+}
+.field input.ok{border-color:var(--good);background:#F0F9F5}
+.field input.no{border-color:var(--miss);background:#FCF1FB}
+.unit{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--ink-soft);flex:none}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+
+.fb{border-left:3px solid var(--line);padding:11px 0 11px 13px;margin:14px 0 0;font-size:15px;display:none}
+.fb.show{display:block}
+.fb.yes{border-color:var(--good)}
+.fb.no{border-color:var(--miss)}
+.fb .verdict{font-family:"Space Grotesk",sans-serif;font-weight:700;display:block;margin-bottom:3px}
+.fb.yes .verdict{color:var(--good)}
+.fb.no .verdict{color:var(--miss)}
+.fb code{font-family:"IBM Plex Mono",monospace;background:#EEF3F7;padding:1px 5px;border-radius:4px;font-size:13.5px}
+
+/* ---------- match-the-graph controls ---------- */
+.dials{display:grid;gap:10px;margin:16px 0 4px}
+.dial{
+  display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);
+  border-radius:8px;padding:9px 11px;flex-wrap:wrap;
+}
+.dial .lab{font-size:13.5px;font-weight:600;flex:1 1 130px}
+.dial .lab small{display:block;font-weight:400;color:var(--ink-soft);font-size:12px}
+.stepper{display:flex;align-items:center;gap:8px;flex:none}
+.stepper button{
+  width:34px;height:34px;border-radius:7px;border:1px solid var(--line);background:#fff;
+  font-size:18px;line-height:1;cursor:pointer;color:var(--ink);
+}
+.stepper button:hover{background:#EEF3F7}
+.stepper .val{
+  font-family:"IBM Plex Mono",monospace;font-size:16px;font-weight:600;
+  min-width:64px;text-align:center;
+}
+.dial.matched{background:#F0F9F5;border-color:var(--good)}
+.dial.matched .val{color:var(--good)}
+
+/* ---------- reference ---------- */
+.ref dl{margin:0;display:grid;gap:12px}
+.ref dt{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:15px}
+.ref dd{margin:2px 0 0;color:var(--ink-soft);font-size:14.5px}
+.ref dd b{color:var(--ink);font-weight:600}
+.mono{font-family:"IBM Plex Mono",monospace;font-size:13.5px}
+.pill{
+  display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:12px;
+  border:1px solid var(--line);border-radius:5px;padding:1px 6px;background:#fff;
+}
+footer{color:var(--ink-soft);font-size:13px;text-align:center;margin-top:8px}
+
+@media (max-width:520px){
+  .card{padding:14px}
+  .readout b{font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ping{display:none}
+}
+.ping{transform-box:fill-box;transform-origin:center;opacity:0}
+.rig.playing .ping{animation:ping 1.4s linear infinite}
+.rig.playing .ping:nth-child(2){animation-delay:.46s}
+.rig.playing .ping:nth-child(3){animation-delay:.92s}
+@keyframes ping{
+  0%{opacity:.55;transform:scale(.25)}
+  100%{opacity:0;transform:scale(1)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Physics · Unit 1 · Motion in one dimension</div>
+  <h1>Read the graph.<br>Then <em>walk the graph.</em></h1>
+  <p class="lede">Four practice sets on position–time graphs, slope, and distance vs. displacement. Every graph comes with the hallway it came from — press play or drag the time slider to watch the walk that made it.</p>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Practice sets">
+  <button class="tab" role="tab" id="tab-read"  aria-controls="p-read"  aria-selected="true"><span class="n">A</span>Read a graph</button>
+  <button class="tab" role="tab" id="tab-slope" aria-controls="p-slope" aria-selected="false"><span class="n">B</span>Slope = velocity</button>
+  <button class="tab" role="tab" id="tab-dd"    aria-controls="p-dd"    aria-selected="false"><span class="n">C</span>Distance vs. displacement</button>
+  <button class="tab" role="tab" id="tab-match" aria-controls="p-match" aria-selected="false"><span class="n">D</span>Match the graph</button>
+  <button class="tab" role="tab" id="tab-ref"   aria-controls="p-ref"   aria-selected="false"><span class="n">✳</span>Quick reference</button>
+</nav>
+
+<!-- A ---------------------------------------------------------------- -->
+<section class="panel on" id="p-read" role="tabpanel" aria-labelledby="tab-read">
+  <div class="card">
+    <div class="rowtop">
+      <div>
+        <h2>Read a graph</h2>
+        <p class="sub">Position is measured from the motion detector. Flat means at rest, and the steeper the line, the faster she's moving.</p>
+      </div>
+      <div class="score" id="score-read">0 / 0</div>
+    </div>
+    <div id="rig-read"></div>
+    <p class="qtext" id="q-read"></p>
+    <div class="opts" id="opts-read"></div>
+    <div class="actions">
+      <button class="btn" id="check-read">Check answer</button>
+      <button class="btn ghost" id="next-read">Next question</button>
+    </div>
+    <div class="fb" id="fb-read"></div>
+  </div>
+</section>
+
+<!-- B ---------------------------------------------------------------- -->
+<section class="panel" id="p-slope" role="tabpanel" aria-labelledby="tab-slope">
+  <div class="card">
+    <div class="rowtop">
+      <div>
+        <h2>Slope = velocity</h2>
+        <p class="sub">Find the velocity over the shaded interval. Sign matters: away from the detector is positive, back toward it is negative.</p>
+      </div>
+      <div class="score" id="score-slope">0 / 0</div>
+    </div>
+    <div id="rig-slope"></div>
+    <p class="qtext" id="q-slope"></p>
+    <div class="fields">
+      <div class="field">
+        <label for="in-slope">Velocity over the shaded interval</label>
+        <div class="inputrow">
+          <input id="in-slope" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. -1.5">
+          <span class="unit">m/s</span>
+        </div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="check-slope">Check answer</button>
+      <button class="btn ghost" id="hint-slope">Show rise / run</button>
+      <button class="btn ghost" id="next-slope">New graph</button>
+    </div>
+    <div class="fb" id="fb-slope"></div>
+  </div>
+</section>
+
+<!-- C ---------------------------------------------------------------- -->
+<section class="panel" id="p-dd" role="tabpanel" aria-labelledby="tab-dd">
+  <div class="card">
+    <div class="rowtop">
+      <div>
+        <h2>Distance vs. displacement</h2>
+        <p class="sub">Distance is the whole path she walks. Displacement is only how far she ends up from where she started, with a sign.</p>
+      </div>
+      <div class="score" id="score-dd">0 / 0</div>
+    </div>
+    <div id="rig-dd"></div>
+    <p class="qtext">From <span class="mono" id="q-dd-span"></span>, find both quantities for this walk.</p>
+    <div class="fields">
+      <div class="field">
+        <label for="in-dist">Total distance travelled</label>
+        <div class="inputrow"><input id="in-dist" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 9"><span class="unit">m</span></div>
+      </div>
+      <div class="field">
+        <label for="in-disp">Displacement</label>
+        <div class="inputrow"><input id="in-disp" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. -3"><span class="unit">m</span></div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="check-dd">Check answers</button>
+      <button class="btn ghost" id="next-dd">New walk</button>
+    </div>
+    <div class="fb" id="fb-dd"></div>
+  </div>
+</section>
+
+<!-- D ---------------------------------------------------------------- -->
+<section class="panel" id="p-match" role="tabpanel" aria-labelledby="tab-match">
+  <div class="card">
+    <div class="rowtop">
+      <div>
+        <h2>Match the graph</h2>
+        <p class="sub">Same game as the motion-sensor lab, minus the walking. Set the starting position and the velocity for each 3-second stretch until your solid line lands on the dashed target.</p>
+      </div>
+      <div class="score" id="score-match">0 solved</div>
+    </div>
+    <div id="rig-match"></div>
+    <p class="qtext" id="q-match"></p>
+    <div class="dials" id="dials-match"></div>
+    <div class="actions">
+      <button class="btn" id="check-match">Check my graph</button>
+      <button class="btn ghost" id="reveal-match">Reveal the answer</button>
+      <button class="btn ghost" id="next-match">New target</button>
+    </div>
+    <div class="fb" id="fb-match"></div>
+  </div>
+</section>
+
+<!-- REF -------------------------------------------------------------- -->
+<section class="panel" id="p-ref" role="tabpanel" aria-labelledby="tab-ref">
+  <div class="card ref">
+    <h2>Quick reference</h2>
+    <p class="sub">Everything on this card showed up in the first three days of class.</p>
+    <dl>
+      <dt>Position <span class="pill">x</span></dt>
+      <dd>Where she is, measured from an agreed zero — for us, the motion detector. It's a location, not a trip.</dd>
+
+      <dt>Distance <span class="pill">d</span></dt>
+      <dd>The length of the whole path walked. Always positive, always adds up. <b>Never negative.</b></dd>
+
+      <dt>Displacement <span class="pill">Δx</span></dt>
+      <dd><span class="mono">Δx = x<sub>final</sub> − x<sub>initial</sub></span>. Start to finish, straight, with a sign. It can be negative, and it can be zero on a walk of 20 m if she returns to where she started.</dd>
+
+      <dt>Speed vs. velocity</dt>
+      <dd>Speed is how fast (no sign). Velocity is how fast <b>and which way</b> (has a sign). Two students can walk at the same speed with opposite velocities.</dd>
+
+      <dt>Slope of a position–time graph</dt>
+      <dd><span class="mono">slope = rise / run = Δx / Δt = velocity</span>. Pick two points you can read exactly off the gridlines, then subtract — <b>final minus initial, in both directions.</b></dd>
+
+      <dt>What the shape is telling you</dt>
+      <dd>
+        Flat line → at rest.<br>
+        Rising line → moving away from the detector (positive velocity).<br>
+        Falling line → moving back toward the detector (negative velocity).<br>
+        Steeper line → faster. Two lines with the same steepness have the same speed even if one rises and one falls.<br>
+        A corner (a kink) → the velocity changed. A peak or valley → she changed direction.
+      </dd>
+
+      <dt>The trap to avoid</dt>
+      <dd>A position–time graph is <b>not a picture of the hallway.</b> A rising line is not a hill, and a line that goes up then down is not a trip over a bump — it's a walk out and back. Press play on any graph in here if that ever stops feeling obvious.</dd>
+
+      <dt>Units, every time</dt>
+      <dd>Position and distance in <span class="mono">m</span>, time in <span class="mono">s</span>, velocity and speed in <span class="mono">m/s</span>. An answer without a unit is an incomplete answer.</dd>
+    </dl>
+  </div>
+  <footer>Built for practice, not for grading. Bring your questions to class.</footer>
+</section>
+
+</div>
+
+<script>
+"use strict";
+const NS = "http://www.w3.org/2000/svg";
+const svgEl = (t, a, p) => {
+  const e = document.createElementNS(NS, t);
+  if (a) for (const k in a) e.setAttribute(k, a[k]);
+  if (p) p.appendChild(e);
+  return e;
+};
+const fmt = n => {
+  const r = Math.round(n * 100) / 100;
+  return (Object.is(r, -0) ? 0 : r).toString();
+};
+const sgn = n => (n > 0 ? "+" + fmt(n) : fmt(n));
+const rnd = a => a[Math.floor(Math.random() * a.length)];
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ============================== THE RIG ============================== */
+/* A hallway view stacked on a position-time graph, sharing one clock. */
+
+const GEO = { w:460, h:300, L:52, R:16, T:16, B:46 };
+const HALL = { w:460, h:112, floor:82 };
+
+function Rig(host, opt){
+  opt = Object.assign({ tMax:10, xMax:8, speed:2 }, opt || {});
+  const S = {
+    tMax: opt.tMax, xMax: opt.xMax, xMin: 0, speed: opt.speed,
+    verts: [[0,0]], ghost:null, band:null, triangle:false, wall:null,
+    trail:false, arrow:null, cursor:0, raf:null, playing:false
+  };
+
+  const root = document.createElement("div");
+  root.className = "rig";
+  root.innerHTML =
+    '<svg class="hall" viewBox="0 0 '+HALL.w+' '+HALL.h+'" role="img" aria-label="Hallway view showing where the walker is"></svg>' +
+    '<svg class="plot" viewBox="0 0 '+GEO.w+' '+GEO.h+'" role="img" aria-label="Position versus time graph"></svg>' +
+    '<div class="readout">' +
+      '<div><span>time</span><b class="r-t">0 s</b></div>' +
+      '<div><span>position</span><b class="r-x">0 m</b></div>' +
+      '<div><span>velocity</span><b class="r-v">0 m/s</b></div>' +
+    '</div>' +
+    '<div class="transport">' +
+      '<button class="btn sm play">Play the walk</button>' +
+      '<input class="scrub" type="range" min="0" max="1000" value="0" aria-label="Scrub through time">' +
+      '<span class="spd"><button class="btn ghost sm s1">1&times;</button><button class="btn ghost sm s2 on">2&times;</button></span>' +
+    '</div>';
+  host.innerHTML = "";
+  host.appendChild(root);
+
+  const hall = root.querySelector(".hall");
+  const plot = root.querySelector(".plot");
+  const rT = root.querySelector(".r-t"), rX = root.querySelector(".r-x"), rV = root.querySelector(".r-v");
+  const playBtn = root.querySelector(".play"), scrub = root.querySelector(".scrub");
+  const s1 = root.querySelector(".s1"), s2 = root.querySelector(".s2");
+
+  /* --- maps --- */
+  const gx = t => GEO.L + (t / S.tMax) * (GEO.w - GEO.L - GEO.R);
+  const gy = x => (GEO.h - GEO.B) - ((x - S.xMin) / (S.xMax - S.xMin)) * (GEO.h - GEO.B - GEO.T);
+  const hx = x => GEO.L + ((x - S.xMin) / (S.xMax - S.xMin)) * (HALL.w - GEO.L - GEO.R);
+
+  /* --- piecewise helpers --- */
+  function posAt(t, vs){
+    vs = vs || S.verts;
+    if (t <= vs[0][0]) return vs[0][1];
+    for (let i = 0; i < vs.length - 1; i++){
+      const [t0,x0] = vs[i], [t1,x1] = vs[i+1];
+      if (t <= t1) return t1 === t0 ? x1 : x0 + (x1 - x0) * (t - t0) / (t1 - t0);
+    }
+    return vs[vs.length-1][1];
+  }
+  function velAt(t){
+    const vs = S.verts;
+    for (let i = 0; i < vs.length - 1; i++){
+      const [t0,x0] = vs[i], [t1,x1] = vs[i+1];
+      if (t >= t0 && t < t1) return (x1 - x0) / (t1 - t0);
+    }
+    const n = vs.length;
+    return n > 1 ? (vs[n-1][1] - vs[n-2][1]) / (vs[n-1][0] - vs[n-2][0]) : 0;
+  }
+
+  /* --- draw the graph --- */
+  let cursorG, hallWalker, hallStem, hallTrail, pingG;
+
+  const clipId = "clip" + Math.random().toString(36).slice(2, 8);
+
+  function drawPlot(){
+    plot.innerHTML = "";
+    const defs = svgEl("defs", {}, plot);
+    const cp = svgEl("clipPath", { id:clipId }, defs);
+    svgEl("rect", { x:GEO.L, y:GEO.T - 4, width:GEO.w - GEO.L - GEO.R,
+      height:(GEO.h - GEO.B) - GEO.T + 8 }, cp);
+    const gGrid = svgEl("g", {}, plot);
+
+    for (let x = S.xMin; x <= S.xMax + .001; x += 0.5){
+      const major = Math.abs(x % 1) < .001;
+      svgEl("line", { x1:GEO.L, x2:GEO.w-GEO.R, y1:gy(x), y2:gy(x),
+        stroke: major ? "var(--grid)" : "var(--grid-fine)", "stroke-width": major ? 1 : .7 }, gGrid);
+      if (major && x % 2 === 0)
+        svgEl("text", { x:GEO.L-8, y:gy(x)+4, "text-anchor":"end",
+          "font-family":"IBM Plex Mono, monospace","font-size":12, fill:"var(--ink-soft)" }, gGrid)
+          .textContent = x;
+    }
+    for (let t = 0; t <= S.tMax + .001; t += 1){
+      svgEl("line", { x1:gx(t), x2:gx(t), y1:GEO.T, y2:GEO.h-GEO.B,
+        stroke:"var(--grid)", "stroke-width":1 }, gGrid);
+      if (t % 2 === 0 || Math.abs(t - S.tMax) < .001)
+        svgEl("text", { x:gx(t), y:GEO.h-GEO.B+18, "text-anchor":"middle",
+          "font-family":"IBM Plex Mono, monospace","font-size":12, fill:"var(--ink-soft)" }, gGrid)
+          .textContent = t;
+    }
+
+    if (S.wall){
+      const [lo, hi] = S.wall;
+      if (S.xMax > hi + .001)
+        svgEl("rect", { x:GEO.L, y:GEO.T, width:GEO.w-GEO.L-GEO.R, height:Math.max(0, gy(hi)-GEO.T),
+          fill:"var(--ink)", opacity:.07 }, plot);
+      if (S.xMin < lo - .001)
+        svgEl("rect", { x:GEO.L, y:gy(lo), width:GEO.w-GEO.L-GEO.R, height:Math.max(0, (GEO.h-GEO.B)-gy(lo)),
+          fill:"var(--ink)", opacity:.07 }, plot);
+      if (S.xMin < lo - .001)
+        svgEl("text", { x:GEO.w-GEO.R-6, y:(GEO.h-GEO.B)-6, "text-anchor":"end",
+          "font-family":"IBM Plex Mono, monospace","font-size":11, fill:"var(--ink-soft)",
+          stroke:"#fff", "stroke-width":4, "paint-order":"stroke" }, plot)
+          .textContent = "past the detector — she can't walk here";
+      if (S.xMax > hi + .001)
+        svgEl("text", { x:GEO.w-GEO.R-6, y:GEO.T+13, "text-anchor":"end",
+          "font-family":"IBM Plex Mono, monospace","font-size":11, fill:"var(--ink-soft)",
+          stroke:"#fff", "stroke-width":4, "paint-order":"stroke" }, plot)
+          .textContent = "past the end of the hallway";
+    }
+
+    if (S.band){
+      svgEl("rect", { x:gx(S.band[0]), y:GEO.T, width:gx(S.band[1])-gx(S.band[0]),
+        height:(GEO.h-GEO.B)-GEO.T, fill:"var(--walker)", opacity:.16 }, plot);
+    }
+
+    svgEl("line", { x1:GEO.L, x2:GEO.w-GEO.R, y1:GEO.h-GEO.B, y2:GEO.h-GEO.B,
+      stroke:"var(--ink)", "stroke-width":1.6 }, plot);
+    svgEl("line", { x1:GEO.L, x2:GEO.L, y1:GEO.T, y2:GEO.h-GEO.B,
+      stroke:"var(--ink)", "stroke-width":1.6 }, plot);
+    svgEl("text", { x:(GEO.L+GEO.w-GEO.R)/2, y:GEO.h-6, "text-anchor":"middle",
+      "font-family":"IBM Plex Mono, monospace","font-size":11,"letter-spacing":".08em", fill:"var(--ink-soft)" }, plot)
+      .textContent = "TIME (s)";
+    const yl = svgEl("text", { x:14, y:(GEO.T+GEO.h-GEO.B)/2, "text-anchor":"middle",
+      "font-family":"IBM Plex Mono, monospace","font-size":11,"letter-spacing":".08em", fill:"var(--ink-soft)",
+      transform:"rotate(-90 14 "+((GEO.T+GEO.h-GEO.B)/2)+")" }, plot);
+    yl.textContent = "POSITION (m)";
+
+    if (S.ghost){
+      svgEl("polyline", { "clip-path":"url(#"+clipId+")",
+        points:S.ghost.map(p => gx(p[0])+","+gy(p[1])).join(" "),
+        fill:"none", stroke:"var(--miss)", "stroke-width":2.4, "stroke-dasharray":"7 5",
+        "stroke-linejoin":"round", opacity:.85 }, plot);
+    }
+
+    if (S.triangle && S.band){
+      const [t0,t1] = S.band, x0 = posAt(t0), x1 = posAt(t1);
+      const g = svgEl("g", {}, plot);
+      svgEl("line", { x1:gx(t0), y1:gy(x0), x2:gx(t1), y2:gy(x0),
+        stroke:"var(--ink-soft)", "stroke-width":1.4, "stroke-dasharray":"4 3" }, g);
+      svgEl("line", { x1:gx(t1), y1:gy(x0), x2:gx(t1), y2:gy(x1),
+        stroke:"var(--ink-soft)", "stroke-width":1.4, "stroke-dasharray":"4 3" }, g);
+      svgEl("text", { x:(gx(t0)+gx(t1))/2, y:gy(x0)+(x1>=x0?15:-7), "text-anchor":"middle",
+        "font-family":"IBM Plex Mono, monospace","font-size":11.5, fill:"var(--ink)",
+        stroke:"#fff", "stroke-width":4.5, "paint-order":"stroke" }, g)
+        .textContent = "run = " + fmt(t1-t0) + " s";
+      const room = gx(t1) + 82 < GEO.w - GEO.R;
+      svgEl("text", { x:gx(t1) + (room ? 7 : -7), y:gy(x0) + 0.75*(gy(x1)-gy(x0)) + 4,
+        "text-anchor": room ? "start" : "end",
+        "font-family":"IBM Plex Mono, monospace","font-size":11.5, fill:"var(--ink)",
+        stroke:"#fff", "stroke-width":4.5, "paint-order":"stroke" }, g)
+        .textContent = "rise = " + sgn(x1-x0) + " m";
+    }
+
+    const gTrace = svgEl("g", { "clip-path":"url(#"+clipId+")" }, plot);
+    svgEl("polyline", { points:S.verts.map(p => gx(p[0])+","+gy(p[1])).join(" "),
+      fill:"none", stroke:"var(--trace)", "stroke-width":3,
+      "stroke-linejoin":"round", "stroke-linecap":"round" }, gTrace);
+    S.verts.forEach(p => svgEl("circle", { cx:gx(p[0]), cy:gy(p[1]), r:3.4,
+      fill:"#fff", stroke:"var(--trace)", "stroke-width":2 }, gTrace));
+
+    cursorG = svgEl("g", {}, plot);
+    svgEl("line", { class:"cline", x1:gx(0), x2:gx(0), y1:GEO.T, y2:GEO.h-GEO.B,
+      stroke:"var(--walker)", "stroke-width":1.6 }, cursorG);
+    svgEl("line", { class:"chair", x1:GEO.L, x2:gx(0), y1:gy(0), y2:gy(0),
+      stroke:"var(--walker)", "stroke-width":1.2, "stroke-dasharray":"3 3" }, cursorG);
+    svgEl("circle", { class:"cdot", cx:gx(0), cy:gy(0), r:6,
+      fill:"var(--walker)", stroke:"#fff", "stroke-width":2 }, cursorG);
+  }
+
+  function drawHall(){
+    hall.innerHTML = "";
+    svgEl("text", { x:GEO.L, y:16, "font-family":"IBM Plex Mono, monospace","font-size":10.5,
+      "letter-spacing":".14em", fill:"var(--ink-soft)" }, hall)
+      .textContent = "HALLWAY — METRES FROM THE DETECTOR";
+
+    svgEl("line", { x1:GEO.L-30, x2:HALL.w-GEO.R, y1:HALL.floor, y2:HALL.floor,
+      stroke:"var(--ink)", "stroke-width":1.6 }, hall);
+    for (let x = S.xMin; x <= S.xMax + .001; x += 1){
+      svgEl("line", { x1:hx(x), x2:hx(x), y1:HALL.floor, y2:HALL.floor + (x % 2 ? 4 : 7),
+        stroke:"var(--grid)", "stroke-width":1.2 }, hall);
+      if (x % 2 === 0)
+        svgEl("text", { x:hx(x), y:HALL.floor+20, "text-anchor":"middle",
+          "font-family":"IBM Plex Mono, monospace","font-size":11, fill:"var(--ink-soft)" }, hall)
+          .textContent = x;
+    }
+
+    /* detector at the zero mark, pinging down the hall */
+    pingG = svgEl("g", {}, hall);
+    for (let i = 0; i < 3; i++)
+      svgEl("circle", { class:"ping", cx:hx(0)-6, cy:HALL.floor-13, r:22,
+        fill:"none", stroke:"var(--trace)", "stroke-width":1.6 }, pingG);
+    svgEl("rect", { x:hx(0)-20, y:HALL.floor-22, width:15, height:18, rx:3,
+      fill:"var(--ink)" }, hall);
+    svgEl("circle", { cx:hx(0)-7, cy:HALL.floor-13, r:3.4, fill:"var(--walker)" }, hall);
+
+    hallTrail = svgEl("line", { x1:hx(0), x2:hx(0), y1:HALL.floor-2, y2:HALL.floor-2,
+      stroke:"var(--trace)", "stroke-width":4, opacity:S.trail ? .28 : 0,
+      "stroke-linecap":"round" }, hall);
+
+    if (S.arrow){
+      const y = HALL.floor - 40;
+      const [a,b] = S.arrow, dir = b >= a ? 1 : -1;
+      if (Math.abs(b - a) < .001){
+        svgEl("circle", { cx:hx(a), cy:y, r:3.6, fill:"none",
+          stroke:"var(--miss)", "stroke-width":2.2 }, hall);
+      } else {
+        svgEl("line", { x1:hx(a), x2:hx(b)-dir*7, y1:y, y2:y,
+          stroke:"var(--miss)", "stroke-width":2.2 }, hall);
+        svgEl("polygon", { points:[hx(b)+","+y, (hx(b)-dir*8)+","+(y-4.5), (hx(b)-dir*8)+","+(y+4.5)].join(" "),
+          fill:"var(--miss)" }, hall);
+      }
+      svgEl("text", { x:(hx(a)+hx(b))/2, y:y-7, "text-anchor":"middle",
+        "font-family":"IBM Plex Mono, monospace","font-size":11, fill:"var(--miss)",
+        stroke:"#F3F7FA", "stroke-width":4, "paint-order":"stroke" }, hall)
+        .textContent = "Δx = " + sgn(b-a) + " m";
+    }
+
+    hallStem  = svgEl("line", { x1:hx(0), x2:hx(0), y1:HALL.floor, y2:HALL.floor-12,
+      stroke:"var(--walker)", "stroke-width":2.4 }, hall);
+    hallWalker = svgEl("circle", { cx:hx(0), cy:HALL.floor-18, r:7,
+      fill:"var(--walker)", stroke:"var(--ink)", "stroke-width":1.6 }, hall);
+  }
+
+  function setCursor(t){
+    S.cursor = Math.max(0, Math.min(S.tMax, t));
+    const x = posAt(S.cursor), v = velAt(S.cursor);
+    cursorG.querySelector(".cline").setAttribute("x1", gx(S.cursor));
+    cursorG.querySelector(".cline").setAttribute("x2", gx(S.cursor));
+    const h = cursorG.querySelector(".chair");
+    h.setAttribute("x2", gx(S.cursor)); h.setAttribute("y1", gy(x)); h.setAttribute("y2", gy(x));
+    const d = cursorG.querySelector(".cdot");
+    d.setAttribute("cx", gx(S.cursor)); d.setAttribute("cy", gy(x));
+    hallWalker.setAttribute("cx", hx(x));
+    hallStem.setAttribute("x1", hx(x)); hallStem.setAttribute("x2", hx(x));
+    if (S.trail){
+      hallTrail.setAttribute("x1", hx(posAt(0)));
+      hallTrail.setAttribute("x2", hx(x));
+    }
+    rT.textContent = fmt(S.cursor) + " s";
+    rX.textContent = fmt(x) + " m";
+    rV.textContent = sgn(v) + " m/s";
+    scrub.value = Math.round((S.cursor / S.tMax) * 1000);
+  }
+
+  function stop(){
+    S.playing = false;
+    if (S.raf) cancelAnimationFrame(S.raf);
+    S.raf = null;
+    root.classList.remove("playing");
+    playBtn.textContent = "Play the walk";
+  }
+  function play(){
+    stop();
+    S.playing = true;
+    root.classList.add("playing");
+    playBtn.textContent = "Stop";
+    const dur = (S.tMax / S.speed) * 1000;
+    const t0 = performance.now();
+    const step = now => {
+      const k = Math.min(1, (now - t0) / dur);
+      setCursor(k * S.tMax);
+      if (k < 1) S.raf = requestAnimationFrame(step);
+      else stop();
+    };
+    S.raf = requestAnimationFrame(step);
+  }
+
+  playBtn.addEventListener("click", () => S.playing ? stop() : play());
+  scrub.addEventListener("input", () => { stop(); setCursor((scrub.value/1000) * S.tMax); });
+  s1.addEventListener("click", () => { S.speed = 1; s1.classList.add("on"); s2.classList.remove("on"); });
+  s2.addEventListener("click", () => { S.speed = 2; s2.classList.add("on"); s1.classList.remove("on"); });
+
+  const api = {
+    set(cfg){
+      stop();
+      if (cfg.tMax) S.tMax = cfg.tMax;
+      if (cfg.xMax) S.xMax = cfg.xMax;
+      S.xMin = ("xMin" in cfg) ? cfg.xMin : 0;
+      S.verts = cfg.verts || S.verts;
+      S.ghost = "ghost" in cfg ? cfg.ghost : null;
+      S.band  = "band"  in cfg ? cfg.band  : null;
+      S.triangle = !!cfg.triangle;
+      S.wall = ("wall" in cfg) ? cfg.wall : null;
+      S.trail = !!cfg.trail;
+      S.arrow = "arrow" in cfg ? cfg.arrow : null;
+      drawHall(); drawPlot(); setCursor(cfg.keepCursor ? S.cursor : 0);
+      return api;
+    },
+    update(cfg){ return api.set(Object.assign({ keepCursor:true }, cfg)); },
+    showTriangle(){ S.triangle = true; drawPlot(); setCursor(S.cursor); },
+    play, stop, posAt
+  };
+  return api;
+}
+
+/* generic helpers over a vertex list */
+const totalDistance = vs => vs.slice(1).reduce((s,p,i) => s + Math.abs(p[1] - vs[i][1]), 0);
+const displacement  = vs => vs[vs.length-1][1] - vs[0][1];
+const shuffle = a => { for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+
+/* ============================== TABS ============================== */
+const tabs = [...document.querySelectorAll(".tab")];
+tabs.forEach(tb => tb.addEventListener("click", () => {
+  tabs.forEach(o => {
+    const on = o === tb;
+    o.setAttribute("aria-selected", on);
+    document.getElementById(o.getAttribute("aria-controls")).classList.toggle("on", on);
+  });
+}));
+
+/* ============================== A · READ ============================== */
+const READ = [
+  { verts:[[0,1],[4,5],[7,5],[10,2]],
+    q:"Which description matches this graph?",
+    opts:[
+      { t:"She walks steadily away from the detector for 4 s, stands still for 3 s, then walks back toward it.", ok:true },
+      { t:"She walks up a hill, stands at the top, then walks down the far side." },
+      { t:"She speeds up for 4 s, stops, then speeds up again." },
+      { t:"She walks toward the detector for 4 s, stands still, then walks away from it." }
+    ],
+    why:"Straight rising line = steady velocity away (+1 m/s). Flat = at rest. Falling line = heading back toward the detector (−1 m/s). Careful: the graph is not a picture of a hill." },
+
+  { verts:[[0,0],[3,3],[6,3],[8,7]],
+    q:"During which interval is she moving fastest?",
+    opts:[
+      { t:"6 s to 8 s", ok:true }, { t:"0 s to 3 s" }, { t:"3 s to 6 s" },
+      { t:"Her speed is the same the whole time." }
+    ],
+    why:"Fastest = steepest. From 0–3 s the slope is 1 m/s, from 3–6 s it's 0, and from 6–8 s it's 4 m ÷ 2 s = 2 m/s." },
+
+  { verts:[[0,6],[5,1],[10,6]],
+    q:"At t = 2 s, which way is she moving?",
+    opts:[
+      { t:"Toward the detector", ok:true }, { t:"Away from the detector" },
+      { t:"She's at rest." }, { t:"There isn't enough information." }
+    ],
+    why:"At t = 2 s the line is falling, so her position is shrinking: she's heading back toward the detector at −1 m/s. She turns around at t = 5 s." },
+
+  { verts:[[0,2],[2,2],[6,6],[10,6]],
+    q:"How much of the 10 seconds does she spend at rest?",
+    opts:[ { t:"6 s", ok:true }, { t:"2 s" }, { t:"4 s" }, { t:"None of it." } ],
+    why:"Flat means at rest: 0–2 s (2 s) plus 6–10 s (4 s) is 6 s standing still." },
+
+  { verts:[[0,0],[4,8],[10,8]],
+    q:"What is her velocity during the first 4 seconds?",
+    opts:[ { t:"2 m/s", ok:true }, { t:"0.5 m/s" }, { t:"8 m/s" }, { t:"32 m/s" } ],
+    why:"Slope = rise ÷ run = 8 m ÷ 4 s = 2 m/s. Reading 8 straight off the graph gives you her position, not her velocity." },
+
+  { verts:[[0,5],[4,1],[10,7]],
+    q:"When does she change direction?",
+    opts:[ { t:"At t = 4 s", ok:true }, { t:"At t = 0 s" }, { t:"At t = 7 s" }, { t:"She never changes direction." } ],
+    why:"Direction changes where the graph turns around — the valley at t = 4 s, where she stops closing in on the detector and starts moving away." },
+
+  { verts:[[0,2],[3,6],[6,2]],
+    q:"Over the full 6 seconds, what are her distance and her displacement?",
+    opts:[
+      { t:"Distance 8 m, displacement 0 m", ok:true },
+      { t:"Distance 0 m, displacement 8 m" },
+      { t:"Distance 8 m, displacement 8 m" },
+      { t:"Distance 4 m, displacement 4 m" }
+    ],
+    why:"She walks 4 m out and 4 m back, so the path is 8 m. She finishes at 2 m, exactly where she started, so Δx = 2 − 2 = 0 m." },
+
+  { verts:[[0,4],[10,4]],
+    q:"What does this graph tell you?",
+    opts:[
+      { t:"She stands 4 m from the detector for the whole 10 s.", ok:true },
+      { t:"She walks at a steady 4 m/s." },
+      { t:"She walks 4 m and then stops." },
+      { t:"The detector wasn't recording." }
+    ],
+    why:"A flat line still records motion data — it records none. Position stays at 4 m, so the slope is 0 and her velocity is 0." },
+
+  { verts:[[0,1],[4,5],[8,1]],
+    q:"How does her motion from 0–4 s compare with her motion from 4–8 s?",
+    opts:[
+      { t:"Same speed, opposite directions", ok:true },
+      { t:"Faster in the first interval" },
+      { t:"Faster in the second interval" },
+      { t:"She's at rest for the second interval." }
+    ],
+    why:"Both lines are equally steep, so the speed is 1 m/s both times. The velocities differ in sign: +1 m/s then −1 m/s." },
+
+  { verts:[[0,3],[2,3],[5,0],[8,0],[10,4]],
+    q:"What is happening between t = 2 s and t = 5 s?",
+    opts:[
+      { t:"She walks toward the detector at 1 m/s until she reaches it.", ok:true },
+      { t:"She walks away from the detector at 1 m/s." },
+      { t:"She stands still 3 m from the detector." },
+      { t:"She slows down gradually and stops." }
+    ],
+    why:"Position drops from 3 m to 0 m in 3 s, so v = −3 m ÷ 3 s = −1 m/s. The line is straight, so she isn't slowing down — a curve would show that." }
+];
+
+const rigRead = Rig(document.getElementById("rig-read"), { tMax:10, xMax:8 });
+let readIdx = -1, readOrder = shuffle([...READ.keys()]), readPick = null, readLocked = false;
+let readStats = { c:0, n:0 };
+
+function nextRead(){
+  readIdx++;
+  if (readIdx >= readOrder.length){ readOrder = shuffle([...READ.keys()]); readIdx = 0; }
+  const item = READ[readOrder[readIdx]];
+  readPick = null; readLocked = false;
+  const tMax = Math.max(...item.verts.map(p => p[0]));
+  const xMax = Math.max(8, Math.ceil(Math.max(...item.verts.map(p => p[1]))));
+  rigRead.set({ verts:item.verts, tMax, xMax });
+  document.getElementById("q-read").textContent = item.q;
+  const box = document.getElementById("opts-read");
+  box.innerHTML = "";
+  const opts = shuffle(item.opts.map((o,i) => ({ ...o, i })));
+  opts.forEach((o, k) => {
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.type = "button";
+    b.setAttribute("aria-pressed", "false");
+    b.innerHTML = '<span class="k">' + "ABCD"[k] + '</span><span>' + o.t + '</span>';
+    b.addEventListener("click", () => {
+      if (readLocked) return;
+      readPick = o;
+      [...box.children].forEach(c => c.setAttribute("aria-pressed", "false"));
+      b.setAttribute("aria-pressed", "true");
+    });
+    b._opt = o;
+    box.appendChild(b);
+  });
+  const fb = document.getElementById("fb-read");
+  fb.className = "fb"; fb.innerHTML = "";
+  document.getElementById("check-read").disabled = false;
+}
+
+document.getElementById("check-read").addEventListener("click", () => {
+  if (readLocked) return;
+  const fb = document.getElementById("fb-read");
+  if (!readPick){
+    fb.className = "fb no show";
+    fb.innerHTML = '<span class="verdict">Pick an option first.</span>Choose the answer you think is right, then check it.';
+    return;
+  }
+  readLocked = true;
+  readStats.n++;
+  const item = READ[readOrder[readIdx]];
+  const right = !!readPick.ok;
+  if (right) readStats.c++;
+  const box = document.getElementById("opts-read");
+  [...box.children].forEach(c => {
+    c.disabled = true;
+    if (c._opt.ok) c.classList.add("correct");
+    else if (c._opt === readPick) c.classList.add("wrong");
+  });
+  fb.className = "fb show " + (right ? "yes" : "no");
+  fb.innerHTML = '<span class="verdict">' + (right ? "That's it." : "Not this time.") + '</span>' + item.why;
+  document.getElementById("score-read").innerHTML = "<b>" + readStats.c + "</b> / " + readStats.n;
+  document.getElementById("check-read").disabled = true;
+});
+document.getElementById("next-read").addEventListener("click", nextRead);
+nextRead();
+
+/* ============================== B · SLOPE ============================== */
+const SLOPES = [-2,-1.5,-1,-0.5,0,0.5,1,1.5,2];
+
+function genWalk(minSeg, maxSeg, needTurn){
+  for (let tries = 0; tries < 600; tries++){
+    const n = minSeg + Math.floor(Math.random() * (maxSeg - minSeg + 1));
+    let t = 0, x = rnd([0,1,2,2,3,3,4,4,5,6,7]);
+    const verts = [[0,x]], segs = [];
+    let bad = false;
+    for (let i = 0; i < n; i++){
+      const d = rnd([2,3,4]);
+      const v = rnd(SLOPES);
+      const nx = x + v * d;
+      if (nx < 0 || nx > 8){ bad = true; break; }
+      t += d; x = nx;
+      verts.push([t, x]); segs.push({ t0:t-d, t1:t, v });
+    }
+    if (bad || t < 6 || t > 10) continue;
+    if (!segs.some(s => s.v !== 0)) continue;
+    if (needTurn){
+      const nz = segs.filter(s => s.v !== 0).map(s => Math.sign(s.v));
+      if (!nz.some((s,i) => i && s !== nz[i-1])) continue;
+    }
+    return { verts, segs, tMax:t };
+  }
+  return { verts:[[0,1],[4,5],[7,5],[10,2]], segs:[{t0:0,t1:4,v:1},{t0:4,t1:7,v:0},{t0:7,t1:10,v:-1}], tMax:10 };
+}
+
+const rigSlope = Rig(document.getElementById("rig-slope"), { tMax:10, xMax:8 });
+let slopeQ = null, slopeLocked = false, slopeStats = { c:0, n:0 };
+const inSlope = document.getElementById("in-slope");
+
+function nextSlope(){
+  const w = genWalk(2, 3, false);
+  const seg = rnd(w.segs.filter(s => Math.random() < .8 ? s.v !== 0 : true)) || w.segs[0];
+  slopeQ = { w, seg };
+  slopeLocked = false;
+  rigSlope.set({ verts:w.verts, tMax:w.tMax, band:[seg.t0, seg.t1] });
+  document.getElementById("q-slope").textContent =
+    "The shaded stretch runs from t = " + fmt(seg.t0) + " s to t = " + fmt(seg.t1) + " s.";
+  inSlope.value = ""; inSlope.className = "";
+  const fb = document.getElementById("fb-slope");
+  fb.className = "fb"; fb.innerHTML = "";
+  document.getElementById("check-slope").disabled = false;
+}
+
+document.getElementById("check-slope").addEventListener("click", () => {
+  if (slopeLocked) return;
+  const fb = document.getElementById("fb-slope");
+  const raw = inSlope.value.trim().replace(/[^0-9.\-+/]/g, "");
+  const val = raw.includes("/") ? (parseFloat(raw.split("/")[0]) / parseFloat(raw.split("/")[1])) : parseFloat(raw);
+  if (!isFinite(val)){
+    fb.className = "fb no show";
+    fb.innerHTML = '<span class="verdict">Type a number first.</span>Include a minus sign if she\'s heading back toward the detector.';
+    return;
+  }
+  const { seg } = slopeQ;
+  const x0 = rigSlope.posAt(seg.t0, slopeQ.w.verts), x1 = rigSlope.posAt(seg.t1, slopeQ.w.verts);
+  const right = Math.abs(val - seg.v) < 0.03;
+  slopeLocked = true; slopeStats.n++; if (right) slopeStats.c++;
+  inSlope.className = right ? "ok" : "no";
+  rigSlope.showTriangle();
+  const work = "(" + fmt(x1) + " m − " + fmt(x0) + " m) ÷ (" + fmt(seg.t1) + " s − " + fmt(seg.t0) + " s) = "
+    + sgn(seg.v) + " m/s";
+  let extra = "";
+  if (!right && Math.abs(val + seg.v) < 0.03 && seg.v !== 0)
+    extra = " Your size is right but the sign is flipped — subtract <b>final minus initial</b>, in that order.";
+  else if (!right && Math.abs(val - (x1 - x0)) < 0.03 && seg.t1 - seg.t0 !== 1)
+    extra = " Looks like you found the rise but didn't divide by the run.";
+  fb.className = "fb show " + (right ? "yes" : "no");
+  fb.innerHTML = '<span class="verdict">' + (right ? "Correct." : "Not quite — here's the slope triangle.") + '</span>' +
+    'v = Δx / Δt = <code>' + work + '</code>.' + extra +
+    (seg.v === 0 ? " A flat line means she stayed put." : (seg.v > 0 ? " Positive, so she's moving away from the detector." : " Negative, so she's moving back toward it."));
+  document.getElementById("score-slope").innerHTML = "<b>" + slopeStats.c + "</b> / " + slopeStats.n;
+  document.getElementById("check-slope").disabled = true;
+});
+document.getElementById("hint-slope").addEventListener("click", () => rigSlope.showTriangle());
+document.getElementById("next-slope").addEventListener("click", nextSlope);
+inSlope.addEventListener("keydown", e => { if (e.key === "Enter") document.getElementById("check-slope").click(); });
+nextSlope();
+
+/* ============================== C · DISTANCE vs DISPLACEMENT ============================== */
+const rigDD = Rig(document.getElementById("rig-dd"), { tMax:10, xMax:8 });
+let ddQ = null, ddLocked = false, ddStats = { c:0, n:0 };
+const inDist = document.getElementById("in-dist"), inDisp = document.getElementById("in-disp");
+
+function nextDD(){
+  const w = genWalk(3, 4, Math.random() < .75);
+  ddQ = w; ddLocked = false;
+  rigDD.set({ verts:w.verts, tMax:w.tMax, trail:true });
+  document.getElementById("q-dd-span").textContent = "t = 0 s to t = " + fmt(w.tMax) + " s";
+  [inDist, inDisp].forEach(i => { i.value = ""; i.className = ""; });
+  const fb = document.getElementById("fb-dd");
+  fb.className = "fb"; fb.innerHTML = "";
+  document.getElementById("check-dd").disabled = false;
+}
+
+document.getElementById("check-dd").addEventListener("click", () => {
+  if (ddLocked) return;
+  const fb = document.getElementById("fb-dd");
+  const a = parseFloat(inDist.value), b = parseFloat(inDisp.value);
+  if (!isFinite(a) || !isFinite(b)){
+    fb.className = "fb no show";
+    fb.innerHTML = '<span class="verdict">Fill in both boxes.</span>They\'re different questions about the same walk, so answer them separately.';
+    return;
+  }
+  const D = totalDistance(ddQ.verts), X = displacement(ddQ.verts);
+  const okA = Math.abs(a - D) < 0.03, okB = Math.abs(b - X) < 0.03;
+  ddLocked = true; ddStats.n++; if (okA && okB) ddStats.c++;
+  inDist.className = okA ? "ok" : "no";
+  inDisp.className = okB ? "ok" : "no";
+  rigDD.update({ verts:ddQ.verts, tMax:ddQ.tMax, trail:true,
+    arrow:[ddQ.verts[0][1], ddQ.verts[ddQ.verts.length-1][1]] });
+  const legs = ddQ.verts.slice(1)
+    .map((p,i) => Math.abs(p[1] - ddQ.verts[i][1]))
+    .filter(v => v > 0).map(fmt).join(" + ");
+  let extra = "";
+  if (!okA && Math.abs(a - Math.abs(X)) < 0.03)
+    extra += " For distance, don't let the trips cancel — add the lengths of every leg, including the ones walked backwards.";
+  if (!okB && Math.abs(b - D) < 0.03)
+    extra += " For displacement, only the endpoints matter, not the path.";
+  if (!okB && Math.abs(b + X) < 0.03 && X !== 0)
+    extra += " Displacement is final minus initial — check which way you subtracted.";
+  fb.className = "fb show " + (okA && okB ? "yes" : "no");
+  fb.innerHTML = '<span class="verdict">' + (okA && okB ? "Both right." : "Check the marked box.") + '</span>' +
+    'Distance = ' + (legs || "0") + ' = <code>' + fmt(D) + ' m</code>. ' +
+    'Displacement = ' + fmt(ddQ.verts[ddQ.verts.length-1][1]) + ' m − ' + fmt(ddQ.verts[0][1]) + ' m = <code>' + sgn(X) + ' m</code>.' +
+    extra + '<br><br>Bonus: average speed = ' + fmt(D) + ' m ÷ ' + fmt(ddQ.tMax) + ' s = <code>' +
+    fmt(D / ddQ.tMax) + ' m/s</code>, while average velocity = <code>' + fmt(X / ddQ.tMax) + ' m/s</code>.';
+  document.getElementById("score-dd").innerHTML = "<b>" + ddStats.c + "</b> / " + ddStats.n;
+  document.getElementById("check-dd").disabled = true;
+});
+document.getElementById("next-dd").addEventListener("click", nextDD);
+[inDist, inDisp].forEach(i => i.addEventListener("keydown", e => {
+  if (e.key === "Enter") document.getElementById("check-dd").click();
+}));
+nextDD();
+
+/* ============================== D · MATCH THE GRAPH ============================== */
+const TARGETS = [
+  { x0:1, v:[1,0,-0.5],   d:"Start 1 m from the detector. Walk steadily away at 1 m/s, stand still, then head back toward the detector at 0.5 m/s." },
+  { x0:6, v:[-1.5,0.5,0], d:"Start 6 m out. Walk toward the detector at 1.5 m/s, turn around and walk away at 0.5 m/s, then stop." },
+  { x0:0, v:[2,-1,1],     d:"Start right at the detector. Move away quickly at 2 m/s, come halfway back at 1 m/s, then move away again at 1 m/s." },
+  { x0:3, v:[0,-1,1.5],   d:"Stand still 3 m from the detector for 3 s, walk to the detector at 1 m/s, then leave at 1.5 m/s." },
+  { x0:2, v:[1.5,-0.5,-0.5], d:"Start 2 m out. Walk away at 1.5 m/s, then turn around and keep the same steady 0.5 m/s all the way to the end." },
+  { x0:8, v:[-2,0,-0.5],  d:"Start 8 m out. Close in on the detector at 2 m/s, stand still, then keep closing in at 0.5 m/s." }
+];
+const M_T = [0,3,6,9];
+const vertsFrom = (x0, v) => {
+  const out = [[0, x0]];
+  let x = x0;
+  for (let i = 0; i < 3; i++){ x += v[i] * (M_T[i+1] - M_T[i]); out.push([M_T[i+1], x]); }
+  return out;
+};
+
+const rigMatch = Rig(document.getElementById("rig-match"), { tMax:9, xMax:8 });
+let mTarget = null, mine = { x0:4, v:[0,0,0] }, mOrder = shuffle([...TARGETS.keys()]), mIdx = -1, mSolved = 0;
+
+const DIALS = [
+  { key:"x0", lab:"Starting position", note:"where she stands at t = 0", unit:"m",   min:0, max:8, step:0.5 },
+  { key:0,    lab:"Velocity, 0–3 s",  note:"first stretch",             unit:"m/s", min:-2, max:2, step:0.5 },
+  { key:1,    lab:"Velocity, 3–6 s",  note:"second stretch",            unit:"m/s", min:-2, max:2, step:0.5 },
+  { key:2,    lab:"Velocity, 6–9 s",  note:"third stretch",             unit:"m/s", min:-2, max:2, step:0.5 }
+];
+
+function buildDials(){
+  const box = document.getElementById("dials-match");
+  box.innerHTML = "";
+  DIALS.forEach(d => {
+    const row = document.createElement("div");
+    row.className = "dial";
+    row.dataset.key = d.key;
+    row.innerHTML =
+      '<div class="lab">' + d.lab + '<small>' + d.note + '</small></div>' +
+      '<div class="stepper">' +
+        '<button type="button" class="dn" aria-label="Decrease ' + d.lab + '">−</button>' +
+        '<span class="val"></span>' +
+        '<button type="button" class="up" aria-label="Increase ' + d.lab + '">+</button>' +
+      '</div>';
+    const get = () => d.key === "x0" ? mine.x0 : mine.v[d.key];
+    const set = val => {
+      val = Math.max(d.min, Math.min(d.max, Math.round(val * 2) / 2));
+      if (d.key === "x0") mine.x0 = val; else mine.v[d.key] = val;
+      paintMatch();
+    };
+    row.querySelector(".dn").addEventListener("click", () => set(get() - d.step));
+    row.querySelector(".up").addEventListener("click", () => set(get() + d.step));
+    row._d = d;
+    box.appendChild(row);
+  });
+}
+
+function paintMatch(){
+  const mv = vertsFrom(mine.x0, mine.v);
+  const tv = vertsFrom(mTarget.x0, mTarget.v);
+  const all = mv.concat(tv).map(p => p[1]);
+  const lo = Math.max(-4, Math.floor(Math.min(0, ...all)));
+  const hi = Math.min(14, Math.ceil(Math.max(8, ...all)));
+  rigMatch.update({ verts:mv, ghost:tv, tMax:9, xMin:lo, xMax:hi, wall:[0,8] });
+  [...document.getElementById("dials-match").children].forEach(row => {
+    const d = row._d;
+    const val = d.key === "x0" ? mine.x0 : mine.v[d.key];
+    const want = d.key === "x0" ? mTarget.x0 : mTarget.v[d.key];
+    row.querySelector(".val").textContent = (d.key === "x0" ? fmt(val) : sgn(val)) + " " + d.unit;
+    row.classList.toggle("matched", Math.abs(val - want) < 0.001 && mRevealed);
+  });
+}
+
+let mRevealed = false;
+function nextMatch(){
+  mIdx++;
+  if (mIdx >= mOrder.length){ mOrder = shuffle([...TARGETS.keys()]); mIdx = 0; }
+  mTarget = TARGETS[mOrder[mIdx]];
+  mine = { x0:4, v:[0,0,0] };
+  mRevealed = false;
+  document.getElementById("q-match").textContent = mTarget.d;
+  rigMatch.set({ verts:vertsFrom(mine.x0, mine.v), ghost:vertsFrom(mTarget.x0, mTarget.v), tMax:9, xMax:8, wall:[0,8] });
+  buildDials(); paintMatch();
+  const fb = document.getElementById("fb-match");
+  fb.className = "fb"; fb.innerHTML = "";
+}
+
+document.getElementById("check-match").addEventListener("click", () => {
+  const fb = document.getElementById("fb-match");
+  const wrong = [];
+  if (Math.abs(mine.x0 - mTarget.x0) > 0.001) wrong.push("the starting position");
+  ["0–3", "3–6", "6–9"].forEach((n,i) => {
+    if (Math.abs(mine.v[i] - mTarget.v[i]) > 0.001) wrong.push("the velocity from " + n + " s");
+  });
+  if (!wrong.length){
+    mSolved++;
+    document.getElementById("score-match").innerHTML = "<b>" + mSolved + "</b> solved";
+    fb.className = "fb show yes";
+    fb.innerHTML = '<span class="verdict">Matched.</span>Your line sits right on the target. Press play to watch the walk it describes.';
+    mRevealed = true; paintMatch(); rigMatch.play();
+  } else {
+    fb.className = "fb show no";
+    fb.innerHTML = '<span class="verdict">' + wrong.length + (wrong.length === 1 ? " piece is off." : " pieces are off.") +
+      '</span>Fix ' + wrong.join(", ") + '. Remember: a flat stretch on the target needs a velocity of 0, a falling stretch needs a negative one, and steeper means bigger.';
+  }
+});
+document.getElementById("reveal-match").addEventListener("click", () => {
+  mine = { x0:mTarget.x0, v:[...mTarget.v] };
+  mRevealed = true; paintMatch();
+  const fb = document.getElementById("fb-match");
+  fb.className = "fb show";
+  fb.innerHTML = '<span class="verdict">Here it is.</span>Starting position ' + fmt(mTarget.x0) + ' m, then ' +
+    mTarget.v.map(sgn).join(" m/s, ") + ' m/s. Read each stretch off the dashed line one at a time: rise over run.';
+});
+document.getElementById("next-match").addEventListener("click", nextMatch);
+nextMatch();
+</script>
+</body>
+</html>
