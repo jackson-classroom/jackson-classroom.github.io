@@ -1,1 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taking Measurements — Reading the Instrument</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#131E1D; --ink2:#3B4A48; --mute:#5F6D6B;
+  --wash:#E3E9E8; --card:#FBFCFB; --line:#C9D3D1; --line-soft:#E0E7E6;
+  --water:#12727F; --water-dk:#0B4E58; --water-lite:#BFDEE2;
+  --brass:#9A6E22; --brass-lite:#F5E9CF;
+  --ok:#26694A; --ok-bg:#E4F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  --display:"Instrument Serif",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--wash); color:var(--ink);
+  font-family:var(--body); font-size:17px; line-height:1.6;
+}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+/* ---------- top bar ---------- */
+.bar{
+  position:sticky; top:0; z-index:50; background:rgba(227,233,232,.93);
+  backdrop-filter:blur(6px); border-bottom:1px solid var(--line);
+}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+.partsw{display:flex;border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--card)}
+.partsw a{
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-decoration:none;
+  padding:6px 11px;color:var(--ink2);
+}
+.partsw a[aria-current]{background:var(--ink);color:#F6F8F7}
+.partsw a:not([aria-current]):hover{background:var(--line-soft)}
+
+/* ---------- hero ---------- */
+header.hero{padding:64px 0 44px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--water-dk)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,7.4vw,74px);line-height:1;margin:16px 0 0;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--water-dk)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:47ch;color:var(--ink2);margin:20px 0 0}
+
+/* signature readout */
+.sig-readout{
+  margin:38px 0 0;padding:24px 26px;background:var(--card);border:1px solid var(--line);
+  border-radius:4px;display:flex;gap:28px;align-items:flex-end;flex-wrap:wrap;
+}
+.sig-num{font-family:var(--mono);font-size:clamp(40px,9vw,64px);font-weight:500;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.sig-num .certain{color:var(--ink)}
+.sig-num .est{color:var(--brass);border-bottom:3px dotted var(--brass);padding-bottom:2px}
+.sig-num .unit{font-size:.45em;color:var(--mute);margin-left:.25em}
+.sig-legend{font-family:var(--mono);font-size:12.5px;line-height:1.8;color:var(--ink2);padding-bottom:6px}
+.sig-legend b{color:var(--brass);font-weight:600}
+.sig-legend .swatch{display:inline-block;width:22px;border-bottom:3px dotted var(--brass);margin-right:8px;vertical-align:middle}
+.sig-legend .swatch.solid{border-bottom:3px solid var(--ink)}
+
+/* ---------- jump nav ---------- */
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{
+  font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);
+  border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px;
+}
+.jump a:hover{border-color:var(--water);color:var(--water-dk)}
+
+/* ---------- sections ---------- */
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--water-dk);background:var(--water-lite);border-radius:2px;padding:3px 7px;white-space:nowrap;
+}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.4vw,40px);line-height:1.08;margin:0;letter-spacing:-.01em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px;letter-spacing:.01em}
+p{margin:14px 0}
+ul{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.est-ink{color:var(--brass);font-weight:600}
+.note{
+  border-left:3px solid var(--brass);background:var(--brass-lite);padding:14px 18px;
+  border-radius:0 3px 3px 0;margin:22px 0;font-size:16px;
+}
+.note b{font-weight:600}
+
+/* ---------- cards & widgets ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px}
+.tool-row{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+.tool-figure{flex:0 0 268px;max-width:100%}
+.tool-figure svg{width:100%;height:auto;display:block}
+.tool-panel{flex:1 1 300px;min-width:250px}
+.instr-name{font-family:var(--mono);font-size:13px;color:var(--water-dk);margin-bottom:4px}
+.smallprint{font-size:14.5px;color:var(--mute);margin-top:8px}
+
+/* buttons & inputs */
+button{
+  font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;
+  background:var(--ink);color:#F6F8F7;border:1px solid var(--ink);border-radius:3px;padding:9px 15px;
+}
+button:hover{background:var(--water-dk);border-color:var(--water-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--water)}
+button:focus-visible,input:focus-visible,a:focus-visible,.digit:focus-visible{outline:2.5px solid var(--water);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+input[type=text],input[type=number]{
+  font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;
+  border:1px solid var(--line);border-radius:3px;padding:9px 11px;width:130px;background:#fff;color:var(--ink);
+}
+input.wide{width:100%;max-width:180px}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.field label{font-size:14.5px;color:var(--ink2);min-width:96px}
+.unit-tag{font-family:var(--mono);font-size:14px;color:var(--mute)}
+
+/* feedback */
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1B4E36}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--water);color:var(--ink2)}
+.fb b{font-weight:600}
+
+/* score chip */
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto}
+
+/* digit tapper */
+.digits{display:flex;gap:3px;flex-wrap:wrap;font-family:var(--mono);font-size:clamp(30px,7vw,46px);font-weight:500;margin:6px 0 4px}
+.digit{
+  background:none;border:1px solid transparent;border-radius:3px;padding:2px 5px;color:var(--ink);
+  font-family:inherit;font-size:inherit;font-weight:inherit;cursor:pointer;line-height:1.1;
+}
+.digit:hover{border-color:var(--line)}
+.digit.on{background:var(--brass-lite);border-color:var(--brass);color:var(--brass)}
+.digit.dot{cursor:default;color:var(--mute)}
+.digit.dot:hover{border-color:transparent}
+.digit.rev-yes{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.digit.rev-no{background:var(--no-bg);border-color:var(--no);color:var(--no);text-decoration:line-through}
+
+/* balance bench */
+.bench{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:6px}
+.bal{border:1px solid var(--line);border-radius:4px;padding:15px;background:#fff}
+.bal h4{margin:0;font-size:15px;font-weight:600}
+.bal .dp{font-family:var(--mono);font-size:12px;color:var(--mute);margin:3px 0 12px}
+.readout{
+  font-family:var(--mono);font-size:24px;font-weight:500;font-variant-numeric:tabular-nums;
+  background:var(--ink);color:#9FE6C4;border-radius:3px;padding:11px 12px;text-align:right;min-height:50px;
+}
+.readout .est{color:#F2C96A;border-bottom:2px dotted #F2C96A}
+.readout.blank{color:#41524F}
+.bal .sf{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:9px;min-height:19px}
+
+/* quiz */
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{
+  text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;
+  padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45;
+}
+.opt:hover{border-color:var(--water)}
+.opt .mono{font-size:15.5px}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.94}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+footer a{color:var(--water-dk)}
+.next{
+  display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;
+  background:var(--ink);color:#EDF2F1;border-radius:4px;padding:22px 24px;margin:34px 0 0;
+}
+.next p{margin:0;font-size:16px;color:#C3D0CE}
+.next .nt{font-family:var(--display);font-size:26px;color:#fff;margin:0 0 4px}
+.next a{
+  font-family:var(--mono);font-size:13px;text-decoration:none;background:#F6F8F7;color:var(--ink);
+  border-radius:3px;padding:10px 16px;white-space:nowrap;
+}
+.next a:hover{background:var(--water-lite)}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:16px}
+  .tool-figure{flex:1 1 100%;max-width:280px;margin:0 auto}
+  .field label{min-width:auto;flex:1 1 100%}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Taking Measurements</span>
+    <span class="bar-sub">Reading an instrument · the estimated digit · significant digits</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Reading the instrument</div>
+  <h1>Every measurement ends in a <em>guess</em>.</h1>
+  <p class="lede">Not a wild guess — a disciplined one. When you write down a measurement, every digit but the last is certain. The last digit is your best estimate, and leaving it off is just as wrong as making one up.</p>
+
+  <div class="sig-readout">
+    <div class="sig-num"><span class="certain">43.</span><span class="est">6</span><span class="unit">mL</span></div>
+    <div class="sig-legend">
+      <span class="swatch solid"></span>certain — you can see it on the scale<br>
+      <span class="swatch"></span><b>estimated</b> — you judged it between two marks
+    </div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#rule">The one-estimated-digit rule</a>
+  <a href="#glass">Reading glassware</a>
+  <a href="#ruler">Reading a ruler</a>
+  <a href="#balances">Digital instruments</a>
+  <a href="#count">Counting significant digits</a>
+  <a href="#tool">Choosing your tool</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ RULE ============ -->
+<section id="rule">
+  <div class="sec-head">
+    <h2>The one-estimated-digit rule</h2>
+  </div>
+  <p>An instrument only takes you so far. A ruler marked in millimeters tells you, with certainty, that your cube is somewhere between 2.4 cm and 2.5 cm. It cannot tell you where in that gap. So you look, you judge, and you commit to a digit: <span class="mono">2.4<span class="est-ink">3</span> cm</span>.</p>
+  <p>That last digit is uncertain, and everyone reading your data knows it. That's the point. It's how a number carries its own honesty.</p>
+
+  <h3>How far do you estimate?</h3>
+  <ul>
+    <li><b>Analog tools</b> (rulers, graduated cylinders, triple beam balances) — find the smallest marked division, then estimate <em>one place beyond it</em>. Marks every 1 mL, so you report tenths.</li>
+    <li><b>Digital tools</b> (electronic balances) — write down every digit the display gives you, including trailing zeros. The instrument already did the estimating; the last digit shown is the uncertain one.</li>
+  </ul>
+
+  <div class="note">
+    <b>The trap:</b> if the meniscus sits exactly on the 44 mL line, you do <em>not</em> write <span class="mono">44 mL</span>. You write <span class="mono">44.<span class="est-ink">0</span> mL</span>. That zero is a real measurement — it says "I looked, and it's not 43.9 or 44.1." Dropping it throws away information you actually collected.
+  </div>
+</section>
+
+<!-- ============ GLASSWARE ============ -->
+<section id="glass">
+  <div class="sec-head">
+    <span class="tasktag">Cylinders &amp; beakers</span>
+    <h2>Reading glassware</h2>
+  </div>
+  <p>Water in glass pulls itself into a curve called the <b>meniscus</b>. Read it at eye level, from the <b>bottom of the curve</b>. Looking down at it from above will cost you a millimeter or two every time.</p>
+
+  <div class="card">
+    <div class="card-label" style="display:flex;align-items:center">
+      <span>Close-up view · read the volume</span>
+      <span class="score" id="g-score">0 of 0</span>
+    </div>
+    <div class="tool-row">
+      <div class="tool-figure" id="g-figure"></div>
+      <div class="tool-panel">
+        <div class="instr-name" id="g-name"></div>
+        <div class="smallprint" id="g-div" style="margin-top:0"></div>
+        <div class="field" style="margin-top:18px">
+          <label for="g-input">Your reading</label>
+          <input type="text" id="g-input" inputmode="decimal" autocomplete="off">
+          <span class="unit-tag">mL</span>
+        </div>
+        <div class="btn-row">
+          <button id="g-check">Check reading</button>
+          <button class="ghost" id="g-new">New sample</button>
+        </div>
+        <div class="fb" id="g-fb"></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="smallprint">Type the digits exactly as you would write them in your lab notebook — trailing zeros included. Estimating varies a little from person to person, so you have a small margin on the last digit; you have none on <em>how many</em> digits you report.</p>
+</section>
+
+<!-- ============ RULER ============ -->
+<section id="ruler">
+  <div class="sec-head">
+    <span class="tasktag">Rulers</span>
+    <h2>Reading a ruler</h2>
+  </div>
+  <p>Your metric ruler is marked every millimeter — that's every 0.1 cm. So you can be certain to the tenth of a centimeter and you estimate the hundredth. Measurements in centimeters coming off this ruler have <b>two decimal places</b>.</p>
+
+  <div class="card">
+    <div class="card-label" style="display:flex;align-items:center">
+      <span>Measure the object · report in centimeters</span>
+      <span class="score" id="r-score">0 of 0</span>
+    </div>
+    <div id="r-figure"></div>
+    <div class="tool-row" style="margin-top:18px">
+      <div class="tool-panel">
+        <div class="field">
+          <label for="r-input">Length</label>
+          <input type="text" id="r-input" inputmode="decimal" autocomplete="off">
+          <span class="unit-tag">cm</span>
+        </div>
+        <div class="btn-row">
+          <button id="r-check">Check reading</button>
+          <button class="ghost" id="r-new">New object</button>
+        </div>
+        <div class="fb" id="r-fb"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    Line the object up with the <span class="mono">0</span> mark, not the end of the plastic. The edge of a ruler is usually a few tenths of a millimeter of nothing.
+  </div>
+</section>
+
+<!-- ============ BALANCES ============ -->
+<section id="balances">
+  <div class="sec-head">
+    <span class="tasktag">Balances</span>
+    <h2>Three balances, one object</h2>
+  </div>
+  <p>You massed the same object on three different balances and got three different numbers of digits. None of them is lying. Each one is reporting the best it can do, and the number of decimal places <em>is</em> the claim about precision.</p>
+
+  <div class="card">
+    <div class="card-label">Place the object on each balance</div>
+    <div class="bench" id="bench"></div>
+    <div class="btn-row">
+      <button id="b-all">Mass it on all three</button>
+      <button class="ghost" id="b-new">New object</button>
+    </div>
+    <div class="fb" id="b-fb"></div>
+  </div>
+
+  <p>The analytical balance reports four decimal places, so it claims certainty down to the tenth of a milligram. The triple beam claims only hundredths of a gram. Recording <span class="mono">12.35 g</span> from the analytical balance would be throwing away two digits you paid for — and recording <span class="mono">12.3500 g</span> from the triple beam would be inventing two you never had.</p>
+</section>
+
+<!-- ============ COUNTING ============ -->
+<section id="count">
+  <div class="sec-head">
+    <h2>Counting significant digits</h2>
+  </div>
+  <p>The <b>significant digits</b> of a measurement are the ones that carry real information: all the certain digits plus that one estimated digit. Zeros are the only complication, and only because they do double duty — sometimes they're measurements, sometimes they're just placeholders holding the decimal point in position.</p>
+
+  <ul>
+    <li><b>Leading zeros never count.</b> <span class="mono">0.0042 g</span> has 2 significant digits. Writing it as <span class="mono">4.2 mg</span> doesn't change the precision, so those zeros can't be carrying any.</li>
+    <li><b>Zeros between nonzero digits always count.</b> <span class="mono">1.04 cm</span> has 3.</li>
+    <li><b>Trailing zeros count when there's a decimal point.</b> <span class="mono">2.500 g</span> has 4 — you wouldn't have written those zeros unless you'd measured them.</li>
+    <li><b>Trailing zeros with no decimal point are ambiguous.</b> <span class="mono">1200 m</span> could be 2, 3, or 4 — the writing simply doesn't say. Read it as 2 unless you're told otherwise. (Later this year you'll learn a notation that removes the guesswork.)</li>
+  </ul>
+
+  <div class="card">
+    <div class="card-label" style="display:flex;align-items:center">
+      <span>Tap every digit that is significant</span>
+      <span class="score" id="d-score">0 of 0</span>
+    </div>
+    <div class="digits" id="d-digits" role="group" aria-label="Digits of the measurement"></div>
+    <div class="smallprint" id="d-unit"></div>
+    <div class="btn-row">
+      <button id="d-check">Check</button>
+      <button class="ghost" id="d-new">Next measurement</button>
+    </div>
+    <div class="fb" id="d-fb"></div>
+  </div>
+</section>
+
+<!-- ============ TOOL CHOICE ============ -->
+<section id="tool">
+  <div class="sec-head">
+    <span class="tasktag">Precision vs. accuracy</span>
+    <h2>Choosing your tool</h2>
+  </div>
+  <p>Try this: have four people each pour "50 mL" from a beaker, then check each pour in a graduated cylinder. The readings won't be 50 mL, and they won't match each other. That isn't carelessness. A beaker marked every 25 or 50 mL simply cannot deliver a measurement with two decimal places, no matter how careful you are.</p>
+  <p>Two different words for two different problems:</p>
+  <ul>
+    <li><b>Precision</b> — how finely you can measure, and how closely repeated measurements agree. A tool's smallest division sets your ceiling.</li>
+    <li><b>Accuracy</b> — how close you land to the true value. You can be precise and wrong: an analytical balance that was never zeroed will hand you four beautiful decimal places of nonsense.</li>
+  </ul>
+  <p>The same idea applies to you as an instrument. Estimating 20 seconds with your eyes closed is a measurement with an uncertainty of several seconds. A stopwatch reading <span class="mono">17.62 s</span> is precise to hundredths; your internal sense of time is not even close. Percent error is how you put a number on that gap.</p>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head">
+    <h2>Check yourself</h2>
+  </div>
+  <p>Six questions. If you can clear these, you're ready to do arithmetic with your data.</p>
+  <div class="card" id="quiz"></div>
+</section>
+
+<footer>
+  <p>Reading instruments and the estimated digit. Every reading on this page regenerates at random, so you can practice as many times as you want.</p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   shared helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function rnd(a,b){ return a + Math.random()*(b-a); }
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function nudge(v){ return v === 0 ? 0 : v + Math.sign(v)*Math.abs(v)*1e-12; }
+function fixed(x,dp){ var f = Math.pow(10,dp); return (Math.round(nudge(x*f))/f).toFixed(dp); }
+function decimalsOf(s){ var i = String(s).indexOf('.'); return i === -1 ? 0 : String(s).length - i - 1; }
+function cleanNum(s){ return String(s).trim().replace(/\s/g,'').replace(/,/g,''); }
+function isNumStr(s){ return /^[+-]?(\d+\.?\d*|\.\d+)$/.test(s); }
+
+function setFb(node, kind, html){
+  node.className = 'fb show ' + kind;
+  node.innerHTML = html;
+}
+function Score(node){
+  var right = 0, total = 0;
+  return {
+    add: function(ok){ total++; if(ok) right++; node.textContent = right + ' of ' + total; },
+    node: node
+  };
+}
+
+/* =========================================================
+   1. glassware reader
+   ========================================================= */
+var GLASS_TYPES = [
+  { name:'100 mL graduated cylinder', shape:'cyl', minor:1, labelEvery:5, span:10, dp:1, tol:0.25,
+    lows:[10,20,30,40,50,60,70,80], divText:'Smallest division: 1 mL' },
+  { name:'50 mL graduated cylinder', shape:'cyl', minor:1, labelEvery:5, span:10, dp:1, tol:0.25,
+    lows:[5,10,15,20,25,30,35,40], divText:'Smallest division: 1 mL' },
+  { name:'10 mL graduated cylinder', shape:'cyl', minor:0.1, labelEvery:1, span:1, dp:2, tol:0.025,
+    lows:[1,2,3,4,5,6,7,8], divText:'Smallest division: 0.1 mL' },
+  { name:'100 mL beaker', shape:'beaker', minor:10, labelEvery:10, span:30, dp:0, tol:2,
+    lows:[0,10,20], divText:'Smallest division: 10 mL' }
+];
+
+var gState = null;
+var gScore = Score(el('g-score'));
+
+function glassNew(){
+  var t = pick(GLASS_TYPES);
+  var low = pick(t.lows), val;                    // window always starts on a labeled line
+  var snap = function(x){ return parseFloat(fixed(x, t.dp)); };
+  var onLine = function(x){ return snap(Math.round(x/t.minor) * t.minor); };
+  if(t.shape === 'cyl'){
+    var pad = t.minor * 1.4;
+    val = low + rnd(pad, t.span - pad);
+    if(Math.random() < 0.22){
+      // land exactly on a graduation, so the estimated digit has to be a zero
+      val = onLine(val);
+    } else {
+      val = snap(val);
+      // otherwise keep it clearly off the line, so the estimate is unambiguous
+      if(Math.abs(val - onLine(val)) < t.minor*0.15) val = snap(onLine(val) + t.minor*0.3);
+    }
+  } else {
+    // a beaker's marks are far apart, so keep the level clearly between two of them
+    val = snap(low + rnd(t.minor*0.35, t.span - t.minor*0.35));
+    if(Math.abs(val - onLine(val)) < t.minor*0.12) val = snap(onLine(val) + t.minor*0.25);
+  }
+  gState = { t:t, low:low, high:low + t.span, val:val };
+  el('g-name').textContent = t.name;
+  el('g-div').textContent = t.divText;
+  el('g-figure').innerHTML = drawGlass(gState);
+  el('g-input').value = '';
+  el('g-fb').className = 'fb';
+  el('g-input').focus();
+}
+
+function drawGlass(s){
+  var W = 240, H = 320, top = 26, bot = 296;
+  var xL = 74, xR = 176;
+  var t = s.t;
+  var y = function(v){ return bot - (v - s.low)/(s.high - s.low) * (bot - top); };
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Close-up of a ' + t.name + ' with water in it">';
+
+  svg += '<defs>' +
+    '<linearGradient id="fadeTop" x1="0" y1="0" x2="0" y2="1">' +
+      '<stop offset="0" stop-color="#FBFCFB"/><stop offset="1" stop-color="#FBFCFB" stop-opacity="0"/></linearGradient>' +
+    '<linearGradient id="fadeBot" x1="0" y1="0" x2="0" y2="1">' +
+      '<stop offset="0" stop-color="#FBFCFB" stop-opacity="0"/><stop offset="1" stop-color="#FBFCFB"/></linearGradient>' +
+    '<linearGradient id="glassSheen" x1="0" y1="0" x2="1" y2="0">' +
+      '<stop offset="0" stop-color="#0B4E58" stop-opacity=".10"/>' +
+      '<stop offset=".18" stop-color="#0B4E58" stop-opacity="0"/>' +
+      '<stop offset=".82" stop-color="#0B4E58" stop-opacity="0"/>' +
+      '<stop offset="1" stop-color="#0B4E58" stop-opacity=".10"/></linearGradient>' +
+    '</defs>';
+
+  // beakers flare outward slightly; cylinders are straight
+  var flare = (t.shape === 'beaker') ? 12 : 0;
+  var xLt = xL - flare, xRt = xR + flare;
+  var body = 'M' + xLt + ',' + (top-14) + ' L' + xL + ',' + (bot+16) + ' L' + xR + ',' + (bot+16) + ' L' + xRt + ',' + (top-14) + ' Z';
+
+  // water
+  // the bottom of the meniscus curve is what gets read, so put THAT at y(val)
+  // and lift the edges where they meet the glass wall
+  var yBot = y(s.val), yEdge = yBot - 6, yCtl = yEdge + 12;
+  var frac = (yEdge - (top-14)) / ((bot+16) - (top-14));
+  var xLw = xLt + (xL - xLt) * frac, xRw = xRt + (xR - xRt) * frac;
+  svg += '<path d="' + body + '" fill="#F2F7F7"/>';
+  svg += '<path d="M' + xLw + ',' + yEdge + ' L' + xL + ',' + (bot+16) + ' L' + xR + ',' + (bot+16) + ' L' + xRw + ',' + yEdge +
+         ' Q' + ((xLw+xRw)/2) + ',' + yCtl + ' ' + xLw + ',' + yEdge + ' Z" fill="#BFDEE2"/>';
+  svg += '<path d="M' + xLw + ',' + yEdge + ' Q' + ((xLw+xRw)/2) + ',' + yCtl + ' ' + xRw + ',' + yEdge +
+         '" fill="none" stroke="#0B4E58" stroke-width="2.2"/>';
+
+  // ticks
+  var n = Math.round((s.high - s.low)/t.minor);
+  for(var i=0;i<=n;i++){
+    var v = parseFloat((s.low + i*t.minor).toFixed(4));
+    var yy = y(v);
+    if(yy < top-10 || yy > bot+12) continue;
+    var ratio = v / t.labelEvery;
+    var isLabel = Math.abs(ratio - Math.round(ratio)) < 1e-6;
+    var len = isLabel ? 30 : 15;
+    svg += '<line x1="' + (xL+1) + '" y1="' + yy + '" x2="' + (xL+1+len) + '" y2="' + yy +
+           '" stroke="#3B4A48" stroke-width="' + (isLabel ? 1.9 : 1.1) + '" opacity="' + (isLabel ? .95 : .6) + '"/>';
+    if(isLabel){
+      svg += '<text x="' + (xL-9) + '" y="' + (yy+5) + '" text-anchor="end" font-family="IBM Plex Mono, monospace" ' +
+             'font-size="15" fill="#131E1D">' + v + '</text>';
+    }
+  }
+
+  // glass edges + fades
+  svg += '<path d="' + body + '" fill="url(#glassSheen)" stroke="#5F6D6B" stroke-width="1.6"/>';
+  svg += '<rect x="0" y="0" width="' + W + '" height="34" fill="url(#fadeTop)"/>';
+  svg += '<rect x="0" y="' + (H-30) + '" width="' + W + '" height="30" fill="url(#fadeBot)"/>';
+  svg += '<text x="' + (xR+flare+8) + '" y="' + (top+4) + '" font-family="IBM Plex Mono, monospace" font-size="11" fill="#5F6D6B">mL</text>';
+  svg += '</svg>';
+  return svg;
+}
+
+function glassCheck(){
+  var raw = cleanNum(el('g-input').value);
+  var s = gState, fb = el('g-fb');
+  if(!isNumStr(raw)){
+    setFb(fb,'hint','Type a number, using digits and a decimal point.');
+    return;
+  }
+  var v = parseFloat(raw), dp = decimalsOf(raw), t = s.t;
+  var closeVal = Math.abs(v - s.val) <= t.tol + 1e-9;
+  var exactDp = dp === t.dp;
+  var want = dpWords(t.dp);
+  var certain = placeName(t.dp - 1), estimated = placeName(t.dp);
+  var trueStr = fixed(s.val, t.dp);
+
+  if(closeVal && exactDp){
+    gScore.add(true);
+    setFb(fb,'good','<b>Good reading.</b> The scale is marked every ' + t.minor + ' mL, so the ' +
+      certain + ' digit is certain and you estimate the ' + estimated +
+      ' place. This one was about <span class="mono">' + trueStr + ' mL</span>.');
+  } else if(closeVal && dp < t.dp){
+    gScore.add(false);
+    setFb(fb,'bad','<b>Right value, missing your estimated digit.</b> You stopped at the last digit you could see. Every measurement needs exactly one estimated digit past the smallest division, so a reading off this one has ' + want + ': <span class="mono">' + trueStr + ' mL</span>.');
+  } else if(closeVal && dp > t.dp){
+    gScore.add(false);
+    setFb(fb,'bad','<b>Right value, too many digits.</b> Marks every ' + t.minor + ' mL let you estimate the ' + estimated + ' place and no further, so this reading gets ' + want + '. Writing <span class="mono">' + raw + '</span> claims precision this glassware does not have.');
+  } else {
+    gScore.add(false);
+    setFb(fb,'bad','<b>Not quite.</b> Find the two marks the bottom of the meniscus sits between, then judge the fraction of the gap. It was closer to <span class="mono">' + trueStr + ' mL</span>. Reading from above instead of at eye level is the usual culprit.');
+  }
+}
+
+el('g-check').addEventListener('click', glassCheck);
+el('g-new').addEventListener('click', glassNew);
+el('g-input').addEventListener('keydown', function(e){ if(e.key === 'Enter') glassCheck(); });
+
+/* =========================================================
+   2. ruler reader
+   ========================================================= */
+var rState = null;
+var rScore = Score(el('r-score'));
+var R_OBJECTS = ['metal cube','metal cylinder','paper clip','eraser','crayon','key','washer'];
+
+function rulerNew(){
+  var len = Math.round(rnd(1.6, 8.4) * 100) / 100;
+  if(Math.random() < 0.18) len = Math.round(len*10)/10;   // sometimes lands on a mm line
+  rState = { len:len, obj:pick(R_OBJECTS) };
+  el('r-figure').innerHTML = drawRuler(rState);
+  el('r-input').value = '';
+  el('r-fb').className = 'fb';
+}
+
+function drawRuler(s){
+  var W = 800, H = 168, x0 = 34, x1 = 766, yTop = 78;
+  var px = function(cm){ return x0 + cm/10 * (x1 - x0); };
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="A ' + s.obj +
+            ' lying along a centimeter ruler">';
+  // object
+  var oy = 26, oh = 40;
+  svg += '<rect x="' + px(0) + '" y="' + oy + '" width="' + (px(s.len) - px(0)) + '" height="' + oh +
+         '" rx="2" fill="#9A6E22" fill-opacity=".22" stroke="#9A6E22" stroke-width="1.7"/>';
+  svg += '<text x="' + (px(0)+9) + '" y="' + (oy+25) + '" font-family="IBM Plex Mono, monospace" font-size="14" fill="#7A5718">' + s.obj + '</text>';
+  // ruler body
+  svg += '<rect x="' + (x0-22) + '" y="' + yTop + '" width="' + (x1-x0+44) + '" height="72" rx="3" fill="#F2F7F7" stroke="#5F6D6B" stroke-width="1.4"/>';
+  for(var i=0;i<=100;i++){
+    var cm = i/10, X = px(cm);
+    var isCm = i % 10 === 0, isHalf = i % 5 === 0;
+    var len = isCm ? 34 : (isHalf ? 22 : 14);
+    svg += '<line x1="' + X + '" y1="' + yTop + '" x2="' + X + '" y2="' + (yTop+len) +
+           '" stroke="#131E1D" stroke-width="' + (isCm ? 1.9 : 1) + '" opacity="' + (isCm ? .95 : .62) + '"/>';
+    if(isCm){
+      svg += '<text x="' + X + '" y="' + (yTop+55) + '" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="15" fill="#131E1D">' + (i/10) + '</text>';
+    }
+  }
+  svg += '<text x="' + (x1+16) + '" y="' + (yTop+55) + '" font-family="IBM Plex Mono, monospace" font-size="12" fill="#5F6D6B">cm</text>';
+  svg += '</svg>';
+  return svg;
+}
+
+function rulerCheck(){
+  var raw = cleanNum(el('r-input').value), fb = el('r-fb');
+  if(!isNumStr(raw)){ setFb(fb,'hint','Type a number, using digits and a decimal point.'); return; }
+  var v = parseFloat(raw), dp = decimalsOf(raw);
+  var close = Math.abs(v - rState.len) <= 0.06 + 1e-9;
+  var trueStr = fixed(rState.len,2);
+
+  if(close && dp === 2){
+    rScore.add(true);
+    setFb(fb,'good','<b>Exactly right.</b> Millimeter marks are 0.1 cm apart, so tenths are certain and hundredths are your estimate. It measured about <span class="mono">' + trueStr + ' cm</span>.');
+  } else if(close && dp < 2){
+    rScore.add(false);
+    setFb(fb,'bad','<b>Right length, not enough digits.</b> You read only what the marks show. Estimate the fraction of the millimeter gap and report two decimal places: <span class="mono">' + trueStr + ' cm</span>. If it looks like it sits right on the line, that digit is <span class="mono">0</span> — write it.');
+  } else if(close && dp > 2){
+    rScore.add(false);
+    setFb(fb,'bad','<b>Right length, too many digits.</b> With millimeter marks you can honestly estimate hundredths of a centimeter and no further. <span class="mono">' + trueStr + ' cm</span> is as precise as this ruler gets.');
+  } else {
+    rScore.add(false);
+    setFb(fb,'bad','<b>Check your starting point.</b> Measure from the <span class="mono">0</span> mark, then find the two millimeter lines the end falls between. It was about <span class="mono">' + trueStr + ' cm</span>.');
+  }
+}
+el('r-check').addEventListener('click', rulerCheck);
+el('r-new').addEventListener('click', rulerNew);
+el('r-input').addEventListener('keydown', function(e){ if(e.key === 'Enter') rulerCheck(); });
+
+/* =========================================================
+   3. balance bench
+   ========================================================= */
+var BALANCES = [
+  { key:'tb', name:'Triple beam balance', dp:2, note:'reads to 0.01 g' },
+  { key:'dg', name:'Digital balance', dp:2, note:'reads to 0.01 g' },
+  { key:'an', name:'Analytical balance', dp:4, note:'reads to 0.0001 g' }
+];
+var B_OBJECTS = ['rubber stopper','metal cylinder','plastic flamingo','glass marble','steel washer'];
+var bTrue = 0, bObj = '';
+
+function benchNew(){
+  bTrue = Math.round(rnd(4, 48) * 10000) / 10000;
+  bObj = pick(B_OBJECTS);
+  var h = '';
+  BALANCES.forEach(function(b){
+    h += '<div class="bal"><h4>' + b.name + '</h4><div class="dp">' + b.note + '</div>' +
+         '<div class="readout blank" id="ro-' + b.key + '">— — —</div>' +
+         '<div class="sf" id="sf-' + b.key + '"></div></div>';
+  });
+  el('bench').innerHTML = h;
+  el('b-fb').className = 'fb';
+  el('b-all').textContent = 'Mass the ' + bObj + ' on all three';
+}
+
+function benchWeigh(){
+  BALANCES.forEach(function(b){
+    var s = fixed(bTrue, b.dp);
+    var head = s.slice(0, s.length-1), last = s.slice(-1);
+    var ro = el('ro-' + b.key);
+    ro.className = 'readout';
+    ro.innerHTML = head + '<span class="est">' + last + '</span> g';
+    el('sf-' + b.key).innerHTML = sigFigCount(s) + ' significant digits · uncertain digit is the ' +
+      placeName(b.dp) + ' place';
+  });
+  setFb(el('b-fb'),'hint','<b>Same object, three honest answers.</b> The analytical balance gives ' +
+    sigFigCount(fixed(bTrue,4)) + ' significant digits; the triple beam gives ' + sigFigCount(fixed(bTrue,2)) +
+    '. Copy down every digit the display shows you — including any trailing zeros. Those zeros are measurements, not decoration.');
+}
+function placeName(dp){
+  var names = { '-1':'tens', '0':'ones', '1':'tenths', '2':'hundredths',
+                '3':'thousandths', '4':'ten-thousandths' };
+  return names[String(dp)] || 'last';
+}
+function dpWords(dp){
+  return ['no decimal places','one decimal place','two decimal places','three decimal places'][dp] || (dp + ' decimal places');
+}
+el('b-all').addEventListener('click', benchWeigh);
+el('b-new').addEventListener('click', function(){ benchNew(); });
+
+/* =========================================================
+   4. significant-digit counter
+   ========================================================= */
+function sigFigCount(str){
+  var s = String(str).trim().replace(/^[+-]/,'');
+  if(!isNumStr(s)) return null;
+  var hasDot = s.indexOf('.') !== -1;
+  var digits = s.replace('.','');
+  var firstNZ = digits.search(/[1-9]/);
+  if(firstNZ === -1) return hasDot ? 1 : 1;
+  var sig = digits.slice(firstNZ);
+  if(!hasDot) sig = sig.replace(/0+$/,'');
+  return sig.length;
+}
+/* which character indices of the displayed string are significant */
+function sigIndices(str){
+  var chars = String(str).split('');
+  var hasDot = str.indexOf('.') !== -1;
+  var firstNZ = -1, lastNZ = -1;
+  for(var i=0;i<chars.length;i++){
+    if(/[1-9]/.test(chars[i])){ if(firstNZ === -1) firstNZ = i; lastNZ = i; }
+  }
+  var out = [];
+  if(firstNZ === -1) return out;
+  var end = hasDot ? chars.length - 1 : lastNZ;
+  for(var j=firstNZ;j<=end;j++){ if(/\d/.test(chars[j])) out.push(j); }
+  return out;
+}
+
+var D_ITEMS = [
+  { v:'0.0042', u:'g', why:'Leading zeros only park the decimal point — they are not measurements. Two digits.' },
+  { v:'1.04', u:'cm', why:'A zero trapped between nonzero digits is always significant. Three digits.' },
+  { v:'2.500', u:'g', why:'Trailing zeros after a decimal point are measured digits. You would not write them otherwise. Four digits.' },
+  { v:'12.3456', u:'g', why:'Every digit an analytical balance gives you counts. Six digits.' },
+  { v:'0.030', u:'mL', why:'The two leading zeros are placeholders; the final zero comes after a decimal point, so it counts. Two digits.' },
+  { v:'44.0', u:'mL', why:'That last zero says you looked and it was not 43.9 or 44.1. Three digits.' },
+  { v:'1200', u:'m', why:'No decimal point, so the trailing zeros are ambiguous and the standard reading is two significant digits. If you had really measured to the ones place, you would write 1200. with a decimal point to say so.' },
+  { v:'7.60', u:'cm', why:'Three digits. The zero is the estimated one.' },
+  { v:'0.5070', u:'g', why:'Skip the leading zero; the captive zero counts and so does the trailing zero after the decimal. Four digits.' },
+  { v:'305.0', u:'K', why:'Captive zero counts, trailing zero after the decimal counts. Four digits.' }
+];
+var dQueue = [], dItem = null, dPicked = {};
+var dScore = Score(el('d-score'));
+
+function digitsNew(){
+  if(dQueue.length === 0){ dQueue = D_ITEMS.slice().sort(function(){ return Math.random()-0.5; }); }
+  dItem = dQueue.pop();
+  dPicked = {};
+  var h = '';
+  dItem.v.split('').forEach(function(c,i){
+    if(c === '.') h += '<span class="digit dot" aria-hidden="true">.</span>';
+    else h += '<button class="digit" data-i="' + i + '" aria-pressed="false">' + c + '</button>';
+  });
+  el('d-digits').innerHTML = h;
+  el('d-unit').textContent = 'Measured value: ' + dItem.v + ' ' + dItem.u;
+  el('d-fb').className = 'fb';
+  Array.prototype.forEach.call(el('d-digits').querySelectorAll('.digit[data-i]'), function(b){
+    b.addEventListener('click', function(){
+      var i = b.dataset.i;
+      if(dPicked[i]){ delete dPicked[i]; b.classList.remove('on'); b.setAttribute('aria-pressed','false'); }
+      else { dPicked[i] = true; b.classList.add('on'); b.setAttribute('aria-pressed','true'); }
+    });
+  });
+}
+
+function digitsCheck(){
+  var want = sigIndices(dItem.v);
+  var got = Object.keys(dPicked).map(Number).sort(function(a,b){ return a-b; });
+  var ok = want.length === got.length && want.every(function(v,i){ return v === got[i]; });
+  Array.prototype.forEach.call(el('d-digits').querySelectorAll('.digit[data-i]'), function(b){
+    var i = Number(b.dataset.i);
+    b.classList.remove('on');
+    b.classList.add(want.indexOf(i) !== -1 ? 'rev-yes' : 'rev-no');
+  });
+  dScore.add(ok);
+  var n = want.length;
+  setFb(el('d-fb'), ok ? 'good' : 'bad',
+    '<b>' + (ok ? 'Correct — ' : 'Not quite. ') + dItem.v + ' ' + dItem.u + ' has ' + n +
+    ' significant digit' + (n === 1 ? '' : 's') + '.</b> ' + dItem.why +
+    ' Green digits count, struck-out digits do not.');
+}
+el('d-check').addEventListener('click', digitsCheck);
+el('d-new').addEventListener('click', digitsNew);
+
+/* =========================================================
+   5. quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'A graduated cylinder is marked every 1 mL. Which reading is recorded correctly?',
+    opts:['<span class="mono">27 mL</span>','<span class="mono">27.4 mL</span>','<span class="mono">27.42 mL</span>','<span class="mono">27.4207 mL</span>'],
+    ans:1,
+    why:'Marks every 1 mL means the ones place is certain and you estimate tenths — exactly one digit past the smallest division.' },
+  { stem:'The water in a 100 mL cylinder sits exactly on the 62 mL line. What do you write down?',
+    opts:['<span class="mono">62 mL</span>','<span class="mono">62.0 mL</span>','<span class="mono">62.00 mL</span>','Either 62 or 62.0 — same thing'],
+    ans:1,
+    why:'The zero is a measurement: you looked between 61 and 63 and judged it to be dead on 62. Dropping it discards a digit you earned, and 62 mL claims less precision than the cylinder gives.' },
+  { stem:'How many significant digits are in <span class="mono">0.03080 g</span>?',
+    opts:['3','4','5','6'],
+    ans:1,
+    why:'Leading zeros are placeholders. Counting from the 3: 3, 0, 8, 0 — four digits. The final zero counts because it follows a decimal point.' },
+  { stem:'A digital balance displays <span class="mono">15.70 g</span>. What should go in your data table?',
+    opts:['<span class="mono">15.7 g</span> — the last zero is meaningless','<span class="mono">15.70 g</span> — copy the display exactly','<span class="mono">15.700 g</span> — add a digit for safety','<span class="mono">16 g</span> — round it off'],
+    ans:1,
+    why:'The balance measured that zero. It is the estimated digit, and it tells anyone reading your data that this instrument resolves hundredths of a gram.' },
+  { stem:'A balance is never zeroed and reads 0.85 g high every single time. This is a problem with the measurement\u2019s\u2026',
+    opts:['precision','accuracy','number of significant digits','estimated digit'],
+    ans:1,
+    why:'It is off from the true value in a consistent direction, so the accuracy is bad. The precision is untouched — repeated readings still agree closely with each other, which is exactly why this kind of error is easy to miss.' },
+  { stem:'Which tool can honestly give you a volume with two decimal places?',
+    opts:['A 250 mL beaker marked every 25 mL','A 100 mL graduated cylinder marked every 1 mL','A 10 mL graduated cylinder marked every 0.1 mL','Any of them, if you look carefully'],
+    ans:2,
+    why:'Marks 0.1 mL apart let you be certain to tenths and estimate hundredths. No amount of care lets a beaker do that — the smallest division sets a ceiling on your precision.' }
+];
+
+(function buildQuiz(){
+  var host = el('quiz'), html = '';
+  QUIZ.forEach(function(q,qi){
+    html += '<div class="q"><p class="stem">' + (qi+1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o,oi){
+      html += '<button class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>';
+    });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  host.innerHTML = html;
+  Array.prototype.forEach.call(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      var group = el('q' + qi);
+      Array.prototype.forEach.call(group.querySelectorAll('.opt'), function(other,i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      setFb(el('qfb'+qi), oi === q.ans ? 'good' : 'bad',
+        '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+    });
+  });
+})();
+
+/* boot */
+glassNew();
+rulerNew();
+benchNew();
+digitsNew();
+</script>
+</body>
+</html>
 
