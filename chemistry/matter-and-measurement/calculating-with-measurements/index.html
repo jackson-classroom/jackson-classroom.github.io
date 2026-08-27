@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculating With Measurements — Significant Figures</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#131E1D; --ink2:#3B4A48; --mute:#5F6D6B;
+  --wash:#E3E9E8; --card:#FBFCFB; --line:#C9D3D1; --line-soft:#E0E7E6;
+  --water:#12727F; --water-dk:#0B4E58; --water-lite:#BFDEE2;
+  --brass:#9A6E22; --brass-lite:#F5E9CF;
+  --ok:#26694A; --ok-bg:#E4F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  --display:"Instrument Serif",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(227,233,232,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+.partsw{display:flex;border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--card)}
+.partsw a{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-decoration:none;padding:6px 11px;color:var(--ink2)}
+.partsw a[aria-current]{background:var(--ink);color:#F6F8F7}
+.partsw a:not([aria-current]):hover{background:var(--line-soft)}
+
+header.hero{padding:64px 0 44px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--water-dk)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,7.4vw,74px);line-height:1;margin:16px 0 0;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--water-dk)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:47ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: the raw calculator string with a cut */
+.sig-readout{margin:38px 0 0;padding:24px 26px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.sig-calc{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.sig-num{font-family:var(--mono);font-size:clamp(34px,8vw,56px);font-weight:500;line-height:1.15;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:8px}
+.sig-num .keep{color:var(--ink)}
+.sig-num .cut{color:#B7C2C0;text-decoration:line-through;text-decoration-color:var(--no)}
+.sig-num .rule{display:inline-block;width:0;border-left:2px dashed var(--no);height:1.05em;vertical-align:-.18em;margin:0 4px}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:10px}
+.sig-note b{color:var(--no);font-weight:600}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--water);color:var(--water-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--water-dk);background:var(--water-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.4vw,40px);line-height:1.08;margin:0;letter-spacing:-.01em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.note{border-left:3px solid var(--brass);background:var(--brass-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:24px 0}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--water);border-radius:0 4px 4px 0;padding:18px 20px}
+.rulecard .op{font-family:var(--display);font-size:30px;line-height:1;color:var(--water-dk)}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.problem{font-family:var(--mono);font-size:clamp(18px,3.4vw,23px);font-weight:500;letter-spacing:-.01em}
+.problem .lim{color:var(--brass)}
+.setup{font-size:15px;color:var(--ink2);margin:0 0 14px}
+
+/* cut-line widget */
+.tape{margin:18px 0 6px;padding:16px 4px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;overflow-x:auto}
+.tape-lab{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding:0 12px 8px}
+.strip{display:flex;align-items:stretch;justify-content:center;min-width:min-content;padding:0 8px}
+.ch{font-family:var(--mono);font-size:clamp(26px,6vw,40px);font-weight:500;line-height:1.35;padding:0 1px;font-variant-numeric:tabular-nums;color:var(--ink)}
+.ch.dim{color:#B7C2C0}
+.ch.slash{text-decoration:line-through;text-decoration-color:var(--no);color:#B7C2C0}
+.gap{
+  width:16px;border:none;background:none;cursor:pointer;padding:0;position:relative;border-radius:2px;
+}
+.gap::before{content:"";position:absolute;left:50%;top:12%;bottom:12%;width:0;border-left:2px dashed transparent;transform:translateX(-1px)}
+.gap:hover::before{border-left-color:var(--line)}
+.gap.set::before{border-left-color:var(--no);border-left-style:dashed}
+.gap.right::before{border-left-color:var(--ok);border-left-width:2px}
+.tape-hint{font-family:var(--mono);font-size:12px;color:var(--mute);text-align:center;padding-top:6px}
+
+/* stacked add/sub column */
+.stack{font-family:var(--mono);font-size:clamp(19px,4.4vw,26px);font-variant-numeric:tabular-nums;display:inline-block;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:16px 20px;margin:16px 0 4px;overflow-x:auto;max-width:100%}
+.srow{display:flex;justify-content:flex-end;white-space:nowrap}
+.srow.sum{border-top:2px solid var(--ink);margin-top:6px;padding-top:6px}
+.scell{width:.62em;text-align:center;position:relative}
+.scell.op{width:1.3em;text-align:left;color:var(--water-dk)}
+.scell.unknown{color:#C6D0CE;background:repeating-linear-gradient(-45deg,transparent,transparent 3px,#EDF1F0 3px,#EDF1F0 6px)}
+.scell.wall{box-shadow:-2px 0 0 -1px var(--no) inset}
+.wallnote{font-family:var(--mono);font-size:12px;color:var(--no);margin:2px 0 0}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F6F8F7;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--water-dk);border-color:var(--water-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--water)}
+button:focus-visible,input:focus-visible,a:focus-visible,.gap:focus-visible{outline:2.5px solid var(--water);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid var(--line);border-radius:3px;padding:9px 11px;width:150px;background:#fff;color:var(--ink)}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:150px}
+.unit-tag{font-family:var(--mono);font-size:14px;color:var(--mute);min-width:42px}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1B4E36}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--water);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb .mono{font-size:15px}
+
+/* result blocks for the data calculators */
+.result{margin-top:16px;border-top:1px solid var(--line-soft);padding-top:14px;display:none}
+.result.show{display:block}
+.rline{display:flex;gap:12px;align-items:baseline;font-size:15px;color:var(--ink2);padding:4px 0;flex-wrap:wrap}
+.rline .k{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);min-width:132px}
+.rline .v{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.answer{font-family:var(--mono);font-size:clamp(24px,5vw,34px);font-weight:500;color:var(--ink);margin:10px 0 2px;font-variant-numeric:tabular-nums}
+.answer .u{font-size:.62em;color:var(--mute);margin-left:.25em}
+.raw{color:#8B9997;text-decoration:line-through;text-decoration-color:#C2CECC}
+.idbox{margin-top:12px;padding:11px 14px;background:var(--water-lite);border-radius:3px;font-size:15.5px;color:#0A424B}
+.idbox b{font-weight:600}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab[aria-selected="true"]{background:var(--ink);color:#F6F8F7;border-color:var(--ink)}
+.panel{display:none;padding-top:12px}
+.panel.on{display:block}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft)}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45}
+.opt:hover{border-color:var(--water)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.94}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#EDF2F1;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#C3D0CE}
+.next .nt{font-family:var(--display);font-size:26px;color:#fff;margin:0 0 4px}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F6F8F7;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--water-lite)}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:16px}
+  .field label{min-width:auto;flex:1 1 100%}
+  .rline .k{min-width:auto;flex:1 1 100%}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show,.result.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Calculating With Measurements</span>
+    <span class="bar-sub">Significant figures · rounding · percent error</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Doing math with measurements</div>
+  <h1>Your calculator does not know how <em>carefully</em> you measured.</h1>
+  <p class="lede">It will happily hand you ten digits from two measurements that only justified two. Your job is to decide where the real answer stops — and then cut.</p>
+
+  <div class="sig-readout">
+    <div class="sig-calc">3.42 cm × 2.1 cm → the calculator says</div>
+    <div class="sig-num"><span class="keep">7.1</span><span class="rule"></span><span class="cut">82</span><span style="font-size:.5em;color:var(--mute)"> cm²</span></div>
+    <div class="sig-note"><b>2.1 cm</b> had only two significant digits, so the answer stops after two. Then the discarded 8 rounds the 1 up: <b>7.2 cm²</b>. Everything past the cut was your calculator making things up.</div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#why">Why cut at all</a>
+  <a href="#muldiv">Multiply &amp; divide</a>
+  <a href="#addsub">Add &amp; subtract</a>
+  <a href="#exact">Exact numbers</a>
+  <a href="#data">Your lab data</a>
+  <a href="#avg">Averages</a>
+  <a href="#error">Percent error</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ WHY ============ -->
+<section id="why">
+  <div class="sec-head"><h2>Why cut at all</h2></div>
+  <p>Say you measure a cube with a ruler and get <span class="mono">3.42 cm</span> by <span class="mono">2.1 cm</span>. That second measurement means "somewhere between 2.05 and 2.15." Multiply the extremes and the area lands anywhere from <span class="mono">7.011</span> to <span class="mono">7.353 cm²</span>. You don't even know the tenths place for certain, so reporting <span class="mono">7.182 cm²</span> — three decimal places, five digits — is a claim you cannot back up.</p>
+  <p>Significant figure rules are a fast, mechanical way to answer one question: <b>how much of my calculator's answer did I actually earn?</b> Uncertainty doesn't vanish in a calculation. It travels through, and it always wins.</p>
+  <div class="note">
+    <b>The one habit that matters:</b> carry all your digits through the middle of a multi-step calculation, and round only once, at the very end. Rounding at every step stacks small errors on top of each other.
+  </div>
+</section>
+
+<!-- ============ MULTIPLY / DIVIDE ============ -->
+<section id="muldiv">
+  <div class="sec-head">
+    <span class="tasktag">Area · volume · density</span>
+    <h2>Multiplying and dividing</h2>
+  </div>
+
+  <div class="rulebox">
+    <div class="rulecard">
+      <div class="op">× ÷</div>
+      <h4>Count significant digits</h4>
+      <p>The answer gets the same number of significant digits as the input that had the <b>fewest</b>. Area, volume, and density all follow this rule.</p>
+    </div>
+    <div class="rulecard">
+      <div class="op">+ −</div>
+      <h4>Count decimal places</h4>
+      <p>The answer gets the same number of decimal places as the input with the <b>fewest</b>. Sums, differences, and averages of raw data follow this one.</p>
+    </div>
+  </div>
+
+  <p>It's two steps. First find the weakest input, count its significant digits, and cut the calculator's output there. Then round the last surviving digit up or down depending on the first digit you threw away — five or more rounds up.</p>
+  <p>Below, the amber value is the one setting the limit. Click the space where the honest answer stops.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Place the cut</span><span class="score" id="c-score">0 of 0</span></div>
+    <p class="setup" id="c-setup"></p>
+    <div class="problem" id="c-problem"></div>
+    <div class="tape">
+      <div class="tape-lab">Calculator output</div>
+      <div class="strip" id="c-strip"></div>
+      <div class="tape-hint">Click between two digits to cut</div>
+    </div>
+    <div class="btn-row">
+      <button id="c-check">Check the cut</button>
+      <button class="ghost" id="c-new">Next problem</button>
+    </div>
+    <div class="fb" id="c-fb"></div>
+  </div>
+</section>
+
+<!-- ============ ADD / SUBTRACT ============ -->
+<section id="addsub">
+  <div class="sec-head">
+    <span class="tasktag">Sums &amp; differences</span>
+    <h2>Adding and subtracting</h2>
+  </div>
+  <p>Adding is a different problem. If one balance gave you tenths of a gram and another gave you thousandths, the sum cannot be known to thousandths — the moment you add in a number whose thousandths place is unknown, the sum's thousandths place becomes unknown too.</p>
+  <p>So line the measurements up by their decimal points and find the one that runs out of digits first. That's the wall. Everything to the right of it is unknown, and your answer stops there.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Where does the sum stop?</span><span class="score" id="s-score">0 of 0</span></div>
+    <p class="setup" id="s-setup"></p>
+    <div id="s-stack"></div>
+    <p class="wallnote" id="s-wallnote"></p>
+    <div class="field" style="margin-top:14px">
+      <label for="s-input">Rounded answer</label>
+      <input type="text" id="s-input" inputmode="decimal" autocomplete="off">
+      <span class="unit-tag" id="s-unit"></span>
+    </div>
+    <div class="btn-row">
+      <button id="s-check">Check answer</button>
+      <button class="ghost" id="s-new">Next problem</button>
+    </div>
+    <div class="fb" id="s-fb"></div>
+  </div>
+
+  <div class="note">
+    <b>Subtraction can destroy precision.</b> <span class="mono">100.0 g − 97.65 g = 2.35 g</span>, which rounds to <span class="mono">2.4 g</span> — two four-digit measurements produced a two-digit answer. Nothing went wrong. You subtracted away almost everything you knew and kept only the small remainder, where your uncertainty is now a big fraction of what's left.
+  </div>
+</section>
+
+<!-- ============ EXACT ============ -->
+<section id="exact">
+  <div class="sec-head">
+    <span class="tasktag">Counts · constants · conversions</span>
+    <h2>Numbers that don't limit you</h2>
+  </div>
+  <p>Not every number in a calculation is a measurement. Some are perfect, and perfect numbers never limit your significant digits.</p>
+  <ul>
+    <li><b>Counted objects.</b> Ten pennies in a graduated cylinder is not "about ten" — it is exactly ten. Divide the volume of 10 pennies by 10 and that 10 is exact, so your answer keeps every significant digit the volume had.</li>
+    <li><b>Defined conversions.</b> <span class="mono">1 cm³ = 1 mL</span> exactly, and <span class="mono">100 cm = 1 m</span> exactly. Converting units never costs you digits. This is why a density in <span class="mono">g/mL</span> and one in <span class="mono">g/cm³</span> are the same number.</li>
+    <li><b>Constants like π.</b> Use more digits of π than you need — your calculator's button is fine — and let the measurements decide the answer. In <span class="mono">V = πr²ℓ</span>, only <span class="mono">r</span> and <span class="mono">ℓ</span> control the significant digits.</li>
+    <li><b>Exact numbers in a formula.</b> The 2 in <span class="mono">r = d/2</span> and the 100 in a percent are definitions, not measurements. A diameter of <span class="mono">1.27 cm</span> gives a radius of <span class="mono">0.635 cm</span> — still three significant digits.</li>
+  </ul>
+  <div class="note">
+    <b>Why massing in batches is smarter.</b> Massing 10 identical objects and dividing by 10 is not a shortcut for lazy measuring — it's a real precision upgrade. Your balance is uncertain by about <span class="mono">±0.01 g</span> no matter what's on the pan. Spread that uncertainty across 10 objects and each one is only uncertain by about <span class="mono">±0.001 g</span>. That's the whole reason to weigh in batches.
+  </div>
+</section>
+
+<!-- ============ YOUR DATA ============ -->
+<section id="data">
+  <div class="sec-head">
+    <span class="tasktag">Your own data</span>
+    <h2>Run your own numbers</h2>
+  </div>
+  <p>Type in the measurements from your data table exactly as you recorded them — trailing zeros and all, since they're what the sig fig count is reading. Each calculator shows the raw result, the input that limited it, and the answer you should write down.</p>
+
+  <div class="card">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-p="penny">Small objects · density</button>
+      <button class="tab" role="tab" aria-selected="false" data-p="cube">Block · area &amp; volume</button>
+      <button class="tab" role="tab" aria-selected="false" data-p="cyl">Cylinder · volume &amp; density</button>
+    </div>
+
+    <!-- pennies -->
+    <div class="panel on" id="p-penny">
+      <p class="setup">Density = mass ÷ volume. For something too small to measure on its own, drop ten in and divide the displaced volume by 10 — that 10 is an exact count, so it costs you nothing.</p>
+      <div class="field"><label for="pn-m">Mass of one object</label><input type="text" id="pn-m" inputmode="decimal"><span class="unit-tag">g</span></div>
+      <div class="field"><label for="pn-v10">Volume displaced by 10</label><input type="text" id="pn-v10" inputmode="decimal"><span class="unit-tag">mL</span></div>
+      <div class="btn-row"><button data-calc="penny">Calculate density</button><button class="ghost" data-clear="penny">Clear</button></div>
+      <div class="fb" id="pn-fb"></div>
+      <div class="result" id="pn-res"></div>
+    </div>
+
+    <!-- cube -->
+    <div class="panel" id="p-cube">
+      <p class="setup">Area of one face = ℓ × w. Volume = ℓ × w × h. Every input is a ruler measurement, so every input is in the running to be the limiting one.</p>
+      <div class="field"><label for="cu-l">Length</label><input type="text" id="cu-l" inputmode="decimal"><span class="unit-tag">cm</span></div>
+      <div class="field"><label for="cu-w">Width</label><input type="text" id="cu-w" inputmode="decimal"><span class="unit-tag">cm</span></div>
+      <div class="field"><label for="cu-h">Height</label><input type="text" id="cu-h" inputmode="decimal"><span class="unit-tag">cm</span></div>
+      <div class="btn-row"><button data-calc="cube">Calculate area &amp; volume</button><button class="ghost" data-clear="cube">Clear</button></div>
+      <div class="fb" id="cu-fb"></div>
+      <div class="result" id="cu-res"></div>
+    </div>
+
+    <!-- cylinder -->
+    <div class="panel" id="p-cyl">
+      <p class="setup">V = πr²ℓ, and r = d/2. Enter the diameter you measured — halving it is exact, so the radius keeps all its digits. Volume by displacement is optional; if you enter it, you'll get both densities to compare.</p>
+      <div class="field"><label for="cy-m">Mass</label><input type="text" id="cy-m" inputmode="decimal"><span class="unit-tag">g</span></div>
+      <div class="field"><label for="cy-d">Diameter</label><input type="text" id="cy-d" inputmode="decimal"><span class="unit-tag">cm</span></div>
+      <div class="field"><label for="cy-l">Length</label><input type="text" id="cy-l" inputmode="decimal"><span class="unit-tag">cm</span></div>
+      <div class="field"><label for="cy-v">Displacement volume</label><input type="text" id="cy-v" inputmode="decimal" placeholder="optional"><span class="unit-tag">mL</span></div>
+      <div class="btn-row"><button data-calc="cyl">Calculate volume &amp; density</button><button class="ghost" data-clear="cyl">Clear</button></div>
+      <div class="fb" id="cy-fb"></div>
+      <div class="result" id="cy-res"></div>
+    </div>
+  </div>
+
+  <h3>Reference densities</h3>
+  <p class="smallprint">If your class has its own density chart, that one is the authority — these are here so the calculators above can suggest a match. All values in g/cm³, which is the same as g/mL.</p>
+  <table>
+    <thead><tr><th>Material</th><th>Density</th><th>Material</th><th>Density</th></tr></thead>
+    <tbody>
+      <tr><td>Magnesium</td><td class="n">1.74</td><td>Iron</td><td class="n">7.87</td></tr>
+      <tr><td>Aluminum</td><td class="n">2.70</td><td>Brass</td><td class="n">8.5</td></tr>
+      <tr><td>Titanium</td><td class="n">4.51</td><td>Nickel</td><td class="n">8.91</td></tr>
+      <tr><td>Zinc</td><td class="n">7.14</td><td>Copper</td><td class="n">8.96</td></tr>
+      <tr><td>Tin</td><td class="n">7.29</td><td>Silver</td><td class="n">10.49</td></tr>
+      <tr><td>Post-1982 penny (zinc core)</td><td class="n">7.17</td><td>Lead</td><td class="n">11.34</td></tr>
+      <tr><td>Steel</td><td class="n">7.85</td><td>Pre-1982 penny (95% copper)</td><td class="n">8.8</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ AVERAGES ============ -->
+<section id="avg">
+  <div class="sec-head">
+    <span class="tasktag">Repeated measurements</span>
+    <h2>Averaging repeated measurements</h2>
+  </div>
+  <p>An average is a sum followed by a division. The sum obeys the decimal-place rule; the division is by an exact count, so it costs you nothing. When you mass ten objects at once and divide by ten, the average keeps all the significant digits of that total mass.</p>
+
+  <div class="card">
+    <div class="card-label"><span>One object, then five, then ten</span></div>
+    <p class="setup">Use identical objects — marbles, washers, coins, whatever you have ten of. Mass one on its own, then five together, then all ten.</p>
+    <div class="field"><label for="f1">Mass of 1 object</label><input type="text" id="f1" inputmode="decimal"><span class="unit-tag">g</span></div>
+    <div class="field"><label for="f5">Mass of 5 objects</label><input type="text" id="f5" inputmode="decimal"><span class="unit-tag">g</span></div>
+    <div class="field"><label for="f10">Mass of 10 objects</label><input type="text" id="f10" inputmode="decimal"><span class="unit-tag">g</span></div>
+    <div class="btn-row"><button id="f-calc">Compare averages</button><button class="ghost" id="f-clear">Clear</button></div>
+    <div class="fb" id="f-fb"></div>
+    <div class="result" id="f-res"></div>
+  </div>
+</section>
+
+<!-- ============ PERCENT ERROR ============ -->
+<section id="error">
+  <div class="sec-head">
+    <span class="tasktag">Comparing to a target</span>
+    <h2>Percent error</h2>
+  </div>
+  <p>Percent error asks how far off you landed, as a fraction of the value you were aiming at:</p>
+  <p class="problem" style="text-align:center;padding:8px 0">% error = |measured − accepted| ÷ accepted × 100</p>
+  <p>The 100 is a definition, so it's exact. The <b>accepted value</b> is whatever you were aiming at: a 20-second target, a 50 mL pour, or the published density of a metal you're trying to identify. Take the absolute value — percent error is a size, not a direction, so it's never negative.</p>
+  <p>Watch what happens to your digits. Subtract first, and the difference follows the decimal-place rule — which can leave you with very few significant digits. Then divide, and that small count is what limits your final answer.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Percent error, step by step</span></div>
+    <div class="field"><label for="pe-m">Your measured value</label><input type="text" id="pe-m" inputmode="decimal" placeholder="17.62"></div>
+    <div class="field"><label for="pe-a">Accepted value</label><input type="text" id="pe-a" inputmode="decimal" placeholder="20"></div>
+    <div class="btn-row"><button id="pe-calc">Calculate percent error</button><button class="ghost" id="pe-clear">Clear</button></div>
+    <div class="fb" id="pe-fb"></div>
+    <div class="result" id="pe-res"></div>
+  </div>
+
+  <p class="smallprint">This calculator treats the accepted value as an exact target, which is the right call when you were aiming at a round number like 20 seconds or 50 mL. If your accepted value is itself a measurement — a density read off a chart, say — then the subtraction has to respect its decimal places too, and the note under each result will tell you when that changes the answer.</p>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Eight questions covering both rules, exact numbers, and percent error.</p>
+  <div class="card" id="quiz"></div>
+</section>
+
+<footer>
+  <p>Significant figures in calculations. The practice problems reshuffle each time you reload, and the calculators accept any data you type in.</p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function nudge(v){ return v === 0 ? 0 : v + Math.sign(v)*Math.abs(v)*1e-12; }
+function fixed(x,dp){ var f = Math.pow(10,dp); return (Math.round(nudge(x*f))/f).toFixed(dp); }
+function isNumStr(s){ return /^\d+\.?\d*$|^\.\d+$/.test(s); }
+function cleanNum(s){ return String(s).trim().replace(/\s/g,'').replace(/,/g,''); }
+function decimalsOf(s){ var i = String(s).indexOf('.'); return i === -1 ? 0 : String(s).length - i - 1; }
+
+function sigFigCount(str){
+  var s = String(str).trim().replace(/^[+-]/,'');
+  if(!isNumStr(s)) return null;
+  var hasDot = s.indexOf('.') !== -1;
+  var digits = s.replace('.','');
+  var firstNZ = digits.search(/[1-9]/);
+  if(firstNZ === -1) return 1;
+  var sig = digits.slice(firstNZ);
+  if(!hasDot) sig = sig.replace(/0+$/,'');
+  return sig.length;
+}
+/* round to n significant digits; returns {html, plain, sci}
+   large results are written out in plain digits rather than scientific notation */
+function sigOut(x,n){
+  if(x === 0) return { html:'0', plain:'0', sci:false };
+  var s = nudge(x).toPrecision(n);
+  if(s.indexOf('e') !== -1){
+    var plain = Number(s).toString();
+    return { html: plain, plain: plain, sci:true };
+  }
+  return { html:s, plain:s, sci:false };
+}
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function ordinal(n){ return ['zeroth','first','second','third','fourth','fifth','sixth','seventh','eighth','ninth','tenth'][n] || (n + 'th'); }
+function placeName(dp){ return ['ones','tenths','hundredths','thousandths','ten-thousandths'][dp] || 'last'; }
+
+/* =========================================================
+   1. cut-line widget (multiply / divide)
+   ========================================================= */
+var CUT_PROBLEMS = [
+  { setup:'Area of one face of a metal cube.',
+    terms:['3.42','2.1'], op:'×', unit:'cm²', val:3.42*2.1,
+    note:'Length had three significant digits, width had two. Two wins.' },
+  { setup:'Volume of a metal cube.',
+    terms:['2.54','2.54','2.54'], op:'×', unit:'cm³', val:2.54*2.54*2.54,
+    note:'All three measurements have three significant digits, so the volume gets three.' },
+  { setup:'Density of a single penny: its mass, divided by its volume from water displacement.',
+    terms:['2.535','0.36'], op:'÷', unit:'g/mL', val:2.535/0.36,
+    note:'The volume was the weak link: 0.36 mL has two significant digits, so the density gets two. Leading zeros never count.' },
+  { setup:'Density of a metal cylinder, using a displacement volume.',
+    terms:['24.61','3.2'], op:'÷', unit:'g/mL', val:24.61/3.2,
+    note:'A displacement volume read to tenths from a cylinder often has just two significant digits, and it drags a four-digit mass down with it.' },
+  { setup:'Volume of a cylinder from πr²ℓ, with r = 0.635 cm and ℓ = 4.50 cm.',
+    terms:['π','0.635²','4.50'], op:'×', unit:'cm³', val:Math.PI*0.635*0.635*4.50,
+    note:'π is exact and does not limit anything. Both measurements have three significant digits, so the volume gets three — and the third one is a zero you have to write down.' },
+  { setup:'A thin metal foil: mass 0.0512 g, volume 6.0 mL of displaced water.',
+    terms:['0.0512','6.0'], op:'÷', unit:'g/mL', val:0.0512/6.0,
+    note:'6.0 mL has two significant digits, so the answer gets two. Count from the first nonzero digit — the leading zeros in the answer are placeholders, not digits you measured.' }
+];
+
+var cState = null, cScore = Score(el('c-score'));
+
+function cutNew(){
+  var p, raw, limit, tries = 0;
+  do {
+    p = pick(CUT_PROBLEMS);
+    // full calculator string: up to 10 digits, trailing zeros trimmed
+    raw = String(parseFloat(p.val.toPrecision(10)));
+    if(raw.indexOf('e') !== -1) raw = p.val.toFixed(8).replace(/0+$/,'');
+    limit = Math.min.apply(null, p.terms.map(function(t){
+      var m = t.replace('²','');
+      return isNumStr(m) ? sigFigCount(m) : 99;
+    }));
+    tries++;
+  } while(sigIndices(raw).length <= limit && tries < 20);   // need at least one digit to discard
+  cState = { p:p, raw:raw, n:limit, chosen:null, locked:false };
+
+  el('c-setup').textContent = p.setup;
+  var probHtml = p.terms.map(function(t){
+    var m = t.replace('²','');
+    var isLim = isNumStr(m) && sigFigCount(m) === limit;
+    return isLim ? '<span class="lim">' + t + '</span>' : t;
+  }).join(' ' + p.op + ' ');
+  el('c-problem').innerHTML = probHtml + ' = ?';
+
+  renderStrip();
+  hideFb(el('c-fb'));
+}
+
+function sigIndices(str){
+  var chars = String(str).split(''), hasDot = str.indexOf('.') !== -1;
+  var firstNZ = -1, lastNZ = -1;
+  for(var i=0;i<chars.length;i++){ if(/[1-9]/.test(chars[i])){ if(firstNZ === -1) firstNZ = i; lastNZ = i; } }
+  var out = [];
+  if(firstNZ === -1) return out;
+  var end = hasDot ? chars.length - 1 : lastNZ;
+  for(var j=firstNZ;j<=end;j++){ if(/\d/.test(chars[j])) out.push(j); }
+  return out;
+}
+
+function renderStrip(){
+  var s = cState, raw = s.raw, chars = raw.split('');
+  var sig = sigIndices(raw);
+  var correctAfter = sig[s.n - 1];              // char index of last kept digit
+  s.correctGap = correctAfter + 1;               // gap sits before this index
+  var h = '';
+  for(var i=0;i<chars.length;i++){
+    if(i > 0){
+      var isSet = s.chosen === i;
+      var cls = 'gap' + (isSet ? ' set' : '') + (s.locked && i === s.correctGap ? ' right' : '');
+      h += '<button class="' + cls + '" data-gap="' + i + '" aria-label="Cut before digit ' + (i+1) + '"></button>';
+    }
+    var dim = (s.chosen !== null && i >= s.chosen);
+    h += '<span class="ch' + (dim ? (s.locked ? ' slash' : ' dim') : '') + '">' + chars[i] + '</span>';
+  }
+  el('c-strip').innerHTML = h;
+  Array.prototype.forEach.call(el('c-strip').querySelectorAll('.gap'), function(b){
+    b.addEventListener('click', function(){
+      if(cState.locked) return;
+      cState.chosen = Number(b.dataset.gap);
+      renderStrip();
+    });
+  });
+}
+
+function cutCheck(){
+  var s = cState, fb = el('c-fb');
+  if(s.locked) return;
+  if(s.chosen === null){ setFb(fb,'hint','Click one of the spaces between digits to place your cut first.'); return; }
+  var kept = sigIndices(s.raw).filter(function(i){ return i < s.chosen; }).length;
+  var ok = s.chosen === s.correctGap;
+  s.locked = true;
+  renderStrip();
+  var out = sigOut(s.p.val, s.n);
+  var ansHtml = '<span class="mono">' + out.html + ' ' + s.p.unit + '</span>';
+  // step two: round the last kept digit using the first discarded one
+  var keptStr = s.raw.slice(0, s.correctGap);
+  var firstCut = s.raw.charAt(s.correctGap);
+  var roundStep = ' Then round: the first discarded digit is <span class="mono">' + firstCut + '</span>, so ' +
+    (Number(firstCut) >= 5 ? 'the last kept digit goes up' : 'the kept digits stay as they are') +
+    ' — <span class="mono">' + keptStr + '</span> becomes ' + ansHtml + '.';
+
+  if(ok){
+    cScore.add(true);
+    setFb(fb,'good','<b>Right where it belongs.</b> ' + s.p.note + roundStep);
+  } else {
+    cScore.add(false);
+    setFb(fb,'bad','<b>Your cut keeps ' + kept + ' significant digit' + (kept === 1 ? '' : 's') +
+      ', and this answer should have ' + s.n + '.</b> ' + s.p.note +
+      ' The green line shows where the cut belongs.' + roundStep);
+  }
+}
+el('c-check').addEventListener('click', cutCheck);
+el('c-new').addEventListener('click', cutNew);
+
+/* =========================================================
+   2. add / subtract stack
+   ========================================================= */
+var SUM_PROBLEMS = [
+  { setup:'Three objects, massed on three different balances.',
+    terms:['12.11','18.0','1.013'], ops:['+','+'], unit:'g' },
+  { setup:'Water level after dropping an object in, minus the level before.',
+    terms:['43.6','25.0'], ops:['−'], unit:'mL' },
+  { setup:'Total length of three blocks lined up end to end, measured by three people with different rulers.',
+    terms:['2.50','1.7','0.63'], ops:['+','+'], unit:'cm' },
+  { setup:'Three stopwatch times added together.',
+    terms:['8.2','17.62','21.5'], ops:['+','+'], unit:'s' },
+  { setup:'Mass of a beaker with a sample in it, minus the mass of the empty beaker.',
+    terms:['100.0','97.65'], ops:['−'], unit:'g' },
+  { setup:'Two pours combined in the same graduated cylinder.',
+    terms:['47.3','52.85'], ops:['+'], unit:'mL' }
+];
+var sState = null, sScore = Score(el('s-score'));
+
+function sumNew(){
+  var p = pick(SUM_PROBLEMS);
+  var val = parseFloat(p.terms[0]);
+  for(var i=1;i<p.terms.length;i++){
+    val = p.ops[i-1] === '+' ? val + parseFloat(p.terms[i]) : val - parseFloat(p.terms[i]);
+  }
+  var minDp = Math.min.apply(null, p.terms.map(decimalsOf));
+  var maxDp = Math.max.apply(null, p.terms.map(decimalsOf));
+  sState = { p:p, val:val, dp:minDp, maxDp:maxDp };
+  el('s-setup').textContent = p.setup;
+  el('s-unit').textContent = p.unit;
+  el('s-input').value = '';
+  el('s-stack').innerHTML = drawStack(sState);
+  var weakest = p.terms.filter(function(t){ return decimalsOf(t) === minDp; })[0];
+  el('s-wallnote').innerHTML = '↑ ' + weakest + ' ' + p.unit + ' runs out of digits at the ' +
+    placeName(minDp) + ' place, so that is where the answer stops. The hatched region is unknown.';
+  hideFb(el('s-fb'));
+}
+
+function drawStack(s){
+  var p = s.p, terms = p.terms;
+  var maxInt = Math.max.apply(null, terms.map(function(t){ return t.split('.')[0].length; }));
+  var rawSum = s.val.toFixed(Math.max(s.maxDp, 0));
+  maxInt = Math.max(maxInt, rawSum.split('.')[0].length);
+  // always show at least one column past the wall, so the wall is visible even when
+  // every measurement happens to stop at the same place
+  var maxDec = Math.max(s.maxDp, s.dp + 1);
+
+  function row(numStr, op, isSum){
+    var parts = numStr.split('.');
+    var ip = parts[0], dpart = parts[1] || '';
+    var h = '<div class="srow' + (isSum ? ' sum' : '') + '">';
+    h += '<span class="scell op">' + (op || '') + '</span>';
+    for(var i=0;i<maxInt - ip.length;i++) h += '<span class="scell"></span>';
+    for(var j=0;j<ip.length;j++) h += '<span class="scell">' + ip[j] + '</span>';
+    h += '<span class="scell" style="width:.34em">.</span>';
+    for(var k=0;k<maxDec;k++){
+      var ch = dpart[k];
+      var beyond = k >= s.dp;
+      var cls = 'scell' + (ch === undefined ? ' unknown' : (isSum && beyond ? ' unknown' : ''));
+      if(k === s.dp) cls += ' wall';
+      h += '<span class="' + cls + '">' + (ch === undefined ? '?' : ch) + '</span>';
+    }
+    h += '</div>';
+    return h;
+  }
+
+  var html = '<div class="stack">';
+  terms.forEach(function(t,i){ html += row(t, i === 0 ? '' : p.ops[i-1], false); });
+  html += row(rawSum, '', true);
+  html += '</div>';
+  return html;
+}
+
+function sumCheck(){
+  var raw = cleanNum(el('s-input').value), fb = el('s-fb'), s = sState;
+  if(!isNumStr(raw)){ setFb(fb,'hint','Type your rounded answer as a number.'); return; }
+  var want = fixed(s.val, s.dp);
+  var dp = decimalsOf(raw);
+  var sameVal = Math.abs(parseFloat(raw) - parseFloat(want)) < Math.pow(10,-s.dp)/2;
+  var sfWant = sigFigCount(want);
+
+  if(raw === want){
+    sScore.add(true);
+    setFb(fb,'good','<b>Correct.</b> The raw result was <span class="mono">' + s.val.toFixed(s.maxDp) +
+      '</span>, and the ' + placeName(s.dp) + ' place is the last one anybody knew, so the answer is <span class="mono">' +
+      want + ' ' + s.p.unit + '</span> — ' + sfWant + ' significant digit' + (sfWant === 1 ? '' : 's') + '.');
+  } else if(sameVal && dp !== s.dp){
+    sScore.add(false);
+    setFb(fb,'bad','<b>Right number, wrong number of decimal places.</b> Write it as <span class="mono">' + want + ' ' + s.p.unit +
+      '</span>. Adding and subtracting is about decimal places, not significant digits, and a trailing zero here is not optional — it is part of the claim.');
+  } else if(dp > s.dp){
+    sScore.add(false);
+    setFb(fb,'bad','<b>Too many decimal places.</b> One of your measurements stopped at the ' + placeName(s.dp) +
+      ' place, so the answer has to as well: <span class="mono">' + want + ' ' + s.p.unit + '</span>.');
+  } else {
+    sScore.add(false);
+    setFb(fb,'bad','<b>Not quite.</b> The raw result is <span class="mono">' + s.val.toFixed(s.maxDp) +
+      '</span>. Round it to the ' + placeName(s.dp) + ' place: <span class="mono">' + want + ' ' + s.p.unit + '</span>.');
+  }
+}
+el('s-check').addEventListener('click', sumCheck);
+el('s-new').addEventListener('click', sumNew);
+el('s-input').addEventListener('keydown', function(e){ if(e.key === 'Enter') sumCheck(); });
+
+/* =========================================================
+   3. lab data calculators
+   ========================================================= */
+var DENSITIES = [
+  { name:'magnesium', d:1.74 }, { name:'aluminum', d:2.70 }, { name:'titanium', d:4.51 },
+  { name:'zinc', d:7.14 }, { name:'a post-1982 penny (zinc core)', d:7.17 }, { name:'tin', d:7.29 },
+  { name:'steel', d:7.85 }, { name:'iron', d:7.87 }, { name:'brass', d:8.5 },
+  { name:'a pre-1982 penny (95% copper)', d:8.8 }, { name:'nickel', d:8.91 },
+  { name:'copper', d:8.96 }, { name:'silver', d:10.49 }, { name:'lead', d:11.34 }
+];
+function identify(d){
+  var best = null, bestOff = Infinity;
+  DENSITIES.forEach(function(m){
+    var off = Math.abs(d - m.d)/m.d;
+    if(off < bestOff){ bestOff = off; best = m; }
+  });
+  var pct = fixed(bestOff*100, 1);
+  if(bestOff <= 0.05) return '<b>Closest match: ' + best.name + '</b> at ' + best.d + ' g/cm³ — you are within ' + pct + '% of it. That is a solid identification.';
+  if(bestOff <= 0.15) return '<b>Closest match: ' + best.name + '</b> at ' + best.d + ' g/cm³, but you are off by ' + pct + '%. Plausible — displacement volumes from a graduated cylinder are usually the weak link. Check that reading first.';
+  return 'Nothing on the chart is close — the nearest is ' + best.name + ' at ' + best.d + ' g/cm³, and you are off by ' + pct + '%. Re-check your volume: a misread meniscus or a trapped air bubble will do this.';
+}
+function rline(k,v){ return '<div class="rline"><span class="k">' + k + '</span><span class="v">' + v + '</span></div>'; }
+
+function readInputs(ids, fbNode, names){
+  var out = [], bad = [];
+  ids.forEach(function(id,i){
+    var raw = cleanNum(el(id).value);
+    if(!isNumStr(raw) || parseFloat(raw) === 0){ bad.push(names[i]); out.push(null); }
+    else out.push({ raw:raw, v:parseFloat(raw), sf:sigFigCount(raw) });
+  });
+  if(bad.length){
+    setFb(fbNode,'hint','Enter a value for: ' + bad.join(', ') + '. Type the digits exactly as you recorded them.');
+    return null;
+  }
+  hideFb(fbNode);
+  return out;
+}
+
+/* pennies */
+function calcPenny(){
+  var v = readInputs(['pn-m','pn-v10'], el('pn-fb'), ['mass of one object','volume displaced by 10']);
+  if(!v) return;
+  var m = v[0], v10 = v[1];
+  var vol1 = v10.v/10, n = Math.min(m.sf, v10.sf), dens = m.v/vol1;
+  var out = sigOut(dens, n);
+  var lim = m.sf < v10.sf ? 'the mass (' + m.raw + ' g, ' + m.sf + ' sig figs)'
+          : v10.sf < m.sf ? 'the volume (' + v10.raw + ' mL, ' + v10.sf + ' sig figs)'
+          : 'both inputs, tied at ' + n + ' sig figs';
+  var res = el('pn-res');
+  res.innerHTML =
+    rline('Volume of 1 object', sigOut(vol1, v10.sf).html + ' mL <span class="smallprint">— dividing by an exact count of 10 keeps all ' + v10.sf + ' digits</span>') +
+    rline('Raw calculation', '<span class="raw">' + dens.toPrecision(9) + '</span> g/mL') +
+    rline('Limited by', lim) +
+    '<div class="answer">' + out.html + '<span class="u">g/mL</span></div>' +
+    '<div class="smallprint">Same number as g/cm³, since 1 mL = 1 cm³ exactly.</div>' +
+    '<div class="idbox">' + identify(dens) + '</div>';
+  res.classList.add('show');
+}
+
+/* cube */
+function calcCube(){
+  var v = readInputs(['cu-l','cu-w','cu-h'], el('cu-fb'), ['length','width','height']);
+  if(!v) return;
+  var L = v[0], W = v[1], H = v[2];
+  var nA = Math.min(L.sf, W.sf), nV = Math.min(L.sf, W.sf, H.sf);
+  var area = L.v*W.v, vol = L.v*W.v*H.v;
+  var oA = sigOut(area, nA), oV = sigOut(vol, nV);
+  var weakestV = [L,W,H].filter(function(x){ return x.sf === nV; })[0];
+  var res = el('cu-res');
+  res.innerHTML =
+    rline('Area of one face', '<span class="raw">' + area.toPrecision(9) + '</span> → limited to ' + nA + ' sig figs') +
+    '<div class="answer">' + oA.html + '<span class="u">cm²</span></div>' +
+    rline('Volume', '<span class="raw">' + vol.toPrecision(9) + '</span> → limited to ' + nV + ' sig figs by ' + weakestV.raw + ' cm') +
+    '<div class="answer">' + oV.html + '<span class="u">cm³</span></div>' +
+    '<div class="smallprint">Multiplying lengths multiplies the units too: cm × cm gives cm², and cm × cm × cm gives cm³. If you want the total surface area of all six faces, multiply the one-face area by 6 — an exact number that does not change your digit count.</div>';
+  res.classList.add('show');
+}
+
+/* cylinder */
+function calcCyl(){
+  var v = readInputs(['cy-m','cy-d','cy-l'], el('cy-fb'), ['mass','diameter','length']);
+  if(!v) return;
+  var M = v[0], D = v[1], L = v[2];
+  var r = D.v/2;
+  var nV = Math.min(D.sf, L.sf);
+  var vol = Math.PI*r*r*L.v;
+  var oV = sigOut(vol, nV);
+  var nD = Math.min(M.sf, nV);
+  var dens = M.v/vol;
+  var oD = sigOut(dens, nD);
+  var html =
+    rline('Radius', sigOut(r, D.sf).html + ' cm <span class="smallprint">— halving is exact, so it keeps all ' + D.sf + ' digits</span>') +
+    rline('Raw volume', '<span class="raw">' + vol.toPrecision(9) + '</span> cm³ · π is exact and does not limit anything') +
+    '<div class="answer">' + oV.html + '<span class="u">cm³</span></div>' +
+    rline('Density from πr²ℓ', '<span class="raw">' + dens.toPrecision(9) + '</span> → limited to ' + nD + ' sig figs') +
+    '<div class="answer">' + oD.html + '<span class="u">g/cm³</span></div>' +
+    '<div class="idbox">' + identify(dens) + '</div>';
+
+  var dispRaw = cleanNum(el('cy-v').value);
+  if(isNumStr(dispRaw) && parseFloat(dispRaw) > 0){
+    var Vd = { raw:dispRaw, v:parseFloat(dispRaw), sf:sigFigCount(dispRaw) };
+    var nD2 = Math.min(M.sf, Vd.sf), dens2 = M.v/Vd.v;
+    html += '<div style="border-top:1px solid var(--line-soft);margin-top:16px;padding-top:12px">' +
+      rline('Density by displacement', '<span class="raw">' + dens2.toPrecision(9) + '</span> → limited to ' + nD2 + ' sig figs by ' +
+        (Vd.sf <= M.sf ? Vd.raw + ' mL' : M.raw + ' g')) +
+      '<div class="answer">' + sigOut(dens2, nD2).html + '<span class="u">g/mL</span></div>' +
+      '<div class="smallprint">Two methods, two answers, and the ruler method usually has more significant digits — a ruler resolves hundredths of a centimeter while a graduated cylinder resolves tenths of a millilitre. If the two densities disagree by more than a few percent, suspect the displacement reading.</div>' +
+      '</div>';
+  }
+  var res = el('cy-res');
+  res.innerHTML = html;
+  res.classList.add('show');
+}
+
+document.addEventListener('click', function(e){
+  var b = e.target.closest ? e.target.closest('[data-calc],[data-clear],.tab') : null;
+  if(!b) return;
+  if(b.dataset.calc){
+    if(b.dataset.calc === 'penny') calcPenny();
+    if(b.dataset.calc === 'cube') calcCube();
+    if(b.dataset.calc === 'cyl') calcCyl();
+  }
+  if(b.dataset.clear){
+    var map = { penny:['pn-m','pn-v10'], cube:['cu-l','cu-w','cu-h'], cyl:['cy-m','cy-d','cy-l','cy-v'] };
+    var res = { penny:'pn-res', cube:'cu-res', cyl:'cy-res' };
+    var fbs = { penny:'pn-fb', cube:'cu-fb', cyl:'cy-fb' };
+    map[b.dataset.clear].forEach(function(id){ el(id).value = ''; });
+    el(res[b.dataset.clear]).classList.remove('show');
+    hideFb(el(fbs[b.dataset.clear]));
+  }
+  if(b.classList.contains('tab')){
+    Array.prototype.forEach.call(document.querySelectorAll('.tab'), function(t){
+      t.setAttribute('aria-selected', String(t === b));
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.panel'), function(p){ p.classList.remove('on'); });
+    el('p-' + b.dataset.p).classList.add('on');
+  }
+});
+
+/* =========================================================
+   4. batch averages
+   ========================================================= */
+el('f-calc').addEventListener('click', function(){
+  var v = readInputs(['f1','f5','f10'], el('f-fb'), ['mass of 1','mass of 5','mass of 10']);
+  if(!v) return;
+  var one = v[0], five = v[1], ten = v[2];
+  var a5 = five.v/5, a10 = ten.v/10;
+  var o5 = sigOut(a5, five.sf), o10 = sigOut(a10, ten.sf);
+  var spread = Math.max(one.v, a5, a10) - Math.min(one.v, a5, a10);
+  var res = el('f-res');
+  res.innerHTML =
+    rline('From 1 object', one.raw + ' g <span class="smallprint">— ' + one.sf + ' sig figs, no averaging</span>') +
+    rline('Average of 5', '<span class="raw">' + a5.toPrecision(9) + '</span> → ' + o5.html + ' g') +
+    rline('Average of 10', '<span class="raw">' + a10.toPrecision(9) + '</span> → ' + o10.html + ' g') +
+    '<div class="answer">' + o10.html + '<span class="u">g per object</span></div>' +
+    '<div class="smallprint">The counts 5 and 10 are exact, so each average keeps all the significant digits of the total mass it came from.</div>' +
+    '<div class="idbox">Your three answers spread over about <b>' + fixed(spread,3) + ' g</b>. ' +
+      (spread < 0.02
+        ? 'Tight agreement — your objects are close to identical and your balance is behaving.'
+        : 'They disagree, and that disagreement is the interesting part. Individual objects are not truly identical, and a single one also carries the balance\u2019s full uncertainty.') +
+      ' A balance is uncertain by roughly ±0.01 g whatever sits on the pan. Spread that across 10 objects and it becomes about ±0.001 g each, which is why the 10-object average is the number to trust.</div>';
+  res.classList.add('show');
+});
+el('f-clear').addEventListener('click', function(){
+  ['f1','f5','f10'].forEach(function(id){ el(id).value = ''; });
+  el('f-res').classList.remove('show'); hideFb(el('f-fb'));
+});
+
+/* =========================================================
+   5. percent error
+   ========================================================= */
+el('pe-calc').addEventListener('click', function(){
+  var v = readInputs(['pe-m','pe-a'], el('pe-fb'), ['measured value','accepted value']);
+  if(!v) return;
+  var M = v[0], A = v[1];
+  var diff = Math.abs(M.v - A.v);
+  var dpM = decimalsOf(M.raw), dpA = decimalsOf(A.raw);
+  var diffStrExact = fixed(diff, dpM);                       // accepted treated as exact
+  var nExact = sigFigCount(diffStrExact);
+  var pe = diff/A.v*100;
+  var out = sigOut(pe, Math.max(nExact,1));
+
+  var dpBoth = Math.min(dpM, dpA);
+  var diffStrBoth = fixed(diff, dpBoth);
+  var nBoth = sigFigCount(diffStrBoth);
+  var differs = nBoth !== nExact;
+
+  var res = el('pe-res');
+  var html =
+    rline('Difference', '|' + M.raw + ' − ' + A.raw + '| = <span class="mono">' + diffStrExact +
+      '</span> · ' + nExact + ' sig fig' + (nExact === 1 ? '' : 's')) +
+    rline('Divide by accepted', '<span class="raw">' + (diff/A.v).toPrecision(9) + '</span>') +
+    rline('Times 100', '<span class="raw">' + pe.toPrecision(9) + '</span> · the 100 is exact') +
+    '<div class="answer">' + out.html + '<span class="u">% error</span></div>' +
+    '<div class="smallprint">The subtraction set the digit count, not the original measurements. ' +
+      (nExact <= 2
+        ? 'Notice how few digits survived: subtracting two close numbers throws away almost everything you knew and keeps only the small leftover.'
+        : 'Here the difference held on to most of its digits.') + '</div>';
+  if(differs){
+    html += '<div class="idbox">If your accepted value is itself a measurement rather than an exact target, the difference has to stop at the ' +
+      placeName(dpBoth) + ' place instead: <span class="mono">' + diffStrBoth + '</span>, giving ' + nBoth +
+      ' sig fig' + (nBoth === 1 ? '' : 's') + ' and a percent error of <span class="mono">' +
+      sigOut(pe, Math.max(nBoth,1)).html + '%</span>. Ask yourself which kind of number you were given.</div>';
+  }
+  res.innerHTML = html;
+  res.classList.add('show');
+});
+el('pe-clear').addEventListener('click', function(){
+  ['pe-m','pe-a'].forEach(function(id){ el(id).value = ''; });
+  el('pe-res').classList.remove('show'); hideFb(el('pe-fb'));
+});
+
+/* =========================================================
+   6. quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'You measure <span class="mono">4.25 cm</span> × <span class="mono">1.1 cm</span>. Your calculator says <span class="mono">4.675</span>. What do you report?',
+    opts:['<span class="mono">4.675 cm²</span>','<span class="mono">4.68 cm²</span>','<span class="mono">4.7 cm²</span>','<span class="mono">5 cm²</span>'],
+    ans:2,
+    why:'1.1 cm has two significant digits, so the answer gets two. 4.675 rounds to 4.7 cm².' },
+  { stem:'<span class="mono">12.11 g + 18.0 g + 1.013 g</span>. The calculator says <span class="mono">31.123</span>. What do you report?',
+    opts:['<span class="mono">31.123 g</span>','<span class="mono">31.12 g</span>','<span class="mono">31.1 g</span>','<span class="mono">31 g</span>'],
+    ans:2,
+    why:'Addition follows decimal places, not significant digits. 18.0 g stops at the tenths place, so the sum does too: 31.1 g. It happens to have three significant digits, but that was not the rule you used.' },
+  { stem:'You dropped exactly 10 pennies in and displaced <span class="mono">3.6 mL</span>. What is the volume of one penny?',
+    opts:['<span class="mono">0.36 mL</span> — two sig figs','<span class="mono">0.4 mL</span> — one sig fig, because 10 has one','<span class="mono">0.360 mL</span> — three sig figs','You cannot divide a measurement by a count'],
+    ans:0,
+    why:'A count of objects is exact, so it never limits your digits. 3.6 mL has two significant digits, so the answer does too: 0.36 mL. The leading zero is a placeholder and does not count.' },
+  { stem:'In <span class="mono">V = πr²ℓ</span> with <span class="mono">r = 0.635 cm</span> and <span class="mono">ℓ = 4.50 cm</span>, how many significant digits does the volume have?',
+    opts:['2, because of the 2 in r²','3','Depends how many digits of π you use','9, whatever the calculator shows'],
+    ans:1,
+    why:'π and the exponent are exact. Both measurements have three significant digits, so the volume gets three: 5.70 cm³ — and that final zero is a digit you must write.' },
+  { stem:'<span class="mono">100.0 g − 97.65 g</span> equals <span class="mono">2.35</span>. Reported correctly, that is…',
+    opts:['<span class="mono">2.35 g</span>, keeping three sig figs','<span class="mono">2.4 g</span>, stopping at the tenths place','<span class="mono">2.350 g</span>, matching four sig figs','<span class="mono">2 g</span>, one sig fig'],
+    ans:1,
+    why:'100.0 g stops at the tenths place, so the difference does too — 2.4 g. Two four-digit measurements gave a two-digit answer, which is subtraction eating your precision.' },
+  { stem:'A cylinder has mass <span class="mono">24.61 g</span> and displacement volume <span class="mono">3.2 mL</span>. Its density is…',
+    opts:['<span class="mono">7.690625 g/mL</span>','<span class="mono">7.69 g/mL</span>','<span class="mono">7.7 g/mL</span>','<span class="mono">8 g/mL</span>'],
+    ans:2,
+    why:'Division takes the fewest significant digits. 3.2 mL has two, so the density has two: 7.7 g/mL. The four-digit mass cannot rescue a two-digit volume.' },
+  { stem:'You aimed for 20 seconds and stopped the watch at <span class="mono">17.62 s</span>. Percent error?',
+    opts:['<span class="mono">2.38%</span>','<span class="mono">11.9%</span>','<span class="mono">−11.9%</span>','<span class="mono">88.1%</span>'],
+    ans:1,
+    why:'The difference is 2.38 s. Divide by the accepted 20 s to get 0.119, then multiply by 100: 11.9%. Percent error uses the absolute value, so it is never negative, and it is measured against the accepted value rather than your own.' },
+  { stem:'A three-step calculation. When should you round?',
+    opts:['After every step, to keep the numbers clean','Only at the very end','Before you start, so the inputs match','Never — report all the digits'],
+    ans:1,
+    why:'Rounding at each step stacks small errors on top of each other. Carry the extra digits through and round once, at the end, to the count your weakest measurement allows.' }
+];
+
+(function buildQuiz(){
+  var host = el('quiz'), html = '';
+  QUIZ.forEach(function(q,qi){
+    html += '<div class="q"><p class="stem">' + (qi+1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o,oi){ html += '<button class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  host.innerHTML = html;
+  Array.prototype.forEach.call(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      Array.prototype.forEach.call(el('q'+qi).querySelectorAll('.opt'), function(other,i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      setFb(el('qfb'+qi), oi === q.ans ? 'good' : 'bad',
+        '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+    });
+  });
+})();
+
+/* boot */
+cutNew();
+sumNew();
+</script>
+</body>
+</html>
