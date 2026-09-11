@@ -151,6 +151,16 @@ ul.courses li a{
 
 ul.courses li:hover{border-color:var(--accent)}
 
+/* Optional grey note inside a course or unit card */
+ul.courses li span{
+  display:block;
+  font-family:var(--font-body);
+  font-weight:400;
+  font-size:14.5px;
+  color:var(--ink-soft);
+  margin-top:3px;
+}
+
 /* ---------- footer ---------- */
 
 footer{
