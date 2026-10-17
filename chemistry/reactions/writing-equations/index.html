@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Writing Equations — Sentences to Skeleton Equations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#131E1D; --ink2:#3B4A48; --mute:#5F6D6B;
+  --wash:#E3E9E8; --card:#FBFCFB; --line:#C9D3D1; --line-soft:#E0E7E6;
+  --water:#12727F; --water-dk:#0B4E58; --water-lite:#BFDEE2;
+  --brass:#9A6E22; --brass-lite:#F5E9CF;
+  --ok:#26694A; --ok-bg:#E4F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  --display:"Instrument Serif",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(227,233,232,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:64px 0 44px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--water-dk)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,7.4vw,74px);line-height:1;margin:16px 0 0;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--water-dk)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:47ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: a sentence glossed, phrase by phrase, into its equation */
+.sig{margin:38px 0 0;padding:24px 26px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.sig-lab{font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.08em;text-transform:uppercase;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.sig-lab .k{display:inline-flex;gap:14px;flex-wrap:wrap;text-transform:none;letter-spacing:0}
+.sig-lab .k i{font-style:normal;display:inline-flex;align-items:center;gap:5px}
+.sig-lab .sw{display:inline-block;width:10px;height:10px;border-radius:2px}
+.sig-eq{font-family:var(--mono);font-size:clamp(19px,4.4vw,30px);font-weight:500;line-height:1.3;margin-top:22px;padding-top:16px;border-top:1px solid var(--line-soft);letter-spacing:-.01em}
+.sig-eq .st,.gsym .st,.eqline .st{color:var(--brass)}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:10px}
+.sig-note b{color:var(--brass);font-weight:600}
+
+/* gloss: phrase above, symbol below */
+.gloss{display:flex;flex-wrap:wrap;gap:16px 6px;align-items:stretch}
+.gcol{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:15.5em;min-width:2.4em}
+.gph{flex:1;display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1.35;padding:7px 10px;border-radius:3px}
+.gcol.sp .gph{background:#fff;border:1px solid var(--water-lite);box-shadow:inset 0 -2px 0 var(--water-lite)}
+.gcol.cx .gph{color:var(--water-dk);font-style:italic;padding:7px 3px}
+.gcol.nil .gph{color:var(--mute);font-style:italic;padding:7px 3px}
+.gcue{color:var(--brass);font-weight:600}
+.gdown{width:0;height:20px;border-left:1.5px solid var(--line);position:relative;margin-top:3px}
+.gdown::after{content:"";position:absolute;bottom:-2px;left:-5px;border-left:4.25px solid transparent;border-right:4.25px solid transparent;border-top:6px solid var(--line)}
+.gcol.sp .gdown{border-left-color:var(--water)}
+.gcol.sp .gdown::after{border-top-color:var(--water)}
+.gsym{font-family:var(--mono);font-size:19px;font-weight:500;padding-top:6px;white-space:nowrap}
+.gcol.cx .gsym{color:var(--water-dk)}
+.gcol.nil .gsym{color:#AAB6B4;font-weight:400;font-size:15px;padding-top:9px}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--water);color:var(--water-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--water-dk);background:var(--water-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.4vw,40px);line-height:1.08;margin:0;letter-spacing:-.01em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.note{border-left:3px solid var(--brass);background:var(--brass-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:24px 0}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--water);border-radius:0 4px 4px 0;padding:18px 20px}
+.rulecard .op{font-family:var(--display);font-size:30px;line-height:1;color:var(--water-dk)}
+.rulecard .op.mono{font-family:var(--mono);font-size:22px;font-weight:500}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard p + p{margin-top:8px}
+.cues{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.cues span{font-size:14px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:2px 8px;color:var(--ink2)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.problem{font-family:var(--mono);font-size:clamp(18px,3.4vw,23px);font-weight:500;letter-spacing:-.01em}
+.problem .st{color:var(--brass)}
+.setup{font-size:15px;color:var(--ink2);margin:0 0 14px}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F6F8F7;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--water-dk);border-color:var(--water-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--water)}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2.5px solid var(--water);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid var(--line);border-radius:3px;padding:9px 11px;width:150px;background:#fff;color:var(--ink)}
+input.eq-input{width:100%;font-size:18px}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:150px}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1B4E36}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--water);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb .mono{font-size:15px}
+.fb ul{margin:8px 0 2px;padding-left:20px}
+.fb li{margin:5px 0}
+.fb .you{font-family:var(--mono);font-size:15px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(0,0,0,.08)}
+
+.result{margin-top:16px;border-top:1px solid var(--line-soft);padding-top:14px;display:none}
+.result.show{display:block}
+.rline{display:flex;gap:12px;align-items:baseline;font-size:15px;color:var(--ink2);padding:4px 0;flex-wrap:wrap}
+.rline .k{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);min-width:132px}
+.eqline{font-family:var(--mono);font-size:clamp(17px,3.6vw,22px);font-weight:500;margin:4px 0 16px;line-height:1.45}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+td.n,td.f{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.sym{font-family:var(--mono);font-size:18px;font-weight:500;color:var(--brass);white-space:nowrap}
+
+/* diatomic tiles */
+.dia{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
+.dia span{font-family:var(--mono);font-size:22px;font-weight:500;background:var(--card);border:1px solid var(--line);border-top:3px solid var(--water);border-radius:3px;padding:8px 0;width:72px;text-align:center}
+.dia span small{display:block;font-family:var(--body);font-size:11.5px;font-weight:400;color:var(--mute);margin-top:2px}
+
+/* clickable phrases */
+.chipsent{font-size:clamp(17px,2.6vw,19px);line-height:2.05;margin:4px 0 0}
+.chip{font-family:var(--body);font-size:inherit;letter-spacing:0;line-height:1.4;background:#fff;color:var(--ink);border:1px dashed var(--water);border-radius:3px;padding:2px 8px;margin:0 1px;vertical-align:baseline}
+.chip:hover{background:var(--water-lite);color:var(--ink);border-color:var(--water-dk)}
+.chip[aria-pressed="true"]{background:var(--water-dk);color:#fff;border-style:solid;border-color:var(--water-dk)}
+.chip[aria-pressed="true"]::after{content:" X\2082";font-family:var(--mono);font-size:.8em;opacity:.85}
+.chip.right{background:var(--ok-bg);color:#1B4E36;border:1px solid var(--ok)}
+.chip.wrong{background:var(--no-bg);color:#7E2A1D;border:1px solid var(--no)}
+.chip.right::after,.chip.wrong::after{content:none}
+.chip[disabled]{cursor:default}
+.chip .cf{font-family:var(--mono);font-weight:500;margin-left:6px}
+
+/* state buttons + keys */
+.stbtns{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.stbtns button{font-size:17px;min-width:72px;padding:10px 14px;background:#fff;color:var(--ink);border-color:var(--line)}
+.stbtns button:hover{border-color:var(--water);background:var(--water-lite)}
+.stbtns button.yes{background:var(--ok-bg);border-color:var(--ok);color:#1B4E36}
+.stbtns button.no{background:var(--no-bg);border-color:var(--no);color:#7E2A1D}
+.stbtns button[disabled]{cursor:default}
+.keys{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.keys button{font-size:14px;padding:5px 11px;background:transparent;color:var(--ink2);border-color:var(--line)}
+.keys button:hover{background:var(--line-soft);color:var(--ink)}
+.preview{font-family:var(--mono);font-size:15px;color:var(--mute);min-height:1.6em;margin-top:8px}
+.preview b{color:var(--ink);font-weight:500}
+.sentence{font-size:clamp(17px,2.6vw,20px);line-height:1.5;margin:0 0 6px;color:var(--ink)}
+
+/* pitfalls */
+.pits{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:22px 0}
+.pit{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px 18px}
+.pit h4{font-size:15.5px;font-weight:600;margin:0 0 8px}
+.pit .wr,.pit .rt{font-family:var(--mono);font-size:16px;display:block;line-height:1.7}
+.pit .wr{color:var(--no)}
+.pit .wr s{text-decoration-color:var(--no)}
+.pit .rt{color:var(--ok)}
+.pit .tag{display:inline-block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);min-width:44px;margin-right:8px}
+.pit p{margin:8px 0 0;font-size:14.5px;color:var(--ink2)}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45;letter-spacing:0}
+.opt:hover{border-color:var(--water);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.94}
+.opt .mono,.q .mono{font-size:.97em}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+footer a{color:var(--water-dk)}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#EDF2F1;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#C3D0CE}
+.next .nt{font-family:var(--display);font-size:26px;color:#fff;margin:0 0 4px}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F6F8F7;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--water-lite)}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  .bar-in{padding:10px 16px}
+  .card{padding:16px}
+  .sig{padding:18px 16px}
+  .field label{min-width:auto;flex:1 1 100%}
+  .rline .k{min-width:auto;flex:1 1 100%}
+  .gph{font-size:14px}
+  .gsym{font-size:17px}
+  .dia span{width:calc((100% - 24px)/4)}
+  th,td{padding:8px 6px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show,.result.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Writing Equations</span>
+    <span class="bar-sub">Sentences ↔ skeleton equations · states · diatomics</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 3 · Chemical reactions</div>
+  <h1>A chemical equation is a sentence, <em>translated</em>.</h1>
+  <p class="lede">Every substance becomes a formula, every "reacts with" becomes a plus sign, every "produces" becomes the arrow, and the wording tells you each state. Read carefully and the equation almost writes itself.</p>
+
+  <div class="sig" aria-label="A sentence translated phrase by phrase into an equation">
+    <div class="sig-lab">
+      <span>The sentence &#8595; the equation</span>
+      <span class="k"><i><span class="sw" style="background:var(--water-lite);border:1px solid var(--water)"></span>substance</i><i><span class="sw" style="background:var(--brass)"></span>state cue</i><i><span class="sw" style="background:var(--water-dk)"></span>connector</i></span>
+    </div>
+    <div id="hero-gloss"></div>
+    <div class="sig-eq" id="hero-eq"></div>
+    <div class="sig-note"><b>a strip of</b> &#8594; (s), <b>aqueous solution of</b> &#8594; (aq). "Is placed in" joins the two reactants; "producing" is the arrow.</div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#anatomy">Anatomy</a>
+  <a href="#states">State symbols</a>
+  <a href="#diatomic">Diatomic elements</a>
+  <a href="#formulas">Names to formulas</a>
+  <a href="#pitfalls">Common mistakes</a>
+  <a href="#write">Write equations</a>
+  <a href="#read">Read equations</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ ANATOMY ============ -->
+<section id="anatomy">
+  <div class="sec-head"><h2>The anatomy of an equation</h2></div>
+  <p>A chemical equation describes a reaction in symbols. The substances you start with, the <b>reactants</b>, go on the left. The substances that form, the <b>products</b>, go on the right. The arrow between them reads "yields" or "produces."</p>
+  <p>Translating a sentence comes down to spotting signal words. Some phrases mean "these meet each other" and become a plus sign. Others mean "and this is what comes out" and become the arrow. Everything else names a substance and tells you its state.</p>
+
+  <div class="rulebox">
+    <div class="rulecard">
+      <div class="op">+</div>
+      <h4>Joins substances on the same side</h4>
+      <p>Read it as "and" or "reacts with."</p>
+      <div class="cues"><span>reacts with</span><span>and</span><span>is added to</span><span>is mixed with</span><span>is placed in</span><span>is burned in oxygen</span></div>
+    </div>
+    <div class="rulecard">
+      <div class="op">&#8594;</div>
+      <h4>Separates start from finish</h4>
+      <p>Read it as "yields," "produces," or "forms."</p>
+      <div class="cues"><span>produces</span><span>yields</span><span>forms</span><span>combine to form</span><span>decomposes into</span><span>producing</span></div>
+    </div>
+  </div>
+
+  <p>One phrase does double duty. <b>"Is burned in oxygen"</b> is a connector and a reactant at once: it means <span class="mono">+ O<sub>2</sub>(g)</span> on the left, even though the sentence never says "oxygen gas."</p>
+
+  <div class="note">
+    <b>Conditions stay in the sentence.</b> "When heated," "an electric current," and "is bubbled through" tell you <em>how</em> a reaction happens, not <em>what</em> is in it. In this class nothing is ever written over the arrow (no &#916;, no catalysts), and heat is never written as a reactant.
+  </div>
+  <div class="note">
+    <b>These are skeleton equations.</b> A skeleton has the right formulas, the right states, and everything on the right side of the arrow, but it is not balanced yet. If you feel the urge to put a 2 in front of something, hold that thought. Balancing is the next page.
+  </div>
+</section>
+
+<!-- ============ STATES ============ -->
+<section id="states">
+  <div class="sec-head">
+    <span class="tasktag">Read the wording</span>
+    <h2>State symbols come from the words</h2>
+  </div>
+  <p>Every species in an equation gets a state symbol in parentheses right after its formula. You don't guess it from memory. The sentence tells you, and every sentence on this page says each state outright.</p>
+
+  <table>
+    <thead><tr><th>Symbol</th><th>Means</th><th>Words that signal it</th></tr></thead>
+    <tbody>
+      <tr><td class="sym">(s)</td><td>solid</td><td>"solid," "a strip of," "powdered," "crystals"</td></tr>
+      <tr><td class="sym">(l)</td><td>liquid</td><td>"liquid" &#8212; a pure liquid such as water, bromine, mercury</td></tr>
+      <tr><td class="sym">(g)</td><td>gas</td><td>"gas," "gaseous," "vapor"; "burned in oxygen" means O<sub>2</sub>(g)</td></tr>
+      <tr><td class="sym">(aq)</td><td>aqueous</td><td>"aqueous," "a solution of," "an aqueous solution of," "dissolved in water"</td></tr>
+    </tbody>
+  </table>
+
+  <p><b>(aq) is not (l).</b> Aqueous means <em>dissolved in water</em>. The substance itself isn't a liquid; it is spread out among water molecules. Salt water is <span class="mono">NaCl(aq)</span>, never <span class="mono">NaCl(l)</span>. Water on its own is a pure liquid, <span class="mono">H<sub>2</sub>O(l)</span>, and water vapor is <span class="mono">H<sub>2</sub>O(g)</span>.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Quick-fire: name the state</span><span class="score" id="st-score">0 of 0</span></div>
+    <p class="setup">A phrase pulled from a reaction sentence. Which state symbol does it get?</p>
+    <div class="problem" id="st-phrase"></div>
+    <div class="stbtns" id="st-btns" role="group" aria-label="State symbol">
+      <button data-s="s">(s)</button><button data-s="l">(l)</button><button data-s="g">(g)</button><button data-s="aq">(aq)</button>
+    </div>
+    <div class="fb" id="st-fb"></div>
+    <div class="btn-row"><button class="ghost" id="st-new">Next phrase</button></div>
+  </div>
+</section>
+
+<!-- ============ DIATOMIC ============ -->
+<section id="diatomic">
+  <div class="sec-head">
+    <span class="tasktag">Alone vs. in a compound</span>
+    <h2>Seven elements come in pairs</h2>
+  </div>
+  <p>Seven elements never exist as single atoms on their own. Left alone, they pair up into two-atom molecules:</p>
+  <div class="dia" aria-label="The seven diatomic elements">
+    <span>H<sub>2</sub><small>hydrogen</small></span><span>N<sub>2</sub><small>nitrogen</small></span><span>O<sub>2</sub><small>oxygen</small></span><span>F<sub>2</sub><small>fluorine</small></span><span>Cl<sub>2</sub><small>chlorine</small></span><span>Br<sub>2</sub><small>bromine</small></span><span>I<sub>2</sub><small>iodine</small></span>
+  </div>
+  <p>To find them on the periodic table, start at nitrogen, element 7. Nitrogen, oxygen, fluorine, then down through chlorine, bromine, and iodine trace the shape of a 7. Add hydrogen, sitting off by itself, and you have all seven.</p>
+  <p>The 2 only applies when the element <b>stands alone</b>: "chlorine gas," "liquid bromine," "hydrogen gas," "burned in oxygen." Once the element is inside a compound it is bonded to something else, and the subscripts come from charges or prefixes instead.</p>
+
+  <div class="rulebox">
+    <div class="rulecard">
+      <div class="op mono">Cl<sub>2</sub>(g)</div>
+      <h4>Alone: always the pair</h4>
+      <p>"Chlorine gas" is the molecule Cl<sub>2</sub>. Writing Cl, or 2 Cl, describes loose atoms that don't exist on their own.</p>
+    </div>
+    <div class="rulecard">
+      <div class="op mono">NaCl &#183; CaCl<sub>2</sub></div>
+      <h4>In a compound: charges decide</h4>
+      <p>Na<sup>+</sup> and Cl<sup>&#8722;</sup> cancel one to one: NaCl, not NaCl<sub>2</sub>. CaCl<sub>2</sub> has a 2 because Ca<sup>2+</sup> needs two chlorides, not because chlorine is diatomic.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label"><span>Which ones get the pair?</span><span class="score" id="d-score">0 of 0</span></div>
+    <p class="setup">Click every substance that is a <b>diatomic element standing alone</b>, written H<sub>2</sub>, N<sub>2</sub>, O<sub>2</sub>, F<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub>, or I<sub>2</sub>. Leave compounds alone, even ones whose names contain those elements. Some sentences have none.</p>
+    <p class="chipsent" id="d-sent"></p>
+    <div class="btn-row">
+      <button id="d-check">Check</button>
+      <button class="ghost" id="d-new">Next sentence</button>
+    </div>
+    <div class="fb" id="d-fb"></div>
+  </div>
+</section>
+
+<!-- ============ FORMULAS ============ -->
+<section id="formulas">
+  <div class="sec-head">
+    <span class="tasktag">Unit 2 refresher</span>
+    <h2>Names to formulas, quickly</h2>
+  </div>
+  <p>You already know how to do this. Here is the short version, so the formulas in the equations come out right. Use your reference sheet for ion charges and polyatomic ions.</p>
+
+  <div class="rulebox">
+    <div class="rulecard">
+      <div class="op mono">Al<sup>3+</sup> O<sup>2&#8722;</sup> &#8594; Al<sub>2</sub>O<sub>3</sub></div>
+      <h4>Ionic: make the charges cancel</h4>
+      <p>Criss-cross the charge numbers into subscripts, then reduce. Ca<sup>2+</sup> and O<sup>2&#8722;</sup> give CaO, not Ca<sub>2</sub>O<sub>2</sub>.</p>
+    </div>
+    <div class="rulecard">
+      <div class="op mono">iron(III) = Fe<sup>3+</sup></div>
+      <h4>Roman numerals: the metal's charge</h4>
+      <p>Iron(III) chloride is FeCl<sub>3</sub>; iron(II) chloride is FeCl<sub>2</sub>. Copper(II) sulfate is CuSO<sub>4</sub>, because 2+ and 2&#8722; already cancel.</p>
+    </div>
+    <div class="rulecard">
+      <div class="op mono">Ca(NO<sub>3</sub>)<sub>2</sub></div>
+      <h4>Polyatomic ions stay in one piece</h4>
+      <p>When you need more than one, wrap it in parentheses: Ca(NO<sub>3</sub>)<sub>2</sub>, (NH<sub>4</sub>)<sub>3</sub>PO<sub>4</sub>. With just one, no parentheses: NaNO<sub>3</sub>.</p>
+    </div>
+    <div class="rulecard">
+      <div class="op mono">N<sub>2</sub>O<sub>5</sub></div>
+      <h4>Covalent: prefixes are subscripts</h4>
+      <p>Di-nitrogen pent-oxide is N<sub>2</sub>O<sub>5</sub>. Carbon dioxide is CO<sub>2</sub>. "Mono" is dropped on the first element.</p>
+    </div>
+  </div>
+
+  <h3>Polyatomic ions on this page</h3>
+  <table>
+    <thead><tr><th>Ion</th><th>Formula</th><th>Ion</th><th>Formula</th></tr></thead>
+    <tbody>
+      <tr><td>ammonium</td><td class="f">NH<sub>4</sub><sup>+</sup></td><td>hydroxide</td><td class="f">OH<sup>&#8722;</sup></td></tr>
+      <tr><td>acetate</td><td class="f">C<sub>2</sub>H<sub>3</sub>O<sub>2</sub><sup>&#8722;</sup></td><td>nitrate</td><td class="f">NO<sub>3</sub><sup>&#8722;</sup></td></tr>
+      <tr><td>carbonate</td><td class="f">CO<sub>3</sub><sup>2&#8722;</sup></td><td>phosphate</td><td class="f">PO<sub>4</sub><sup>3&#8722;</sup></td></tr>
+      <tr><td>chlorate</td><td class="f">ClO<sub>3</sub><sup>&#8722;</sup></td><td>sulfate</td><td class="f">SO<sub>4</sub><sup>2&#8722;</sup></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Names you just have to know</h3>
+  <p>Water is <span class="mono">H<sub>2</sub>O</span>, hydrogen peroxide is <span class="mono">H<sub>2</sub>O<sub>2</sub></span>, ammonia is <span class="mono">NH<sub>3</sub></span>, and methane is <span class="mono">CH<sub>4</sub></span>. Other fuels on this page, like propane and octane, come with their formula in the sentence. So do the two acids, hydrochloric acid (HCl) and sulfuric acid (H<sub>2</sub>SO<sub>4</sub>).</p>
+</section>
+
+<!-- ============ PITFALLS ============ -->
+<section id="pitfalls">
+  <div class="sec-head">
+    <span class="tasktag">Read before you practice</span>
+    <h2>Six ways to lose the point</h2>
+  </div>
+  <p>Almost every wrong skeleton equation comes from one of these. The practice checker below looks for each one by name.</p>
+  <div class="pits">
+    <div class="pit">
+      <h4>Forgetting a diatomic</h4>
+      <div class="wr"><span class="tag">Wrong</span><s>Na(s) + Cl(g)</s></div>
+      <div class="rt"><span class="tag">Right</span>Na(s) + Cl<sub>2</sub>(g)</div>
+      <p>"Chlorine gas" is the element alone, so it's the pair.</p>
+    </div>
+    <div class="pit">
+      <h4>Writing "oxygen" as O</h4>
+      <div class="wr"><span class="tag">Wrong</span><s>CH<sub>4</sub>(g) + O(g)</s></div>
+      <div class="rt"><span class="tag">Right</span>CH<sub>4</sub>(g) + O<sub>2</sub>(g)</div>
+      <p>Oxygen you burn things in is always O<sub>2</sub>(g).</p>
+    </div>
+    <div class="pit">
+      <h4>Carrying the 2 into a compound</h4>
+      <div class="wr"><span class="tag">Wrong</span><s>NaCl<sub>2</sub>(s)</s></div>
+      <div class="rt"><span class="tag">Right</span>NaCl(s)</div>
+      <p>Inside a compound, chlorine is chloride, Cl<sup>&#8722;</sup>. Charges set the subscripts.</p>
+    </div>
+    <div class="pit">
+      <h4>Picking the wrong state</h4>
+      <div class="wr"><span class="tag">Wrong</span><s>NaCl(l)</s></div>
+      <div class="rt"><span class="tag">Right</span>NaCl(aq)</div>
+      <p>"Aqueous" means dissolved in water, which is (aq). Read the state from the sentence every time.</p>
+    </div>
+    <div class="pit">
+      <h4>Changing subscripts to make it "fit"</h4>
+      <div class="wr"><span class="tag">Wrong</span><s>H<sub>2</sub> + O<sub>2</sub> &#8594; H<sub>2</sub>O<sub>2</sub></s></div>
+      <div class="rt"><span class="tag">Right</span>H<sub>2</sub> + O<sub>2</sub> &#8594; H<sub>2</sub>O</div>
+      <p>H<sub>2</sub>O<sub>2</sub> is hydrogen peroxide, a different substance. Subscripts are fixed by the name. Balancing uses coefficients, and that is next page.</p>
+    </div>
+    <div class="pit">
+      <h4>Dropping the parentheses</h4>
+      <div class="wr"><span class="tag">Wrong</span><s>CaNO<sub>32</sub></s></div>
+      <div class="rt"><span class="tag">Right</span>Ca(NO<sub>3</sub>)<sub>2</sub></div>
+      <p>Without parentheses, "NO32" reads as 32 oxygens.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WRITE ============ -->
+<section id="write">
+  <div class="sec-head">
+    <span class="tasktag">Sentence &#8594; equation</span>
+    <h2>Write the skeleton equation</h2>
+  </div>
+  <p>Read the sentence, then type the skeleton equation with a state on every species. You can type <span class="mono">Na2SO4</span> for Na<sub>2</sub>SO<sub>4</sub>, and <span class="mono">-&gt;</span> or <span class="mono">=</span> for the arrow. Spaces and the order of species on each side don't matter, and state symbols can be upper or lower case.</p>
+  <p>Don't balance. If you do anyway, that's fine. A correct skeleton with coefficients still counts.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Sentence &#8594; equation</span><span class="score" id="w-score">0 of 0</span></div>
+    <p class="sentence" id="w-sent"></p>
+    <div class="field" style="margin-top:14px">
+      <label for="w-input" style="min-width:auto;flex:1 1 100%">Your skeleton equation</label>
+      <input type="text" id="w-input" class="eq-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Zn(s) + CuSO4(aq) -> ZnSO4(aq) + Cu(s)">
+    </div>
+    <div class="keys" aria-label="Insert symbols">
+      <button type="button" data-k=" → ">&#8594;</button><button type="button" data-k=" + ">+</button><button type="button" data-k="(s)">(s)</button><button type="button" data-k="(l)">(l)</button><button type="button" data-k="(g)">(g)</button><button type="button" data-k="(aq)">(aq)</button>
+    </div>
+    <div class="preview" id="w-preview" aria-live="polite"></div>
+    <div class="btn-row">
+      <button id="w-check">Check equation</button>
+      <button class="ghost" id="w-show">Show answer</button>
+      <button class="ghost" id="w-new">New sentence</button>
+    </div>
+    <div class="fb" id="w-fb"></div>
+    <div class="result" id="w-res"></div>
+  </div>
+  <p class="smallprint">Your score counts your first check on each sentence. After that, fix what the feedback points to and check again as many times as you like.</p>
+</section>
+
+<!-- ============ READ ============ -->
+<section id="read">
+  <div class="sec-head">
+    <span class="tasktag">Equation &#8594; sentence</span>
+    <h2>Read an equation back into words</h2>
+  </div>
+  <p>Now go the other way. Each formula names a substance, each state symbol becomes a word, and the arrow tells you which substances react and which are produced. The wrong choices differ by one detail: a state, a name, or the direction. Check every species.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Equation &#8594; sentence</span><span class="score" id="r-score">0 of 0</span></div>
+    <div class="problem" id="r-eq" style="line-height:1.45"></div>
+    <p class="setup" style="margin:14px 0 10px">Which sentence describes this reaction?</p>
+    <div class="opts" id="r-opts"></div>
+    <div class="fb" id="r-fb"></div>
+    <div class="btn-row"><button class="ghost" id="r-new">Next equation</button></div>
+  </div>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Eight questions on signal words, state symbols, diatomic elements, and formulas.</p>
+  <div class="card" id="quiz"></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">Next: Balancing Equations</div>
+      <p>Your skeletons have the right substances. Now make the atoms add up.</p>
+    </div>
+    <a href="/chemistry/reactions/balancing-equations/">Balancing Equations &#8594;</a>
+  </div>
+</section>
+
+<footer>
+  <p>Translating between sentences and skeleton equations, with state symbols and diatomic elements. Every practice set reshuffles each time you use it.</p>
+  <p><a href="/chemistry/reactions/">← Unit 3 — Chemical Reactions</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/*CORE-START*/
+/* =========================================================
+   core: data, formula parser, grader, generators (no DOM)
+   ========================================================= */
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function shuffle(a){ a = a.slice(); for(var i=a.length-1;i>0;i--){ var j = Math.floor(Math.random()*(i+1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function stripTags(s){ return String(s).replace(/<[^>]*>/g,''); }
+function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+function gcd(a,b){ a = Math.abs(a); b = Math.abs(b); while(b){ var t = b; b = a % b; a = t; } return a; }
+
+/* formulas as HTML */
+function fmt(f){ return esc(f).replace(/([A-Za-z\)\]])(\d+)/g,'$1<sub>$2</sub>'); }
+function chg(q){ var a = Math.abs(q); return (a === 1 ? '' : a) + (q > 0 ? '+' : '&#8722;'); }
+function ionHTML(f,q){ return fmt(f) + '<sup>' + chg(q) + '</sup>'; }
+function termHTML(f, s, coef){ return (coef ? coef + ' ' : '') + fmt(f) + (s ? '<span class="st">(' + s + ')</span>' : ''); }
+function eqHTML(r, p){
+  function side(list){ return list.map(function(sp){ return termHTML(sp.f, sp.s); }).join(' + '); }
+  return side(r) + ' &#8594; ' + side(p);
+}
+/* phrase text in sentences may contain [[C3H8]] formula markers */
+function richText(t){ return esc(t).replace(/\[\[([^\]]+)\]\]/g, function(m, f){ return fmt(f); }); }
+function plainText(t){ return String(t).replace(/\[\[([^\]]+)\]\]/g,'$1'); }
+
+var ELEMENTS = 'H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr Rb Sr Y Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn Fr Ra Ac Th Pa U Np Pu Am Cm Bk Cf Es Fm Md No Lr Rf Db Sg Bh Hs Mt Ds Rg Cn Nh Fl Mc Lv Ts Og'.split(' ');
+var DIATOMIC2 = { H2:'hydrogen', N2:'nitrogen', O2:'oxygen', F2:'fluorine', Cl2:'chlorine', Br2:'bromine', I2:'iodine' };
+var DIA_EL = { H:'hydrogen', N:'nitrogen', O:'oxygen', F:'fluorine', Cl:'chlorine', Br:'bromine', I:'iodine' };
+
+/* ions used to build every ionic formula on the page */
+var CATIONS = {
+  'sodium':['Na',1], 'potassium':['K',1], 'silver':['Ag',1], 'ammonium':['NH4',1], 'copper(I)':['Cu',1],
+  'magnesium':['Mg',2], 'calcium':['Ca',2], 'barium':['Ba',2], 'zinc':['Zn',2], 'copper(II)':['Cu',2],
+  'iron(II)':['Fe',2], 'mercury(II)':['Hg',2],
+  'iron(III)':['Fe',3], 'aluminum':['Al',3]
+};
+var ANIONS = {
+  'chloride':['Cl',-1], 'bromide':['Br',-1], 'iodide':['I',-1], 'oxide':['O',-2], 'hydroxide':['OH',-1],
+  'nitrate':['NO3',-1], 'nitrite':['NO2',-1], 'sulfate':['SO4',-2], 'sulfite':['SO3',-2],
+  'carbonate':['CO3',-2], 'bicarbonate':['HCO3',-1], 'phosphate':['PO4',-3], 'phosphite':['PO3',-3],
+  'acetate':['C2H3O2',-1], 'chlorate':['ClO3',-1], 'chlorite':['ClO2',-1], 'bromate':['BrO3',-1], 'iodate':['IO3',-1]
+};
+function isPoly(f){ return /\d/.test(f) || (f.match(/[A-Z]/g) || []).length > 1; }
+function ionUnit(f, n){ if(n === 1) return f; return isPoly(f) ? '(' + f + ')' + n : f + n; }
+function splitIonName(name){
+  var best = null;
+  for(var k in CATIONS){ if(name.indexOf(k + ' ') === 0 && (!best || k.length > best.length)) best = k; }
+  if(!best) return null;
+  var an = name.slice(best.length + 1);
+  return ANIONS[an] ? { cat:best, an:an } : null;
+}
+/* criss-cross and reduce */
+function ionicFormula(name){
+  var p = splitIonName(name), c = CATIONS[p.cat], a = ANIONS[p.an];
+  var qc = c[1], qa = -a[1], g = gcd(qc, qa);
+  return ionUnit(c[0], qa/g) + ionUnit(a[0], qc/g);
+}
+
+/* species builders.  k: el = element, ion = ionic, cov = prefixes, common = memorized name, given = formula stated in sentence */
+function E(n, f, s, cue){ return { n:n, f:f, s:s, k:'el', cue:cue || null }; }
+function I(n, s){ var p = splitIonName(n); return { n:n, f:ionicFormula(n), s:s, k:'ion', cat:p.cat, an:p.an }; }
+function M(n, f, s, k){ return { n:n, f:f, s:s, k:k }; }
+var BURNED = 'burned in oxygen';
+
+/* the bank.  {i|phrase} marks species i, reactants first, then products.
+   ty is for verification only and is never shown.  bal = lowest whole-number coefficients (verification only). */
+var BANK = [
+  { ty:'syn', t:'{0|Solid sodium} reacts with {1|chlorine gas} to form {2|solid sodium chloride}.',
+    r:[E('sodium','Na','s'), E('chlorine','Cl2','g')], p:[I('sodium chloride','s')], bal:[2,1,2] },
+  { ty:'syn', t:'{0|Hydrogen gas} and {1|nitrogen gas} combine to form {2|ammonia gas}.',
+    r:[E('hydrogen','H2','g'), E('nitrogen','N2','g')], p:[M('ammonia','NH3','g','common')], bal:[3,1,2] },
+  { ty:'syn', t:'{0|A strip of magnesium} is burned in {1|oxygen} to produce {2|solid magnesium oxide}.',
+    r:[E('magnesium','Mg','s'), E('oxygen','O2','g',BURNED)], p:[I('magnesium oxide','s')], bal:[2,1,2] },
+  { ty:'syn', t:'{0|Solid aluminum} reacts with {1|liquid bromine} to form {2|solid aluminum bromide}.',
+    r:[E('aluminum','Al','s'), E('bromine','Br2','l')], p:[I('aluminum bromide','s')], bal:[2,3,2] },
+  { ty:'syn', t:'{0|Powdered iron} reacts with {1|chlorine gas} to produce {2|solid iron(III) chloride}.',
+    r:[E('iron','Fe','s'), E('chlorine','Cl2','g')], p:[I('iron(III) chloride','s')], bal:[2,3,2] },
+  { ty:'syn', t:'{0|Solid potassium} and {1|solid iodine} combine to form {2|solid potassium iodide}.',
+    r:[E('potassium','K','s'), E('iodine','I2','s')], p:[I('potassium iodide','s')], bal:[2,1,2] },
+  { ty:'syn', t:'{0|Solid calcium oxide} reacts with {1|carbon dioxide gas} to form {2|solid calcium carbonate}.',
+    r:[I('calcium oxide','s'), M('carbon dioxide','CO2','g','cov')], p:[I('calcium carbonate','s')], bal:[1,1,1] },
+  { ty:'syn', t:'{0|Solid sodium oxide} is added to {1|liquid water}, forming {2|aqueous sodium hydroxide}.',
+    r:[I('sodium oxide','s'), M('water','H2O','l','common')], p:[I('sodium hydroxide','aq')], bal:[1,1,2] },
+
+  { ty:'dec', t:'{0|Solid potassium chlorate} decomposes when heated into {1|solid potassium chloride} and {2|oxygen gas}.',
+    r:[I('potassium chlorate','s')], p:[I('potassium chloride','s'), E('oxygen','O2','g')], bal:[2,2,3] },
+  { ty:'dec', t:'An electric current decomposes {0|liquid water} into {1|hydrogen gas} and {2|oxygen gas}.',
+    r:[M('water','H2O','l','common')], p:[E('hydrogen','H2','g'), E('oxygen','O2','g')], bal:[2,2,1] },
+  { ty:'dec', t:'{0|Aqueous hydrogen peroxide} decomposes into {1|liquid water} and {2|oxygen gas}.',
+    r:[M('hydrogen peroxide','H2O2','aq','common')], p:[M('water','H2O','l','common'), E('oxygen','O2','g')], bal:[2,2,1] },
+  { ty:'dec', t:'Heating {0|solid calcium carbonate} produces {1|solid calcium oxide} and {2|carbon dioxide gas}.',
+    r:[I('calcium carbonate','s')], p:[I('calcium oxide','s'), M('carbon dioxide','CO2','g','cov')], bal:[1,1,1] },
+  { ty:'dec', t:'{0|Gaseous dinitrogen pentoxide} decomposes into {1|nitrogen dioxide gas} and {2|oxygen gas}.',
+    r:[M('dinitrogen pentoxide','N2O5','g','cov')], p:[M('nitrogen dioxide','NO2','g','cov'), E('oxygen','O2','g')], bal:[2,4,1] },
+  { ty:'dec', t:'{0|Solid copper(II) hydroxide} decomposes into {1|solid copper(II) oxide} and {2|water vapor}.',
+    r:[I('copper(II) hydroxide','s')], p:[I('copper(II) oxide','s'), M('water','H2O','g','common')], bal:[1,1,1] },
+  { ty:'dec', t:'{0|Solid mercury(II) oxide} decomposes into {1|liquid mercury} and {2|oxygen gas}.',
+    r:[I('mercury(II) oxide','s')], p:[E('mercury','Hg','l'), E('oxygen','O2','g')], bal:[2,2,1] },
+
+  { ty:'sr', hero:true, t:'{0|A strip of zinc} is placed in {1|an aqueous solution of copper(II) sulfate}, producing {2|aqueous zinc sulfate} and {3|solid copper}.',
+    r:[E('zinc','Zn','s'), I('copper(II) sulfate','aq')], p:[I('zinc sulfate','aq'), E('copper','Cu','s')], bal:[1,1,1,1] },
+  { ty:'sr', t:'{0|Solid copper} is added to {1|aqueous silver nitrate}, forming {2|aqueous copper(II) nitrate} and {3|solid silver}.',
+    r:[E('copper','Cu','s'), I('silver nitrate','aq')], p:[I('copper(II) nitrate','aq'), E('silver','Ag','s')], bal:[1,2,1,2] },
+  { ty:'sr', t:'{0|Chlorine gas} is bubbled through {1|aqueous sodium bromide}, producing {2|aqueous sodium chloride} and {3|liquid bromine}.',
+    r:[E('chlorine','Cl2','g'), I('sodium bromide','aq')], p:[I('sodium chloride','aq'), E('bromine','Br2','l')], bal:[1,2,2,1] },
+  { ty:'sr', t:'{0|Solid magnesium} reacts with {1|hydrochloric acid (aqueous [[HCl]])} to produce {2|aqueous magnesium chloride} and {3|hydrogen gas}.',
+    r:[E('magnesium','Mg','s'), M('hydrochloric acid','HCl','aq','given')], p:[I('magnesium chloride','aq'), E('hydrogen','H2','g')], bal:[1,2,1,1] },
+  { ty:'sr', t:'{0|Solid aluminum} is placed in {1|an aqueous solution of iron(III) nitrate}, producing {2|aqueous aluminum nitrate} and {3|solid iron}.',
+    r:[E('aluminum','Al','s'), I('iron(III) nitrate','aq')], p:[I('aluminum nitrate','aq'), E('iron','Fe','s')], bal:[1,1,1,1] },
+  { ty:'sr', t:'{0|Solid sodium} is dropped into {1|liquid water}, producing {2|aqueous sodium hydroxide} and {3|hydrogen gas}.',
+    r:[E('sodium','Na','s'), M('water','H2O','l','common')], p:[I('sodium hydroxide','aq'), E('hydrogen','H2','g')], bal:[2,2,2,1] },
+  { ty:'sr', t:'{0|Liquid bromine} is added to {1|aqueous calcium iodide}, producing {2|aqueous calcium bromide} and {3|solid iodine}.',
+    r:[E('bromine','Br2','l'), I('calcium iodide','aq')], p:[I('calcium bromide','aq'), E('iodine','I2','s')], bal:[1,1,1,1] },
+  { ty:'sr', t:'{0|Powdered iron} is added to {1|aqueous copper(II) chloride}, producing {2|aqueous iron(II) chloride} and {3|solid copper}.',
+    r:[E('iron','Fe','s'), I('copper(II) chloride','aq')], p:[I('iron(II) chloride','aq'), E('copper','Cu','s')], bal:[1,1,1,1] },
+
+  { ty:'dr', t:'{0|Aqueous silver nitrate} reacts with {1|aqueous sodium chloride} to produce {2|solid silver chloride} and {3|aqueous sodium nitrate}.',
+    r:[I('silver nitrate','aq'), I('sodium chloride','aq')], p:[I('silver chloride','s'), I('sodium nitrate','aq')], bal:[1,1,1,1] },
+  { ty:'dr', t:'{0|An aqueous solution of barium chloride} is mixed with {1|an aqueous solution of sodium sulfate}, forming {2|solid barium sulfate} and {3|aqueous sodium chloride}.',
+    r:[I('barium chloride','aq'), I('sodium sulfate','aq')], p:[I('barium sulfate','s'), I('sodium chloride','aq')], bal:[1,1,1,2] },
+  { ty:'dr', t:'{0|Aqueous iron(III) chloride} is mixed with {1|aqueous sodium hydroxide}, producing {2|solid iron(III) hydroxide} and {3|aqueous sodium chloride}.',
+    r:[I('iron(III) chloride','aq'), I('sodium hydroxide','aq')], p:[I('iron(III) hydroxide','s'), I('sodium chloride','aq')], bal:[1,3,1,3] },
+  { ty:'dr', t:'{0|Aqueous calcium nitrate} reacts with {1|aqueous ammonium phosphate} to form {2|solid calcium phosphate} and {3|aqueous ammonium nitrate}.',
+    r:[I('calcium nitrate','aq'), I('ammonium phosphate','aq')], p:[I('calcium phosphate','s'), I('ammonium nitrate','aq')], bal:[3,2,1,6] },
+  { ty:'dr', t:'{0|Aqueous copper(II) sulfate} reacts with {1|aqueous potassium carbonate} to produce {2|solid copper(II) carbonate} and {3|aqueous potassium sulfate}.',
+    r:[I('copper(II) sulfate','aq'), I('potassium carbonate','aq')], p:[I('copper(II) carbonate','s'), I('potassium sulfate','aq')], bal:[1,1,1,1] },
+  { ty:'dr', t:'{0|Aqueous sodium carbonate} is added to {1|aqueous zinc acetate}, forming {2|solid zinc carbonate} and {3|aqueous sodium acetate}.',
+    r:[I('sodium carbonate','aq'), I('zinc acetate','aq')], p:[I('zinc carbonate','s'), I('sodium acetate','aq')], bal:[1,1,1,2] },
+  { ty:'dr', t:'{0|Sulfuric acid (aqueous [[H2SO4]])} reacts with {1|aqueous potassium hydroxide} to produce {2|aqueous potassium sulfate} and {3|liquid water}.',
+    r:[M('sulfuric acid','H2SO4','aq','given'), I('potassium hydroxide','aq')], p:[I('potassium sulfate','aq'), M('water','H2O','l','common')], bal:[1,2,1,2] },
+
+  { ty:'comb', t:'{0|Methane gas} burns in {1|oxygen gas} to produce {2|carbon dioxide gas} and {3|water vapor}.',
+    r:[M('methane','CH4','g','common'), E('oxygen','O2','g')], p:[M('carbon dioxide','CO2','g','cov'), M('water','H2O','g','common')], bal:[1,2,1,2] },
+  { ty:'comb', t:'{0|Propane gas ([[C3H8]])} is burned in {1|oxygen gas}, producing {2|carbon dioxide gas} and {3|liquid water}.',
+    r:[M('propane','C3H8','g','given'), E('oxygen','O2','g')], p:[M('carbon dioxide','CO2','g','cov'), M('water','H2O','l','common')], bal:[1,5,3,4] },
+  { ty:'comb', t:'{0|Liquid octane ([[C8H18]])} is burned in {1|oxygen} to produce {2|carbon dioxide gas} and {3|water vapor}.',
+    r:[M('octane','C8H18','l','given'), E('oxygen','O2','g',BURNED)], p:[M('carbon dioxide','CO2','g','cov'), M('water','H2O','g','common')], bal:[2,25,16,18] },
+  { ty:'comb', t:'{0|Liquid ethanol ([[C2H5OH]])} burns in {1|oxygen gas}, forming {2|carbon dioxide gas} and {3|water vapor}.',
+    r:[M('ethanol','C2H5OH','l','given'), E('oxygen','O2','g')], p:[M('carbon dioxide','CO2','g','cov'), M('water','H2O','g','common')], bal:[1,3,2,3] },
+  { ty:'comb', t:'{0|Butane gas ([[C4H10]])} reacts with {1|oxygen gas} to produce {2|carbon dioxide gas} and {3|liquid water}.',
+    r:[M('butane','C4H10','g','given'), E('oxygen','O2','g')], p:[M('carbon dioxide','CO2','g','cov'), M('water','H2O','l','common')], bal:[2,13,8,10] }
+];
+
+function splitSentence(t){
+  var re = /\{(\d+)\|([^}]*)\}/g, out = [], last = 0, mm;
+  while((mm = re.exec(t))){
+    if(mm.index > last) out.push({ txt:t.slice(last, mm.index), m:-1 });
+    out.push({ txt:mm[2], m:Number(mm[1]) });
+    last = re.lastIndex;
+  }
+  if(last < t.length) out.push({ txt:t.slice(last), m:-1 });
+  return out;
+}
+BANK.forEach(function(e){
+  e.parts = splitSentence(e.t);
+  e.all = e.r.concat(e.p);
+  e.ph = [];
+  e.phH = [];
+  e.parts.forEach(function(p){ if(p.m >= 0){ e.ph[p.m] = plainText(p.txt); e.phH[p.m] = richText(p.txt); } });
+});
+function sentenceHTML(e){ return e.parts.map(function(p){ return richText(p.txt); }).join(''); }
+
+/* state cues: the wording decides the state */
+var CUE_RULES = [
+  { re:/an aqueous solution of|a solution of|aqueous|dissolved in water|solution|dissolved/i, s:'aq', why:'means dissolved in water' },
+  { re:/vapou?r|gaseous|\bgas\b/i, s:'g', why:'means a gas' },
+  { re:/liquid/i, s:'l', why:'means a pure liquid' },
+  { re:/solid|a strip of|strip|powdered|crystals/i, s:'s', why:'describes a solid' }
+];
+function stateCue(sp, phraseText){
+  if(sp && sp.cue) return { s:'g', w:sp.cue, why:'always means oxygen gas, O<sub>2</sub>(g)' };
+  var txt = plainText(phraseText);
+  for(var i=0;i<CUE_RULES.length;i++){
+    var m = CUE_RULES[i].re.exec(txt);
+    if(m) return { s:CUE_RULES[i].s, w:m[0], why:CUE_RULES[i].why };
+  }
+  return null;
+}
+var STATE_WORD = { s:'a solid', l:'a pure liquid', g:'a gas', aq:'dissolved in water (aqueous)' };
+
+/* ---------- formula + equation parser ---------- */
+function addComp(into, c, n){ for(var k in c){ into[k] = (into[k] || 0) + c[k]*n; } return into; }
+function compKey(c){ return Object.keys(c).sort().map(function(k){ return k + c[k]; }).join(' '); }
+function elSet(c){ return Object.keys(c).sort().join(','); }
+function compOf(f){ return parseFormula(f).comp; }
+
+function parseFormula(s){
+  var i = 0, err = null;
+  function num(){
+    var m = /^\d+/.exec(s.slice(i));
+    if(m){ i += m[0].length; return parseInt(m[0], 10); }
+    return 1;
+  }
+  function group(close){
+    var comp = {}, any = false;
+    while(i < s.length){
+      var c = s.charAt(i);
+      if(c === '(' || c === '['){
+        i++;
+        var inner = group(c === '(' ? ')' : ']');
+        if(inner === null) return null;
+        var n = num();
+        if(n === 0){ err = { code:'zero' }; return null; }
+        addComp(comp, inner, n); any = true;
+      } else if(c === ')' || c === ']'){
+        if(c !== close || !any){ err = { code:'paren' }; return null; }
+        i++; return comp;
+      } else if(/[A-Z]/.test(c)){
+        var two = s.substr(i, 2), sym;
+        if(/^[A-Z][a-z]$/.test(two) && ELEMENTS.indexOf(two) !== -1) sym = two;
+        else if(ELEMENTS.indexOf(c) !== -1) sym = c;
+        else { err = { code:'sym', sym:(/^[A-Z][a-z]$/.test(two) ? two : c) }; return null; }
+        i += sym.length;
+        var n2 = num();
+        if(n2 === 0){ err = { code:'zero' }; return null; }
+        comp[sym] = (comp[sym] || 0) + n2; any = true;
+      } else if(/[a-z]/.test(c)){ err = { code:'lower', ch:c }; return null; }
+      else if(/\d/.test(c)){ err = { code:'digit' }; return null; }
+      else { err = { code:'char', ch:c }; return null; }
+    }
+    if(close){ err = { code:'paren' }; return null; }
+    if(!any){ err = { code:'empty' }; return null; }
+    return comp;
+  }
+  var comp = group(null);
+  return comp ? { ok:true, comp:comp } : { ok:false, err:err };
+}
+
+function parseTerm(t){
+  var m = /^(\d*)(.*?)(?:\((s|l|g|aq)\))?$/i.exec(t);
+  var coef = m[1] ? parseInt(m[1], 10) : null, f = m[2], st = m[3] ? m[3].toLowerCase() : null;
+  if(!f) return { err:{ code:'empty' }, raw:t };
+  if(coef === 0) return { err:{ code:'zero' }, raw:t };
+  if(!st && /\([a-z]+\)$/.test(f)) return { err:{ code:'state' }, raw:t };
+  var pf = parseFormula(f);
+  if(!pf.ok) return { err:pf.err, raw:t };
+  return { coef:coef, raw:f, comp:pf.comp, key:compKey(pf.comp), state:st };
+}
+
+function parseEquation(raw){
+  var s = String(raw).replace(/[₀-₉]/g, function(c){ return String(c.charCodeAt(0) - 0x2080); });
+  s = s.replace(/\s+/g, '');
+  if(!s) return { err:'empty' };
+  s = s.replace(/-+>|=+>|→|⟶|⇒|=+/g, '>');
+  var sides = s.split('>');
+  if(sides.length < 2) return { err:'noarrow' };
+  if(sides.length > 2) return { err:'twoarrows' };
+  if(!sides[0] || !sides[1]) return { err:'emptyside' };
+  var out = { r:[], p:[] }, bad = null;
+  [['r', sides[0]], ['p', sides[1]]].forEach(function(pair){
+    pair[1].split('+').forEach(function(t){
+      if(bad) return;
+      if(!t){ bad = { err:'emptyterm' }; return; }
+      if(/^(heat|energy|light|electricity|\u0394|delta)$/i.test(t)){ bad = { err:'heat' }; return; }
+      var term = parseTerm(t);
+      if(term.err){ bad = { err:'term', term:term }; return; }
+      out[pair[0]].push(term);
+    });
+  });
+  return bad || out;
+}
+
+function parseErrorHTML(pe){
+  switch(pe.err){
+    case 'empty': return 'Type the equation first: reactants, an arrow, then products.';
+    case 'noarrow': return 'There’s no arrow. Put <span class="mono">-&gt;</span>, <span class="mono">=</span>, or <span class="mono">&#8594;</span> between the reactants and the products.';
+    case 'twoarrows': return 'There’s more than one arrow. An equation has exactly one, between reactants and products.';
+    case 'emptyside': return 'One side of the arrow is empty. Reactants go on the left, products on the right.';
+    case 'heat': return 'Leave conditions like heat out of the equation. In this class, only substances are written: never heat as a reactant, and nothing over the arrow.';
+    case 'emptyterm': return 'There’s a <span class="mono">+</span> with nothing on one side of it.';
+  }
+  var t = pe.term, e = t.err, raw = '<span class="mono">' + esc(t.raw) + '</span>';
+  switch(e.code){
+    case 'lower': return 'Can’t read ' + raw + '. Every element symbol starts with a capital letter, and a second letter is lowercase: <span class="mono">Cl</span>, not <span class="mono">cl</span> or <span class="mono">CL</span>.';
+    case 'sym': return 'Can’t read ' + raw + ': <span class="mono">' + esc(e.sym) + '</span> isn’t an element symbol. Check the capital letters.';
+    case 'paren': return 'Can’t read ' + raw + ': the parentheses don’t pair up.';
+    case 'state': return 'Can’t read ' + raw + '. State symbols are <span class="mono">(s)</span>, <span class="mono">(l)</span>, <span class="mono">(g)</span>, or <span class="mono">(aq)</span>.';
+    case 'zero': return 'Can’t read ' + raw + ': a zero there doesn’t mean anything.';
+    case 'empty': return 'Can’t read ' + raw + ': there’s a state symbol or coefficient with no formula.';
+    default: return 'Can’t read ' + raw + '. Use element symbols, digits, parentheses, and a state symbol at the end.';
+  }
+}
+
+function termOut(t){ return termHTML(t.raw, t.state, t.coef); }
+function equationOut(eq){ return eq.r.map(termOut).join(' + ') + ' &#8594; ' + eq.p.map(termOut).join(' + '); }
+
+/* ---------- grader ---------- */
+function diagnoseFormula(sp, t){
+  var F = '<span class="mono">' + fmt(sp.f) + '</span>', Y = '<span class="mono">' + fmt(t.raw) + '</span>';
+  var head = 'For <b>' + esc(sp.n) + '</b> you wrote ' + Y + '. ';
+  var exp = compOf(sp.f);
+  var flatRaw = t.raw.replace(/[()\[\]]/g,''), flatExp = sp.f.replace(/[()]/g,'');
+
+  if(sp.f.indexOf('(') !== -1 && t.raw === flatExp)
+    return head + 'A polyatomic ion needs parentheses when there is more than one of it. Without them, the last digits run together and change the count. Write ' + F + '.';
+  if(flatRaw !== flatExp && flatRaw.toLowerCase() === flatExp.toLowerCase())
+    return head + 'Check the capital letters: each symbol starts with a capital and any second letter is lowercase. (<span class="mono">Co</span> is cobalt, but <span class="mono">CO</span> is carbon and oxygen.) It should be ' + F + '.';
+
+  if(sp.k === 'el'){
+    var els = Object.keys(t.comp), sym = Object.keys(exp)[0];
+    if(DIATOMIC2[sp.f] && els.length === 1 && els[0] === sym){
+      if(t.comp[sym] === 1 && t.coef === 2)
+        return 'For <b>' + esc(sp.n) + '</b> you wrote <span class="mono">2 ' + fmt(t.raw) + '</span>. That means two loose atoms. ' + cap(sp.n) + ' standing alone is one molecule made of a pair: ' + F + '.';
+      if(t.comp[sym] === 1)
+        return head + cap(sp.n) + ' is one of the seven diatomic elements, and here it stands alone, so it’s the pair: ' + F + '.';
+      return head + cap(sp.n) + ' standing alone is diatomic, which means exactly two atoms: ' + F + '.';
+    }
+    if(!DIATOMIC2[sp.f] && els.length === 1 && els[0] === sym)
+      return head + cap(sp.n) + ' isn’t diatomic. Only H, N, O, F, Cl, Br, and I pair up when alone. Write ' + F + '.';
+    return head + cap(sp.n) + ' is the element by itself: ' + F + '.';
+  }
+
+  if(sp.k === 'ion'){
+    var c = CATIONS[sp.cat], a = ANIONS[sp.an];
+    var cc = compOf(c[0]), ac = compOf(a[0]);
+    var ions = ionHTML(c[0], c[1]) + ' and ' + ionHTML(a[0], a[1]);
+    var expA = 0, expB = 0, x, y;
+    for(x=1;x<=6;x++) for(y=1;y<=6;y++){
+      if(compKey(addComp(addComp({}, cc, x), ac, y)) === compKey(exp)){ expA = x; expB = y; }
+    }
+    for(x=1;x<=8;x++) for(y=1;y<=8;y++){
+      if(compKey(addComp(addComp({}, cc, x), ac, y)) !== t.key) continue;
+      var net = x*c[1] + y*a[1];
+      if(net !== 0){
+        if(DIA_EL[a[0]] && x === expA && y === 2*expB)
+          return head + 'The diatomic 2 doesn’t follow ' + DIA_EL[a[0]] + ' into a compound. Inside ' + esc(sp.n) + ' it is the ion ' + ionHTML(a[0], a[1]) + ', and the charges of ' + ions + ' give ' + F + '.';
+        var sg = function(q){ return (q > 0 ? '+' : '&#8722;') + Math.abs(q); };
+        return head + 'Those charges don’t cancel: ' + x + ' &#215; (' + sg(c[1]) + ') and ' + y + ' &#215; (' + sg(a[1]) + ') leaves ' + sg(net) + '. ' +
+          cap(esc(sp.n)) + ' is built from ' + ions + '; criss-cross the charges to get ' + F + '.';
+      }
+      if(gcd(x, y) > 1)
+        return head + 'The charges cancel, but ionic formulas are written in the lowest whole-number ratio. Reduce it to ' + F + '.';
+    }
+    return head + cap(esc(sp.n)) + ' is built from ' + ions + ', which gives ' + F + '.' +
+      (isPoly(a[0]) ? ' Check the polyatomic ion: ' + esc(sp.an) + ' is ' + ionHTML(a[0], a[1]) + '.' : '');
+  }
+  if(sp.k === 'cov') return head + 'In a covalent name the prefixes are the subscripts, so ' + esc(sp.n) + ' is ' + F + '.';
+  if(sp.k === 'common') return head + cap(esc(sp.n)) + ' is ' + F + '. That one is a name to memorize.';
+  return head + 'The sentence gives this formula: ' + F + '.';
+}
+
+var ISSUE_RANK = { formula:1, side:2, missing:3, extra:4, nostates:5, statemiss:6, statewrong:7 };
+
+function grade(entry, eq){
+  var Ex = [], S = [], issues = [], notes = [];
+  entry.all.forEach(function(sp, i){
+    var c = compOf(sp.f);
+    Ex.push({ sp:sp, side:(i < entry.r.length ? 'r' : 'p'), ph:entry.ph[i], phH:entry.phH[i], key:compKey(c), set:elSet(c), comp:c });
+  });
+  eq.r.forEach(function(t){ S.push({ t:t, side:'r', used:false, set:elSet(t.comp) }); });
+  eq.p.forEach(function(t){ S.push({ t:t, side:'p', used:false, set:elSet(t.comp) }); });
+
+  function take(e, test, how){
+    for(var k=0;k<S.length;k++){
+      if(!S[k].used && test(S[k])){ S[k].used = true; e.s = S[k]; e.how = how; return; }
+    }
+  }
+  function overlap(a, b){ for(var k in a){ if(!b[k]) return false; } return true; } /* student elements all appear in the expected species */
+  Ex.forEach(function(e){ take(e, function(s){ return s.side === e.side && s.t.key === e.key; }, 'exact'); });
+  Ex.forEach(function(e){ if(!e.s) take(e, function(s){ return s.t.key === e.key; }, 'exact'); });
+  Ex.forEach(function(e){ if(!e.s) take(e, function(s){ return s.side === e.side && s.set === e.set; }, 'near'); });
+  Ex.forEach(function(e){ if(!e.s) take(e, function(s){ return s.set === e.set; }, 'near'); });
+  function flat(x){ return x.replace(/[()\[\]]/g,'').toLowerCase(); }
+  Ex.forEach(function(e){ if(!e.s) take(e, function(s){ return flat(s.t.raw) === flat(e.sp.f); }, 'near'); });
+  Ex.forEach(function(e){ if(!e.s) take(e, function(s){ return s.side === e.side && overlap(s.t.comp, e.comp); }, 'loose'); });
+
+  var anyState = S.some(function(s){ return !!s.t.state; });
+  if(S.length && !anyState)
+    issues.push({ type:'nostates', html:'None of your species has a state symbol. Each one needs <span class="mono">(s)</span>, <span class="mono">(l)</span>, <span class="mono">(g)</span>, or <span class="mono">(aq)</span>, taken from the wording of the sentence.' });
+
+  Ex.forEach(function(e){
+    var sp = e.sp, quote = '“' + e.phH + '”';
+    if(!e.s){
+      issues.push({ type:'missing', sp:sp, html:'Something is missing. The sentence also mentions <b>' + quote + '</b>, ' +
+        (e.side === 'r' ? 'one of the reactants.' : 'one of the products.') });
+      return;
+    }
+    var t = e.s.t;
+    if(e.how !== 'exact') issues.push({ type:'formula', sp:sp, html:diagnoseFormula(sp, t) });
+    else if(sp.f.indexOf('(') !== -1 && t.raw.indexOf('(') === -1)
+      notes.push('Right atoms in ' + '<span class="mono">' + fmt(t.raw) + '</span>, but keep polyatomic ions together as a unit: <span class="mono">' + fmt(sp.f) + '</span>.');
+    if(e.s.side !== e.side){
+      issues.push({ type:'side', sp:sp, html: e.side === 'r'
+        ? '<b>' + cap(esc(sp.n)) + '</b> belongs on the <b>left</b> of the arrow. It is a starting material: ' + quote + '.'
+        : '<b>' + cap(esc(sp.n)) + '</b> belongs on the <b>right</b> of the arrow. The sentence says it is produced: ' + quote + '.' });
+    }
+    if(anyState && e.how !== 'loose'){
+      var cue = stateCue(sp, e.ph);
+      var why = '“' + esc(cue.w.toLowerCase()) + '” ' + cue.why + ', so it’s <b>(' + sp.s + ')</b>.';
+      if(!t.state)
+        issues.push({ type:'statemiss', sp:sp, html:'<span class="mono">' + fmt(t.raw) + '</span> has no state symbol. ' + why });
+      else if(t.state !== sp.s)
+        issues.push({ type:'statewrong', sp:sp, html:'You wrote <span class="mono">' + fmt(t.raw) + '(' + t.state + ')</span>, but ' + why });
+    }
+  });
+  S.forEach(function(s){
+    if(!s.used) issues.push({ type:'extra', html:'<span class="mono">' + fmt(s.t.raw) + '</span> isn’t part of this reaction. Every formula you write should come from a phrase in the sentence.' });
+  });
+  issues = issues.map(function(x, i){ x._i = i; return x; }).sort(function(a, b){
+    return (ISSUE_RANK[a.type] - ISSUE_RANK[b.type]) || (a._i - b._i);
+  });
+
+  var hasCoef = S.some(function(s){ return s.t.coef !== null; });
+  var balanced = null;
+  if(hasCoef){
+    var L = {}, R = {};
+    eq.r.forEach(function(t){ addComp(L, t.comp, t.coef || 1); });
+    eq.p.forEach(function(t){ addComp(R, t.comp, t.coef || 1); });
+    balanced = compKey(L) === compKey(R);
+  }
+  return { ok:issues.length === 0, issues:issues, notes:notes, hasCoef:hasCoef, balanced:balanced };
+}
+
+/* ---------- sentence templates for the reverse widget ---------- */
+function phraseFor(sp){
+  if(sp.f === 'H2O') return { l:'liquid water', g:'water vapor', s:'solid water', aq:'aqueous water' }[sp.s];
+  var nm = esc(sp.n) + (sp.k === 'given' ? ' (' + fmt(sp.f) + ')' : '');
+  if(sp.s === 'g') return sp.k === 'given' ? esc(sp.n) + ' gas (' + fmt(sp.f) + ')' : nm + ' gas';
+  return { s:'solid ', l:'liquid ', aq:'aqueous ' }[sp.s] + nm;
+}
+function andList(a){ return a.length === 1 ? a[0] : a.slice(0, -1).join(', ') + ' and ' + a[a.length-1]; }
+function templateSentence(r, p){
+  var R = r.map(phraseFor), P = p.map(phraseFor), s;
+  if(R.length === 1) s = R[0] + ' decomposes into ' + andList(P) + '.';
+  else if(P.length === 1) s = andList(R) + ' combine to form ' + P[0] + '.';
+  else s = R[0] + ' reacts with ' + R[1] + ' to produce ' + andList(P) + '.';
+  return cap(s);
+}
+
+var ANION_ALT = { nitrate:'nitrite', sulfate:'sulfite', chloride:'chlorate', chlorate:'chlorite', bromide:'bromate',
+  iodide:'iodate', phosphate:'phosphite', carbonate:'bicarbonate', hydroxide:'oxide', oxide:'hydroxide' };
+var CATION_ALT = { 'copper(II)':'copper(I)', 'iron(III)':'iron(II)', 'iron(II)':'iron(III)' };
+var MOL_ALT = {
+  'carbon dioxide':['carbon monoxide','CO','cov'], 'nitrogen dioxide':['dinitrogen tetroxide','N2O4','cov'],
+  'dinitrogen pentoxide':['dinitrogen tetroxide','N2O4','cov'], 'water':['hydrogen peroxide','H2O2','common'],
+  'hydrogen peroxide':['water','H2O','common'], 'methane':['ethane','C2H6','given'],
+  'propane':['butane','C4H10','given'], 'butane':['propane','C3H8','given'],
+  'ethanol':['methanol','CH3OH','given'], 'octane':['hexane','C6H14','given']
+};
+function altSpecies(sp){
+  if(sp.k === 'ion'){
+    var opts = [];
+    if(CATION_ALT[sp.cat]) opts.push(CATION_ALT[sp.cat] + ' ' + sp.an);
+    if(ANION_ALT[sp.an]) opts.push(sp.cat + ' ' + ANION_ALT[sp.an]);
+    if(!opts.length) return null;
+    return I(pick(opts), sp.s);
+  }
+  var m = MOL_ALT[sp.n];
+  return m ? M(m[0], m[1], sp.s, m[2]) : null;
+}
+function altState(sp){
+  return { s:'aq', aq:'s', l:'g', g:'l' }[sp.s];
+}
+function replaced(entry, idx, sp2){
+  var all = entry.all.slice(); all[idx] = sp2;
+  return { r:all.slice(0, entry.r.length), p:all.slice(entry.r.length) };
+}
+
+function genReverse(entry){
+  entry = entry || pick(BANK);
+  var correct = templateSentence(entry.r, entry.p);
+  var opts = [{ html:correct, ok:true, kind:'correct',
+    why:'Every substance, every state, and the direction match the equation.' }];
+  var seen = {}; seen[correct] = 1;
+  function add(o){ if(o && !seen[o.html]){ seen[o.html] = 1; opts.push(o); return true; } return false; }
+
+  /* direction */
+  var rev = templateSentence(entry.p, entry.r);
+  add({ html:rev, ok:false, kind:'direction',
+    why:'This one runs the reaction backward. It starts from ' + andList(entry.p.map(function(sp){ return '<span class="mono">' + fmt(sp.f) + '</span>'; })) +
+      ', but those are to the right of the arrow, so they are what gets made, not what you start with.' });
+
+  /* name */
+  var idxs = shuffle(entry.all.map(function(sp, i){ return i; }));
+  for(var a=0;a<idxs.length;a++){
+    var sp = entry.all[idxs[a]], alt = altSpecies(sp);
+    if(!alt) continue;
+    var parts = replaced(entry, idxs[a], alt);
+    if(add({ html:templateSentence(parts.r, parts.p), ok:false, kind:'name',
+      why:'This one says <b>' + esc(alt.n) + '</b>, which would be <span class="mono">' + fmt(alt.f) + '</span>. The equation shows <span class="mono">' +
+        fmt(sp.f) + '</span>, which is ' + esc(sp.n) + '.' })) break;
+  }
+
+  /* state (fills whatever is left) */
+  var tries = 0;
+  while(opts.length < 4 && tries < 60){
+    tries++;
+    var i2 = Math.floor(Math.random()*entry.all.length), sp2 = entry.all[i2];
+    if(sp2.k === 'given' || (sp2.k === 'common' && sp2.f !== 'H2O')) continue;
+    var mut = { n:sp2.n, f:sp2.f, s:altState(sp2), k:sp2.k };
+    var parts2 = replaced(entry, i2, mut);
+    add({ html:templateSentence(parts2.r, parts2.p), ok:false, kind:'state',
+      why:'This one says “' + phraseFor(mut) + '”, but the equation shows <span class="mono">' + fmt(sp2.f) + '(' + sp2.s + ')</span>, which is ' + STATE_WORD[sp2.s] + '.' });
+  }
+  /* rare fallback: a second name swap */
+  tries = 0;
+  while(opts.length < 4 && tries < 60){
+    tries++;
+    var i3 = Math.floor(Math.random()*entry.all.length), sp3 = entry.all[i3], alt3 = altSpecies(sp3);
+    if(!alt3) continue;
+    var parts3 = replaced(entry, i3, alt3);
+    add({ html:templateSentence(parts3.r, parts3.p), ok:false, kind:'name',
+      why:'This one says <b>' + esc(alt3.n) + '</b>, which would be <span class="mono">' + fmt(alt3.f) + '</span>. The equation shows <span class="mono">' + fmt(sp3.f) + '</span>.' });
+  }
+  return { entry:entry, opts:shuffle(opts) };
+}
+
+/* ---------- diatomic chips ---------- */
+function isDiatomicAlone(sp){ return sp.k === 'el' && !!DIATOMIC2[sp.f]; }
+function chipVerdict(sp, phrase, marked){
+  var want = isDiatomicAlone(sp), F = '<span class="mono">' + fmt(sp.f) + '</span>';
+  if(want && marked) return null;
+  if(!want && !marked) return null;
+  if(want) return '<b>“' + esc(phrase) + '”</b> is ' + sp.n + ' standing alone, so it’s the pair: ' + F + '.';
+  if(sp.k === 'el') return '<b>' + cap(esc(sp.n)) + '</b> isn’t one of the seven. Alone it is just ' + F + '.';
+  if(sp.k === 'ion'){
+    var c = CATIONS[sp.cat], a = ANIONS[sp.an];
+    return '<b>' + cap(esc(sp.n)) + '</b> is a compound. ' +
+      (DIA_EL[a[0]] ? 'It contains ' + DIA_EL[a[0]] + ', but as the ion ' + ionHTML(a[0], a[1]) + ', and the charges ' + ionHTML(c[0], c[1]) + ' and ' + ionHTML(a[0], a[1]) + ' set the subscripts: ' + F + '.'
+                     : 'Its subscripts come from the charges of ' + ionHTML(c[0], c[1]) + ' and ' + ionHTML(a[0], a[1]) + ': ' + F + '.');
+  }
+  if(sp.k === 'cov') return '<b>' + cap(esc(sp.n)) + '</b> is a compound, ' + F + '. Its subscripts come from the prefixes, not from anything being diatomic.';
+  return '<b>' + cap(esc(sp.n)) + '</b> is a compound, ' + F + ', not an element standing alone.';
+}
+
+/* ---------- state quick-fire pool ---------- */
+var STATE_EXTRA = [
+  { t:'powdered zinc', s:'s' }, { t:'sodium chloride dissolved in water', s:'aq' }, { t:'gaseous ammonia', s:'g' },
+  { t:'iodine crystals', s:'s' }, { t:'a solution of potassium nitrate in water', s:'aq' }, { t:'a strip of copper', s:'s' },
+  { t:'liquid mercury', s:'l' }, { t:'water vapor', s:'g' }, { t:'liquid water', s:'l' }, { t:'an aqueous solution of sugar', s:'aq' }
+];
+var STATE_POOL = (function(){
+  var seen = {}, out = [];
+  function add(t, s){ var key = plainText(t).toLowerCase(); if(seen[key]) return; seen[key] = 1; out.push({ t:t, s:s }); }
+  BANK.forEach(function(e){
+    e.all.forEach(function(sp, i){
+      var ph = sp.cue ? 'is ' + sp.cue : e.ph[i];
+      add(ph.charAt(0).toLowerCase() + ph.slice(1), sp.s);
+    });
+  });
+  STATE_EXTRA.forEach(function(x){ add(x.t, x.s); });
+  return out;
+})();
+/*CORE-END*/
+
+/* =========================================================
+   DOM helpers (same conventions as the other topic pages)
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function pickNew(list, last){ var x, n = 0; do { x = pick(list); n++; } while(x === last && n < 20); return x; }
+
+/* gloss: phrase above, symbol below, for any bank entry */
+function glossHTML(e){
+  var nr = e.r.length, h = '<div class="gloss">', seenFirst = false;
+  e.parts.forEach(function(p, idx){
+    if(p.m >= 0){
+      var sp = e.all[p.m], cue = stateCue(sp, plainText(p.txt));
+      var txt = richText(p.txt);
+      if(cue && !sp.cue){
+        var w = esc(cue.w);
+        txt = txt.replace(new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'i'), function(m){ return '<span class="gcue">' + m + '</span>'; });
+      }
+      h += '<div class="gcol sp"><div class="gph"><span>' + txt + '</span></div><div class="gdown"></div><div class="gsym">' + fmt(sp.f) + '<span class="st">(' + sp.s + ')</span></div></div>';
+      seenFirst = true;
+      return;
+    }
+    var raw = plainText(p.txt).replace(/^[\s,]+|[\s,.]+$/g, '');
+    if(!raw) return;
+    var sym, cls = 'cx';
+    if(!seenFirst){ sym = '&#8212;'; cls = 'nil'; }
+    else {
+      var prev = -1, next = -1;
+      for(var j=idx-1;j>=0;j--){ if(e.parts[j].m >= 0){ prev = e.parts[j].m; break; } }
+      for(var k=idx+1;k<e.parts.length;k++){ if(e.parts[k].m >= 0){ next = e.parts[k].m; break; } }
+      if(next === -1){ return; }
+      sym = (prev < nr && next >= nr) ? '&#8594;' : '+';
+    }
+    var label = esc(raw);
+    if(/burned in$/.test(raw) && e.all.some(function(sp){ return sp.cue; }))
+      label = label.replace(/burned in$/, '<span class="gcue">burned in</span>');
+    h += '<div class="gcol ' + cls + '"><div class="gph"><span>' + label + '</span></div><div class="gdown"></div><div class="gsym">' + sym + '</div></div>';
+  });
+  return h + '</div>';
+}
+
+/* =========================================================
+   hero
+   ========================================================= */
+(function hero(){
+  var e = BANK.filter(function(x){ return x.hero; })[0];
+  el('hero-gloss').innerHTML = glossHTML(e);
+  el('hero-eq').innerHTML = eqHTML(e.r, e.p);
+})();
+
+/* =========================================================
+   1. state quick-fire
+   ========================================================= */
+var stState = null, stScore = Score(el('st-score'));
+var stBtns = Array.prototype.slice.call(el('st-btns').querySelectorAll('button'));
+function stNew(){
+  stState = { item:pickNew(STATE_POOL, stState && stState.item), done:false };
+  el('st-phrase').innerHTML = '“' + richText(stState.item.t) + '”';
+  stBtns.forEach(function(b){ b.disabled = false; b.className = ''; });
+  hideFb(el('st-fb'));
+}
+function stAnswer(s){
+  if(stState.done) return;
+  stState.done = true;
+  var it = stState.item, cue = stateCue(null, it.t);
+  if(/burned in oxygen/.test(it.t)) cue = { w:'burned in oxygen', why:'always means oxygen gas, O<sub>2</sub>(g)' };
+  var ok = s === it.s;
+  stScore.add(ok);
+  stBtns.forEach(function(b){
+    b.disabled = true;
+    if(b.dataset.s === it.s) b.className = 'yes';
+    else if(b.dataset.s === s) b.className = 'no';
+  });
+  var because = '“' + esc(cue.w.toLowerCase()) + '” ' + cue.why + ', so it’s <b>(' + it.s + ')</b>.';
+  var extra = '';
+  if(!ok && s === 'l' && it.s === 'aq') extra = ' Dissolved isn’t the same as liquid: the substance is spread through water, so it’s (aq), not (l).';
+  else if(!ok && s === 'aq' && it.s === 'l') extra = ' (aq) means dissolved <em>in</em> water. A pure liquid on its own, like water itself, is (l).';
+  else if(!ok && s === 'l' && it.s === 'g' && /vapor/.test(it.t)) extra = ' Vapor is the gas form, even though it comes from a liquid.';
+  setFb(el('st-fb'), ok ? 'good' : 'bad', '<b>' + (ok ? 'Yes.' : 'Not this one.') + '</b> ' + because + extra);
+}
+stBtns.forEach(function(b){ b.addEventListener('click', function(){ stAnswer(b.dataset.s); }); });
+el('st-new').addEventListener('click', stNew);
+
+/* =========================================================
+   2. diatomic chips
+   ========================================================= */
+var dState = null, dScore = Score(el('d-score'));
+function dNew(){
+  var e = pickNew(BANK, dState && dState.e);
+  dState = { e:e, marked:{}, done:false };
+  var h = e.parts.map(function(p){
+    if(p.m < 0) return richText(p.txt);
+    return '<button class="chip" type="button" aria-pressed="false" data-i="' + p.m + '">' + richText(p.txt) + '</button>';
+  }).join('');
+  el('d-sent').innerHTML = h;
+  Array.prototype.forEach.call(el('d-sent').querySelectorAll('.chip'), function(b){
+    b.addEventListener('click', function(){
+      if(dState.done) return;
+      var i = Number(b.dataset.i);
+      dState.marked[i] = !dState.marked[i];
+      b.setAttribute('aria-pressed', dState.marked[i] ? 'true' : 'false');
+    });
+  });
+  hideFb(el('d-fb'));
+}
+function dCheck(){
+  if(dState.done) return;
+  dState.done = true;
+  var e = dState.e, msgs = [], right = [];
+  Array.prototype.forEach.call(el('d-sent').querySelectorAll('.chip'), function(b){
+    var i = Number(b.dataset.i), sp = e.all[i], marked = !!dState.marked[i];
+    var v = chipVerdict(sp, e.ph[i], marked);
+    b.disabled = true;
+    b.classList.add(v ? 'wrong' : 'right');
+    b.innerHTML += '<span class="cf">' + termHTML(sp.f, sp.s) + '</span>';
+    if(v) msgs.push(v);
+    if(isDiatomicAlone(sp)) right.push('<span class="mono">' + fmt(sp.f) + '</span>');
+  });
+  var ok = msgs.length === 0;
+  dScore.add(ok);
+  if(ok){
+    setFb(el('d-fb'), 'good', '<b>Correct.</b> ' + (right.length
+      ? 'The diatomic element' + (right.length > 1 ? 's here are ' : ' here is ') + andList(right) + '. Everything else is either a compound or an element that doesn’t pair up.'
+      : 'Nothing in this sentence is a diatomic element standing alone. Any 2s you see in these formulas come from charges or prefixes.'));
+  } else {
+    setFb(el('d-fb'), 'bad', '<b>' + msgs.length + ' to fix.</b><ul><li>' + msgs.join('</li><li>') + '</li></ul>');
+  }
+}
+el('d-check').addEventListener('click', dCheck);
+el('d-new').addEventListener('click', dNew);
+
+/* =========================================================
+   3. sentence -> equation (typed)
+   ========================================================= */
+var wState = null, wScore = Score(el('w-score'));
+function wNew(){
+  wState = { e:pickNew(BANK, wState && wState.e), scored:false, done:false };
+  el('w-sent').innerHTML = sentenceHTML(wState.e);
+  el('w-input').value = '';
+  el('w-preview').innerHTML = '';
+  hideFb(el('w-fb'));
+  el('w-res').classList.remove('show');
+}
+function wPreview(){
+  var v = el('w-input').value;
+  if(!v.trim()){ el('w-preview').innerHTML = ''; return; }
+  var pe = parseEquation(v);
+  el('w-preview').innerHTML = pe.err ? '' : 'Reads as: <b>' + equationOut(pe) + '</b>';
+}
+function wResult(){
+  var e = wState.e;
+  el('w-res').innerHTML = '<div class="rline"><span class="k">Skeleton equation</span></div>' +
+    '<div class="eqline">' + eqHTML(e.r, e.p) + '</div>' + glossHTML(e);
+  el('w-res').classList.add('show');
+}
+function wCheck(){
+  var pe = parseEquation(el('w-input').value);
+  if(pe.err){ setFb(el('w-fb'), 'hint', parseErrorHTML(pe)); return; }
+  var g = grade(wState.e, pe);
+  if(!wState.scored){ wScore.add(g.ok); wState.scored = true; }
+  var you = '<div class="you">You wrote: ' + equationOut(pe) + '</div>';
+  if(g.ok){
+    var msg = '<b>Correct.</b> Every species, formula, and state matches the sentence.';
+    if(g.hasCoef) msg += g.balanced
+      ? ' You balanced it too, and the atoms check out. A skeleton was all this page needed; balancing gets its own page next.'
+      : ' The skeleton is right, but your coefficients don’t balance the atoms yet. That’s fine here, since balancing is the next page.';
+    if(g.notes.length) msg += '<ul><li>' + g.notes.join('</li><li>') + '</li></ul>';
+    setFb(el('w-fb'), 'good', msg + you);
+    wResult();
+  } else {
+    var n = g.issues.length;
+    var list = g.issues.slice(0, 7).map(function(x){ return x.html; });
+    setFb(el('w-fb'), 'bad', '<b>Not yet: ' + n + ' thing' + (n === 1 ? '' : 's') + ' to fix.</b><ul><li>' + list.join('</li><li>') + '</li></ul>' + you);
+  }
+}
+function wShow(){
+  if(!wState.scored){ wScore.add(false); wState.scored = true; }
+  wResult();
+}
+el('w-check').addEventListener('click', wCheck);
+el('w-show').addEventListener('click', wShow);
+el('w-new').addEventListener('click', wNew);
+el('w-input').addEventListener('keydown', function(ev){ if(ev.key === 'Enter') wCheck(); });
+el('w-input').addEventListener('input', wPreview);
+Array.prototype.forEach.call(document.querySelectorAll('.keys button'), function(b){
+  b.addEventListener('click', function(){
+    var inp = el('w-input'), k = b.dataset.k;
+    var a = inp.selectionStart == null ? inp.value.length : inp.selectionStart;
+    var z = inp.selectionEnd == null ? inp.value.length : inp.selectionEnd;
+    inp.value = inp.value.slice(0, a) + k + inp.value.slice(z);
+    inp.focus();
+    try { inp.setSelectionRange(a + k.length, a + k.length); } catch(err){}
+    wPreview();
+  });
+});
+
+/* =========================================================
+   4. equation -> sentence
+   ========================================================= */
+var rState = null, rScore = Score(el('r-score'));
+function rNew(){
+  var g = genReverse(pickNew(BANK, rState && rState.entry));
+  rState = g;
+  el('r-eq').innerHTML = eqHTML(g.entry.r, g.entry.p);
+  var host = el('r-opts');
+  host.innerHTML = g.opts.map(function(o, i){ return '<button class="opt" data-o="' + i + '">' + o.html + '</button>'; }).join('');
+  Array.prototype.forEach.call(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var o = g.opts[Number(b.dataset.o)];
+      Array.prototype.forEach.call(host.querySelectorAll('.opt'), function(other, i){
+        other.disabled = true;
+        if(g.opts[i].ok) other.classList.add('reveal');
+      });
+      b.classList.add(o.ok ? 'picked-yes' : 'picked-no');
+      rScore.add(o.ok);
+      setFb(el('r-fb'), o.ok ? 'good' : 'bad', '<b>' + (o.ok ? 'Yes.' : 'Not this one.') + '</b> ' + o.why +
+        (o.ok ? '' : ' The outlined sentence is the match.'));
+    });
+  });
+  hideFb(el('r-fb'));
+}
+el('r-new').addEventListener('click', rNew);
+
+/* =========================================================
+   5. quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'A sentence begins "Chlorine gas reacts with&#8230;". How do you write chlorine gas?',
+    opts:['<span class="mono">Cl(g)</span>','<span class="mono">Cl<sub>2</sub>(g)</span>','<span class="mono">2 Cl(g)</span>','<span class="mono">Cl<sup>&#8722;</sup>(g)</span>'],
+    ans:1,
+    why:'Chlorine standing alone is one of the seven diatomic elements, so it is the molecule Cl<sub>2</sub>. "2 Cl" describes two loose atoms, and Cl<sup>&#8722;</sup> is the ion that exists inside compounds.' },
+  { stem:'Which is the correct way to write "solid magnesium chloride"?',
+    opts:['<span class="mono">MgCl(s)</span>','<span class="mono">MgCl<sub>2</sub>(s)</span>','<span class="mono">Mg<sub>2</sub>Cl(s)</span>','<span class="mono">MgCl<sub>2</sub>(aq)</span>'],
+    ans:1,
+    why:'Mg<sup>2+</sup> needs two Cl<sup>&#8722;</sup> to cancel its charge, giving MgCl<sub>2</sub>. That 2 comes from the charges, not from chlorine being diatomic. "Solid" makes it (s).' },
+  { stem:'"&#8230;an aqueous solution of sodium sulfate&#8230;" becomes:',
+    opts:['<span class="mono">NaSO<sub>4</sub>(aq)</span>','<span class="mono">Na<sub>2</sub>SO<sub>4</sub>(aq)</span>','<span class="mono">Na<sub>2</sub>SO<sub>4</sub>(l)</span>','<span class="mono">Na<sub>2</sub>SO<sub>4</sub>(s)</span>'],
+    ans:1,
+    why:'Two Na<sup>+</sup> cancel one SO<sub>4</sub><sup>2&#8722;</sup>, so Na<sub>2</sub>SO<sub>4</sub>. "Aqueous solution" means dissolved in water, which is (aq), not (l).' },
+  { stem:'Which phrase in a sentence becomes the arrow?',
+    opts:['reacts with','is added to','produces','and'],
+    ans:2,
+    why:'"Produces," "yields," "forms," and "decomposes into" separate what you start with from what you get, so they become the arrow. The other three join substances on the same side, so they become plus signs.' },
+  { stem:'"Liquid octane is burned in oxygen&#8230;" What does "burned in oxygen" add to the equation?',
+    opts:['<span class="mono">+ O(g)</span> on the reactant side','<span class="mono">+ O<sub>2</sub>(g)</span> on the reactant side','<span class="mono">+ O<sub>2</sub>(g)</span> on the product side','Nothing. It’s a condition, so it isn’t written.'],
+    ans:1,
+    why:'Burning in oxygen means oxygen gas is a reactant. Oxygen alone is diatomic, so it is O<sub>2</sub>(g), on the left with the octane.' },
+  { stem:'Which skeleton equation matches: "When solid calcium carbonate is heated, it decomposes into solid calcium oxide and carbon dioxide gas"?',
+    opts:['<span class="mono">CaCO<sub>3</sub>(s) &#8594; CaO(s) + CO<sub>2</sub>(g)</span>','<span class="mono">CaCO<sub>3</sub>(s) + heat &#8594; CaO(s) + CO<sub>2</sub>(g)</span>','<span class="mono">CaO(s) + CO<sub>2</sub>(g) &#8594; CaCO<sub>3</sub>(s)</span>','<span class="mono">CaCO<sub>3</sub>(aq) &#8594; CaO(s) + CO<sub>2</sub>(g)</span>'],
+    ans:0,
+    why:'Heating is a condition. In this class it isn’t written in the equation at all, either over the arrow or as a reactant. The third option runs the reaction backward, and the fourth contradicts "solid."' },
+  { stem:'For "hydrogen gas and oxygen gas combine to form liquid water," a student writes <span class="mono">H<sub>2</sub>(g) + O<sub>2</sub>(g) &#8594; H<sub>2</sub>O<sub>2</sub>(l)</span> so the oxygens match. What’s wrong?',
+    opts:['Nothing. The oxygens match now.','H<sub>2</sub>O<sub>2</sub> is hydrogen peroxide, a different substance. Water is always H<sub>2</sub>O.','Water should be (aq).','Oxygen should be written O.'],
+    ans:1,
+    why:'Subscripts are fixed by the substance’s name. Changing them changes the substance. The skeleton is H<sub>2</sub>(g) + O<sub>2</sub>(g) &#8594; H<sub>2</sub>O(l); making the atoms match is done with coefficients, on the next page.' },
+  { stem:'Iron(III) nitrate is:',
+    opts:['<span class="mono">FeNO<sub>3</sub></span>','<span class="mono">Fe<sub>3</sub>NO<sub>3</sub></span>','<span class="mono">Fe(NO<sub>3</sub>)<sub>3</sub></span>','<span class="mono">FeNO<sub>33</sub></span>'],
+    ans:2,
+    why:'Iron(III) is Fe<sup>3+</sup>, so it needs three NO<sub>3</sub><sup>&#8722;</sup> ions. Parentheses keep each nitrate together. Without them, "NO<sub>33</sub>" would mean 33 oxygens.' }
+];
+
+(function buildQuiz(){
+  var host = el('quiz'), html = '';
+  QUIZ.forEach(function(q,qi){
+    html += '<div class="q"><p class="stem">' + (qi+1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o,oi){ html += '<button class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  host.innerHTML = html;
+  Array.prototype.forEach.call(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      Array.prototype.forEach.call(el('q'+qi).querySelectorAll('.opt'), function(other,i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      setFb(el('qfb'+qi), oi === q.ans ? 'good' : 'bad',
+        '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+    });
+  });
+})();
+
+/* boot */
+stNew();
+dNew();
+wNew();
+rNew();
+</script>
+</body>
+</html>

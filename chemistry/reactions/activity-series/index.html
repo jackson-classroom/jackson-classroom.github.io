@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Activity Series — Single Replacement Reactions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#131E1D; --ink2:#3B4A48; --mute:#5F6D6B;
+  --wash:#E3E9E8; --card:#FBFCFB; --line:#C9D3D1; --line-soft:#E0E7E6;
+  --water:#12727F; --water-dk:#0B4E58; --water-lite:#BFDEE2;
+  --brass:#9A6E22; --brass-lite:#F5E9CF;
+  --ok:#26694A; --ok-bg:#E4F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  --display:"Instrument Serif",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(227,233,232,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:64px 0 44px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--water-dk)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,7.4vw,74px);line-height:1;margin:16px 0 0;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--water-dk)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:47ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: two beakers, two verdicts */
+.sig-rx{margin:38px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.rx{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:20px 22px 18px;min-width:0}
+.rx-lab{font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.rx-scene{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:14px 0 14px;min-height:150px}
+.mini-lad{position:relative;padding-left:26px;display:flex;flex-direction:column;gap:2px;font-family:var(--mono);align-self:center}
+.mini-rung{display:flex;gap:8px;align-items:center;border:1px solid var(--line);background:#fff;padding:4px 10px;border-radius:3px;font-size:15px;font-weight:600;min-width:118px}
+.mini-rung .n{color:var(--mute);font-size:11px;font-weight:400;min-width:18px;text-align:right}
+.mini-rung .tg{margin-left:auto;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:#F6F8F7;border-radius:2px;padding:1px 5px}
+.mini-gap{font-size:13px;color:var(--mute);padding-left:34px;line-height:1.2}
+.mini-arrow{position:absolute;left:8px;top:16px;bottom:16px;border-left:2.5px solid currentColor}
+.mini-arrow.ok{color:var(--ok)}
+.mini-arrow.no{color:var(--no);border-left-style:dashed}
+.mini-arrow::after{content:"";position:absolute;left:-7.5px;border:6px solid transparent}
+.mini-arrow.down::after{bottom:-6px;border-top:9px solid currentColor;border-bottom:0}
+.mini-arrow.up::after{top:-6px;border-bottom:9px solid currentColor;border-top:0}
+.beaker{position:relative;width:96px;height:108px;margin-top:40px;border:2px solid #7C8B89;border-top:0;border-radius:0 0 12px 12px;background:rgba(255,255,255,.55);flex:none}
+.beaker::before,.beaker::after{content:"";position:absolute;top:-2px;width:8px;border-top:2px solid #7C8B89}
+.beaker::before{left:-8px}
+.beaker::after{right:-8px}
+.liq{position:absolute;left:0;right:0;bottom:0;height:72%;border-radius:0 0 10px 10px}
+.liq.blue{background:linear-gradient(180deg,#8EC3E4 0%,#4D97CC 55%,#2F7DB6 100%)}
+.liq.clear{background:linear-gradient(180deg,#F1F7F8,#DCE9EC)}
+.metal{position:absolute;left:39px;top:-42px;width:16px;height:140px;border-radius:2px}
+.metal.zn{background:linear-gradient(90deg,#858F95,#D5DBDE 45%,#929CA2)}
+.metal.cu{background:linear-gradient(90deg,#9C4E25,#DE9365 45%,#A6582C)}
+.coat{position:absolute;left:-2px;right:-2px;bottom:0;height:56%;border-radius:2px;
+  background:radial-gradient(circle at 30% 30%,#B5653A 1.3px,transparent 1.8px) 0 0/5px 5px,radial-gradient(circle at 70% 70%,#5A2A12 1.2px,transparent 1.7px) 0 0/6px 6px,#7D3D1C}
+.rx-eq{font-family:var(--mono);font-size:14.5px;border-top:1px solid var(--line-soft);padding-top:12px}
+.rx-note{font-size:14.5px;color:var(--ink2);margin-top:8px;line-height:1.5}
+.okc{color:var(--ok);font-weight:600}
+.noc{color:var(--no);font-weight:600}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--water);color:var(--water-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--water-dk);background:var(--water-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.4vw,40px);line-height:1.08;margin:0;letter-spacing:-.01em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.note{border-left:3px solid var(--brass);background:var(--brass-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:24px 0}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--water);border-radius:0 4px 4px 0;padding:18px 20px;min-width:0}
+.rulecard .op{font-family:var(--display);font-size:30px;line-height:1;color:var(--water-dk)}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard .eqline{margin:10px 0 10px;font-size:14px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.problem{font-family:var(--mono);font-size:clamp(18px,3.4vw,23px);font-weight:500;letter-spacing:-.01em}
+.setup{font-size:15px;color:var(--ink2);margin:0 0 14px}
+
+/* equations */
+.eq .t{white-space:nowrap}
+.eq .arr{white-space:nowrap}
+.eq .nr{font-weight:600;color:var(--no)}
+.eqline{font-family:var(--mono);font-size:clamp(15px,2.6vw,18px);background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:12px 14px;margin:14px 0;line-height:1.7}
+.eqline.strike .eq{text-decoration:line-through;text-decoration-color:var(--no);color:var(--mute)}
+.eqlab{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);margin:18px 0 -8px}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F6F8F7;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--water-dk);border-color:var(--water-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--water)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--water);outline-offset:2px}
+button[disabled]{opacity:.5;cursor:default}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid var(--line);border-radius:3px;padding:9px 11px;width:150px;background:#fff;color:var(--ink)}
+input.wide{width:100%;font-size:17px}
+select{font-family:var(--mono);font-size:15px;border:1px solid var(--line);border-radius:3px;padding:8px 10px;background:#fff;color:var(--ink);min-width:160px;max-width:100%}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:150px}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1B4E36}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--water);color:var(--ink2)}
+.fb.part{background:var(--brass-lite);border-left:3px solid var(--brass);color:#5C4214}
+.fb b{font-weight:600}
+.fb .mono{font-size:15px}
+.fb .eqline{font-size:15px;margin:10px 0 2px}
+.echo{font-size:13.5px;color:var(--mute);margin-bottom:6px}
+.echo .eq{font-family:var(--mono);font-size:15px;color:var(--ink)}
+.preview{font-family:var(--mono);font-size:15px;color:var(--ink2);min-height:1.7em;margin-top:8px;line-height:1.7}
+.preview .pl{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);margin-right:8px}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab[aria-selected="true"]{background:var(--ink);color:#F6F8F7;border-color:var(--ink)}
+.panel{display:none;padding-top:12px}
+.panel.on{display:block}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* the ladder */
+.ladwrap{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:26px;align-items:start}
+.ladwrap .ladder{order:1}
+.ladwrap .lad-side{order:2;position:sticky;top:64px}
+.ladder{position:relative;padding-left:38px}
+.lad-end{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding:4px 0 6px 12px}
+.lad-end.bot{padding:6px 0 0 12px}
+.lad-col{position:relative;border-left:4px solid #9AA8A6;border-right:4px solid #9AA8A6;background:#fff}
+.rung{display:flex;align-items:center;gap:10px;width:100%;height:27px;padding:0 10px;background:transparent;color:var(--ink);border:0;border-bottom:1px solid #D3DCDA;border-radius:0;font-family:var(--mono);font-size:13.5px;text-align:left;letter-spacing:0}
+.rung:last-child{border-bottom:0}
+.rung:hover{background:var(--line-soft);color:var(--ink)}
+.rung .rn{width:20px;color:var(--mute);font-size:11px;text-align:right;flex:none}
+.rung .rs{font-weight:600;min-width:28px;flex:none}
+.rung .rnm{font-family:var(--body);font-size:13px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rung .rtag{margin-left:auto;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;padding:0 6px;line-height:17px;flex:none}
+.rung .rtag:empty{display:none}
+.rung.div{background:var(--brass-lite);border-top:2px dashed var(--brass);border-bottom:2px dashed var(--brass)}
+.rung.div .rnm{color:#6E4F18}
+.rung.reach{background:var(--ok-bg)}
+.rung.dim .rs,.rung.dim .rnm{opacity:.5}
+.rung.free{background:var(--ink);color:#F6F8F7}
+.rung.free .rn,.rung.free .rnm{color:#C3D0CE}
+.rung.free .rtag{background:#F6F8F7;color:var(--ink)}
+.rung.target.hit{background:var(--ok-bg);box-shadow:inset 0 0 0 2px var(--ok)}
+.rung.target.hit .rtag{background:var(--ok);color:#fff}
+.rung.target.miss{background:var(--no-bg);box-shadow:inset 0 0 0 2px var(--no)}
+.rung.target.miss .rtag{background:var(--no);color:#fff}
+.rung.target.same{box-shadow:inset 0 0 0 2px var(--mute)}
+.lad-arrow{position:absolute;left:14px;width:0;border-left:3px solid currentColor;display:none;pointer-events:none}
+.lad-arrow.ok{color:var(--ok)}
+.lad-arrow.no{color:var(--no);border-left-style:dashed}
+.lad-arrow.info{color:var(--mute)}
+.lad-arrow::after{content:"";position:absolute;left:-8.5px;border:7px solid transparent}
+.lad-arrow.down::after{bottom:-7px;border-top:10px solid currentColor;border-bottom:0}
+.lad-arrow.up::after{top:-7px;border-bottom:10px solid currentColor;border-top:0}
+.lad-out{margin-top:16px;border-top:1px solid var(--line-soft);padding-top:12px;font-size:15.5px;color:var(--ink2)}
+.lad-out p{margin:8px 0}
+.lad-out .eqline{font-size:14.5px;margin:10px 0}
+.verdict{font-family:var(--display);font-size:32px;line-height:1.05;color:var(--ink)}
+.verdict.ok{color:var(--ok)}
+.verdict.no{color:var(--no)}
+.lad-tip{font-size:13.5px;color:var(--mute);margin:8px 0 0}
+.lad-water{font-size:14px;background:var(--brass-lite);border-left:3px solid var(--brass);padding:8px 12px;border-radius:0 3px 3px 0;margin-top:10px;color:#5C4214}
+.halwrap{grid-template-columns:minmax(0,370px) minmax(0,1fr)}
+.halwrap .lad-side{position:static}
+
+/* yes/no widget */
+.yn{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.yn button{min-width:150px}
+.yn button.picked-yes{background:var(--ok);border-color:var(--ok)}
+.yn button.picked-no{background:var(--no);border-color:var(--no)}
+.yn button[disabled].picked-yes,.yn button[disabled].picked-no{opacity:1}
+.ionnote{font-size:15px;color:var(--ink2);background:var(--water-lite);border-radius:3px;padding:8px 12px;margin:12px 0 0;display:inline-block}
+.formulas{font-size:14.5px;color:var(--mute);margin:8px 0 0}
+.formulas .mono{color:var(--ink2)}
+.tips{font-size:14px;color:var(--mute);margin:14px 0 0}
+
+/* charge chips */
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--mono);font-size:14px;background:#fff;border:1px solid var(--line);border-radius:3px;padding:2px 8px}
+.chip.v{border-color:var(--brass);background:var(--brass-lite)}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45}
+.opt:hover{border-color:var(--water);background:#fff;color:var(--ink)}
+.opt .eq{font-family:var(--mono);font-size:14.5px}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.94}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#EDF2F1;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#C3D0CE}
+.next .nt{font-family:var(--display);font-size:26px;color:#fff;margin:0 0 4px}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F6F8F7;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--water-lite)}
+
+@media (max-width:760px){
+  .sig-rx{grid-template-columns:1fr}
+  .ladwrap,.halwrap{grid-template-columns:1fr;gap:16px}
+  .ladwrap .ladder{order:2}
+  .ladwrap .lad-side{order:1;position:static}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:16px}
+  .field label{min-width:auto;flex:1 1 100%}
+  .field select{flex:1 1 100%}
+  .rung{height:25px;font-size:13px}
+  .ladder{padding-left:32px}
+  .lad-arrow{left:11px}
+  .yn button{flex:1 1 140px;min-width:0}
+  .rx{padding:16px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">The Activity Series</span>
+    <span class="bar-sub">Single replacement · who replaces whom</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 3 · Single replacement</div>
+  <h1>A free element only takes the place of one that is <em>weaker</em>.</h1>
+  <p class="lede">On paper, any element can trade places with any other. In a beaker, most of those swaps never happen. A ranked list, the activity series, tells you which ones do and when the honest answer is no reaction.</p>
+
+  <div class="sig-rx">
+    <div class="rx">
+      <div class="rx-lab">Zinc strip in copper(II) sulfate</div>
+      <div class="rx-scene">
+        <div class="mini-lad" aria-hidden="true">
+          <div class="mini-arrow down ok"></div>
+          <div class="mini-rung"><span class="n">12</span>Zn<span class="tg">free</span></div>
+          <div class="mini-gap">&#8942;</div>
+          <div class="mini-rung"><span class="n">23</span>Cu</div>
+        </div>
+        <div class="beaker" role="img" aria-label="A zinc strip in blue copper(II) sulfate solution, coated with dark copper below the surface"><div class="liq blue"></div><div class="metal zn"><div class="coat"></div></div></div>
+      </div>
+      <div class="rx-eq"><span class="eq" data-eq="Zn(s) + CuSO4(aq) -> ZnSO4(aq) + Cu(s)"></span></div>
+      <div class="rx-note"><span class="okc">Reacts.</span> Zinc sits above copper, so it pushes copper out. A dark copper coating grows on the strip, and the blue fades as the Cu<sup>2+</sup> ions get used up.</div>
+    </div>
+    <div class="rx">
+      <div class="rx-lab">Copper strip in zinc sulfate</div>
+      <div class="rx-scene">
+        <div class="mini-lad" aria-hidden="true">
+          <div class="mini-arrow up no"></div>
+          <div class="mini-rung"><span class="n">12</span>Zn</div>
+          <div class="mini-gap">&#8942;</div>
+          <div class="mini-rung"><span class="n">23</span>Cu<span class="tg">free</span></div>
+        </div>
+        <div class="beaker" role="img" aria-label="A clean copper strip in colorless zinc sulfate solution, unchanged"><div class="liq clear"></div><div class="metal cu"></div></div>
+      </div>
+      <div class="rx-eq"><span class="eq" data-eq="Cu(s) + ZnSO4(aq) -> NR"></span></div>
+      <div class="rx-note"><span class="noc">No reaction.</span> Copper sits below zinc, so it can't push zinc out. Leave it for a week and the strip is still shiny and the solution is still clear.</div>
+    </div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#recap">Single replacement</a>
+  <a href="#ladder">The ladder</a>
+  <a href="#acids">Hydrogen &amp; acids</a>
+  <a href="#halogens">Halogens</a>
+  <a href="#charges">Which ion?</a>
+  <a href="#predict">Will it react?</a>
+  <a href="#write">Write it out</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ RECAP ============ -->
+<section id="recap">
+  <div class="sec-head"><span class="tasktag">Recap</span><h2>Single replacement in one line</h2></div>
+  <p class="problem" style="text-align:center;padding:6px 0">A + BC &#8594; AC + B</p>
+  <p>One element starts out alone. We'll call it the <b>free element</b>. It meets a compound and takes the place of one of the elements in that compound, which is pushed out and ends up alone. There are two ways it happens in this course:</p>
+
+  <div class="rulebox">
+    <div class="rulecard">
+      <div class="op">metal &#8644; metal</div>
+      <h4>A metal replaces the cation</h4>
+      <div class="eqline"><span class="eq" data-eq="Zn(s) + CuSO4(aq) -> ZnSO4(aq) + Cu(s)"></span></div>
+      <p>The free metal becomes a positive ion in the new compound, and the metal that was the cation comes out as the element. Hydrogen in an acid counts as a cation here, so a metal can replace it too.</p>
+    </div>
+    <div class="rulecard">
+      <div class="op">halogen &#8644; halogen</div>
+      <h4>A halogen replaces the anion</h4>
+      <div class="eqline"><span class="eq" data-eq="Cl2(g) + 2NaBr(aq) -> 2NaCl(aq) + Br2(l)"></span></div>
+      <p>The free halogen becomes a negative ion, and the halide that was there comes out as a diatomic element. The sodium never moves.</p>
+    </div>
+  </div>
+
+  <p><b>Like replaces like.</b> A metal goes after the cation, and a halogen goes after the anion. That tells you which two elements to compare, and comparing them is the whole question this page answers.</p>
+  <div class="note">
+    <b>A correct-looking equation is not the same as a real reaction.</b> This one is balanced and every formula is right:
+    <div class="eqline strike"><span class="eq" data-eq="Cu(s) + ZnSO4(aq) -> CuSO4(aq) + Zn(s)"></span></div>
+    It still never happens. Drop a copper strip into zinc sulfate and you can watch it do nothing for a week. Balancing tells you whether atoms are conserved. It can't tell you whether the swap happens.
+  </div>
+</section>
+
+<!-- ============ LADDER ============ -->
+<section id="ladder">
+  <div class="sec-head"><span class="tasktag">The rule</span><h2>Above replaces below</h2></div>
+  <p>The activity series ranks metals by how easily they give up electrons and become positive ions. The most active metal is at the top and the least active is at the bottom. A free metal replaces the metal in a compound <b>only if the free metal is higher on the list</b>. If it's lower, nothing happens, and you write <b>NR</b> for "no reaction."</p>
+  <p>Here's why it works that way. In <span class="eq" data-eq="Zn(s) + CuSO4(aq) -> ZnSO4(aq) + Cu(s)"></span>, zinc atoms hand their electrons to copper ions. Zinc is the more active metal, so it would rather be the ion, and that trade goes downhill. Run it backward and you'd be asking copper to give electrons to zinc, which holds on to being an ion harder than copper does. It won't.</p>
+  <p>Use the order below. It's your class's list, the same one on your reference sheet. Some textbooks shuffle the top few metals, but for this class, this is the order.</p>
+
+  <div class="card">
+    <div class="card-label"><span>The ladder · click two rungs</span></div>
+    <p class="setup">Click a rung to choose the <b>free element</b>, then click a second rung for the element <b>in the compound</b>. You can also use the menus.</p>
+    <div class="ladwrap">
+      <div class="lad-side">
+        <div class="field"><label for="l-free">Free element</label><select id="l-free"></select></div>
+        <div class="field"><label for="l-targ">In the compound</label><select id="l-targ"></select></div>
+        <div class="btn-row"><button class="ghost" id="l-swap" type="button">Swap them</button><button class="ghost" id="l-clear" type="button">Clear</button></div>
+        <div class="lad-out" id="l-out" aria-live="polite"></div>
+      </div>
+      <div class="ladder" id="l-lad"></div>
+    </div>
+  </div>
+
+  <h3>How to read it</h3>
+  <ol>
+    <li>Find the free element, the one written alone.</li>
+    <li>Find the element it would replace: the metal (or hydrogen) in the compound for a free metal, the halide for a free halogen.</li>
+    <li>If the free element is higher, it reacts. If it's lower, write NR. If it's the same element, there's nothing to swap.</li>
+  </ol>
+</section>
+
+<!-- ============ ACIDS ============ -->
+<section id="acids">
+  <div class="sec-head"><span class="tasktag">Metals + acids</span><h2>Hydrogen is on the list for a reason</h2></div>
+  <p>Hydrogen is the only nonmetal on the metal list, and the dashed rung on the ladder shows why it's there. In an acid like HCl or H<sub>2</sub>SO<sub>4</sub>, hydrogen is the cation. A metal that sits above hydrogen can replace it. The products are a salt and <b>hydrogen gas</b>. The bubbles you see are H<sub>2</sub> leaving.</p>
+  <div class="eqline"><span class="eq" data-eq="Zn(s) + 2HCl(aq) -> ZnCl2(aq) + H2(g)"></span></div>
+  <div class="eqline"><span class="eq" data-eq="Mg(s) + H2SO4(aq) -> MgSO4(aq) + H2(g)"></span></div>
+  <div class="eqline"><span class="eq" data-eq="2Al(s) + 6HCl(aq) -> 2AlCl3(aq) + 3H2(g)"></span></div>
+  <p>Hydrogen is diatomic. When it leaves the acid, two H atoms pair up as H<sub>2</sub>, and that pairing is what puts the 2 in front of HCl in the zinc equation. Writing a lone <span class="mono">H</span> as a product is one of the most common mistakes on this topic.</p>
+  <p>Metals below hydrogen (Sb, Bi, Cu, W, Hg, Ag, Pt, Au) <b>do not react</b> with acids like HCl. That's a big part of why coins, wiring and jewelry are made from copper, silver and gold.</p>
+  <div class="eqline"><span class="eq" data-eq="Cu(s) + HCl(aq) -> NR"></span></div>
+
+  <div class="note">
+    <b>Why we don't drop sodium into copper sulfate solution in the lab.</b> The metals at the very top of the list, lithium through sodium, are so active that they react with the water itself. They fizz, release hydrogen and sometimes catch fire. On paper the series says sodium beats copper, but in a beaker the sodium attacks the water before it ever reaches a copper ion. That's why the practice problems on this page start at magnesium.
+  </div>
+</section>
+
+<!-- ============ HALOGENS ============ -->
+<section id="halogens">
+  <div class="sec-head"><span class="tasktag">Nonmetals</span><h2>Halogens: read the column</h2></div>
+  <p>Halogens aren't on the class list, and you don't need them to be. Their activity follows <b>column 17 of the periodic table, from top to bottom</b>:</p>
+  <p class="problem" style="text-align:center;padding:6px 0">F<sub>2</sub> &gt; Cl<sub>2</sub> &gt; Br<sub>2</sub> &gt; I<sub>2</sub></p>
+  <p>For a halogen, being active means <i>grabbing</i> electrons to become a negative ion. Smaller atoms pull harder because the electron can get closer to the nucleus. Fluorine is the smallest, so it's the most active. A free halogen replaces any halide below it in the column and none above it.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Column 17 · click two rungs</span></div>
+    <div class="ladwrap halwrap">
+      <div class="ladder" id="h-lad"></div>
+      <div class="lad-side"><div class="lad-out" id="h-out" aria-live="polite" style="margin-top:0;border-top:0;padding-top:0"></div></div>
+    </div>
+  </div>
+
+  <div class="eqline"><span class="eq" data-eq="Cl2(g) + 2KI(aq) -> 2KCl(aq) + I2(s)"></span></div>
+  <div class="eqline"><span class="eq" data-eq="Br2(l) + 2NaI(aq) -> 2NaBr(aq) + I2(s)"></span></div>
+  <div class="eqline"><span class="eq" data-eq="I2(s) + NaCl(aq) -> NR"></span></div>
+  <p>Compare halogen with halogen. The metal ion in the salt (Na<sup>+</sup>, K<sup>+</sup>) is a bystander and has no say in whether the reaction happens. As for states, at room temperature F<sub>2</sub> and Cl<sub>2</sub> are gases, Br<sub>2</sub> is a liquid and I<sub>2</sub> is a solid: <span class="mono">F<sub>2</sub>(g) Cl<sub>2</sub>(g) Br<sub>2</sub>(l) I<sub>2</sub>(s)</span>.</p>
+  <div class="note"><b>Same rule, opposite meaning.</b> For metals, "active" means giving electrons away. For halogens, it means taking them. Either way, the one higher on its own list wins.</div>
+</section>
+
+<!-- ============ CHARGES ============ -->
+<section id="charges">
+  <div class="sec-head"><span class="tasktag">Writing products</span><h2>Which ion does the metal form?</h2></div>
+  <p>Once you know a metal reacts, it becomes an ion in the new compound, and you need its charge to write the formula. Some metals only ever form one ion. You're expected to know these:</p>
+  <div class="chips" style="margin:14px 0">
+    <span class="chip">Li<sup>+</sup></span><span class="chip">Na<sup>+</sup></span><span class="chip">K<sup>+</sup></span>
+    <span class="chip">Mg<sup>2+</sup></span><span class="chip">Ca<sup>2+</sup></span><span class="chip">Sr<sup>2+</sup></span><span class="chip">Ba<sup>2+</sup></span>
+    <span class="chip">Al<sup>3+</sup></span><span class="chip">Zn<sup>2+</sup></span><span class="chip">Cd<sup>2+</sup></span><span class="chip">Ag<sup>+</sup></span>
+  </div>
+  <p>Most of the others can form more than one ion. When the free metal is one of these, <b>the problem has to tell you which ion forms</b>. It will do that in one of two ways:</p>
+  <ul>
+    <li>It says so directly: <i>"iron forms Fe<sup>3+</sup> ions in this reaction."</i></li>
+    <li>It names the product with a Roman numeral: <i>"…forming iron(III) sulfate."</i> The (III) means Fe<sup>3+</sup>.</li>
+  </ul>
+  <table>
+    <thead><tr><th>Metal</th><th>Usual choice</th><th>Metal</th><th>Usual choice</th></tr></thead>
+    <tbody>
+      <tr><td>Manganese</td><td class="n">Mn<sup>2+</sup></td><td>Tin</td><td class="n">Sn<sup>2+</sup></td></tr>
+      <tr><td>Chromium</td><td class="n">Cr<sup>3+</sup></td><td>Lead</td><td class="n">Pb<sup>2+</sup></td></tr>
+      <tr><td>Iron</td><td class="n">Fe<sup>2+</sup> or Fe<sup>3+</sup></td><td>Copper</td><td class="n">Cu<sup>2+</sup> (or Cu<sup>+</sup>)</td></tr>
+      <tr><td>Cobalt</td><td class="n">Co<sup>2+</sup></td><td>Mercury</td><td class="n">Hg<sup>2+</sup></td></tr>
+      <tr><td>Nickel</td><td class="n">Ni<sup>2+</sup></td><td>Gold</td><td class="n">Au<sup>3+</sup></td></tr>
+    </tbody>
+  </table>
+  <p>The charge really does change the answer. Here is the same reaction, iron in copper(II) sulfate, written both ways:</p>
+  <div class="eqlab">Iron forms Fe<sup>2+</sup></div>
+  <div class="eqline"><span class="eq" data-eq="Fe(s) + CuSO4(aq) -> FeSO4(aq) + Cu(s)"></span></div>
+  <div class="eqlab">Iron forms Fe<sup>3+</sup></div>
+  <div class="eqline"><span class="eq" data-eq="2Fe(s) + 3CuSO4(aq) -> Fe2(SO4)3(aq) + 3Cu(s)"></span></div>
+  <p>The charge on copper in the compound you start with doesn't carry over. Each new formula is built from <b>the new ion's charge</b>.</p>
+
+  <h3>The recipe, start to finish</h3>
+  <ol>
+    <li><b>Decide.</b> Compare the free element with the one it would replace. If it's lower, write NR and stop.</li>
+    <li><b>Make the ion.</b> The free metal becomes a cation with its charge, or the free halogen becomes X<sup>&#8722;</sup>.</li>
+    <li><b>Build the new compound.</b> Pair that ion with the partner already in the compound, which is the same anion for a metal and the same cation for a halogen. Balance the charges with subscripts.</li>
+    <li><b>Release the other element.</b> A metal comes out as the element, as a solid (mercury is the one liquid metal). Hydrogen comes out as H<sub>2</sub>(g), and halogens come out diatomic.</li>
+    <li><b>Balance</b> with coefficients in lowest whole numbers.</li>
+    <li><b>Add states.</b> Solid metals are (s), dissolved ionic compounds and acids are (aq), H<sub>2</sub> is (g), and halogens are F<sub>2</sub>(g), Cl<sub>2</sub>(g), Br<sub>2</sub>(l) and I<sub>2</sub>(s).</li>
+  </ol>
+  <p>Worked through for aluminum in copper(II) chloride: Al (10th) is above Cu (23rd), so it reacts. Aluminum forms Al<sup>3+</sup>, and with Cl<sup>&#8722;</sup> that's AlCl<sub>3</sub>. Copper comes out as Cu(s). Then you balance:</p>
+  <div class="eqline"><span class="eq" data-eq="2Al(s) + 3CuCl2(aq) -> 2AlCl3(aq) + 3Cu(s)"></span></div>
+</section>
+
+<!-- ============ PREDICT ============ -->
+<section id="predict">
+  <div class="sec-head"><span class="tasktag">Practice · decide</span><h2>Will it react?</h2></div>
+  <p>Each pair is a free element and a compound in solution. Compare like with like, find both on the list, and decide. The free metals in these problems run from magnesium down, so water never gets involved.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Generated pairs</span><span class="score" id="p-score">0 of 0</span></div>
+    <p class="setup" id="p-setup"></p>
+    <div class="eqline" id="p-prob" style="font-size:clamp(17px,3.2vw,21px)"></div>
+    <div class="yn">
+      <button type="button" id="p-yes">Yes, it reacts</button>
+      <button type="button" id="p-no">No reaction</button>
+      <button type="button" class="ghost" id="p-new">Next pair</button>
+    </div>
+    <div class="fb" id="p-fb" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ============ WRITE ============ -->
+<section id="write">
+  <div class="sec-head"><span class="tasktag">Practice · full equation</span><h2>Write it out</h2></div>
+  <p>Now write the whole thing. If the pair reacts, type the balanced equation with a state on every formula. If it doesn't, type <span class="mono">NR</span>. Some of these don't react, so decide before you write.</p>
+  <p class="tips">Type subscripts as plain numbers, like <span class="mono">Al2(SO4)3</span>. Use <span class="mono">-&gt;</span> or <span class="mono">=</span> for the arrow and put the state right after each formula, like <span class="mono">Cu(s)</span>. Spaces and the order of terms don't matter. You'll get feedback on a first try even if it isn't balanced yet.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Generated reactions</span><span class="score" id="w-score">0 of 0</span></div>
+    <p class="setup" id="w-setup" style="font-size:16.5px;color:var(--ink)"></p>
+    <p class="formulas" id="w-forms"></p>
+    <div id="w-ion"></div>
+    <div class="field" style="margin-top:16px">
+      <label for="w-input" style="min-width:auto;flex:1 1 100%">Your equation (or NR)</label>
+      <input type="text" class="wide" id="w-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. 2Na(s) + Cl2(g) -> 2NaCl(s)">
+    </div>
+    <div class="preview" id="w-prev" aria-live="off"></div>
+    <div class="btn-row">
+      <button type="button" id="w-check">Check equation</button>
+      <button type="button" class="ghost" id="w-show">Show answer</button>
+      <button type="button" class="ghost" id="w-new">New reaction</button>
+    </div>
+    <div class="fb" id="w-fb" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Eight questions on the series, hydrogen and acids, halogens, NR cases and writing products.</p>
+  <div class="card" id="quiz"></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">Unit 3 — Chemical Reactions</div>
+      <p>That's the last topic page in this unit. Head back to the unit page for all four.</p>
+    </div>
+    <a href="/chemistry/reactions/">&#8592; Back to Unit 3</a>
+  </div>
+</section>
+
+<footer>
+  <p>Single replacement and the activity series. The practice pairs are generated fresh every time, and the ladder answers any pair you pick.</p>
+  <p><a href="/chemistry/reactions/">&#8592; Unit 3 — Chemical Reactions</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   chemistry logic (no DOM) — also loaded by the verification script
+   ========================================================= */
+/*LOGIC-START*/
+var SERIES = ['Li','Cs','Rb','K','Ba','Sr','Ca','Na','Mg','Al','Mn','Zn','Cr','Fe','Cd','Co','Ni','Sn','Pb','H','Sb','Bi','Cu','W','Hg','Ag','Pt','Au'];
+var HALOGENS = ['F','Cl','Br','I'];
+var PERIOD = { F:2, Cl:3, Br:4, I:5 };
+var NAME = { Li:'lithium', Cs:'cesium', Rb:'rubidium', K:'potassium', Ba:'barium', Sr:'strontium', Ca:'calcium',
+  Na:'sodium', Mg:'magnesium', Al:'aluminum', Mn:'manganese', Zn:'zinc', Cr:'chromium', Fe:'iron', Cd:'cadmium',
+  Co:'cobalt', Ni:'nickel', Sn:'tin', Pb:'lead', H:'hydrogen', Sb:'antimony', Bi:'bismuth', Cu:'copper',
+  W:'tungsten', Hg:'mercury', Ag:'silver', Pt:'platinum', Au:'gold', F:'fluorine', Cl:'chlorine', Br:'bromine', I:'iodine' };
+/* metals that can form more than one ion: the problem must say which one */
+var VARIABLE = { Mn:1, Cr:1, Fe:1, Co:1, Ni:1, Sn:1, Pb:1, Cu:1, Hg:1, Au:1, Sb:1, Bi:1, W:1, Pt:1 };
+var DEFAULT_Q = { Li:1, Cs:1, Rb:1, K:1, Ba:2, Sr:2, Ca:2, Na:1, Mg:2, Al:3, Mn:2, Zn:2, Cr:3, Fe:2, Cd:2,
+  Co:2, Ni:2, Sn:2, Pb:2, H:1, Cu:2, Hg:2, Ag:1, Au:3 };
+var ANION = {
+  NO3:{ f:'NO3', q:1, poly:true, name:'nitrate' },
+  SO4:{ f:'SO4', q:2, poly:true, name:'sulfate' },
+  C2H3O2:{ f:'C2H3O2', q:1, poly:true, name:'acetate' },
+  Cl:{ f:'Cl', q:1, poly:false, name:'chloride' },
+  Br:{ f:'Br', q:1, poly:false, name:'bromide' },
+  I:{ f:'I', q:1, poly:false, name:'iodide' },
+  F:{ f:'F', q:1, poly:false, name:'fluoride' }
+};
+var ALL4 = ['NO3','SO4','Cl','C2H3O2'];
+/* cation (symbol + charge) -> anions whose compound is soluble AND a sensible lab reagent */
+var SOLUBLE = {
+  Li1:ALL4, Cs1:ALL4, Rb1:ALL4, K1:ALL4, Na1:ALL4, Mg2:ALL4,
+  Ba2:['NO3','Cl','C2H3O2'], Sr2:['NO3','Cl','C2H3O2'], Ca2:['NO3','Cl','C2H3O2'],
+  Al3:['NO3','SO4','Cl'], Cr3:['NO3','SO4','Cl'], Fe3:['NO3','SO4','Cl'],
+  Mn2:ALL4, Zn2:ALL4, Fe2:ALL4, Cd2:ALL4, Co2:ALL4, Ni2:ALL4, Cu2:ALL4,
+  Sn2:['SO4','Cl'], Pb2:['NO3','C2H3O2'], Ag1:['NO3'], Hg2:['NO3','Cl'], Au3:['Cl'],
+  H1:['Cl','SO4']
+};
+var ELSET = {};
+('H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr Rb Sr Y Zr Nb Mo ' +
+ 'Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re Os Ir Pt Au Hg Tl Pb ' +
+ 'Bi Po At Rn Fr Ra Ac Th Pa U').split(' ').forEach(function(s){ ELSET[s] = 1; });
+var DIATOMIC = { H:1, N:1, O:1, F:1, Cl:1, Br:1, I:1 };
+var ROMAN = ['','I','II','III','IV'];
+/* free metals used in generated problems: magnesium and below */
+var FREE_LIST = ['Mg','Al','Mn','Zn','Cr','Fe','Cd','Co','Ni','Sn','Pb','Cu','Ag','Au'];
+var TARGET_KEYS = ['Li1','Na1','K1','Ca2','Ba2','Mg2','Al3','Mn2','Zn2','Cr3','Fe2','Fe3','Cd2','Co2','Ni2','Sn2','Pb2','Cu2','Ag1','Au3'];
+var HALIDE_CATS = ['Na1','K1','Li1','Mg2','Ca2','Ba2'];
+
+function rpick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function pos(s){ return SERIES.indexOf(s) + 1; }
+function ord(n){ var s = ['th','st','nd','rd'], v = n % 100; return n + (s[(v-20)%10] || s[v] || s[0]); }
+function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+function gcd(a,b){ while(b){ var t = b; b = a % b; a = t; } return a; }
+function fh(f){ return String(f).replace(/(\d+)/g,'<sub>$1</sub>'); }
+function sup(q,neg){ return '<sup>' + (q > 1 ? q : '') + (neg ? '−' : '+') + '</sup>'; }
+function catIon(sym,q){ return sym + sup(q,false); }
+function anIon(k){ var a = ANION[k]; return fh(a.f) + sup(a.q,true); }
+function halIon(x){ return x + sup(1,true); }
+function splitKey(k){ var m = /^([A-Z][a-z]?)(\d)$/.exec(k); return { sym:m[1], q:Number(m[2]) }; }
+
+function saltF(sym,q,ak){
+  var a = ANION[ak], g = gcd(q,a.q), nc = a.q/g, na = q/g;
+  var an = na > 1 ? (a.poly ? '(' + a.f + ')' + na : a.f + na) : a.f;
+  return sym + (nc > 1 ? nc : '') + an;
+}
+function saltName(sym,q,ak){
+  if(sym === 'H') return ak === 'Cl' ? 'hydrochloric acid' : 'sulfuric acid';
+  return NAME[sym] + (VARIABLE[sym] ? '(' + ROMAN[q] + ')' : '') + ' ' + ANION[ak].name;
+}
+function elemF(sym){ return DIATOMIC[sym] ? sym + '2' : sym; }
+function elemState(sym){
+  if(sym === 'H' || sym === 'F' || sym === 'Cl') return 'g';
+  if(sym === 'Br' || sym === 'Hg') return 'l';
+  return 's';
+}
+
+/* formula -> {a:{El:count}} or {err:...} ; handles parentheses */
+function atoms(f){
+  var i = 0, stack = [{}];
+  function num(){ var m = /^\d+/.exec(f.slice(i)); if(m){ i += m[0].length; return parseInt(m[0],10); } return 1; }
+  function add(o,k,n){ o[k] = (o[k] || 0) + n; }
+  if(!f) return { err:'empty' };
+  while(i < f.length){
+    var c = f.charAt(i);
+    if(c === '('){ stack.push({}); i++; }
+    else if(c === ')'){
+      if(stack.length < 2) return { err:'paren' };
+      i++;
+      var n = num(), top = stack.pop(), base = stack[stack.length-1];
+      for(var k in top) add(base, k, top[k]*n);
+    }
+    else if(/[A-Z]/.test(c)){
+      var sym = c; i++;
+      if(i < f.length && /[a-z]/.test(f.charAt(i))){ sym += f.charAt(i); i++; }
+      if(!ELSET[sym]) return { err:'unknown', sym:sym };
+      add(stack[stack.length-1], sym, num());
+    }
+    else if(/[a-z]/.test(c)) return { err:'case' };
+    else if(/\d/.test(c)) return { err:'digit' };
+    else return { err:'char', ch:c };
+  }
+  if(stack.length !== 1) return { err:'paren' };
+  if(!Object.keys(stack[0]).length) return { err:'empty' };
+  return { a:stack[0] };
+}
+function akey(a){ return Object.keys(a).sort().map(function(k){ return k + a[k]; }).join('.'); }
+function fkey(f){ return akey(atoms(f).a); }
+
+/* smallest whole-number coefficients (brute force; one degree of freedom for every reaction here) */
+function balance(rf, pf){
+  var all = rf.concat(pf).map(function(f){ return atoms(f).a; });
+  var n = all.length, els = {}, c = [], best = null;
+  all.forEach(function(a){ for(var k in a) els[k] = 1; });
+  function ok(){
+    for(var e in els){
+      var s = 0;
+      for(var j=0;j<n;j++) s += (j < rf.length ? 1 : -1) * c[j] * (all[j][e] || 0);
+      if(s !== 0) return false;
+    }
+    return true;
+  }
+  function rec(j){
+    if(best) return;
+    if(j === n){ if(ok()) best = c.slice(); return; }
+    for(var v=1; v<=12 && !best; v++){ c[j] = v; rec(j+1); }
+  }
+  rec(0);
+  return best;
+}
+function mkRx(rs, ps){
+  var c = balance(rs.map(function(x){ return x[0]; }), ps.map(function(x){ return x[0]; }));
+  return {
+    r: rs.map(function(x,i){ return { f:x[0], st:x[1], c:c[i] }; }),
+    p: ps.map(function(x,i){ return { f:x[0], st:x[1], c:c[rs.length+i] }; })
+  };
+}
+function termStr(t){ return (t.c > 1 ? t.c : '') + t.f + '(' + t.st + ')'; }
+function rxStr(rx){ return rx.r.map(termStr).join(' + ') + ' -> ' + rx.p.map(termStr).join(' + '); }
+
+/* ---------- problem builders ---------- */
+function finish(p){
+  p.reac = [{ f:p.freeF, st:p.freeState }, { f:p.comp, st:'aq' }];
+  if(p.reacts){
+    p.rx = mkRx([[p.freeF,p.freeState],[p.comp,'aq']], [[p.salt,'aq'],[p.elem,p.elemState]]);
+    p.eq = rxStr(p.rx);
+  } else {
+    p.eq = p.freeF + '(' + p.freeState + ') + ' + p.comp + '(aq) -> NR';
+  }
+  return p;
+}
+/* free metal (charge fq) + compound of target metal ts (charge tq) with anion ak; ts may be 'H' (an acid) */
+function buildMetal(fs, fq, ts, tq, ak){
+  var p = { kind: ts === 'H' ? 'acid' : 'metal', free:fs, freeQ:fq, freeF:fs, freeState:'s',
+    target:ts, targetQ:tq, an:ak, comp:saltF(ts,tq,ak), compName:saltName(ts,tq,ak),
+    reacts: pos(fs) < pos(ts),
+    salt:saltF(fs,fq,ak), saltName:saltName(fs,fq,ak), elem:elemF(ts), elemState:elemState(ts) };
+  return finish(p);
+}
+/* free halogen x + halide salt of cation cs (charge cq) with halide y */
+function buildHal(x, cs, cq, y){
+  var p = { kind:'hal', free:x, freeF:x+'2', freeState:elemState(x), cation:cs, cationQ:cq,
+    target:y, an:y, comp:saltF(cs,cq,y), compName:saltName(cs,cq,y),
+    reacts: HALOGENS.indexOf(x) < HALOGENS.indexOf(y),
+    salt:saltF(cs,cq,x), saltName:saltName(cs,cq,x), elem:y+'2', elemState:elemState(y) };
+  return finish(p);
+}
+function tryMetal(wantYes){
+  var fs = rpick(FREE_LIST);
+  var fq = fs === 'Fe' ? rpick([2,3]) : DEFAULT_Q[fs];
+  var t = splitKey(rpick(TARGET_KEYS));
+  if(t.sym === fs) return null;
+  var reacts = pos(fs) < pos(t.sym);
+  if(reacts !== wantYes) return null;
+  var ans = SOLUBLE[t.sym + t.q].filter(function(a){ return SOLUBLE[fs + fq].indexOf(a) !== -1; });
+  if(!ans.length) return null;   /* product would not be a soluble salt: skip this pair */
+  return buildMetal(fs, fq, t.sym, t.q, rpick(ans));
+}
+function tryAcid(wantYes){
+  var fs = rpick(FREE_LIST), fq = DEFAULT_Q[fs];   /* iron makes Fe2+ with acids */
+  var ak = rpick(['Cl','SO4']);
+  var reacts = pos(fs) < pos('H');
+  if(reacts !== wantYes) return null;
+  if(SOLUBLE[fs + fq].indexOf(ak) === -1) return null;
+  return buildMetal(fs, fq, 'H', 1, ak);
+}
+function halideOK(ck, y){ return y === 'F' ? (ck === 'Na1' || ck === 'K1') : true; }
+function tryHal(wantYes){
+  var x = rpick(['Cl','Br','I']), y = rpick(HALOGENS), ck = rpick(HALIDE_CATS);
+  if(x === y || !halideOK(ck, y)) return null;
+  if((HALOGENS.indexOf(x) < HALOGENS.indexOf(y)) !== wantYes) return null;
+  var c = splitKey(ck);
+  return buildHal(x, c.sym, c.q, y);
+}
+function genProblem(wantYes, kind){
+  if(!kind){ var r = Math.random(); kind = r < 0.55 ? 'metal' : (r < 0.77 ? 'acid' : 'hal'); }
+  var fn = kind === 'metal' ? tryMetal : (kind === 'acid' ? tryAcid : tryHal);
+  for(var i=0;i<500;i++){ var p = fn(wantYes); if(p) return p; }
+  return null;
+}
+
+/* ---------- words ---------- */
+function ladderReason(f, t){
+  var tgt = t === 'H' ? 'the hydrogen in an acid' : NAME[t];
+  var head = '<b>' + f + '</b> is ' + ord(pos(f)) + ' and <b>' + t + '</b> is ' + ord(pos(t)) + ' on the series. ';
+  if(pos(f) < pos(t)) return head + cap(NAME[f]) + ' is above ' + NAME[t] + ', so it replaces ' + tgt + '.';
+  return head + cap(NAME[f]) + ' is below ' + NAME[t] + ', so it can’t replace ' + tgt + '. No reaction.';
+}
+function reason(p){
+  if(p.kind !== 'hal') return ladderReason(p.free, p.target);
+  var x = p.free, y = p.target;
+  var head = 'In column 17, <b>' + x + '</b> (period ' + PERIOD[x] + ') sits ' + (p.reacts ? 'above' : 'below') +
+    ' <b>' + y + '</b> (period ' + PERIOD[y] + '). ';
+  if(p.reacts) return head + cap(NAME[x]) + ' is more active, so ' + fh(x+'2') + ' replaces the ' + ANION[y].name + '.';
+  return head + cap(NAME[x]) + ' is less active, so ' + fh(x+'2') + ' can’t replace the ' + ANION[y].name + '. No reaction.';
+}
+function describe(p, useRoman){
+  var out = {};
+  if(p.kind === 'hal'){
+    var lead = { Cl:'Chlorine gas is bubbled through', Br:'Liquid bromine is added to', I:'Solid iodine is added to' }[p.free];
+    out.setup = lead + ' an aqueous solution of ' + p.compName + '.';
+    out.forms = NAME[p.free] + ' <span class="mono">' + fh(p.freeF) + '</span> · ' + p.compName + ' <span class="mono">' + fh(p.comp) + '</span>';
+    out.ion = '';
+    return out;
+  }
+  var m = NAME[p.free];
+  if(p.kind === 'acid'){
+    out.setup = 'A piece of solid ' + m + ' is dropped into ' + p.compName + '.';
+  } else {
+    out.setup = rpick(['A strip of solid ' + m + ' is placed in an aqueous solution of ' + p.compName + '.',
+                       'Solid ' + m + ' is added to aqueous ' + p.compName + '.',
+                       'A piece of solid ' + m + ' is dropped into an aqueous solution of ' + p.compName + '.']);
+  }
+  out.forms = m + ' <span class="mono">' + p.free + '</span> · ' + p.compName + ' <span class="mono">' + fh(p.comp) + '</span>';
+  out.ion = '';
+  if(VARIABLE[p.free]){
+    out.ion = useRoman
+      ? 'If a reaction happens, the ' + m + ' compound formed is ' + p.saltName + '.'
+      : cap(m) + ' forms ' + catIon(p.free, p.freeQ) + ' ions in this reaction.';
+  }
+  return out;
+}
+
+/* ---------- reading what a student typed ---------- */
+function isNR(s){ return /^(nr|noreaction|norxn)\.?$/i.test(String(s).replace(/[\s\-]/g,'')); }
+function parseSide(side){
+  var bits = side.split('+'), terms = [];
+  for(var i=0;i<bits.length;i++){
+    var b = bits[i];
+    if(!b) return { err:'There’s an empty spot next to a <span class="mono">+</span> sign.' };
+    var m = /^(\d*)(.+?)(\((s|l|g|aq)\))?$/i.exec(b);
+    if(!m) return { err:'I couldn’t read <span class="mono">' + esc(b) + '</span>.' };
+    var f = m[2], st = m[4] ? m[4].toLowerCase() : null;
+    var bad = /\(([a-z]+)\)$/.exec(f);
+    if(!st && bad) return { err:'States are <span class="mono">(s)</span>, <span class="mono">(l)</span>, <span class="mono">(g)</span> or <span class="mono">(aq)</span>. Check <span class="mono">' + esc(b) + '</span>.' };
+    if(/^0/.test(m[1])) return { err:'A coefficient can’t be zero. Check <span class="mono">' + esc(b) + '</span>.' };
+    var a = atoms(f);
+    if(a.err){
+      var msg;
+      if(a.err === 'unknown') msg = '<span class="mono">' + esc(a.sym) + '</span> isn’t an element symbol. Check your capitals: <span class="mono">Cl</span>, not <span class="mono">CL</span> or <span class="mono">cl</span>.';
+      else if(a.err === 'case') msg = 'Element symbols start with a capital letter. Check <span class="mono">' + esc(b) + '</span>.';
+      else if(a.err === 'paren') msg = 'The parentheses in <span class="mono">' + esc(b) + '</span> don’t match up.';
+      else msg = 'I couldn’t read <span class="mono">' + esc(b) + '</span> as a formula.';
+      return { err:msg };
+    }
+    terms.push({ c: m[1] ? parseInt(m[1],10) : 1, f:f, st:st, a:a.a, k:akey(a.a) });
+  }
+  return { terms:terms };
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function echoTerm(t){ return '<span class="t">' + (t.c > 1 ? t.c : '') + fh(t.f) + (t.st ? '(' + t.st + ')' : '') + '</span>'; }
+function echoSide(ts){ return ts.map(echoTerm).join(' + '); }
+function parseEq(raw){
+  var s = String(raw || '');
+  s = s.replace(/[₀-₉]/g, function(d){ return String(d.charCodeAt(0) - 0x2080); });
+  s = s.replace(/\s+/g,'');
+  if(!s) return { err:'Type the equation, or <span class="mono">NR</span> if nothing happens.' };
+  if(isNR(s)) return { nr:true, left:null, echo:'<span class="t nr">NR</span>' };
+  s = s.replace(/[→⟶⇒]/g,'->').replace(/[—–−]+>/g,'->').replace(/-{2,}>/g,'->').replace(/=+>?/g,'->');
+  var parts = s.split('->');
+  if(parts.length < 2) return { err:'Put an arrow between the reactants and the products. Type <span class="mono">-&gt;</span> or <span class="mono">=</span>.' };
+  if(parts.length > 2) return { err:'Use one arrow only.' };
+  if(!parts[0]) return { err:'There’s nothing before the arrow. Start with the reactants.' };
+  var L = parseSide(parts[0]); if(L.err) return L;
+  var arrow = ' <span class="arr">→</span> ';
+  if(isNR(parts[1])) return { nr:true, left:L.terms, echo:echoSide(L.terms) + arrow + '<span class="t nr">NR</span>' };
+  if(!parts[1]) return { err:'There’s nothing after the arrow. Write the products, or NR if there’s no reaction.' };
+  var R = parseSide(parts[1]); if(R.err) return R;
+  return { left:L.terms, right:R.terms, echo:echoSide(L.terms) + arrow + echoSide(R.terms) };
+}
+
+/* ---------- grading a typed equation ---------- */
+function findK(list, k){ for(var i=0;i<list.length;i++) if(list[i].k === k) return list[i]; return null; }
+function fm(f){ return '<span class="mono">' + fh(f) + '</span>'; }
+function diagnoseSalt(p, wf){
+  var w = fm(wf), right = fm(p.salt), wk = fkey(wf);
+  if(p.kind === 'hal'){
+    var wa = atoms(wf).a, ra = atoms(p.salt).a;
+    var catLine = catIon(p.cation, p.cationQ) + ' and ' + halIon(p.free);
+    if(!wa[p.cation]) return '<b>' + w + ' isn’t right.</b> Halogens trade places with halogens, and the ' + NAME[p.cation] +
+      ' stays in the compound. ' + fh(p.freeF) + ' becomes ' + halIon(p.free) + ' and pairs with ' + catIon(p.cation,p.cationQ) + ': ' + right + '.';
+    if(wa[p.free] && ra[p.free] && wa[p.cation] === ra[p.cation] && wa[p.free] === 2*ra[p.free])
+      return '<b>' + w + ' has too many ' + p.free + ' atoms.</b> ' + fh(p.freeF) + ' splits into two separate ' + halIon(p.free) +
+        ' ions. With ' + catIon(p.cation,p.cationQ) + ' that makes ' + right + '. The 2 from ' + fh(p.freeF) + ' becomes a coefficient, not a subscript.';
+    return '<b>Check the formula ' + w + '.</b> ' + catLine + ' combine as ' + right + '.';
+  }
+  var ion = catIon(p.free, p.freeQ), an = anIon(p.an);
+  if(VARIABLE[p.free]){
+    for(var q=1;q<=4;q++){
+      if(q !== p.freeQ && fkey(saltF(p.free,q,p.an)) === wk)
+        return '<b>Wrong ion.</b> ' + w + ' would contain ' + catIon(p.free,q) + ', but this problem says ' + NAME[p.free] +
+          ' forms ' + ion + '. With ' + an + ' the formula is ' + right + '.';
+    }
+  }
+  var copied = p.comp.replace(new RegExp('^' + p.target), p.free);
+  var ca = atoms(copied);
+  if(ca.a && akey(ca.a) === wk && wk !== fkey(p.salt))
+    return '<b>You kept the subscripts from ' + fm(p.comp) + '.</b> Subscripts come from the charges of the new ions. ' +
+      cap(NAME[p.free]) + ' forms ' + ion + ' and ' + (p.kind === 'acid' ? 'the anion' : ANION[p.an].name) + ' is ' + an + ', so the formula is ' + right + '.';
+  return '<b>Check the formula ' + w + '.</b> ' + cap(NAME[p.free]) + ' forms ' + ion + ' and ' +
+    (p.kind === 'acid' ? 'the anion from the acid' : ANION[p.an].name) + ' is ' + an + '. Balance the charges: ' + right + '.';
+}
+var MARKER = { NO3:['N',1], SO4:['S',1], C2H3O2:['C',2] };
+function stateWhy(p, t, exp){
+  var f = fm(t.f) + '(' + exp + ')';
+  if(t.k === fkey(p.salt) || (t.k === fkey(p.comp) && p.kind !== 'acid')) return fm(t.f) + ' is dissolved in the water: ' + f + '.';
+  if(t.k === fkey(p.comp)) return 'The acid is an aqueous solution: ' + f + '.';
+  if(t.f === 'H2') return 'Hydrogen comes off as a gas. The bubbles are H<sub>2</sub>: ' + f + '.';
+  if(/^(F|Cl|Br|I)2$/.test(t.f)) return cap(NAME[t.f.replace('2','')]) + ' is ' + { g:'a gas', l:'a liquid', s:'a solid' }[exp] + ' at room temperature: ' + f + '.';
+  if(t.f === 'Hg') return 'Mercury is the one liquid metal: ' + f + '.';
+  return fm(t.f) + ' is a solid metal: ' + f + '. Only dissolved ionic compounds get (aq).';
+}
+/* returns {level:'full'|'part'|'bad'|'hint', html, echo} */
+function grade(p, raw){
+  var s = parseEq(raw);
+  if(s.err) return { level:'hint', html:s.err };
+  var echo = s.echo;
+  if(!p.reacts){
+    if(s.nr) return { level:'full', echo:echo, html:'<b>Right: no reaction.</b> ' + reason(p) };
+    return { level:'bad', echo:echo, html:'<b>This pair doesn’t react, so there are no products to write.</b> ' + reason(p) +
+      ' Type <span class="mono">NR</span>.' };
+  }
+  if(s.nr) return { level:'bad', echo:echo, html:'<b>It does react.</b> ' + reason(p) + ' Write the products.' };
+
+  var L = s.left, R = s.right;
+  var kFree = fkey(p.freeF), kComp = fkey(p.comp), kSalt = fkey(p.salt), kElem = fkey(p.elem);
+  var startHtml = fm(p.freeF) + ' and ' + fm(p.comp);
+
+  /* backwards? */
+  if(findK(L, kSalt) && findK(R, kComp))
+    return { level:'bad', echo:echo, html:'<b>It’s written backward.</b> Reactants, the things you start with, go on the left: ' + startHtml + '.' };
+
+  /* reactants */
+  var lExtra = L.filter(function(t){ return t.k !== kFree && t.k !== kComp; });
+  if(!findK(L, kFree) || !findK(L, kComp) || lExtra.length){
+    if(!findK(L, kFree) && p.kind === 'hal' && findK(L, fkey(p.free)))
+      return { level:'bad', echo:echo, html:'<b>' + cap(NAME[p.free]) + ' is diatomic.</b> The free element is ' + fm(p.freeF) + ', not ' + fm(p.free) + '.' };
+    return { level:'bad', echo:echo, html:'<b>Start from the reactants in the problem:</b> ' + startHtml + '.' +
+      (lExtra.length ? ' I don’t expect ' + fm(lExtra[0].f) + ' on the left.' : '') };
+  }
+
+  /* products */
+  var stuck = R.filter(function(t){ return t.k === kFree || t.k === kComp; })[0];
+  if(stuck)
+    return { level:'bad', echo:echo, html:'<b>' + fm(stuck.f) + ' is still on the product side.</b> In single replacement the free element and the replaced element trade places. ' +
+      fm(p.freeF) + ' goes into the compound, and ' + (p.kind === 'hal' ? 'the ' + ANION[p.target].name : NAME[p.target]) + ' comes out.' };
+  var hasSalt = findK(R, kSalt), hasElem = findK(R, kElem);
+  if(!hasElem && DIATOMIC[p.target] && findK(R, fkey(p.target))){
+    var msg = p.target === 'H'
+      ? '<b>Hydrogen leaves as H<sub>2</sub>, because it’s diatomic.</b> A lone H atom never shows up as a product. Write ' + fm('H2') + '(g) and balance around it.'
+      : '<b>' + cap(NAME[p.target]) + ' is diatomic.</b> Two ' + halIon(p.target) + ' ions give up their electrons and pair up as ' + fm(p.elem) + ', not ' + fm(p.target) + '.';
+    return { level:'bad', echo:echo, html:msg };
+  }
+  if(!hasSalt){
+    var cand = R.filter(function(t){ return t.a[p.free] && t.k !== kElem; })[0];
+    if(cand) return { level:'bad', echo:echo, html:diagnoseSalt(p, cand.f) };
+    var how = p.kind === 'hal'
+      ? fh(p.freeF) + ' becomes ' + halIon(p.free) + ' and pairs with ' + catIon(p.cation,p.cationQ)
+      : cap(NAME[p.free]) + ' becomes ' + catIon(p.free,p.freeQ) + ' and pairs with ' + anIon(p.an);
+    return { level:'bad', echo:echo, html:'<b>The new compound is missing.</b> ' + how + ': ' + fm(p.salt) + '.' };
+  }
+  if(!hasElem){
+    var out = p.kind === 'hal' ? 'The ' + ANION[p.target].name + ' ions come out as the element, ' + fm(p.elem) + '.'
+      : (p.target === 'H' ? 'The hydrogen from the acid comes out as ' + fm('H2') + ' gas.'
+         : 'The ' + NAME[p.target] + ' that gets pushed out leaves as the element, ' + fm(p.elem) + '.');
+    return { level:'bad', echo:echo, html:'<b>Something is missing from the products.</b> ' + out };
+  }
+  var rExtra = R.filter(function(t){ return t.k !== kSalt && t.k !== kElem; })[0];
+  if(rExtra)
+    return { level:'bad', echo:echo, html:'<b>' + fm(rExtra.f) + ' shouldn’t be a product.</b> Single replacement gives one new compound and one element: ' +
+      fm(p.salt) + ' and ' + fm(p.elem) + '.' };
+  if(L.length !== 2 || R.length !== 2)
+    return { level:'bad', echo:echo, html:'<b>List each substance once.</b> Combine repeats into one coefficient.' };
+
+  /* balance */
+  var tl = {}, tr = {}, e;
+  L.forEach(function(t){ for(var k in t.a) tl[k] = (tl[k] || 0) + t.c*t.a[k]; });
+  R.forEach(function(t){ for(var k in t.a) tr[k] = (tr[k] || 0) + t.c*t.a[k]; });
+  var els = {}; for(e in tl) els[e] = 1; for(e in tr) els[e] = 1;
+  var off = Object.keys(els).filter(function(x){ return (tl[x] || 0) !== (tr[x] || 0); });
+  if(off.length){
+    var bits = [], skip = {};
+    var mk = MARKER[p.an];
+    if(mk && off.indexOf(mk[0]) !== -1){
+      bits.push(fm(ANION[p.an].f) + ' groups: ' + (tl[mk[0]]||0)/mk[1] + ' on the left, ' + (tr[mk[0]]||0)/mk[1] + ' on the right');
+      for(var ae in atoms(ANION[p.an].f).a) skip[ae] = 1;
+    }
+    off.forEach(function(x){ if(!skip[x]) bits.push(x + ': ' + (tl[x]||0) + ' on the left, ' + (tr[x]||0) + ' on the right'); });
+    return { level:'part', echo:echo, html:'<b>The formulas are right. Now balance it.</b> ' + bits.slice(0,2).join('; ') + '.' };
+  }
+  var g = L.concat(R).reduce(function(acc,t){ return gcd(acc, t.c); }, 0);
+  if(g > 1)
+    return { level:'part', echo:echo, html:'<b>Balanced, but not in lowest terms.</b> Every coefficient divides by ' + g + '. Divide them all.' };
+
+  /* states */
+  var expSt = {}; expSt[kFree] = p.freeState; expSt[kComp] = 'aq'; expSt[kSalt] = 'aq'; expSt[kElem] = p.elemState;
+  var all = L.concat(R);
+  var missing = all.filter(function(t){ return !t.st; });
+  if(missing.length)
+    return { level:'part', echo:echo, html:'<b>Balanced. Now add a state to every formula.</b> Missing on ' +
+      missing.map(function(t){ return fm(t.f); }).join(', ') + '.' };
+  var wrong = all.filter(function(t){ return t.st !== expSt[t.k]; });
+  if(wrong.length)
+    return { level:'part', echo:echo, html:'<b>Balanced, but check the states.</b> ' +
+      wrong.map(function(t){ return stateWhy(p, t, expSt[t.k]); }).join(' ') };
+  return { level:'full', echo:echo, html:'<b>Balanced, with every state right.</b> ' + reason(p) };
+}
+
+/* ---------- ladder examples ---------- */
+var PREF = ['NO3','Cl','SO4','C2H3O2'];
+function ladderEq(f, t){
+  var fq = DEFAULT_Q[f], tq = DEFAULT_Q[t];
+  if(!fq || !tq || f === 'H' || f === t) return null;
+  var reacts = pos(f) < pos(t);
+  var tl = SOLUBLE[t + tq], fl = SOLUBLE[f + fq];
+  if(!tl || !fl) return null;
+  var ak = null;
+  for(var i=0;i<PREF.length;i++){
+    var a = PREF[i];
+    if(tl.indexOf(a) !== -1 && (!reacts || fl.indexOf(a) !== -1)){ ak = a; break; }
+  }
+  if(!ak) return null;
+  return buildMetal(f, fq, t, tq, ak);
+}
+/*LOGIC-END*/
+
+/* =========================================================
+   helpers (DOM)
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function renderTerm(t){
+  var m = /^(\d*)(.*?)(\((?:s|l|g|aq)\))?$/i.exec(t.trim());
+  return '<span class="t">' + (m[1] || '') + fh(m[2]) + (m[3] ? m[3].toLowerCase() : '') + '</span>';
+}
+function renderEq(str){
+  var sides = str.split('->');
+  var Rt = sides[1].trim();
+  var R = /^nr$/i.test(Rt) ? '<span class="t nr">NR</span>' : Rt.split(' + ').map(renderTerm).join(' + ');
+  return sides[0].split(' + ').map(renderTerm).join(' + ') + ' <span class="arr">→</span> ' + R;
+}
+function E(s){ return '<span class="eq" data-eq="' + s + '">' + renderEq(s) + '</span>'; }
+function Ex(s){ return '<span class="eq x" data-eq="' + s + '">' + renderEq(s) + '</span>'; }
+function eqBox(s){ return '<div class="eqline">' + E(s) + '</div>'; }
+
+Array.prototype.forEach.call(document.querySelectorAll('.eq[data-eq]'), function(n){ n.innerHTML = renderEq(n.getAttribute('data-eq')); });
+
+/* =========================================================
+   ladder component (used for metals and for column 17)
+   ========================================================= */
+function Ladder(o){
+  var st = { f:null, t:null };
+  var h = '<div class="lad-end">most active</div><div class="lad-col">';
+  o.items.forEach(function(it,i){
+    h += '<button type="button" class="rung' + (it.divider ? ' div' : '') + '" data-i="' + i + '" aria-label="' + it.name + ', ' + ord(i+1) + '">' +
+      '<span class="rn">' + (i+1) + '</span><span class="rs">' + it.label + '</span><span class="rnm">' + it.name + (it.aux ? ' · ' + it.aux : '') + '</span><span class="rtag"></span></button>';
+  });
+  h += '</div><div class="lad-end bot">least active</div><div class="lad-arrow" aria-hidden="true"></div>';
+  o.host.innerHTML = h;
+  var rungs = o.host.querySelectorAll('.rung'), arrow = o.host.querySelector('.lad-arrow'), col = o.host.querySelector('.lad-col');
+  var res = null;
+
+  function draw(){
+    res = (st.f !== null && st.t !== null) ? o.judge(st.f, st.t) : null;
+    Array.prototype.forEach.call(rungs, function(r,i){
+      var c = 'rung' + (o.items[i].divider ? ' div' : '');
+      var tag = '';
+      if(i === st.f){ c += ' free'; tag = 'free'; }
+      else if(i === st.t && res){ c += ' target ' + (res.v === 'yes' ? 'hit' : res.v === 'no' ? 'miss' : 'same'); tag = res.tag || ''; }
+      else if(st.f !== null && st.t === null && o.reach){
+        var rr = o.reach(st.f, i);
+        if(rr === true) c += ' reach'; else if(rr === false) c += ' dim';
+      }
+      r.className = c;
+      r.querySelector('.rtag').textContent = tag;
+      r.setAttribute('aria-pressed', (i === st.f || i === st.t) ? 'true' : 'false');
+    });
+    if(st.f !== null && st.t !== null && st.f === st.t){
+      rungs[st.f].querySelector('.rtag').textContent = 'same';
+    }
+    o.out.innerHTML = res ? res.html : (st.f === null ? o.prompt0 : o.prompt1(st.f));
+    place();
+    if(o.onSync) o.onSync(st);
+  }
+  function place(){
+    if(!res || st.f === st.t){ arrow.style.display = 'none'; return; }
+    var a = rungs[st.f], b = rungs[st.t];
+    var ya = col.offsetTop + a.offsetTop + a.offsetHeight/2, yb = col.offsetTop + b.offsetTop + b.offsetHeight/2;
+    arrow.style.display = 'block';
+    arrow.style.top = Math.min(ya,yb) + 'px';
+    arrow.style.height = Math.abs(yb - ya) + 'px';
+    arrow.className = 'lad-arrow ' + (yb > ya ? 'down' : 'up') + ' ' + (res.v === 'yes' ? 'ok' : res.v === 'no' ? 'no' : 'info');
+  }
+  Array.prototype.forEach.call(rungs, function(r){
+    r.addEventListener('click', function(){
+      var i = Number(r.getAttribute('data-i'));
+      if(st.f === null){ st.f = i; }
+      else if(st.t === null){ if(i === st.f){ st.f = null; } else { st.t = i; } }
+      else { st.f = i; st.t = null; }
+      draw();
+    });
+  });
+  window.addEventListener('resize', place);
+  draw();
+  return { set:function(f,t){ st.f = f; st.t = t; draw(); }, st:st };
+}
+
+/* ---------- metal ladder ---------- */
+var metalItems = SERIES.map(function(s){ return { label:s, name:NAME[s], divider: s === 'H', aux: s === 'H' ? 'acid line' : '' }; });
+function metalJudge(fi, ti){
+  var f = SERIES[fi], t = SERIES[ti];
+  if(fi === ti) return { v:'same', tag:'same', html:'<div class="verdict">Same element</div><p>There’s nothing to swap. Pick a different element for the compound.</p>' };
+  if(f === 'H') return { v:'info', tag:'', html:'<div class="verdict">Hydrogen is the line</div><p>You won’t use H<sub>2</sub> as a free element here. Hydrogen’s job on this list is to split the metals: everything above it reacts with acids like HCl, and everything below it doesn’t.</p>' };
+  var yes = pos(f) < pos(t);
+  var html = '<div class="verdict ' + (yes ? 'ok' : 'no') + '">' + (yes ? 'Reacts' : 'No reaction') + '</div><p>' + ladderReason(f, t) + '</p>';
+  var p = ladderEq(f, t);
+  if(p){
+    html += '<div class="eqline">' + E(p.eq) + '</div>';
+    if(yes && VARIABLE[f]) html += '<p class="lad-tip">Written with ' + catIon(f, p.freeQ) + '. A real problem would tell you which ion ' + NAME[f] + ' forms.</p>';
+  }
+  if(pos(f) < pos('Mg')) html += '<div class="lad-water">' + cap(NAME[f]) + ' is near the top of the list, so in a real beaker it reacts with the water first. That’s why you won’t see it dropped into a solution in lab.</div>';
+  return { v: yes ? 'yes' : 'no', tag: yes ? 'replaced' : 'NR', html:html };
+}
+var mLadder = Ladder({
+  host:el('l-lad'), out:el('l-out'), items:metalItems, judge:metalJudge,
+  reach:function(fi,i){ if(SERIES[fi] === 'H') return null; return i > fi ? true : (i < fi ? false : null); },
+  prompt0:'<p>Pick the <b>free element</b> on the ladder or in the menu.</p>',
+  prompt1:function(fi){
+    var f = SERIES[fi];
+    if(f === 'H') return '<p>Hydrogen is the dividing line. Pick a metal as the free element instead.</p>';
+    return '<p>Now pick the element <b>in the compound</b>. The green rungs are everything ' + NAME[f] + ' can replace. Everything above it is safe from ' + NAME[f] + '.</p>';
+  },
+  onSync:function(st){
+    el('l-free').value = st.f === null ? '' : String(st.f);
+    el('l-targ').value = st.t === null ? '' : String(st.t);
+  }
+});
+(function fillSelects(){
+  var opts = '<option value="">— pick —</option>' + SERIES.map(function(s,i){
+    return '<option value="' + i + '">' + (i+1) + '. ' + s + ' (' + NAME[s] + ')</option>';
+  }).join('');
+  el('l-free').innerHTML = opts; el('l-targ').innerHTML = opts;
+  function fromSelects(){
+    var f = el('l-free').value, t = el('l-targ').value;
+    mLadder.set(f === '' ? null : Number(f), (f === '' || t === '') ? null : Number(t));
+  }
+  el('l-free').addEventListener('change', fromSelects);
+  el('l-targ').addEventListener('change', fromSelects);
+  el('l-swap').addEventListener('click', function(){
+    if(mLadder.st.f === null || mLadder.st.t === null) return;
+    mLadder.set(mLadder.st.t, mLadder.st.f);
+  });
+  el('l-clear').addEventListener('click', function(){ mLadder.set(null, null); });
+  mLadder.set(SERIES.indexOf('Zn'), SERIES.indexOf('Cu'));
+})();
+
+/* ---------- halogen ladder ---------- */
+var halItems = HALOGENS.map(function(x){ return { label:fh(x+'2'), name:NAME[x], aux:'period ' + PERIOD[x] }; });
+function halJudge(fi, ti){
+  var x = HALOGENS[fi], y = HALOGENS[ti];
+  if(fi === ti) return { v:'same', tag:'same', html:'<div class="verdict">Same element</div><p>Nothing to swap.</p>' };
+  var p = buildHal(x, 'Na', 1, y);
+  var html = '<div class="verdict ' + (p.reacts ? 'ok' : 'no') + '">' + (p.reacts ? 'Reacts' : 'No reaction') + '</div><p>' + reason(p) + '</p>' + eqBox(p.eq);
+  if(x === 'F') html += '<p class="lad-tip">On paper, fluorine beats every other halogen. In real life F<sub>2</sub> is so reactive it attacks the water itself, so you won’t see this done in solution.</p>';
+  return { v: p.reacts ? 'yes' : 'no', tag: p.reacts ? 'replaced' : 'NR', html:html };
+}
+var hLadder = Ladder({
+  host:el('h-lad'), out:el('h-out'), items:halItems, judge:halJudge,
+  reach:function(fi,i){ return i > fi ? true : (i < fi ? false : null); },
+  prompt0:'<p>Click a halogen to be the <b>free element</b>.</p>',
+  prompt1:function(fi){ return '<p>Now click the halide <b>in the salt</b>. The green rungs are the ones ' + fh(HALOGENS[fi]+'2') + ' can replace.</p>'; }
+});
+hLadder.set(1, 2);
+
+/* =========================================================
+   widget 1: will it react?
+   ========================================================= */
+var pState = null, pScore = Score(el('p-score')), pLast = '';
+function predictNew(){
+  var p;
+  do { p = genProblem(Math.random() < 0.5); } while(p.eq === pLast);
+  pLast = p.eq;
+  pState = { p:p, done:false };
+  var kindLine = p.kind === 'hal' ? 'A halogen meets a halide salt.' : (p.kind === 'acid' ? 'A metal meets an acid.' : 'A metal meets a dissolved ionic compound.');
+  el('p-setup').innerHTML = kindLine + ' <span class="smallprint">(' + NAME[p.free] + ' + ' + p.compName + ')</span>';
+  el('p-prob').innerHTML = '<span class="eq">' + renderTerm(p.freeF + '(' + p.freeState + ')') + ' + ' + renderTerm(p.comp + '(aq)') +
+    ' <span class="arr">→</span> ?</span>';
+  el('p-yes').className = ''; el('p-no').className = '';
+  el('p-yes').disabled = false; el('p-no').disabled = false;
+  hideFb(el('p-fb'));
+}
+function predictAnswer(saidYes){
+  var s = pState; if(s.done) return;
+  s.done = true;
+  var p = s.p, ok = saidYes === p.reacts;
+  pScore.add(ok);
+  el(saidYes ? 'p-yes' : 'p-no').className = ok ? 'picked-yes' : 'picked-no';
+  el('p-yes').disabled = true; el('p-no').disabled = true;
+  var extra = '';
+  if(!ok){
+    if(p.reacts) extra = p.kind === 'acid' ? ' Every metal above H (20th) pushes the hydrogen out of an acid and makes H<sub>2</sub> bubbles.'
+      : ' The free element is the higher one here, and higher wins.';
+    else if(p.kind === 'hal') extra = ' Compare the two halogens. The ' + NAME[p.cation] + ' ion is a bystander.';
+    else if(p.kind === 'acid') extra = ' Only metals above hydrogen react with acids. No hydrogen gas forms here.';
+    else if(pos(p.target) < pos('Mg')) extra = ' ' + cap(NAME[p.target]) + ' is near the very top of the list. No metal in these problems can push it out of a compound.';
+    else extra = ' A free metal can only push out a metal <i>below</i> it.';
+  }
+  var head = ok ? '<b>' + (p.reacts ? 'Yes, it reacts.' : 'Right, no reaction.') + '</b> ' : '<b>' + (p.reacts ? 'It does react.' : 'No reaction here.') + '</b> ';
+  setFb(el('p-fb'), ok ? 'good' : 'bad', head + reason(p) + extra + eqBox(p.eq) +
+    (p.reacts && p.kind !== 'hal' && VARIABLE[p.free] ? '<span class="smallprint">Written with ' + catIon(p.free, p.freeQ) + '.</span>' : ''));
+}
+el('p-yes').addEventListener('click', function(){ predictAnswer(true); });
+el('p-no').addEventListener('click', function(){ predictAnswer(false); });
+el('p-new').addEventListener('click', predictNew);
+
+/* =========================================================
+   widget 2: write it out
+   ========================================================= */
+var wState = null, wLast = '';
+var wTally = { att:0, ok:0 };
+function wScoreShow(){ el('w-score').textContent = wTally.ok + ' of ' + wTally.att; }
+function writeNew(){
+  var p;
+  do { p = genProblem(Math.random() < 0.75); } while(p.eq === wLast);
+  wLast = p.eq;
+  var d = describe(p, Math.random() < 0.5);
+  wState = { p:p, tried:false, solved:false, revealed:false };
+  el('w-setup').innerHTML = d.setup;
+  el('w-forms').innerHTML = 'Formulas: ' + d.forms;
+  el('w-ion').innerHTML = d.ion ? '<p class="ionnote">' + d.ion + '</p>' : '';
+  el('w-input').value = '';
+  el('w-prev').innerHTML = '';
+  hideFb(el('w-fb'));
+}
+function writePreview(){
+  var v = el('w-input').value;
+  if(!v.trim()){ el('w-prev').innerHTML = ''; return; }
+  var s = parseEq(v);
+  el('w-prev').innerHTML = s.err ? '' : '<span class="pl">Reads as</span><span class="eq">' + s.echo + '</span>';
+}
+function writeCheck(){
+  var s = wState, g = grade(s.p, el('w-input').value);
+  if(g.level === 'hint'){ setFb(el('w-fb'), 'hint', g.html); return; }
+  if(!s.tried){ s.tried = true; wTally.att++; }
+  if(g.level === 'full' && !s.solved && !s.revealed){ s.solved = true; wTally.ok++; }
+  wScoreShow();
+  var cls = g.level === 'full' ? 'good' : (g.level === 'part' ? 'part' : 'bad');
+  setFb(el('w-fb'), cls, '<div class="echo">You wrote: <span class="eq">' + g.echo + '</span></div>' + g.html);
+}
+function writeShow(){
+  var s = wState;
+  if(!s.tried){ s.tried = true; wTally.att++; wScoreShow(); }
+  s.revealed = true;
+  setFb(el('w-fb'), 'hint', '<b>Answer.</b> ' + reason(s.p) + eqBox(s.p.eq));
+}
+el('w-check').addEventListener('click', writeCheck);
+el('w-show').addEventListener('click', writeShow);
+el('w-new').addEventListener('click', writeNew);
+el('w-input').addEventListener('keydown', function(e){ if(e.key === 'Enter') writeCheck(); });
+el('w-input').addEventListener('input', writePreview);
+
+/* =========================================================
+   quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'You have Cl<sub>2</sub> and I<sub>2</sub> on the shelf. Which one will react with NaBr(aq)?',
+    opts:['I<sub>2</sub> only','Cl<sub>2</sub> only','Both of them','Neither. Halogens don’t replace each other.'],
+    ans:1,
+    why:'Column 17 from top to bottom is F, Cl, Br, I. Chlorine is above bromine, so it replaces bromide: ' + E('Cl2(g) + 2NaBr(aq) -> 2NaCl(aq) + Br2(l)') + '. Iodine is below bromine, so I<sub>2</sub> + NaBr is NR.' },
+  { stem:'Which metal will <b>not</b> produce hydrogen gas when dropped into HCl(aq)?',
+    opts:['Magnesium','Zinc','Iron','Copper'],
+    ans:3,
+    why:'Copper is 23rd and H is 20th, so copper is below hydrogen and can’t replace it. Mg (9th), Zn (12th) and Fe (14th) are all above H and fizz in acid.' },
+  { stem:'Zinc is dropped into hydrochloric acid. Which equation is correct?',
+    opts:[Ex('Zn(s) + HCl(aq) -> ZnCl(aq) + H(g)'), Ex('Zn(s) + 2HCl(aq) -> ZnCl2(aq) + 2H(g)'), E('Zn(s) + 2HCl(aq) -> ZnCl2(aq) + H2(g)'), Ex('Zn(s) + 2HCl(aq) -> ZnH2(aq) + Cl2(g)')],
+    ans:2,
+    why:'Zinc forms Zn<sup>2+</sup>, so the salt is ZnCl<sub>2</sub>. The hydrogen leaves as diatomic H<sub>2</sub> gas, never as lone H atoms. A metal replaces the cation, which here is hydrogen, so chlorine stays put in the salt.' },
+  { stem:'Silver metal is placed in copper(II) nitrate solution: Ag(s) + Cu(NO<sub>3</sub>)<sub>2</sub>(aq) → ?',
+    opts:[Ex('2Ag(s) + Cu(NO3)2(aq) -> 2AgNO3(aq) + Cu(s)'), Ex('Ag(s) + Cu(NO3)2(aq) -> AgNO3(aq) + Cu(s)'), 'NR (no reaction)','Ag(NO<sub>3</sub>)<sub>2</sub>(aq) + Cu(s)'],
+    ans:2,
+    why:'Silver is 26th and copper is 23rd. Silver is below copper, so it can’t push copper out. The first option is balanced, but it’s a reaction that doesn’t happen.' },
+  { stem:'Which of these is the most active metal: Sn, Ni, Cr, Pb?',
+    opts:['Sn','Ni','Cr','Pb'],
+    ans:2,
+    why:'On the class list Cr is 13th, Ni is 17th, Sn is 18th and Pb is 19th. Chromium is highest, so it’s the most active and could replace any of the other three.' },
+  { stem:'A strip of copper is left in silver nitrate solution. Silvery crystals grow on the strip and the solution slowly turns blue. Which equation describes it?',
+    opts:[Ex('Cu(s) + AgNO3(aq) -> CuNO3(aq) + Ag(s)'), E('Cu(s) + 2AgNO3(aq) -> Cu(NO3)2(aq) + 2Ag(s)'), Ex('2Ag(s) + Cu(NO3)2(aq) -> 2AgNO3(aq) + Cu(s)'), 'No reaction. Copper is below silver.'],
+    ans:1,
+    why:'Copper (23rd) is above silver (26th), so it replaces silver. The silvery crystals are Ag(s). The blue color comes from Cu<sup>2+</sup> ions, which is how you know copper formed Cu<sup>2+</sup> and the salt is Cu(NO<sub>3</sub>)<sub>2</sub>.' },
+  { stem:'Iron is placed in CuCl<sub>2</sub>(aq). The problem says iron forms Fe<sup>3+</sup> ions. Which is the balanced equation?',
+    opts:[Ex('Fe(s) + CuCl2(aq) -> FeCl2(aq) + Cu(s)'), Ex('Fe(s) + CuCl2(aq) -> FeCl3(aq) + Cu(s)'), E('2Fe(s) + 3CuCl2(aq) -> 2FeCl3(aq) + 3Cu(s)'), Ex('2Fe(s) + 3CuCl2(aq) -> 2FeCl3(aq) + 3Cu(aq)')],
+    ans:2,
+    why:'Fe<sup>3+</sup> with Cl<sup>−</sup> gives FeCl<sub>3</sub>. Balancing six chlorines takes 3 CuCl<sub>2</sub> and 2 FeCl<sub>3</sub>. The first option is balanced, but it uses Fe<sup>2+</sup>, which the problem ruled out. The last one has copper metal as (aq), but metal coming out of solution is a solid.' },
+  { stem:'To decide whether Cl<sub>2</sub>(g) + NaBr(aq) reacts, which two elements do you compare?',
+    opts:['Cl and Na','Cl and Br','Na and Br','Cl and H'],
+    ans:1,
+    why:'Like replaces like. A free halogen can only take the place of another halogen, so you compare chlorine with bromine. Sodium is a bystander.' }
+];
+
+(function buildQuiz(){
+  var host = el('quiz'), html = '';
+  QUIZ.forEach(function(q,qi){
+    html += '<div class="q"><p class="stem">' + (qi+1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o,oi){ html += '<button type="button" class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  host.innerHTML = html;
+  Array.prototype.forEach.call(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      Array.prototype.forEach.call(el('q'+qi).querySelectorAll('.opt'), function(other,i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      setFb(el('qfb'+qi), oi === q.ans ? 'good' : 'bad',
+        '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+    });
+  });
+})();
+
+/* boot */
+predictNew();
+writeNew();
+</script>
+</body>
+</html>

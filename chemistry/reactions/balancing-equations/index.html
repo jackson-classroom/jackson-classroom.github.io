@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balancing Equations — Conservation of Atoms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#131E1D; --ink2:#3B4A48; --mute:#5F6D6B;
+  --wash:#E3E9E8; --card:#FBFCFB; --line:#C9D3D1; --line-soft:#E0E7E6;
+  --water:#12727F; --water-dk:#0B4E58; --water-lite:#BFDEE2;
+  --brass:#9A6E22; --brass-lite:#F5E9CF;
+  --ok:#26694A; --ok-bg:#E4F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  --display:"Instrument Serif",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(227,233,232,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:64px 0 44px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--water-dk)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,7.4vw,74px);line-height:1;margin:16px 0 0;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--water-dk)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:47ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: a skeleton equation and its atom tally */
+.sig-readout{margin:38px 0 0;padding:24px 26px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.sig-calc{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.sig-grid{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;align-items:center}
+.sig-eq{font-family:var(--mono);font-size:clamp(26px,5.6vw,40px);font-weight:500;line-height:1.2;letter-spacing:-.02em;margin-top:10px}
+.sig-eq .st{font-size:.45em;color:var(--mute);font-weight:400;letter-spacing:0}
+.sig-rows{margin-top:16px;display:grid;gap:6px;max-width:330px}
+.sig-r{display:grid;grid-template-columns:2.6em 1fr auto;align-items:baseline;gap:10px;font-family:var(--mono);font-size:clamp(18px,3.6vw,24px);font-weight:500;font-variant-numeric:tabular-nums;border-bottom:1px dashed var(--line);padding-bottom:4px}
+.sig-r .tg{font-size:12px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.sig-r.off{color:var(--no)}
+.sig-r.off .tg{color:var(--no)}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px}
+.sig-note b{color:var(--no);font-weight:600}
+.sig-note b.fix{color:var(--ok)}
+.sig-scale svg{display:block;width:100%;height:auto}
+.scl-line{stroke:var(--ink2);stroke-width:3;stroke-linecap:round;fill:none}
+.scl-str{stroke:var(--mute);stroke-width:1.2;fill:none}
+.scl-pan{fill:var(--line-soft);stroke:var(--ink2);stroke-width:2}
+.scl-lab{font-family:var(--mono);font-size:11px;fill:var(--ink2)}
+.scl-lab.off{fill:var(--no)}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--water);color:var(--water-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--water-dk);background:var(--water-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.4vw,40px);line-height:1.08;margin:0;letter-spacing:-.01em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--water-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.note{border-left:3px solid var(--brass);background:var(--brass-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:24px 0}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--water);border-radius:0 4px 4px 0;padding:18px 20px}
+.rulecard .op{font-family:var(--display);font-size:30px;line-height:1;color:var(--water-dk)}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard.warn{border-left-color:var(--no)}
+.rulecard.warn .op{color:var(--no)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.problem{font-family:var(--mono);font-size:clamp(18px,3.4vw,23px);font-weight:500;letter-spacing:-.01em}
+.setup{font-size:15px;color:var(--ink2);margin:0 0 14px}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F6F8F7;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--water-dk);border-color:var(--water-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--water)}
+button[disabled]{opacity:.45;cursor:default}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2.5px solid var(--water);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid var(--line);border-radius:3px;padding:9px 11px;width:150px;background:#fff;color:var(--ink)}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:150px}
+.unit-tag{font-family:var(--mono);font-size:14px;color:var(--mute);min-width:42px}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1B4E36}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--water);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb .mono{font-size:15px}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab[aria-selected="true"]{background:var(--ink);color:#F6F8F7;border-color:var(--ink)}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft)}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45}
+.opt:hover{border-color:var(--water);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.94}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#EDF2F1;border-radius:4px;padding:22px 24px;margin:34px 0 44px}
+.next p{margin:0;font-size:16px;color:#C3D0CE}
+.next .nt{font-family:var(--display);font-size:26px;color:#fff;margin:0 0 4px}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F6F8F7;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--water-lite)}
+
+/* ---------- page widgets ---------- */
+.st{font-size:.62em;color:var(--mute);font-weight:400;letter-spacing:0}
+.co{color:var(--water-dk)}
+
+/* molecule comparison */
+.molpair{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:24px 0}
+.molcard{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--ok);border-radius:4px;padding:18px 20px}
+.molcard.bad{border-top-color:var(--no)}
+.molcard .mk{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ok)}
+.molcard.bad .mk{color:var(--no)}
+.molcard .mf{font-family:var(--mono);font-size:30px;font-weight:500;line-height:1.2;margin-top:4px}
+.molcard .mf .big{color:var(--water-dk)}
+.molcard .mf .changed{color:var(--no);border-bottom:2px solid var(--no)}
+.molcard svg{display:block;width:100%;max-width:260px;height:auto;margin:12px 0 8px}
+.molcard .cnt{font-family:var(--mono);font-size:13.5px;color:var(--ink2)}
+.molcard p{font-size:15.5px;color:var(--ink2);margin:8px 0 0}
+.bond{stroke:var(--ink2);stroke-width:3.5;stroke-linecap:round}
+.at-o{fill:var(--no)}
+.at-h{fill:#fff;stroke:var(--ink2);stroke-width:1.5}
+.at-al{fill:#8C9997}
+.at-t{font-family:var(--mono);font-size:10px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+.at-t.w{fill:#fff}
+.at-t.k{fill:var(--ink)}
+.mol-box{fill:none;stroke:var(--line);stroke-dasharray:4 4}
+
+/* counting */
+.cprob{font-family:var(--mono);font-size:clamp(32px,7.4vw,48px);font-weight:500;line-height:1.15;letter-spacing:-.01em;margin:4px 0 2px}
+.cask{font-size:17px;margin:6px 0 0}
+.cask b{font-family:var(--mono);font-weight:600;color:var(--water-dk)}
+.ex-tab td:first-child{font-family:var(--mono);font-weight:600}
+.ex-tab th,.ex-tab td{padding:8px 8px}
+
+/* equation with steppers */
+.bal-eq{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:14px 10px;padding:20px 10px 18px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;margin-top:14px}
+.side{display:flex;flex-wrap:wrap;gap:14px 6px;justify-content:center;align-items:flex-start}
+.sp{display:flex;flex-direction:column;align-items:center;gap:9px;min-width:100px}
+.sp-f{font-family:var(--mono);font-size:clamp(20px,3.6vw,25px);font-weight:500;white-space:nowrap;line-height:36px;height:36px}
+.sp-f .co{margin-right:.06em}
+.op{font-family:var(--mono);font-size:clamp(20px,3.6vw,25px);color:var(--mute);line-height:36px;padding:0 2px}
+.op.arrow{color:var(--ink);padding:0 6px}
+.stp{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:3px;overflow:hidden;background:#fff}
+.stp button{padding:0;width:32px;height:36px;background:var(--line-soft);color:var(--ink);border:none;border-radius:0;font-size:18px;line-height:1}
+.stp button:hover{background:var(--water-lite);color:var(--water-dk)}
+.stp input[type=text]{width:44px;height:36px;text-align:center;border:none;border-left:1px solid var(--line);border-right:1px solid var(--line);border-radius:0;padding:0 2px;font-size:18px}
+.stp input[type=text].badin{background:var(--no-bg);color:var(--no)}
+
+/* atom tally */
+.tally{margin:14px 0 0;display:grid;gap:5px}
+.trow{display:grid;grid-template-columns:52px minmax(0,1fr) 36px 22px 36px minmax(0,1fr);align-items:center;gap:6px;padding:5px 10px;border-radius:3px;background:#fff;border:1px solid var(--line-soft);font-family:var(--mono);font-variant-numeric:tabular-nums}
+.trow.head{background:transparent;border-color:transparent;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);padding-top:0;padding-bottom:0}
+.trow.head .rt{text-align:right}
+.te{font-weight:600;font-size:15px;white-space:nowrap}
+.tb{height:10px;background:var(--line-soft);border-radius:2px;position:relative;overflow:hidden}
+.tb i{position:absolute;top:0;bottom:0;background:var(--brass);border-radius:2px}
+.tb.l i{right:0}
+.tb.r i{left:0}
+.tn{text-align:center;font-size:16px;font-weight:500}
+.tq{text-align:center;color:var(--no);font-weight:600}
+.trow.ok{background:var(--ok-bg);border-color:#C3DCCB}
+.trow.ok .tb i{background:var(--ok)}
+.trow.ok .tq{color:var(--ok)}
+.tstatus{font-family:var(--mono);font-size:12.5px;color:var(--mute);margin:10px 0 0}
+.tstatus b{color:var(--ok);font-weight:600}
+@media (prefers-reduced-motion:no-preference){ .tb i{transition:width .22s ease-out} .trow{transition:background .2s,border-color .2s} }
+
+/* worked example */
+.wk-eq{font-family:var(--mono);font-size:clamp(18px,3.4vw,24px);font-weight:500;text-align:center;padding:16px 8px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;margin-top:12px;line-height:1.7}
+.wk-eq .sps{padding:2px 5px;border-radius:3px;white-space:nowrap}
+.wk-eq .sps.hl{background:var(--brass-lite);box-shadow:inset 0 -2px 0 var(--brass)}
+.opx{color:var(--mute);margin:0 .25em}
+.wk-count{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto}
+.wk-text{min-height:5.2em}
+
+.own{border-top:1px solid var(--line-soft);margin-top:22px;padding-top:16px}
+.own input[type=text]{width:100%;max-width:420px;font-size:17px}
+.own .field label{min-width:0;flex:1 1 100%}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:16px}
+  .field label{min-width:auto;flex:1 1 100%}
+  .sig-readout{padding:20px 18px}
+  .sig-grid{grid-template-columns:1fr}
+  .sig-scale{max-width:250px;margin:0 auto}
+  .bal-eq{padding:16px 4px}
+  .sp{min-width:96px}
+  .ex-tab th,.ex-tab td{padding:7px 5px}
+  .ex-tab th{font-size:10.5px;letter-spacing:.04em}
+  .trow{grid-template-columns:42px minmax(0,1fr) 30px 16px 30px minmax(0,1fr);gap:5px;padding:5px 7px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Balancing Equations</span>
+    <span class="bar-sub">Conservation of atoms · coefficients · strategy</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 3 · Chemical reactions</div>
+  <h1>Every atom that goes in has to come <em>out</em>.</h1>
+  <p class="lede">A skeleton equation tells you what reacts and what forms. Balancing makes it honest about how many — by changing how many of each substance you have, never what the substances are.</p>
+
+  <div class="sig-readout">
+    <div class="sig-grid">
+      <div>
+        <div class="sig-calc">Skeleton equation · atom tally</div>
+        <div class="sig-eq">Al<span class="st">(s)</span> + O<sub>2</sub><span class="st">(g)</span> → Al<sub>2</sub>O<sub>3</sub><span class="st">(s)</span></div>
+        <div class="sig-rows">
+          <div class="sig-r off"><span>Al:</span><span>1 → 2</span><span class="tg">≠ off</span></div>
+          <div class="sig-r off"><span>O:</span><span>2 → 3</span><span class="tg">≠ off</span></div>
+        </div>
+        <div class="sig-note">As written, this reaction makes <b>one aluminum atom and one oxygen atom out of nothing</b>. Coefficients fix it: <b class="fix">4Al + 3O<sub>2</sub> → 2Al<sub>2</sub>O<sub>3</sub></b> — 4 Al and 6 O on each side.</div>
+      </div>
+      <div class="sig-scale" aria-hidden="true">
+        <svg viewBox="0 0 280 190">
+          <rect x="108" y="170" width="64" height="7" rx="2" fill="var(--ink2)"/>
+          <line class="scl-line" x1="140" y1="52" x2="140" y2="171"/>
+          <g transform="rotate(9 140 52)"><line class="scl-line" x1="40" y1="52" x2="240" y2="52" style="stroke-width:4"/></g>
+          <circle cx="140" cy="52" r="5" fill="var(--ink)"/>
+          <!-- left pan: reactants -->
+          <line class="scl-str" x1="41.2" y1="36.4" x2="12" y2="88.4"/>
+          <line class="scl-str" x1="41.2" y1="36.4" x2="70" y2="88.4"/>
+          <path class="scl-pan" d="M10 88.4 Q41 108 72 88.4 Z"/>
+          <circle class="at-al" cx="26" cy="79" r="9"/><text class="at-t w" x="26" y="79">Al</text>
+          <line class="bond" x1="46" y1="81" x2="58" y2="81"/>
+          <circle class="at-o" cx="46" cy="81" r="7"/><text class="at-t w" x="46" y="81">O</text>
+          <circle class="at-o" cx="58" cy="81" r="7"/><text class="at-t w" x="58" y="81">O</text>
+          <text class="scl-lab" x="41" y="125" text-anchor="middle">1 Al · 2 O</text>
+          <!-- right pan: products -->
+          <line class="scl-str" x1="238.8" y1="67.6" x2="208" y2="119.6"/>
+          <line class="scl-str" x1="238.8" y1="67.6" x2="270" y2="119.6"/>
+          <path class="scl-pan" d="M206 119.6 Q239 139 272 119.6 Z"/>
+          <line class="bond" x1="216" y1="111" x2="228" y2="108"/>
+          <line class="bond" x1="228" y1="108" x2="239" y2="100"/>
+          <line class="bond" x1="239" y1="100" x2="250" y2="108"/>
+          <line class="bond" x1="250" y1="108" x2="262" y2="111"/>
+          <circle class="at-o" cx="216" cy="111" r="7"/><text class="at-t w" x="216" y="111">O</text>
+          <circle class="at-o" cx="239" cy="100" r="7"/><text class="at-t w" x="239" y="100">O</text>
+          <circle class="at-o" cx="262" cy="111" r="7"/><text class="at-t w" x="262" y="111">O</text>
+          <circle class="at-al" cx="228" cy="109" r="8.5"/><text class="at-t w" x="228" y="109">Al</text>
+          <circle class="at-al" cx="250" cy="109" r="8.5"/><text class="at-t w" x="250" y="109">Al</text>
+          <text class="scl-lab off" x="239" y="156" text-anchor="middle">2 Al · 3 O</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#why">Why balance</a>
+  <a href="#coef">Coefficients vs. subscripts</a>
+  <a href="#count">Counting atoms</a>
+  <a href="#strategy">Strategy</a>
+  <a href="#balancer">The balancer</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ WHY ============ -->
+<section id="why">
+  <div class="sec-head"><span class="tasktag">Conservation of mass</span><h2>Why equations have to balance</h2></div>
+  <p>A chemical reaction breaks bonds and makes new ones. That's all it does. The atoms themselves — the nuclei that decide whether something is carbon or oxygen — come through untouched. They are <b>rearranged, not created or destroyed</b>.</p>
+  <p>That's why mass is conserved. Burn methane in a sealed container and the container weighs the same afterward, because every atom you started with is still in there, just bonded to different partners. A balanced equation is the bookkeeping that proves it: each element appears the same number of times on both sides of the arrow.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Methane burning · balanced</span></div>
+    <div class="wk-eq" id="why-eq"></div>
+    <div class="tally" id="why-tally"></div>
+    <p class="tstatus">Same 1 carbon, 4 hydrogen and 4 oxygen on both sides — just bonded to different partners.</p>
+  </div>
+
+  <div class="note">
+    <b>Atoms are conserved. Molecules are not.</b> N<sub>2</sub>(g) + 3H<sub>2</sub>(g) → 2NH<sub>3</sub>(g) starts with 4 molecules and ends with 2, and that's fine. What has to match is each <i>element</i>, counted separately: 2 N and 6 H on each side.
+  </div>
+</section>
+
+<!-- ============ COEFFICIENTS VS SUBSCRIPTS ============ -->
+<section id="coef">
+  <div class="sec-head"><span class="tasktag">The one rule</span><h2>Coefficients, never subscripts</h2></div>
+  <p>Take the skeleton H<sub>2</sub>(g) + O<sub>2</sub>(g) → H<sub>2</sub>O(l). Oxygen is off — 2 on the left, 1 on the right. There are two ways you might try to get a second oxygen onto the right side. Only one of them still describes water.</p>
+
+  <div class="molpair">
+    <div class="molcard">
+      <div class="mk">Change the coefficient ✓</div>
+      <div class="mf"><span class="big">2</span>H<sub>2</sub>O</div>
+      <svg viewBox="0 0 260 96" role="img" aria-label="Two separate water molecules, each with one oxygen and two hydrogens">
+        <rect class="mol-box" x="4" y="4" width="118" height="88" rx="6"/>
+        <rect class="mol-box" x="138" y="4" width="118" height="88" rx="6"/>
+        <g>
+          <line class="bond" x1="63" y1="40" x2="38" y2="62"/><line class="bond" x1="63" y1="40" x2="88" y2="62"/>
+          <circle class="at-h" cx="38" cy="62" r="10"/><text class="at-t k" x="38" y="62">H</text>
+          <circle class="at-h" cx="88" cy="62" r="10"/><text class="at-t k" x="88" y="62">H</text>
+          <circle class="at-o" cx="63" cy="40" r="15"/><text class="at-t w" x="63" y="40">O</text>
+        </g>
+        <g transform="translate(134 0)">
+          <line class="bond" x1="63" y1="40" x2="38" y2="62"/><line class="bond" x1="63" y1="40" x2="88" y2="62"/>
+          <circle class="at-h" cx="38" cy="62" r="10"/><text class="at-t k" x="38" y="62">H</text>
+          <circle class="at-h" cx="88" cy="62" r="10"/><text class="at-t k" x="88" y="62">H</text>
+          <circle class="at-o" cx="63" cy="40" r="15"/><text class="at-t w" x="63" y="40">O</text>
+        </g>
+      </svg>
+      <div class="cnt">2 molecules · 4 H · 2 O</div>
+      <p>Two separate water molecules. Still water — you just have more of it.</p>
+    </div>
+    <div class="molcard bad">
+      <div class="mk">Change the subscript ✗</div>
+      <div class="mf">H<sub>2</sub>O<sub class="changed">2</sub></div>
+      <svg viewBox="0 0 260 96" role="img" aria-label="One hydrogen peroxide molecule: H, O, O, H joined in a chain">
+        <rect class="mol-box" x="38" y="4" width="184" height="88" rx="6"/>
+        <line class="bond" x1="70" y1="66" x2="110" y2="46"/>
+        <line class="bond" x1="110" y1="46" x2="150" y2="46"/>
+        <line class="bond" x1="150" y1="46" x2="190" y2="26"/>
+        <circle class="at-h" cx="70" cy="66" r="10"/><text class="at-t k" x="70" y="66">H</text>
+        <circle class="at-h" cx="190" cy="26" r="10"/><text class="at-t k" x="190" y="26">H</text>
+        <circle class="at-o" cx="110" cy="46" r="15"/><text class="at-t w" x="110" y="46">O</text>
+        <circle class="at-o" cx="150" cy="46" r="15"/><text class="at-t w" x="150" y="46">O</text>
+      </svg>
+      <div class="cnt">1 molecule · 2 H · 2 O</div>
+      <p>Hydrogen peroxide — the antiseptic in the brown bottle. A different chemical with different properties. The equation now describes a reaction that isn't the one you were asked about.</p>
+    </div>
+  </div>
+
+  <div class="rulebox">
+    <div class="rulecard">
+      <div class="op">2<span style="color:var(--ink)">H<sub>2</sub>O</span></div>
+      <h4>Coefficient — the big number in front</h4>
+      <p>Counts how many molecules or formula units. This is the only number you change while balancing.</p>
+    </div>
+    <div class="rulecard warn">
+      <div class="op"><span style="color:var(--ink)">H</span><sub>2</sub><span style="color:var(--ink)">O</span></div>
+      <h4>Subscript — the small number inside</h4>
+      <p>Part of the substance's identity. It was fixed when you wrote the skeleton from charges or prefixes, and it stays fixed.</p>
+    </div>
+  </div>
+  <p>The legal fix for the water equation is coefficients only: 2H<sub>2</sub>(g) + O<sub>2</sub>(g) → 2H<sub>2</sub>O(l). Four H and two O on each side. If a formula looks wrong while you're balancing, the problem is in the skeleton — go back to <a href="/chemistry/reactions/writing-equations/">Writing Equations</a> and fix it there.</p>
+</section>
+
+<!-- ============ COUNTING ATOMS ============ -->
+<section id="count">
+  <div class="sec-head"><span class="tasktag">Before you balance</span><h2>Counting atoms</h2></div>
+  <p>You can't balance what you can't count. Three rules cover every formula you'll see:</p>
+  <ul>
+    <li><b>A subscript belongs to the symbol right before it.</b> In CO<sub>2</sub> the 2 is on the oxygen only. No subscript means 1.</li>
+    <li><b>A subscript after parentheses multiplies everything inside.</b> Ca(NO<sub>3</sub>)<sub>2</sub> has two whole nitrate groups: 2 N and 6 O.</li>
+    <li><b>A coefficient multiplies everything in the formula.</b> Not just the first element — every atom, including the ones inside parentheses.</li>
+  </ul>
+  <p>Stack them by multiplying. Here's 3Ca(NO<sub>3</sub>)<sub>2</sub>:</p>
+  <table class="ex-tab">
+    <thead><tr><th>Element</th><th>Coef.</th><th>× ( )</th><th>× inside</th><th>Total</th></tr></thead>
+    <tbody>
+      <tr><td>Ca</td><td class="n">3</td><td class="n">—</td><td class="n">1</td><td class="n">3</td></tr>
+      <tr><td>N</td><td class="n">3</td><td class="n">2</td><td class="n">1</td><td class="n">6</td></tr>
+      <tr><td>O</td><td class="n">3</td><td class="n">2</td><td class="n">3</td><td class="n">18</td></tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <div class="card-label"><span>Count the atoms</span><span class="score" id="k-score">0 of 0</span></div>
+    <div class="cprob" id="k-prob"></div>
+    <p class="cask" id="k-ask"></p>
+    <div class="field">
+      <label for="k-input">Number of atoms</label>
+      <input type="text" id="k-input" inputmode="numeric" autocomplete="off">
+    </div>
+    <div class="btn-row">
+      <button id="k-check">Check count</button>
+      <button class="ghost" id="k-new">New formula</button>
+    </div>
+    <div class="fb" id="k-fb"></div>
+  </div>
+</section>
+
+<!-- ============ STRATEGY ============ -->
+<section id="strategy">
+  <div class="sec-head"><span class="tasktag">Order of attack</span><h2>A strategy that works</h2></div>
+  <p>Balancing is trial and error, but it doesn't have to be random. Working in a smart order means each new coefficient rarely undoes one you already set.</p>
+  <div class="rulebox">
+    <div class="rulecard"><div class="op">1</div><h4>Write the correct skeleton first</h4><p>Right formulas, diatomics as H<sub>2</sub>, O<sub>2</sub>, Cl<sub>2</sub> and so on, states included. No amount of balancing fixes a wrong formula.</p></div>
+    <div class="rulecard"><div class="op">2</div><h4>Keep polyatomic ions whole</h4><p>If SO<sub>4</sub>, NO<sub>3</sub>, PO<sub>4</sub> or OH shows up unchanged on both sides, count it as one unit instead of splitting it into atoms.</p></div>
+    <div class="rulecard"><div class="op">3</div><h4>Start with the most complex formula</h4><p>Pick an element from the biggest formula. Leave anything that appears alone — O<sub>2</sub>, H<sub>2</sub>, a lone metal — for last, since changing it affects nothing else.</p></div>
+    <div class="rulecard"><div class="op">4</div><h4>Combustion: C, then H, then O</h4><p>Carbon into CO<sub>2</sub>, hydrogen into H<sub>2</sub>O, oxygen last. If O<sub>2</sub> needs a half, double every coefficient.</p></div>
+    <div class="rulecard"><div class="op">5</div><h4>Check every element, then reduce</h4><p>Recount each element on both sides. If every coefficient shares a factor, divide it out — answers go in lowest whole numbers.</p></div>
+  </div>
+
+  <p>Step through two examples. Watch the tally: each move should turn one more row green without breaking the ones you already fixed.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Worked example</span><span class="wk-count" id="wk-count"></span></div>
+    <div class="tabs" role="tablist" aria-label="Choose a worked example" id="wk-tabs"></div>
+    <div class="wk-eq" id="wk-eq"></div>
+    <div class="tally" id="wk-tally"></div>
+    <div class="fb hint show wk-text" id="wk-text" aria-live="polite"></div>
+    <div class="btn-row">
+      <button id="wk-next">Next step</button>
+      <button class="ghost" id="wk-prev">Back</button>
+      <button class="ghost" id="wk-restart">Start over</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BALANCER ============ -->
+<section id="balancer">
+  <div class="sec-head"><span class="tasktag">Practice</span><h2>The balancer</h2></div>
+  <p>Use the − and + buttons under each substance, or type a coefficient straight into the box. The tally updates as you go, and a row turns green once that element matches. When every row is green, press <b>Check</b> — the answer only counts if it's in lowest whole-number terms.</p>
+  <p class="smallprint">A blank box means 1, just as it would on paper. Your score counts an equation as solved when your first balanced answer is also in lowest terms; using "Show answer" counts as a miss.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Balance it</span><span class="score" id="b-score">0 of 0</span></div>
+    <div class="tabs" role="tablist" aria-label="Difficulty" id="b-tabs">
+      <button class="tab" role="tab" data-lv="w" aria-selected="true">Warm-up</button>
+      <button class="tab" role="tab" data-lv="s" aria-selected="false">Standard</button>
+      <button class="tab" role="tab" data-lv="c" aria-selected="false">Challenge</button>
+    </div>
+    <div class="bal-eq" id="b-eq"></div>
+    <div class="tally" id="b-tally"></div>
+    <p class="tstatus" id="b-status" aria-live="polite"></p>
+    <div class="btn-row">
+      <button id="b-check">Check</button>
+      <button class="ghost" id="b-new">New equation</button>
+      <button class="ghost" id="b-reset">Reset to 1s</button>
+      <button class="ghost" id="b-show">Show answer</button>
+    </div>
+    <div class="fb" id="b-fb"></div>
+
+    <div class="own">
+      <div class="field">
+        <label for="b-own">Or load a skeleton from your homework — type it with plain numbers, like <span class="mono" style="white-space:nowrap">Fe + Cl2 -&gt; FeCl3</span></label>
+        <input type="text" id="b-own" autocomplete="off" spellcheck="false" placeholder="Fe(s) + Cl2(g) -> FeCl3(s)">
+        <button class="ghost" id="b-load">Load it</button>
+      </div>
+      <div class="fb" id="b-ownfb"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Eight questions on subscripts versus coefficients, counting atoms, lowest terms, polyatomic ions, and combustion.</p>
+  <div class="card" id="quiz"></div>
+</section>
+
+<div class="next">
+  <div>
+    <div class="nt">Next: Types of Reactions</div>
+    <p>Now that you can balance any equation, learn to recognize the five patterns reactions follow.</p>
+  </div>
+  <a href="/chemistry/reactions/types-of-reactions/">Types of Reactions →</a>
+</div>
+
+<footer>
+  <p>Balancing chemical equations with coefficients. The atom-counting drill and the balancer draw new problems every time, and the balancer will check any skeleton equation you type in.</p>
+  <p><a href="/chemistry/reactions/">← Unit 3 — Chemical Reactions</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+
+/*CORE-START*/
+/* =========================================================
+   core chemistry: parser, counter, solver, banks (no DOM)
+   ========================================================= */
+var SYMBOLS = ('H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr ' +
+  'Rb Sr Y Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re ' +
+  'Os Ir Pt Au Hg Tl Pb Bi Po At Rn Fr Ra Ac Th Pa U Np Pu Am Cm Bk Cf Es Fm Md No Lr Rf Db Sg Bh Hs Mt Ds Rg Cn Nh ' +
+  'Fl Mc Lv Ts Og').split(' ');
+
+function gcd(a,b){ a = Math.abs(a); b = Math.abs(b); while(b){ var t = a % b; a = b; b = t; } return a; }
+function gcdAll(arr){ return arr.reduce(function(g,x){ return gcd(g,x); }, 0); }
+function lcm(a,b){ return a / gcd(a,b) * b; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+/* unicode subscript digits -> plain digits */
+function plainDigits(s){ return String(s).replace(/[₀-₉]/g, function(ch){ return String(ch.charCodeAt(0) - 0x2080); }); }
+
+/* parseFormula('Ca(NO3)2') -> { ok, occ:[{el,n,mult}], counts:{Ca:1,N:2,O:6} }
+   occ keeps each written occurrence: n = subscript on the symbol, mult = product of enclosing parentheses subscripts */
+function parseFormula(str){
+  var s = plainDigits(str).replace(/\s+/g,''), i = 0;
+  if(!s) return { ok:false, err:'empty formula' };
+  function num(){
+    var m = /^\d+/.exec(s.slice(i));
+    if(!m) return 1;
+    i += m[0].length;
+    var n = parseInt(m[0],10);
+    if(n === 0) throw 'a subscript of 0 in ' + s;
+    return n;
+  }
+  function group(depth){
+    var items = [];
+    while(i < s.length){
+      var ch = s.charAt(i);
+      if(ch === '(' || ch === '['){
+        i++;
+        var inner = group(depth + 1);
+        if(s.charAt(i) !== ')' && s.charAt(i) !== ']') throw 'an unclosed parenthesis in ' + s;
+        i++;
+        var k = num();
+        if(!inner.length) throw 'empty parentheses in ' + s;
+        inner.forEach(function(o){ o.mult *= k; });
+        items = items.concat(inner);
+      } else if(ch === ')' || ch === ']'){
+        if(depth === 0) throw 'an extra closing parenthesis in ' + s;
+        return items;
+      } else if(/[A-Z]/.test(ch)){
+        var sym = ch; i++;
+        if(/[a-z]/.test(s.charAt(i))){ sym += s.charAt(i); i++; }
+        if(SYMBOLS.indexOf(sym) === -1) throw '"' + sym + '", which is not an element symbol';
+        items.push({ el:sym, n:num(), mult:1 });
+      } else if(/[a-z]/.test(ch)){
+        throw 'a lowercase "' + ch + '" — element symbols start with a capital letter';
+      } else {
+        throw 'the character "' + ch + '"';
+      }
+    }
+    if(depth > 0) throw 'an unclosed parenthesis in ' + s;
+    return items;
+  }
+  try {
+    var occ = group(0), counts = {};
+    occ.forEach(function(o){ counts[o.el] = (counts[o.el] || 0) + o.n*o.mult; });
+    return { ok:true, f:s, occ:occ, counts:counts };
+  } catch(e){
+    return { ok:false, err:String(e) };
+  }
+}
+
+/* parseEquation('2H2(g) + O2(g) -> 2H2O(l)') -> { ok, r:[{c,f,st}], p:[...] }
+   accepts ->, -->, =, =>, → ; states in any case; spaces ignored */
+function parseEquation(str){
+  var s = plainDigits(str).replace(/\s+/g,'');
+  if(!s) return { ok:false, err:'Type an equation first.' };
+  var parts = s.split(/-+>|=+>?|→|⟶|⇒/);
+  if(parts.length < 2) return { ok:false, err:'There is no arrow. Separate reactants and products with <span class="mono">-&gt;</span> or <span class="mono">=</span>.' };
+  if(parts.length > 2) return { ok:false, err:'There is more than one arrow.' };
+  function side(txt, name){
+    if(!txt) throw 'The ' + name + ' side is empty.';
+    var terms = txt.split('+');
+    return terms.map(function(t){
+      if(!t) throw 'There is an empty spot next to a + sign on the ' + name + ' side.';
+      var m = /^(\d*)(.+?)(?:\((s|l|g|aq)\))?$/i.exec(t);
+      if(!m) throw 'I could not read "' + esc(t) + '".';
+      var c = m[1] ? parseInt(m[1],10) : 1;
+      if(c === 0) throw 'A coefficient of 0 removes a substance entirely.';
+      var pf = parseFormula(m[2]);
+      if(!pf.ok) throw 'In <span class="mono">' + esc(m[2]) + '</span> I found ' + esc(pf.err) + '.';
+      return { c:c, f:pf.f, st:m[3] ? m[3].toLowerCase() : '' };
+    });
+  }
+  try {
+    return { ok:true, r:side(parts[0],'reactant'), p:side(parts[1],'product') };
+  } catch(e){
+    return { ok:false, err:String(e) };
+  }
+}
+
+var COUNT_CACHE = {};
+function countsOf(f){
+  if(!COUNT_CACHE[f]) COUNT_CACHE[f] = parseFormula(f).counts;
+  return COUNT_CACHE[f];
+}
+function speciesOf(eq){ return eq.r.concat(eq.p); }
+function elementsOf(eq){
+  var out = [];
+  speciesOf(eq).forEach(function(sp){
+    parseFormula(sp.f).occ.forEach(function(o){ if(out.indexOf(o.el) === -1) out.push(o.el); });
+  });
+  return out;
+}
+/* how many intact copies of polyatomic unit u are written in formula f */
+function unitCount(f, u){
+  var m = new RegExp('\\(' + u + '\\)(\\d*)').exec(f);
+  if(m) return m[1] ? parseInt(m[1],10) : 1;
+  return f.indexOf(u) !== -1 ? 1 : 0;
+}
+/* rows of {lab, L, R}; items are element symbols, or {u:'SO4'} for a polyatomic unit */
+function tallyOf(eq, coefs, items){
+  var nr = eq.r.length, sp = speciesOf(eq);
+  items = items || elementsOf(eq);
+  return items.map(function(it){
+    var L = 0, R = 0, isU = typeof it === 'object';
+    sp.forEach(function(s,j){
+      var k = isU ? unitCount(s.f, it.u) : (countsOf(s.f)[it] || 0);
+      if(j < nr) L += coefs[j]*k; else R += coefs[j]*k;
+    });
+    return { lab: isU ? it.u : it, unit:isU, L:L, R:R };
+  });
+}
+
+/* ---- exact rational null-space solver ---- */
+function fr(n,d){ d = d || 1; if(d < 0){ n = -n; d = -d; } var g = gcd(n,d) || 1; return [n/g, d/g]; }
+function fsub(a,b){ return fr(a[0]*b[1] - b[0]*a[1], a[1]*b[1]); }
+function fmul(a,b){ return fr(a[0]*b[0], a[1]*b[1]); }
+function fdiv(a,b){ return fr(a[0]*b[1], a[1]*b[0]); }
+/* returns { dim, coefs } — coefs is the lowest-terms positive solution when dim === 1 */
+function solveEq(eq){
+  var sp = speciesOf(eq), nr = eq.r.length, els = elementsOf(eq), n = sp.length;
+  var M = els.map(function(e){
+    return sp.map(function(s,j){ return fr((countsOf(s.f)[e] || 0) * (j < nr ? 1 : -1)); });
+  });
+  var rows = M.length, piv = [], r = 0;
+  for(var c = 0; c < n && r < rows; c++){
+    var p = -1;
+    for(var i = r; i < rows; i++){ if(M[i][c][0] !== 0){ p = i; break; } }
+    if(p === -1) continue;
+    var tmp = M[r]; M[r] = M[p]; M[p] = tmp;
+    var pv = M[r][c];
+    for(var j = 0; j < n; j++) M[r][j] = fdiv(M[r][j], pv);
+    for(var i2 = 0; i2 < rows; i2++){
+      if(i2 === r || M[i2][c][0] === 0) continue;
+      var f = M[i2][c];
+      for(var j2 = 0; j2 < n; j2++) M[i2][j2] = fsub(M[i2][j2], fmul(f, M[r][j2]));
+    }
+    piv.push(c); r++;
+  }
+  var dim = n - piv.length;
+  if(dim !== 1) return { dim:dim, coefs:null };
+  var free = -1;
+  for(var c2 = 0; c2 < n; c2++){ if(piv.indexOf(c2) === -1){ free = c2; break; } }
+  var x = []; for(var k = 0; k < n; k++) x.push(fr(0));
+  x[free] = fr(1);
+  piv.forEach(function(pc, ri){ x[pc] = fr(-M[ri][free][0], M[ri][free][1]); });
+  var L = x.reduce(function(a,v){ return lcm(a, v[1]); }, 1);
+  var ints = x.map(function(v){ return v[0] * (L / v[1]); });
+  var g = gcdAll(ints) || 1;
+  ints = ints.map(function(v){ return v / g; });
+  if(ints.every(function(v){ return v <= 0; })) ints = ints.map(function(v){ return -v; });
+  var positive = ints.every(function(v){ return v > 0; });
+  return { dim:1, coefs: positive ? ints : null, raw:ints };
+}
+
+/* judge a student's coefficients */
+function judgeCoefs(eq, coefs){
+  for(var i = 0; i < coefs.length; i++){
+    if(!(coefs[i] >= 1) || Math.floor(coefs[i]) !== coefs[i]) return { kind:'invalid', at:i };
+  }
+  var t = tallyOf(eq, coefs);
+  var off = t.filter(function(row){ return row.L !== row.R; });
+  if(off.length) return { kind:'unbalanced', off:off, tally:t };
+  var g = gcdAll(coefs);
+  if(g > 1) return { kind:'reducible', g:g, reduced: coefs.map(function(c){ return c / g; }), tally:t };
+  return { kind:'correct', tally:t };
+}
+
+/* ---- equation bank ----
+   lv: w = warm-up, s = standard, c = challenge
+   t: syn, dec, sr (single replacement), dr (double replacement), comb (combustion of a hydrocarbon)
+   a: lowest-terms answer (verified by the Node check script)
+   u: polyatomic units that stay intact on both sides */
+var BANK_SRC = [
+  ['H2(g) + O2(g) -> H2O(l)',                         'w','syn', [2,1,2]],
+  ['Na(s) + Cl2(g) -> NaCl(s)',                        'w','syn', [2,1,2]],
+  ['Mg(s) + O2(g) -> MgO(s)',                          'w','syn', [2,1,2]],
+  ['N2(g) + H2(g) -> NH3(g)',                          'w','syn', [1,3,2]],
+  ['H2O2(l) -> H2O(l) + O2(g)',                        'w','dec', [2,2,1]],
+  ['HgO(s) -> Hg(l) + O2(g)',                          'w','dec', [2,2,1]],
+  ['KClO3(s) -> KCl(s) + O2(g)',                       'w','dec', [2,2,3]],
+  ['NH4NO3(s) -> N2O(g) + H2O(g)',                     'w','dec', [1,1,2]],
+  ['Zn(s) + HCl(aq) -> ZnCl2(aq) + H2(g)',             'w','sr',  [1,2,1,1]],
+  ['Na(s) + H2O(l) -> NaOH(aq) + H2(g)',               'w','sr',  [2,2,2,1]],
+  ['Cl2(g) + NaBr(aq) -> NaCl(aq) + Br2(l)',           'w','sr',  [1,2,2,1]],
+  ['BaCl2(aq) + Na2SO4(aq) -> BaSO4(s) + NaCl(aq)',    'w','dr',  [1,1,1,2], ['SO4']],
+  ['CH4(g) + O2(g) -> CO2(g) + H2O(g)',                'w','comb',[1,2,1,2]],
+
+  ['Al(s) + O2(g) -> Al2O3(s)',                        's','syn', [4,3,2]],
+  ['Fe(s) + Cl2(g) -> FeCl3(s)',                       's','syn', [2,3,2]],
+  ['Li(s) + N2(g) -> Li3N(s)',                         's','syn', [6,1,2]],
+  ['P4(s) + O2(g) -> P4O10(s)',                        's','syn', [1,5,1]],
+  ['NaHCO3(s) -> Na2CO3(s) + H2O(g) + CO2(g)',         's','dec', [2,1,1,1]],
+  ['N2O5(g) -> NO2(g) + O2(g)',                        's','dec', [2,4,1]],
+  ['Al2O3(l) -> Al(l) + O2(g)',                        's','dec', [2,4,3]],
+  ['Al(s) + CuSO4(aq) -> Al2(SO4)3(aq) + Cu(s)',       's','sr',  [2,3,1,3], ['SO4']],
+  ['Cu(s) + AgNO3(aq) -> Cu(NO3)2(aq) + Ag(s)',        's','sr',  [1,2,1,2], ['NO3']],
+  ['Al(s) + HCl(aq) -> AlCl3(aq) + H2(g)',             's','sr',  [2,6,2,3]],
+  ['Al(s) + Pb(NO3)2(aq) -> Al(NO3)3(aq) + Pb(s)',     's','sr',  [2,3,2,3], ['NO3']],
+  ['Pb(NO3)2(aq) + KOH(aq) -> Pb(OH)2(s) + KNO3(aq)',      's','dr',  [1,2,1,2], ['NO3']],
+  ['KOH(aq) + H2SO4(aq) -> K2SO4(aq) + H2O(l)',        's','dr',  [2,1,1,2], ['SO4']],
+  ['Ca(OH)2(aq) + HCl(aq) -> CaCl2(aq) + H2O(l)',      's','dr',  [1,2,1,2]],
+  ['FeCl3(aq) + NaOH(aq) -> Fe(OH)3(s) + NaCl(aq)',    's','dr',  [1,3,1,3], ['OH']],
+  ['AgNO3(aq) + K3PO4(aq) -> Ag3PO4(s) + KNO3(aq)',    's','dr',  [3,1,1,3], ['NO3','PO4']],
+  ['C3H8(g) + O2(g) -> CO2(g) + H2O(g)',               's','comb',[1,5,3,4]],
+  ['C2H4(g) + O2(g) -> CO2(g) + H2O(g)',               's','comb',[1,3,2,2]],
+  ['C5H12(l) + O2(g) -> CO2(g) + H2O(g)',              's','comb',[1,8,5,6]],
+  ['C7H16(l) + O2(g) -> CO2(g) + H2O(g)',              's','comb',[1,11,7,8]],
+
+  ['C2H6(g) + O2(g) -> CO2(g) + H2O(g)',               'c','comb',[2,7,4,6]],
+  ['C2H2(g) + O2(g) -> CO2(g) + H2O(g)',               'c','comb',[2,5,4,2]],
+  ['C4H10(g) + O2(g) -> CO2(g) + H2O(g)',              'c','comb',[2,13,8,10]],
+  ['C6H6(l) + O2(g) -> CO2(g) + H2O(g)',               'c','comb',[2,15,12,6]],
+  ['C8H18(l) + O2(g) -> CO2(g) + H2O(g)',              'c','comb',[2,25,16,18]],
+  ['Al(s) + H2SO4(aq) -> Al2(SO4)3(aq) + H2(g)',       'c','sr',  [2,3,1,3], ['SO4']],
+  ['Fe(s) + H2O(g) -> Fe3O4(s) + H2(g)',               'c','sr',  [3,4,1,4]],
+  ['Ca(OH)2(aq) + H3PO4(aq) -> Ca3(PO4)2(s) + H2O(l)', 'c','dr',  [3,2,1,6], ['PO4']],
+  ['Fe2(SO4)3(aq) + KOH(aq) -> K2SO4(aq) + Fe(OH)3(s)','c','dr',  [1,6,3,2], ['SO4','OH']],
+  ['Al2(SO4)3(aq) + Ca(OH)2(aq) -> Al(OH)3(s) + CaSO4(s)','c','dr',[1,3,2,3], ['SO4','OH']],
+  ['Na3PO4(aq) + CaCl2(aq) -> Ca3(PO4)2(s) + NaCl(aq)','c','dr',  [2,3,1,6], ['PO4']],
+  ['(NH4)3PO4(aq) + Pb(NO3)2(aq) -> Pb3(PO4)2(s) + NH4NO3(aq)','c','dr',[2,3,1,6], ['NH4','PO4','NO3']]
+];
+var BANK = BANK_SRC.map(function(row, idx){
+  var e = parseEquation(row[0]);
+  return { id:idx, src:row[0], r:e.r, p:e.p, lv:row[1], t:row[2], a:row[3], u:row[4] || [] };
+});
+
+function pickEquation(lv, avoidId){
+  var pool = BANK.filter(function(e){ return e.lv === lv && e.id !== avoidId; });
+  return pick(pool);
+}
+
+/* ---- atom-counting bank: formula + its ions (symbol/formula, charge, how many) for a neutrality check ---- */
+var COUNT_BANK = [
+  { f:'Ca(NO3)2',     ions:[['Ca',2,1],['NO3',-1,2]] },
+  { f:'Al2(SO4)3',    ions:[['Al',3,2],['SO4',-2,3]] },
+  { f:'(NH4)3PO4',    ions:[['NH4',1,3],['PO4',-3,1]] },
+  { f:'Fe(OH)3',      ions:[['Fe',3,1],['OH',-1,3]] },
+  { f:'Mg(C2H3O2)2',  ions:[['Mg',2,1],['C2H3O2',-1,2]] },
+  { f:'Ba(ClO3)2',    ions:[['Ba',2,1],['ClO3',-1,2]] },
+  { f:'Ca3(PO4)2',    ions:[['Ca',2,3],['PO4',-3,2]] },
+  { f:'Pb(NO3)2',     ions:[['Pb',2,1],['NO3',-1,2]] },
+  { f:'(NH4)2CO3',    ions:[['NH4',1,2],['CO3',-2,1]] },
+  { f:'Fe2(SO4)3',    ions:[['Fe',3,2],['SO4',-2,3]] },
+  { f:'Al(OH)3',      ions:[['Al',3,1],['OH',-1,3]] },
+  { f:'Mg3(PO4)2',    ions:[['Mg',2,3],['PO4',-3,2]] },
+  { f:'(NH4)2Cr2O7',  ions:[['NH4',1,2],['Cr2O7',-2,1]] },
+  { f:'Al(C2H3O2)3',  ions:[['Al',3,1],['C2H3O2',-1,3]] },
+  { f:'Ba(OH)2',      ions:[['Ba',2,1],['OH',-1,2]] },
+  { f:'NH4C2H3O2',    ions:[['NH4',1,1],['C2H3O2',-1,1]] },
+  { f:'Na2S2O3',      ions:[['Na',1,2],['S2O3',-2,1]] },
+  { f:'Cu(NO3)2',     ions:[['Cu',2,1],['NO3',-1,2]] },
+  { f:'Zn3(PO4)2',    ions:[['Zn',2,3],['PO4',-3,2]] },
+  { f:'Sr(ClO4)2',    ions:[['Sr',2,1],['ClO4',-1,2]] },
+  { f:'C6H12O6',      ions:null },
+  { f:'C8H18',        ions:null }
+];
+
+/* one generated counting problem, with the likely wrong answers precomputed */
+function countProblem(){
+  var item = pick(COUNT_BANK), pf = parseFormula(item.f);
+  var c = Math.random() < 0.15 ? 1 : 2 + Math.floor(Math.random()*5);   // 1–6, mostly 2–6
+  var els = [];
+  pf.occ.forEach(function(o){ if(els.indexOf(o.el) === -1) els.push(o.el); });
+  var grouped = els.filter(function(e){ return pf.occ.some(function(o){ return o.el === e && o.mult > 1; }); });
+  var elx = (grouped.length && Math.random() < 0.7) ? pick(grouped) : pick(els);
+  var occ = pf.occ.filter(function(o){ return o.el === elx; });
+  var base = 0, sumN = 0, sumMult = 0, anyGroup = false, anyInner = false;
+  occ.forEach(function(o){ base += o.n*o.mult; sumN += o.n; sumMult += o.mult; if(o.mult > 1) anyGroup = true; if(o.n > 1) anyInner = true; });
+  var ans = c*base;
+  var traps = [];
+  if(c > 1) traps.push({ k:'coef', v:base });
+  if(anyGroup) traps.push({ k:'paren', v:c*sumN });
+  if(c > 1 && anyGroup) traps.push({ k:'both', v:sumN });
+  if(anyInner && anyGroup) traps.push({ k:'inner', v:c*sumMult });
+  if(c > 1) traps.push({ k:'add', v:c + base });
+  traps = traps.filter(function(t){ return t.v !== ans; });
+  return { f:item.f, c:c, el:elx, occ:occ, ans:ans, base:base, traps:traps, counts:pf.counts };
+}
+function countDiagnose(p, got){
+  if(got === p.ans) return 'correct';
+  for(var i = 0; i < p.traps.length; i++){ if(p.traps[i].v === got) return p.traps[i].k; }
+  return 'other';
+}
+
+/* ---- worked examples ---- */
+var WORKED = [
+  { title:'Combustion: C₂H₆', src:'C2H6(g) + O2(g) -> CO2(g) + H2O(g)',
+    steps:[
+      { c:[1,1,1,1], hl:[], t:'<b>Start from the correct skeleton.</b> Ethane burns in oxygen to make carbon dioxide and water vapor. Every coefficient is 1 for now, and all three elements are off.' },
+      { c:[1,1,2,1], hl:[2], t:'<b>Carbon first.</b> Ethane holds 2 C, so put a 2 in front of CO<sub>2</sub>. Carbon now reads 2 = 2. Oxygen on the right went up too — ignore it for now. Oxygen comes last.' },
+      { c:[1,1,2,3], hl:[3], t:'<b>Hydrogen next.</b> Ethane has 6 H and each water carries 2, so you need 3 H<sub>2</sub>O. Hydrogen reads 6 = 6.' },
+      { c:[1,3.5,2,3], d:[null,'3½',null,null], hl:[1], t:'<b>Oxygen last.</b> The right side now holds 2 × 2 + 3 × 1 = 7 O. O<sub>2</sub> brings oxygen in pairs, so you would need 3½ O<sub>2</sub>. The tally is all green — but there is no such thing as half a molecule.' },
+      { c:[2,7,4,6], hl:[0,1,2,3], t:'<b>Double everything.</b> Multiply every coefficient by 2 to clear the half: 2C<sub>2</sub>H<sub>6</sub> + 7O<sub>2</sub> → 4CO<sub>2</sub> + 6H<sub>2</sub>O. C 4 = 4, H 12 = 12, O 14 = 14.' },
+      { c:[2,7,4,6], hl:[], t:'<b>Lowest terms?</b> 2, 7, 4 and 6 share no common factor — 7 is odd — so this is the final answer.' }
+    ] },
+  { title:'Polyatomic ions: Fe₂(SO₄)₃ + KOH', src:'Fe2(SO4)3(aq) + KOH(aq) -> K2SO4(aq) + Fe(OH)3(s)',
+    items:['Fe',{u:'SO4'},'K',{u:'OH'}],
+    steps:[
+      { c:[1,1,1,1], hl:[], t:'<b>Skeleton first.</b> Sulfate (SO<sub>4</sub>) and hydroxide (OH) appear unchanged on both sides, so count each as one unit instead of splitting it into S, O and H. This tally counts units.' },
+      { c:[1,1,1,2], hl:[3], t:'<b>Start with the most complex formula,</b> Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>. It has 2 Fe, so Fe(OH)<sub>3</sub> gets a 2.' },
+      { c:[1,1,3,2], hl:[2], t:'<b>Sulfate as one unit.</b> Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> carries 3 SO<sub>4</sub> groups, so K<sub>2</sub>SO<sub>4</sub> gets a 3.' },
+      { c:[1,6,3,2], hl:[1], t:'<b>Potassium and hydroxide.</b> 3 K<sub>2</sub>SO<sub>4</sub> means 6 K, so KOH gets a 6 — which also supplies 6 OH, exactly what 2 Fe(OH)<sub>3</sub> needs. Both rows go green at once.' },
+      { c:[1,6,3,2], hl:[], atoms:true, t:'<b>Check every element, then reduce.</b> The tally now counts individual atoms: Fe 2 = 2, S 3 = 3, O 18 = 18, K 6 = 6, H 6 = 6. The coefficients 1, 6, 3, 2 share no common factor. Done.' }
+    ] }
+];
+WORKED.forEach(function(w){ var e = parseEquation(w.src); w.eq = { r:e.r, p:e.p }; });
+/*CORE-END*/
+
+/* =========================================================
+   rendering helpers
+   ========================================================= */
+function fHtml(f){ return esc(f).replace(/(\d+)/g, '<sub>$1</sub>'); }
+function stHtml(st){ return st ? '<span class="st">(' + st + ')</span>' : ''; }
+function coefText(c){ return c === 1 ? '' : String(c); }
+function eqHtml(eq, coefs, opts){
+  opts = opts || {};
+  var nr = eq.r.length;
+  function term(s, j){
+    var c = coefs ? coefs[j] : (s.c || 1);
+    var shown = (opts.disp && opts.disp[j]) ? opts.disp[j] : coefText(c);
+    var cls = 'sps' + (opts.hl && opts.hl.indexOf(j) !== -1 ? ' hl' : '');
+    return '<span class="' + cls + '"><span class="co">' + shown + '</span>' + fHtml(s.f) + stHtml(s.st) + '</span>';
+  }
+  var L = eq.r.map(function(s,j){ return term(s,j); }).join('<span class="opx">+</span>');
+  var R = eq.p.map(function(s,j){ return term(s,j + nr); }).join('<span class="opx">+</span>');
+  return L + '<span class="opx">→</span>' + R;
+}
+function renderTally(host, rows){
+  var max = 1;
+  rows.forEach(function(r){ max = Math.max(max, r.L, r.R); });
+  var h = '<div class="trow head"><span>' + (rows.some(function(r){ return r.unit; }) ? 'Unit' : 'Element') +
+    '</span><span class="rt">Reactants</span><span></span><span></span><span></span><span>Products</span></div>';
+  rows.forEach(function(r){
+    var ok = r.L === r.R;
+    h += '<div class="trow ' + (ok ? 'ok' : 'off') + '">' +
+      '<span class="te">' + fHtml(r.lab) + '</span>' +
+      '<span class="tb l"><i style="width:' + (r.L/max*100).toFixed(1) + '%"></i></span>' +
+      '<span class="tn">' + r.L + '</span>' +
+      '<span class="tq" aria-label="' + (ok ? 'equal' : 'not equal') + '">' + (ok ? '=' : '≠') + '</span>' +
+      '<span class="tn">' + r.R + '</span>' +
+      '<span class="tb r"><i style="width:' + (r.R/max*100).toFixed(1) + '%"></i></span>' +
+      '</div>';
+  });
+  host.innerHTML = h;
+}
+
+/* =========================================================
+   1. why: static balanced tally
+   ========================================================= */
+(function whyTally(){
+  var e = parseEquation('CH4(g) + 2O2(g) -> CO2(g) + 2H2O(g)');
+  var coefs = e.r.concat(e.p).map(function(s){ return s.c; });
+  el('why-eq').innerHTML = eqHtml(e, coefs);
+  renderTally(el('why-tally'), tallyOf(e, coefs));
+})();
+
+/* =========================================================
+   2. count the atoms drill
+   ========================================================= */
+var kState = null, kScore = Score(el('k-score'));
+
+function countNew(){
+  var p, tries = 0;
+  do { p = countProblem(); tries++; } while(kState && p.f === kState.f && p.c === kState.c && tries < 20);
+  kState = p; p.scored = false;
+  el('k-prob').innerHTML = '<span class="co">' + coefText(p.c) + '</span>' + fHtml(p.f);
+  el('k-ask').innerHTML = 'How many <b>' + p.el + '</b> atoms in total?';
+  el('k-input').value = '';
+  hideFb(el('k-fb'));
+}
+function countBreakdown(p){
+  var parts = p.occ.map(function(o){
+    var f = [];
+    if(o.mult > 1) f.push(o.mult);
+    f.push(o.n);
+    return f.join(' × ');
+  });
+  var inner = parts.length > 1 ? '(' + parts.join(' + ') + ')' : parts[0];
+  var expr = (p.c > 1 ? p.c + ' × ' : '') + inner;
+  var simple = expr === String(p.ans);
+  return '<span class="mono">' + (simple ? p.ans : expr + ' = ' + p.ans) + '</span>';
+}
+function groupName(p){
+  // the parentheses group holding this element, rendered
+  var m = /\(([^)]+)\)(\d+)/.exec(p.f);
+  return m ? { g:fHtml(m[1]), k:m[2] } : null;
+}
+function countCheck(){
+  var p = kState, fb = el('k-fb'), raw = el('k-input').value.trim();
+  if(!/^\d+$/.test(raw)){ setFb(fb,'hint','Type a whole number of atoms.'); return; }
+  var got = parseInt(raw,10), kind = countDiagnose(p, got);
+  var expr = '<span class="mono">' + coefText(p.c) + fHtml(p.f) + '</span>';
+  var all = Object.keys(p.counts).map(function(e){ return e + ' ' + p.counts[e]*p.c; }).join(' · ');
+  var tail = ' <span class="smallprint">All atoms in ' + expr + ': <span class="mono">' + all + '</span>.</span>';
+  var g = groupName(p);
+  var first = !p.scored; p.scored = true;
+  if(kind === 'correct'){
+    if(first) kScore.add(true);
+    setFb(fb,'good','<b>Correct — ' + p.ans + ' ' + p.el + '.</b> ' + countBreakdown(p) + '.' + tail);
+    return;
+  }
+  if(first) kScore.add(false);
+  var msg;
+  switch(kind){
+    case 'coef':
+      msg = '<b>That’s the count for one formula unit.</b> The coefficient ' + p.c + ' in front means ' + p.c +
+        ' formula units, and it multiplies every atom in the formula — not just the first element.'; break;
+    case 'paren':
+      msg = '<b>You skipped the subscript after the parentheses.</b> The ' + g.k + ' after (' + g.g + ') means ' + g.k +
+        ' whole groups in every formula unit, so everything inside gets multiplied by ' + g.k + '.'; break;
+    case 'both':
+      msg = '<b>You counted what’s written inside just once.</b> There are ' + g.k + ' (' + g.g + ') groups per formula unit, and ' +
+        p.c + ' formula units — both multipliers apply.'; break;
+    case 'inner':
+      msg = '<b>You counted the groups but not the ' + p.el + ' inside each one.</b> Each (' + g.g + ') group holds more than one ' +
+        p.el + ' atom, so that small subscript multiplies too.'; break;
+    case 'add':
+      msg = '<b>You added the coefficient instead of multiplying.</b> ' + p.c + ' formula units means ' + p.c + ' copies of everything: multiply.'; break;
+    default:
+      msg = '<b>Not quite.</b> Work from the inside out: the subscript on the symbol, times any subscript after its parentheses, times the coefficient.';
+  }
+  setFb(fb,'bad', msg + ' The count is ' + countBreakdown(p) + ' ' + p.el + '.' + tail);
+}
+el('k-check').addEventListener('click', countCheck);
+el('k-new').addEventListener('click', countNew);
+el('k-input').addEventListener('keydown', function(e){ if(e.key === 'Enter') countCheck(); });
+
+/* =========================================================
+   3. worked examples
+   ========================================================= */
+var wkIdx = 0, wkStep = 0;
+(function buildWkTabs(){
+  el('wk-tabs').innerHTML = WORKED.map(function(w,i){
+    return '<button class="tab" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '">' + fHtml(plainDigits(w.title)) + '</button>';
+  }).join('');
+  Array.prototype.forEach.call(el('wk-tabs').querySelectorAll('.tab'), function(b){
+    b.addEventListener('click', function(){
+      wkIdx = Number(b.dataset.i); wkStep = 0;
+      Array.prototype.forEach.call(el('wk-tabs').querySelectorAll('.tab'), function(o){ o.setAttribute('aria-selected', String(o === b)); });
+      wkRender();
+    });
+  });
+})();
+function wkRender(){
+  var w = WORKED[wkIdx], s = w.steps[wkStep];
+  el('wk-eq').innerHTML = eqHtml(w.eq, s.c, { disp:s.d, hl:s.hl });
+  renderTally(el('wk-tally'), tallyOf(w.eq, s.c, s.atoms ? null : w.items));
+  el('wk-text').innerHTML = s.t;
+  el('wk-count').textContent = 'Step ' + (wkStep + 1) + ' of ' + w.steps.length;
+  el('wk-next').disabled = wkStep === w.steps.length - 1;
+  el('wk-prev').disabled = wkStep === 0;
+}
+el('wk-next').addEventListener('click', function(){ if(wkStep < WORKED[wkIdx].steps.length - 1){ wkStep++; wkRender(); } });
+el('wk-prev').addEventListener('click', function(){ if(wkStep > 0){ wkStep--; wkRender(); } });
+el('wk-restart').addEventListener('click', function(){ wkStep = 0; wkRender(); });
+
+/* =========================================================
+   4. the balancer
+   ========================================================= */
+var bScore = Score(el('b-score'));
+var bLevel = 'w';
+var B = null;   // { eq, coefs:[], scored, custom }
+
+function bLoad(eq, coefs, custom){
+  B = { eq:eq, coefs:coefs.slice(), scored:!!custom, custom:!!custom };
+  var nr = eq.r.length, sp = speciesOf(eq);
+  function col(s, j){
+    var name = s.f;
+    return '<div class="sp">' +
+      '<div class="sp-f" id="b-f' + j + '"></div>' +
+      '<div class="stp">' +
+        '<button type="button" data-i="' + j + '" data-d="-1" aria-label="Decrease coefficient of ' + name + '">−</button>' +
+        '<input type="text" inputmode="numeric" autocomplete="off" data-i="' + j + '" aria-label="Coefficient of ' + name + '">' +
+        '<button type="button" data-i="' + j + '" data-d="1" aria-label="Increase coefficient of ' + name + '">+</button>' +
+      '</div></div>';
+  }
+  var L = eq.r.map(function(s,j){ return col(s,j); }).join('<span class="op">+</span>');
+  var R = eq.p.map(function(s,j){ return col(s,j + nr); }).join('<span class="op">+</span>');
+  el('b-eq').innerHTML = '<div class="side">' + L + '</div><span class="op arrow">→</span><div class="side">' + R + '</div>';
+  Array.prototype.forEach.call(el('b-eq').querySelectorAll('.stp button'), function(btn){
+    btn.addEventListener('click', function(){ bStep(Number(btn.dataset.i), Number(btn.dataset.d)); });
+  });
+  Array.prototype.forEach.call(el('b-eq').querySelectorAll('.stp input'), function(inp){
+    inp.addEventListener('input', function(){ bTyped(Number(inp.dataset.i), inp); });
+    inp.addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){ e.preventDefault(); bCheck(); }
+      else if(e.key === 'ArrowUp'){ e.preventDefault(); bStep(Number(inp.dataset.i), 1); }
+      else if(e.key === 'ArrowDown'){ e.preventDefault(); bStep(Number(inp.dataset.i), -1); }
+    });
+  });
+  sp.forEach(function(s,j){ bSetInput(j); });
+  bUpdate();
+  hideFb(el('b-fb'));
+}
+function bSetInput(j){
+  var inp = el('b-eq').querySelector('input[data-i="' + j + '"]');
+  inp.value = B.coefs[j];
+  inp.classList.remove('badin');
+}
+function bStep(j, d){
+  var c = B.coefs[j];
+  if(!(c >= 1)) c = 1;
+  else c = Math.min(99, Math.max(1, c + d));
+  B.coefs[j] = c;
+  bSetInput(j);
+  bUpdate();
+  hideFb(el('b-fb'));
+}
+function bTyped(j, inp){
+  var v = inp.value.trim();
+  if(v === '') B.coefs[j] = 1;
+  else if(/^\d+$/.test(v) && parseInt(v,10) >= 1 && parseInt(v,10) <= 99) B.coefs[j] = parseInt(v,10);
+  else B.coefs[j] = NaN;
+  inp.classList.toggle('badin', isNaN(B.coefs[j]));
+  bUpdate();
+  hideFb(el('b-fb'));
+}
+function bUpdate(){
+  var sp = speciesOf(B.eq);
+  sp.forEach(function(s,j){
+    var c = B.coefs[j];
+    el('b-f' + j).innerHTML = '<span class="co">' + (isNaN(c) ? '?' : coefText(c)) + '</span>' + fHtml(s.f) + stHtml(s.st);
+  });
+  var bad = B.coefs.map(function(c,j){ return isNaN(c) ? j : -1; }).filter(function(j){ return j >= 0; });
+  if(bad.length){
+    el('b-status').innerHTML = 'Coefficients are whole numbers from 1 to 99. Fix the box under ' + fHtml(sp[bad[0]].f) + '.';
+    return;
+  }
+  var rows = tallyOf(B.eq, B.coefs);
+  renderTally(el('b-tally'), rows);
+  var nOk = rows.filter(function(r){ return r.L === r.R; }).length;
+  el('b-status').innerHTML = nOk === rows.length
+    ? '<b>Every element matches.</b> Press Check to confirm it’s in lowest terms.'
+    : nOk + ' of ' + rows.length + ' elements balanced.';
+}
+function bEqText(eq, coefs){ return eqHtml(eq, coefs).replace(/class="sps[^"]*"/g,''); }
+function joinList(a){ return a.length < 2 ? a.join('') : a.slice(0,-1).join(', ') + ' and ' + a[a.length-1]; }
+
+function bHint(eq, coefs, res){
+  var sp = speciesOf(eq), nr = eq.r.length;
+  if(coefs.every(function(c){ return c === 1; })){
+    // most complex formula = most atoms; suggest an off element in it that isn't standing alone
+    var best = null, bestN = -1;
+    sp.forEach(function(s){
+      var n = 0, cnt = countsOf(s.f); Object.keys(cnt).forEach(function(k){ n += cnt[k]; });
+      if(n > bestN){ bestN = n; best = s; }
+    });
+    var offEls = res.off.map(function(r){ return r.lab; });
+    var cand = Object.keys(countsOf(best.f)).filter(function(e){ return offEls.indexOf(e) !== -1 && e !== 'O' && e !== 'H'; });
+    return 'Start with the most complex formula, ' + fHtml(best.f) + (cand.length ? ' — balance ' + cand[0] + ' first' : '') +
+      ', and leave elements that stand alone for last.';
+  }
+  // polyatomic units
+  for(var i = 0; i < eq.u.length; i++){
+    var u = eq.u[i], t = tallyOf(eq, coefs, [{u:u}])[0];
+    if(t.L !== t.R) return 'Treat ' + fHtml(u) + ' as one unit — it appears unchanged on both sides. Right now there are ' + t.L +
+      ' on the left and ' + t.R + ' on the right.';
+  }
+  // oxygen-only problems with O2 on the left
+  var o2 = -1; eq.r.forEach(function(s,j){ if(s.f === 'O2') o2 = j; });
+  if(res.off.length === 1 && res.off[0].lab === 'O' && o2 !== -1){
+    var otherO = res.off[0].L - 2*coefs[o2];
+    var need = res.off[0].R - otherO;
+    if(need > 0 && need % 2 === 1)
+      return 'Only oxygen is off, and O<sub>2</sub> would need to supply ' + need + ' O atoms — an odd number, so you’d need a half. Double every coefficient, then fix O<sub>2</sub>.';
+    if(need > 0) return 'Only oxygen is off. Adjust O<sub>2</sub> last: it needs to supply ' + need + ' O atoms.';
+  }
+  return 'Fix one element at a time: change the coefficient on a formula that contains it, then watch the tally.';
+}
+
+function bCheck(){
+  var fb = el('b-fb'), res = judgeCoefs(B.eq, B.coefs);
+  var sp = speciesOf(B.eq);
+  if(res.kind === 'invalid'){
+    setFb(fb,'hint','Every coefficient has to be a whole number of at least 1. Fix the box under ' + fHtml(sp[res.at].f) + '.');
+    return;
+  }
+  if(res.kind === 'unbalanced'){
+    var offTxt = res.off.map(function(r){ return '<b>' + r.lab + '</b> (' + r.L + ' left, ' + r.R + ' right)'; });
+    var okEls = res.tally.filter(function(r){ return r.L === r.R; }).map(function(r){ return r.lab; });
+    setFb(fb,'bad','<b>Not balanced yet.</b> Off: ' + joinList(offTxt) + '.' +
+      (okEls.length ? ' ' + joinList(okEls) + (okEls.length === 1 ? ' is' : ' are') + ' already matched.' : '') +
+      ' ' + bHint(B.eq, B.coefs, res));
+    return;
+  }
+  var first = !B.scored;
+  if(res.kind === 'reducible'){
+    if(first){ B.scored = true; bScore.add(false); }
+    setFb(fb,'hint','<b>Balanced — but not in lowest terms.</b> Every coefficient you used divides by ' + res.g +
+      '. Divide it out: <span class="mono">' + bEqText(B.eq, res.reduced) + '</span>. Balanced equations are always written with the smallest whole numbers.');
+    return;
+  }
+  if(first){ B.scored = true; bScore.add(true); }
+  var tallyTxt = res.tally.map(function(r){ return r.lab + ' ' + r.L + ' = ' + r.R; }).join(', ');
+  setFb(fb,'good','<b>Balanced, lowest terms.</b> <span class="mono">' + bEqText(B.eq, B.coefs) + '</span>. ' + tallyTxt + '.' +
+    (B.custom ? '' : ' Press New equation for another.'));
+}
+
+function bNew(){
+  var eq = pickEquation(bLevel, B && !B.custom ? B.eq.id : -1);
+  bLoad(eq, eq.a.map(function(){ return 1; }), false);
+}
+function bShow(){
+  var ans = B.eq.a;
+  if(!B.scored){ B.scored = true; bScore.add(false); }
+  B.coefs = ans.slice();
+  speciesOf(B.eq).forEach(function(s,j){ bSetInput(j); });
+  bUpdate();
+  setFb(el('b-fb'),'hint','<b>Answer:</b> <span class="mono">' + bEqText(B.eq, ans) + '</span>. Read down the tally to see every element match, then try a new one.');
+}
+el('b-check').addEventListener('click', bCheck);
+el('b-new').addEventListener('click', bNew);
+el('b-reset').addEventListener('click', function(){
+  B.coefs = B.coefs.map(function(){ return 1; });
+  speciesOf(B.eq).forEach(function(s,j){ bSetInput(j); });
+  bUpdate(); hideFb(el('b-fb'));
+});
+el('b-show').addEventListener('click', bShow);
+Array.prototype.forEach.call(el('b-tabs').querySelectorAll('.tab'), function(b){
+  b.addEventListener('click', function(){
+    bLevel = b.dataset.lv;
+    Array.prototype.forEach.call(el('b-tabs').querySelectorAll('.tab'), function(o){ o.setAttribute('aria-selected', String(o === b)); });
+    bNew();
+  });
+});
+
+/* custom skeleton */
+function bLoadOwn(){
+  var fb = el('b-ownfb'), raw = el('b-own').value;
+  var e = parseEquation(raw);
+  if(!e.ok){ setFb(fb,'bad','<b>I couldn’t read that.</b> ' + e.err); return; }
+  var eq = { r:e.r, p:e.p, u:[], custom:true };
+  var shown = '<span class="mono">' + eqHtml(e, null).replace(/class="sps[^"]*"/g,'') + '</span>';
+  // every element must appear on both sides
+  var lhs = {}, rhs = {};
+  e.r.forEach(function(s){ Object.keys(countsOf(s.f)).forEach(function(k){ lhs[k] = 1; }); });
+  e.p.forEach(function(s){ Object.keys(countsOf(s.f)).forEach(function(k){ rhs[k] = 1; }); });
+  var onlyL = Object.keys(lhs).filter(function(k){ return !rhs[k]; });
+  var onlyR = Object.keys(rhs).filter(function(k){ return !lhs[k]; });
+  if(onlyL.length || onlyR.length){
+    var bits = [];
+    if(onlyL.length) bits.push(joinList(onlyL) + ' only on the left');
+    if(onlyR.length) bits.push(joinList(onlyR) + ' only on the right');
+    setFb(fb,'bad','You typed ' + shown + '. That has ' + bits.join(' and ') + '. Atoms can’t appear or vanish, so no coefficients will balance it — check the formulas in your skeleton.');
+    return;
+  }
+  var sol = solveEq(eq);
+  if(sol.dim === 0 || (sol.dim === 1 && !sol.coefs)){
+    setFb(fb,'bad','You typed ' + shown + '. No set of positive whole-number coefficients balances it. That almost always means a formula in the skeleton is wrong — recheck charges, subscripts and diatomics.');
+    return;
+  }
+  if(sol.dim > 1){
+    setFb(fb,'hint','You typed ' + shown + '. That one can be balanced in more than one way, so this tool can’t give you a single answer. Check that the skeleton is exactly what the problem describes.');
+    return;
+  }
+  eq.a = sol.coefs;
+  var start = e.r.concat(e.p).map(function(s){ return s.c; });
+  bLoad(eq, start, true);
+  setFb(fb,'hint','Loaded ' + shown + ' into the balancer above. Custom equations don’t change your score.');
+  el('b-eq').scrollIntoView({ behavior:'smooth', block:'center' });
+}
+el('b-load').addEventListener('click', bLoadOwn);
+el('b-own').addEventListener('keydown', function(e){ if(e.key === 'Enter') bLoadOwn(); });
+
+/* =========================================================
+   5. quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'A student “balances” H<sub>2</sub>(g) + O<sub>2</sub>(g) → H<sub>2</sub>O(l) by writing H<sub>2</sub>(g) + O<sub>2</sub>(g) → H<sub>2</sub>O<sub>2</sub>(l). What went wrong?',
+    opts:['Nothing — oxygen now matches, 2 = 2','They changed a subscript, so the product is now hydrogen peroxide, a different substance','They should have written O instead of O<sub>2</sub> on the left','They needed a coefficient of ½ on H<sub>2</sub>'],
+    ans:1,
+    why:'Subscripts are part of a substance’s identity. H<sub>2</sub>O<sub>2</sub> is hydrogen peroxide, not water. The only legal fix is coefficients: 2H<sub>2</sub> + O<sub>2</sub> → 2H<sub>2</sub>O. Writing O for O<sub>2</sub> would also change a formula — oxygen is diatomic.' },
+  { stem:'How many oxygen atoms are in 2Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>?',
+    opts:['4','8','12','24'],
+    ans:3,
+    why:'Each sulfate has 4 O. The 3 after the parentheses makes 12 O per formula unit, and the coefficient 2 doubles that: 2 × 3 × 4 = 24. 12 forgets the coefficient; 8 forgets the 3 after the parentheses.' },
+  { stem:'Which statement about 4H<sub>2</sub>(g) + 2O<sub>2</sub>(g) → 4H<sub>2</sub>O(l) is true?',
+    opts:['It is not balanced','It is balanced and written correctly','It is balanced, but not in lowest terms — it should be 2H<sub>2</sub> + O<sub>2</sub> → 2H<sub>2</sub>O','It is balanced only once states are removed'],
+    ans:2,
+    why:'H: 8 = 8 and O: 4 = 4, so atoms are conserved. But 4, 2 and 4 all divide by 2, and balanced equations are always written in the smallest whole numbers.' },
+  { stem:'In Pb(NO<sub>3</sub>)<sub>2</sub>(aq) + KOH(aq) → Pb(OH)<sub>2</sub>(s) + KNO<sub>3</sub>(aq), nitrate appears unchanged on both sides. What’s the quickest way to handle it?',
+    opts:['Count N and O separately on each side','Count NO<sub>3</sub> as one unit: there are 2 on the left, so KNO<sub>3</sub> gets a 2','Change KNO<sub>3</sub> to K(NO<sub>3</sub>)<sub>2</sub>','Save nitrate for last, after balancing oxygen'],
+    ans:1,
+    why:'A polyatomic ion that survives the reaction intact can be treated as one piece. Pb(NO<sub>3</sub>)<sub>2</sub> has 2 nitrate units, so you need 2 KNO<sub>3</sub>, and then 2 KOH to match potassium: Pb(NO<sub>3</sub>)<sub>2</sub> + 2KOH → Pb(OH)<sub>2</sub> + 2KNO<sub>3</sub>. Writing K(NO<sub>3</sub>)<sub>2</sub> changes a formula, which is never allowed.' },
+  { stem:'Balance C<sub>3</sub>H<sub>8</sub>(g) + O<sub>2</sub>(g) → CO<sub>2</sub>(g) + H<sub>2</sub>O(g). What is the coefficient on O<sub>2</sub>?',
+    opts:['3','5','7','10'],
+    ans:1,
+    why:'Carbon first: 3 CO<sub>2</sub>. Hydrogen next: 8 H means 4 H<sub>2</sub>O. Oxygen last: 3 × 2 + 4 × 1 = 10 O on the right, which is 5 O<sub>2</sub>. Final: C<sub>3</sub>H<sub>8</sub> + 5O<sub>2</sub> → 3CO<sub>2</sub> + 4H<sub>2</sub>O. Picking 10 confuses O atoms with O<sub>2</sub> molecules.' },
+  { stem:'Halfway through balancing butane you have C<sub>4</sub>H<sub>10</sub> + <span class="mono">13/2</span> O<sub>2</sub> → 4CO<sub>2</sub> + 5H<sub>2</sub>O. What do you do next?',
+    opts:['Write 6.5 in front of O<sub>2</sub> and stop','Round 13/2 up to 7','Double every coefficient: 2C<sub>4</sub>H<sub>10</sub> + 13O<sub>2</sub> → 8CO<sub>2</sub> + 10H<sub>2</sub>O','Change O<sub>2</sub> to O so it can take a 13'],
+    ans:2,
+    why:'Coefficients must be whole numbers, and rounding breaks the balance — 7 O<sub>2</sub> gives 14 O on the left against 13 on the right. Multiply everything by 2 to clear the fraction. Changing O<sub>2</sub> to O changes a formula.' },
+  { stem:'Why do chemical equations have to be balanced?',
+    opts:['So the number of molecules on each side is equal','Because atoms are rearranged in a reaction, not created or destroyed','Because some mass turns into energy','So the coefficients add up to the same total on each side'],
+    ans:1,
+    why:'Reactions break and form bonds; the atoms themselves survive. Each element must appear the same number of times on both sides, which is why mass is conserved. Molecule counts don’t have to match: N<sub>2</sub> + 3H<sub>2</sub> → 2NH<sub>3</sub> turns 4 molecules into 2.' },
+  { stem:'Which equation is balanced correctly?',
+    opts:['2Al(s) + O<sub>3</sub>(g) → Al<sub>2</sub>O<sub>3</sub>(s)','2Al(s) + 3O<sub>2</sub>(g) → Al<sub>2</sub>O<sub>3</sub>(s)','4Al(s) + 3O<sub>2</sub>(g) → 2Al<sub>2</sub>O<sub>3</sub>(s)','8Al(s) + 6O<sub>2</sub>(g) → 4Al<sub>2</sub>O<sub>3</sub>(s)'],
+    ans:2,
+    why:'Al: 4 = 4, O: 6 = 6, and 4, 3, 2 share no common factor. The first changed O<sub>2</sub> to O<sub>3</sub> (ozone, a different substance). The second has 6 O on the left and only 3 on the right. The last is balanced but not in lowest terms.' }
+];
+
+(function buildQuiz(){
+  var host = el('quiz'), html = '';
+  QUIZ.forEach(function(q,qi){
+    html += '<div class="q"><p class="stem">' + (qi+1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o,oi){ html += '<button class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  host.innerHTML = html;
+  Array.prototype.forEach.call(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      Array.prototype.forEach.call(el('q'+qi).querySelectorAll('.opt'), function(other,i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      setFb(el('qfb'+qi), oi === q.ans ? 'good' : 'bad',
+        '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+    });
+  });
+})();
+
+/* boot */
+countNew();
+wkRender();
+bNew();
+</script>
+</body>
+</html>
