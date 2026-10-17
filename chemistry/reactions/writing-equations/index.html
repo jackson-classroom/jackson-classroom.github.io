@@ -208,6 +208,12 @@ footer a{color:var(--water-dk)}
   .fb.show,.result.show{animation:pop .18s ease-out}
   @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
 }
+/* Input boxes: clearly fillable. Placeholder text is a short instruction, never a sample answer. */
+input[type=text],input[type=number]{border-color:#93A5A2;box-shadow:inset 0 1px 3px rgba(19,30,29,.12)}
+.stp input[type=text]{box-shadow:none}
+::placeholder{font-family:var(--body);font-style:italic;font-size:15px;color:#7F8D8B;opacity:1}
+.typing-tip{font-size:14px;color:var(--mute);margin:8px 0 0}
+.typing-tip kbd{font-family:var(--mono);font-size:13px;color:var(--ink2);background:#fff;border:1px solid var(--line);border-radius:3px;padding:1px 5px}
 </style>
 </head>
 <body>
@@ -456,11 +462,12 @@ footer a{color:var(--water-dk)}
     <p class="sentence" id="w-sent"></p>
     <div class="field" style="margin-top:14px">
       <label for="w-input" style="min-width:auto;flex:1 1 100%">Your skeleton equation</label>
-      <input type="text" id="w-input" class="eq-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Zn(s) + CuSO4(aq) -> ZnSO4(aq) + Cu(s)">
+      <input type="text" id="w-input" class="eq-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Type your skeleton equation here">
     </div>
     <div class="keys" aria-label="Insert symbols">
       <button type="button" data-k=" → ">&#8594;</button><button type="button" data-k=" + ">+</button><button type="button" data-k="(s)">(s)</button><button type="button" data-k="(l)">(l)</button><button type="button" data-k="(g)">(g)</button><button type="button" data-k="(aq)">(aq)</button>
     </div>
+    <p class="typing-tip">Type subscripts as plain numbers. Use <kbd>-&gt;</kbd> or the &#8594; button for the arrow.</p>
     <div class="preview" id="w-preview" aria-live="polite"></div>
     <div class="btn-row">
       <button id="w-check">Check equation</button>

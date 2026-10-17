@@ -245,6 +245,12 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
   .fb.show{animation:pop .18s ease-out}
   @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
 }
+/* Input boxes: clearly fillable. Placeholder text is a short instruction, never a sample answer. */
+input[type=text],input[type=number]{border-color:#93A5A2;box-shadow:inset 0 1px 3px rgba(19,30,29,.12)}
+.stp input[type=text]{box-shadow:none}
+::placeholder{font-family:var(--body);font-style:italic;font-size:15px;color:#7F8D8B;opacity:1}
+.typing-tip{font-size:14px;color:var(--mute);margin:8px 0 0}
+.typing-tip kbd{font-family:var(--mono);font-size:13px;color:var(--ink2);background:#fff;border:1px solid var(--line);border-radius:3px;padding:1px 5px}
 </style>
 </head>
 <body>
@@ -477,8 +483,9 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
     <div id="w-ion"></div>
     <div class="field" style="margin-top:16px">
       <label for="w-input" style="min-width:auto;flex:1 1 100%">Your equation (or NR)</label>
-      <input type="text" class="wide" id="w-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. 2Na(s) + Cl2(g) -> 2NaCl(s)">
+      <input type="text" class="wide" id="w-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your equation, or NR">
     </div>
+    <p class="typing-tip">Type subscripts as plain numbers and use <kbd>-&gt;</kbd> for the arrow.</p>
     <div class="preview" id="w-prev" aria-live="off"></div>
     <div class="btn-row">
       <button type="button" id="w-check">Check equation</button>

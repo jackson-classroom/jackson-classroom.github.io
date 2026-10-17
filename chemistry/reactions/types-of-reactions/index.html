@@ -209,6 +209,12 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
   .fb.show,.result.show{animation:pop .18s ease-out}
   @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
 }
+/* Input boxes: clearly fillable. Placeholder text is a short instruction, never a sample answer. */
+input[type=text],input[type=number]{border-color:#93A5A2;box-shadow:inset 0 1px 3px rgba(19,30,29,.12)}
+.stp input[type=text]{box-shadow:none}
+::placeholder{font-family:var(--body);font-style:italic;font-size:15px;color:#7F8D8B;opacity:1}
+.typing-tip{font-size:14px;color:var(--mute);margin:8px 0 0}
+.typing-tip kbd{font-family:var(--mono);font-size:13px;color:var(--ink2);background:#fff;border:1px solid var(--line);border-radius:3px;padding:1px 5px}
 </style>
 </head>
 <body>
@@ -494,8 +500,9 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
     <div class="eqline" id="p-problem" aria-live="polite"></div>
     <div class="field">
       <label for="p-input">Products</label>
-      <input type="text" id="p-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. NaCl + H2O">
+      <input type="text" id="p-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the products">
     </div>
+    <p class="typing-tip">Separate products with <kbd>+</kbd> and type subscripts as plain numbers.</p>
     <div class="btn-row">
       <button id="p-check">Check products</button>
       <button class="ghost" id="p-show">Show answer</button>

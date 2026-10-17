@@ -207,6 +207,9 @@ footer{color:var(--ink-soft);font-size:13px;text-align:center;margin-top:8px}
   0%{opacity:.55;transform:scale(.25)}
   100%{opacity:0;transform:scale(1)}
 }
+/* Input boxes: clearly fillable. Placeholder text is a short instruction, never a sample answer. */
+.field input{border-color:#9FB1C0;box-shadow:inset 0 1px 3px rgba(22,40,60,.12)}
+::placeholder{font-family:"IBM Plex Sans",system-ui,sans-serif;font-style:italic;font-size:14px;color:#7E8E9D;opacity:1}
 </style>
 </head>
 <body>
@@ -263,7 +266,7 @@ footer{color:var(--ink-soft);font-size:13px;text-align:center;margin-top:8px}
       <div class="field">
         <label for="in-slope">Velocity over the shaded interval</label>
         <div class="inputrow">
-          <input id="in-slope" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. -1.5">
+          <input id="in-slope" type="text" inputmode="decimal" autocomplete="off" placeholder="Type a number">
           <span class="unit">m/s</span>
         </div>
       </div>
@@ -292,11 +295,11 @@ footer{color:var(--ink-soft);font-size:13px;text-align:center;margin-top:8px}
     <div class="fields">
       <div class="field">
         <label for="in-dist">Total distance travelled</label>
-        <div class="inputrow"><input id="in-dist" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 9"><span class="unit">m</span></div>
+        <div class="inputrow"><input id="in-dist" type="text" inputmode="decimal" autocomplete="off" placeholder="Type a number"><span class="unit">m</span></div>
       </div>
       <div class="field">
         <label for="in-disp">Displacement</label>
-        <div class="inputrow"><input id="in-disp" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. -3"><span class="unit">m</span></div>
+        <div class="inputrow"><input id="in-disp" type="text" inputmode="decimal" autocomplete="off" placeholder="Type a number"><span class="unit">m</span></div>
       </div>
     </div>
     <div class="actions">
