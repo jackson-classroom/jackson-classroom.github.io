@@ -279,7 +279,6 @@ input[type=text],input[type=number]{border-color:#93A5A2;box-shadow:inset 0 1px 
   <a href="#name">Name that reaction</a>
   <a href="#products">Writing products</a>
   <a href="#watch">Watch-outs</a>
-  <a href="#predict">Predict the products</a>
   <a href="#check">Check yourself</a>
 </nav>
 
@@ -435,7 +434,7 @@ input[type=text],input[type=number]{border-color:#93A5A2;box-shadow:inset 0 1px 
       </tbody>
     </table></div>
     <p>Balanced, the second one is <span class="mono nw">3Ca(NO<sub>3</sub>)<sub>2</sub> + 2Na<sub>3</sub>PO<sub>4</sub> → Ca<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub> + 6NaNO<sub>3</sub></span>. Phosphate stays a single unit the whole way through, and when you need more than one of it, it goes in parentheses.</p>
-    <p class="smallprint">Which of these swaps actually produce a visible change (a solid forming out of solution) is next week's topic. For now you are predicting formulas only.</p>
+    <p class="smallprint">Which of these swaps actually produce a visible change (a solid forming out of solution) is the topic of <a href="/chemistry/reactions/double-replacement/">Double Replacement</a> (page 5). Here you are predicting formulas only.</p>
   </div>
 
   <div class="panel" id="r-burn" role="tabpanel" aria-labelledby="rt-burn">
@@ -451,6 +450,8 @@ input[type=text],input[type=number]{border-color:#93A5A2;box-shadow:inset 0 1px 
     </table></div>
     <p>Balance carbon first, then hydrogen, then oxygen last, since O<sub>2</sub> is the only reactant that is a single element. If oxygen comes out odd, as it does for ethane, double everything.</p>
   </div>
+
+  <div class="note"><b>Practice predicting products</b> on <a href="/chemistry/reactions/predicting-products/">Predicting Products</a> (page 6). It adds the two things this page leaves out, whether a reaction actually happens and the state of each product, so it comes after the activity series and double replacement.</div>
 </section>
 
 <!-- ============ WATCH-OUTS ============ -->
@@ -481,35 +482,6 @@ input[type=text],input[type=number]{border-color:#93A5A2;box-shadow:inset 0 1px 
       <p>Cations stay in front; only the anions trade places. Polyatomic ions such as SO<sub>4</sub><sup>2−</sup> travel as one unit and never get broken up or merged with another ion.</p>
       <div class="wr"><span class="mono" style="color:var(--ink2)">BaCl<sub>2</sub> + Na<sub>2</sub>SO<sub>4</sub> →</span><span><span class="lbl">not</span><span class="bad">BaNa + Cl<sub>2</sub>SO<sub>4</sub></span></span><span><span class="lbl">write</span><span class="good">BaSO<sub>4</sub> + NaCl</span></span></div>
     </div>
-  </div>
-</section>
-
-<!-- ============ PREDICT ============ -->
-<section id="predict">
-  <div class="sec-head">
-    <span class="tasktag">Generated practice</span>
-    <h2>Predict the products</h2>
-  </div>
-  <p>You get the reactants; you type the products. Formulas only: no states, and you don't need to balance. Separate products with a plus sign, in any order, and type subscripts as plain digits (<span class="mono">Na2SO4</span>, <span class="mono">Ca(OH)2</span>). If you get it wrong, the feedback names the mistake and you can fix it before looking at the answer.</p>
-
-  <div class="card">
-    <div class="card-label"><span>Predict the products</span><span class="score" id="p-score">0 of 0</span></div>
-    <div class="tabs" role="tablist" aria-label="Which reaction types to practice" id="p-tabs"></div>
-    <label class="chk"><input type="checkbox" id="p-hide"> Hide the type until I check (name it yourself)</label>
-    <p class="setup" id="p-setup" style="margin-top:12px"></p>
-    <div class="eqline" id="p-problem" aria-live="polite"></div>
-    <div class="field">
-      <label for="p-input">Products</label>
-      <input type="text" id="p-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the products">
-    </div>
-    <p class="typing-tip">Separate products with <kbd>+</kbd> and type subscripts as plain numbers.</p>
-    <div class="btn-row">
-      <button id="p-check">Check products</button>
-      <button class="ghost" id="p-show">Show answer</button>
-      <button class="ghost" id="p-new">New reactants</button>
-    </div>
-    <div class="fb" id="p-fb"></div>
-    <div class="result" id="p-res"></div>
   </div>
 </section>
 
@@ -1218,92 +1190,6 @@ el('n-new').addEventListener('click', nameNew);
 })();
 
 /* =========================================================
-   3. Predict the products
-   ========================================================= */
-var pMode = 'mix', pState = null, pScore = Score(el('p-score'));
-var P_MODES = [['mix','Mixed']].concat(TYPE_KEYS.map(function(k){ return [k, TYPES[k].short]; }));
-
-(function buildModeTabs(){
-  var h = '';
-  P_MODES.forEach(function(m){
-    h += '<button class="tab" role="tab" data-mode="' + m[0] + '" aria-selected="' + (m[0] === pMode ? 'true' : 'false') + '">' + m[1] + '</button>';
-  });
-  el('p-tabs').innerHTML = h;
-  Array.prototype.forEach.call(el('p-tabs').querySelectorAll('.tab'), function(b){
-    b.addEventListener('click', function(){
-      pMode = b.dataset.mode;
-      Array.prototype.forEach.call(el('p-tabs').querySelectorAll('.tab'), function(o){
-        o.setAttribute('aria-selected', o === b ? 'true' : 'false');
-      });
-      prodNew();
-    });
-  });
-})();
-
-function badgeHtml(p, reveal){
-  if(el('p-hide').checked && !reveal) return '<span class="badge hid">Type hidden</span>';
-  return '<span class="badge">' + TYPES[p.type].label + '</span>';
-}
-function renderSetup(reveal){
-  var p = pState.p;
-  el('p-setup').innerHTML = badgeHtml(p, reveal) + (p.notes ? ' &nbsp;' + p.notes : '');
-}
-
-function prodNew(){
-  var k = pMode === 'mix' ? pick(TYPE_KEYS) : pMode;
-  var p = GEN[k](), tries = 0;
-  while(pState && pState.p.reac.join() === p.reac.join() && tries < 10){ p = GEN[k](); tries++; }
-  pState = { p:p, scored:false, done:false };
-  renderSetup(false);
-  el('p-problem').innerHTML = p.reac.map(function(f){ return '<span class="sp">' + fmt(f) + '</span>'; }).join(' + ') + ' <span class="ar">→</span> ?';
-  el('p-input').value = '';
-  hideFb(el('p-fb'));
-  el('p-res').classList.remove('show');
-}
-
-function showWorked(){
-  var p = pState.p;
-  el('p-res').innerHTML =
-    '<div class="rline"><span class="k">Products</span><span class="v">' + fmtList(p.prod) + '</span></div>' +
-    '<div class="rline"><span class="k">Balanced</span><span class="v">' + balancedHtml(p.reac, p.prod) + '</span></div>' +
-    '<div class="smallprint" style="margin-top:6px">' + p.build + '</div>';
-  el('p-res').classList.add('show');
-}
-
-function prodCheck(){
-  var s = pState;
-  if(s.done) return;
-  var r = checkProducts(s.p, el('p-input').value);
-  var fb = el('p-fb');
-  if(r.kind === 'hint'){ setFb(fb, 'hint', r.msg); return; }
-  var echo = '<p class="echo">You wrote: ' + r.echo + '</p>';
-  renderSetup(true);
-  if(r.kind === 'good'){
-    if(!s.scored){ pScore.add(true); s.scored = true; }
-    s.done = true;
-    setFb(fb, 'good', '<p><b>Correct.</b> ' + TYPES[s.p.type].label + ' gives ' + fmtList(s.p.prod) + '.</p>' + echo);
-    showWorked();
-    return;
-  }
-  if(!s.scored){ pScore.add(false); s.scored = true; }
-  setFb(fb, 'bad', r.msgs.map(function(m){ return '<p>' + m + '</p>'; }).join('') + echo +
-    '<p class="smallprint" style="margin-top:6px">Fix it and check again, or press Show answer.</p>');
-}
-function prodShow(){
-  var s = pState;
-  if(!s.scored){ pScore.add(false); s.scored = true; }
-  s.done = true;
-  renderSetup(true);
-  setFb(el('p-fb'), 'hint', '<b>Answer:</b> ' + fmtList(s.p.prod) + '. Read how it was built below, then try a new set.');
-  showWorked();
-}
-el('p-check').addEventListener('click', prodCheck);
-el('p-show').addEventListener('click', prodShow);
-el('p-new').addEventListener('click', prodNew);
-el('p-input').addEventListener('keydown', function(e){ if(e.key === 'Enter'){ if(pState.done) prodNew(); else prodCheck(); } });
-el('p-hide').addEventListener('change', function(){ if(pState) renderSetup(pState.done); });
-
-/* =========================================================
    4. quiz
    ========================================================= */
 var QUIZ = [
@@ -1366,7 +1252,6 @@ var QUIZ = [
 /* boot */
 renderTally();
 nameNew();
-prodNew();
 </script>
 </body>
 </html>

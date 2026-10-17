@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Double Replacement — Precipitates, Water and Net Ionic Equations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#131E1D; --ink2:#3B4A48; --mute:#5F6D6B;
+  --wash:#E3E9E8; --card:#FBFCFB; --line:#C9D3D1; --line-soft:#E0E7E6;
+  --water:#12727F; --water-dk:#0B4E58; --water-lite:#BFDEE2;
+  --brass:#9A6E22; --brass-lite:#F5E9CF;
+  --ok:#26694A; --ok-bg:#E4F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  --display:"Instrument Serif",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(227,233,232,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:64px 0 44px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--water-dk)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,7.4vw,74px);line-height:1;margin:16px 0 0;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--water-dk)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:47ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: two beakers, two verdicts */
+.sig-rx{margin:38px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.rx{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:20px 22px 18px;min-width:0}
+.rx-lab{font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.rx-scene{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:14px 0 14px;min-height:150px}
+.mini-swap{display:flex;flex-direction:column;gap:5px;align-self:center}
+.ms-in{display:flex;gap:3px;align-items:center}
+.ms-arr{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding:1px 0 1px 3px}
+.mini-swap .ic{font-size:13px;padding:1px 6px}
+.beaker{position:relative;width:96px;height:108px;margin-top:40px;border:2px solid #7C8B89;border-top:0;border-radius:0 0 12px 12px;background:rgba(255,255,255,.55);flex:none;overflow:hidden}
+.beaker-rim{position:relative;flex:none}
+.beaker-rim::before,.beaker-rim::after{content:"";position:absolute;top:40px;width:8px;border-top:2px solid #7C8B89;z-index:2}
+.beaker-rim::before{left:-8px}
+.beaker-rim::after{right:-8px}
+.liq{position:absolute;left:0;right:0;bottom:0;height:72%;border-radius:0 0 10px 10px}
+.liq.clear{background:linear-gradient(180deg,#F1F7F8,#DCE9EC)}
+.liq.milky{background:linear-gradient(180deg,#EEF3F3 0%,#E2EAEB 100%)}
+.liq.milky::before{content:"";position:absolute;inset:6px 6px 26px;background:
+  radial-gradient(circle,#fff 1.3px,transparent 1.8px) 0 0/11px 9px,
+  radial-gradient(circle,#F9FBFB 1.1px,transparent 1.6px) 5px 4px/13px 11px}
+.ppt{position:absolute;left:2px;right:2px;bottom:2px;height:22%;border-radius:0 0 9px 9px;
+  background:radial-gradient(circle at 30% 40%,#fff 1.6px,transparent 2.2px) 0 0/7px 6px,radial-gradient(circle at 70% 70%,#D6DEDF 1.4px,transparent 2px) 0 0/6px 5px,#F6F8F8;border-top:1px solid #D3DCDA}
+.rx-eq{font-family:var(--mono);font-size:14.5px;border-top:1px solid var(--line-soft);padding-top:12px}
+.rx-note{font-size:14.5px;color:var(--ink2);margin-top:8px;line-height:1.5}
+.okc{color:var(--ok);font-weight:600}
+.noc{color:var(--no);font-weight:600}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--water);color:var(--water-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--water-dk);background:var(--water-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.4vw,40px);line-height:1.08;margin:0;letter-spacing:-.01em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.note{border-left:3px solid var(--brass);background:var(--brass-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:24px 0}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--water);border-radius:0 4px 4px 0;padding:18px 20px;min-width:0}
+.rulecard .op{font-family:var(--display);font-size:30px;line-height:1;color:var(--water-dk)}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard .eqline{margin:10px 0 10px;font-size:14px}
+.rulecard.miss{border-left-color:var(--no)}
+.rulecard .st{font-family:var(--mono);font-size:13px;color:var(--mute);margin-top:8px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.problem{font-family:var(--mono);font-size:clamp(18px,3.4vw,23px);font-weight:500;letter-spacing:-.01em}
+.setup{font-size:15px;color:var(--ink2);margin:0 0 14px}
+
+/* equations */
+.eq .t{white-space:nowrap}
+.eq .arr{white-space:nowrap}
+.eq .nr{font-weight:600;color:var(--no)}
+.eq .t.sp{text-decoration:line-through;text-decoration-color:var(--no);text-decoration-thickness:2px;color:var(--mute)}
+.eqline{font-family:var(--mono);font-size:clamp(15px,2.6vw,18px);background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:12px 14px;margin:14px 0;line-height:1.7}
+.eqline.strike .eq{text-decoration:line-through;text-decoration-color:var(--no);color:var(--mute)}
+.eqlab{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);margin:18px 0 -8px}
+.ion{white-space:nowrap}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F6F8F7;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--water-dk);border-color:var(--water-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--water)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--water);outline-offset:2px}
+button[disabled]{opacity:.5;cursor:default}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid var(--line);border-radius:3px;padding:9px 11px;width:150px;background:#fff;color:var(--ink)}
+input.wide{width:100%;font-size:17px}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:150px}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1B4E36}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--water);color:var(--ink2)}
+.fb.part{background:var(--brass-lite);border-left:3px solid var(--brass);color:#5C4214}
+.fb b{font-weight:600}
+.fb .mono{font-size:15px}
+.fb .eqline{font-size:15px;margin:10px 0 2px}
+.fb ul.why{margin:8px 0 6px;padding-left:20px}
+.fb ul.why li{margin:5px 0}
+.echo{font-size:13.5px;color:var(--mute);margin-bottom:6px}
+.echo .eq{font-family:var(--mono);font-size:15px;color:var(--ink)}
+.preview{font-family:var(--mono);font-size:15px;color:var(--ink2);min-height:1.7em;margin-top:8px;line-height:1.7}
+.preview .pl{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);margin-right:8px}
+
+/* chart cell reference */
+.cellref{font-family:var(--mono);font-size:13.5px;background:#fff;border:1px solid var(--line);border-radius:3px;padding:1px 7px;color:var(--ink2);line-height:1.9;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.cellref b{color:var(--ink);font-weight:600}
+
+/* ion chips */
+.ic{display:inline-block;font-family:var(--mono);font-size:15px;border:1px solid;border-radius:3px;padding:2px 8px;white-space:nowrap;line-height:1.5}
+.ic.c{background:var(--water-lite);border-color:#93C4CB;color:var(--water-dk)}
+.ic.a{background:var(--brass-lite);border-color:#D9C08E;color:#6E4F18}
+.pair{display:inline-flex;gap:3px;align-items:center;vertical-align:middle}
+.tagv{font-family:var(--mono);font-size:11px;font-weight:600;border-radius:2px;padding:1px 6px;margin-left:5px;line-height:1.5}
+.tagv.S{background:var(--line-soft);color:var(--ink2);border:1px solid var(--line)}
+.tagv.I{background:var(--ink);color:#F6F8F7;border:1px solid var(--ink)}
+.swapvis{display:flex;flex-direction:column;align-items:center;gap:10px;margin:22px 0;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:20px 16px}
+.sv-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;font-family:var(--mono);font-size:18px;color:var(--mute)}
+.sv-arr{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+
+/* key cards */
+.keygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:22px 0}
+.key{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 16px;min-width:0}
+.key .k{font-family:var(--mono);font-size:24px;font-weight:600;line-height:1;color:var(--ink)}
+.key .kn{font-size:14px;color:var(--mute);margin-top:4px}
+.key p{margin:8px 0 0;font-size:15px;color:var(--ink2)}
+.key .ks{font-family:var(--mono);font-size:14px;margin-top:8px;color:var(--water-dk)}
+
+/* answer buttons */
+.yn{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.yn button{min-width:150px}
+.yn button.short{min-width:64px;font-size:16px;font-weight:600}
+.yn button.picked-yes{background:var(--ok);border-color:var(--ok)}
+.yn button.picked-no{background:var(--no);border-color:var(--no)}
+.yn button.right-one{background:var(--ok-bg);color:var(--ok);border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.yn button[disabled].right-one{opacity:1}
+.yn button[disabled].picked-yes,.yn button[disabled].picked-no{opacity:1}
+.drill-f{font-family:var(--mono);font-size:clamp(28px,5.4vw,38px);font-weight:500;letter-spacing:-.01em;line-height:1.2}
+
+/* complete ionic equation as clickable chips */
+.ci{font-family:var(--mono);font-size:16px;line-height:2.5;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px 12px;margin:14px 0}
+.ci .op{color:var(--mute);margin:0 4px}
+.ci .arr{color:var(--ink);margin:0 8px;white-space:nowrap}
+.chipbtn{font-family:var(--mono);font-size:15.5px;letter-spacing:0;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:3px;padding:2px 9px;line-height:1.6}
+.chipbtn:hover{background:#fff;color:var(--ink);border-color:var(--water)}
+.chipbtn.cat{background:#F1F8F9;border-color:#A9CFD4}
+.chipbtn.an{background:#FBF6EA;border-color:#E0CDA3}
+.chipbtn.mol{font-weight:600}
+.chipbtn.struck{text-decoration:line-through;text-decoration-color:var(--no);text-decoration-thickness:2px;color:var(--mute);background:#F3F5F5;border-style:dashed}
+.chipbtn.was-wrong{box-shadow:inset 0 0 0 2px var(--no)}
+.chipbtn[disabled]{opacity:1;cursor:default}
+
+.step2{display:none;margin-top:24px;padding-top:18px;border-top:1px dashed var(--line)}
+.step2.on{display:block}
+.steplab{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--water-dk);margin-bottom:4px}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45}
+.opt:hover{border-color:var(--water);background:#fff;color:var(--ink)}
+.opt .eq{font-family:var(--mono);font-size:14.5px}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.94}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#EDF2F1;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#C3D0CE}
+.next .nt{font-family:var(--display);font-size:26px;color:#fff;margin:0 0 4px}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F6F8F7;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--water-lite)}
+
+@media (max-width:760px){
+  .sig-rx{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:16px}
+  .field label{min-width:auto;flex:1 1 100%}
+  .yn button{flex:1 1 140px;min-width:0}
+  .yn button.short{flex:1 1 60px}
+  .rx{padding:16px}
+  .sv-row{font-size:15px;gap:8px}
+  .ic{font-size:14px;padding:1px 6px}
+  .ci{font-size:15px;padding:8px 10px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+/* Input boxes: clearly fillable. Placeholder text is a short instruction, never a sample answer. */
+input[type=text],input[type=number]{border-color:#93A5A2;box-shadow:inset 0 1px 3px rgba(19,30,29,.12)}
+::placeholder{font-family:var(--body);font-style:italic;font-size:15px;color:#7F8D8B;opacity:1}
+.typing-tip{font-size:14px;color:var(--mute);margin:8px 0 0}
+.typing-tip kbd{font-family:var(--mono);font-size:13px;color:var(--ink2);background:#fff;border:1px solid var(--line);border-radius:3px;padding:1px 5px}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Double Replacement</span>
+    <span class="bar-sub">Precipitates · water · net ionic equations</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 3 · Double replacement</div>
+  <h1>Partners swap, but something has to <em>leave</em>.</h1>
+  <p class="lede">Two dissolved compounds trade partners. On paper that works for any pair. In a beaker it only counts as a reaction when the swap makes something that can't stay dissolved: a solid that falls out, or water. Your solubility chart tells you which.</p>
+
+  <div class="sig-rx">
+    <div class="rx">
+      <div class="rx-lab">Silver nitrate + sodium chloride</div>
+      <div class="rx-scene">
+        <div class="mini-swap" aria-hidden="true">
+          <div class="ms-in"><span class="ic c">Ag<sup>+</sup></span><span class="ic a">NO<sub>3</sub><sup>−</sup></span></div>
+          <div class="ms-in"><span class="ic c">Na<sup>+</sup></span><span class="ic a">Cl<sup>−</sup></span></div>
+          <div class="ms-arr">swap &#8595;</div>
+          <div class="ms-in"><span class="ic c">Ag<sup>+</sup></span><span class="ic a">Cl<sup>−</sup></span><span class="tagv I">I</span></div>
+          <div class="ms-in"><span class="ic c">Na<sup>+</sup></span><span class="ic a">NO<sub>3</sub><sup>−</sup></span><span class="tagv S">S</span></div>
+        </div>
+        <div class="beaker-rim"><div class="beaker" role="img" aria-label="A cloudy mixture with a white solid settled on the bottom of the beaker"><div class="liq milky"></div><div class="ppt"></div></div></div>
+      </div>
+      <div class="rx-eq"><span class="eq" data-eq="AgNO3(aq) + NaCl(aq) -> AgCl(s) + NaNO3(aq)"></span></div>
+      <div class="rx-note"><span class="okc">Reacts.</span> AgCl is insoluble, so it comes out of the solution as a white solid and settles to the bottom. That solid is the <b>precipitate</b>.</div>
+    </div>
+    <div class="rx">
+      <div class="rx-lab">Potassium nitrate + sodium chloride</div>
+      <div class="rx-scene">
+        <div class="mini-swap" aria-hidden="true">
+          <div class="ms-in"><span class="ic c">K<sup>+</sup></span><span class="ic a">NO<sub>3</sub><sup>−</sup></span></div>
+          <div class="ms-in"><span class="ic c">Na<sup>+</sup></span><span class="ic a">Cl<sup>−</sup></span></div>
+          <div class="ms-arr">swap &#8595;</div>
+          <div class="ms-in"><span class="ic c">K<sup>+</sup></span><span class="ic a">Cl<sup>−</sup></span><span class="tagv S">S</span></div>
+          <div class="ms-in"><span class="ic c">Na<sup>+</sup></span><span class="ic a">NO<sub>3</sub><sup>−</sup></span><span class="tagv S">S</span></div>
+        </div>
+        <div class="beaker-rim"><div class="beaker" role="img" aria-label="A clear, colorless solution with nothing in it"><div class="liq clear"></div></div></div>
+      </div>
+      <div class="rx-eq"><span class="eq" data-eq="KNO3(aq) + NaCl(aq) -> NR"></span></div>
+      <div class="rx-note"><span class="noc">No reaction.</span> Both new pairings are soluble. The four kinds of ions just keep floating around in the water, so nothing changed.</div>
+    </div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#swap">Swap partners</a>
+  <a href="#chart">Your chart</a>
+  <a href="#react">Will it react?</a>
+  <a href="#water">Acids + hydroxides</a>
+  <a href="#netionic">Net ionic</a>
+  <a href="#watch">Watch-outs</a>
+  <a href="#predict">Predict it</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ SWAP ============ -->
+<section id="swap">
+  <div class="sec-head"><span class="tasktag">Recap</span><h2>Swap partners, keep the charges</h2></div>
+  <p>Double replacement starts with two ionic compounds, both dissolved in water. Each one is a cation and an anion. The two cations trade anions:</p>
+  <p class="problem" style="text-align:center;padding:6px 0">AB + CD &#8594; AD + CB</p>
+
+  <div class="swapvis" aria-label="Barium chloride and sodium sulfate swap partners to make barium sulfate and sodium chloride">
+    <div class="sv-row">
+      <span class="pair"><span class="ic c">Ba<sup>2+</sup></span><span class="ic a">Cl<sup>−</sup></span></span> +
+      <span class="pair"><span class="ic c">Na<sup>+</sup></span><span class="ic a">SO<sub>4</sub><sup>2−</sup></span></span>
+    </div>
+    <div class="sv-arr">swap partners &#8595;</div>
+    <div class="sv-row">
+      <span class="pair"><span class="ic c">Ba<sup>2+</sup></span><span class="ic a">SO<sub>4</sub><sup>2−</sup></span></span> +
+      <span class="pair"><span class="ic c">Na<sup>+</sup></span><span class="ic a">Cl<sup>−</sup></span></span>
+    </div>
+  </div>
+  <div class="eqline"><span class="eq" data-eq="BaCl2(aq) + Na2SO4(aq) -> BaSO4(s) + 2NaCl(aq)"></span></div>
+
+  <h3>Writing the new formulas</h3>
+  <ol>
+    <li><b>Split each reactant into its ions.</b> Your Chem Ref sheet has the charges for the main groups and the polyatomic ions. For a transition metal, read the charge off the formula: FeCl<sub>3</sub> has three Cl<sup>−</sup> ions, so the iron is Fe<sup>3+</sup>.</li>
+    <li><b>Swap.</b> The first cation takes the second anion, and the second cation takes the first anion. The cation is always written first.</li>
+    <li><b>Build each formula from the charges</b>, not from the old subscripts. Ba<sup>2+</sup> and SO<sub>4</sub><sup>2−</sup> cancel one-to-one, so the formula is BaSO<sub>4</sub>. Na<sup>+</sup> and Cl<sup>−</sup> cancel one-to-one, so it's NaCl.</li>
+    <li><b>Keep polyatomic ions whole.</b> If you need more than one, put it in parentheses: Ca(NO<sub>3</sub>)<sub>2</sub>, never CaNO<sub>32</sub>.</li>
+  </ol>
+  <div class="note"><b>Nobody changes charge.</b> In single replacement, a free element turns into an ion. In double replacement, every ion starts as an ion and stays the same ion. The Fe<sup>3+</sup> in FeCl<sub>3</sub> is still Fe<sup>3+</sup> in the product:
+    <div class="eqline" style="margin-bottom:0"><span class="eq" data-eq="FeCl3(aq) + 3NaOH(aq) -> Fe(OH)3(s) + 3NaCl(aq)"></span></div>
+  </div>
+</section>
+
+<!-- ============ CHART ============ -->
+<section id="chart">
+  <div class="sec-head"><span class="tasktag">Your Chem Ref</span><h2>Reading your solubility chart</h2></div>
+  <p>Every swap makes two new compounds, and the solubility chart on your Chem Ref sheet tells you what each one does in water. Cations run down the side and anions run across the top. Each cell answers one question: <b>if these two ions meet in water, does the compound stay dissolved?</b></p>
+  <ol>
+    <li>Split the compound into its cation and its anion.</li>
+    <li>Find the cation's row. Watch the charge: Fe<sup>2+</sup> and Fe<sup>3+</sup> have separate rows, and so do Cu<sup>+</sup> and Cu<sup>2+</sup>.</li>
+    <li>Find the anion's column.</li>
+    <li>Read the cell where they cross.</li>
+  </ol>
+  <div class="keygrid">
+    <div class="key"><div class="k">S</div><div class="kn">Soluble</div><p>Stays dissolved as separate ions.</p><div class="ks">state: (aq)</div></div>
+    <div class="key"><div class="k">I</div><div class="kn">Insoluble</div><p>Comes out of the solution as a solid. That's a precipitate.</p><div class="ks">state: (s)</div></div>
+    <div class="key"><div class="k">P</div><div class="kn">Partially soluble</div><p>Enough of it comes out that it counts as a precipitate too.</p><div class="ks">state: (s)</div></div>
+    <div class="key"><div class="k">HOH</div><div class="kn">Water</div><p>Only in the H<sup>+</sup> row. It's H–O–H, written H<sub>2</sub>O.</p><div class="ks">state: (l)</div></div>
+  </div>
+  <p class="smallprint">You'll also see D, D/S and D/P in a few cells. Those compounds break down in water into something else, usually a gas. They won't come up on this page.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Look it up</span><span class="score" id="d-score">0 of 0</span></div>
+    <p class="setup">Find this compound on your Chem Ref chart. Which letter is in its cell?</p>
+    <div class="drill-f" id="d-f"></div>
+    <div class="smallprint" id="d-name"></div>
+    <div class="yn">
+      <button type="button" class="short" id="d-S">S</button>
+      <button type="button" class="short" id="d-I">I</button>
+      <button type="button" class="short" id="d-P">P</button>
+      <button type="button" class="ghost" id="d-new">Next compound</button>
+    </div>
+    <div class="fb" id="d-fb" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ============ REACT ============ -->
+<section id="react">
+  <div class="sec-head"><span class="tasktag">The rule</span><h2>Will it react?</h2></div>
+  <p>A dissolved ionic compound isn't really sitting in the water as AgNO<sub>3</sub>. It's Ag<sup>+</sup> ions and NO<sub>3</sub><sup>−</sup> ions floating around separately. Mix two solutions and all you've done is put four kinds of ions in one beaker.</p>
+  <p>Something only happens if two of those ions grab each other and <b>leave the solution</b>. In this course that means one of two things:</p>
+  <ul>
+    <li><b>A precipitate.</b> One of the new compounds is I or P on your chart, so it comes out as a solid.</li>
+    <li><b>Water.</b> H<sup>+</sup> meets OH<sup>−</sup>. Once they're locked into water molecules, those ions are out of the solution too.</li>
+  </ul>
+  <p>If both new compounds are S, every ion stays dissolved. The beaker has the same four ions it had before you mixed, so nothing happened. Write <b>NR</b>.</p>
+  <div class="eqline"><span class="eq" data-eq="KNO3(aq) + NaCl(aq) -> NR"></span></div>
+  <div class="note"><b>Only one product has to leave.</b> In AgNO<sub>3</sub> + NaCl, the NaNO<sub>3</sub> stays dissolved, and that's normal. One precipitate is enough to make it a reaction.</div>
+
+  <div class="card">
+    <div class="card-label"><span>Decide</span><span class="score" id="k-score">0 of 0</span></div>
+    <p class="setup">These two solutions are mixed. Swap partners in your head, look up both new compounds, and decide.</p>
+    <div class="eqline" id="k-prob" style="font-size:clamp(17px,3.2vw,21px)"></div>
+    <div class="yn">
+      <button type="button" id="k-ppt">A precipitate forms</button>
+      <button type="button" id="k-water">Water forms</button>
+      <button type="button" id="k-nr">No reaction</button>
+      <button type="button" class="ghost" id="k-new">Next pair</button>
+    </div>
+    <div class="fb" id="k-fb" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ============ WATER ============ -->
+<section id="water">
+  <div class="sec-head"><span class="tasktag">H<sup>+</sup> + OH<sup>−</sup></span><h2>Acids and hydroxides make water</h2></div>
+  <p>An acid is a compound whose cation is H<sup>+</sup>. You'll see acids written as formulas that start with H, like HCl(aq), HNO<sub>3</sub>(aq) and H<sub>2</sub>SO<sub>4</sub>(aq). For double replacement, H<sup>+</sup> is <b>just another cation</b>: split it off, swap partners, and use the H<sup>+</sup> row on your chart.</p>
+  <p>Mix an acid with a hydroxide and the H<sup>+</sup> ends up with the OH<sup>−</sup>. The H<sup>+</sup> row, OH<sup>−</sup> column says <b>HOH</b>. That's water, H–O–H, and you write it as H<sub>2</sub>O(l).</p>
+  <div class="eqline"><span class="eq" data-eq="HCl(aq) + NaOH(aq) -> NaCl(aq) + H2O(l)"></span></div>
+  <div class="eqline"><span class="eq" data-eq="H2SO4(aq) + 2KOH(aq) -> K2SO4(aq) + 2H2O(l)"></span></div>
+  <p>The other product is a salt made from the metal ion and the acid's anion. Look it up like any other compound. In these problems it stays dissolved. Water forming is enough on its own, so an acid plus a hydroxide always reacts.</p>
+
+  <h3>An acid can swap with a salt too</h3>
+  <p>H<sup>+</sup> can trade partners with an ordinary salt. With no OH<sup>−</sup> around, no water forms, so it only reacts if a precipitate does:</p>
+  <div class="eqline"><span class="eq" data-eq="HCl(aq) + AgNO3(aq) -> AgCl(s) + HNO3(aq)"></span></div>
+  <div class="eqline"><span class="eq" data-eq="HNO3(aq) + KCl(aq) -> NR"></span></div>
+</section>
+
+<!-- ============ NET IONIC ============ -->
+<section id="netionic">
+  <div class="sec-head"><span class="tasktag">Ions only</span><h2>Net ionic equations</h2></div>
+  <p>Every equation so far is a <b>molecular equation</b>, with each compound written as one formula. But a dissolved compound is really separate ions. Writing it that way shows which ions actually do something.</p>
+  <h3>Four steps</h3>
+  <ol>
+    <li><b>Balance</b> the molecular equation and put a state on every formula.</li>
+    <li><b>Split</b> every (aq) compound into its ions. The coefficient multiplies through: <span class="ion">2NaCl(aq)</span> becomes <span class="ion">2Na<sup>+</sup>(aq)</span> + <span class="ion">2Cl<sup>−</sup>(aq)</span>. Leave (s) and (l) alone, since a precipitate and water are not dissolved ions. This is the <b>complete ionic equation</b>.</li>
+    <li><b>Cross out the spectators.</b> These are ions that appear on both sides, unchanged. They were dissolved before and they're still dissolved after.</li>
+    <li><b>Write what's left.</b> That's the <b>net ionic equation</b>. If every coefficient divides by the same number, divide.</li>
+  </ol>
+  <div class="eqlab">Molecular</div>
+  <div class="eqline"><span class="eq" data-eq="BaCl2(aq) + Na2SO4(aq) -> BaSO4(s) + 2NaCl(aq)"></span></div>
+  <div class="eqlab">Complete ionic</div>
+  <div class="eqline"><span class="eq" data-ieq="Ba^2+(aq) + ~2Cl^-(aq) + ~2Na^+(aq) + SO4^2-(aq) -> BaSO4(s) + ~2Na^+(aq) + ~2Cl^-(aq)"></span></div>
+  <div class="eqlab">Net ionic</div>
+  <div class="eqline"><span class="eq" data-ieq="Ba^2+(aq) + SO4^2-(aq) -> BaSO4(s)"></span></div>
+  <p>Na<sup>+</sup> and Cl<sup>−</sup> are the spectators. The net ionic equation says what really happened: barium ions and sulfate ions found each other and left as a solid.</p>
+  <p>For an acid and a dissolved hydroxide, the spectators are the metal ion and the acid's anion. What's left is the same every time:</p>
+  <div class="eqline"><span class="eq" data-ieq="H^+(aq) + OH^-(aq) -> H2O(l)"></span></div>
+  <p>From H<sub>2</sub>SO<sub>4</sub> + 2KOH you'd first get <span class="ion">2H<sup>+</sup> + 2OH<sup>−</sup> &#8594; 2H<sub>2</sub>O</span>. Every coefficient divides by 2.</p>
+  <div class="note"><b>No reaction, no net ionic equation.</b> When the answer is NR, every ion is a spectator. Cross them all out and nothing is left.</div>
+
+  <div class="card">
+    <div class="card-label"><span>Cross out the spectators</span><span class="score" id="s-score">0 of 0</span></div>
+    <p class="setup">Click every spectator ion to cross it out. A spectator shows up on both sides, so cross out both copies. Click again to undo.</p>
+    <div class="eqlab" style="margin-top:4px">Molecular</div>
+    <div class="eqline" id="s-mol"></div>
+    <div class="eqlab">Complete ionic</div>
+    <div class="ci" id="s-ci"></div>
+    <div class="btn-row">
+      <button type="button" id="s-check">Check</button>
+      <button type="button" class="ghost" id="s-show">Show answer</button>
+      <button type="button" class="ghost" id="s-new">New reaction</button>
+    </div>
+    <div class="fb" id="s-fb" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="sec-head"><span class="tasktag">Common mistakes</span><h2>Watch-outs</h2></div>
+  <div class="rulebox">
+    <div class="rulecard miss">
+      <h4>Carrying the old subscripts over</h4>
+      <div class="eqline strike"><span class="eq" data-eq="BaCl2(aq) + Na2SO4(aq) -> BaSO4(s) + Na2Cl2(aq)"></span></div>
+      <div class="eqline"><span class="eq" data-eq="BaCl2(aq) + Na2SO4(aq) -> BaSO4(s) + 2NaCl(aq)"></span></div>
+      <p>Na<sup>+</sup> and Cl<sup>−</sup> cancel one-to-one, so the formula is NaCl. If you need two of them, that's a coefficient in front.</p>
+    </div>
+    <div class="rulecard miss">
+      <h4>Breaking up a polyatomic ion</h4>
+      <p>Two NO<sub>3</sub><sup>−</sup> with one Ca<sup>2+</sup> is Ca(NO<sub>3</sub>)<sub>2</sub>. Writing CaNO<sub>32</sub> or CaN<sub>2</sub>O<sub>6</sub> loses the nitrate. Keep the ion whole and wrap it in parentheses.</p>
+    </div>
+    <div class="rulecard miss">
+      <h4>Treating P as dissolved</h4>
+      <div class="eqline"><span class="eq" data-eq="CaCl2(aq) + 2NaOH(aq) -> Ca(OH)2(s) + 2NaCl(aq)"></span></div>
+      <p>The Ca<sup>2+</sup> row, OH<sup>−</sup> column says P. Partially soluble still counts as a precipitate, so it's (s), not (aq).</p>
+    </div>
+    <div class="rulecard miss">
+      <h4>Writing products when everything is S</h4>
+      <div class="eqline strike"><span class="eq" data-eq="KNO3(aq) + NaCl(aq) -> KCl(aq) + NaNO3(aq)"></span></div>
+      <div class="eqline"><span class="eq" data-eq="KNO3(aq) + NaCl(aq) -> NR"></span></div>
+      <p>The formulas are right and it's balanced, but nothing left the solution. That's no reaction.</p>
+    </div>
+    <div class="rulecard miss">
+      <h4>Splitting the precipitate</h4>
+      <p>In a net ionic equation, only (aq) compounds get split into ions. A precipitate is a solid, so it stays as one formula: AgCl(s), never Ag<sup>+</sup> + Cl<sup>−</sup> on the product side. Water stays H<sub>2</sub>O(l) for the same reason.</p>
+    </div>
+    <div class="rulecard miss">
+      <h4>Changing a charge</h4>
+      <p>FeCl<sub>3</sub> means Fe<sup>3+</sup>, so with OH<sup>−</sup> it's Fe(OH)<sub>3</sub>, not Fe(OH)<sub>2</sub>. In double replacement every ion keeps the charge it came in with.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PREDICT ============ -->
+<section id="predict">
+  <div class="sec-head"><span class="tasktag">Practice · full</span><h2>Predict it</h2></div>
+  <p>Two solutions are mixed. Swap partners, look up both new compounds on your chart, and type the products with their states. If nothing leaves the solution, type <span class="mono">NR</span>. You don't need to balance this step.</p>
+  <p>When it reacts, a second step opens for the net ionic equation. That one does need to be balanced.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Generated reactions</span><span class="score" id="p-score">0 of 0</span></div>
+    <p class="setup">These two solutions are mixed:</p>
+    <div class="eqline" id="p-prob" style="font-size:clamp(17px,3.2vw,21px)"></div>
+    <div class="field" style="margin-top:16px">
+      <label for="p-in" style="min-width:auto;flex:1 1 100%">Products (or NR)</label>
+      <input type="text" class="wide" id="p-in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Type the products, or NR">
+    </div>
+    <p class="typing-tip">Separate products with <kbd>+</kbd>, type subscripts as plain numbers, and put a state right after each formula.</p>
+    <div class="preview" id="p-prev" aria-live="off"></div>
+    <div class="btn-row">
+      <button type="button" id="p-check">Check products</button>
+      <button type="button" class="ghost" id="p-show">Show answer</button>
+      <button type="button" class="ghost" id="p-new">New reaction</button>
+    </div>
+    <div class="fb" id="p-fb" aria-live="polite"></div>
+
+    <div class="step2" id="p-step2">
+      <div class="steplab">Step 2 · Net ionic equation</div>
+      <div class="field">
+        <label for="n-in" style="min-width:auto;flex:1 1 100%">Net ionic equation</label>
+        <input type="text" class="wide" id="n-in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Type the net ionic equation">
+      </div>
+      <p class="typing-tip">Put each charge right after its ion, like <kbd>Fe3+</kbd> or <kbd>SO4 2-</kbd> (a <kbd>^</kbd> works too). Use <kbd>-&gt;</kbd> for the arrow, leave out the spectators, and balance.</p>
+      <div class="preview" id="n-prev" aria-live="off"></div>
+      <div class="btn-row">
+        <button type="button" id="n-check">Check net ionic</button>
+        <button type="button" class="ghost" id="n-show">Show answer</button>
+      </div>
+      <div class="fb" id="n-fb" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Nine questions on swapping partners, reading your chart, water, and net ionic equations.</p>
+  <div class="card" id="quiz"></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">Next: Predicting Products</div>
+      <p>All five reaction types in one place. Read the reactants, decide the type, then write the products with states, or NR.</p>
+    </div>
+    <a href="/chemistry/reactions/predicting-products/">Go to page 6 &#8594;</a>
+  </div>
+</section>
+
+<footer>
+  <p>Double replacement: swapping partners, reading your Chem Ref solubility chart, water from acids and hydroxides, and net ionic equations. The practice reactions are generated fresh every time.</p>
+  <p><a href="/chemistry/reactions/activity-series/">&#8592; Page 4: The Activity Series</a> &nbsp;·&nbsp; <a href="/chemistry/reactions/">Unit 3 — Chemical Reactions</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   chemistry logic (no DOM) — also loaded by the verification script
+   ========================================================= */
+/*LOGIC-START*/
+function gcd(a,b){ a = Math.abs(a); b = Math.abs(b); while(b){ var t = b; b = a % b; a = t; } return a; }
+function rpick(a){ return a[Math.floor(Math.random()*a.length)]; }
+
+/* The class solubility chart, used only to check answers. It is never drawn on the page:
+   students read it from their own printed Chem Ref sheet. Column order: */
+var ANCOLS = ['C2H3O2','Br','CO3','ClO3','Cl','CrO4','F','OH','I','NO3','NO2','O','PO4','SO4','SO3','S'];
+var CHART_TXT = {
+  Al:'S S I S S I S I S S S I I S I D',
+  NH4:'S S S S S S S S S S S D/S S S S S',
+  Ba:'S S I S S I I S S S S D/S I I I S',
+  Cd:'S S I S S I S I S S S I I S I I',
+  Ca:'S S I S S I I P S S S D/P I P I S',
+  Cs:'S S S S S S S S S S S D/S S S S S',
+  Cr:'S S I S S I S I S S S I I S I D',
+  Co:'S S I S S I S I S S S I I S I I',
+  Cu1:'S I I S I I S I I S I I I S I I',
+  Cu:'S S I S S I S I S S S I I S I I',
+  H:'S S D S S S S HOH S S S HOH S S D S',
+  Fe2:'S S I S S I S I S S S I I S I I',
+  Fe3:'S S I S S I S I S S S I I S I I',
+  Pb:'S S I S S I S I S S S I I S I I',
+  Li:'S S S S S S S S S S S D/S S S S S',
+  Mg:'S S I S S S I I S S S I I S I S',
+  Mn:'S S I S S I S I S S S I I S I I',
+  Ni:'S S I S S I S I S S S I I S I I',
+  K:'S S S S S S S S S S S D/S S S S S',
+  Ag:'P I I S I I S I I S P I I P I I',
+  Na:'S S S S S S S S S S S D/S S S S S',
+  Sr:'S S I S S I I P S S S D/S I I I S',
+  Zn:'S S I S S I S I S S S I I S I I'
+};
+var CHART = {};
+(function(){
+  for(var c in CHART_TXT){
+    var v = CHART_TXT[c].split(' ');
+    CHART[c] = {};
+    for(var i=0;i<ANCOLS.length;i++) CHART[c][ANCOLS[i]] = v[i];
+  }
+})();
+
+function CI(s,z,name,vary){ return { s:s, z:z, name:name, vary:!!vary, poly: s === 'NH4' }; }
+var CAT = {
+  Na:CI('Na',1,'sodium'), K:CI('K',1,'potassium'), Li:CI('Li',1,'lithium'), NH4:CI('NH4',1,'ammonium'),
+  Mg:CI('Mg',2,'magnesium'), Ca:CI('Ca',2,'calcium'), Sr:CI('Sr',2,'strontium'), Ba:CI('Ba',2,'barium'),
+  Al:CI('Al',3,'aluminum'), Zn:CI('Zn',2,'zinc'), Ag:CI('Ag',1,'silver'), Pb:CI('Pb',2,'lead',true),
+  Cu:CI('Cu',2,'copper',true), Fe2:CI('Fe',2,'iron',true), Fe3:CI('Fe',3,'iron',true), Ni:CI('Ni',2,'nickel',true),
+  Co:CI('Co',2,'cobalt',true), Mn:CI('Mn',2,'manganese',true), H:CI('H',1,'hydrogen')
+};
+function AI(s,z,name){ return { s:s, z:z, name:name, poly:/[A-Z][^A-Z]*[A-Z]/.test(s) }; }
+var AN = {
+  NO3:AI('NO3',-1,'nitrate'), C2H3O2:AI('C2H3O2',-1,'acetate'), ClO3:AI('ClO3',-1,'chlorate'),
+  Cl:AI('Cl',-1,'chloride'), Br:AI('Br',-1,'bromide'), I:AI('I',-1,'iodide'), F:AI('F',-1,'fluoride'),
+  OH:AI('OH',-1,'hydroxide'), SO4:AI('SO4',-2,'sulfate'), CO3:AI('CO3',-2,'carbonate'),
+  PO4:AI('PO4',-3,'phosphate'), CrO4:AI('CrO4',-2,'chromate'), S:AI('S',-2,'sulfide')
+};
+var ROMAN = ['','I','II','III'];
+
+/* Pairs never used anywhere on this page (as a reactant or a product):
+   lead halides, lead sulfate and lead fluoride (the class chart and real data disagree), NH4OH,
+   redox pairs, compounds that don't really exist as written, and cells whose real behavior differs from the chart. */
+var EXCL = { 'Pb|Cl':1, 'Pb|Br':1, 'Pb|I':1, 'Pb|SO4':1, 'Pb|F':1, 'NH4|OH':1, 'Fe3|I':1, 'Cu|I':1, 'Fe3|S':1,
+  'Fe2|CrO4':1, 'Al|CO3':1, 'Fe3|CO3':1, 'Ag|OH':1, 'Mg|S':1, 'Ca|S':1, 'Sr|S':1, 'Ba|S':1, 'Ca|CrO4':1 };
+/* acids appear only as formulas, and only these: HCl HBr HI HNO3 H2SO4 */
+var ACID_AN = ['Cl','Br','I','NO3','SO4'];
+var BASE_CATS = ['Na','K','Li','Ba'];
+var G_CATS = ['Na','K','Li','NH4','Mg','Ca','Sr','Ba','Al','Zn','Ag','Pb','Cu','Fe2','Fe3','Ni','Co','Mn'];
+var G_ANS = ['NO3','C2H3O2','ClO3','Cl','Br','I','F','OH','SO4','CO3','PO4','CrO4','S'];
+/* weighted draws: the common lab ions come up more often */
+var W_CATS = G_CATS.concat(['Na','K','Ag','Ba','Ca','Cu','Pb','Fe3','Mg','Zn','NH4','Na','K']);
+var W_ANS = G_ANS.concat(['NO3','NO3','NO3','Cl','Cl','SO4','SO4','CO3','OH','OH','PO4','I','Br','C2H3O2']);
+
+function cell(c,a){ return CHART[c] ? CHART[c][a] : undefined; }
+function isWater(c,a){ return c === 'H' && a === 'OH'; }
+function okPair(c,a){
+  if(!CAT[c] || !AN[a] || EXCL[c + '|' + a]) return false;
+  if(c === 'H') return a === 'OH' || ACID_AN.indexOf(a) !== -1;
+  var v = cell(c,a);
+  return v === 'S' || v === 'I' || v === 'P';
+}
+function solPair(c,a){ return c !== 'H' && okPair(c,a) && cell(c,a) === 'S'; }
+function isPpt(c,a){ var v = cell(c,a); return c !== 'H' && (v === 'I' || v === 'P'); }
+function stateOf(c,a){ return isWater(c,a) ? 'l' : (isPpt(c,a) ? 's' : 'aq'); }
+function cellVal(c,a){ return isWater(c,a) ? 'HOH' : cell(c,a); }
+function counts(c,a){ var qc = CAT[c].z, qa = -AN[a].z, g = gcd(qc,qa); return { nc:qa/g, na:qc/g }; }
+function cmpF(c,a){
+  if(isWater(c,a)) return 'H2O';
+  var C = CAT[c], A = AN[a], k = counts(c,a);
+  var cp = k.nc > 1 ? (C.poly ? '(' + C.s + ')' + k.nc : C.s + k.nc) : C.s;
+  var ap = k.na > 1 ? (A.poly ? '(' + A.s + ')' + k.na : A.s + k.na) : A.s;
+  return cp + ap;
+}
+function cmpName(c,a){
+  if(c === 'H') return '';
+  var C = CAT[c];
+  return C.name + (C.vary ? '(' + ROMAN[C.z] + ')' : '') + ' ' + AN[a].name;
+}
+
+/* ---------- formulas ---------- */
+var ELSET = {};
+('H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr Rb Sr Y Zr Nb Mo ' +
+ 'Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re Os Ir Pt Au Hg Tl Pb ' +
+ 'Bi Po At Rn Fr Ra Ac Th Pa U').split(' ').forEach(function(s){ ELSET[s] = 1; });
+function atoms(f){
+  var i = 0, stack = [{}];
+  function num(){ var m = /^\d+/.exec(f.slice(i)); if(m){ i += m[0].length; return parseInt(m[0],10); } return 1; }
+  function add(o,k,n){ o[k] = (o[k] || 0) + n; }
+  if(!f) return { err:'empty' };
+  while(i < f.length){
+    var c = f.charAt(i);
+    if(c === '('){ stack.push({}); i++; }
+    else if(c === ')'){
+      if(stack.length < 2) return { err:'paren' };
+      i++;
+      var n = num(), top = stack.pop(), base = stack[stack.length-1];
+      for(var k in top) add(base, k, top[k]*n);
+    }
+    else if(/[A-Z]/.test(c)){
+      var sym = c; i++;
+      if(i < f.length && /[a-z]/.test(f.charAt(i))){ sym += f.charAt(i); i++; }
+      if(!ELSET[sym]) return { err:'unknown', sym:sym };
+      add(stack[stack.length-1], sym, num());
+    }
+    else if(/[a-z]/.test(c)) return { err:'case' };
+    else if(/\d/.test(c)) return { err:'digit' };
+    else return { err:'char', ch:c };
+  }
+  if(stack.length !== 1) return { err:'paren' };
+  if(!Object.keys(stack[0]).length) return { err:'empty' };
+  return { a:stack[0] };
+}
+function akey(a){ return Object.keys(a).sort().map(function(k){ return k + a[k]; }).join('.'); }
+function fkey(f){ var r = atoms(f); return r.a ? akey(r.a) : null; }
+function elkey(f){ var r = atoms(f); return r.a ? Object.keys(r.a).sort().join('.') : null; }
+
+/* smallest whole-number coefficients (brute force; one degree of freedom for every reaction here) */
+function balance(rf, pf){
+  var all = rf.concat(pf).map(function(f){ return atoms(f).a; });
+  var n = all.length, els = {}, c = [], best = null;
+  all.forEach(function(a){ for(var k in a) els[k] = 1; });
+  function ok(){
+    for(var e in els){
+      var s = 0;
+      for(var j=0;j<n;j++) s += (j < rf.length ? 1 : -1) * c[j] * (all[j][e] || 0);
+      if(s !== 0) return false;
+    }
+    return true;
+  }
+  function rec(j){
+    if(best) return;
+    if(j === n){ if(ok()) best = c.slice(); return; }
+    for(var v=1; v<=12 && !best; v++){ c[j] = v; rec(j+1); }
+  }
+  rec(0);
+  return best;
+}
+
+/* ---------- building a problem ---------- */
+function ionRec(kind, key){
+  var o = kind === 'c' ? CAT[key] : AN[key];
+  return { k:kind + ':' + key, key:key, cat: kind === 'c', s:o.s, z:o.z };
+}
+/* split one side of a molecular equation into the species of the complete ionic equation */
+function sideIons(terms){
+  var out = [];
+  terms.forEach(function(t){
+    if(t.st === 'aq'){
+      var k = counts(t.c, t.a);
+      var ci = ionRec('c', t.c), ai = ionRec('a', t.a);
+      ci.n = t.n * k.nc; ai.n = t.n * k.na;
+      ci.ion = ai.ion = true;
+      out.push(ci, ai);
+    } else {
+      out.push({ ion:false, k:'m:' + t.f, f:t.f, st:t.st, n:t.n });
+    }
+  });
+  return out;
+}
+function termStr(t){ return (t.n > 1 ? t.n : '') + t.f + '(' + t.st + ')'; }
+function makeProb(kind, c1, a1, c2, a2){
+  var P = { kind:kind,
+    r:[ { c:c1, a:a1, f:cmpF(c1,a1), st:'aq', n:1 }, { c:c2, a:a2, f:cmpF(c2,a2), st:'aq', n:1 } ],
+    p:[ { c:c1, a:a2, f:cmpF(c1,a2), st:stateOf(c1,a2), n:1 }, { c:c2, a:a1, f:cmpF(c2,a1), st:stateOf(c2,a1), n:1 } ] };
+  if(P.p[0].st === 'l') P.p.reverse();   /* write water last: K2SO4(aq) + 2H2O(l) */
+  var w = P.p.some(function(t){ return t.st === 'l'; }), s = P.p.some(function(t){ return t.st === 's'; });
+  P.outcome = w ? 'water' : (s ? 'ppt' : 'nr');
+  P.reacts = P.outcome !== 'nr';
+  P.id = P.r[0].f + '+' + P.r[1].f;
+  P.ions = [ionRec('c',c1), ionRec('a',a1), ionRec('c',c2), ionRec('a',a2)];
+  P.leave = P.p.filter(function(t){ return t.st !== 'aq'; })[0] || null;
+  P.reacStr = P.r.map(termStr).join(' + ');
+  if(!P.reacts){
+    P.molStr = P.reacStr + ' -> NR';
+    return P;
+  }
+  var co = balance([P.r[0].f, P.r[1].f], [P.p[0].f, P.p[1].f]);
+  P.r[0].n = co[0]; P.r[1].n = co[1]; P.p[0].n = co[2]; P.p[1].n = co[3];
+  P.molStr = P.r.map(termStr).join(' + ') + ' -> ' + P.p.map(termStr).join(' + ');
+  var L = sideIons(P.r), R = sideIons(P.p), Lk = {}, Rk = {};
+  L.forEach(function(x){ if(x.ion) Lk[x.k] = 1; });
+  R.forEach(function(x){ if(x.ion) Rk[x.k] = 1; });
+  L.forEach(function(x){ x.spect = !!(x.ion && Rk[x.k]); });
+  R.forEach(function(x){ x.spect = !!(x.ion && Lk[x.k]); });
+  P.ci = { L:L, R:R };
+  var nl = L.filter(function(x){ return !x.spect; }), nr = R.filter(function(x){ return !x.spect; });
+  var g = nl.concat(nr).reduce(function(acc,x){ return gcd(acc, x.n); }, 0) || 1;
+  function cp(x){ var y = {}; for(var k in x) y[k] = x[k]; y.n = x.n / g; return y; }
+  P.net = { L:nl.map(cp), R:nr.map(cp) };
+  P.spect = L.filter(function(x){ return x.spect; });
+  return P;
+}
+
+/* ---------- generators ---------- */
+function genSaltSalt(want){
+  for(var i=0;i<6000;i++){
+    var c1 = rpick(W_CATS), c2 = rpick(W_CATS), a1 = rpick(W_ANS), a2 = rpick(W_ANS);
+    if(c1 === c2 || a1 === a2 || CAT[c1].s === CAT[c2].s) continue;
+    if(!solPair(c1,a1) || !solPair(c2,a2)) continue;
+    if(!okPair(c1,a2) || !okPair(c2,a1)) continue;
+    var x = isPpt(c1,a2), y = isPpt(c2,a1);
+    if(x && y) continue;
+    if((x || y) !== (want === 'ppt')) continue;
+    return makeProb('salt', c1, a1, c2, a2);
+  }
+  return null;
+}
+function genAcidBase(){
+  for(var i=0;i<500;i++){
+    var a = rpick(ACID_AN), b = rpick(BASE_CATS);
+    if(!solPair(b,a) || !solPair(b,'OH')) continue;   /* rules out H2SO4 + Ba(OH)2 */
+    return Math.random() < 0.6 ? makeProb('acidbase', 'H', a, b, 'OH') : makeProb('acidbase', b, 'OH', 'H', a);
+  }
+  return null;
+}
+function genAcidSalt(want){
+  for(var i=0;i<6000;i++){
+    var a1 = rpick(ACID_AN), c2 = rpick(W_CATS), a2 = rpick(ACID_AN);
+    if(a1 === a2 || !solPair(c2,a2) || !okPair(c2,a1)) continue;
+    if(isPpt(c2,a1) !== (want === 'ppt')) continue;
+    return Math.random() < 0.5 ? makeProb('acidsalt', 'H', a1, c2, a2) : makeProb('acidsalt', c2, a2, 'H', a1);
+  }
+  return null;
+}
+/* outcome: 'ppt' | 'water' | 'nr' | undefined (mixed) */
+function genProblem(outcome){
+  if(!outcome){ var r = Math.random(); outcome = r < 0.5 ? 'ppt' : (r < 0.74 ? 'nr' : 'water'); }
+  var P = null;
+  for(var i=0;i<30 && !P;i++){
+    if(outcome === 'water') P = genAcidBase();
+    else P = Math.random() < 0.18 ? genAcidSalt(outcome) : genSaltSalt(outcome);
+  }
+  return P;
+}
+/* look-up drill */
+var LOOK = [];
+G_CATS.forEach(function(c){ G_ANS.forEach(function(a){ if(okPair(c,a)) LOOK.push({ c:c, a:a, v:cell(c,a) }); }); });
+ACID_AN.forEach(function(a){ LOOK.push({ c:'H', a:a, v:'S' }); });
+function genLook(){
+  var r = Math.random(), want = r < 0.4 ? 'S' : (r < 0.8 ? 'I' : 'P');
+  return rpick(LOOK.filter(function(x){ return x.v === want; }));
+}
+
+/* ---------- words ---------- */
+function fh(f){ return String(f).replace(/(\d+)/g,'<sub>$1</sub>'); }
+function sup(z){ var q = Math.abs(z); return '<sup>' + (q > 1 ? q : '') + (z > 0 ? '+' : '−') + '</sup>'; }
+function ionH(s,z){ return '<span class="ion">' + fh(s) + sup(z) + '</span>'; }
+function cIon(c){ return ionH(CAT[c].s, CAT[c].z); }
+function aIon(a){ return ionH(AN[a].s, AN[a].z); }
+function fm(f){ return '<span class="mono">' + fh(f) + '</span>'; }
+function fms(f,st){ return '<span class="mono">' + fh(f) + '(' + st + ')</span>'; }
+function cellRef(c,a){
+  return '<span class="cellref">Chem Ref chart: ' + cIon(c) + ' row, ' + aIon(a) + ' column → <b>' + cellVal(c,a) + '</b></span>';
+}
+function cellWhy(t){
+  var ref = cellRef(t.c, t.a), v = cellVal(t.c, t.a);
+  if(v === 'HOH') return ref + ' That’s water, a liquid: ' + fms('H2O','l') + '.';
+  if(v === 'S') return ref + ' Soluble, so it stays dissolved: ' + fms(t.f,'aq') + '.';
+  if(v === 'I') return ref + ' Insoluble, so it comes out as a precipitate: ' + fms(t.f,'s') + '.';
+  return ref + ' Partially soluble still counts as a precipitate: ' + fms(t.f,'s') + '.';
+}
+function swapLine(P){
+  var r0 = P.r[0], r1 = P.r[1];
+  return 'Split them into ions: ' + cIon(r0.c) + ' and ' + aIon(r0.a) + ', ' + cIon(r1.c) + ' and ' + aIon(r1.a) +
+    '. Swap partners: ' + cIon(r0.c) + ' with ' + aIon(r1.a) + ' gives ' + fm(cmpF(r0.c, r1.a)) + ', and ' +
+    cIon(r1.c) + ' with ' + aIon(r0.a) + ' gives ' + fm(cmpF(r1.c, r0.a)) + '.';
+}
+function reasonHtml(P){
+  var html = '<ul class="why"><li>' + fm(P.p[0].f) + ': ' + cellWhy(P.p[0]) + '</li><li>' + fm(P.p[1].f) + ': ' + cellWhy(P.p[1]) + '</li></ul>';
+  if(P.outcome === 'nr') return html + 'Both new compounds stay dissolved, so every ion is still floating in the water. Nothing happened: <b>NR</b>.';
+  if(P.outcome === 'water') return html + 'The H<sup>+</sup> and OH<sup>−</sup> leave the solution as water, so it reacts.';
+  return html + fm(P.leave.f) + ' leaves the solution as a solid, so it reacts.';
+}
+var NUMW = ['zero','one','two','three','four','five','six'];
+function chargeNote(c,a){
+  var C = CAT[c];
+  if(!C.vary) return '';
+  var k = counts(c,a), f = cmpF(c,a), tot = k.na * (-AN[a].z);
+  var lead = NUMW[k.na] + ' ' + aIon(a);
+  if(k.nc === 1) return ' In ' + fm(f) + ', ' + lead + (k.na === 1 ? ' is ' : ' add up to ') + tot + '−, so the ' + C.name + ' is ' + cIon(c) + '.';
+  return ' In ' + fm(f) + ', ' + lead + ' add up to ' + tot + '−, shared by ' + NUMW[k.nc] + ' ' + C.name + ' ions, so each one is ' + cIon(c) + '.';
+}
+function lookWhy(q){
+  var f = cmpF(q.c, q.a), v = q.v;
+  var m = v === 'S' ? 'Soluble: it stays dissolved, so it’s written ' + fms(f,'aq') + '.'
+    : v === 'I' ? 'Insoluble: it comes out as a precipitate, ' + fms(f,'s') + '.'
+    : 'Partially soluble: it still counts as a precipitate, ' + fms(f,'s') + '.';
+  return 'Split ' + fm(f) + ' into ' + cIon(q.c) + ' and ' + aIon(q.a) + '.' + chargeNote(q.c, q.a) + ' ' + cellRef(q.c, q.a) + ' ' + m;
+}
+function ionsHtml(list){
+  return list.map(function(x){
+    var co = x.n > 1 ? x.n : '';
+    return '<span class="t">' + co + (x.ion ? ionH(x.s, x.z) + '(aq)' : fh(x.f) + '(' + x.st + ')') + '</span>';
+  }).join(' + ');
+}
+function netHtml(P){ return '<span class="eq">' + ionsHtml(P.net.L) + ' <span class="arr">→</span> ' + ionsHtml(P.net.R) + '</span>'; }
+function spectNames(P){
+  var seen = {}, out = [];
+  P.spect.forEach(function(x){ if(!seen[x.k]){ seen[x.k] = 1; out.push(ionH(x.s, x.z)); } });
+  return out.length === 2 ? out[0] + ' and ' + out[1] : out.join(', ');
+}
+
+/* ---------- reading what a student typed ---------- */
+var SUPS = { '⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-' };
+function norm(raw){
+  var s = String(raw || '');
+  s = s.replace(/[₀-₉]/g, function(d){ return String(d.charCodeAt(0) - 0x2080); });
+  s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]/g, function(ch){ return SUPS[ch]; });
+  s = s.replace(/[→⟶⇒➔➝➞]/g, '->').replace(/[‐‑–—−]/g, '-');
+  s = s.replace(/\s+/g, '');
+  s = s.replace(/=+>?/g, '->');
+  s = s.replace(/\((aq|s|l|g)\)/gi, function(m, x){ return '(' + x.toLowerCase() + ')'; });
+  return s;
+}
+function isNR(s){ return /^(nr|noreaction|norxn)\.?$/i.test(String(s).replace(/[\s\-]/g,'')); }
+function chargeSpellings(z){
+  var q = Math.abs(z), sg = z > 0 ? '+' : '-', base;
+  base = q === 1 ? [sg, '1' + sg, sg + '1'] : [q + sg, sg + q];
+  var out = [];
+  base.forEach(function(b){ out.push(b, '^' + b, '(' + b + ')', '^(' + b + ')'); });
+  return out;
+}
+function ionDict(P){
+  var d = [], seen = {};
+  P.ions.forEach(function(io){
+    if(seen[io.k]) return; seen[io.k] = 1;
+    chargeSpellings(io.z).forEach(function(cs){
+      d.push({ txt:io.s + cs, f:io.s, z:io.z });
+      if(io.s.length > 1 && /[A-Z][^A-Z]*[A-Z]|\d/.test(io.s)) d.push({ txt:'(' + io.s + ')' + cs, f:io.s, z:io.z });
+    });
+  });
+  return d;
+}
+function cmpDict(P){
+  var d = [];
+  P.r.concat(P.p).forEach(function(t){ d.push({ txt:t.f, f:t.f, z:null }); });
+  d.push({ txt:'H2O', f:'H2O', z:null }, { txt:'HOH', f:'HOH', z:null });
+  return d;
+}
+/* Split one side into terms. Charges use + and - too, so this tries every reading
+   and keeps the one that best matches ions and compounds it knows about. */
+function readSide(str, dict){
+  var n = str.length, memo = {};
+  function best(i){
+    if(memo.hasOwnProperty(i)) return memo[i];
+    var res = null;
+    function offer(term, k, pen){
+      var nexts = [];
+      if(k === n) nexts.push([n, 0]);
+      else {
+        if(str.charAt(k) === '+' && k + 1 < n) nexts.push([k + 1, 0]);
+        if(/[+\-)]$/.test(term.raw) && term.z !== null && !term.st && /[0-9A-Z(]/.test(str.charAt(k))) nexts.push([k, 1]);
+      }
+      for(var x=0;x<nexts.length;x++){
+        var b = nexts[x][0] === n ? { pen:0, terms:[] } : best(nexts[x][0]);
+        if(!b) continue;
+        var tot = pen + nexts[x][1] + b.pen;
+        if(!res || tot < res.pen) res = { pen:tot, terms:[term].concat(b.terms) };
+      }
+    }
+    function withState(term, k, pen){
+      var sm = /^\((aq|s|l|g)\)/.exec(str.slice(k));
+      if(sm){
+        offer({ coef:term.coef, f:term.f, z:term.z, st:sm[1], raw:term.raw + sm[0], known:term.known }, k + sm[0].length, pen);
+      }
+      offer(term, k, pen);
+    }
+    var m = /^\d+/.exec(str.slice(i)), coef = 1, j = i;
+    if(m){ coef = parseInt(m[0],10); j = i + m[0].length; }
+    dict.forEach(function(d){
+      if(str.substr(j, d.txt.length) === d.txt)
+        withState({ coef:coef, f:d.f, z:d.z, st:null, raw:d.txt, known:true }, j + d.txt.length, 0);
+    });
+    for(var L = n - j; L >= 1; L--){
+      var fp = str.substr(j, L);
+      if(!/^[A-Z(]/.test(fp)) break;
+      if(atoms(fp).err) continue;
+      var k0 = j + L;
+      withState({ coef:coef, f:fp, z:null, st:null, raw:fp, known:false }, k0, 5);
+      var cm = /^\^?(?:\(?(\d)([+\-])\)?|\(?([+\-])(\d)?\)?)/.exec(str.slice(k0));
+      if(cm){
+        var mag = cm[1] ? +cm[1] : (cm[4] ? +cm[4] : 1), sgn = (cm[2] || cm[3]) === '+' ? 1 : -1;
+        var pen = 5 + (/\d$/.test(fp) && !cm[1] ? 0.5 : 0);
+        withState({ coef:coef, f:fp, z:sgn*mag, st:null, raw:fp + cm[0], known:false }, k0 + cm[0].length, pen);
+        if(cm[4] && !/\)$/.test(cm[0])){
+          var cut = cm[0].slice(0, -1);
+          withState({ coef:coef, f:fp, z:sgn, st:null, raw:fp + cut, known:false }, k0 + cut.length, pen);
+        }
+      }
+    }
+    memo[i] = res;
+    return res;
+  }
+  if(!str) return null;
+  return best(0);
+}
+function termHtml(t){
+  return '<span class="t">' + (t.coef > 1 ? t.coef : '') + fh(t.f) + (t.z !== null && t.z !== undefined ? sup(t.z) : '') + (t.st ? '(' + t.st + ')' : '') + '</span>';
+}
+function sideHtml(terms){ return terms.map(termHtml).join(' + '); }
+
+/* what is this term, compared with the problem? */
+function classify(t, P){
+  var key = fkey(t.f), i;
+  if(t.z !== null){
+    for(i=0;i<P.ions.length;i++){
+      if(fkey(P.ions[i].s) === key) return t.z === P.ions[i].z ? { type:'ion', io:P.ions[i] } : { type:'badcharge', io:P.ions[i] };
+    }
+    return { type:'strange' };
+  }
+  for(i=0;i<P.r.length;i++) if(fkey(P.r[i].f) === key) return { type:'reac', t:P.r[i] };
+  for(i=0;i<P.p.length;i++) if(fkey(P.p[i].f) === key) return { type:'prod', t:P.p[i], i:i };
+  for(i=0;i<P.ions.length;i++) if(fkey(P.ions[i].s) === key) return { type:'nocharge', io:P.ions[i] };
+  return { type:'strange' };
+}
+function diagnoseFormula(P, t){
+  var ek = elkey(t.f);
+  for(var i=0;i<P.p.length;i++){
+    var pp = P.p[i];
+    if(elkey(pp.f) !== ek) continue;
+    if(isWater(pp.c, pp.a)) return '<b>Check ' + fm(t.f) + '.</b> H<sup>+</sup> and OH<sup>−</sup> make water, ' + fm('H2O') + '.';
+    var k = counts(pp.c, pp.a), A = AN[pp.a], extra = '';
+    if(A.poly && k.na > 1 && t.f.indexOf('(') === -1) extra = ' Keep ' + fm(A.s) + ' whole, in parentheses, when there’s more than one.';
+    var src = P.r.filter(function(r){ return r.c === pp.c; })[0];
+    var chg = CAT[pp.c].vary && src ? ' The charge comes along from ' + fm(src.f) + ', where it’s ' + cIon(pp.c) + '.' : '';
+    return '<b>Check the formula ' + fm(t.f) + '.</b> ' + cIon(pp.c) + ' and ' + aIon(pp.a) + ' have to cancel out, which gives ' + fm(pp.f) + '.' + chg + extra;
+  }
+  return null;
+}
+
+/* step 1: products with states, or NR. returns {level:'full'|'part'|'bad'|'hint', html, echo} */
+function gradeProducts(P, raw){
+  var s = norm(raw);
+  if(!s) return { level:'hint', html:'Type the products, or <span class="mono">NR</span> if nothing happens.' };
+  if(s.indexOf('->') !== -1){
+    var parts = s.split('->');
+    if(parts.length > 2) return { level:'hint', html:'Use one arrow only. You can also just type the products.' };
+    s = parts[1];
+    if(!s) return { level:'hint', html:'There’s nothing after the arrow. Type the products, or <span class="mono">NR</span>.' };
+  }
+  if(isNR(s)){
+    var echoNR = '<span class="t nr">NR</span>';
+    if(!P.reacts) return { level:'full', echo:echoNR, html:'<b>Right: no reaction.</b> ' + reasonHtml(P) };
+    return { level:'bad', echo:echoNR, html:'<b>This one does react.</b> ' + swapLine(P) + reasonHtml(P) };
+  }
+  var rd = readSide(s, cmpDict(P));
+  if(!rd) return { level:'hint', html:'I couldn’t read that. Type each product as a formula with its state, like you’d write it on paper, and put <span class="mono">+</span> between them.' };
+  var terms = rd.terms, echo = sideHtml(terms);
+  if(terms.some(function(t){ return t.z !== null; }))
+    return { level:'hint', echo:echo, html:'<b>Write whole compounds here, not separate ions.</b> Swap partners and build each new formula from the charges.' + (P.reacts ? ' The ions come in step 2.' : '') };
+  if(terms.some(function(t){ return t.coef === 0; })) return { level:'hint', echo:echo, html:'A coefficient can’t be zero.' };
+  var found = [null, null], extra = [], dup = false;
+  terms.forEach(function(t){
+    var k = fkey(t.f), hit = -1;
+    P.p.forEach(function(pp,i){ if(fkey(pp.f) === k) hit = i; });
+    if(hit >= 0){ if(found[hit]) dup = true; else found[hit] = t; }
+    else extra.push(t);
+  });
+  var formulasRight = found[0] && found[1] && !extra.length;
+  if(!P.reacts){
+    return { level:'bad', echo:echo, html:'<b>' + (formulasRight ? 'Those are the right formulas for the swap, but look them both up.' : 'Swap partners and look up both new compounds.') + '</b> ' +
+      (formulasRight ? '' : swapLine(P)) + reasonHtml(P) + ' Type <span class="mono">NR</span>.' };
+  }
+  if(dup) return { level:'bad', echo:echo, html:'<b>List each product once.</b>' };
+  var stuck = extra.filter(function(t){ return P.r.some(function(r){ return fkey(r.f) === fkey(t.f); }); })[0];
+  if(stuck) return { level:'bad', echo:echo, html:'<b>' + fm(stuck.f) + ' is one of the reactants.</b> In double replacement the partners swap, so neither starting pair survives. ' + swapLine(P) };
+  for(var i=0;i<2;i++){
+    if(found[i]) continue;
+    for(var e=0;e<extra.length;e++){
+      var d = diagnoseFormula(P, extra[e]);
+      if(d) return { level:'bad', echo:echo, html:d };
+    }
+  }
+  if(!found[0] || !found[1]){
+    if(extra.length) return { level:'bad', echo:echo, html:'<b>' + fm(extra[0].f) + ' isn’t one of the products.</b> ' + swapLine(P) };
+    return { level:'bad', echo:echo, html:'<b>There are two products.</b> ' + swapLine(P) };
+  }
+  if(extra.length) return { level:'bad', echo:echo, html:'<b>' + fm(extra[0].f) + ' shouldn’t be a product.</b> Double replacement makes exactly two: ' + fm(P.p[0].f) + ' and ' + fm(P.p[1].f) + '.' };
+  var miss = [0,1].filter(function(i){ return !found[i].st; });
+  if(miss.length)
+    return { level:'part', echo:echo, html:'<b>The formulas are right. Now add a state to ' + (miss.length === 2 ? 'each product' : fm(P.p[miss[0]].f)) + '.</b> Look ' + (miss.length === 2 ? 'each one' : 'it') +
+      ' up on your Chem Ref chart: S means (aq), I or P means (s), and water is (l).' };
+  var wrong = [0,1].filter(function(i){ return found[i].st !== P.p[i].st; });
+  if(wrong.length)
+    return { level:'part', echo:echo, html:'<b>The formulas are right, but check the state' + (wrong.length > 1 ? 's' : '') + '.</b> ' +
+      wrong.map(function(i){ return cellWhy(P.p[i]); }).join(' ') };
+  return { level:'full', echo:echo, html:'<b>Right.</b> ' + reasonHtml(P) };
+}
+
+/* step 2: the net ionic equation */
+function gradeNet(P, raw){
+  var s = norm(raw);
+  if(!s) return { level:'hint', html:'Type the net ionic equation.' };
+  if(isNR(s)) return { level:'bad', html:'<b>This one reacts, so it has a net ionic equation.</b> Start from the ions that end up in ' + (P.outcome === 'water' ? 'the water' : fm(P.leave.f)) + '.' };
+  var parts = s.split('->');
+  if(parts.length < 2) return { level:'hint', html:'Put an arrow between the two sides. Type <span class="mono">-&gt;</span> or <span class="mono">=</span>.' };
+  if(parts.length > 2) return { level:'hint', html:'Use one arrow only.' };
+  if(!parts[0]) return { level:'hint', html:'There’s nothing before the arrow.' };
+  if(!parts[1]) return { level:'hint', html:'There’s nothing after the arrow.' };
+  var dict = ionDict(P).concat(cmpDict(P));
+  var L = readSide(parts[0], dict), R = readSide(parts[1], dict);
+  if(!L || !R) return { level:'hint', html:'I couldn’t read that. Write each ion with its charge right after it, like <span class="mono">Fe3+</span> or <span class="mono">SO4 2-</span>, and put <span class="mono">+</span> between terms.' };
+  var echo = sideHtml(L.terms) + ' <span class="arr">→</span> ' + sideHtml(R.terms);
+  var CL = L.terms.map(function(t){ return { t:t, k:classify(t,P) }; }), CR = R.terms.map(function(t){ return { t:t, k:classify(t,P) }; });
+  var all = CL.concat(CR);
+  function bad(h){ return { level:'bad', echo:echo, html:h }; }
+  function part(h){ return { level:'part', echo:echo, html:h }; }
+  if(all.some(function(x){ return x.t.coef === 0; })) return bad('A coefficient can’t be zero.');
+
+  var aq = all.filter(function(x){ return x.k.type === 'reac' || (x.k.type === 'prod' && x.k.t.st === 'aq'); })[0];
+  if(aq){
+    var tt = aq.k.t, k = counts(tt.c, tt.a);
+    if(aq.k.type === 'reac')
+      return bad('<b>' + fms(tt.f,'aq') + ' is dissolved, so in a net ionic equation it’s written as separate ions.</b> It splits into ' +
+        (k.nc > 1 ? k.nc : '') + cIon(tt.c) + ' and ' + (k.na > 1 ? k.na : '') + aIon(tt.a) + '. Then decide which ions are spectators.');
+    return bad('<b>' + fms(tt.f,'aq') + ' stays dissolved, so it isn’t a product in the net ionic equation.</b> Its ions, ' + cIon(tt.c) + ' and ' + aIon(tt.a) + ', are spectators.');
+  }
+  var nc = all.filter(function(x){ return x.k.type === 'nocharge'; })[0];
+  if(nc) return bad('<b>Every ion needs its charge.</b> Write ' + fm(nc.t.f) + ' as ' + ionH(nc.k.io.s, nc.k.io.z) + '. Type the charge right after it, like <span class="mono">' + nc.k.io.s + (Math.abs(nc.k.io.z) > 1 ? Math.abs(nc.k.io.z) : '') + (nc.k.io.z > 0 ? '+' : '-') + '</span>.');
+  var bc = all.filter(function(x){ return x.k.type === 'badcharge'; })[0];
+  if(bc){
+    var io = bc.k.io, why = io.cat ? (CAT[io.key].vary ? ' The charge comes from the formula you started with.' : '') : ' Check the ion list on your Chem Ref sheet.';
+    return bad('<b>Check the charge on ' + fh(io.s) + '.</b> In this reaction it’s ' + ionH(io.s, io.z) + ', not ' + ionH(io.s, bc.t.z) + '.' + why);
+  }
+  var st = all.filter(function(x){ return x.k.type === 'strange'; })[0];
+  if(st){
+    var d = st.t.z === null ? diagnoseFormula(P, st.t) : null;
+    if(d) return bad(d);
+    return bad('<b>I don’t expect ' + termHtml(st.t) + ' here.</b> The net ionic equation only uses ions from the reactants and what they form.');
+  }
+  var lp = CL.filter(function(x){ return x.k.type === 'prod'; })[0];
+  if(lp) return bad('<b>' + fm(lp.t.f) + ' is what forms, so it goes after the arrow.</b> The ions that make it go before the arrow.');
+  var ri = CR.filter(function(x){ return x.k.type === 'ion'; });
+  if(ri.length){
+    var rsp = ri.filter(function(x){ return isSpect(P, x.k.io); });
+    if(rsp.length){
+      var many = uniqCount(rsp) > 1;
+      return bad('<b>' + uniqIons(rsp) + (many ? ' are spectators' : ' is a spectator') + '.</b> ' + (many ? 'They’re' : 'It’s') + ' dissolved before and after, unchanged, so ' + (many ? 'they drop' : 'it drops') + ' out of both sides.');
+    }
+    return bad('<b>' + (P.outcome === 'water' ? 'Water is a molecule, so write it as ' + fms('H2O','l') + '.' : 'The precipitate is a solid, so write it as one formula: ' + fms(P.leave.f, 's') + '.') + '</b> Only dissolved (aq) compounds get split into ions.');
+  }
+  var lsp = CL.filter(function(x){ return x.k.type === 'ion' && isSpect(P, x.k.io); });
+  if(lsp.length) return bad('<b>' + uniqIons(lsp) + (uniqCount(lsp) > 1 ? ' are spectators' : ' is a spectator') + '.</b> ' + (uniqCount(lsp) > 1 ? 'They’re' : 'It’s') + ' dissolved before and after, unchanged, so ' + (uniqCount(lsp) > 1 ? 'they drop' : 'it drops') + ' out of the net ionic equation.');
+
+  /* the right species? */
+  var seen = {}, dupe = false;
+  CL.forEach(function(x){ if(seen[x.k.io.k]) dupe = true; seen[x.k.io.k] = x.t; });
+  CR.forEach(function(x){ var kk = 'm:' + fkey(x.t.f); if(seen[kk]) dupe = true; seen[kk] = x.t; });
+  if(dupe) return bad('<b>List each ion once.</b> Combine repeats into one coefficient.');
+  for(var i=0;i<P.net.L.length;i++){
+    var need = P.net.L[i];
+    if(!seen[need.k]) return bad('<b>' + ionH(need.s, need.z) + ' is missing.</b> It’s one of the ions that ' + (P.outcome === 'water' ? 'makes the water.' : 'ends up in ' + fms(P.leave.f,'s') + '.'));
+  }
+  var prod = P.net.R[0], pt = seen['m:' + fkey(prod.f)];
+  if(!pt) return bad('<b>What forms?</b> Put ' + fms(prod.f, prod.st) + ' after the arrow.');
+
+  /* coefficients: must be a whole-number multiple of the answer */
+  var given = P.net.L.map(function(x){ return seen[x.k].coef; }).concat([pt.coef]);
+  var want = P.net.L.map(function(x){ return x.n; }).concat([prod.n]);
+  var ratio = given[0] / want[0];
+  var prop = given.every(function(g,ix){ return g === ratio * want[ix]; });
+  if(!prop){
+    var how = P.outcome === 'water' ? 'H<sup>+</sup> and OH<sup>−</sup> combine one-to-one to make each H<sub>2</sub>O.'
+      : 'One ' + fm(prod.f) + ' uses ' + P.net.L.map(function(x){ return x.n + ' ' + ionH(x.s, x.z); }).join(' and ') + '. The charges on the left have to add to zero.';
+    return part('<b>The right species are there. Now balance it.</b> ' + how);
+  }
+  if(ratio > 1) return part('<b>Balanced, but not in lowest terms.</b> Every coefficient divides by ' + ratio + '.');
+  if(!pt.st) return part('<b>Balanced. Now add the state of ' + fm(prod.f) + '.</b> ' + (prod.st === 'l' ? 'Water is a liquid: (l).' : 'It’s the precipitate: (s).'));
+  if(pt.st !== prod.st) return part('<b>Check the state of ' + fm(prod.f) + '.</b> ' + (prod.st === 'l' ? 'Water is a liquid: ' + fms('H2O','l') + '.' : 'It’s the precipitate, a solid: ' + fms(prod.f,'s') + '.'));
+  var ionSt = CL.filter(function(x){ return x.t.st && x.t.st !== 'aq'; })[0];
+  if(ionSt) return part('<b>Check the state on ' + ionH(ionSt.k.io.s, ionSt.k.io.z) + '.</b> Dissolved ions are (aq).');
+  return { level:'full', echo:echo, html:'<b>Right.</b> ' + spectNames(P) + ' are the spectators, and what’s left is ' + (P.outcome === 'water' ? 'water forming.' : 'the precipitate forming.') };
+}
+function isSpect(P, io){ return P.spect.some(function(x){ return x.k === io.k; }); }
+function uniqIons(list){
+  var seen = {}, out = [];
+  list.forEach(function(x){ if(!seen[x.k.io.k]){ seen[x.k.io.k] = 1; out.push(ionH(x.k.io.s, x.k.io.z)); } });
+  return out.length > 1 ? out.slice(0,-1).join(', ') + ' and ' + out[out.length-1] : out[0];
+}
+function uniqCount(list){ var seen = {}; list.forEach(function(x){ seen[x.k.io.k] = 1; }); return Object.keys(seen).length; }
+function netPlain(P){
+  function side(list){ return list.map(function(x){ var co = x.n > 1 ? x.n : ''; return x.ion ? co + x.s + (Math.abs(x.z) > 1 ? Math.abs(x.z) : '') + (x.z > 0 ? '+' : '-') + '(aq)' : co + x.f + '(' + x.st + ')'; }).join(' + '); }
+  return side(P.net.L) + ' -> ' + side(P.net.R);
+}
+function prodPlain(P){ return P.reacts ? P.p.map(function(t){ return t.f + '(' + t.st + ')'; }).join(' + ') : 'NR'; }
+/*LOGIC-END*/
+
+/* =========================================================
+   helpers (DOM)
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function renderTerm(t){
+  var m = /^(\d*)(.*?)(\((?:s|l|g|aq)\))?$/i.exec(t.trim());
+  return '<span class="t">' + (m[1] || '') + fh(m[2]) + (m[3] ? m[3].toLowerCase() : '') + '</span>';
+}
+function renderEq(str){
+  var sides = str.split('->');
+  var Rt = sides[1].trim();
+  var R = /^nr$/i.test(Rt) ? '<span class="t nr">NR</span>' : Rt.split(' + ').map(renderTerm).join(' + ');
+  return sides[0].split(' + ').map(renderTerm).join(' + ') + ' <span class="arr">→</span> ' + R;
+}
+/* ionic strings for static examples: "2Na^+(aq)", "SO4^2-(aq)", "~" in front marks a crossed-out spectator */
+function renderITerm(t){
+  t = t.trim();
+  var sp = t.charAt(0) === '~'; if(sp) t = t.slice(1);
+  var m = /^(\d*)([A-Za-z0-9()]+?)(\^(\d*)([+\-]))?(\((?:s|l|g|aq)\))?$/.exec(t);
+  var ch = m[3] ? '<sup>' + m[4] + (m[5] === '+' ? '+' : '−') + '</sup>' : '';
+  return '<span class="t' + (sp ? ' sp' : '') + '">' + m[1] + fh(m[2]) + ch + (m[6] || '') + '</span>';
+}
+function renderIEq(str){
+  var sides = str.split(' -> ');
+  return sides[0].split(' + ').map(renderITerm).join(' + ') + ' <span class="arr">→</span> ' + sides[1].split(' + ').map(renderITerm).join(' + ');
+}
+function E(s){ return '<span class="eq">' + renderEq(s) + '</span>'; }
+function Ex(s){ return '<span class="eq x">' + renderEq(s) + '</span>'; }
+function IE(s){ return '<span class="eq">' + renderIEq(s) + '</span>'; }
+function eqBox(s){ return '<div class="eqline">' + E(s) + '</div>'; }
+function reacHtml(P){ return '<span class="eq">' + renderEq(P.reacStr + ' -> NR').replace(/<span class="t nr">NR<\/span>$/, '?') + '</span>'; }
+
+Array.prototype.forEach.call(document.querySelectorAll('.eq[data-eq]'), function(n){ n.innerHTML = renderEq(n.getAttribute('data-eq')); });
+Array.prototype.forEach.call(document.querySelectorAll('.eq[data-ieq]'), function(n){ n.innerHTML = renderIEq(n.getAttribute('data-ieq')); });
+
+/* =========================================================
+   widget 1: look it up
+   ========================================================= */
+var dState = null, dScore = Score(el('d-score')), dLast = '';
+var dBtns = { S:el('d-S'), I:el('d-I'), P:el('d-P') };
+function drillNew(){
+  var q;
+  do { q = genLook(); } while(q.c + q.a === dLast);
+  dLast = q.c + q.a;
+  dState = { q:q, done:false };
+  el('d-f').innerHTML = fh(cmpF(q.c, q.a));
+  var nm = cmpName(q.c, q.a);
+  el('d-name').textContent = nm ? nm : '';
+  for(var k in dBtns){ dBtns[k].className = 'short'; dBtns[k].disabled = false; }
+  hideFb(el('d-fb'));
+}
+function drillAnswer(v){
+  var s = dState; if(s.done) return;
+  s.done = true;
+  var q = s.q, ok = v === q.v;
+  dScore.add(ok);
+  for(var k in dBtns){ dBtns[k].disabled = true; }
+  dBtns[v].className = 'short ' + (ok ? 'picked-yes' : 'picked-no');
+  if(!ok) dBtns[q.v].className = 'short right-one';
+  setFb(el('d-fb'), ok ? 'good' : 'bad', '<b>' + (ok ? 'Right: ' + q.v + '.' : 'Not quite. It’s ' + q.v + '.') + '</b> ' + lookWhy(q));
+}
+['S','I','P'].forEach(function(v){ dBtns[v].addEventListener('click', function(){ drillAnswer(v); }); });
+el('d-new').addEventListener('click', drillNew);
+
+/* =========================================================
+   widget 2: decide
+   ========================================================= */
+var kState = null, kScore = Score(el('k-score')), kLast = '';
+var kBtns = { ppt:el('k-ppt'), water:el('k-water'), nr:el('k-nr') };
+function classNew(){
+  var P, r;
+  do { r = Math.random(); P = genProblem(r < 0.45 ? 'ppt' : (r < 0.7 ? 'water' : 'nr')); } while(P.id === kLast);
+  kLast = P.id;
+  kState = { P:P, done:false };
+  el('k-prob').innerHTML = reacHtml(P);
+  for(var k in kBtns){ kBtns[k].className = ''; kBtns[k].disabled = false; }
+  hideFb(el('k-fb'));
+}
+function classAnswer(v){
+  var s = kState; if(s.done) return;
+  s.done = true;
+  var P = s.P, ok = v === P.outcome;
+  kScore.add(ok);
+  for(var k in kBtns){ kBtns[k].disabled = true; }
+  kBtns[v].className = ok ? 'picked-yes' : 'picked-no';
+  var head = { ppt:'A precipitate forms.', water:'Water forms.', nr:'No reaction.' }[P.outcome];
+  setFb(el('k-fb'), ok ? 'good' : 'bad', '<b>' + (ok ? 'Right. ' : 'Not this one. ') + head + '</b> ' + swapLine(P) + reasonHtml(P) + eqBox(P.molStr));
+}
+['ppt','water','nr'].forEach(function(v){ kBtns[v].addEventListener('click', function(){ classAnswer(v); }); });
+el('k-new').addEventListener('click', classNew);
+
+/* =========================================================
+   widget 3: cross out the spectators
+   ========================================================= */
+var sState = null, sLast = '', sTally = { att:0, ok:0 };
+function sScoreShow(){ el('s-score').textContent = sTally.ok + ' of ' + sTally.att; }
+function specNew(){
+  var P;
+  do { P = genProblem(Math.random() < 0.7 ? 'ppt' : 'water'); } while(P.id === sLast);
+  sLast = P.id;
+  var items = P.ci.L.map(function(x){ return { x:x, side:'L' }; }).concat(P.ci.R.map(function(x){ return { x:x, side:'R' }; }));
+  sState = { P:P, items:items, tried:false, solved:false, revealed:false };
+  el('s-mol').innerHTML = E(P.molStr);
+  var h = '', first = true;
+  items.forEach(function(it, i){
+    if(it.side === 'R' && (i === 0 || items[i-1].side === 'L')){ h += ' <span class="arr">→</span> '; first = true; }
+    if(!first) h += '<span class="op">+</span>';
+    first = false;
+    var x = it.x, cls = x.ion ? (x.cat ? 'cat' : 'an') : 'mol';
+    var label = (x.n > 1 ? x.n : '') + (x.ion ? ionH(x.s, x.z) + '(aq)' : fh(x.f) + '(' + x.st + ')');
+    var aria = (x.n > 1 ? x.n + ' ' : '') + (x.ion ? x.s + ' ' + Math.abs(x.z) + (x.z > 0 ? ' plus' : ' minus') + ' ion' : x.f + ' ' + (x.st === 's' ? 'solid' : 'liquid')) + (it.side === 'L' ? ', before the arrow' : ', after the arrow');
+    h += '<button type="button" class="chipbtn ' + cls + '" data-i="' + i + '" aria-pressed="false" aria-label="' + aria + '">' + label + '</button>';
+  });
+  el('s-ci').innerHTML = h;
+  Array.prototype.forEach.call(el('s-ci').querySelectorAll('.chipbtn'), function(b){
+    b.addEventListener('click', function(){
+      if(sState.revealed || sState.solved) return;
+      var on = !b.classList.contains('struck');
+      b.classList.toggle('struck', on);
+      b.classList.remove('was-wrong');
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  });
+  hideFb(el('s-fb'));
+}
+function specCheck(){
+  var s = sState, P = s.P;
+  if(s.solved || s.revealed) return;
+  var btns = el('s-ci').querySelectorAll('.chipbtn');
+  var struck = {}, wrong = [], missedOne = [], missedBoth = [];
+  Array.prototype.forEach.call(btns, function(b){ if(b.classList.contains('struck')) struck[b.getAttribute('data-i')] = 1; });
+  if(!Object.keys(struck).length){ setFb(el('s-fb'), 'hint', 'Click the ions you think are spectators first, then check.'); return; }
+  if(!s.tried){ s.tried = true; sTally.att++; sScoreShow(); }
+  var byK = {};
+  s.items.forEach(function(it, i){
+    var x = it.x;
+    if(x.spect){ byK[x.k] = byK[x.k] || { x:x, hit:0 }; if(struck[i]) byK[x.k].hit++; }
+    else if(struck[i]){ wrong.push(x); btns[i].classList.add('was-wrong'); }
+  });
+  for(var k in byK){ if(byK[k].hit === 0) missedBoth.push(byK[k].x); else if(byK[k].hit === 1) missedOne.push(byK[k].x); }
+  if(!wrong.length && !missedOne.length && !missedBoth.length){
+    s.solved = true;
+    sTally.ok++; sScoreShow();
+    Array.prototype.forEach.call(btns, function(b){ b.disabled = true; });
+    setFb(el('s-fb'), 'good', '<b>Right.</b> ' + spectNames(P) + ' are on both sides, unchanged. What’s left is the net ionic equation:<div class="eqline">' + netHtml(P) + '</div>');
+    return;
+  }
+  var msg = [];
+  wrong.forEach(function(x){
+    if(x.ion) msg.push('<b>' + ionH(x.s, x.z) + ' isn’t a spectator.</b> It ends up in ' + (P.outcome === 'water' ? 'the water' : fms(P.leave.f,'s')) + ', so it shows up on only one side as an ion.');
+    else msg.push('<b>' + fms(x.f, x.st) + ' is what forms, so it stays.</b> It’s the reason this is a reaction.');
+  });
+  missedOne.forEach(function(x){ msg.push('You crossed out ' + ionH(x.s, x.z) + ' on one side only. A spectator gets crossed out on both sides.'); });
+  if(missedBoth.length) msg.push(missedBoth.length === 1 ? 'There’s still one spectator showing. Look for an ion that appears on both sides with the same coefficient.'
+    : 'There are still spectators showing. Look for ions that appear on both sides with the same coefficient.');
+  setFb(el('s-fb'), 'bad', msg.join(' '));
+}
+function specShow(){
+  var s = sState, P = s.P;
+  if(s.solved || s.revealed) return;
+  if(!s.tried){ s.tried = true; sTally.att++; sScoreShow(); }
+  s.revealed = true;
+  var btns = el('s-ci').querySelectorAll('.chipbtn');
+  s.items.forEach(function(it, i){
+    btns[i].classList.toggle('struck', !!it.x.spect);
+    btns[i].classList.remove('was-wrong');
+    btns[i].setAttribute('aria-pressed', it.x.spect ? 'true' : 'false');
+    btns[i].disabled = true;
+  });
+  setFb(el('s-fb'), 'hint', '<b>Answer.</b> ' + spectNames(P) + ' are the spectators. What’s left:<div class="eqline">' + netHtml(P) + '</div>');
+}
+el('s-check').addEventListener('click', specCheck);
+el('s-show').addEventListener('click', specShow);
+el('s-new').addEventListener('click', specNew);
+
+/* =========================================================
+   widget 4: predict it (products, then net ionic)
+   ========================================================= */
+var pState = null, pLast = '', pTally = { att:0, ok:0 };
+function pScoreShow(){ el('p-score').textContent = pTally.ok + ' of ' + pTally.att; }
+function predNew(){
+  var P;
+  do { P = genProblem(); } while(P.id === pLast);
+  pLast = P.id;
+  pState = { P:P, tried:false, clean:true, done1:false, done2:false, counted:false };
+  el('p-prob').innerHTML = reacHtml(P);
+  el('p-in').value = ''; el('n-in').value = '';
+  el('p-prev').innerHTML = ''; el('n-prev').innerHTML = '';
+  el('p-in').disabled = false; el('n-in').disabled = false;
+  hideFb(el('p-fb')); hideFb(el('n-fb'));
+  el('p-step2').className = 'step2';
+}
+function pFinish(){
+  var s = pState;
+  if(s.counted) return;
+  if(s.done1 && (!s.P.reacts || s.done2)){
+    s.counted = true;
+    if(s.clean) pTally.ok++;
+    pScoreShow();
+  }
+}
+function pOpenStep2(){
+  if(pState.P.reacts) el('p-step2').className = 'step2 on';
+}
+function pPreview(){
+  var v = el('p-in').value, P = pState.P;
+  if(!v.trim()){ el('p-prev').innerHTML = ''; return; }
+  var s = norm(v);
+  if(s.indexOf('->') !== -1) s = s.split('->')[1] || '';
+  if(isNR(s)){ el('p-prev').innerHTML = '<span class="pl">Reads as</span><span class="eq"><span class="t nr">NR</span></span>'; return; }
+  var rd = readSide(s, cmpDict(P));
+  el('p-prev').innerHTML = rd ? '<span class="pl">Reads as</span><span class="eq">' + sideHtml(rd.terms) + '</span>' : '';
+}
+function nPreview(){
+  var v = el('n-in').value, P = pState.P;
+  if(!v.trim()){ el('n-prev').innerHTML = ''; return; }
+  var parts = norm(v).split('->');
+  if(parts.length !== 2 || !parts[0] || !parts[1]){ el('n-prev').innerHTML = ''; return; }
+  var dict = ionDict(P).concat(cmpDict(P));
+  var L = readSide(parts[0], dict), R = readSide(parts[1], dict);
+  el('n-prev').innerHTML = (L && R) ? '<span class="pl">Reads as</span><span class="eq">' + sideHtml(L.terms) + ' <span class="arr">→</span> ' + sideHtml(R.terms) + '</span>' : '';
+}
+function pCheck(){
+  var s = pState, g = gradeProducts(s.P, el('p-in').value);
+  if(g.level === 'hint'){ setFb(el('p-fb'), 'hint', (g.echo ? '<div class="echo">You wrote: <span class="eq">' + g.echo + '</span></div>' : '') + g.html); return; }
+  if(!s.tried){ s.tried = true; pTally.att++; pScoreShow(); }
+  var cls = g.level === 'full' ? 'good' : (g.level === 'part' ? 'part' : 'bad');
+  var extra = '';
+  if(g.level === 'full' && !s.done1){
+    s.done1 = true;
+    if(s.P.reacts){ extra = '<p style="margin:10px 0 0">Now write the net ionic equation below.</p>'; pOpenStep2(); }
+    pFinish();
+  }
+  setFb(el('p-fb'), cls, '<div class="echo">You wrote: <span class="eq">' + g.echo + '</span></div>' + g.html + extra);
+}
+function pShow(){
+  var s = pState, P = s.P;
+  if(!s.tried){ s.tried = true; pTally.att++; pScoreShow(); }
+  if(!s.done1) s.clean = false;
+  s.done1 = true;
+  var ans = P.reacts ? '<div class="eqline"><span class="eq">' + P.p.map(function(t){ return renderTerm(t.f + '(' + t.st + ')'); }).join(' + ') + '</span></div>' : '<div class="eqline"><span class="eq"><span class="t nr">NR</span></span></div>';
+  setFb(el('p-fb'), 'hint', '<b>Answer.</b> ' + swapLine(P) + reasonHtml(P) + ans + (P.reacts ? '<p style="margin:10px 0 0">Now try the net ionic equation below.</p>' : ''));
+  pOpenStep2();
+  pFinish();
+}
+function nCheck(){
+  var s = pState, g = gradeNet(s.P, el('n-in').value);
+  if(g.level === 'hint'){ setFb(el('n-fb'), 'hint', g.html); return; }
+  var cls = g.level === 'full' ? 'good' : (g.level === 'part' ? 'part' : 'bad');
+  if(g.level === 'full' && !s.done2){ s.done2 = true; pFinish(); }
+  setFb(el('n-fb'), cls, (g.echo ? '<div class="echo">You wrote: <span class="eq">' + g.echo + '</span></div>' : '') + g.html);
+}
+function nShow(){
+  var s = pState, P = s.P;
+  if(!s.done2) s.clean = false;
+  s.done2 = true;
+  setFb(el('n-fb'), 'hint', '<b>Answer.</b> Split every (aq) compound into ions, cross out ' + spectNames(P) + ' (the spectators), and reduce:' +
+    '<div class="eqline">' + netHtml(P) + '</div>');
+  pFinish();
+}
+el('p-check').addEventListener('click', pCheck);
+el('p-show').addEventListener('click', pShow);
+el('p-new').addEventListener('click', predNew);
+el('p-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') pCheck(); });
+el('p-in').addEventListener('input', pPreview);
+el('n-check').addEventListener('click', nCheck);
+el('n-show').addEventListener('click', nShow);
+el('n-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') nCheck(); });
+el('n-in').addEventListener('input', nPreview);
+
+/* =========================================================
+   quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'BaCl<sub>2</sub>(aq) and Na<sub>2</sub>SO<sub>4</sub>(aq) are mixed. Which equation is right?',
+    opts:[Ex('BaCl2(aq) + Na2SO4(aq) -> BaSO4(aq) + 2NaCl(aq)'), E('BaCl2(aq) + Na2SO4(aq) -> BaSO4(s) + 2NaCl(aq)'), Ex('BaCl2(aq) + Na2SO4(aq) -> BaSO4(s) + Na2Cl2(aq)'), 'NR. Both reactants are soluble.'],
+    ans:1,
+    why:'Swap partners: Ba<sup>2+</sup> with SO<sub>4</sub><sup>2−</sup>, and Na<sup>+</sup> with Cl<sup>−</sup>. On your chart, the Ba<sup>2+</sup> row, SO<sub>4</sub><sup>2−</sup> column is I, so BaSO<sub>4</sub> is a precipitate, (s). NaCl is S, so it stays (aq). The reactants being soluble is just the normal starting point.' },
+  { stem:'Which pair of solutions gives <b>no reaction</b>?',
+    opts:['AgNO<sub>3</sub> + NaCl','KNO<sub>3</sub> + NaCl','BaCl<sub>2</sub> + K<sub>2</sub>SO<sub>4</sub>','Na<sub>2</sub>CO<sub>3</sub> + CaCl<sub>2</sub>'],
+    ans:1,
+    why:'KNO<sub>3</sub> + NaCl would swap to KCl and NaNO<sub>3</sub>, and both are S on your chart. Every ion stays dissolved. The other three each make a precipitate: AgCl, BaSO<sub>4</sub> and CaCO<sub>3</sub>.' },
+  { stem:'Your chart says P in the Ca<sup>2+</sup> row, SO<sub>4</sub><sup>2−</sup> column. If CaSO<sub>4</sub> forms in a reaction, how do you write it?',
+    opts:['CaSO<sub>4</sub>(aq), since part of it dissolves','CaSO<sub>4</sub>(s)','CaSO<sub>4</sub>(l)','You don’t. P means no reaction.'],
+    ans:1,
+    why:'P means partially soluble, and the chart’s key marks it as a precipitate, the same as I. Enough of it comes out of the solution that it counts as a solid.' },
+  { stem:'HCl(aq) and NaOH(aq) are mixed. What are the products?',
+    opts:['NaCl(aq) + H<sub>2</sub>O(l)','NaH + ClOH','NaCl(s) + H<sub>2</sub>O(l)','NR. NaCl is soluble.'],
+    ans:0,
+    why:'H<sup>+</sup> is just another cation. It ends up with OH<sup>−</sup>, and the H<sup>+</sup> row, OH<sup>−</sup> column says HOH: water, H<sub>2</sub>O(l). Na<sup>+</sup> and Cl<sup>−</sup> make NaCl, which is S, so it’s (aq). Water forming is enough to make it a reaction.' },
+  { stem:'What is the net ionic equation for AgNO<sub>3</sub>(aq) + NaCl(aq) → AgCl(s) + NaNO<sub>3</sub>(aq)?',
+    opts:[IE('Ag^+(aq) + Cl^-(aq) -> AgCl(s)'), IE('Na^+(aq) + NO3^-(aq) -> NaNO3(aq)'), IE('Ag^+(aq) + NO3^-(aq) + Na^+(aq) + Cl^-(aq) -> AgCl(s) + Na^+(aq) + NO3^-(aq)'), IE('Ag^+(aq) + Cl^-(aq) -> Ag^+(aq) + Cl^-(aq)')],
+    ans:0,
+    why:'Na<sup>+</sup> and NO<sub>3</sub><sup>−</sup> are on both sides, unchanged, so they’re spectators. Cross them out and Ag<sup>+</sup> + Cl<sup>−</sup> → AgCl(s) is left. The third option is the complete ionic equation, before the spectators come out.' },
+  { stem:'In Na<sub>2</sub>CO<sub>3</sub>(aq) + CaCl<sub>2</sub>(aq) → CaCO<sub>3</sub>(s) + 2NaCl(aq), which ions are spectators?',
+    opts:['Na<sup>+</sup> and Cl<sup>−</sup>','Ca<sup>2+</sup> and CO<sub>3</sub><sup>2−</sup>','All four ions','None of them'],
+    ans:0,
+    why:'Na<sup>+</sup> and Cl<sup>−</sup> start dissolved and end dissolved, as NaCl(aq). Ca<sup>2+</sup> and CO<sub>3</sub><sup>2−</sup> leave the solution together as the CaCO<sub>3</sub> precipitate, so they’re the ones that react.' },
+  { stem:'AgNO<sub>3</sub>(aq) is mixed with Na<sub>3</sub>PO<sub>4</sub>(aq). What is the formula of the precipitate?',
+    opts:['AgPO<sub>4</sub>','Ag<sub>3</sub>PO<sub>4</sub>','Ag(PO<sub>4</sub>)<sub>3</sub>','NaNO<sub>3</sub>'],
+    ans:1,
+    why:'Ag<sup>+</sup> is 1+ and PO<sub>4</sub><sup>3−</sup> is 3−, so it takes three Ag<sup>+</sup> to cancel one PO<sub>4</sub><sup>3−</sup>: Ag<sub>3</sub>PO<sub>4</sub>. The Ag<sup>+</sup> row, PO<sub>4</sub><sup>3−</sup> column is I. NaNO<sub>3</sub> is the other product, and it’s S.' },
+  { stem:'What is the net ionic equation for H<sub>2</sub>SO<sub>4</sub>(aq) + 2KOH(aq) → K<sub>2</sub>SO<sub>4</sub>(aq) + 2H<sub>2</sub>O(l)?',
+    opts:[IE('2H^+(aq) + 2OH^-(aq) -> 2H2O(l)'), IE('H^+(aq) + OH^-(aq) -> H2O(l)'), IE('2K^+(aq) + SO4^2-(aq) -> K2SO4(aq)'), IE('H2SO4(aq) + 2OH^-(aq) -> SO4^2-(aq) + 2H2O(l)')],
+    ans:1,
+    why:'K<sup>+</sup> and SO<sub>4</sub><sup>2−</sup> are the spectators. What’s left is 2H<sup>+</sup> + 2OH<sup>−</sup> → 2H<sub>2</sub>O, and every coefficient divides by 2. An acid plus a dissolved hydroxide gives this same net ionic equation every time.' },
+  { stem:'FeCl<sub>3</sub>(aq) is mixed with NaOH(aq). Which compound is the precipitate?',
+    opts:['Fe(OH)<sub>2</sub>','FeOH','Fe(OH)<sub>3</sub>','NaCl'],
+    ans:2,
+    why:'FeCl<sub>3</sub> has three Cl<sup>−</sup>, so the iron is Fe<sup>3+</sup>, and it stays Fe<sup>3+</sup>. Fe<sup>3+</sup> needs three OH<sup>−</sup>: Fe(OH)<sub>3</sub>. On your chart, the Fe<sup>3+</sup> row, OH<sup>−</sup> column is I.' }
+];
+
+(function buildQuiz(){
+  var host = el('quiz'), html = '';
+  QUIZ.forEach(function(q,qi){
+    html += '<div class="q"><p class="stem">' + (qi+1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o,oi){ html += '<button type="button" class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  host.innerHTML = html;
+  Array.prototype.forEach.call(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      Array.prototype.forEach.call(el('q'+qi).querySelectorAll('.opt'), function(other,i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      setFb(el('qfb'+qi), oi === q.ans ? 'good' : 'bad',
+        '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+    });
+  });
+})();
+
+/* boot */
+drillNew();
+classNew();
+specNew();
+predNew();
+</script>
+</body>
+</html>
