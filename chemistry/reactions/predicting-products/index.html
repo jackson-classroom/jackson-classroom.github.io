@@ -305,6 +305,7 @@ input[type=text],input[type=number]{border-color:#93A5A2;box-shadow:inset 0 1px 
   </table></div>
 
   <p class="smallprint">(aq) means "dissolved in water." Only an ionic compound or an acid that's in solution gets it. A free metal is never (aq).</p>
+  <p class="smallprint">The state of a free element comes from the periodic table, so in the practice below a slip on an element's state still counts. The feedback tells you the usual state.</p>
 </section>
 
 <!-- ============ WATCH-OUTS ============ -->
@@ -545,6 +546,8 @@ function ionic(cat, an){
   return ionPart(cat, qa/g) + ionPart(an, qc/g);
 }
 function freeEl(sym){ return DIATOMIC.indexOf(sym) >= 0 ? sym + '2' : sym; }
+/* a free element: Cu, Hg, H2, Br2... (one symbol, maybe a 2) */
+function isFreeEl(f){ return /^[A-Z][a-z]?2?$/.test(f); }
 /* room-temperature state of a free element */
 function elemState(f){
   if(f === 'H2' || f === 'N2' || f === 'O2' || f === 'F2' || f === 'Cl2') return 'g';
@@ -1013,11 +1016,14 @@ function checkProducts(p, raw){
     return { kind:'bad', msgs:msgs, echo:echo, generic:generic };
   }
   /* formulas all right: now the states */
-  var missing = [], wrong = [];
+  var missing = [], wrong = [], slips = [];
   mf.pairs.forEach(function(pr){
     var t = pr.t, i = pr.i;
     if(!t.st) missing.push(i);
-    else if(t.st !== p.pst[i] && p.alt[i].indexOf(t.st) < 0) wrong.push({ i:i, got:t.st });
+    else if(t.st !== p.pst[i] && p.alt[i].indexOf(t.st) < 0){
+      /* a free element's state is a periodic-table lookup, so a slip there still counts; the feedback adds a note */
+      if(isFreeEl(p.prod[i])) slips.push(i); else wrong.push({ i:i, got:t.st });
+    }
   });
   if(missing.length)
     return { kind:'part', echo:echo, msgs:[ '<b>The formulas are right. Now add a state after each one.</b> Missing on ' +
@@ -1026,7 +1032,7 @@ function checkProducts(p, raw){
     return { kind:'part', echo:echo, msgs:[ '<b>The formulas are right. Check the state' + (wrong.length > 1 ? 's' : '') + '.</b>' ]
       .concat(wrong.map(function(w){ return stateWhy(p, w.i, w.got); })) };
   var hoh = r.terms.some(function(t){ return /^H\(?OH\)?$/.test(t.f); });
-  return { kind:'good', echo:echo, hoh:hoh };
+  return { kind:'good', echo:echo, hoh:hoh, slips:slips.map(function(i){ return elemWhy(p.prod[i], mSt(p.prod[i], p.pst[i])); }) };
 }
 /* the answer as plain text, for testing: list of "formula(state)" or "NR" */
 function answerText(p){ return p.nr ? 'NR' : p.prod.map(function(f,i){ return f + '(' + p.pst[i] + ')'; }).join(' + '); }
@@ -1101,7 +1107,8 @@ function prodCheck(){
     if(p.nr) head = '<b>Right: no reaction.</b> ' + p.why;
     else head = '<b>Correct.</b> ' + TYPES[p.type].label + ' gives ' + fmtSts(p.prod, p.pst) + '.' +
       (r.hoh ? ' (HOH is water; it is usually written H<sub>2</sub>O.)' : '');
-    setFb(fb, 'good', '<p>' + head + '</p>' + echo);
+    var slipNote = (r.slips && r.slips.length) ? '<p>That counts. One note on states: ' + r.slips.join(' ') + '</p>' : '';
+    setFb(fb, 'good', '<p>' + head + '</p>' + slipNote + echo);
     showWorked();
     return;
   }

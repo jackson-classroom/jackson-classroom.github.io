@@ -220,6 +220,32 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
   .fb.show{animation:pop .18s ease-out}
   @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
 }
+/* particle diagrams */
+.pd{display:flex;align-items:center;justify-content:center;gap:8px 12px;flex-wrap:wrap;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:14px 10px 10px;margin:14px 0}
+.pd figure{margin:0;text-align:center}
+.pd svg{display:block;width:100%;height:auto}
+.pd figcaption{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:2px;line-height:1.45}
+.pd .pd-before{display:flex;gap:6px}
+.pd .pd-b{width:170px}
+.pd .pd-after{width:262px}
+.pd .pd-arrow{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--mute);text-align:center;line-height:1.2;text-transform:uppercase}
+.pd .pd-arrow b{display:block;font-size:22px;font-weight:400;color:var(--ink)}
+.pd-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--ink2);margin:4px 0 0;justify-content:center;width:100%}
+.pd-legend > span{display:inline-flex;align-items:center;gap:6px}
+.pd-legend i{display:inline-block;width:14px;height:14px;border-radius:50%;border:1.5px solid}
+.pd-legend i.ring{background:#fff;border:1.6px dashed #A93A2A}
+.pdchips{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 0}
+.pdchips .chipbtn{padding:4px 12px}
+.pdchips .chipbtn[aria-pressed=true]{background:var(--ink);color:#F6F8F7;border-color:var(--ink)}
+.pdchips .chipbtn.right-one{box-shadow:inset 0 0 0 2px var(--ok)}
+input.coef{width:46px;padding:5px 4px;margin:0 3px 0 0;text-align:center;font-size:18px;vertical-align:middle}
+.coefrow{line-height:2.6}
+@media (max-width:600px){
+  .pd .pd-b{width:140px}
+  .pd .pd-after{width:240px}
+  .pd .pd-arrow b{transform:rotate(90deg)}
+  .pd .pd-arrow{width:100%}
+}
 /* Input boxes: clearly fillable. Placeholder text is a short instruction, never a sample answer. */
 input[type=text],input[type=number]{border-color:#93A5A2;box-shadow:inset 0 1px 3px rgba(19,30,29,.12)}
 ::placeholder{font-family:var(--body);font-style:italic;font-size:15px;color:#7F8D8B;opacity:1}
@@ -282,6 +308,7 @@ input[type=text],input[type=number]{border-color:#93A5A2;box-shadow:inset 0 1px 
   <a href="#chart">Your chart</a>
   <a href="#react">Will it react?</a>
   <a href="#water">Acids + hydroxides</a>
+  <a href="#particles">Particle view</a>
   <a href="#netionic">Net ionic</a>
   <a href="#watch">Watch-outs</a>
   <a href="#predict">Predict it</a>
@@ -394,6 +421,33 @@ input[type=text],input[type=number]{border-color:#93A5A2;box-shadow:inset 0 1px 
   <div class="eqline"><span class="eq" data-eq="HNO3(aq) + KCl(aq) -> NR"></span></div>
 </section>
 
+<!-- ============ PARTICLES ============ -->
+<section id="particles">
+  <div class="sec-head"><span class="tasktag">Picture it</span><h2>Particle diagrams</h2></div>
+  <p>A particle diagram zooms in on the beaker so you can see what an equation means. Each circle is one ion. The water the ions are dissolved in isn't drawn.</p>
+  <ul>
+    <li><b>Dissolved, (aq):</b> the ions are spread out on their own. A beaker of NaCl(aq) holds Na<sup>+</sup> ions and Cl<sup>−</sup> ions floating separately, never NaCl pairs.</li>
+    <li><b>Precipitate, (s):</b> the ions that found each other are packed together in a solid clump that settles to the bottom.</li>
+    <li><b>Water, (l):</b> each H<sup>+</sup> has joined an OH<sup>−</sup> to make one H<sub>2</sub>O molecule.</li>
+    <li><b>Spectators:</b> ions that are floating on their own before mixing and are still floating on their own after. They're in the beaker the whole time but never change, which is why the net ionic equation leaves them out.</li>
+  </ul>
+
+  <div class="card">
+    <div class="card-label"><span>Before and after mixing</span><span class="score" id="pd-score">0 of 0</span></div>
+    <div class="eqlab" style="margin-top:4px">Molecular</div>
+    <div class="eqline" id="pd-mol"></div>
+    <div class="pd" id="pd-fig"></div>
+    <p class="setup" style="margin:4px 0 8px">Which ions are spectators? Select every one, then check.</p>
+    <div class="pdchips" id="pd-chips"></div>
+    <div class="btn-row">
+      <button type="button" id="pd-check">Check</button>
+      <button type="button" class="ghost" id="pd-show">Show answer</button>
+      <button type="button" class="ghost" id="pd-new">New reaction</button>
+    </div>
+    <div class="fb" id="pd-fb" aria-live="polite"></div>
+  </div>
+</section>
+
 <!-- ============ NET IONIC ============ -->
 <section id="netionic">
   <div class="sec-head"><span class="tasktag">Ions only</span><h2>Net ionic equations</h2></div>
@@ -472,8 +526,12 @@ input[type=text],input[type=number]{border-color:#93A5A2;box-shadow:inset 0 1px 
 <!-- ============ PREDICT ============ -->
 <section id="predict">
   <div class="sec-head"><span class="tasktag">Practice · full</span><h2>Predict it</h2></div>
-  <p>Two solutions are mixed. Swap partners, look up both new compounds on your chart, and type the products with their states. If nothing leaves the solution, type <span class="mono">NR</span>. You don't need to balance this step.</p>
-  <p>When it reacts, a second step opens for the net ionic equation. That one does need to be balanced.</p>
+  <p>Two solutions are mixed. This is the whole path: build the complete equation, then reduce it to the net ionic equation.</p>
+  <ol>
+    <li><b>Products.</b> Swap partners, look up both new compounds on your chart, and type the products with their states. If nothing leaves the solution, type <span class="mono">NR</span> and you're done.</li>
+    <li><b>Balance</b> the complete equation.</li>
+    <li><b>Net ionic.</b> The complete ionic equation appears as a bridge. Leave out the spectators and write what's left, balanced.</li>
+  </ol>
 
   <div class="card">
     <div class="card-label"><span>Generated reactions</span><span class="score" id="p-score">0 of 0</span></div>
@@ -492,8 +550,22 @@ input[type=text],input[type=number]{border-color:#93A5A2;box-shadow:inset 0 1px 
     </div>
     <div class="fb" id="p-fb" aria-live="polite"></div>
 
+    <div class="step2" id="p-stepB">
+      <div class="steplab">Step 2 · Balance the complete equation</div>
+      <div class="eqline coefrow" id="b-row"></div>
+      <p class="typing-tip">Type a coefficient in each box. Leave a box empty for 1.</p>
+      <div class="btn-row">
+        <button type="button" id="b-check">Check balance</button>
+        <button type="button" class="ghost" id="b-show">Show answer</button>
+      </div>
+      <div class="fb" id="b-fb" aria-live="polite"></div>
+    </div>
+
     <div class="step2" id="p-step2">
-      <div class="steplab">Step 2 · Net ionic equation</div>
+      <div class="steplab">Step 3 · Net ionic equation</div>
+      <div class="eqlab" style="margin-top:8px">Bridge · complete ionic</div>
+      <div class="eqline" id="n-bridge"></div>
+      <p class="setup" style="margin:0 0 6px">Find the ions that show up on both sides unchanged. Those are the spectators. Leave them out and write what's left.</p>
       <div class="field">
         <label for="n-in" style="min-width:auto;flex:1 1 100%">Net ionic equation</label>
         <input type="text" class="wide" id="n-in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Type the net ionic equation">
@@ -506,6 +578,8 @@ input[type=text],input[type=number]{border-color:#93A5A2;box-shadow:inset 0 1px 
       </div>
       <div class="fb" id="n-fb" aria-live="polite"></div>
     </div>
+
+    <div class="step2" id="p-part"></div>
   </div>
 </section>
 
@@ -1323,7 +1397,252 @@ el('s-show').addEventListener('click', specShow);
 el('s-new').addEventListener('click', specNew);
 
 /* =========================================================
-   widget 4: predict it (products, then net ionic)
+   particle diagrams (shared by the particle widget and Predict it)
+   ========================================================= */
+var SUBD = '₀₁₂₃₄₅₆₇₈₉', SUPD = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+var PD_FILL = { c0:'#BFDEE2', c1:'#D2EAD8', a0:'#F5E9CF', a1:'#F4D9C6' };
+var PD_LINE = { c0:'#0B4E58', c1:'#2F6B45', a0:'#9A6E22', a1:'#9A5A2E' };
+var PD_SLOTS = ['c0','a0','c1','a1'];
+var BW = 170, BH = 186, AW = 250, AH = 214;
+function uniIon(s, z){
+  var q = Math.abs(z);
+  return s.replace(/\d/g, function(d){ return SUBD.charAt(+d); }) +
+    (q > 1 ? String(q).replace(/\d/g, function(d){ return SUPD.charAt(+d); }) : '') + (z > 0 ? '⁺' : '⁻');
+}
+function plainIon(s, z){ var q = Math.abs(z); return s + (q > 1 ? q : '') + (z > 0 ? '+' : '-'); }
+function f1(v){ return Math.round(v * 10) / 10; }
+function pdSpectKeys(P){
+  var SK = {};
+  (P.reacts ? P.spect : P.ions).forEach(function(x){ SK[x.k] = 1; });
+  return SK;
+}
+function pdParts(P){
+  var slot = {}, SK = pdSpectKeys(P), r = P.r;
+  P.ions.forEach(function(io, i){ slot[io.k] = PD_SLOTS[i]; });
+  function pdIon(io){
+    var poly = io.s.length > 2 || /\d/.test(io.s);
+    return { kind:'ion', k:io.k, slot:slot[io.k], cat:io.cat, spect:!!SK[io.k], r: poly ? 16 : 13,
+      label:uniIon(io.s, io.z), plain:plainIon(io.s, io.z) };
+  }
+  function unit(t){
+    var k = counts(t.c, t.a), out = [], c = ionRec('c', t.c), a = ionRec('a', t.a), i;
+    for(i = 0; i < k.nc; i++) out.push(pdIon(c));
+    for(i = 0; i < k.na; i++) out.push(pdIon(a));
+    return out;
+  }
+  var k1 = counts(r[0].c, r[0].a), k2 = counts(r[1].c, r[1].a);
+  var base = r[0].n * (k1.nc + k1.na) + r[1].n * (k2.nc + k2.na);
+  var m = base >= 10 ? 1 : (base * 2 >= 10 ? 2 : 3);
+  var A = [], B = [], F = [], S = [], W = 0, i;
+  for(i = 0; i < r[0].n * m; i++) A = A.concat(unit(r[0]));
+  for(i = 0; i < r[1].n * m; i++) B = B.concat(unit(r[1]));
+  if(!P.reacts){
+    for(i = 0; i < m; i++) F = F.concat(unit(r[0]), unit(r[1]));
+  } else {
+    P.p.forEach(function(t){
+      var u = t.n * m, j;
+      if(t.st === 'aq') for(j = 0; j < u; j++) F = F.concat(unit(t));
+      else if(t.st === 's') for(j = 0; j < u; j++) S.push(unit(t));
+      else W += u;
+    });
+  }
+  return { A:A, B:B, F:F, S:S, W:W, m:m };
+}
+/* spread particles out without overlaps (best effort when crowded) */
+function pdScatter(list, box){
+  var placed = [];
+  list.forEach(function(p){
+    var best = null, bestD = -Infinity;
+    for(var t = 0; t < 700; t++){
+      var x = box.x0 + p.r + Math.random() * Math.max(1, box.x1 - box.x0 - 2 * p.r);
+      var y = box.y0 + p.r + Math.random() * Math.max(1, box.y1 - box.y0 - 2 * p.r);
+      var dmin = Infinity;
+      placed.forEach(function(q){ var d = Math.sqrt((x-q.x)*(x-q.x) + (y-q.y)*(y-q.y)) - p.r - q.r; if(d < dmin) dmin = d; });
+      if(dmin >= 5){ best = { x:x, y:y }; break; }
+      if(dmin > bestD){ bestD = dmin; best = { x:x, y:y }; }
+    }
+    p.x = best.x; p.y = best.y; placed.push(p);
+  });
+}
+function pdBox(W, H){ return { x0:20, x1:W - 20, y0:38, y1:H - 10 }; }
+function pdLayout(P){
+  if(P._pd) return P._pd;
+  var parts = pdParts(P);
+  pdScatter(parts.A, pdBox(BW, BH));
+  pdScatter(parts.B, pdBox(BW, BH));
+  var box = pdBox(AW, AH), solid = [];
+  if(parts.S.length){
+    var cats = [], ans = [];
+    parts.S.forEach(function(u){ u.forEach(function(p){ (p.cat ? cats : ans).push(p); }); });
+    var N = cats.length + ans.length, ci = 0, ai = 0;
+    while(solid.length < N){
+      if(ai >= ans.length || (ci < cats.length && ci / cats.length <= ai / ans.length)) solid.push(cats[ci++]);
+      else solid.push(ans[ai++]);
+    }
+    var rmax = Math.max.apply(null, solid.map(function(p){ return p.r; })), d = rmax * 2 * 0.93;
+    var cols = Math.max(2, Math.ceil(Math.sqrt(N * 1.9))), cx = (box.x0 + box.x1) / 2, bottom = box.y1 - 1;
+    solid.forEach(function(p, i){
+      var row = Math.floor(i / cols), col = i % cols, inRow = Math.min(cols, N - row * cols);
+      p.x = cx + (col - (inRow - 1) / 2) * d;
+      p.y = bottom - rmax - row * d * 0.87;
+    });
+    var rows = Math.ceil(N / cols);
+    box = { x0:box.x0, x1:box.x1, y0:box.y0, y1:bottom - 2 * rmax - (rows - 1) * d * 0.87 - 6 };
+  }
+  var floaters = parts.F.slice();
+  for(var w = 0; w < parts.W; w++) floaters.push({ kind:'w', r:12.5 });
+  floaters.sort(function(){ return Math.random() - 0.5; });
+  pdScatter(floaters, box);
+  parts.after = floaters.concat(solid);
+  parts.solid = solid;
+  P._pd = parts;
+  return parts;
+}
+function pdWater(x, y){
+  return '<circle cx="' + f1(x - 7.4) + '" cy="' + f1(y + 5.4) + '" r="4.6" fill="#fff" stroke="#5F6D6B" stroke-width="1.2"/>' +
+    '<circle cx="' + f1(x + 7.4) + '" cy="' + f1(y + 5.4) + '" r="4.6" fill="#fff" stroke="#5F6D6B" stroke-width="1.2"/>' +
+    '<circle cx="' + f1(x) + '" cy="' + f1(y - 1.5) + '" r="8" fill="#D9E2E6" stroke="#5F6D6B" stroke-width="1.2"/>';
+}
+function pdDraw(list, spect){
+  return list.map(function(p){
+    if(p.kind === 'w') return pdWater(p.x, p.y);
+    var L = p.label.length, fs = L <= 2 ? 11.5 : (L <= 3 ? 10.5 : (L <= 5 ? 9.2 : 7.4));
+    var g = '<circle cx="' + f1(p.x) + '" cy="' + f1(p.y) + '" r="' + p.r + '" fill="' + PD_FILL[p.slot] + '" stroke="' + PD_LINE[p.slot] + '" stroke-width="1.3"/>' +
+      '<text x="' + f1(p.x) + '" y="' + f1(p.y + fs * 0.36) + '" text-anchor="middle" font-size="' + fs + '" font-family="IBM Plex Mono, ui-monospace, Menlo, monospace" fill="#131E1D">' + p.label + '</text>';
+    if(spect && p.spect) g += '<circle cx="' + f1(p.x) + '" cy="' + f1(p.y) + '" r="' + f1(p.r + 3.6) + '" fill="none" stroke="#A93A2A" stroke-width="1.4" stroke-dasharray="3 2.4"/>';
+    return g;
+  }).join('');
+}
+function pdBeaker(W, H, list, spect, aria){
+  var x0 = 14, x1 = W - 14, rim = 12, bot = H - 4, liq = 32;
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + aria + '">' +
+    '<path d="M' + (x0 + 1) + ' ' + liq + 'H' + (x1 - 1) + 'V' + (bot - 12) + 'Q' + (x1 - 1) + ' ' + (bot - 1) + ' ' + (x1 - 12) + ' ' + (bot - 1) +
+      'H' + (x0 + 12) + 'Q' + (x0 + 1) + ' ' + (bot - 1) + ' ' + (x0 + 1) + ' ' + (bot - 12) + 'Z" fill="#E6F1F3"/>' +
+    pdDraw(list, spect) +
+    '<path d="M' + (x0 - 8) + ' ' + rim + 'H' + x0 + 'V' + (bot - 12) + 'Q' + x0 + ' ' + bot + ' ' + (x0 + 12) + ' ' + bot + 'H' + (x1 - 12) +
+      'Q' + x1 + ' ' + bot + ' ' + x1 + ' ' + (bot - 12) + 'V' + rim + 'H' + (x1 + 8) + '" fill="none" stroke="#7C8B89" stroke-width="2" stroke-linejoin="round"/>' +
+    '</svg>';
+}
+function pdTally(list){
+  var o = {}, order = [];
+  list.forEach(function(p){ if(p.kind !== 'ion') return; if(!o[p.k]){ o[p.k] = { n:0, t:p.plain }; order.push(p.k); } o[p.k].n++; });
+  return order.map(function(k){ return o[k].n + ' ' + o[k].t; }).join(', ');
+}
+function pdFigure(P, spect){
+  var L = pdLayout(P), r = P.r;
+  var after = !P.reacts ? 'Nothing changed: NR' :
+    (P.outcome === 'water' ? 'H<sub>2</sub>O molecules form' : fms(P.leave.f, 's') + ' settles out');
+  var ariaA = 'After mixing: ' + (L.solid.length ? 'a solid clump of ' + pdTally(L.solid) + ' at the bottom; ' : '') +
+    (L.W ? L.W + ' water molecules; ' : '') + 'still floating separately: ' + pdTally(L.after.filter(function(p){ return L.solid.indexOf(p) < 0; }));
+  var h = '<div class="pd-before">' +
+    '<figure class="pd-b">' + pdBeaker(BW, BH, L.A, spect, 'Before mixing, ' + r[0].f + ' solution: ' + pdTally(L.A) + ', spread out separately') +
+      '<figcaption>' + fms(r[0].f, 'aq') + '</figcaption></figure>' +
+    '<figure class="pd-b">' + pdBeaker(BW, BH, L.B, spect, 'Before mixing, ' + r[1].f + ' solution: ' + pdTally(L.B) + ', spread out separately') +
+      '<figcaption>' + fms(r[1].f, 'aq') + '</figcaption></figure>' +
+    '</div>' +
+    '<div class="pd-arrow">mix<b>→</b></div>' +
+    '<figure class="pd-after">' + pdBeaker(AW, AH, L.after, spect, ariaA) + '<figcaption>After: ' + after + '</figcaption></figure>';
+  h += '<div class="pd-legend">';
+  P.ions.forEach(function(io, i){
+    var sl = PD_SLOTS[i];
+    h += '<span><i style="background:' + PD_FILL[sl] + ';border-color:' + PD_LINE[sl] + '"></i>' + ionH(io.s, io.z) + '</span>';
+  });
+  if(L.W) h += '<span><svg width="24" height="20" viewBox="-12 -11 24 22" aria-hidden="true">' + pdWater(0, 0) + '</svg><span>H<sub>2</sub>O molecule</span></span>';
+  if(spect) h += '<span><i class="ring"></i><span>spectator</span></span>';
+  return h + '</div>';
+}
+
+/* =========================================================
+   widget: particle diagram, pick the spectators
+   ========================================================= */
+var pdState = null, pdLast = '', pdTallyN = { att:0, ok:0 };
+function pdScoreShow(){ el('pd-score').textContent = pdTallyN.ok + ' of ' + pdTallyN.att; }
+function pdNew(){
+  var x = Math.random(), want = x < 0.55 ? 'ppt' : (x < 0.78 ? 'water' : 'nr'), P;
+  do { P = genProblem(want); } while(P.id === pdLast);
+  pdLast = P.id;
+  pdState = { P:P, tried:false, done:false };
+  el('pd-mol').innerHTML = E(P.molStr);
+  el('pd-fig').innerHTML = pdFigure(P, false);
+  el('pd-chips').innerHTML = P.ions.map(function(io, i){
+    return '<button type="button" class="chipbtn ' + (io.cat ? 'cat' : 'an') + '" data-i="' + i + '" aria-pressed="false">' + ionH(io.s, io.z) + '</button>';
+  }).join('');
+  Array.prototype.forEach.call(el('pd-chips').querySelectorAll('.chipbtn'), function(b){
+    b.addEventListener('click', function(){
+      if(pdState.done) return;
+      b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      b.classList.remove('was-wrong');
+    });
+  });
+  hideFb(el('pd-fb'));
+}
+function pdWhere(P, io){
+  if(P.outcome === 'water') return 'the H<sub>2</sub>O molecules';
+  return 'the ' + fms(P.leave.f, 's') + ' clump at the bottom';
+}
+function pdFinish(kind, html){
+  var s = pdState, P = s.P, SK = pdSpectKeys(P);
+  s.done = true;
+  Array.prototype.forEach.call(el('pd-chips').querySelectorAll('.chipbtn'), function(b){
+    var io = P.ions[+b.getAttribute('data-i')];
+    b.setAttribute('aria-pressed', SK[io.k] ? 'true' : 'false');
+    b.classList.remove('was-wrong');
+    b.disabled = true;
+  });
+  el('pd-fig').innerHTML = pdFigure(P, true);
+  setFb(el('pd-fb'), kind, html);
+}
+function pdAnswerHtml(P){
+  if(!P.reacts) return 'All four ions are still floating on their own after mixing. Nothing left the solution, so every ion is a spectator and the answer is NR. There’s no net ionic equation.';
+  return spectNames(P) + ' are floating on their own before mixing and still floating after, so they’re the spectators. ' +
+    'The ions that changed are what the net ionic equation shows:<div class="eqline">' + netHtml(P) + '</div>';
+}
+function pdCheck(){
+  var s = pdState, P = s.P;
+  if(s.done) return;
+  var SK = pdSpectKeys(P), btns = el('pd-chips').querySelectorAll('.chipbtn'), picked = [], wrong = [], missed = [];
+  Array.prototype.forEach.call(btns, function(b){
+    var io = P.ions[+b.getAttribute('data-i')], on = b.getAttribute('aria-pressed') === 'true';
+    if(on) picked.push(io);
+    if(on && !SK[io.k]){ wrong.push(io); b.classList.add('was-wrong'); }
+    if(!on && SK[io.k]) missed.push(io);
+  });
+  if(!picked.length){ setFb(el('pd-fb'), 'hint', 'Select the ions you think are spectators first, then check.'); return; }
+  if(!s.tried){ s.tried = true; pdTallyN.att++; pdScoreShow(); }
+  if(!wrong.length && !missed.length){
+    pdTallyN.ok++; pdScoreShow();
+    pdFinish('good', '<b>Right.</b> ' + pdAnswerHtml(P));
+    return;
+  }
+  var msg = [];
+  wrong.forEach(function(io){ msg.push('<b>' + ionH(io.s, io.z) + ' isn’t a spectator.</b> In the after beaker it’s part of ' + pdWhere(P, io) + ', not floating on its own.'); });
+  if(missed.length) msg.push(missed.length === 1 ? 'One spectator is still unselected. Look for an ion that’s floating on its own in the after beaker.'
+    : 'Some spectators are still unselected. Look for ions that are floating on their own in the after beaker.');
+  setFb(el('pd-fb'), 'bad', msg.join(' '));
+}
+function pdShow(){
+  var s = pdState;
+  if(s.done) return;
+  if(!s.tried){ s.tried = true; pdTallyN.att++; pdScoreShow(); }
+  pdFinish('hint', '<b>Answer.</b> ' + pdAnswerHtml(s.P));
+}
+el('pd-check').addEventListener('click', pdCheck);
+el('pd-show').addEventListener('click', pdShow);
+el('pd-new').addEventListener('click', pdNew);
+
+/* complete ionic equation as a bridge; "strike" crosses out the spectators */
+function ciHtml(P, strike){
+  function t(x){
+    var co = x.n > 1 ? x.n : '';
+    if(!x.ion) return co + x.f + '(' + x.st + ')';
+    var q = Math.abs(x.z);
+    return (strike && x.spect ? '~' : '') + co + x.s + '^' + (q > 1 ? q : '') + (x.z > 0 ? '+' : '-') + '(aq)';
+  }
+  return '<span class="eq">' + renderIEq(P.ci.L.map(t).join(' + ') + ' -> ' + P.ci.R.map(t).join(' + ')) + '</span>';
+}
+
+/* =========================================================
+   widget 4: predict it (products, balance, then net ionic)
    ========================================================= */
 var pState = null, pLast = '', pTally = { att:0, ok:0 };
 function pScoreShow(){ el('p-score').textContent = pTally.ok + ' of ' + pTally.att; }
@@ -1331,25 +1650,103 @@ function predNew(){
   var P;
   do { P = genProblem(); } while(P.id === pLast);
   pLast = P.id;
-  pState = { P:P, tried:false, clean:true, done1:false, done2:false, counted:false };
+  pState = { P:P, tried:false, clean:true, done1:false, doneB:false, done2:false, counted:false };
   el('p-prob').innerHTML = reacHtml(P);
   el('p-in').value = ''; el('n-in').value = '';
   el('p-prev').innerHTML = ''; el('n-prev').innerHTML = '';
   el('p-in').disabled = false; el('n-in').disabled = false;
-  hideFb(el('p-fb')); hideFb(el('n-fb'));
-  el('p-step2').className = 'step2';
+  hideFb(el('p-fb')); hideFb(el('b-fb')); hideFb(el('n-fb'));
+  el('b-row').innerHTML = P.reacts ? coefRowHtml(P) : '';
+  Array.prototype.forEach.call(el('b-row').querySelectorAll('input.coef'), function(inp){
+    inp.addEventListener('keydown', function(e){ if(e.key === 'Enter') bCheck(); });
+  });
+  el('n-bridge').innerHTML = '';
+  el('p-part').innerHTML = '';
+  ['p-stepB', 'p-step2', 'p-part'].forEach(function(id){ el(id).className = 'step2'; });
 }
 function pFinish(){
   var s = pState;
   if(s.counted) return;
-  if(s.done1 && (!s.P.reacts || s.done2)){
+  if(s.done1 && (!s.P.reacts || (s.doneB && s.done2))){
     s.counted = true;
     if(s.clean) pTally.ok++;
     pScoreShow();
   }
 }
+function coefRowHtml(P){
+  var i = 0;
+  function term(t){
+    return '<span class="t"><input type="text" class="coef" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="2" data-i="' + (i++) +
+      '" aria-label="Coefficient for ' + t.f + '">' + fh(t.f) + '(' + t.st + ')</span>';
+  }
+  return '<span class="eq">' + P.r.map(term).join(' + ') + ' <span class="arr">→</span> ' + P.p.map(term).join(' + ') + '</span>';
+}
+/* after step 1: open the balancing step, or (for NR) go straight to the particle view */
 function pOpenStep2(){
-  if(pState.P.reacts) el('p-step2').className = 'step2 on';
+  if(pState.P.reacts) el('p-stepB').className = 'step2 on';
+  else pParticles();
+}
+function pParticles(){
+  var P = pState.P;
+  el('p-part').innerHTML = '<div class="steplab">See it as particles</div><div class="pd">' + pdFigure(P, true) + '</div>' +
+    '<p class="setup" style="margin:6px 0 0">' + (P.reacts
+      ? 'Dashed rings mark the spectators: floating on their own before mixing and still floating after. Everything without a ring is in the net ionic equation.'
+      : 'Every ion is still floating on its own after mixing. Nothing left the solution, so every ion is a spectator: NR.') + '</p>';
+  el('p-part').className = 'step2 on';
+}
+function bRead(){
+  var out = [], bad = false;
+  Array.prototype.forEach.call(el('b-row').querySelectorAll('input.coef'), function(inp){
+    var v = inp.value.trim();
+    if(v === '') out.push(1);
+    else if(/^\d+$/.test(v) && +v > 0) out.push(+v);
+    else bad = true;
+  });
+  return bad ? null : out;
+}
+function bDone(kind, html){
+  pState.doneB = true;
+  Array.prototype.forEach.call(el('b-row').querySelectorAll('input.coef'), function(inp){ inp.disabled = true; });
+  setFb(el('b-fb'), kind, html);
+  el('n-bridge').innerHTML = ciHtml(pState.P, false);
+  el('p-step2').className = 'step2 on';
+  pFinish();
+}
+function bCheck(){
+  var s = pState, P = s.P;
+  if(s.doneB || !P.reacts) return;
+  var co = bRead();
+  if(!co){ setFb(el('b-fb'), 'hint', 'Coefficients are whole numbers like 2 or 3. Leave a box empty for 1.'); return; }
+  /* count ions, not atoms: each polyatomic ion is one piece (H2O counts as one H+ and one OH-) */
+  var L = {}, R = {}, lab = {};
+  P.r.concat(P.p).forEach(function(t, i){
+    var k = counts(t.c, t.a), side = i < P.r.length ? L : R, c = CAT[t.c], a = AN[t.a];
+    side['c:' + t.c] = (side['c:' + t.c] || 0) + k.nc * co[i];
+    side['a:' + t.a] = (side['a:' + t.a] || 0) + k.na * co[i];
+    lab['c:' + t.c] = ionH(c.s, c.z); lab['a:' + t.a] = ionH(a.s, a.z);
+  });
+  var off = Object.keys(lab).filter(function(e){ return (L[e] || 0) !== (R[e] || 0); });
+  if(off.length){
+    setFb(el('b-fb'), 'bad', '<b>Not balanced yet.</b> Counting each ion as one piece: ' +
+      off.map(function(e){ return lab[e] + ' ' + (L[e] || 0) + ' on the left, ' + (R[e] || 0) + ' on the right'; }).join('; ') +
+      '. Change only the coefficients, never the subscripts.');
+    return;
+  }
+  var g = co.reduce(function(acc, x){ return gcd(acc, x); }, 0);
+  if(g > 1){ setFb(el('b-fb'), 'part', '<b>Balanced, but not in lowest terms.</b> Every coefficient divides by ' + g + '. Use the smallest whole numbers that work.'); return; }
+  bDone('good', '<b>Balanced.</b> That’s the complete equation:<div class="eqline">' + E(P.molStr) + '</div>Now use the complete ionic equation below as a bridge to the net ionic equation.');
+}
+function bShow(){
+  var s = pState, P = s.P;
+  if(s.doneB || !P.reacts) return;
+  s.clean = false;
+  var terms = P.r.concat(P.p);
+  Array.prototype.forEach.call(el('b-row').querySelectorAll('input.coef'), function(inp, i){ inp.value = terms[i].n > 1 ? terms[i].n : ''; });
+  bDone('hint', '<b>Answer.</b><div class="eqline">' + E(P.molStr) + '</div>Now use the complete ionic equation below as a bridge to the net ionic equation.');
+}
+function pNetDone(){
+  el('n-bridge').innerHTML = ciHtml(pState.P, true);
+  pParticles();
 }
 function pPreview(){
   var v = el('p-in').value, P = pState.P;
@@ -1377,7 +1774,8 @@ function pCheck(){
   var extra = '';
   if(g.level === 'full' && !s.done1){
     s.done1 = true;
-    if(s.P.reacts){ extra = '<p style="margin:10px 0 0">Now write the net ionic equation below.</p>'; pOpenStep2(); }
+    if(s.P.reacts) extra = '<p style="margin:10px 0 0">Now balance the complete equation below.</p>';
+    pOpenStep2();
     pFinish();
   }
   setFb(el('p-fb'), cls, '<div class="echo">You wrote: <span class="eq">' + g.echo + '</span></div>' + g.html + extra);
@@ -1388,7 +1786,7 @@ function pShow(){
   if(!s.done1) s.clean = false;
   s.done1 = true;
   var ans = P.reacts ? '<div class="eqline"><span class="eq">' + P.p.map(function(t){ return renderTerm(t.f + '(' + t.st + ')'); }).join(' + ') + '</span></div>' : '<div class="eqline"><span class="eq"><span class="t nr">NR</span></span></div>';
-  setFb(el('p-fb'), 'hint', '<b>Answer.</b> ' + swapLine(P) + reasonHtml(P) + ans + (P.reacts ? '<p style="margin:10px 0 0">Now try the net ionic equation below.</p>' : ''));
+  setFb(el('p-fb'), 'hint', '<b>Answer.</b> ' + swapLine(P) + reasonHtml(P) + ans + (P.reacts ? '<p style="margin:10px 0 0">Now balance the complete equation below.</p>' : ''));
   pOpenStep2();
   pFinish();
 }
@@ -1396,7 +1794,7 @@ function nCheck(){
   var s = pState, g = gradeNet(s.P, el('n-in').value);
   if(g.level === 'hint'){ setFb(el('n-fb'), 'hint', g.html); return; }
   var cls = g.level === 'full' ? 'good' : (g.level === 'part' ? 'part' : 'bad');
-  if(g.level === 'full' && !s.done2){ s.done2 = true; pFinish(); }
+  if(g.level === 'full' && !s.done2){ s.done2 = true; pNetDone(); pFinish(); }
   setFb(el('n-fb'), cls, (g.echo ? '<div class="echo">You wrote: <span class="eq">' + g.echo + '</span></div>' : '') + g.html);
 }
 function nShow(){
@@ -1405,9 +1803,12 @@ function nShow(){
   s.done2 = true;
   setFb(el('n-fb'), 'hint', '<b>Answer.</b> Split every (aq) compound into ions, cross out ' + spectNames(P) + ' (the spectators), and reduce:' +
     '<div class="eqline">' + netHtml(P) + '</div>');
+  pNetDone();
   pFinish();
 }
 el('p-check').addEventListener('click', pCheck);
+el('b-check').addEventListener('click', bCheck);
+el('b-show').addEventListener('click', bShow);
 el('p-show').addEventListener('click', pShow);
 el('p-new').addEventListener('click', predNew);
 el('p-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') pCheck(); });
@@ -1485,6 +1886,7 @@ var QUIZ = [
 drillNew();
 classNew();
 specNew();
+pdNew();
 predNew();
 </script>
 </body>

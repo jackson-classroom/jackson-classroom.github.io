@@ -936,10 +936,16 @@ function grade(p, raw){
   if(missing.length)
     return { level:'part', echo:echo, html:'<b>Balanced. Now add a state to every formula.</b> Missing on ' +
       missing.map(function(t){ return fm(t.f); }).join(', ') + '.' };
-  var wrong = all.filter(function(t){ return t.st !== expSt[t.k]; });
+  /* a free element's state is a periodic-table lookup, so a slip there still counts; the feedback adds a note */
+  function isEl(t){ return t.k === kFree || t.k === kElem; }
+  var wrong = all.filter(function(t){ return t.st !== expSt[t.k] && !isEl(t); });
+  var slips = all.filter(function(t){ return t.st !== expSt[t.k] && isEl(t); });
   if(wrong.length)
     return { level:'part', echo:echo, html:'<b>Balanced, but check the states.</b> ' +
       wrong.map(function(t){ return stateWhy(p, t, expSt[t.k]); }).join(' ') };
+  if(slips.length)
+    return { level:'full', echo:echo, html:'<b>Balanced, and that counts.</b> ' + reason(p) + ' One note on states: ' +
+      slips.map(function(t){ return stateWhy(p, t, expSt[t.k]); }).join(' ') };
   return { level:'full', echo:echo, html:'<b>Balanced, with every state right.</b> ' + reason(p) };
 }
 
