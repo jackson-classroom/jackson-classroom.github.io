@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Newton's First Law — Balanced or Unbalanced?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Physics · Unit 3 · Forces — shared page system
+   (identical block on every Unit 3 page)
+   ========================================================= */
+:root{
+  --ink:#16283C; --ink2:#3D4F63; --mute:#5D6D7E;
+  --paper:#EDF1F4; --card:#FBFCFD; --line:#CBD7E1; --line-soft:#E1E8EE;
+  --acc:#1B6CA8; --acc-dk:#0F4A78; --acc-lite:#D3E4F2;
+  --warm:#9A6410; --warm-lite:#FBEFD6;
+  --ok:#1F6E4D; --ok-bg:#E3F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  /* one colour per force, used on every page */
+  --f-g:#B23A2B;    /* gravity / weight      */
+  --f-n:#1B6CA8;    /* normal                */
+  --f-f:#A86A0C;    /* friction              */
+  --f-t:#1E7F5C;    /* tension               */
+  --f-a:#6B45B0;    /* applied               */
+  --f-air:#3E7C8A;  /* air resistance / drag */
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+  background-image:linear-gradient(to right,rgba(150,178,199,.17) 1px,transparent 1px),linear-gradient(to bottom,rgba(150,178,199,.17) 1px,transparent 1px);
+  background-size:26px 26px}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(237,241,244,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:60px 0 40px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc-dk)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(38px,6.4vw,64px);line-height:1.02;margin:16px 0 0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--acc)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:48ch;color:var(--ink2);margin:20px 0 0}
+
+.board{margin:36px 0 0;padding:22px 24px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.board-cap{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+.board svg{display:block;width:100%;height:auto}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft)}
+.sig-note b{color:var(--acc-dk);font-weight:600}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--acc);color:var(--acc-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(27px,4.2vw,38px);line-height:1.1;margin:0;letter-spacing:-.02em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--acc-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.nw{white-space:nowrap}
+.note{border-left:3px solid var(--warm);background:var(--warm-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.law{font-family:var(--display);font-size:clamp(20px,2.8vw,25px);font-weight:500;line-height:1.35;letter-spacing:-.01em;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:0 4px 4px 0;padding:18px 22px;margin:22px 0}
+.law small{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:6px;font-weight:400}
+
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:24px 0}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:0 4px 4px 0;padding:18px 20px}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard .form{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--acc-dk);margin:2px 0 0;line-height:1.5}
+.rulecard .ex{font-family:var(--body);font-size:14.5px;color:var(--ink);background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:7px 10px;margin-top:10px}
+.rulecard.warn{border-left-color:var(--warm)}
+
+/* force labels: F with a coloured subscript tag */
+.F{font-family:var(--mono);font-weight:600;white-space:nowrap}
+.F.g{color:var(--f-g)} .F.n{color:var(--f-n)} .F.f{color:var(--f-f)} .F.t{color:var(--f-t)} .F.a{color:var(--f-a)} .F.air{color:var(--f-air)} .F.net{color:var(--ink)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.setup{font-size:16px;color:var(--ink2);margin:0 0 14px}
+.scene{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:8px}
+.scene svg{display:block;width:100%;height:auto;max-width:540px;margin:0 auto}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F5F8FA;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--acc-dk);border-color:var(--acc-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--acc)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--acc);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+/* Input boxes: clearly fillable. Placeholder text is a short instruction, never a sample answer. */
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid #93A6B8;border-radius:3px;padding:9px 11px;width:150px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(22,40,60,.12)}
+::placeholder{font-family:var(--body);font-style:italic;font-size:15px;color:#7E8E9D;opacity:1}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:170px}
+.unit{font-family:var(--mono);font-size:15px;color:var(--ink2)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1A4B35}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--acc);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb p{margin:6px 0 0}
+.fb p:first-child{margin-top:0}
+
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-top:14px}
+.cbtn{background:#fff;color:var(--ink);border:1px solid var(--line);font-size:13px;padding:11px 10px;text-align:center}
+.cbtn:hover{background:#fff;color:var(--ink);border-color:var(--acc)}
+.cbtn.yes{background:var(--ok-bg);border-color:var(--ok);color:#1A4B35}
+.cbtn.no{background:var(--no-bg);border-color:var(--no);color:#7E2A1D}
+.cbtn.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.cbtn[disabled]{cursor:default}
+
+.tally-h{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:20px 0 8px}
+.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px}
+.tcell{border:1px solid var(--line-soft);border-radius:3px;padding:7px 10px;background:#fff}
+.tcell .tl{display:block;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.04em}
+.tcell .tv{font-family:var(--mono);font-size:15px;color:var(--ink)}
+.tcell.miss{border-color:#E3B7AE;background:#FDF6F4}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab:hover{background:var(--line-soft);color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--ink);color:#F5F8FA;border-color:var(--ink)}
+.panel{display:none;padding-top:12px}
+.panel.on{display:block}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.tbl{overflow-x:auto;margin:18px 0;-webkit-overflow-scrolling:touch}
+.tbl table{margin:0}
+
+.wo{list-style:none;padding:0;margin:20px 0}
+.wo li{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 18px;margin:10px 0}
+.wo .myth{display:block;font-size:15px;color:var(--no);text-decoration:line-through;text-decoration-color:rgba(169,58,42,.55);margin-bottom:4px}
+.wo .fact{font-size:16px}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45;letter-spacing:0}
+.opt:hover{border-color:var(--acc);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.95}
+.quiz-sum{font-family:var(--mono);font-size:13px;color:var(--ink2);margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft)}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#E9EFF4;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#BCCADA}
+.next .nt{font-family:var(--display);font-weight:600;font-size:24px;color:#fff;margin:0 0 4px;letter-spacing:-.01em}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F5F8FA;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--acc-lite)}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:14px}
+  .scene{padding:2px}
+  .board{padding:16px 14px}
+  .field label{min-width:auto;flex:1 1 100%}
+  .choices{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+/* ======== end shared block ======== */
+
+/* ---- page: hero pair ---- */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.duo figure{margin:0;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px 10px 12px}
+.duo figcaption{font-family:var(--mono);font-size:12.5px;color:var(--ink2);text-align:center;margin-top:4px;line-height:1.45}
+.duo figcaption b{display:block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.duo .is-bal b{color:var(--ok)} .duo .is-unbal b{color:var(--no)}
+@media (max-width:560px){.duo{grid-template-columns:1fr}}
+
+/* ---- page: force key ---- */
+.fkey td:first-child{white-space:nowrap}
+.swatch{display:inline-block;width:18px;height:4px;border-radius:2px;vertical-align:middle;margin-right:8px}
+
+/* ---- page: method ladder ---- */
+.ladder{list-style:none;padding:0;margin:20px 0;counter-reset:step}
+.ladder li{counter-increment:step;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:baseline;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:12px 16px;margin:8px 0}
+.ladder li::before{content:counter(step);font-family:var(--mono);font-size:13px;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;text-align:center;padding:2px 0}
+.ladder small{display:block;color:var(--mute);font-size:14.5px;margin-top:2px}
+
+/* ---- page: worked example ---- */
+.worked{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:18px;align-items:center}
+@media (max-width:640px){.worked{grid-template-columns:1fr}}
+
+/* ---- page: ledger (sum per direction) ---- */
+.ledger{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:14px;margin:10px 0 4px;background:rgba(255,255,255,.55)}
+.ledger th,.ledger td{padding:6px 8px;border-bottom:1px solid rgba(22,40,60,.12);text-align:left;vertical-align:top}
+.ledger th{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:inherit;opacity:.75;font-weight:500}
+.ledger td.z{font-weight:600}
+.verdict{font-family:var(--mono);font-size:13.5px;margin-top:8px}
+
+/* ---- page: practice ---- */
+.cap{font-size:16px;color:var(--ink2);margin:0 0 10px}
+.cap b{color:var(--ink)}
+.mini svg{max-width:300px;margin:4px 0 0}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Newton's First Law</span>
+    <span class="bar-sub">Free-body diagrams · balanced or unbalanced?</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 3 · Forces · Page 1</div>
+  <h1>Balanced or unbalanced? <em>Add up the arrows.</em></h1>
+  <p class="lede">A free-body diagram shows every force acting on one object. Add the forces up and down, then left and right. If both directions cancel, the forces are balanced. If either one doesn't, they're unbalanced.</p>
+
+  <div class="board">
+    <div class="board-cap">Two free-body diagrams</div>
+    <div class="duo">
+      <figure class="is-bal">
+        <svg id="hero-a" viewBox="0 0 520 360" role="img" aria-label="A book on a table. Normal force 20 newtons up, gravity 20 newtons down. Balanced."></svg>
+        <figcaption><b>Balanced</b>A book on a table<br>20 N up, 20 N down → F<sub>net</sub> = 0</figcaption>
+      </figure>
+      <figure class="is-unbal">
+        <svg id="hero-b" viewBox="0 0 520 360" role="img" aria-label="A sled pulled by a rope. Tension 60 newtons right, friction 40 newtons left, normal force 100 newtons up, gravity 100 newtons down. Unbalanced, net force 20 newtons right."></svg>
+        <figcaption><b>Unbalanced</b>A sled pulled by a rope<br>60 N right, 40 N left → F<sub>net</sub> = 20 N right</figcaption>
+      </figure>
+    </div>
+    <div class="sig-note">Up–down and left–right are <b>checked separately</b>. The sled's vertical forces cancel, but its horizontal forces don't, so the sled's forces are unbalanced.</div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#law">The law</a>
+  <a href="#fbd">Reading a free-body diagram</a>
+  <a href="#practice">Balanced or unbalanced?</a>
+  <a href="#watch">Watch-outs</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ THE LAW ============ -->
+<section id="law">
+  <div class="sec-head"><h2>Newton's first law</h2></div>
+
+  <div class="law"><small>Newton's first law · the law of inertia</small>An object at rest stays at rest, and an object in motion stays in motion with the same speed and direction, unless acted on by an unbalanced force.</div>
+
+  <p><b>Inertia</b> is an object's tendency to keep doing what it's already doing. A force isn't needed to <i>keep</i> something moving, only to <i>change</i> how it moves. The more mass an object has, the more inertia it has.</p>
+  <p>That means a free-body diagram tells you a lot about motion. You can't tell from the forces whether an object is moving, but you <b>can</b> tell whether its motion is changing.</p>
+
+  <div class="rulebox">
+    <div class="rulecard">
+      <div class="form">F<sub>net</sub> = 0</div>
+      <h4>Balanced forces</h4>
+      <p>The forces cancel in <b>both</b> directions. The velocity doesn't change: the object stays at rest, <b>or</b> keeps moving at a constant speed in a straight line.</p>
+      <div class="ex">A book sitting on a desk. A car on cruise control on a straight highway.</div>
+    </div>
+    <div class="rulecard warn">
+      <div class="form">F<sub>net</sub> ≠ 0</div>
+      <h4>Unbalanced forces</h4>
+      <p>The forces don't cancel in at least one direction. The velocity changes: the object speeds up, slows down, or changes direction.</p>
+      <div class="ex">A sprinter leaving the blocks. A car braking at a red light.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ READING AN FBD ============ -->
+<section id="fbd">
+  <div class="sec-head"><h2>Reading a free-body diagram</h2></div>
+  <p>A free-body diagram (FBD) strips a situation down to <b>one object</b>, drawn as a box, and the forces acting <b>on</b> it, drawn as arrows. Each arrow points the way the force pushes or pulls, is labeled with its name and size in newtons (N), and is drawn longer for bigger forces. (On this page, up–down arrows and left–right arrows are each drawn to their own scale, so compare arrows within a direction.)</p>
+
+  <div class="tbl"><table class="fkey">
+    <thead><tr><th>Force</th><th>Symbol</th><th>Where it comes from</th></tr></thead>
+    <tbody>
+      <tr><td><span class="swatch" style="background:var(--f-g)"></span>Gravity (weight)</td><td><span class="F g">F<sub>g</sub></span></td><td>Earth pulling down on the object. Always there, always straight down.</td></tr>
+      <tr><td><span class="swatch" style="background:var(--f-n)"></span>Normal force</td><td><span class="F n">F<sub>N</sub></span></td><td>A surface pushing back on an object resting on it, straight out from the surface.</td></tr>
+      <tr><td><span class="swatch" style="background:var(--f-f)"></span>Friction</td><td><span class="F f">F<sub>f</sub></span></td><td>A surface resisting sliding. Points opposite the motion (or the attempted motion).</td></tr>
+      <tr><td><span class="swatch" style="background:var(--f-t)"></span>Tension</td><td><span class="F t">F<sub>T</sub></span></td><td>A rope, string, cable, or chain pulling. Always a pull, along the rope.</td></tr>
+      <tr><td><span class="swatch" style="background:var(--f-a)"></span>Applied force</td><td><span class="F a">F<sub>app</sub></span></td><td>A person or another object pushing or pulling directly.</td></tr>
+      <tr><td><span class="swatch" style="background:var(--f-air)"></span>Air resistance</td><td><span class="F air">F<sub>air</sub></span></td><td>Air pushing against a moving object. Points opposite the motion.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>The method: two directions, checked separately</h3>
+  <ol class="ladder">
+    <li><div><b>Add the vertical forces.</b> Total up minus total down.<small>Two arrows pointing the same way add together.</small></div></li>
+    <li><div><b>Add the horizontal forces.</b> Total right minus total left.</div></li>
+    <li><div><b>Both totals are zero → balanced.</b> Either total isn't zero → unbalanced.<small>One balanced direction isn't enough. Both have to cancel.</small></div></li>
+  </ol>
+
+  <h3>Worked example</h3>
+  <div class="worked">
+    <div class="scene"><svg id="worked-svg" viewBox="0 0 520 360" role="img" aria-label="A box on the floor. Two applied forces to the right, 30 newtons and 20 newtons. Friction 50 newtons to the left. Normal force 80 newtons up, gravity 80 newtons down."></svg></div>
+    <div>
+      <p style="margin-top:0">Two people push a box across the floor while friction pushes back.</p>
+      <table class="ledger" style="background:transparent">
+        <thead><tr><th>Direction</th><th>Add up</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Vertical</td><td>80 N up − 80 N down</td><td class="z">0 N</td></tr>
+          <tr><td>Horizontal</td><td>(30 + 20) N right − 50 N left</td><td class="z">0 N</td></tr>
+        </tbody>
+      </table>
+      <p class="verdict"><b>Both zero → balanced.</b> The box slides at a constant velocity, or stays put if it wasn't moving.</p>
+    </div>
+  </div>
+
+  <div class="note"><b>Trust the numbers, not the picture.</b> Longer arrows mean bigger forces, but 48 N and 50 N look almost the same. Always add up the labeled values.</div>
+</section>
+
+<!-- ============ PRACTICE ============ -->
+<section id="practice">
+  <div class="sec-head">
+    <span class="tasktag">Practice</span>
+    <h2>Balanced or unbalanced?</h2>
+  </div>
+  <p>Each diagram shows every force acting on the object. Add up each direction, then decide. A new diagram is generated every time.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Balanced or unbalanced?</span><span class="score" id="bu-score">0 of 0</span></div>
+    <p class="cap" id="bu-cap"></p>
+    <div class="scene"><svg id="bu-svg" viewBox="0 0 520 360" role="img" aria-labelledby="bu-desc"><desc id="bu-desc"></desc></svg></div>
+    <div class="choices" id="bu-choices">
+      <button class="cbtn" data-k="bal">Balanced · F<sub>net</sub> = 0</button>
+      <button class="cbtn" data-k="unbal">Unbalanced · F<sub>net</sub> ≠ 0</button>
+    </div>
+    <div class="fb" id="bu-fb" aria-live="polite"></div>
+    <div class="btn-row"><button id="bu-next">Next diagram</button></div>
+    <div class="tally-h">Your results by kind of diagram</div>
+    <div class="tally" id="bu-tally"></div>
+  </div>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="sec-head"><h2>Watch-outs</h2></div>
+  <ul class="wo">
+    <li><span class="myth">Balanced means the object isn't moving.</span><span class="fact">Balanced means the velocity isn't <b>changing</b>. The object could be at rest, or it could be moving at a steady speed in a straight line. An FBD alone can't tell you which.</span></li>
+    <li><span class="myth">A moving object needs a force arrow pointing the way it moves.</span><span class="fact">There is no "force of motion." A puck sliding across ice has only F<sub>g</sub> and F<sub>N</sub> on it. It keeps moving because of inertia, not because something pushes it.</span></li>
+    <li><span class="myth">The vertical forces cancel, so it's balanced.</span><span class="fact">Check <b>both</b> directions. Most diagrams have balanced vertical forces; the horizontal forces are usually where the answer is.</span></li>
+    <li><span class="myth">One force by itself can be balanced.</span><span class="fact">With only one force, there is nothing to cancel it. A ball in free fall has only F<sub>g</sub>, so its forces are always unbalanced, even at the top of its flight.</span></li>
+    <li><span class="myth">The arrows look the same length, so they're equal.</span><span class="fact">Read the labels. Small differences are easy to miss by eye, and any difference at all makes the forces unbalanced.</span></li>
+  </ul>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Six questions on Newton's first law and balanced forces.</p>
+  <div class="card" id="quiz"></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">That's page 1 of Unit 3</div>
+      <p>More Forces pages will show up on the unit page as we go.</p>
+    </div>
+    <a href="/physics/forces/">Back to Unit 3 →</a>
+  </div>
+</section>
+
+<footer>
+  <p>Newton's first law: reading free-body diagrams and deciding whether the forces are balanced. The practice generates a new diagram every time.</p>
+  <p><a href="/physics/forces/">← Unit 3 — Forces</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   shared helpers (same on every Unit 3 page)
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function randInt(lo,hi){ return lo + Math.floor(Math.random()*(hi-lo+1)); }
+var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* force colours and labels (match the CSS variables) */
+var FORCE = {
+  g:  { c:'#B23A2B', sym:'F<tspan baseline-shift="sub" font-size="70%">g</tspan>',   html:'F<sub>g</sub>',   name:'gravity' },
+  n:  { c:'#1B6CA8', sym:'F<tspan baseline-shift="sub" font-size="70%">N</tspan>',   html:'F<sub>N</sub>',   name:'normal force' },
+  f:  { c:'#A86A0C', sym:'F<tspan baseline-shift="sub" font-size="70%">f</tspan>',   html:'F<sub>f</sub>',   name:'friction' },
+  t:  { c:'#1E7F5C', sym:'F<tspan baseline-shift="sub" font-size="70%">T</tspan>',   html:'F<sub>T</sub>',   name:'tension' },
+  a:  { c:'#6B45B0', sym:'F<tspan baseline-shift="sub" font-size="70%">app</tspan>', html:'F<sub>app</sub>', name:'applied force' },
+  air:{ c:'#3E7C8A', sym:'F<tspan baseline-shift="sub" font-size="70%">air</tspan>', html:'F<sub>air</sub>', name:'air resistance' }
+};
+var SVGNS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs, parent){
+  var n = document.createElementNS(SVGNS, tag);
+  for(var k in attrs) n.setAttribute(k, attrs[k]);
+  if(parent) parent.appendChild(n);
+  return n;
+}
+/* Draw an arrow from (x1,y1) to (x2,y2). Returns the group. */
+function arrow(parent, x1, y1, x2, y2, color, width){
+  var g = svgEl('g', {}, parent), w = width || 4;
+  var dx = x2-x1, dy = y2-y1, L = Math.sqrt(dx*dx+dy*dy) || 1, ux = dx/L, uy = dy/L;
+  var head = Math.min(15, L*0.6), hw = head*0.55;
+  var bx = x2 - ux*head, by = y2 - uy*head;
+  svgEl('line', {x1:x1, y1:y1, x2:bx, y2:by, stroke:color, 'stroke-width':w, 'stroke-linecap':'round'}, g);
+  svgEl('path', {d:'M'+x2+' '+y2+' L'+(bx - uy*hw)+' '+(by + ux*hw)+' L'+(bx + uy*hw)+' '+(by - ux*hw)+' Z', fill:color}, g);
+  return g;
+}
+function label(parent, x, y, html, color, anchor, size){
+  var t = svgEl('text', {x:x, y:y, fill:color||'#16283C', 'font-family':'IBM Plex Mono,monospace', 'font-size':size||15, 'font-weight':600, 'text-anchor':anchor||'middle'}, parent);
+  t.innerHTML = html;
+  return t;
+}
+function clearSvg(svg){ Array.prototype.slice.call(svg.childNodes).forEach(function(n){ if(n.nodeName !== 'desc') svg.removeChild(n); }); }
+
+/* =========================================================
+   free-body diagram renderer
+   forces: [{k:'g'|'n'|'f'|'t'|'a'|'air', d:'up'|'down'|'left'|'right', m:<newtons>}]
+   Arrows start at the box edge, lengths scale with size.
+   Several forces in the same direction are drawn side by side.
+   ========================================================= */
+function drawFBD(svg, forces, opts){
+  opts = opts || {};
+  clearSvg(svg);
+  var W = 520, H = 360, cx = 260, cy = 180, half = 34, maxLen = 96, minLen = 28;
+  /* vertical and horizontal forces are each scaled to their own largest force,
+     so a small sideways push next to a heavy weight is still readable */
+  function axisMax(dirs){ return Math.max.apply(null, forces.filter(function(f){ return dirs.indexOf(f.d) >= 0; }).map(function(f){ return f.m; }).concat([1])); }
+  var sV = maxLen / axisMax(['up','down']), sH = maxLen / axisMax(['left','right']);
+  function len(m, d){ return Math.max(minLen, m * (d === 'up' || d === 'down' ? sV : sH)); }
+  /* box */
+  svgEl('rect', {x:cx-half, y:cy-half, width:half*2, height:half*2, rx:3, fill:'#fff', stroke:'#16283C', 'stroke-width':2.2}, svg);
+  if(opts.name) label(svg, cx, cy + 4, opts.name, '#5D6D7E', 'middle', 11);
+  var groups = { up:[], down:[], left:[], right:[] };
+  forces.forEach(function(f){ groups[f.d].push(f); });
+  Object.keys(groups).forEach(function(d){
+    var list = groups[d], n = list.length;
+    list.forEach(function(f, i){
+      var off = (i - (n-1)/2) * (n > 1 ? 34 : 0);
+      var L = len(f.m, d), c = FORCE[f.k].c, txt = FORCE[f.k].sym + ' ' + f.m + ' N';
+      if(d === 'up'){
+        arrow(svg, cx + off, cy - half, cx + off, cy - half - L, c, 4.5);
+        if(n > 1) label(svg, cx + off + (i === 0 ? -10 : 10), cy - half - L + 13, txt, c, i === 0 ? 'end' : 'start', 18);
+        else label(svg, cx + 12, cy - half - L + 12, txt, c, 'start', 18);
+      } else if(d === 'down'){
+        arrow(svg, cx + off, cy + half, cx + off, cy + half + L, c, 4.5);
+        if(n > 1) label(svg, cx + off + (i === 0 ? -10 : 10), cy + half + L - 4, txt, c, i === 0 ? 'end' : 'start', 18);
+        else label(svg, cx + 12, cy + half + L - 4, txt, c, 'start', 18);
+      } else if(d === 'right'){
+        arrow(svg, cx + half, cy + off, cx + half + L, cy + off, c, 4.5);
+        label(svg, cx + half + L + 8, cy + off + 6, txt, c, 'start', 18);
+      } else {
+        arrow(svg, cx - half, cy + off, cx - half - L, cy + off, c, 4.5);
+        label(svg, cx - half - L - 8, cy + off + 6, txt, c, 'end', 18);
+      }
+    });
+  });
+}
+function sumDir(forces, d){ return forces.filter(function(f){ return f.d === d; }).reduce(function(s,f){ return s + f.m; }, 0); }
+function listDir(forces, d){
+  var l = forces.filter(function(f){ return f.d === d; });
+  if(!l.length) return '0 N';
+  if(l.length === 1) return l[0].m + ' N';
+  return '(' + l.map(function(f){ return f.m; }).join(' + ') + ') N';
+}
+function describeForces(forces){
+  return forces.map(function(f){ return FORCE[f.k].name + ' ' + f.m + ' newtons ' + f.d; }).join(', ') + '.';
+}
+
+/* =========================================================
+   hero + worked example
+   ========================================================= */
+drawFBD(el('hero-a'), [{k:'n',d:'up',m:20},{k:'g',d:'down',m:20}], {name:'book'});
+drawFBD(el('hero-b'), [{k:'n',d:'up',m:100},{k:'g',d:'down',m:100},{k:'t',d:'right',m:60},{k:'f',d:'left',m:40}], {name:'sled'});
+drawFBD(el('worked-svg'), [{k:'n',d:'up',m:80},{k:'g',d:'down',m:80},{k:'a',d:'right',m:30},{k:'a',d:'right',m:20},{k:'f',d:'left',m:50}], {name:'box'});
+
+/* =========================================================
+   practice generator
+   Each template returns forces for the balanced case; a
+   "nudge" then makes one direction unbalanced when needed.
+   ========================================================= */
+var BU_TYPES = { vert:'Up and down only', four:'Four forces', multi:'Two forces on one side', single:'Just one force' };
+function r10(lo, hi){ return 10 * randInt(lo/10, hi/10); }
+function r5(lo, hi){ return 5 * randInt(lo/5, hi/5); }
+
+var TEMPLATES = [
+  /* --- vertical only --- */
+  { type:'vert', name:'book', cap:'A <b>book</b> on a shelf.', canUnbal:false,
+    make:function(){ var w = r5(10,40); return [{k:'n',d:'up',m:w},{k:'g',d:'down',m:w}]; } },
+  { type:'vert', name:'lamp', cap:'A <b>lamp</b> hanging from a chain.', canUnbal:false,
+    make:function(){ var w = r5(20,60); return [{k:'t',d:'up',m:w},{k:'g',d:'down',m:w}]; } },
+  { type:'vert', name:'crate', cap:'A <b>crate</b> attached to a crane cable.', canUnbal:true,
+    make:function(){ var w = r10(300,900); return [{k:'t',d:'up',m:w},{k:'g',d:'down',m:w}]; } },
+  { type:'vert', name:'skydiver', cap:'A <b>skydiver</b> falling through the air.', canUnbal:true,
+    make:function(){ var w = r10(600,900); return [{k:'air',d:'up',m:w},{k:'g',d:'down',m:w}]; } },
+  { type:'vert', name:'elevator', cap:'An <b>elevator</b> held by its cable.', canUnbal:true,
+    make:function(){ var w = r10(2000,5000); return [{k:'t',d:'up',m:w},{k:'g',d:'down',m:w}]; } },
+  /* --- four forces --- */
+  { type:'four', name:'box', cap:'A <b>box</b> being pushed across the floor.', canUnbal:true,
+    make:function(){ var w = r10(100,300), p = r10(40,120); return [{k:'n',d:'up',m:w},{k:'g',d:'down',m:w},{k:'a',d:pick(['right','left']),m:p},{k:'f',d:'?',m:p}]; } },
+  { type:'four', name:'sled', cap:'A <b>sled</b> pulled through the snow by a rope.', canUnbal:true,
+    make:function(){ var w = r10(150,400), p = r10(30,100); return [{k:'n',d:'up',m:w},{k:'g',d:'down',m:w},{k:'t',d:pick(['right','left']),m:p},{k:'f',d:'?',m:p}]; } },
+  { type:'four', name:'car', cap:'A <b>car</b> on a level road. (The road pushes it forward; air pushes back.)', canUnbal:true,
+    make:function(){ var w = r10(1000,1500)*10, p = r10(300,900); return [{k:'n',d:'up',m:w},{k:'g',d:'down',m:w},{k:'a',d:pick(['right','left']),m:p},{k:'air',d:'?',m:p}]; } },
+  { type:'vert', name:'puck', cap:'A <b>hockey puck</b> on smooth ice, a moment after it was hit.', canUnbal:false,
+    make:function(){ var w = pick([2,2,3]); return [{k:'n',d:'up',m:w},{k:'g',d:'down',m:w}]; } },
+  /* --- several forces on one side --- */
+  { type:'multi', name:'box', cap:'Two students push a <b>box</b> across the floor.', canUnbal:true,
+    make:function(){ var w = r10(150,300), a = r10(20,60), b = r10(20,60), d = pick(['right','left']); return [{k:'n',d:'up',m:w},{k:'g',d:'down',m:w},{k:'a',d:d,m:a},{k:'a',d:d,m:b},{k:'f',d:'?',m:a+b}]; } },
+  { type:'multi', name:'crate', cap:'A <b>crate</b> in a tug-of-war, sliding on the floor.', canUnbal:true,
+    make:function(){ var w = r10(200,400), f = r10(20,60), small = r10(40,100), big = small + f; var d = pick(['right','left']); return [{k:'n',d:'up',m:w},{k:'g',d:'down',m:w},{k:'t',d:d,m:big},{k:'t',d:'?',m:small},{k:'f',d:'?',m:f}]; } },
+  { type:'multi', name:'box', cap:'A heavy <b>box</b> on the floor. Someone pulls straight up on it but can’t lift it.', canUnbal:false,
+    make:function(){ var w = r10(200,400), up = r10(50, w-60); return [{k:'a',d:'up',m:up},{k:'n',d:'up',m:w-up},{k:'g',d:'down',m:w}]; } },
+  /* --- one force --- */
+  { type:'single', name:'ball', cap:'A <b>ball</b> tossed straight up, at the top of its flight. Ignore air resistance.', canUnbal:true, forceUnbal:true,
+    make:function(){ return [{k:'g',d:'down',m:pick([2,3,4,5,6])}]; } },
+  { type:'single', name:'rock', cap:'A <b>rock</b> dropped off a bridge, just after release. Ignore air resistance.', canUnbal:true, forceUnbal:true,
+    make:function(){ return [{k:'g',d:'down',m:r5(10,40)}]; } }
+];
+var OPP = { right:'left', left:'right', up:'down', down:'up' };
+
+function genBU(){
+  var tp = pick(TEMPLATES);
+  var forces = tp.make();
+  /* resolve '?' directions: opposite the first horizontal force */
+  var firstH = forces.filter(function(f){ return f.d === 'left' || f.d === 'right'; })[0];
+  forces.forEach(function(f){ if(f.d === '?') f.d = OPP[firstH.d]; });
+  var wantUnbal = tp.forceUnbal || (tp.canUnbal && Math.random() < 0.55);
+  if(wantUnbal && !tp.forceUnbal){
+    /* change one non-gravity force so a direction no longer cancels */
+    var hasH = forces.some(function(f){ return f.d === 'left' || f.d === 'right'; });
+    var cands = forces.filter(function(f){ return f.k !== 'g' && f.k !== 'n' && (hasH ? (f.d === 'left' || f.d === 'right') : true); });
+    var f = pick(cands);
+    var step = f.m >= 1000 ? 100 : (f.m >= 200 ? pick([10,20,50]) : pick([2,5,10,20]));
+    if(f.m >= 10000) step = 1000;
+    var sign = (f.m - step < 5) ? 1 : pick([1,-1]);
+    f.m = f.m + sign*step;
+  }
+  /* shuffle draw order within a direction for variety */
+  shuffle(forces);
+  var up = sumDir(forces,'up'), down = sumDir(forces,'down'), right = sumDir(forces,'right'), left = sumDir(forces,'left');
+  return { tp:tp, forces:forces, vy:up-down, vx:right-left, bal:(up===down && right===left) };
+}
+
+var buScore = Score(el('bu-score')), buCur = null, buTally = {};
+Object.keys(BU_TYPES).forEach(function(k){ buTally[k] = {r:0,t:0}; });
+function buRenderTally(){
+  el('bu-tally').innerHTML = Object.keys(BU_TYPES).map(function(k){
+    var c = buTally[k], miss = c.t > c.r;
+    return '<div class="tcell' + (miss ? ' miss' : '') + '"><span class="tl">' + BU_TYPES[k] + '</span><span class="tv">' + c.r + '/' + c.t + '</span></div>';
+  }).join('');
+}
+function buNew(){
+  var p, guard = 0;
+  do { p = genBU(); guard++; } while(buCur && guard < 10 && p.tp === buCur.tp && Math.random() < 0.7);
+  buCur = p;
+  el('bu-cap').innerHTML = p.tp.cap;
+  drawFBD(el('bu-svg'), p.forces, {name:p.tp.name});
+  el('bu-desc').textContent = 'Free-body diagram. ' + describeForces(p.forces);
+  Array.prototype.forEach.call(el('bu-choices').children, function(b){ b.disabled = false; b.className = 'cbtn'; });
+  hideFb(el('bu-fb'));
+}
+function netWord(v, pos, neg){ return v === 0 ? '0 N' : Math.abs(v) + ' N ' + (v > 0 ? pos : neg); }
+function buAnswer(k, btn){
+  var p = buCur, ok = (k === 'bal') === p.bal;
+  Array.prototype.forEach.call(el('bu-choices').children, function(o){ o.disabled = true; if((o.dataset.k === 'bal') === p.bal) o.classList.add('reveal'); });
+  btn.classList.add(ok ? 'yes' : 'no');
+  buScore.add(ok); buTally[p.tp.type].t++; if(ok) buTally[p.tp.type].r++;
+  buRenderTally();
+  var F = p.forces;
+  function row(name, a, b, pos, neg, v){
+    var has = F.some(function(f){ return f.d === a || f.d === b; });
+    return '<tr><td>' + name + '</td><td>' + (has ? listDir(F,a) + ' ' + pos + ' − ' + listDir(F,b) + ' ' + neg : 'no ' + name.toLowerCase() + ' forces') + '</td><td class="z">' + netWord(v,pos,neg) + '</td></tr>';
+  }
+  var rows = row('Vertical','up','down','up','down',p.vy) + row('Horizontal','right','left','right','left',p.vx);
+  var table = '<table class="ledger"><thead><tr><th>Direction</th><th>Add up</th><th>Total</th></tr></thead><tbody>' + rows + '</tbody></table>';
+  var why;
+  if(p.bal){
+    why = 'Both directions cancel, so F<sub>net</sub> = 0. The object is either at rest or moving at a constant velocity.';
+    if(p.tp.name === 'puck') why += ' The puck is still sliding, but nothing pushes it forward and nothing needs to.';
+    if(p.tp.type === 'multi') why += ' Forces pointing the same way add together before you compare.';
+  } else {
+    var parts = [];
+    if(p.vy !== 0) parts.push('the vertical forces leave ' + netWord(p.vy,'up','down'));
+    if(p.vx !== 0) parts.push('the horizontal forces leave ' + netWord(p.vx,'right','left'));
+    why = 'Not everything cancels: ' + parts.join(', and ') + '. That’s an unbalanced force, so the velocity is changing.';
+    if(p.tp.type === 'single') why = 'There is only one force, so nothing can cancel it. F<sub>net</sub> = ' + netWord(p.vy,'up','down') + '. The object is accelerating downward, even at the top of a toss.';
+    if(!ok && p.vy === 0 && p.vx !== 0) why += ' The vertical forces do cancel, but that’s only half the check.';
+    if(!ok && p.tp.type !== 'single' && Math.abs(p.vx) + Math.abs(p.vy) <= 10) why += ' The difference is small, which is why the arrows look almost equal. Go by the numbers.';
+  }
+  setFb(el('bu-fb'), ok ? 'good' : 'bad', '<p><b>' + (ok ? 'Right.' : 'Not this one.') + '</b> ' + why + '</p>' + table);
+}
+Array.prototype.forEach.call(el('bu-choices').children, function(b){
+  b.addEventListener('click', function(){ buAnswer(b.dataset.k, b); });
+});
+el('bu-next').addEventListener('click', buNew);
+
+/* =========================================================
+   quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'An object has balanced forces acting on it. Which statement <b>must</b> be true?',
+    opts:['It is at rest','It is moving at a constant velocity','Its velocity is not changing','No forces act on it'],
+    ans:2,
+    why:'Balanced forces mean no acceleration, so the velocity stays the same. That could be at rest or moving steadily, so neither of the first two must be true. And balanced forces are still forces.' },
+  { stem:'A free-body diagram shows F<sub>N</sub> = 50 N up, F<sub>g</sub> = 50 N down, F<sub>app</sub> = 30 N right, and F<sub>f</sub> = 20 N left. The forces are…',
+    opts:['Balanced, because the vertical forces cancel','Unbalanced, with F<sub>net</sub> = 10 N right','Unbalanced, with F<sub>net</sub> = 50 N right','Balanced, because there are two forces in each direction'],
+    ans:1,
+    why:'Vertical: 50 − 50 = 0. Horizontal: 30 − 20 = 10 N right. One direction that doesn’t cancel is enough to make the forces unbalanced.' },
+  { stem:'Two forces act to the right on a box, 25 N and 15 N. Friction acts to the left with 40 N. The vertical forces cancel. The forces are…',
+    opts:['Balanced','Unbalanced, 40 N right','Unbalanced, 15 N left','Unbalanced, 25 N right'],
+    ans:0,
+    why:'Forces in the same direction add: 25 + 15 = 40 N right, which exactly cancels 40 N left. F<sub>net</sub> = 0.' },
+  { stem:'A hockey puck slides across frictionless ice at 6 m/s. Which forces belong on its free-body diagram?',
+    opts:['Gravity and normal force only','Gravity, normal force, and a forward force of motion','A forward force only','No forces, since it moves at a constant speed'],
+    ans:0,
+    why:'Nothing pushes the puck forward once it leaves the stick. It keeps moving because of inertia. Gravity pulls down and the ice pushes up, and those balance.' },
+  { stem:'A skydiver falls at a constant speed. Compare the air resistance on her to her weight.',
+    opts:['Air resistance is greater','Air resistance is less','They are equal','There is no air resistance at constant speed'],
+    ans:2,
+    why:'Constant speed in a straight line means balanced forces, so F<sub>air</sub> up must equal F<sub>g</sub> down.' },
+  { stem:'A ball is thrown straight up. At the very top, its velocity is 0 m/s. Are the forces on it balanced?',
+    opts:['Yes, because it has stopped','Yes, because gravity has run out','No, because gravity is the only force acting','It depends on how hard it was thrown'],
+    ans:2,
+    why:'Only F<sub>g</sub> acts (ignoring air resistance), and nothing cancels it. Stopping for an instant isn’t the same as balanced: the ball’s velocity keeps changing as it falls back down.' }
+];
+
+(function buildQuiz(){
+  var host = el('quiz'), html = '', answered = 0, right = 0;
+  QUIZ.forEach(function(q,qi){
+    html += '<div class="q"><p class="stem">' + (qi+1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o,oi){ html += '<button class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  html += '<div class="quiz-sum" id="quiz-sum" aria-live="polite"></div>';
+  host.innerHTML = html;
+  Array.prototype.forEach.call(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      Array.prototype.forEach.call(el('q'+qi).querySelectorAll('.opt'), function(other,i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      answered++; if(oi === q.ans) right++;
+      setFb(el('qfb'+qi), oi === q.ans ? 'good' : 'bad',
+        '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+      el('quiz-sum').textContent = right + ' of ' + answered + ' correct' + (answered === QUIZ.length ? ' · reload the page to try again' : '');
+    });
+  });
+})();
+
+/* boot */
+buRenderTally();
+buNew();
+</script>
+</body>
+</html>
