@@ -291,10 +291,10 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
   <div class="tbl"><table class="fkey">
     <thead><tr><th>Force</th><th>Symbol</th><th>Where it comes from</th></tr></thead>
     <tbody>
-      <tr><td><span class="swatch" style="background:var(--f-g)"></span>Gravity (weight)</td><td><span class="F g">F<sub>g</sub></span></td><td>Earth pulling down on the object. Always there, always straight down.</td></tr>
-      <tr><td><span class="swatch" style="background:var(--f-n)"></span>Normal force</td><td><span class="F n">F<sub>N</sub></span></td><td>A surface pushing back on an object resting on it, straight out from the surface.</td></tr>
-      <tr><td><span class="swatch" style="background:var(--f-f)"></span>Friction</td><td><span class="F f">F<sub>f</sub></span></td><td>A surface resisting sliding. Points opposite the motion (or the attempted motion).</td></tr>
-      <tr><td><span class="swatch" style="background:var(--f-t)"></span>Tension</td><td><span class="F t">F<sub>T</sub></span></td><td>A rope, string, cable, or chain pulling. Always a pull, along the rope.</td></tr>
+      <tr><td><span class="swatch" style="background:var(--f-g)"></span>Gravity (weight)</td><td><span class="F g">F<sub>grav</sub></span></td><td>Earth pulling down on the object. Always there, always straight down.</td></tr>
+      <tr><td><span class="swatch" style="background:var(--f-n)"></span>Normal force</td><td><span class="F n">F<sub>norm</sub></span></td><td>A surface pushing back on an object resting on it, straight out from the surface.</td></tr>
+      <tr><td><span class="swatch" style="background:var(--f-f)"></span>Friction</td><td><span class="F f">F<sub>frict</sub></span></td><td>A surface resisting sliding. Points opposite the motion (or the attempted motion).</td></tr>
+      <tr><td><span class="swatch" style="background:var(--f-t)"></span>Tension</td><td><span class="F t">F<sub>tens</sub></span></td><td>A rope, string, cable, or chain pulling. Always a pull, along the rope.</td></tr>
       <tr><td><span class="swatch" style="background:var(--f-a)"></span>Applied force</td><td><span class="F a">F<sub>app</sub></span></td><td>A person or another object pushing or pulling directly.</td></tr>
       <tr><td><span class="swatch" style="background:var(--f-air)"></span>Air resistance</td><td><span class="F air">F<sub>air</sub></span></td><td>Air pushing against a moving object. Points opposite the motion.</td></tr>
     </tbody>
@@ -354,9 +354,9 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
   <div class="sec-head"><h2>Watch-outs</h2></div>
   <ul class="wo">
     <li><span class="myth">Balanced means the object isn't moving.</span><span class="fact">Balanced means the velocity isn't <b>changing</b>. The object could be at rest, or it could be moving at a steady speed in a straight line. An FBD alone can't tell you which.</span></li>
-    <li><span class="myth">A moving object needs a force arrow pointing the way it moves.</span><span class="fact">There is no "force of motion." A puck sliding across ice has only F<sub>g</sub> and F<sub>N</sub> on it. It keeps moving because of inertia, not because something pushes it.</span></li>
+    <li><span class="myth">A moving object needs a force arrow pointing the way it moves.</span><span class="fact">There is no "force of motion." A puck sliding across ice has only F<sub>grav</sub> and F<sub>norm</sub> on it. It keeps moving because of inertia, not because something pushes it.</span></li>
     <li><span class="myth">The vertical forces cancel, so it's balanced.</span><span class="fact">Check <b>both</b> directions. Most diagrams have balanced vertical forces; the horizontal forces are usually where the answer is.</span></li>
-    <li><span class="myth">One force by itself can be balanced.</span><span class="fact">With only one force, there is nothing to cancel it. A ball in free fall has only F<sub>g</sub>, so its forces are always unbalanced, even at the top of its flight.</span></li>
+    <li><span class="myth">One force by itself can be balanced.</span><span class="fact">With only one force, there is nothing to cancel it. A ball in free fall has only F<sub>grav</sub>, so its forces are always unbalanced, even at the top of its flight.</span></li>
     <li><span class="myth">The arrows look the same length, so they're equal.</span><span class="fact">Read the labels. Small differences are easy to miss by eye, and any difference at all makes the forces unbalanced.</span></li>
   </ul>
 </section>
@@ -401,10 +401,10 @@ var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: r
 
 /* force colours and labels (match the CSS variables) */
 var FORCE = {
-  g:  { c:'#B23A2B', sym:'F<tspan baseline-shift="sub" font-size="70%">g</tspan>',   html:'F<sub>g</sub>',   name:'gravity' },
-  n:  { c:'#1B6CA8', sym:'F<tspan baseline-shift="sub" font-size="70%">N</tspan>',   html:'F<sub>N</sub>',   name:'normal force' },
-  f:  { c:'#A86A0C', sym:'F<tspan baseline-shift="sub" font-size="70%">f</tspan>',   html:'F<sub>f</sub>',   name:'friction' },
-  t:  { c:'#1E7F5C', sym:'F<tspan baseline-shift="sub" font-size="70%">T</tspan>',   html:'F<sub>T</sub>',   name:'tension' },
+  g:  { c:'#B23A2B', sym:'F<tspan baseline-shift="sub" font-size="70%">grav</tspan>',   html:'F<sub>grav</sub>',   name:'gravity' },
+  n:  { c:'#1B6CA8', sym:'F<tspan baseline-shift="sub" font-size="70%">norm</tspan>',   html:'F<sub>norm</sub>',   name:'normal force' },
+  f:  { c:'#A86A0C', sym:'F<tspan baseline-shift="sub" font-size="70%">frict</tspan>',   html:'F<sub>frict</sub>',   name:'friction' },
+  t:  { c:'#1E7F5C', sym:'F<tspan baseline-shift="sub" font-size="70%">tens</tspan>',   html:'F<sub>tens</sub>',   name:'tension' },
   a:  { c:'#6B45B0', sym:'F<tspan baseline-shift="sub" font-size="70%">app</tspan>', html:'F<sub>app</sub>', name:'applied force' },
   air:{ c:'#3E7C8A', sym:'F<tspan baseline-shift="sub" font-size="70%">air</tspan>', html:'F<sub>air</sub>', name:'air resistance' }
 };
@@ -622,7 +622,7 @@ var QUIZ = [
     opts:['It is at rest','It is moving at a constant velocity','Its velocity is not changing','No forces act on it'],
     ans:2,
     why:'Balanced forces mean no acceleration, so the velocity stays the same. That could be at rest or moving steadily, so neither of the first two must be true. And balanced forces are still forces.' },
-  { stem:'A free-body diagram shows F<sub>N</sub> = 50 N up, F<sub>g</sub> = 50 N down, F<sub>app</sub> = 30 N right, and F<sub>f</sub> = 20 N left. The forces are…',
+  { stem:'A free-body diagram shows F<sub>norm</sub> = 50 N up, F<sub>grav</sub> = 50 N down, F<sub>app</sub> = 30 N right, and F<sub>frict</sub> = 20 N left. The forces are…',
     opts:['Balanced, because the vertical forces cancel','Unbalanced, with F<sub>net</sub> = 10 N right','Unbalanced, with F<sub>net</sub> = 50 N right','Balanced, because there are two forces in each direction'],
     ans:1,
     why:'Vertical: 50 − 50 = 0. Horizontal: 30 − 20 = 10 N right. One direction that doesn’t cancel is enough to make the forces unbalanced.' },
@@ -637,11 +637,11 @@ var QUIZ = [
   { stem:'A skydiver falls at a constant speed. Compare the air resistance on her to her weight.',
     opts:['Air resistance is greater','Air resistance is less','They are equal','There is no air resistance at constant speed'],
     ans:2,
-    why:'Constant speed in a straight line means balanced forces, so F<sub>air</sub> up must equal F<sub>g</sub> down.' },
+    why:'Constant speed in a straight line means balanced forces, so F<sub>air</sub> up must equal F<sub>grav</sub> down.' },
   { stem:'A ball is thrown straight up. At the very top, its velocity is 0 m/s. Are the forces on it balanced?',
     opts:['Yes, because it has stopped','Yes, because gravity has run out','No, because gravity is the only force acting','It depends on how hard it was thrown'],
     ans:2,
-    why:'Only F<sub>g</sub> acts (ignoring air resistance), and nothing cancels it. Stopping for an instant isn’t the same as balanced: the ball’s velocity keeps changing as it falls back down.' }
+    why:'Only F<sub>grav</sub> acts (ignoring air resistance), and nothing cancels it. Stopping for an instant isn’t the same as balanced: the ball’s velocity keeps changing as it falls back down.' }
 ];
 
 (function buildQuiz(){
