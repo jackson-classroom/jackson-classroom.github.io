@@ -178,6 +178,15 @@ td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabu
 .person .ph{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
 .person .pd{color:var(--indigo-dk)}
 .person .pp{color:var(--amber-dk)}
+.step-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin:0 0 4px}
+.presets{display:flex;flex-direction:column;gap:6px}
+.preset{display:flex;gap:10px;align-items:flex-start;text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);font-family:var(--body);font-size:14.5px;letter-spacing:0;padding:9px 12px;line-height:1.35}
+.preset:hover{background:#fff;color:var(--ink);border-color:var(--indigo)}
+.preset .dot{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--line);flex:none;margin-top:2px}
+.preset small{display:block;color:var(--mute);font-size:12.5px;font-family:var(--mono);letter-spacing:.02em}
+.preset[aria-pressed="true"]{border-color:var(--indigo);background:var(--indigo-lite)}
+.preset[aria-pressed="true"] .dot{border:4px solid var(--indigo);background:#fff}
+.build-btn{width:100%;margin-top:14px}
 .chk{display:flex;align-items:center;gap:8px;font-size:14.5px;color:var(--ink2);margin:12px 0 0;cursor:pointer}
 .chk input{width:17px;height:17px;accent-color:var(--indigo)}
 
@@ -265,6 +274,10 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
   .lo:nth-child(3){border-left:none}
   .lo:nth-child(n+3){border-top:1px solid var(--line-soft)}
   .seg,.pb,.dash{grid-template-columns:1fr}
+  .seg{display:flex;flex-direction:column;gap:16px}
+  .seg-left,.seg-right{display:contents}
+  .step1{order:1} .viz{order:2} .step2{order:3} .person{order:4;margin-top:0}
+  .build-btn{margin-top:0}
   .persona{position:static}
   .stats{grid-template-columns:1fr 1fr}
 }
@@ -428,7 +441,7 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
     <p class="prod-desc" id="prod-desc"></p>
 
     <div class="seg">
-      <div>
+      <div class="seg-left"><div class="viz">
         <svg class="crowd" id="crowd" viewBox="0 0 400 200" role="img" aria-label="200 dots, one per potential customer"></svg>
         <div class="legend">
           <span><i style="background:#fff;border:1.5px solid #C9CDD5"></i>outside segment</span>
@@ -444,15 +457,26 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
         </div>
         <div class="fb show hint coach" id="coach"></div>
         <label class="chk"><input type="checkbox" id="show-missed"> Show likely buyers outside my segment</label>
-      </div>
+      </div></div>
 
-      <div>
-        <div id="filters"></div>
-        <div class="btn-row" style="margin-top:4px"><button class="ghost" id="seg-clear">Clear filters</button></div>
+      <div class="seg-right">
+        <div class="step1">
+        <div class="step-h">Step 1 · Compare ready-made segments</div>
+        <p class="smallprint" style="margin:0 0 8px">Click each one, top to bottom. Watch the dark dots and the cost per buyer.</p>
+        <div class="presets" id="presets"></div>
+        </div>
+        <div class="step2">
+        <button class="ghost build-btn" id="seg-build" aria-expanded="false" aria-controls="builder">Step 2 · Build your own segment</button>
+        <div id="builder" hidden>
+          <p class="smallprint" style="margin:12px 0 10px">The chips start from the segment you picked. Within one row, a customer can match <b>any</b> chip you pick. Across rows, they must match <b>every</b> row.</p>
+          <div id="filters"></div>
+          <div class="btn-row" style="margin-top:4px"><button class="ghost" id="seg-clear">Clear filters</button></div>
+        </div>
+        </div>
         <div class="person" id="person"><span class="ph">Customer data card</span><br><span class="smallprint">Tap any dot to see what a business might know about that person.</span></div>
       </div>
     </div>
-    <p class="smallprint" style="margin:14px 0 0">How it works: within one row of filters, a customer can match <b>any</b> chip you pick. Across rows, they must match <b>every</b> row. The town and its buyers are made up, but the trade-off is real.</p>
+    <p class="smallprint" style="margin:14px 0 0">The town and its buyers are made up, but the trade-off is real.</p>
   </div>
 
   <div class="note"><b>The trade-off you just saw:</b> a narrow segment has a high hit rate and a low cost per buyer, but if you go too narrow you miss buyers. A good target segment is the group where most of your likely buyers are, without paying to reach people who will never buy.</div>
@@ -870,11 +894,26 @@ function Deck(bank){
 
   var PRODUCTS = [
     {name:'Peak Trail Shoes', desc:'$160 trail-running shoes made from recycled materials.', base:-4.9,
-     w:{interest:{'Outdoors':3.4,'Fitness':2.9}, value:{'Sustainability':1.4,'Status':0.6,'Saving money':-1.2}, income:{'Over $100k':1.2,'$50k–$100k':0.5,'Under $50k':-0.7}, age:{'13–17':-0.8,'18–24':0.3,'25–34':0.7,'35–49':0.5,'65+':-1.5}, loc:{'Rural':0.4,'Suburban':0.2}}},
+     w:{interest:{'Outdoors':3.4,'Fitness':2.9}, value:{'Sustainability':1.4,'Status':0.6,'Saving money':-1.2}, income:{'Over $100k':1.2,'$50k–$100k':0.5,'Under $50k':-0.7}, age:{'13–17':-0.8,'18–24':0.3,'25–34':0.7,'35–49':0.5,'65+':-1.5}, loc:{'Rural':0.4,'Suburban':0.2}},
+     presets:[
+       {label:'Everyone in town', sub:'No filters', f:{}},
+       {label:'Ages 18–49', sub:'Demographic: age', f:{age:['18–24','25–34','35–49']}},
+       {label:'Into outdoors or fitness', sub:'Psychographic: interests', f:{interest:['Outdoors','Fitness']}},
+       {label:'Into outdoors or fitness, household income $50k or more', sub:'Psychographic + demographic', f:{interest:['Outdoors','Fitness'], income:['$50k–$100k','Over $100k']}}]},
     {name:'Dorm Chef', desc:'$9 microwave meal kits designed for college dorm rooms.', base:-3.8,
-     w:{life:{'Student':1.6}, age:{'18–24':2.4,'13–17':-1.6,'35–49':-0.8,'50–64':-1.2,'65+':-1.5}, value:{'Saving money':1.0,'Convenience':1.2}, interest:{'Cooking':0.6,'Gaming':0.4}, loc:{'Urban':0.3}}},
+     w:{life:{'Student':1.6}, age:{'18–24':2.4,'13–17':-1.6,'35–49':-0.8,'50–64':-1.2,'65+':-1.5}, value:{'Saving money':1.0,'Convenience':1.2}, interest:{'Cooking':0.6,'Gaming':0.4}, loc:{'Urban':0.3}},
+     presets:[
+       {label:'Everyone in town', sub:'No filters', f:{}},
+       {label:'Household income under $50k', sub:'Demographic: income', f:{income:['Under $50k']}},
+       {label:'Students', sub:'Psychographic: lifestyle', f:{life:['Student']}},
+       {label:'Students ages 18–24', sub:'Psychographic + demographic', f:{life:['Student'], age:['18–24']}}]},
     {name:'QuickPlate', desc:'A $14-a-month app that plans 20-minute family dinners and builds the grocery list.', base:-4.2,
-     w:{life:{'Parent':2.7,'Busy professional':0.8}, value:{'Convenience':1.5}, interest:{'Cooking':0.8}, age:{'25–34':0.5,'35–49':0.6,'13–17':-2.5,'65+':-1.0}, income:{'$50k–$100k':0.4,'Over $100k':0.3}}}
+     w:{life:{'Parent':2.7,'Busy professional':0.8}, value:{'Convenience':1.5}, interest:{'Cooking':0.8}, age:{'25–34':0.5,'35–49':0.6,'13–17':-2.5,'65+':-1.0}, income:{'$50k–$100k':0.4,'Over $100k':0.3}},
+     presets:[
+       {label:'Everyone in town', sub:'No filters', f:{}},
+       {label:'Ages 25–49', sub:'Demographic: age', f:{age:['25–34','35–49']}},
+       {label:'Parents or busy professionals', sub:'Psychographic: lifestyle', f:{life:['Parent','Busy professional']}},
+       {label:'Parents ages 25–49', sub:'Psychographic + demographic', f:{life:['Parent'], age:['25–34','35–49']}}]}
   ];
   people.forEach(function(p){
     p.buy = PRODUCTS.map(function(pr, k){
@@ -884,7 +923,7 @@ function Deck(bank){
     });
   });
 
-  var prod = 0, sel = {}, chosen = null;
+  var prod = 0, sel = {}, chosen = null, curPreset = 0;
   CATS.forEach(function(c){ sel[c.key] = {}; });
 
   /* product tabs */
@@ -892,7 +931,7 @@ function Deck(bank){
   PRODUCTS.forEach(function(pr, k){
     var b = document.createElement('button'); b.className = 'tab'; b.setAttribute('role','tab');
     b.setAttribute('aria-selected', k === 0 ? 'true' : 'false'); b.textContent = pr.name;
-    b.onclick = function(){ prod = k; Array.prototype.forEach.call(tabs.children, function(x,j){ x.setAttribute('aria-selected', j===k ? 'true':'false'); }); render(); };
+    b.onclick = function(){ prod = k; Array.prototype.forEach.call(tabs.children, function(x,j){ x.setAttribute('aria-selected', j===k ? 'true':'false'); }); buildPresets(); applyPreset(0); };
     tabs.appendChild(b);
   });
 
@@ -905,16 +944,43 @@ function Deck(bank){
     c.opts.forEach(function(o){
       var b = document.createElement('button'); b.className = 'fchip' + (c.kind === 'psy' ? ' psy' : '');
       b.textContent = o; b.setAttribute('aria-pressed','false');
-      b.onclick = function(){ var on = !sel[c.key][o]; sel[c.key][o] = on; b.setAttribute('aria-pressed', on ? 'true':'false'); render(); };
+      b.onclick = function(){ var on = !sel[c.key][o]; sel[c.key][o] = on; b.setAttribute('aria-pressed', on ? 'true':'false'); curPreset = -1; render(); };
       row.appendChild(b);
     });
     g.appendChild(row); fbox.appendChild(g);
   });
-  el('seg-clear').onclick = function(){
-    CATS.forEach(function(c){ sel[c.key] = {}; });
-    Array.prototype.forEach.call(fbox.querySelectorAll('.fchip'), function(b){ b.setAttribute('aria-pressed','false'); });
-    render();
+  function syncChips(){
+    Array.prototype.forEach.call(fbox.querySelectorAll('.fgroup'), function(g, i){
+      var key = CATS[i].key;
+      Array.prototype.forEach.call(g.querySelectorAll('.fchip'), function(b){ b.setAttribute('aria-pressed', sel[key][b.textContent] ? 'true' : 'false'); });
+    });
+  }
+  el('seg-clear').onclick = function(){ applyPreset(0); };
+
+  /* Step 1: ready-made segments (the scaffold). Step 2: the full filter grid. */
+  var pbox = el('presets');
+  function buildPresets(){
+    pbox.innerHTML = '';
+    PRODUCTS[prod].presets.forEach(function(ps, i){
+      var b = document.createElement('button'); b.className = 'preset'; b.setAttribute('aria-pressed','false');
+      b.innerHTML = '<span class="dot"></span><span><b>' + esc(ps.label) + '</b><small>' + esc(ps.sub) + '</small></span>';
+      b.onclick = function(){ applyPreset(i); };
+      pbox.appendChild(b);
+    });
+  }
+  function applyPreset(i){
+    var f = PRODUCTS[prod].presets[i].f;
+    CATS.forEach(function(c){ sel[c.key] = {}; (f[c.key] || []).forEach(function(o){ sel[c.key][o] = true; }); });
+    curPreset = i; syncChips(); render();
+  }
+  var buildBtn = el('seg-build');
+  buildBtn.onclick = function(){
+    var open = buildBtn.getAttribute('aria-expanded') !== 'true';
+    buildBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    el('builder').hidden = !open;
+    buildBtn.textContent = open ? 'Hide the filters' : 'Step 2 · Build your own segment';
   };
+  buildPresets();
   el('show-missed').onchange = render;
 
   /* dots: shuffled positions so attributes don't cluster */
@@ -948,6 +1014,7 @@ function Deck(bank){
 
   function render(){
     var pr = PRODUCTS[prod], showMissed = el('show-missed').checked;
+    Array.prototype.forEach.call(pbox.children, function(b, i){ b.setAttribute('aria-pressed', i === curPreset ? 'true' : 'false'); });
     el('prod-desc').innerHTML = '<b>' + esc(pr.name) + ':</b> ' + esc(pr.desc) + ' Who would actually buy this?';
     var n = 0, b = 0, B = 0;
     people.forEach(function(p, k){
@@ -972,7 +1039,7 @@ function Deck(bank){
     var nd = 0, np = 0; CATS.forEach(function(c){ if(active(c.key).length){ if(c.kind === 'demo') nd++; else np++; } });
     var reach = B ? b/B : 0, msg;
     if(nd + np === 0){
-      msg = '<b>You’re marketing to all 200 people.</b> Only ' + B + ' are likely to buy ' + esc(pr.name) + ', so every buyer costs ' + money2(baseCpb) + ' to reach. Pick filters that describe who would actually want it.';
+      msg = '<b>You’re marketing to all 200 people.</b> Only ' + B + ' are likely to buy ' + esc(pr.name) + ', so every buyer costs ' + money2(baseCpb) + ' to reach. Click the next segment and watch what happens to the cost per buyer.';
     } else if(n === 0){
       msg = '<b>No one in town matches every row.</b> Remove a chip, or add another option to one of the rows.';
     } else if(b === 0){
