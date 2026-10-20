@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.1 Marketing to Customers | AP Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1D2433; --ink2:#3F4859; --mute:#626B7C;
+  --wash:#F1EEE8; --card:#FCFBF9; --line:#D5CFC4; --line-soft:#E6E1D8;
+  --indigo:#3A55A0; --indigo-dk:#273C78; --indigo-lite:#DCE3F4;   /* demographic + brand */
+  --amber:#A8670F; --amber-dk:#7A4A08; --amber-lite:#F6E7CB;      /* psychographic */
+  --ok:#2E6B47; --ok-bg:#E3F0E7;
+  --no:#A63D2F; --no-bg:#F7E5E1;
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:64px}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(241,238,232,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:900px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+.bar a{color:inherit;text-decoration:none}
+
+header.hero{padding:60px 0 36px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--indigo-dk)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(40px,7vw,68px);line-height:1;margin:16px 0 0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--indigo)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:50ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: the four learning objectives as a path */
+.board{margin:34px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--card);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.lo{padding:18px 18px 20px;border-left:1px solid var(--line-soft);text-decoration:none;color:var(--ink);display:block;position:relative}
+.lo:first-child{border-left:none}
+.lo:hover{background:#fff}
+.lo .code{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--indigo-dk);background:var(--indigo-lite);border-radius:2px;padding:2px 7px}
+.lo .lq{display:block;font-family:var(--display);font-weight:600;font-size:19px;line-height:1.2;margin:12px 0 6px;letter-spacing:-.01em}
+.lo .d{display:block;font-size:14px;color:var(--mute);line-height:1.45}
+.board-foot{grid-column:1/-1;border-top:1px solid var(--line-soft);padding:10px 18px;font-family:var(--mono);font-size:12px;color:var(--ink2);display:flex;gap:6px 18px;flex-wrap:wrap}
+.board-foot b{color:var(--indigo-dk);font-weight:600}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:22px 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--indigo);color:var(--indigo-dk)}
+
+section{padding:46px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo-dk);background:var(--indigo-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+.tag.amber{color:var(--amber-dk);background:var(--amber-lite)}
+.tag.plain{color:var(--ink2);background:var(--line-soft)}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(27px,4.2vw,38px);line-height:1.08;margin:0;letter-spacing:-.02em}
+h3{font-family:var(--display);font-weight:600;font-size:20px;letter-spacing:-.01em;margin:34px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--indigo-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.nw{white-space:nowrap}
+.lo-line{font-family:var(--mono);font-size:13px;color:var(--ink2);margin:10px 0 0;max-width:70ch}
+.lo-line b{color:var(--indigo-dk);font-weight:600}
+
+.def{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:0 4px 4px 0;padding:16px 20px;margin:22px 0}
+.def .term{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.def p{margin:6px 0 0;font-size:17px}
+.def .ek{font-family:var(--mono);font-size:11px;color:var(--mute);float:right;margin-left:12px}
+
+.note{border-left:3px solid var(--amber);background:var(--amber-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.pf{border:1px solid var(--line);background:var(--card);border-radius:4px;padding:18px 20px;margin:24px 0}
+.pf .pf-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ok);margin-bottom:4px}
+
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:22px 0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:22px 0}
+.mini{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px 18px}
+.mini .n{font-family:var(--mono);font-size:12px;color:var(--indigo-dk)}
+.mini h4{font-family:var(--body);font-size:16px;font-weight:600;margin:6px 0 4px}
+.mini p{margin:0;font-size:15.5px;color:var(--ink2)}
+
+.kind{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--indigo);border-radius:4px;padding:18px 20px}
+.kind.psy{border-top-color:var(--amber)}
+.kind .kh{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.01em;color:var(--indigo-dk)}
+.kind.psy .kh{color:var(--amber-dk)}
+.kind .ks{font-size:15px;color:var(--ink2);margin:4px 0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--mono);font-size:12.5px;border-radius:2px;padding:3px 8px;background:var(--indigo-lite);color:var(--indigo-dk)}
+.kind.psy .chip{background:var(--amber-lite);color:var(--amber-dk)}
+.kind .tip{font-size:14.5px;color:var(--mute);margin:12px 0 0}
+
+.tools-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:20px 0}
+.tl{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 18px}
+.tl .tl-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+.tl ul{margin:0;padding-left:18px;font-size:15.5px}
+.tl li{margin:4px 0}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.prompt{font-size:clamp(18px,2.6vw,21px);font-weight:500;line-height:1.45;margin:4px 0 0}
+.prompt .who{display:block;font-family:var(--mono);font-size:12px;color:var(--mute);font-weight:400;margin-bottom:6px;letter-spacing:.04em}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F7F6F3;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--indigo-dk);border-color:var(--indigo-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--indigo)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--indigo);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+.pick2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.pbtn{background:#fff;color:var(--ink);border:1px solid var(--line);font-size:14px;padding:13px 10px;text-align:center}
+.pbtn:hover{background:#fff;color:var(--ink);border-color:var(--indigo)}
+.pbtn.demo{border-top:3px solid var(--indigo)}
+.pbtn.psy{border-top:3px solid var(--amber)}
+.pbtn.yes{background:var(--ok-bg);border-color:var(--ok);color:#1C4A30}
+.pbtn.no{background:var(--no-bg);border-color:var(--no);color:#7A2B20}
+.pbtn.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.pbtn[disabled]{cursor:default}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1C4A30}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7A2B20}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--indigo);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb p{margin:6px 0 0}
+.fb p:first-child{margin-top:0}
+
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45;letter-spacing:0}
+.opt:hover{border-color:var(--indigo);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.96}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto;margin:18px 0;-webkit-overflow-scrolling:touch}
+.tbl table{margin:0}
+
+/* ---------- segmentation lab ---------- */
+.seg{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px;align-items:start}
+.prod-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 6px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px;letter-spacing:.02em}
+.tab:hover{background:var(--line-soft);color:var(--ink);border-color:var(--indigo)}
+.tab[aria-selected="true"]{background:var(--ink);color:#F7F6F3;border-color:var(--ink)}
+.prod-desc{font-size:15.5px;color:var(--ink2);margin:8px 0 14px}
+.crowd{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--line-soft);border-radius:3px;touch-action:manipulation}
+.crowd circle{cursor:pointer}
+.legend{display:flex;gap:6px 16px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:var(--ink2);margin:10px 0 0}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%}
+.fgroup{margin:0 0 12px}
+.fgroup .fh{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 6px;display:flex;align-items:center;gap:8px}
+.fgroup .fh.demo{color:var(--indigo-dk)}
+.fgroup .fh.psy{color:var(--amber-dk)}
+.fchips{display:flex;flex-wrap:wrap;gap:5px}
+.fchip{font-family:var(--body);font-size:13.5px;letter-spacing:0;background:#fff;color:var(--ink2);border:1px solid var(--line);border-radius:14px;padding:4px 10px}
+.fchip:hover{background:#fff;color:var(--ink);border-color:var(--indigo)}
+.fchip[aria-pressed="true"]{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.fchip.psy[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:#fff}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0 0}
+.stat{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:9px 11px}
+.stat .sl{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);line-height:1.3}
+.stat .sv{font-family:var(--display);font-weight:700;font-size:24px;line-height:1.2;font-variant-numeric:tabular-nums}
+.stat .ss{display:block;font-family:var(--mono);font-size:11.5px;color:var(--mute)}
+.coach{margin-top:12px}
+.person{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px 12px;margin-top:12px;font-size:14px;min-height:64px}
+.person .ph{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.person .pd{color:var(--indigo-dk)}
+.person .pp{color:var(--amber-dk)}
+.chk{display:flex;align-items:center;gap:8px;font-size:14.5px;color:var(--ink2);margin:12px 0 0;cursor:pointer}
+.chk input{width:17px;height:17px;accent-color:var(--indigo)}
+
+/* ---------- profile builder ---------- */
+.pb{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.pb fieldset{border:none;margin:0 0 14px;padding:0}
+.pb legend{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:0;margin:0 0 6px}
+.pb legend.demo{color:var(--indigo-dk)} .pb legend.psy{color:var(--amber-dk)} .pb legend.gen{color:var(--ink2)}
+.fld{display:block;margin:0 0 8px}
+.fld span{display:block;font-size:13.5px;color:var(--ink2);margin-bottom:2px}
+.fld input,.fld textarea,.fld select{width:100%;font-family:var(--body);font-size:15.5px;border:1px solid #9AA2AE;border-radius:3px;padding:7px 9px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 2px rgba(29,36,51,.10)}
+.fld textarea{min-height:58px;resize:vertical;line-height:1.45}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+::placeholder{font-style:italic;font-size:14px;color:#80889A;opacity:1}
+.persona{background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden;position:sticky;top:70px}
+.persona-top{display:flex;gap:14px;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line-soft);background:var(--card)}
+.avatar{width:54px;height:54px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:21px;flex:none}
+.persona-name{font-family:var(--display);font-weight:700;font-size:22px;line-height:1.15;letter-spacing:-.01em}
+.persona-sub{font-size:13.5px;color:var(--mute)}
+.persona-body{padding:14px 18px 16px}
+.pblock{margin:0 0 12px}
+.pblock .pbh{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}
+.pblock.demo .pbh{color:var(--indigo-dk)} .pblock.psy .pbh{color:var(--amber-dk)} .pblock.gen .pbh{color:var(--ink2)}
+.pblock .pv{font-size:15px;line-height:1.45}
+.pblock .empty{color:#9AA0AC;font-style:italic}
+.pblock ol{margin:2px 0 0;padding-left:20px;font-size:15px}
+.checks{list-style:none;padding:0;margin:14px 0 0;font-size:14.5px}
+.checks li{display:flex;gap:8px;align-items:baseline;margin:5px 0}
+.checks .ic{font-family:var(--mono);font-size:12px;width:18px;flex:none;text-align:center;border-radius:2px}
+.checks .y .ic{color:var(--ok)} .checks .n .ic{color:var(--no)} .checks .w .ic{color:var(--amber-dk)}
+.qflag{font-family:var(--mono);font-size:11px;letter-spacing:.04em;border-radius:2px;padding:1px 6px;margin-left:6px;white-space:nowrap}
+.qflag.open{background:var(--ok-bg);color:var(--ok)}
+.qflag.closed{background:var(--amber-lite);color:var(--amber-dk)}
+.qflag.lead{background:var(--no-bg);color:var(--no)}
+
+/* ---------- relationship dashboard ---------- */
+.dash{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.slider{margin:0 0 12px}
+.slider label{display:flex;justify-content:space-between;gap:10px;font-size:14.5px;color:var(--ink2)}
+.slider label b{font-family:var(--mono);font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.slider input{width:100%;accent-color:var(--indigo)}
+.tactics{display:flex;flex-direction:column;gap:6px;margin:6px 0 0}
+.tact{display:flex;gap:10px;align-items:flex-start;text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);font-family:var(--body);font-size:14.5px;letter-spacing:0;padding:9px 12px;line-height:1.4}
+.tact:hover{background:#fff;color:var(--ink);border-color:var(--indigo)}
+.tact .box{font-family:var(--mono);font-size:12px;width:16px;height:16px;border:1.5px solid var(--line);border-radius:2px;flex:none;margin-top:2px;display:flex;align-items:center;justify-content:center}
+.tact[aria-pressed="true"]{border-color:var(--ok);background:var(--ok-bg)}
+.tact[aria-pressed="true"] .box{background:var(--ok);border-color:var(--ok);color:#fff}
+.tact small{display:block;color:var(--mute);font-size:13px}
+.formula{font-family:var(--mono);font-size:15px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px 12px;margin:8px 0;line-height:1.6}
+.formula .eq{color:var(--indigo-dk);font-weight:500}
+.bars{margin:14px 0 0}
+.barrow{display:grid;grid-template-columns:120px 1fr 86px;gap:10px;align-items:center;margin:8px 0;font-size:14px}
+.barrow .bl{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2)}
+.barrow .track{height:18px;background:var(--line-soft);border-radius:2px;overflow:hidden}
+.barrow .fill{height:100%;border-radius:2px;transition:width .25s ease}
+.barrow .bv{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.big{font-family:var(--display);font-weight:700;font-size:30px;line-height:1.1;letter-spacing:-.01em}
+
+/* ---------- practice ---------- */
+.problem{font-size:17px;line-height:1.55;margin:0}
+.problem .mono{font-size:16px}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:14px 0 0}
+.field label{font-size:15px;color:var(--ink2)}
+input.ans{font-family:var(--mono);font-size:19px;border:1px solid #9AA2AE;box-shadow:inset 0 1px 3px rgba(29,36,51,.12);border-radius:3px;padding:8px 10px;width:170px;background:#fff;color:var(--ink)}
+.work{font-family:var(--mono);font-size:14px;line-height:1.7}
+
+.q{border-top:1px solid var(--line-soft);padding:22px 0 6px}
+.q:first-child{border-top:none;padding-top:4px}
+.q .qn{font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.06em}
+.q .stem{font-weight:500;margin:4px 0 0}
+.stim{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:14px 16px;margin:0 0 6px}
+.stim p{margin:0 0 8px;font-size:15.5px}
+.stim table{margin:6px 0 0}
+.qsum{font-family:var(--display);font-weight:700;font-size:22px;margin:18px 0 0}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#ECEDEF;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#BFC5CF}
+.next .nt{font-family:var(--display);font-weight:700;font-size:24px;color:#fff;margin:0 0 4px}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F7F6F3;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--indigo-lite)}
+
+@media (max-width:760px){
+  .board{grid-template-columns:1fr 1fr}
+  .lo:nth-child(3){border-left:none}
+  .lo:nth-child(n+3){border-top:1px solid var(--line-soft)}
+  .seg,.pb,.dash{grid-template-columns:1fr}
+  .persona{position:static}
+  .stats{grid-template-columns:1fr 1fr}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .bar-sub{display:none}
+  .card{padding:16px}
+  .lo{padding:14px}
+  .lo .lq{font-size:17px}
+  .row2{grid-template-columns:1fr}
+  .barrow{grid-template-columns:86px 1fr 74px}
+}
+@media (max-width:380px){
+  .board{grid-template-columns:1fr}
+  .lo{border-left:none;border-top:1px solid var(--line-soft)}
+  .lo:first-child{border-top:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){.barrow .fill{transition:none}}
+
+/* Print: by default print the whole page without the sticky bar.
+   "Print my profile" adds body.print-profile so only the profile card prints. */
+@media print{
+  body{background:#fff}
+  .bar,.jump,.btn-row,.next{display:none}
+  body.print-profile *{visibility:hidden}
+  body.print-profile #persona, body.print-profile #persona *{visibility:visible}
+  body.print-profile #persona{position:absolute;left:0;top:0;width:100%;border:1px solid #999}
+  body.print-profile #pb-checks{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title"><a href="/ap-business/unit-2/">2.1 Marketing to Customers</a></span>
+    <span class="bar-sub">Customer data · segmentation · customer profiles · relationships · data risks</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">AP Business · Unit 2 Marketing · Topic 2.1</div>
+  <h1>Marketing to <em>Customers</em></h1>
+  <p class="lede">Not every product is for everyone. Marketers use customer data to find the people most likely to buy, describe them clearly, keep them coming back, and protect the data along the way.</p>
+
+  <div class="board" aria-label="The four learning objectives in this topic">
+    <a class="lo" href="#data"><span class="code">2.1.A</span><span class="lq">What do marketers know about you?</span><span class="d">Why and how businesses collect customer data</span></a>
+    <a class="lo" href="#segment"><span class="code">2.1.B</span><span class="lq">Who should we sell to?</span><span class="d">Segmentation, target customers, customer profiles</span></a>
+    <a class="lo" href="#relationships"><span class="code">2.1.C</span><span class="lq">How do we keep them?</span><span class="d">Customer relationships, acquisition cost, lifetime value</span></a>
+    <a class="lo" href="#risks"><span class="code">2.1.D</span><span class="lq">What could go wrong?</span><span class="d">Privacy, identity theft, fraud, and business risk</span></a>
+    <div class="board-foot"><span><b>Project link</b> Business Canvas Unit 2, Tasks 1–2: customer profile and relationship plan</span><span><b>Personal finance</b> Managing Risk</span></div>
+  </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#data">Customer data</a>
+    <a href="#sort">Sort the data</a>
+    <a href="#segment">Segmentation lab</a>
+    <a href="#profile">Profile builder</a>
+    <a href="#relationships">Relationships</a>
+    <a href="#cac">CAC &amp; lifetime value practice</a>
+    <a href="#risks">Data risks</a>
+    <a href="#check">Check yourself</a>
+  </nav>
+</header>
+
+<!-- =========================================================
+     2.1.A  CUSTOMER DATA
+     ========================================================= -->
+<section id="data">
+  <div class="sec-head"><span class="tag">2.1.A</span><h2>Why and how marketers collect customer data</h2></div>
+
+  <div class="def">
+    <span class="ek">2.1.A.1</span>
+    <div class="term">Marketing</div>
+    <p>All of the activities businesses undertake to <b>identify</b> customers’ problems, needs, and wants, and to <b>promote, sell, and deliver</b> products.</p>
+  </div>
+
+  <p>Marketing isn’t just ads. It starts before the product exists, with figuring out who has a problem worth solving. That’s why marketers want data about customers. Customer data helps a business answer three questions <span class="smallprint">(2.1.A.2)</span>:</p>
+
+  <div class="grid3">
+    <div class="mini"><span class="n">01</span><h4>Which customers should we serve?</h4><p>Some groups need the product more, can afford it, and are easier to reach.</p></div>
+    <div class="mini"><span class="n">02</span><h4>Which products should we make?</h4><p>Data shows which features, sizes, and price points customers actually want.</p></div>
+    <div class="mini"><span class="n">03</span><h4>How do we market them profitably?</h4><p>Knowing where customers spend time and what they care about keeps marketing from being wasted.</p></div>
+  </div>
+
+  <h3>Two kinds of customer data</h3>
+  <p>Marketers sort customer characteristics into two groups <span class="smallprint">(2.1.A.3)</span>. The quickest test: <b>could you check it on a form or a census?</b> Then it’s probably demographic. <b>Is it about how someone thinks, spends their time, or what they care about?</b> Then it’s psychographic.</p>
+
+  <div class="grid2">
+    <div class="kind">
+      <div class="kh">Demographic</div>
+      <div class="ks">Measurable qualities used to describe a population.</div>
+      <div class="chips"><span class="chip">age</span><span class="chip">sex</span><span class="chip">race</span><span class="chip">ethnicity</span><span class="chip">income</span><span class="chip">location</span><span class="chip">education</span><span class="chip">occupation</span></div>
+      <p class="tip">Answers <b>who</b> and <b>where</b>: “a 16-year-old in suburban Denver whose household earns $90,000.”</p>
+    </div>
+    <div class="kind psy">
+      <div class="kh">Psychographic</div>
+      <div class="ks">Cognitive and behavioral factors: how people think and live.</div>
+      <div class="chips"><span class="chip">interests</span><span class="chip">activities</span><span class="chip">values</span><span class="chip">lifestyles</span><span class="chip">attitudes</span></div>
+      <p class="tip">Answers <b>why</b>: “plays club volleyball, cares about sustainability, and shops secondhand.”</p>
+    </div>
+  </div>
+
+  <div class="note"><b>Watch-out:</b> the same topic can land in either group depending on how it’s worded. “Lives 2 miles from a gym” is demographic (location). “Works out five days a week” is psychographic (an activity). Ask what is actually being measured.</div>
+
+  <!-- SORT THE DATA -->
+  <div class="card" id="sort">
+    <div class="card-label">Sort the data <span class="score" id="sort-score">0 of 0</span></div>
+    <p class="smallprint" style="margin:0 0 10px">A business has this fact about a customer. Which kind of data is it?</p>
+    <p class="prompt" id="sort-item" aria-live="polite"></p>
+    <div class="pick2">
+      <button class="pbtn demo" id="sort-demo">Demographic</button>
+      <button class="pbtn psy" id="sort-psy">Psychographic</button>
+    </div>
+    <div class="fb" id="sort-fb"></div>
+    <div class="btn-row"><button id="sort-next">Next fact →</button></div>
+  </div>
+
+  <h3>How businesses get the data</h3>
+  <p>Customer data comes from three places <span class="smallprint">(2.1.A.4)</span>. Most of it is collected quietly, in the background of things you already do online.</p>
+  <div class="tools-list">
+    <div class="tl"><div class="tl-h">Digital tools</div><ul><li><b>Subscriber lists</b>: email and text sign-ups</li><li><b>Online accounts</b>: profiles and purchase history</li><li><b>Click-tracking software</b>: what you click, view, and skip</li><li><b>Tracking apps</b>: location and in-app behavior</li><li><b>Social media monitoring</b>: posts, mentions, and hashtags about a brand</li></ul></div>
+    <div class="tl"><div class="tl-h">Traditional research tools</div><ul><li><b>Surveys</b>: the same questions asked of many people</li><li><b>Interviews</b>: in-depth conversations with a few people</li></ul></div>
+    <div class="tl"><div class="tl-h">Buying it</div><ul><li><b>Purchased data</b>: businesses also buy customer data from other businesses, such as data brokers or partner companies</li></ul></div>
+  </div>
+
+  <div class="card" id="tool">
+    <div class="card-label">Name the collection tool <span class="score" id="tool-score">0 of 0</span></div>
+    <p class="prompt" id="tool-item" aria-live="polite"></p>
+    <div class="opts" id="tool-opts"></div>
+    <div class="fb" id="tool-fb"></div>
+    <div class="btn-row"><button id="tool-next">Next scenario →</button></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     2.1.B  SEGMENTATION
+     ========================================================= -->
+<section id="segment">
+  <div class="sec-head"><span class="tag">2.1.B</span><h2>Segmentation, target customers, and customer profiles</h2></div>
+
+  <div class="grid3">
+    <div class="def" style="margin:0"><div class="term">Market segmentation</div><p>Grouping potential customers into <b>market segments</b> based on shared demographic and psychographic characteristics.</p></div>
+    <div class="def" style="margin:0"><div class="term">Target customers</div><p>The buyers <b>most likely</b> to purchase a specific product because of their wants, needs, and preferences.</p></div>
+    <div class="def" style="margin:0"><div class="term">Customer profile</div><p>A <b>fictional</b> description of one specific sample customer, with demographic and psychographic data plus their wants, needs, and preferences.</p></div>
+  </div>
+
+  <p>Segmentation helps a business understand what different groups need and how its product might help them <span class="smallprint">(2.1.B.1)</span>. Then it picks the segment most likely to buy <span class="smallprint">(2.1.B.2)</span> and turns that segment into a person it can picture: a customer profile <span class="smallprint">(2.1.B.3)</span>.</p>
+  <p><b>Why bother?</b> When a business designs its product, branding, pricing, and advertising for its target customers, its marketing is <b>typically more effective and less costly</b> than trying to appeal to everyone <span class="smallprint">(2.1.B.4)</span>. The lab below lets you see why.</p>
+
+  <!-- SEGMENTATION LAB -->
+  <div class="card" id="lab">
+    <div class="card-label">Segmentation lab · 200 potential customers in one town</div>
+    <div class="prod-tabs" role="tablist" aria-label="Choose a product" id="prod-tabs"></div>
+    <p class="prod-desc" id="prod-desc"></p>
+
+    <div class="seg">
+      <div>
+        <svg class="crowd" id="crowd" viewBox="0 0 400 200" role="img" aria-label="200 dots, one per potential customer"></svg>
+        <div class="legend">
+          <span><i style="background:#fff;border:1.5px solid #C9CDD5"></i>outside segment</span>
+          <span><i style="background:var(--indigo-lite);border:1.5px solid var(--indigo)"></i>in segment</span>
+          <span><i style="background:var(--indigo)"></i>in segment, likely buyer</span>
+          <span id="lg-missed" hidden><i style="background:#fff;border:2.5px solid var(--amber)"></i>likely buyer you missed</span>
+        </div>
+        <div class="stats">
+          <div class="stat"><span class="sl">People in segment</span><span class="sv" id="st-n">200</span><span class="ss" id="st-n2">of 200</span></div>
+          <div class="stat"><span class="sl">Likely buyers reached</span><span class="sv" id="st-b">0</span><span class="ss" id="st-b2">of 0</span></div>
+          <div class="stat"><span class="sl">Hit rate</span><span class="sv" id="st-h">0%</span><span class="ss" id="st-h2">buyers ÷ people</span></div>
+          <div class="stat"><span class="sl">Ad cost per buyer</span><span class="sv" id="st-c">$0</span><span class="ss" id="st-c2">at $3 per person</span></div>
+        </div>
+        <div class="fb show hint coach" id="coach"></div>
+        <label class="chk"><input type="checkbox" id="show-missed"> Show likely buyers outside my segment</label>
+      </div>
+
+      <div>
+        <div id="filters"></div>
+        <div class="btn-row" style="margin-top:4px"><button class="ghost" id="seg-clear">Clear filters</button></div>
+        <div class="person" id="person"><span class="ph">Customer data card</span><br><span class="smallprint">Tap any dot to see what a business might know about that person.</span></div>
+      </div>
+    </div>
+    <p class="smallprint" style="margin:14px 0 0">How it works: within one row of filters, a customer can match <b>any</b> chip you pick. Across rows, they must match <b>every</b> row. The town and its buyers are made up, but the trade-off is real.</p>
+  </div>
+
+  <div class="note"><b>The trade-off you just saw:</b> a narrow segment has a high hit rate and a low cost per buyer, but if you go too narrow you miss buyers. A good target segment is the group where most of your likely buyers are, without paying to reach people who will never buy.</div>
+
+  <h3>Would it earn the point?</h3>
+  <p>On the AP Exam’s Business Canvas Project question, a description of your target customer earns credit only if it names at least one <b>specific demographic or psychographic characteristic</b> of the customer the product is meant to serve. “Everyone” doesn’t count.</p>
+  <div class="card" id="point">
+    <div class="card-label">Specific or not? <span class="score" id="point-score">0 of 0</span></div>
+    <p class="prompt" id="point-item" aria-live="polite"></p>
+    <div class="pick2">
+      <button class="pbtn" id="point-yes">Names a specific customer characteristic</button>
+      <button class="pbtn" id="point-no">Too general: no specific characteristic</button>
+    </div>
+    <div class="fb" id="point-fb"></div>
+    <div class="btn-row"><button id="point-next">Next pitch →</button></div>
+  </div>
+
+  <!-- PROFILE BUILDER -->
+  <h3 id="profile">Build a customer profile</h3>
+  <p>This is the <b>Business Canvas Unit 2, Task 1</b> deliverable. Describe one fictional person who represents your target customers. Include both kinds of data, say why you think they would buy, and write interview questions that could prove you wrong. Your work saves in this browser, and you can print the finished card.</p>
+
+  <div class="card">
+    <div class="pb">
+      <form id="pb-form" autocomplete="off" onsubmit="return false">
+        <fieldset>
+          <legend class="gen">Your product</legend>
+          <label class="fld"><span>What are you selling?</span><input name="product" placeholder="Name it and say what it does in one line"></label>
+        </fieldset>
+        <fieldset>
+          <legend class="gen">The person</legend>
+          <div class="row2">
+            <label class="fld"><span>Name (made up)</span><input name="name" placeholder="A first and last name"></label>
+            <label class="fld"><span>One-line snapshot</span><input name="tagline" placeholder="How they'd describe themselves"></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend class="demo">Demographics</legend>
+          <div class="row2">
+            <label class="fld"><span>Age</span><input name="age" placeholder="A number or narrow range"></label>
+            <label class="fld"><span>Location</span><input name="location" placeholder="City, type of area"></label>
+            <label class="fld"><span>Income</span><input name="income" placeholder="Personal or household"></label>
+            <label class="fld"><span>Education or occupation</span><input name="job" placeholder="School, job, or role"></label>
+          </div>
+          <label class="fld"><span>Other demographics (optional)</span><input name="demoOther" placeholder="Household size, sex, etc., only if it matters for your product"></label>
+        </fieldset>
+        <fieldset>
+          <legend class="psy">Psychographics</legend>
+          <label class="fld"><span>Interests and activities</span><input name="interests" placeholder="What they do with their time"></label>
+          <label class="fld"><span>Values</span><input name="values" placeholder="What they care about when they spend money"></label>
+          <label class="fld"><span>Lifestyle</span><input name="lifestyle" placeholder="What a typical week looks like"></label>
+        </fieldset>
+        <fieldset>
+          <legend class="gen">Wants, needs, and preferences</legend>
+          <label class="fld"><span>The problem, need, or want your product addresses for them</span><textarea name="needs" placeholder="In their words, what's frustrating or missing?"></textarea></label>
+          <label class="fld"><span>Preferences (how they like to shop, what they use now)</span><textarea name="prefs" placeholder="Current solutions, where they buy, what they'd pay"></textarea></label>
+        </fieldset>
+        <fieldset>
+          <legend class="gen">Your hypothesis</legend>
+          <label class="fld"><span>Why this person would buy</span><textarea name="why" placeholder="We think this person will buy because…"></textarea></label>
+          <label class="fld"><span>Interview question 1</span><input name="q1" placeholder="Write a question to test your hypothesis"></label>
+          <label class="fld"><span>Interview question 2</span><input name="q2" placeholder="Another question"></label>
+          <label class="fld"><span>Interview question 3</span><input name="q3" placeholder="Another question"></label>
+        </fieldset>
+        <div class="btn-row">
+          <button type="button" id="pb-print">Print my profile</button>
+          <button type="button" class="ghost" id="pb-example">Load an example</button>
+          <button type="button" class="ghost" id="pb-clear">Clear</button>
+        </div>
+      </form>
+
+      <div>
+        <div class="persona" id="persona">
+          <div class="persona-top">
+            <div class="avatar" id="pv-avatar">?</div>
+            <div><div class="persona-name" id="pv-name">Your customer</div><div class="persona-sub" id="pv-tag">Target customer profile</div></div>
+          </div>
+          <div class="persona-body">
+            <div class="pblock gen"><div class="pbh">Product</div><div class="pv" id="pv-product"></div></div>
+            <div class="pblock demo"><div class="pbh">Demographics</div><div class="pv" id="pv-demo"></div></div>
+            <div class="pblock psy"><div class="pbh">Psychographics</div><div class="pv" id="pv-psy"></div></div>
+            <div class="pblock gen"><div class="pbh">Wants, needs, and preferences</div><div class="pv" id="pv-needs"></div></div>
+            <div class="pblock gen"><div class="pbh">Why we think they’ll buy</div><div class="pv" id="pv-why"></div></div>
+            <div class="pblock gen"><div class="pbh">Interview questions to test it</div><div class="pv" id="pv-qs"></div></div>
+          </div>
+        </div>
+        <ul class="checks" id="pb-checks" aria-live="polite"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     2.1.C  CUSTOMER RELATIONSHIPS
+     ========================================================= -->
+<section id="relationships">
+  <div class="sec-head"><span class="tag">2.1.C</span><h2>Building customer relationships</h2></div>
+  <p>Finding customers is expensive. Keeping them is where the money is. Businesses build strong relationships with tactics like these <span class="smallprint">(2.1.C.1)</span>, and social media and the internet make every one of them easier:</p>
+  <div class="grid3">
+    <div class="mini"><span class="n">Personalized service</span><h4>“The usual?”</h4><p>Remembering names, orders, sizes, and preferences, in person or through an online account.</p></div>
+    <div class="mini"><span class="n">Rewards programs</span><h4>Buy 9, get 1 free</h4><p>Points, punch cards, and member perks that reward frequent buyers for coming back.</p></div>
+    <div class="mini"><span class="n">Feedback opportunities</span><h4>“How did we do?”</h4><p>Satisfaction surveys, reviews, and comment cards, followed by actually fixing what customers report.</p></div>
+  </div>
+
+  <p>Strong relationships pay off in two ways, and each has a number attached:</p>
+  <div class="grid2">
+    <div class="def" style="margin:0">
+      <span class="ek">2.1.C.2</span>
+      <div class="term">Customer acquisition cost (CAC)</div>
+      <p>What it costs, on average, to win one new customer. Satisfied customers <b>refer</b> new customers for free, which pushes CAC <b>down</b>.</p>
+      <div class="formula"><span class="eq">CAC</span> = total marketing, advertising, and sales costs to acquire customers ÷ number of customers acquired</div>
+    </div>
+    <div class="def" style="margin:0">
+      <span class="ek">2.1.C.3</span>
+      <div class="term">Lifetime value of a customer</div>
+      <p>The <b>estimated</b> amount of money one customer will spend on the business’s products over time. Loyal customers make <b>repeat purchases</b>, which pushes lifetime value <b>up</b>.</p>
+      <div class="formula">One common estimate: <span class="eq">lifetime value</span> ≈ average purchase × purchases per year × years as a customer</div>
+    </div>
+  </div>
+  <p class="smallprint">Lower CAC and higher lifetime value can both <b>potentially increase profits</b>. Only count costs spent to <b>win customers</b> in CAC. Rent, ingredients, and payroll for production aren’t acquisition costs.</p>
+
+  <!-- DASHBOARD -->
+  <div class="card" id="dash-card">
+    <div class="card-label">Relationship dashboard · Bloom Box, a monthly flower subscription</div>
+    <div class="dash">
+      <div>
+        <div class="slider"><label for="d-spend">Marketing, ads &amp; sales per month <b id="d-spend-v"></b></label><input type="range" id="d-spend" min="1000" max="12000" step="100"></div>
+        <div class="slider"><label for="d-ads">New subscribers from ads per month <b id="d-ads-v"></b></label><input type="range" id="d-ads" min="20" max="200" step="1"></div>
+        <div class="slider"><label for="d-ref">Referral rate <b id="d-ref-v"></b></label><input type="range" id="d-ref" min="0" max="80" step="1"></div>
+        <div class="slider"><label for="d-price">Monthly price <b id="d-price-v"></b></label><input type="range" id="d-price" min="15" max="80" step="1"></div>
+        <div class="slider"><label for="d-months">Months a subscriber stays <b id="d-months-v"></b></label><input type="range" id="d-months" min="1" max="36" step="1"></div>
+        <p class="smallprint" style="margin:6px 0 4px">Referral rate: for every 100 new subscribers from ads, how many more join because a friend told them.</p>
+        <div class="card-label" style="margin:16px 0 6px">Try a relationship tactic</div>
+        <div class="tactics" id="tactics"></div>
+        <div class="btn-row"><button class="ghost" id="d-reset">Reset</button></div>
+      </div>
+      <div>
+        <div class="formula" id="d-cac-work"></div>
+        <div class="formula" id="d-ltv-work"></div>
+        <div class="bars">
+          <div class="barrow"><span class="bl">CAC</span><div class="track"><div class="fill" id="bar-cac" style="background:var(--no)"></div></div><span class="bv" id="bar-cac-v"></span></div>
+          <div class="barrow"><span class="bl">Lifetime value</span><div class="track"><div class="fill" id="bar-ltv" style="background:var(--ok)"></div></div><span class="bv" id="bar-ltv-v"></span></div>
+        </div>
+        <p style="margin:16px 0 0"><span class="big" id="d-ratio"></span><br><span class="smallprint">spent by each subscriber for every $1 it cost to win them</span></p>
+        <div class="fb show hint" id="d-coach"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRACTICE -->
+  <div class="card" id="cac">
+    <div class="card-label">Calculate it <span class="score" id="cac-score">0 of 0</span></div>
+    <div class="prod-tabs" role="tablist" aria-label="Problem type" id="cac-tabs">
+      <button class="tab" role="tab" aria-selected="true" data-kind="cac">Acquisition cost</button>
+      <button class="tab" role="tab" aria-selected="false" data-kind="ltv">Lifetime value</button>
+      <button class="tab" role="tab" aria-selected="false" data-kind="mix">Mixed</button>
+    </div>
+    <div style="margin-top:12px" id="cac-problem"></div>
+    <div class="field"><label for="cac-ans">Answer</label><input class="ans" id="cac-ans" type="text" inputmode="decimal" placeholder="Dollars, e.g. 12.50"><button id="cac-check">Check</button><button class="ghost" id="cac-show">Show work</button></div>
+    <div class="fb" id="cac-fb"></div>
+    <div class="btn-row"><button id="cac-next">New problem →</button></div>
+  </div>
+
+  <!-- RELATIONSHIP PLAN -->
+  <h3>Turn a tactic into a testable plan</h3>
+  <p>For <b>Business Canvas Unit 2, Task 2</b>, write each relationship tactic as a hypothesis you can test: <i>“If we offer X, then customers will respond by Y.”</i> Then pick how you’ll find out.</p>
+  <div class="card" id="plan">
+    <div class="card-label">Relationship plan</div>
+    <div class="pb" style="grid-template-columns:1fr">
+      <div class="row2">
+        <label class="fld"><span>Tactic type</span>
+          <select id="pl-type"><option value="">Choose one</option><option>Personalized service</option><option>Rewards program</option><option>Customer feedback opportunity</option><option>Referral incentive</option><option>Other</option></select></label>
+        <label class="fld"><span>How you’ll test it</span>
+          <select id="pl-test"><option value="">Choose one</option><option>Interviews</option><option>Focus group</option><option>A/B test</option><option>Survey</option></select></label>
+      </div>
+      <div class="row2">
+        <label class="fld"><span>If we offer…</span><input id="pl-if" placeholder="The specific tactic"></label>
+        <label class="fld"><span>then customers will…</span><input id="pl-then" placeholder="A behavior you can observe or count"></label>
+      </div>
+      <label class="fld"><span>Which number should this move?</span>
+        <select id="pl-metric"><option value="">Choose one</option><option value="cac">Lower customer acquisition cost (more referrals)</option><option value="ltv">Raise lifetime value (more repeat purchases, staying longer)</option></select></label>
+    </div>
+    <div class="fb show hint" id="pl-out">Fill in the plan and your hypothesis will appear here.</div>
+  </div>
+</section>
+
+<!-- =========================================================
+     2.1.D  DATA RISKS
+     ========================================================= -->
+<section id="risks">
+  <div class="sec-head"><span class="tag">2.1.D</span><h2>When customer data becomes a risk</h2></div>
+  <p>Everything in this topic runs on customer data. That data carries risk for <b>customers</b> and for the <b>business</b> that holds it.</p>
+
+  <div class="grid3">
+    <div class="mini"><span class="n">Privacy infringement</span><h4>Collected without real consent</h4><p>Searches, purchases, card numbers, posts, and location can violate privacy, <b>especially when customers don’t know</b> data is being collected or how it will be used. <span class="smallprint">(2.1.D.1)</span></p></div>
+    <div class="mini"><span class="n">Data breach</span><h4>Stored without real security</h4><p>Data that isn’t properly secured can be stolen, leaving customers and businesses open to <b>fraud</b> and <b>identity theft</b>. <span class="smallprint">(2.1.D.2)</span></p></div>
+    <div class="mini"><span class="n">Business risk</span><h4>The cost of getting it wrong</h4><p>Businesses must weigh data’s benefits against <b>losing customers</b>, <b>violating core values</b>, and <b>harm to reputation</b>. <span class="smallprint">(2.1.D.3)</span></p></div>
+  </div>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Term</th><th>What it means</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td><b>Fraud</b></td><td>Someone uses stolen information to deceive or steal, usually money.</td><td>Stolen card numbers are used to buy gift cards.</td></tr>
+      <tr><td><b>Identity theft</b></td><td>Someone uses your personal information to act as you.</td><td>A thief opens a credit card or files a tax return in your name.</td></tr>
+      <tr><td><b>Privacy infringement</b></td><td>Personal information is collected, shared, or used in ways you didn’t knowingly agree to.</td><td>A flashlight app quietly sells your location history.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="pf">
+    <div class="pf-h">Personal finance link · Managing Risk</div>
+    <p style="margin:0 0 8px">You’re the customer in this story too. A few habits limit what you expose:</p>
+    <ul style="margin:0">
+      <li>Check app permissions. A game doesn’t need your location or contacts.</li>
+      <li>Use a different strong password for important accounts, and turn on two-step verification.</li>
+      <li>Read what you’re agreeing to before trading your email or phone number for a discount.</li>
+      <li>Watch your bank and card statements for charges you don’t recognize.</li>
+      <li>Once you have credit, check your credit reports for free at AnnualCreditReport.com. You can also freeze your credit for free with each of the three credit bureaus.</li>
+    </ul>
+  </div>
+
+  <div class="card" id="risk">
+    <div class="card-label">Spot the risk <span class="score" id="risk-score">0 of 0</span></div>
+    <p class="prompt" id="risk-item" aria-live="polite"></p>
+    <div class="opts" id="risk-opts"></div>
+    <div class="fb" id="risk-fb"></div>
+    <div class="btn-row"><button id="risk-next">Next scenario →</button></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     CHECK YOURSELF
+     ========================================================= -->
+<section id="check">
+  <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
+  <p>Twelve multiple-choice questions in the style of the AP Exam, covering all four learning objectives. The first four share one data set, like a set-based question on the exam.</p>
+  <div class="card" id="quiz"></div>
+  <div class="btn-row"><button class="ghost" id="quiz-reset">Start over</button></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">Next: 2.2 Consumer Behavior</div>
+      <p>You know who your customers are. Next: why and how they decide to buy.</p>
+    </div>
+    <a href="/ap-business/unit-2/">Back to Unit 2 →</a>
+  </div>
+</section>
+
+<footer>
+  <p>Topic 2.1 Marketing to Customers, following the AP Business with Personal Finance course framework (Learning Objectives 2.1.A–2.1.D). Businesses, people, and numbers in the practice are fictional. Practice items reshuffle every time you load the page.</p>
+  <p><a href="/ap-business/unit-2/">← Unit 2 — Marketing</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function shuffle(a){ a = a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function rint(lo,hi,step){ step = step||1; return lo + step*Math.floor(Math.random()*(Math.floor((hi-lo)/step)+1)); }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; node.innerHTML = ''; }
+function money(x,dec){ if(dec===undefined) dec = (Math.abs(x-Math.round(x))<1e-9) ? 0 : 2; return '$' + x.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+function money2(x){ return money(x,2); }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+var store = {
+  get:function(k){ try{ var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; }catch(e){ return null; } },
+  set:function(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} },
+  del:function(k){ try{ localStorage.removeItem(k); }catch(e){} }
+};
+
+/* Cycles through a bank in random order without repeats until it runs out. */
+function Deck(bank){
+  var order = [], i = 0;
+  return { next:function(){ if(i >= order.length){ order = shuffle(bank); i = 0; } return order[i++]; } };
+}
+
+/* =========================================================
+   2.1.A  Sort the data
+   ========================================================= */
+(function(){
+  var D = 'demo', P = 'psy';
+  var bank = [
+    ['Is 17 years old', D, 'Age is a measurable quality of a population.'],
+    ['Lives in a rural town in western Kansas', D, 'Location is demographic: you could check it on a form.'],
+    ['Household earns about $120,000 a year', D, 'Income is a measurable, demographic quality.'],
+    ['Has a bachelor’s degree', D, 'Education level is a measurable fact about a person.'],
+    ['Works as a registered nurse', D, 'Occupation is demographic: a measurable category.'],
+    ['Identifies as Hispanic or Latino', D, 'Ethnicity is listed in the course framework as demographic.'],
+    ['Lives in a household of five people', D, 'Household size is a countable, demographic fact.'],
+    ['Has the zip code 80206', D, 'A zip code is location, which is demographic.'],
+    ['Is female', D, 'Sex is listed in the course framework as demographic.'],
+    ['Lives within walking distance of a stadium', D, 'Tricky one. This is about where they live (location), not what they do.'],
+    ['Plays pickup basketball three nights a week', P, 'This is an activity: how the person spends their time.'],
+    ['Will pay more for products not tested on animals', P, 'This is a value that shapes buying decisions.'],
+    ['Follows a dozen sneaker-release accounts', P, 'This shows an interest.'],
+    ['Likes to be the first to try new tech', P, 'This is an attitude about buying: cognitive, not measurable like age.'],
+    ['Spends most weekends camping', P, 'This is an activity and a lifestyle.'],
+    ['Tries to shop at locally owned businesses', P, 'This is a value.'],
+    ['Eats most meals on the go between work and practice', P, 'This describes a lifestyle.'],
+    ['Cares more about brand prestige than price', P, 'This is a value: what they care about when they spend.'],
+    ['Is a huge anime fan', P, 'This is an interest.'],
+    ['Volunteers at an animal shelter every Saturday', P, 'This is an activity that reflects values.'],
+    ['Goes to every home game of the local team', P, 'Tricky one. This is an activity and interest, even though it sounds like location.']
+  ];
+  var deck = Deck(bank), cur, done, sc = Score(el('sort-score'));
+  var bd = el('sort-demo'), bp = el('sort-psy'), fb = el('sort-fb');
+  function show(){
+    cur = deck.next(); done = false;
+    el('sort-item').innerHTML = '<span class="who">The customer…</span>' + esc(cur[0]);
+    [bd,bp].forEach(function(b){ b.disabled = false; b.className = b.className.replace(/ (yes|no|reveal)/g,''); });
+    hideFb(fb);
+  }
+  function answer(kind){
+    if(done) return; done = true;
+    var ok = kind === cur[1]; sc.add(ok);
+    var btn = kind === D ? bd : bp, right = cur[1] === D ? bd : bp;
+    btn.className += ok ? ' yes' : ' no';
+    if(!ok) right.className += ' reveal';
+    [bd,bp].forEach(function(b){ b.disabled = true; });
+    var name = cur[1] === D ? 'Demographic' : 'Psychographic';
+    setFb(fb, ok ? 'good' : 'bad', '<b>' + (ok ? 'Right: ' : 'Not quite. It’s ') + name + '.</b> ' + esc(cur[2]));
+    el('sort-next').focus();
+  }
+  bd.onclick = function(){ answer(D); };
+  bp.onclick = function(){ answer(P); };
+  el('sort-next').onclick = show;
+  show();
+})();
+
+/* =========================================================
+   2.1.A  Name the collection tool
+   ========================================================= */
+(function(){
+  var tools = ['Subscriber list','Online account','Click-tracking software','Tracking app','Social media monitoring','Survey','Interview','Purchased data'];
+  var bank = [
+    ['An online shoe store records that you looked at three pairs of running shoes, scrolled past the sandals, and left one pair in your cart.', 'Click-tracking software', 'Click-tracking software records what visitors click, view, and skip on a website.'],
+    ['A coffee chain’s app notices you are half a mile from one of its stores and sends you a coupon.', 'Tracking app', 'The app is using location data from your phone: a tracking app.'],
+    ['A clothing brand gives you 15% off your first order in exchange for your email address and birthday.', 'Subscriber list', 'Signing up for emails or texts puts you on a subscriber list, often with extra details like a birthday.'],
+    ['A streaming service recommends shows based on everything you have watched while signed in.', 'Online account', 'Your signed-in account stores your viewing and purchase history.'],
+    ['A snack company searches posts that mention its new flavor to see whether people like it.', 'Social media monitoring', 'Watching what people post about a brand is social media monitoring.'],
+    ['A gym emails the same ten questions about class times to all 2,000 of its members.', 'Survey', 'The same questions sent to many people is a survey.'],
+    ['A founder spends 45 minutes talking one-on-one with each of five parents about their morning routine.', 'Interview', 'A long, in-depth conversation with a few people is an interview.'],
+    ['A furniture store gets a list of people who recently bought a home from a data company.', 'Purchased data', 'Businesses also buy customer data from other businesses.'],
+    ['A video game company tracks which levels players quit on, using data from players’ signed-in profiles.', 'Online account', 'Player profiles are online accounts that store each player’s activity.'],
+    ['A local restaurant texts weekly specials to everyone who joined its text club.', 'Subscriber list', 'A text club is a subscriber list.']
+  ];
+  var deck = Deck(bank), cur, done, sc = Score(el('tool-score')), fb = el('tool-fb'), box = el('tool-opts');
+  function show(){
+    cur = deck.next(); done = false; hideFb(fb);
+    el('tool-item').textContent = cur[0];
+    var others = shuffle(tools.filter(function(t){ return t !== cur[1]; })).slice(0,3);
+    var opts = shuffle(others.concat([cur[1]]));
+    box.innerHTML = '';
+    opts.forEach(function(o){
+      var b = document.createElement('button'); b.className = 'opt'; b.textContent = o;
+      b.onclick = function(){ answer(b, o); };
+      box.appendChild(b);
+    });
+  }
+  function answer(b, o){
+    if(done) return; done = true;
+    var ok = o === cur[1]; sc.add(ok);
+    Array.prototype.forEach.call(box.children, function(x){ x.disabled = true; if(!ok && x.textContent === cur[1]) x.className += ' reveal'; });
+    b.className += ok ? ' picked-yes' : ' picked-no';
+    setFb(fb, ok ? 'good' : 'bad', '<b>' + (ok ? 'Right.' : 'Not quite. It’s ' + esc(cur[1]).toLowerCase() + '.') + '</b> ' + esc(cur[2]));
+    el('tool-next').focus();
+  }
+  el('tool-next').onclick = show;
+  show();
+})();
+
+/* =========================================================
+   2.1.B  Segmentation lab
+   ========================================================= */
+(function(){
+  /* seeded random so the town is the same every visit */
+  function rng(seed){ return function(){ seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  var R = rng(2026);
+  function wpick(opts, w){ var s = 0, i; for(i=0;i<w.length;i++) s += w[i]; var x = R()*s; for(i=0;i<w.length;i++){ x -= w[i]; if(x < 0) return opts[i]; } return opts[opts.length-1]; }
+
+  var CATS = [
+    {key:'age', label:'Age', kind:'demo', opts:['13–17','18–24','25–34','35–49','50–64','65+']},
+    {key:'income', label:'Household income', kind:'demo', opts:['Under $50k','$50k–$100k','Over $100k']},
+    {key:'loc', label:'Location', kind:'demo', opts:['Urban','Suburban','Rural']},
+    {key:'interest', label:'Interests', kind:'psy', opts:['Fitness','Outdoors','Cooking','Gaming','Fashion']},
+    {key:'value', label:'Values', kind:'psy', opts:['Sustainability','Convenience','Saving money','Status']},
+    {key:'life', label:'Lifestyle', kind:'psy', opts:['Student','Busy professional','Parent','Retiree']}
+  ];
+  var LIFE = {'13–17':[100,0,0,0],'18–24':[60,35,5,0],'25–34':[5,55,40,0],'35–49':[0,45,55,0],'50–64':[0,60,20,20],'65+':[0,10,0,90]};
+  var INC  = {'13–17':[35,40,25],'18–24':[55,30,15],'25–34':[35,40,25],'35–49':[25,40,35],'50–64':[25,40,35],'65+':[45,35,20]};
+  var INT  = {'13–17':[15,10,5,40,30],'18–24':[25,15,10,30,20],'25–34':[25,20,25,15,15],'35–49':[20,25,30,10,15],'50–64':[15,30,35,5,15],'65+':[10,25,45,5,15]};
+
+  var people = [];
+  for(var i=0;i<200;i++){
+    var p = {id:i+1};
+    p.age = wpick(CATS[0].opts,[10,16,20,24,18,12]);
+    p.life = wpick(CATS[5].opts, LIFE[p.age]);
+    p.income = wpick(CATS[1].opts, INC[p.age]);
+    p.loc = wpick(CATS[2].opts,[35,45,20]);
+    var iw = INT[p.age].slice(); if(p.loc === 'Rural') iw[1] += 20;
+    p.interest = wpick(CATS[3].opts, iw);
+    var vw = [22,30,30,18];
+    if(p.income === 'Over $100k'){ vw[3] += 10; vw[2] -= 15; }
+    if(p.income === 'Under $50k'){ vw[2] += 20; vw[3] -= 8; }
+    p.value = wpick(CATS[4].opts, vw);
+    p.u = [R(),R(),R()];
+    people.push(p);
+  }
+
+  var PRODUCTS = [
+    {name:'Peak Trail Shoes', desc:'$160 trail-running shoes made from recycled materials.', base:-4.9,
+     w:{interest:{'Outdoors':3.4,'Fitness':2.9}, value:{'Sustainability':1.4,'Status':0.6,'Saving money':-1.2}, income:{'Over $100k':1.2,'$50k–$100k':0.5,'Under $50k':-0.7}, age:{'13–17':-0.8,'18–24':0.3,'25–34':0.7,'35–49':0.5,'65+':-1.5}, loc:{'Rural':0.4,'Suburban':0.2}}},
+    {name:'Dorm Chef', desc:'$9 microwave meal kits designed for college dorm rooms.', base:-3.8,
+     w:{life:{'Student':1.6}, age:{'18–24':2.4,'13–17':-1.6,'35–49':-0.8,'50–64':-1.2,'65+':-1.5}, value:{'Saving money':1.0,'Convenience':1.2}, interest:{'Cooking':0.6,'Gaming':0.4}, loc:{'Urban':0.3}}},
+    {name:'QuickPlate', desc:'A $14-a-month app that plans 20-minute family dinners and builds the grocery list.', base:-4.2,
+     w:{life:{'Parent':2.7,'Busy professional':0.8}, value:{'Convenience':1.5}, interest:{'Cooking':0.8}, age:{'25–34':0.5,'35–49':0.6,'13–17':-2.5,'65+':-1.0}, income:{'$50k–$100k':0.4,'Over $100k':0.3}}}
+  ];
+  people.forEach(function(p){
+    p.buy = PRODUCTS.map(function(pr, k){
+      var s = pr.base;
+      for(var c in pr.w){ var v = pr.w[c][p[c]]; if(v) s += v; }
+      return (1/(1+Math.exp(-s))) > p.u[k];
+    });
+  });
+
+  var prod = 0, sel = {}, chosen = null;
+  CATS.forEach(function(c){ sel[c.key] = {}; });
+
+  /* product tabs */
+  var tabs = el('prod-tabs');
+  PRODUCTS.forEach(function(pr, k){
+    var b = document.createElement('button'); b.className = 'tab'; b.setAttribute('role','tab');
+    b.setAttribute('aria-selected', k === 0 ? 'true' : 'false'); b.textContent = pr.name;
+    b.onclick = function(){ prod = k; Array.prototype.forEach.call(tabs.children, function(x,j){ x.setAttribute('aria-selected', j===k ? 'true':'false'); }); render(); };
+    tabs.appendChild(b);
+  });
+
+  /* filters */
+  var fbox = el('filters');
+  CATS.forEach(function(c){
+    var g = document.createElement('div'); g.className = 'fgroup';
+    g.innerHTML = '<div class="fh ' + c.kind + '">' + c.label + ' <span style="opacity:.7">· ' + (c.kind === 'demo' ? 'demographic' : 'psychographic') + '</span></div>';
+    var row = document.createElement('div'); row.className = 'fchips';
+    c.opts.forEach(function(o){
+      var b = document.createElement('button'); b.className = 'fchip' + (c.kind === 'psy' ? ' psy' : '');
+      b.textContent = o; b.setAttribute('aria-pressed','false');
+      b.onclick = function(){ var on = !sel[c.key][o]; sel[c.key][o] = on; b.setAttribute('aria-pressed', on ? 'true':'false'); render(); };
+      row.appendChild(b);
+    });
+    g.appendChild(row); fbox.appendChild(g);
+  });
+  el('seg-clear').onclick = function(){
+    CATS.forEach(function(c){ sel[c.key] = {}; });
+    Array.prototype.forEach.call(fbox.querySelectorAll('.fchip'), function(b){ b.setAttribute('aria-pressed','false'); });
+    render();
+  };
+  el('show-missed').onchange = render;
+
+  /* dots: shuffled positions so attributes don't cluster */
+  var svg = el('crowd'), NS = 'http://www.w3.org/2000/svg';
+  var slots = []; for(var s=0;s<200;s++) slots.push(s);
+  var R2 = rng(77); for(var a=slots.length-1;a>0;a--){ var b2 = Math.floor(R2()*(a+1)); var t = slots[a]; slots[a] = slots[b2]; slots[b2] = t; }
+  var dots = people.map(function(p, k){
+    var c = document.createElementNS(NS,'circle'), sl = slots[k];
+    c._slot = sl;
+    c.addEventListener('click', function(){ chosen = p; render(); });
+    svg.appendChild(c); return c;
+  });
+
+  /* 20 columns on wide screens, 14 on phones so each dot is easier to tap */
+  var cols = 0;
+  function layout(){
+    var c2 = svg.getBoundingClientRect().width < 480 ? 14 : 20;
+    if(c2 === cols) return; cols = c2;
+    var rows = Math.ceil(200/cols);
+    svg.setAttribute('viewBox', '0 0 ' + (cols*20) + ' ' + (rows*20));
+    dots.forEach(function(c){ c.setAttribute('cx', 10 + (c._slot % cols)*20); c.setAttribute('cy', 10 + Math.floor(c._slot/cols)*20); });
+  }
+  layout();
+  window.addEventListener('resize', layout);
+
+  function active(key){ var o = sel[key], out = []; for(var k in o) if(o[k]) out.push(k); return out; }
+  function inSeg(p){
+    for(var i=0;i<CATS.length;i++){ var a = active(CATS[i].key); if(a.length && a.indexOf(p[CATS[i].key]) < 0) return false; }
+    return true;
+  }
+
+  function render(){
+    var pr = PRODUCTS[prod], showMissed = el('show-missed').checked;
+    el('prod-desc').innerHTML = '<b>' + esc(pr.name) + ':</b> ' + esc(pr.desc) + ' Who would actually buy this?';
+    var n = 0, b = 0, B = 0;
+    people.forEach(function(p, k){
+      var ins = inSeg(p), buy = p.buy[prod], c = dots[k];
+      if(ins) n++; if(buy) B++; if(ins && buy) b++;
+      var fill = '#fff', stroke = '#C9CDD5', sw = 1.5;
+      if(ins && buy){ fill = '#3A55A0'; stroke = '#3A55A0'; }
+      else if(ins){ fill = '#DCE3F4'; stroke = '#3A55A0'; }
+      else if(buy && showMissed){ fill = '#fff'; stroke = '#A8670F'; sw = 2.5; }
+      c.setAttribute('fill', fill); c.setAttribute('stroke', stroke); c.setAttribute('stroke-width', sw);
+      c.setAttribute('r', chosen === p ? 8.5 : 7);
+      if(chosen === p){ c.setAttribute('stroke', '#1D2433'); c.setAttribute('stroke-width', 2.5); }
+    });
+    el('lg-missed').hidden = !showMissed;
+    var hit = n ? b/n : 0, cost = 3*n, cpb = b ? cost/b : null, base = B/200, baseCpb = 600/B;
+    el('st-n').textContent = n; el('st-n2').textContent = 'of 200';
+    el('st-b').textContent = b; el('st-b2').textContent = 'of ' + B + ' in town';
+    el('st-h').textContent = n ? Math.round(hit*100) + '%' : '—';
+    el('st-c').textContent = cpb === null ? '—' : money(Math.round(cpb*100)/100, cpb < 100 ? 2 : 0);
+    el('st-c2').textContent = 'everyone: ' + money(Math.round(baseCpb*100)/100, 2);
+
+    var nd = 0, np = 0; CATS.forEach(function(c){ if(active(c.key).length){ if(c.kind === 'demo') nd++; else np++; } });
+    var reach = B ? b/B : 0, msg;
+    if(nd + np === 0){
+      msg = '<b>You’re marketing to all 200 people.</b> Only ' + B + ' are likely to buy ' + esc(pr.name) + ', so every buyer costs ' + money2(baseCpb) + ' to reach. Pick filters that describe who would actually want it.';
+    } else if(n === 0){
+      msg = '<b>No one in town matches every row.</b> Remove a chip, or add another option to one of the rows.';
+    } else if(b === 0){
+      msg = '<b>This segment has none of the likely buyers.</b> Think about who has the problem this product solves.';
+    } else if(reach < 0.4){
+      msg = '<b>Precise but too narrow.</b> ' + Math.round(hit*100) + '% of this segment would buy, but you’re reaching only ' + b + ' of the ' + B + ' likely buyers. Try adding an option to one row.';
+    } else if(hit < base*1.6){
+      msg = '<b>Barely better than marketing to everyone.</b> Your hit rate is ' + Math.round(hit*100) + '%, compared with ' + Math.round(base*100) + '% for the whole town. Which characteristic really separates buyers from everyone else?';
+    } else if(hit >= base*2.2 && reach >= 0.6){
+      msg = '<b>Strong target segment.</b> You reach ' + b + ' of ' + B + ' likely buyers for ' + money2(cpb) + ' each, versus ' + money2(baseCpb) + ' for marketing to everyone. That’s the “more effective and less costly” idea in action.';
+    } else {
+      msg = '<b>Getting there.</b> Hit rate ' + Math.round(hit*100) + '% (town: ' + Math.round(base*100) + '%), reaching ' + b + ' of ' + B + ' buyers. Can you raise one without losing much of the other?';
+    }
+    if(nd + np > 0 && n > 0){
+      if(np === 0) msg += ' <i>Your filters are all demographic. Does a psychographic filter describe buyers better?</i>';
+      else if(nd === 0) msg += ' <i>Your filters are all psychographic. Real targeting usually needs a demographic too, so you know where to find these people.</i>';
+    }
+    el('coach').innerHTML = msg;
+
+    var pc = el('person');
+    if(chosen){
+      pc.innerHTML = '<span class="ph">Customer #' + chosen.id + (inSeg(chosen) ? ' · in your segment' : ' · outside your segment') + '</span><br>' +
+        '<span class="pd"><b>Demographic:</b> age ' + chosen.age + ', household income ' + chosen.income.replace('Under ','under ').replace('Over ','over ') + ', ' + chosen.loc.toLowerCase() + '</span><br>' +
+        '<span class="pp"><b>Psychographic:</b> into ' + chosen.interest.toLowerCase() + ', values ' + chosen.value.toLowerCase() + ', ' + chosen.life.toLowerCase() + '</span><br>' +
+        '<span class="smallprint">Likely to buy ' + esc(pr.name) + '? <b>' + (chosen.buy[prod] ? 'Yes' : 'No') + '</b></span>';
+    }
+  }
+  render();
+})();
+
+/* =========================================================
+   2.1.B  Would it earn the point?
+   ========================================================= */
+(function(){
+  var bank = [
+    ['“Our reusable water bottle keeps drinks cold for 24 hours. It’s perfect for anyone.”', false, '“Anyone” isn’t a customer characteristic. This describes the product, not who it’s for.'],
+    ['“A meal-prep service for college athletes who need high-protein meals between practices.”', true, '“College athletes” names an education level (demographic) and an activity (psychographic).'],
+    ['“An app that reminds busy parents of kids under 5 about doctor’s appointments.”', true, 'Parents of young children with a busy lifestyle is a specific target customer.'],
+    ['“The best phone case on the market, available in five colors.”', false, 'Every detail is about the product. There’s no description of the customer.'],
+    ['“Affordable used textbooks for community college students in Colorado.”', true, 'Education (community college students) and location (Colorado) are both demographic.'],
+    ['“A smart planner that helps people get organized and stay productive.”', false, '“People” is too general to define a target customer.'],
+    ['“Dog walking for retirees in my neighborhood who have trouble walking long distances.”', true, 'Retirees (age/lifestyle) in one neighborhood (location) is specific.'],
+    ['“Our hot sauce uses fresh, high-quality ingredients and bold flavors.”', false, 'Ingredients and flavor describe the product, not the customer.'],
+    ['“Plastic-free cleaning products for renters who want to cut down on waste.”', true, 'Wanting to reduce waste is a value (psychographic), and renters are a specific group.'],
+    ['“A tutoring service that helps students do better in school.”', false, 'Borderline, and it doesn’t earn the point. “Students” with no level, subject, or need is close to “everyone in school.” Add a grade level or a specific need.']
+  ];
+  var deck = Deck(bank), cur, done, sc = Score(el('point-score')), fb = el('point-fb');
+  var by = el('point-yes'), bn = el('point-no');
+  function show(){
+    cur = deck.next(); done = false; hideFb(fb);
+    el('point-item').textContent = cur[0];
+    [by,bn].forEach(function(b){ b.disabled = false; b.className = 'pbtn'; });
+  }
+  function answer(v){
+    if(done) return; done = true;
+    var ok = v === cur[1]; sc.add(ok);
+    var btn = v ? by : bn, right = cur[1] ? by : bn;
+    btn.className += ok ? ' yes' : ' no'; if(!ok) right.className += ' reveal';
+    [by,bn].forEach(function(b){ b.disabled = true; });
+    setFb(fb, ok ? 'good' : 'bad', '<b>' + (ok ? 'Right.' : 'Not quite.') + '</b> ' + esc(cur[2]));
+    el('point-next').focus();
+  }
+  by.onclick = function(){ answer(true); };
+  bn.onclick = function(){ answer(false); };
+  el('point-next').onclick = show;
+  show();
+})();
+
+/* =========================================================
+   Interview question checker (shared)
+   ========================================================= */
+function classifyQuestion(q){
+  var s = q.trim().toLowerCase().replace(/^["“']+/,'');
+  if(!s) return null;
+  if(/^(don'?t|doesn'?t|wouldn'?t|isn'?t|aren'?t|won'?t|shouldn'?t|can'?t|didn'?t)\b/.test(s) || /\b(right|correct)\?\s*$/.test(s))
+    return {k:'lead', t:'leading', why:'The wording suggests the answer you want. Ask neutrally.'};
+  if(/\b(love|amazing|awesome|great|best|terrible|annoying|frustrating)\b/.test(s))
+    return {k:'lead', t:'loaded', why:'A strong word like this can push the customer toward an answer.'};
+  if(/^(do|does|did|would|will|is|are|was|were|have|has|had|can|could|should)\b/.test(s))
+    return {k:'closed', t:'yes/no', why:'Fine as a screening question. Follow it with an open question (what, how, tell me about) to learn more.'};
+  return {k:'open', t:'open', why:'Open-ended: the customer has to explain in their own words.'};
+}
+
+/* =========================================================
+   2.1.B  Customer profile builder
+   ========================================================= */
+(function(){
+  var KEY = 'apbiz.2-1.profile';
+  var form = el('pb-form');
+  var FIELDS = ['product','name','tagline','age','location','income','job','demoOther','interests','values','lifestyle','needs','prefs','why','q1','q2','q3'];
+  var EXAMPLE = {
+    product:'TrailTag: a $12 rechargeable light that clips onto any dog collar',
+    name:'Maya Castillo', tagline:'“My dog and I don’t skip a walk, rain or snow.”',
+    age:'34', location:'Suburban Aurora, Colorado', income:'Household about $95,000', job:'Physical therapist', demoOther:'Lives with her partner; no kids',
+    interests:'Runs with her dog before work; hikes most weekends', values:'Safety; buying gear that lasts instead of replacing it', lifestyle:'Works 8–5, so from November to February every evening walk is after dark',
+    needs:'“It’s dark by 5 in winter, and drivers can’t see my dog until they’re right on top of us.”',
+    prefs:'Buys pet gear online and at a local pet store. Uses a cheap clip-on light now, but the batteries die. Would pay $10–15.',
+    why:'We think dog owners who walk after dark will buy because being seen by drivers is a real safety worry, and the lights they use now are unreliable.',
+    q1:'Tell me about the last time you walked your dog after dark.',
+    q2:'What do you use now to stay visible, and what do you like or dislike about it?',
+    q3:'Do you ever worry about drivers not seeing your dog?'
+  };
+  function read(){ var o = {}; FIELDS.forEach(function(f){ o[f] = (form.elements[f].value || '').trim(); }); return o; }
+  function write(o){ FIELDS.forEach(function(f){ form.elements[f].value = (o && o[f]) || ''; }); }
+  function line(parts){ parts = parts.filter(Boolean); return parts.length ? esc(parts.join(' · ')) : ''; }
+  function put(id, html, empty){ el(id).innerHTML = html || '<span class="empty">' + empty + '</span>'; }
+
+  function render(){
+    var o = read();
+    var initials = o.name ? o.name.split(/\s+/).filter(Boolean).slice(0,2).map(function(w){ return w[0].toUpperCase(); }).join('') : '?';
+    el('pv-avatar').textContent = initials;
+    el('pv-name').textContent = o.name || 'Your customer';
+    el('pv-tag').textContent = o.tagline || 'Target customer profile';
+    put('pv-product', esc(o.product), 'What you’re selling');
+    put('pv-demo', line([o.age && ('Age ' + o.age), o.location, o.income, o.job, o.demoOther]), 'Age, location, income, education or job');
+    put('pv-psy', line([o.interests, o.values && ('Values: ' + o.values), o.lifestyle]), 'Interests, activities, values, lifestyle');
+    put('pv-needs', [o.needs, o.prefs].filter(Boolean).map(esc).join('<br>'), 'Problem, need, or want, plus preferences');
+    put('pv-why', esc(o.why), 'Your hypothesis');
+    var qs = [o.q1,o.q2,o.q3].filter(Boolean);
+    put('pv-qs', qs.length ? '<ol>' + qs.map(function(q){ var c = classifyQuestion(q); return '<li>' + esc(q) + (c ? '<span class="qflag ' + c.k + '">' + c.t + '</span>' : '') + '</li>'; }).join('') + '</ol>' : '', 'Questions that could prove you wrong');
+
+    /* checklist */
+    var demoN = [o.age,o.location,o.income,o.job,o.demoOther].filter(Boolean).length;
+    var psyN = [o.interests,o.values,o.lifestyle].filter(Boolean).length;
+    var vague = /\b(everyone|anyone|anybody|all ages|all people|people in general|any age)\b/i;
+    var allText = [o.age,o.location,o.income,o.job,o.interests,o.values,o.lifestyle].join(' ');
+    var items = [];
+    function add(state, text){ items.push('<li class="' + state + '"><span class="ic">' + (state === 'y' ? '✓' : state === 'n' ? '○' : '!') + '</span><span>' + text + '</span></li>'); }
+    add(demoN >= 2 ? 'y' : demoN === 1 ? 'w' : 'n', demoN >= 2 ? 'Demographics: ' + demoN + ' specific details' : demoN === 1 ? 'Only one demographic detail so far. Add another so you know where to find this person.' : 'Add at least one specific demographic detail.');
+    add(psyN >= 2 ? 'y' : psyN === 1 ? 'w' : 'n', psyN >= 2 ? 'Psychographics: ' + psyN + ' details' : psyN === 1 ? 'Only one psychographic detail. What do they value, or how do they live?' : 'Add psychographic details: interests, values, lifestyle.');
+    add(o.needs ? 'y' : 'n', o.needs ? 'States the problem, need, or want' : 'Describe the problem, need, or want your product addresses.');
+    add(o.why ? 'y' : 'n', o.why ? 'Includes a hypothesis about why they’ll buy' : 'Say why you think this person will buy. That’s the hypothesis you’ll test.');
+    if(vague.test(allText)) add('w', 'Words like “everyone” or “anyone” aren’t specific. A profile describes one person.');
+    var cls = qs.map(classifyQuestion), opens = cls.filter(function(c){ return c.k === 'open'; }).length, leads = cls.filter(function(c){ return c.k === 'lead'; });
+    if(!qs.length) add('n', 'Write at least one interview question to test your hypothesis.');
+    else {
+      if(leads.length) add('w', 'A question is flagged as leading or loaded. ' + leads[0].why);
+      add(opens ? 'y' : 'w', opens ? opens + ' open-ended question' + (opens > 1 ? 's' : '') + ': good for learning what you don’t know' : 'Add an open-ended question (what, how, tell me about).');
+    }
+    el('pb-checks').innerHTML = items.join('');
+    store.set(KEY, o);
+  }
+  form.addEventListener('input', render);
+  el('pb-example').onclick = function(){
+    var cur = read(), has = FIELDS.some(function(f){ return cur[f]; });
+    if(has && !confirmReplace()) return;
+    write(EXAMPLE); render();
+  };
+  var pendingClear = false;
+  el('pb-clear').onclick = function(){
+    var btn = el('pb-clear');
+    if(!pendingClear){ pendingClear = true; btn.textContent = 'Click again to clear'; setTimeout(function(){ pendingClear = false; btn.textContent = 'Clear'; }, 3000); return; }
+    pendingClear = false; btn.textContent = 'Clear'; write({}); store.del(KEY); render();
+  };
+  /* No browser confirm dialogs: a second click confirms instead. */
+  var pendingEx = false;
+  function confirmReplace(){
+    var btn = el('pb-example');
+    if(pendingEx){ pendingEx = false; btn.textContent = 'Load an example'; return true; }
+    pendingEx = true; btn.textContent = 'Replace my work? Click again';
+    setTimeout(function(){ pendingEx = false; btn.textContent = 'Load an example'; }, 3000);
+    return false;
+  }
+  el('pb-print').onclick = function(){
+    document.body.classList.add('print-profile');
+    var done = function(){ document.body.classList.remove('print-profile'); window.removeEventListener('afterprint', done); };
+    window.addEventListener('afterprint', done);
+    window.print();
+    setTimeout(done, 1500);
+  };
+  write(store.get(KEY) || {});
+  render();
+})();
+
+/* =========================================================
+   2.1.C  Relationship dashboard
+   ========================================================= */
+(function(){
+  var START = {spend:6000, ads:80, ref:10, price:35, months:5};
+  var LIM = {spend:[1000,12000], ads:[20,200], ref:[0,80], price:[15,80], months:[1,36]};
+  var st = {}; for(var k in START) st[k] = START[k];
+  var TACTICS = [
+    {id:'ref', name:'Referral reward', sub:'You and a friend each get a free bouquet when they subscribe. Costs about $400 a month.', d:{ref:15, spend:400}},
+    {id:'rew', name:'Rewards program', sub:'Every 6th month is free for members, so the average price drops a little.', d:{months:4, price:-3}},
+    {id:'per', name:'Personalized service', sub:'Subscribers pick favorite flowers and get handwritten notes.', d:{months:2, ref:5}},
+    {id:'fb',  name:'Satisfaction survey', sub:'A one-question check-in after each delivery, and complaints get fixed fast.', d:{months:2, ref:3}}
+  ];
+  var on = {};
+  var ids = ['spend','ads','ref','price','months'];
+  function clamp(k){ st[k] = Math.max(LIM[k][0], Math.min(LIM[k][1], st[k])); }
+  ids.forEach(function(k){ el('d-' + k).addEventListener('input', function(){ st[k] = +this.value; render(); }); });
+
+  var box = el('tactics');
+  TACTICS.forEach(function(t){
+    var b = document.createElement('button'); b.className = 'tact'; b.setAttribute('aria-pressed','false');
+    b.innerHTML = '<span class="box">' + '' + '</span><span><b>' + t.name + '</b><small>' + t.sub + '</small></span>';
+    b.onclick = function(){
+      var sign = on[t.id] ? -1 : 1; on[t.id] = !on[t.id];
+      for(var k in t.d){ st[k] += sign*t.d[k]; clamp(k); }
+      b.setAttribute('aria-pressed', on[t.id] ? 'true' : 'false');
+      b.querySelector('.box').textContent = on[t.id] ? '✓' : '';
+      render(t, on[t.id]);
+    };
+    box.appendChild(b);
+  });
+  el('d-reset').onclick = function(){
+    for(var k in START) st[k] = START[k]; on = {};
+    Array.prototype.forEach.call(box.children, function(b){ b.setAttribute('aria-pressed','false'); b.querySelector('.box').textContent = ''; });
+    render();
+  };
+
+  function render(lastT, turnedOn){
+    ids.forEach(function(k){ el('d-' + k).value = st[k]; });
+    el('d-spend-v').textContent = money(st.spend);
+    el('d-ads-v').textContent = st.ads;
+    el('d-ref-v').textContent = st.ref + '%';
+    el('d-price-v').textContent = money(st.price);
+    el('d-months-v').textContent = st.months;
+    var refs = Math.round(st.ads*st.ref/100), total = st.ads + refs;
+    var cac = st.spend/total, ltv = st.price*st.months, ratio = ltv/cac;
+    el('d-cac-work').innerHTML = '<span class="eq">CAC</span> = ' + money(st.spend) + ' ÷ (' + st.ads + ' from ads + ' + refs + ' referred)<br>&nbsp;&nbsp;&nbsp;&nbsp;= ' + money(st.spend) + ' ÷ ' + total + ' = <b>' + money2(cac) + '</b>';
+    el('d-ltv-work').innerHTML = '<span class="eq">Lifetime value</span> ≈ ' + money(st.price) + ' a month × ' + st.months + ' month' + (st.months === 1 ? '' : 's') + ' = <b>' + money(ltv) + '</b>';
+    var mx = Math.max(cac, ltv)*1.08;
+    el('bar-cac').style.width = (cac/mx*100) + '%'; el('bar-ltv').style.width = (ltv/mx*100) + '%';
+    el('bar-cac-v').textContent = money2(cac); el('bar-ltv-v').textContent = money(ltv);
+    el('d-ratio').textContent = money2(ratio);
+    var msg;
+    if(ratio < 1) msg = '<b>Each new subscriber spends less than it cost to win them.</b> Bloom Box loses money on every customer before it even buys flowers. Lower CAC or raise lifetime value.';
+    else if(ratio < 3) msg = '<b>Subscribers spend more than they cost to win, but not by much.</b> Lifetime value here is revenue, not profit. Flowers and delivery cost money too, so this gap may not cover them.';
+    else msg = '<b>A healthy gap.</b> Each subscriber brings in several times what it cost to win them, which leaves room to pay for flowers, delivery, and profit.';
+    if(lastT){
+      var parts = [];
+      if(lastT.d.ref) parts.push('more referrals push CAC ' + (turnedOn ? 'down' : 'back up'));
+      if(lastT.d.months) parts.push('longer subscriptions push lifetime value ' + (turnedOn ? 'up' : 'back down'));
+      if(lastT.d.spend) parts.push('the reward itself ' + (turnedOn ? 'adds to' : 'comes off') + ' marketing cost');
+      if(lastT.d.price) parts.push('the free month ' + (turnedOn ? 'lowers' : 'no longer lowers') + ' the average price');
+      msg += '<p><b>' + lastT.name + (turnedOn ? ' on' : ' off') + ':</b> ' + parts.join('; ') + '.</p>';
+    }
+    el('d-coach').innerHTML = msg;
+  }
+  render();
+})();
+
+/* =========================================================
+   2.1.C  Calculate it: CAC and lifetime value
+   ========================================================= */
+(function(){
+  var BIZ = ['Lumen Candle Co.','Ridgeway Bike Repair','Panda Boba','Gridiron Grips','Mile High Tutoring','Fern & Fig Plant Shop','PupCycle Dog Treats','Byte Size Coding Camp','Sol Smoothies','Thread Count Tees'];
+  var DIST = [['rent for its shop', 1500, 6000], ['ingredients and supplies', 800, 5000], ['wages for production staff', 2000, 8000], ['equipment repairs', 300, 2500]];
+  var kind = 'cac', cur = null, sc = Score(el('cac-score')), fb = el('cac-fb'), answered = false;
+
+  function genCAC(){
+    var b = pick(BIZ), m = rint(300,2000,50), a = rint(500,5000,50), s = pick([0, rint(200,3000,50)]), d = pick(DIST), dv = rint(d[1], d[2], 50);
+    var n = rint(40, 400, 1), tot = m + a + s, ans = Math.round(tot/n*100)/100;
+    var costs = money(m) + ' on social media marketing, ' + money(a) + ' on online advertising' + (s ? ', and ' + money(s) + ' in sales commissions' : '');
+    if(!s) costs = costs.replace(', ' + money(a), ' and ' + money(a));
+    return { type:'cac', ans:ans, html:'<p class="problem">Last quarter, <b>' + b + '</b> spent ' + costs + ' to win new customers. It also paid ' + money(dv) + ' for ' + d[0] + '. It gained <b>' + n + '</b> new customers. What was its <b>customer acquisition cost</b>?</p>',
+      work:'CAC = (' + [m,a,s].filter(Boolean).map(function(x){ return money(x); }).join(' + ') + ') ÷ ' + n + '<br>&nbsp;&nbsp;&nbsp;&nbsp;= ' + money(tot) + ' ÷ ' + n + ' = ' + money2(ans) + '<br><span class="smallprint">The ' + money(dv) + ' for ' + d[0] + ' is not a cost of acquiring customers, so it stays out.</span>',
+      wrong:[{v:Math.round((tot+dv)/n*100)/100, msg:'You included the ' + d[0] + '. CAC counts only marketing, advertising, and sales costs spent to win customers.'}]
+        .concat(s ? [{v:Math.round((m+a)/n*100)/100, msg:'You left out the sales commissions. Sales costs count toward CAC.'}] : [])
+        .concat([{v:Math.round(n/tot*100)/100, msg:'You divided customers by costs. Flip it: costs ÷ customers.'}]) };
+  }
+  function genLTV(){
+    var b = pick(BIZ), p = pick([rint(4,15,1) + pick([0,0.5]), rint(15,60,5)]), y = rint(1,6,1);
+    var mode = pick(['month','year']), f = mode === 'month' ? rint(1,8,1) : rint(4,24,2);
+    var perYear = mode === 'month' ? f*12 : f, ans = Math.round(p*perYear*y*100)/100;
+    var freq = mode === 'month' ? f + (f === 1 ? ' time' : ' times') + ' a month' : f + ' times a year';
+    return { type:'ltv', ans:ans, html:'<p class="problem">A typical customer of <b>' + b + '</b> spends an average of ' + money(p) + ' per purchase and buys ' + freq + '. Customers usually stay for <b>' + y + ' year' + (y > 1 ? 's' : '') + '</b>. What is the estimated <b>lifetime value</b> of a customer?</p>',
+      work:'Lifetime value ≈ average purchase × purchases per year × years<br>&nbsp;&nbsp;&nbsp;&nbsp;= ' + money(p) + ' × ' + (mode === 'month' ? '(' + f + ' × 12) ' : '') + (mode === 'month' ? '' : f + ' ') + '× ' + y + '<br>&nbsp;&nbsp;&nbsp;&nbsp;= ' + money(p) + ' × ' + perYear + ' × ' + y + ' = ' + money2(ans),
+      wrong: (mode === 'month' ? [{v:Math.round(p*f*y*100)/100, msg:'You used purchases per month as if they were per year. Multiply by 12 first.'}] : [])
+        .concat(y > 1 ? [{v:Math.round(p*perYear*100)/100, msg:'That’s one year of spending. Multiply by the number of years they stay.'}] : []) };
+  }
+  function gen(){
+    answered = false; hideFb(fb); el('cac-ans').value = '';
+    var k = kind === 'mix' ? pick(['cac','ltv']) : kind;
+    cur = k === 'cac' ? genCAC() : genLTV();
+    el('cac-problem').innerHTML = cur.html;
+  }
+  function parse(s){ s = String(s).replace(/[$,\s]/g,''); if(!/^-?\d*\.?\d+$/.test(s)) return NaN; return parseFloat(s); }
+  el('cac-check').onclick = function(){
+    var v = parse(el('cac-ans').value);
+    if(isNaN(v)){ setFb(fb,'hint','Type a dollar amount, like <span class="mono">48.25</span>.'); return; }
+    var ok = Math.abs(v - cur.ans) <= 0.011 || Math.abs(v - cur.ans) <= cur.ans*0.0005;
+    if(!answered){ sc.add(ok); answered = true; }
+    if(ok){ setFb(fb,'good','<b>Right: ' + money2(cur.ans) + '.</b><div class="work" style="margin-top:6px">' + cur.work + '</div>'); return; }
+    if(Math.abs(v - cur.ans) <= cur.ans*0.01){ setFb(fb,'hint','<b>Very close.</b> Check your rounding. Round to the nearest cent.'); return; }
+    for(var i=0;i<cur.wrong.length;i++) if(Math.abs(v - cur.wrong[i].v) <= 0.011){ setFb(fb,'bad','<b>Not quite.</b> ' + cur.wrong[i].msg); return; }
+    setFb(fb,'bad','<b>Not quite.</b> Try again, or press <b>Show work</b>.');
+  };
+  el('cac-ans').addEventListener('keydown', function(e){ if(e.key === 'Enter') el('cac-check').click(); });
+  el('cac-show').onclick = function(){ if(!answered){ sc.add(false); answered = true; } setFb(fb,'hint','<b>Answer: ' + money2(cur.ans) + '</b><div class="work" style="margin-top:6px">' + cur.work + '</div>'); };
+  el('cac-next').onclick = gen;
+  var tabs = el('cac-tabs');
+  Array.prototype.forEach.call(tabs.children, function(b){
+    b.onclick = function(){ kind = b.getAttribute('data-kind'); Array.prototype.forEach.call(tabs.children, function(x){ x.setAttribute('aria-selected', x === b ? 'true':'false'); }); gen(); };
+  });
+  gen();
+})();
+
+/* =========================================================
+   2.1.C  Relationship plan
+   ========================================================= */
+(function(){
+  var KEY = 'apbiz.2-1.plan', ids = ['pl-type','pl-test','pl-if','pl-then','pl-metric'];
+  var saved = store.get(KEY) || {};
+  ids.forEach(function(id){ if(saved[id]) el(id).value = saved[id]; el(id).addEventListener('input', render); el(id).addEventListener('change', render); });
+  function render(){
+    var o = {}; ids.forEach(function(id){ o[id] = el(id).value.trim(); }); store.set(KEY, o);
+    var out = el('pl-out');
+    if(!o['pl-if'] || !o['pl-then']){ out.className = 'fb show hint'; out.innerHTML = 'Fill in the plan and your hypothesis will appear here.'; return; }
+    var h = '<b>Hypothesis:</b> If we offer ' + esc(o['pl-if'].replace(/^(we offer|offer)\s+/i,'')) + ', then customers will ' + esc(o['pl-then'].replace(/^(customers will|will)\s+/i,'')) + '.';
+    var notes = [];
+    if(o['pl-test']) notes.push('<b>Test:</b> ' + esc(o['pl-test']) + (o['pl-test'] === 'A/B test' ? ': offer the tactic to one group of customers and not another, then compare.' : '.'));
+    if(o['pl-metric'] === 'cac') notes.push('<b>Payoff:</b> if more customers refer friends, each new customer costs less to acquire (lower CAC).');
+    if(o['pl-metric'] === 'ltv') notes.push('<b>Payoff:</b> if customers buy again and stay longer, each one is worth more over time (higher lifetime value).');
+    if(!/\d|more|less|fewer|again|return|come back|twice|times|every|week|month|refer|sign|buy|join|stay|renew|repeat|visit|rate|review|post|share/i.test(o['pl-then'])) notes.push('<i>Make the “then” part something you can observe or count, like “refer at least one friend” or “come back within two weeks.”</i>');
+    out.className = 'fb show good'; out.innerHTML = h + (notes.length ? '<p>' + notes.join('</p><p>') + '</p>' : '');
+  }
+  render();
+})();
+
+/* =========================================================
+   2.1.D  Spot the risk
+   ========================================================= */
+(function(){
+  var PRIV = 'Privacy infringement', FRAUD = 'Fraud', ID = 'Identity theft', BIZ = 'Risk to the business: lost customers and reputation';
+  var ALL = [PRIV, FRAUD, ID, BIZ];
+  var bank = [
+    ['A free photo-editing app collects users’ exact location every few minutes and sells it to advertisers. The privacy policy mentions this on page 14.', 'What’s the main risk to customers?', PRIV, 'Users don’t realize their location is being collected and sold. Data collected without customers’ knowledge is privacy infringement.'],
+    ['Hackers break into an online store’s database, where card numbers were stored without encryption. Weeks later, customers see charges they didn’t make.', 'What happened to the customers?', FRAUD, 'Stolen card numbers were used to steal money: fraud, made possible by data that wasn’t secured.'],
+    ['Using a name, birth date, and Social Security number stolen from a tax-prep website, someone opens a credit card in a customer’s name.', 'What happened to the customer?', ID, 'Someone is using the customer’s personal information to act as them: identity theft.'],
+    ['A clothing brand that advertises “we never sell your data” is caught sharing customer emails with partner companies. Thousands of people close their accounts.', 'What risk did the business create for itself?', BIZ, 'Breaking its own promise violated the brand’s core values, hurt its reputation, and cost it customers.'],
+    ['A smart speaker sometimes records conversations when no one said the wake word, and employees listen to some recordings to improve the product.', 'What’s the main risk to customers?', PRIV, 'Customers didn’t knowingly agree to these recordings or know people would hear them.'],
+    ['A scammer uses card numbers stolen from a restaurant’s payment system to buy gift cards online.', 'What happened to the restaurant’s customers?', FRAUD, 'Using stolen card information to buy things is fraud.'],
+    ['A teen’s school email, birth date, and home address leak in a breach. Someone uses them to open a phone account in the teen’s name.', 'What happened to the teen?', ID, 'Opening an account in someone else’s name is identity theft.'],
+    ['A family bakery known for treating customers like neighbors turns down $5,000 from a data broker that wanted to buy its customer email list.', 'What risk is the bakery choosing to avoid?', BIZ, 'Selling the list could violate the bakery’s values and damage the trust its reputation is built on. The bakery weighed the benefit against that risk.']
+  ];
+  var deck = Deck(bank), cur, done, sc = Score(el('risk-score')), fb = el('risk-fb'), box = el('risk-opts');
+  function show(){
+    cur = deck.next(); done = false; hideFb(fb);
+    el('risk-item').innerHTML = esc(cur[0]) + '<span class="who" style="margin:10px 0 0">' + esc(cur[1]) + '</span>';
+    box.innerHTML = '';
+    shuffle(ALL).forEach(function(o){
+      var b = document.createElement('button'); b.className = 'opt'; b.textContent = o;
+      b.onclick = function(){
+        if(done) return; done = true;
+        var ok = o === cur[2]; sc.add(ok);
+        Array.prototype.forEach.call(box.children, function(x){ x.disabled = true; if(!ok && x.textContent === cur[2]) x.className += ' reveal'; });
+        b.className += ok ? ' picked-yes' : ' picked-no';
+        setFb(fb, ok ? 'good' : 'bad', '<b>' + (ok ? 'Right.' : 'Not quite.') + '</b> ' + esc(cur[3]));
+        el('risk-next').focus();
+      };
+      box.appendChild(b);
+    });
+  }
+  el('risk-next').onclick = show;
+  show();
+})();
+
+/* =========================================================
+   Check yourself (AP-style)
+   ========================================================= */
+(function(){
+  var STIM = '<div class="stim"><p><b>Summit Bouldering</b>, a climbing gym, tracked the cost of three ways it attracted new members last quarter. Costs include all marketing, advertising, and sales costs for each channel.</p>' +
+    '<div class="tbl" style="margin:0"><table><thead><tr><th>Channel</th><th class="num">Cost</th><th class="num">New members</th></tr></thead><tbody>' +
+    '<tr><td>Social media ads</td><td class="num">$4,800</td><td class="num">120</td></tr>' +
+    '<tr><td>Local radio ads</td><td class="num">$6,000</td><td class="num">60</td></tr>' +
+    '<tr><td>Member referral program</td><td class="num">$1,500</td><td class="num">75</td></tr>' +
+    '</tbody></table></div></div>';
+  var Q = [
+    {set:true, stem:'What was Summit’s customer acquisition cost for local radio ads?', a:'$100', d:['$60','$48.24','$1,000'], why:'CAC = cost ÷ customers acquired = $6,000 ÷ 60 = $100 per new member.'},
+    {set:true, stem:'Which channel had the lowest customer acquisition cost?', a:'Member referral program', d:['Social media ads','Local radio ads','All three channels had the same cost per member'], why:'Referral: $1,500 ÷ 75 = $20. Social media: $4,800 ÷ 120 = $40. Radio: $6,000 ÷ 60 = $100.'},
+    {set:true, stem:'What was Summit’s overall customer acquisition cost across all three channels?', a:'$48.24', d:['$53.33','$20.00','$12,300'], why:'Total cost $12,300 ÷ total new members 255 = $48.24. Averaging the three channel CACs ($53.33) ignores that each channel brought in a different number of members.'},
+    {set:true, stem:'Which of the following best explains the referral program’s result?', a:'Satisfied members recommend the gym to friends, so Summit wins new members for less than paid advertising costs.', d:['Referral programs have no costs, so their acquisition cost is always zero.','Referred members spend more over time, and higher lifetime value lowers acquisition cost.','Referred members all share the same demographics, which lowers advertising prices.'], why:'Strong customer relationships reduce CAC because satisfied customers refer new ones. The program still cost $1,500, and lifetime value doesn’t change the CAC calculation.'},
+    {stem:'A sporting goods store collects the following information about a customer. Which is a psychographic characteristic?', a:'She prefers brands that donate to environmental causes.', d:['She lives in Phoenix, Arizona.','She earns $62,000 per year.','She is 29 years old.'], why:'Values are psychographic. Location, income, and age are measurable demographic qualities.'},
+    {stem:'A bike shop writes: “Jordan, 41, commutes six miles by bike in Portland, earns $85,000, cares about low-carbon transportation, and wants rain gear that looks good at the office.” What has the bike shop created?', a:'A customer profile', d:['A market segment','A survey','A data breach report'], why:'A customer profile is a fictional description of one sample customer that combines demographic and psychographic data with wants and needs. A market segment is a group, not one person.'},
+    {stem:'Why is designing a product and its marketing for target customers typically better than trying to appeal to everyone?', a:'It is usually more effective and less costly to appeal to the buyers most likely to purchase.', d:['It guarantees that every customer in the segment will buy.','It allows the business to skip collecting customer data.','It means the business no longer needs psychographic data.'], why:'Targeting focuses product, branding, pricing, and advertising on likely buyers, which is typically more effective and less costly. It doesn’t guarantee sales or replace data.'},
+    {stem:'An online retailer records which product photos visitors zoom in on and how long they stay on each page. Which data collection tool is the retailer using?', a:'Click-tracking software', d:['A subscriber list','Customer interviews','Purchased data'], why:'Click-tracking software records what visitors click, view, and how they behave on a site.'},
+    {stem:'A fitness app shares users’ running routes, which reveal where they live, with advertisers. Most users don’t know their routes are shared. Which risk does this most directly create?', a:'Privacy infringement, because users are unaware their data is being collected and shared', d:['Identity theft, because advertisers will open accounts in users’ names','Fraud, because the app charges users for workouts they didn’t complete','No risk, because the app is free to download'], why:'Collecting and sharing location data when customers are unaware or uninformed is privacy infringement.'},
+    {stem:'Which of the following is a risk to the business itself, rather than only to its customers, from collecting customer data?', a:'Customers may leave and the company’s reputation may suffer if the data is misused or exposed.', d:['Customers may see unauthorized charges on their credit card statements.','Customers’ identities may be used to open new accounts.','The business may learn which products customers prefer.'], why:'Loss of customers, violation of core values, and reputation damage are business risks. Unauthorized charges and identity theft harm customers, and learning preferences is a benefit.'},
+    {stem:'Which action would most directly raise the lifetime value of a coffee shop’s customers?', a:'Starting a rewards program that encourages customers to return more often', d:['Buying a billboard to attract first-time visitors','Negotiating lower rent for the shop','Hiring a sales representative to sign up new office accounts'], why:'Lifetime value grows when customers make repeat purchases and stay loyal. The other options attract new customers or lower costs.'},
+    {stem:'A customer spends an average of $12 per visit at a sandwich shop and visits 3 times a month. If she stays a customer for 2 years, what is her estimated lifetime value?', a:'$864', d:['$72','$432','$36'], why:'$12 × 3 visits a month × 12 months × 2 years = $864. $72 forgets to convert months to years, and $432 is only one year.'}
+  ];
+  var quiz = el('quiz'), right = 0, answered = 0;
+  function build(){
+    right = 0; answered = 0;
+    var html = '<div class="q" style="padding-top:4px"><span class="qn">QUESTIONS 1–4 REFER TO THE FOLLOWING INFORMATION</span>' + STIM + '</div>';
+    quiz.innerHTML = html;
+    Q.forEach(function(q, i){
+      var d = document.createElement('div'); d.className = 'q';
+      d.innerHTML = '<span class="qn">QUESTION ' + (i+1) + '</span><p class="stem">' + esc(q.stem) + '</p>';
+      var opts = document.createElement('div'); opts.className = 'opts';
+      var fb = document.createElement('div'); fb.className = 'fb';
+      var letters = 'ABCD';
+      shuffle([q.a].concat(q.d)).forEach(function(o, j){
+        var b = document.createElement('button'); b.className = 'opt';
+        b.innerHTML = '<span class="mono" style="color:var(--mute);margin-right:8px">(' + letters[j] + ')</span>' + esc(o);
+        b.onclick = function(){
+          if(opts.getAttribute('data-done')) return; opts.setAttribute('data-done','1');
+          var ok = o === q.a; answered++; if(ok) right++;
+          Array.prototype.forEach.call(opts.children, function(x){ x.disabled = true; if(!ok && x.getAttribute('data-a')) x.className += ' reveal'; });
+          b.className += ok ? ' picked-yes' : ' picked-no';
+          setFb(fb, ok ? 'good' : 'bad', '<b>' + (ok ? 'Correct.' : 'Not quite.') + '</b> ' + esc(q.why));
+          sum();
+        };
+        if(o === q.a) b.setAttribute('data-a','1');
+        opts.appendChild(b);
+      });
+      d.appendChild(opts); d.appendChild(fb); quiz.appendChild(d);
+    });
+    var s = document.createElement('div'); s.className = 'q'; s.innerHTML = '<p class="qsum" id="qsum" aria-live="polite"></p>'; quiz.appendChild(s);
+    sum();
+  }
+  function sum(){
+    var n = Q.length, t = el('qsum');
+    if(answered < n) t.textContent = right + ' correct out of ' + answered + ' answered · ' + (n - answered) + ' to go';
+    else t.textContent = 'Final: ' + right + ' of ' + n + (right === n ? '. Perfect.' : right >= n - 2 ? '. Strong work.' : '. Review the sections above for the ones you missed.');
+  }
+  el('quiz-reset').onclick = build;
+  build();
+})();
+
+</script>
+</body>
+</html>

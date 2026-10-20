@@ -122,6 +122,17 @@ ul.tools li span{
   margin-top:2px;
 }
 
+/* A topic with no tool yet: same card, not a link.
+   <li class="soon">2.2 Consumer Behavior<span>Not posted yet</span></li> */
+ul.tools li.soon{
+  padding:14px 16px;
+  font-weight:600;
+  color:var(--ink-soft);
+  background:transparent;
+  border-style:dashed;
+}
+ul.tools li.soon:hover{border-color:var(--line)}
+
 /* ---------- course index on the home page ---------- */
 /* Same markup as ul.tools, laid out two-across on wide screens */
 
