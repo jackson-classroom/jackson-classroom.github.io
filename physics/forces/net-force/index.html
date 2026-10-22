@@ -253,8 +253,7 @@ select{font-family:var(--mono);font-size:16px;border:1px solid #93A6B8;border-ra
   <a href="#net">Net force</a>
   <a href="#p-net">Practice: find F<sub>net</sub></a>
   <a href="#law">Newton's second law</a>
-  <a href="#p-fma">Practice: F = ma</a>
-  <a href="#p-both">Practice: both steps</a>
+  <a href="#p-both">Practice: find a</a>
   <a href="#watch">Watch-outs</a>
   <a href="#check">Check yourself</a>
 </nav>
@@ -355,24 +354,12 @@ select{font-family:var(--mono);font-size:16px;border:1px solid #93A6B8;border-ra
   </table></div>
   <p>A <b>newton</b> is defined by this law: <span class="mono nw">1 N = 1 kg · m/s²</span>. One newton is the net force that gives a 1 kg object an acceleration of 1 m/s².</p>
 
-  <h3>Three ways to use it</h3>
-  <div class="rulebox">
-    <div class="rulecard">
-      <div class="form">a = F<sub>net</sub> / m</div>
-      <h4>Find the acceleration</h4>
-      <div class="ex">12 N on a 4 kg cart → a = 12 / 4 = 3 m/s²</div>
-    </div>
-    <div class="rulecard">
-      <div class="form">F<sub>net</sub> = m · a</div>
-      <h4>Find the net force</h4>
-      <div class="ex">A 1000 kg car speeds up at 2 m/s² → F<sub>net</sub> = 1000 × 2 = 2000 N</div>
-    </div>
-    <div class="rulecard">
-      <div class="form">m = F<sub>net</sub> / a</div>
-      <h4>Find the mass</h4>
-      <div class="ex">30 N gives an acceleration of 5 m/s² → m = 30 / 5 = 6 kg</div>
-    </div>
-  </div>
+  <h3>Finding the acceleration from a free-body diagram</h3>
+  <ol class="ladder">
+    <li><div><b>Find the net force.</b> Add up each direction, just like Practice 1. Get its size and direction.</div></li>
+    <li><div><b>Divide by the mass.</b> a = F<sub>net</sub> / m, with the mass in kg.<small>Use the mass, not the weight. F<sub>grav</sub> is a force in newtons.</small></div></li>
+    <li><div><b>Give the direction.</b> The acceleration points the same way as the net force.</div></li>
+  </ol>
 
   <h3>More force, more acceleration. More mass, less acceleration.</h3>
   <div class="tbl"><table class="prop">
@@ -388,33 +375,10 @@ select{font-family:var(--mono);font-size:16px;border:1px solid #93A6B8;border-ra
   <div class="note"><b>Use the net force.</b> If a diagram has more than one force, find F<sub>net</sub> first. Plugging in just the push or just the pull gives the wrong acceleration.</div>
 </section>
 
-<!-- ============ PRACTICE: F = ma ============ -->
-<section id="p-fma">
-  <div class="sec-head">
-    <span class="tasktag">Practice 2</span>
-    <h2>F = ma</h2>
-  </div>
-  <p>One-step problems. Find the acceleration, the net force, or the mass. A new problem is generated every time.</p>
-
-  <div class="card">
-    <div class="card-label"><span>F<sub>net</sub> = m · a</span><span class="score" id="fm-score">0 of 0</span></div>
-    <p class="prob" id="fm-prob"></p>
-    <div class="field">
-      <label for="fm-ans" id="fm-lab">Answer</label>
-      <input type="text" id="fm-ans" inputmode="decimal" autocomplete="off" placeholder="Type a number">
-      <span class="unit" id="fm-unit"></span>
-    </div>
-    <div class="fb" id="fm-fb" aria-live="polite"></div>
-    <div class="btn-row"><button id="fm-check">Check</button><button class="ghost" id="fm-next">Next problem</button></div>
-    <div class="tally-h">Your results by kind of problem</div>
-    <div class="tally" id="fm-tally"></div>
-  </div>
-</section>
-
 <!-- ============ PRACTICE: BOTH STEPS ============ -->
 <section id="p-both">
   <div class="sec-head">
-    <span class="tasktag">Practice 3</span>
+    <span class="tasktag">Practice 2</span>
     <h2>From diagram to acceleration</h2>
   </div>
   <p>Now put it together. Find the net force from the diagram, then divide by the mass. (Weights use g = 9.8 m/s².)</p>
@@ -476,7 +440,7 @@ select{font-family:var(--mono);font-size:16px;border:1px solid #93A6B8;border-ra
 </section>
 
 <footer>
-  <p>Determining the net force from a free-body diagram, and using Newton's second law (F<sub>net</sub> = m · a). The practice generates new problems every time.</p>
+  <p>Determining the net force from a free-body diagram, then using Newton's second law to find the acceleration (a = F<sub>net</sub> / m). The practice generates new problems every time.</p>
   <p><a href="/physics/forces/">← Unit 3 — Forces</a> · <a href="/physics/forces/newtons-first-law/">← Page 1: Newton's First Law</a></p>
 </footer>
 
@@ -714,64 +678,7 @@ el('nf-next').addEventListener('click', nfNew);
 onEnter(['nf-mag','nf-dir'], nfCheck);
 
 /* =========================================================
-   Practice 2 · F = ma (one step)
-   ========================================================= */
-var FM_TYPES = { a:'Find a', f:'Find F<sub>net</sub>', m:'Find m' };
-var OBJECTS = [
-  { n:'a lab cart',               ms:[1,2,3,4,5] },
-  { n:'a bowling ball',           ms:[5,6,7] },
-  { n:'a box',                    ms:[2,4,5,8,10,12] },
-  { n:'a shopping cart',          ms:[10,15,20,25] },
-  { n:'a sled and its rider',     ms:[40,50,60] },
-  { n:'a student on a skateboard',ms:[50,60,70] },
-  { n:'a car',                    ms:[800,1000,1200,1500], maxA:4 }
-];
-var ACCS = [0.5,1,1.5,2,2.5,3,4,5,6,8];
-var fmScore = Score(el('fm-score')), fmTally = newTally(FM_TYPES), fmCur = null, fmDone = false;
-function cap1(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
-function fmNew(){
-  var kind, guard = 0;
-  do { kind = pick(['a','f','m']); guard++; } while(fmCur && guard < 6 && kind === fmCur.kind && Math.random() < .6);
-  var o = pick(OBJECTS), m = pick(o.ms), a, F;
-  do { a = pick(ACCS); F = m * a; } while((o.maxA && a > o.maxA) || F !== Math.round(F*10)/10);
-  var txt, lab, unit, ans;
-  if(kind === 'a'){ txt = 'A net force of <b>' + fmt(F) + ' N</b> acts on ' + o.n + ' with a mass of <b>' + m + ' kg</b>. What is its acceleration?'; lab = 'Acceleration'; unit = 'm/s²'; ans = a; }
-  else if(kind === 'f'){ txt = cap1(o.n) + ' with a mass of <b>' + m + ' kg</b> accelerates at <b>' + fmt(a) + ' m/s²</b>. What is the net force on it?'; lab = 'Net force'; unit = 'N'; ans = F; }
-  else { txt = 'A net force of <b>' + fmt(F) + ' N</b> gives ' + o.n + ' an acceleration of <b>' + fmt(a) + ' m/s²</b>. What is its mass?'; lab = 'Mass'; unit = 'kg'; ans = m; }
-  fmCur = { kind:kind, m:m, a:a, F:F, ans:ans, unit:unit };
-  el('fm-prob').innerHTML = txt; el('fm-lab').textContent = lab; el('fm-unit').textContent = unit;
-  el('fm-ans').value = ''; lock(['fm-ans','fm-check'], false); fmDone = false;
-  hideFb(el('fm-fb'));
-}
-function fmCheck(){
-  if(fmDone) return;
-  var p = fmCur, x = parseNum(el('fm-ans').value);
-  if(isNaN(x)){ setFb(el('fm-fb'),'hint','Type a number in the box. The unit is already there.'); return; }
-  var ok = close(x, p.ans);
-  fmDone = true; lock(['fm-ans','fm-check'], true);
-  fmScore.add(ok); fmTally[p.kind].t++; if(ok) fmTally[p.kind].r++;
-  renderTally(el('fm-tally'), FM_TYPES, fmTally);
-  var work, extra = '';
-  if(p.kind === 'a'){
-    work = 'a = F<sub>net</sub> / m<br>a = ' + fmt(p.F) + ' N / ' + p.m + ' kg<br>a = <b>' + fmt(p.a) + ' m/s²</b>';
-    if(!ok && close(x, p.m / p.F)) extra = ' You divided mass by force. It’s force divided by mass.';
-    else if(!ok && close(x, p.F * p.m)) extra = ' You multiplied. To find a, divide F<sub>net</sub> by m.';
-  } else if(p.kind === 'f'){
-    work = 'F<sub>net</sub> = m · a<br>F<sub>net</sub> = ' + p.m + ' kg × ' + fmt(p.a) + ' m/s²<br>F<sub>net</sub> = <b>' + fmt(p.F) + ' N</b>';
-    if(!ok && (close(x, p.m / p.a) || close(x, p.a / p.m))) extra = ' You divided. To find the force, multiply mass by acceleration.';
-  } else {
-    work = 'm = F<sub>net</sub> / a<br>m = ' + fmt(p.F) + ' N / ' + fmt(p.a) + ' m/s²<br>m = <b>' + p.m + ' kg</b>';
-    if(!ok && close(x, p.F * p.a)) extra = ' You multiplied. To find the mass, divide F<sub>net</sub> by a.';
-    else if(!ok && close(x, p.a / p.F)) extra = ' You divided the wrong way. It’s force divided by acceleration.';
-  }
-  setFb(el('fm-fb'), ok ? 'good' : 'bad', '<p><b>' + (ok ? 'Right.' : 'Not this one.') + '</b>' + extra + '</p><div class="work">' + work + '</div>');
-}
-el('fm-check').addEventListener('click', fmCheck);
-el('fm-next').addEventListener('click', fmNew);
-onEnter(['fm-ans'], fmCheck);
-
-/* =========================================================
-   Practice 3 · diagram → F_net → a
+   Practice 2 · diagram → F_net → a
    ========================================================= */
 var BT_TYPES = { f:'Step 1 · F<sub>net</sub>', a:'Step 2 · a' };
 function niceA(m, list){ var a, g = 0; do { a = pick(list); g++; } while(!Number.isInteger(m*a) && g < 50); return Number.isInteger(m*a) ? a : 1; }
@@ -854,10 +761,10 @@ var QUIZ = [
     opts:['60 N right','20 N right','40 N right','0 N'],
     ans:2,
     why:'Same direction adds: 20 + 30 = 50 N right. Then subtract the 10 N left: 50 − 10 = 40 N right.' },
-  { stem:'A net force of 20 N acts on a 5 kg cart. What is its acceleration?',
-    opts:['4 m/s²','100 m/s²','0.25 m/s²','25 m/s²'],
+  { stem:'A cable lifts a 50 kg crate. F<sub>tens</sub> = 590 N up and F<sub>grav</sub> = 490 N down. What is the crate’s acceleration?',
+    opts:['2 m/s² up','11.8 m/s² up','9.8 m/s² down','21.6 m/s² up'],
     ans:0,
-    why:'a = F<sub>net</sub> / m = 20 N / 5 kg = 4 m/s².' },
+    why:'F<sub>net</sub> = 590 − 490 = 100 N up. Then a = 100 N / 50 kg = 2 m/s² up. Dividing just the tension by the mass gives 11.8 m/s², which is too big.' },
   { stem:'The net force on an object is doubled. Its mass stays the same. What happens to its acceleration?',
     opts:['It is cut in half','It stays the same','It doubles','It becomes four times as big'],
     ans:2,
@@ -903,9 +810,8 @@ var QUIZ = [
 
 /* boot */
 renderTally(el('nf-tally'), NF_TYPES, nfTally);
-renderTally(el('fm-tally'), FM_TYPES, fmTally);
 renderTally(el('bt-tally'), BT_TYPES, btTally);
-nfNew(); fmNew(); btNew();
+nfNew(); btNew();
 </script>
 </body>
 </html>
