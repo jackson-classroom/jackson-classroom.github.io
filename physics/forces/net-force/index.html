@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Net Force &amp; Newton's Second Law — F = ma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Physics · Unit 3 · Forces — shared page system
+   (identical block on every Unit 3 page)
+   ========================================================= */
+:root{
+  --ink:#16283C; --ink2:#3D4F63; --mute:#5D6D7E;
+  --paper:#EDF1F4; --card:#FBFCFD; --line:#CBD7E1; --line-soft:#E1E8EE;
+  --acc:#1B6CA8; --acc-dk:#0F4A78; --acc-lite:#D3E4F2;
+  --warm:#9A6410; --warm-lite:#FBEFD6;
+  --ok:#1F6E4D; --ok-bg:#E3F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  /* one colour per force, used on every page */
+  --f-g:#B23A2B;    /* gravity / weight      */
+  --f-n:#1B6CA8;    /* normal                */
+  --f-f:#A86A0C;    /* friction              */
+  --f-t:#1E7F5C;    /* tension               */
+  --f-a:#6B45B0;    /* applied               */
+  --f-air:#3E7C8A;  /* air resistance / drag */
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+  background-image:linear-gradient(to right,rgba(150,178,199,.17) 1px,transparent 1px),linear-gradient(to bottom,rgba(150,178,199,.17) 1px,transparent 1px);
+  background-size:26px 26px}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(237,241,244,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:60px 0 40px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc-dk)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(38px,6.4vw,64px);line-height:1.02;margin:16px 0 0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--acc)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:48ch;color:var(--ink2);margin:20px 0 0}
+
+.board{margin:36px 0 0;padding:22px 24px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.board-cap{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+.board svg{display:block;width:100%;height:auto}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft)}
+.sig-note b{color:var(--acc-dk);font-weight:600}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--acc);color:var(--acc-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(27px,4.2vw,38px);line-height:1.1;margin:0;letter-spacing:-.02em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--acc-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.nw{white-space:nowrap}
+.note{border-left:3px solid var(--warm);background:var(--warm-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.law{font-family:var(--display);font-size:clamp(20px,2.8vw,25px);font-weight:500;line-height:1.35;letter-spacing:-.01em;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:0 4px 4px 0;padding:18px 22px;margin:22px 0}
+.law small{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:6px;font-weight:400}
+
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:24px 0}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:0 4px 4px 0;padding:18px 20px}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard .form{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--acc-dk);margin:2px 0 0;line-height:1.5}
+.rulecard .ex{font-family:var(--body);font-size:14.5px;color:var(--ink);background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:7px 10px;margin-top:10px}
+.rulecard.warn{border-left-color:var(--warm)}
+
+/* force labels: F with a coloured subscript tag */
+.F{font-family:var(--mono);font-weight:600;white-space:nowrap}
+.F.g{color:var(--f-g)} .F.n{color:var(--f-n)} .F.f{color:var(--f-f)} .F.t{color:var(--f-t)} .F.a{color:var(--f-a)} .F.air{color:var(--f-air)} .F.net{color:var(--ink)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.setup{font-size:16px;color:var(--ink2);margin:0 0 14px}
+.scene{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:8px}
+.scene svg{display:block;width:100%;height:auto;max-width:540px;margin:0 auto}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F5F8FA;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--acc-dk);border-color:var(--acc-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--acc)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--acc);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+/* Input boxes: clearly fillable. Placeholder text is a short instruction, never a sample answer. */
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid #93A6B8;border-radius:3px;padding:9px 11px;width:150px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(22,40,60,.12)}
+::placeholder{font-family:var(--body);font-style:italic;font-size:15px;color:#7E8E9D;opacity:1}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:170px}
+.unit{font-family:var(--mono);font-size:15px;color:var(--ink2)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1A4B35}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--acc);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb p{margin:6px 0 0}
+.fb p:first-child{margin-top:0}
+
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-top:14px}
+.cbtn{background:#fff;color:var(--ink);border:1px solid var(--line);font-size:13px;padding:11px 10px;text-align:center}
+.cbtn:hover{background:#fff;color:var(--ink);border-color:var(--acc)}
+.cbtn.yes{background:var(--ok-bg);border-color:var(--ok);color:#1A4B35}
+.cbtn.no{background:var(--no-bg);border-color:var(--no);color:#7E2A1D}
+.cbtn.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.cbtn[disabled]{cursor:default}
+
+.tally-h{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:20px 0 8px}
+.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px}
+.tcell{border:1px solid var(--line-soft);border-radius:3px;padding:7px 10px;background:#fff}
+.tcell .tl{display:block;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.04em}
+.tcell .tv{font-family:var(--mono);font-size:15px;color:var(--ink)}
+.tcell.miss{border-color:#E3B7AE;background:#FDF6F4}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab:hover{background:var(--line-soft);color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--ink);color:#F5F8FA;border-color:var(--ink)}
+.panel{display:none;padding-top:12px}
+.panel.on{display:block}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.tbl{overflow-x:auto;margin:18px 0;-webkit-overflow-scrolling:touch}
+.tbl table{margin:0}
+
+.wo{list-style:none;padding:0;margin:20px 0}
+.wo li{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 18px;margin:10px 0}
+.wo .myth{display:block;font-size:15px;color:var(--no);text-decoration:line-through;text-decoration-color:rgba(169,58,42,.55);margin-bottom:4px}
+.wo .fact{font-size:16px}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45;letter-spacing:0}
+.opt:hover{border-color:var(--acc);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.95}
+.quiz-sum{font-family:var(--mono);font-size:13px;color:var(--ink2);margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft)}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#E9EFF4;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#BCCADA}
+.next .nt{font-family:var(--display);font-weight:600;font-size:24px;color:#fff;margin:0 0 4px;letter-spacing:-.01em}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F5F8FA;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--acc-lite)}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:14px}
+  .scene{padding:2px}
+  .board{padding:16px 14px}
+  .field label{min-width:auto;flex:1 1 100%}
+  .choices{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+/* ======== end shared block ======== */
+
+/* ---- page: method ladder ---- */
+.ladder{list-style:none;padding:0;margin:20px 0;counter-reset:step}
+.ladder li{counter-increment:step;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:baseline;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:12px 16px;margin:8px 0}
+.ladder li::before{content:counter(step);font-family:var(--mono);font-size:13px;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;text-align:center;padding:2px 0}
+.ladder small{display:block;color:var(--mute);font-size:14.5px;margin-top:2px}
+
+/* ---- page: worked example ---- */
+.worked{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:18px;align-items:center}
+@media (max-width:640px){.worked{grid-template-columns:1fr}}
+
+/* ---- page: ledger (sum per direction) ---- */
+.ledger{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:14px;margin:10px 0 4px;background:rgba(255,255,255,.55)}
+.ledger th,.ledger td{padding:6px 8px;border-bottom:1px solid rgba(22,40,60,.12);text-align:left;vertical-align:top}
+.ledger th{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:inherit;opacity:.75;font-weight:500}
+.ledger td.z{font-weight:600}
+.verdict{font-family:var(--mono);font-size:13.5px;margin-top:8px}
+
+/* ---- page: hero steps ---- */
+.steps{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.steps li{margin:0;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px 14px}
+.steps .sl{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:2px}
+.steps .eq{font-family:var(--mono);font-size:16px;color:var(--ink)}
+.steps .eq b{color:var(--acc-dk);font-weight:600}
+
+/* ---- page: work shown in feedback ---- */
+.work{font-family:var(--mono);font-size:14.5px;line-height:1.7;margin:8px 0 0;padding:8px 12px;background:rgba(255,255,255,.6);border-radius:3px}
+
+/* ---- page: practice ---- */
+.cap{font-size:16px;color:var(--ink2);margin:0 0 10px}
+.cap b{color:var(--ink)}
+.prob{font-size:18px;line-height:1.55;margin:0 0 6px;color:var(--ink)}
+.given{font-family:var(--mono);font-size:13.5px;color:var(--ink2);margin:10px 0 0}
+select{font-family:var(--mono);font-size:16px;border:1px solid #93A6B8;border-radius:3px;padding:9px 10px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(22,40,60,.12)}
+.prop td.ch{color:var(--acc-dk);font-family:var(--mono);font-size:13.5px}
+.prop td.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Net Force &amp; F = ma</span>
+    <span class="bar-sub">Adding up forces · Newton's second law</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 3 · Forces · Page 2</div>
+  <h1>Find the net force. <em>Then find the acceleration.</em></h1>
+  <p class="lede">The net force is what's left over after you add up every force on an object. Newton's second law says that leftover force is what makes the object accelerate: a = F<sub>net</sub> / m.</p>
+
+  <div class="board">
+    <div class="board-cap">One diagram, two steps</div>
+    <div class="worked">
+      <div class="scene"><svg id="hero-svg" viewBox="0 0 520 360" role="img" aria-label="A 10 kilogram sled pulled by a rope. Tension 60 newtons right, friction 40 newtons left, normal force 98 newtons up, gravity 98 newtons down."></svg></div>
+      <ol class="steps">
+        <li><span class="sl">Step 1 · Net force</span><span class="eq">Up–down: 98 − 98 = 0 N<br>Left–right: 60 − 40 = <b>20 N right</b></span></li>
+        <li><span class="sl">Step 2 · Acceleration</span><span class="eq">a = F<sub>net</sub> / m = 20 N / 10 kg<br>a = <b>2 m/s² right</b></span></li>
+      </ol>
+    </div>
+    <div class="sig-note">The acceleration always points the <b>same way as the net force</b>. Here both point right.</div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#net">Net force</a>
+  <a href="#p-net">Practice: find F<sub>net</sub></a>
+  <a href="#law">Newton's second law</a>
+  <a href="#p-fma">Practice: F = ma</a>
+  <a href="#p-both">Practice: both steps</a>
+  <a href="#watch">Watch-outs</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ NET FORCE ============ -->
+<section id="net">
+  <div class="sec-head"><h2>Determining the net force</h2></div>
+  <p>The <b>net force</b> (<span class="F net">F<sub>net</sub></span>) is the sum of all the forces acting on an object, taking direction into account. Forces are <b>vectors</b>, so you can't just add up every number on the diagram.</p>
+
+  <div class="rulebox">
+    <div class="rulecard">
+      <div class="form">same way → add</div>
+      <h4>Forces in the same direction</h4>
+      <p>Add them together.</p>
+      <div class="ex">30 N right and 20 N right → 50 N right</div>
+    </div>
+    <div class="rulecard">
+      <div class="form">opposite ways → subtract</div>
+      <h4>Forces in opposite directions</h4>
+      <p>Subtract the smaller from the bigger. The net force points the way of the bigger side.</p>
+      <div class="ex">50 N right and 20 N left → 30 N right</div>
+    </div>
+  </div>
+
+  <h3>The method</h3>
+  <ol class="ladder">
+    <li><div><b>Add the vertical forces.</b> Total up minus total down.</div></li>
+    <li><div><b>Add the horizontal forces.</b> Total right minus total left.</div></li>
+    <li><div><b>Whatever doesn't cancel is the net force.</b> Give its size <i>and</i> direction, like "30 N right."<small>If both directions cancel, F<sub>net</sub> = 0 N and the forces are balanced (page 1).</small></div></li>
+  </ol>
+
+  <h3>Worked example</h3>
+  <div class="worked">
+    <div class="scene"><svg id="worked-svg" viewBox="0 0 520 360" role="img" aria-label="A skydiver. Air resistance 300 newtons up, gravity 700 newtons down."></svg></div>
+    <div>
+      <p style="margin-top:0">A skydiver just after jumping, before she's picked up much speed.</p>
+      <table class="ledger" style="background:transparent">
+        <thead><tr><th>Direction</th><th>Add up</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Vertical</td><td>300 N up − 700 N down</td><td class="z">400 N down</td></tr>
+          <tr><td>Horizontal</td><td>no horizontal forces</td><td class="z">0 N</td></tr>
+        </tbody>
+      </table>
+      <p class="verdict"><b>F<sub>net</sub> = 400 N down.</b> Gravity is bigger, so the net force points down.</p>
+    </div>
+  </div>
+
+  <div class="note"><b>Reading the diagrams on this page:</b> up–down arrows and left–right arrows are each drawn to their own scale, so compare arrows within a direction. Go by the labeled numbers, not the arrow lengths.</div>
+</section>
+
+<!-- ============ PRACTICE: NET FORCE ============ -->
+<section id="p-net">
+  <div class="sec-head">
+    <span class="tasktag">Practice 1</span>
+    <h2>Find the net force</h2>
+  </div>
+  <p>Add up each direction, then give the size and direction of F<sub>net</sub>. A new diagram is generated every time.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Find F<sub>net</sub></span><span class="score" id="nf-score">0 of 0</span></div>
+    <p class="cap" id="nf-cap"></p>
+    <div class="scene"><svg id="nf-svg" viewBox="0 0 520 360" role="img" aria-labelledby="nf-desc"><desc id="nf-desc"></desc></svg></div>
+    <div class="field">
+      <label for="nf-mag">Net force</label>
+      <input type="text" id="nf-mag" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">N</span>
+      <select id="nf-dir" aria-label="Direction of the net force">
+        <option value="">Direction…</option>
+        <option value="up">up</option>
+        <option value="down">down</option>
+        <option value="left">left</option>
+        <option value="right">right</option>
+        <option value="none">none (F_net = 0)</option>
+      </select>
+    </div>
+    <div class="fb" id="nf-fb" aria-live="polite"></div>
+    <div class="btn-row"><button id="nf-check">Check</button><button class="ghost" id="nf-next">Next diagram</button></div>
+    <div class="tally-h">Your results by kind of diagram</div>
+    <div class="tally" id="nf-tally"></div>
+  </div>
+</section>
+
+<!-- ============ SECOND LAW ============ -->
+<section id="law">
+  <div class="sec-head"><h2>Newton's second law</h2></div>
+
+  <div class="law"><small>Newton's second law</small>An object's acceleration points in the direction of the net force. It gets bigger when the net force is bigger, and smaller when the mass is bigger.<br><span class="mono" style="font-size:.95em">a = F<sub>net</sub> / m &nbsp;&nbsp;or&nbsp;&nbsp; F<sub>net</sub> = m · a</span></div>
+
+  <p>Page 1 said an unbalanced force changes an object's velocity. Newton's second law tells you <b>how fast</b> the velocity changes. That's the acceleration.</p>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Symbol</th><th>Means</th><th>Unit</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">F<sub>net</sub></td><td>net force (not just one of the forces)</td><td class="mono">N (newtons)</td></tr>
+      <tr><td class="mono">m</td><td>mass</td><td class="mono">kg</td></tr>
+      <tr><td class="mono">a</td><td>acceleration</td><td class="mono">m/s²</td></tr>
+    </tbody>
+  </table></div>
+  <p>A <b>newton</b> is defined by this law: <span class="mono nw">1 N = 1 kg · m/s²</span>. One newton is the net force that gives a 1 kg object an acceleration of 1 m/s².</p>
+
+  <h3>Three ways to use it</h3>
+  <div class="rulebox">
+    <div class="rulecard">
+      <div class="form">a = F<sub>net</sub> / m</div>
+      <h4>Find the acceleration</h4>
+      <div class="ex">12 N on a 4 kg cart → a = 12 / 4 = 3 m/s²</div>
+    </div>
+    <div class="rulecard">
+      <div class="form">F<sub>net</sub> = m · a</div>
+      <h4>Find the net force</h4>
+      <div class="ex">A 1000 kg car speeds up at 2 m/s² → F<sub>net</sub> = 1000 × 2 = 2000 N</div>
+    </div>
+    <div class="rulecard">
+      <div class="form">m = F<sub>net</sub> / a</div>
+      <h4>Find the mass</h4>
+      <div class="ex">30 N gives an acceleration of 5 m/s² → m = 30 / 5 = 6 kg</div>
+    </div>
+  </div>
+
+  <h3>More force, more acceleration. More mass, less acceleration.</h3>
+  <div class="tbl"><table class="prop">
+    <thead><tr><th>Net force</th><th>Mass</th><th>Acceleration</th><th>Compared to row 1</th></tr></thead>
+    <tbody>
+      <tr><td class="num">10 N</td><td class="num">2 kg</td><td class="num">5 m/s²</td><td class="ch">starting point</td></tr>
+      <tr><td class="num">20 N</td><td class="num">2 kg</td><td class="num">10 m/s²</td><td class="ch">double the force → double the a</td></tr>
+      <tr><td class="num">10 N</td><td class="num">4 kg</td><td class="num">2.5 m/s²</td><td class="ch">double the mass → half the a</td></tr>
+      <tr><td class="num">20 N</td><td class="num">4 kg</td><td class="num">5 m/s²</td><td class="ch">double both → same a</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note"><b>Use the net force.</b> If a diagram has more than one force, find F<sub>net</sub> first. Plugging in just the push or just the pull gives the wrong acceleration.</div>
+</section>
+
+<!-- ============ PRACTICE: F = ma ============ -->
+<section id="p-fma">
+  <div class="sec-head">
+    <span class="tasktag">Practice 2</span>
+    <h2>F = ma</h2>
+  </div>
+  <p>One-step problems. Find the acceleration, the net force, or the mass. A new problem is generated every time.</p>
+
+  <div class="card">
+    <div class="card-label"><span>F<sub>net</sub> = m · a</span><span class="score" id="fm-score">0 of 0</span></div>
+    <p class="prob" id="fm-prob"></p>
+    <div class="field">
+      <label for="fm-ans" id="fm-lab">Answer</label>
+      <input type="text" id="fm-ans" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit" id="fm-unit"></span>
+    </div>
+    <div class="fb" id="fm-fb" aria-live="polite"></div>
+    <div class="btn-row"><button id="fm-check">Check</button><button class="ghost" id="fm-next">Next problem</button></div>
+    <div class="tally-h">Your results by kind of problem</div>
+    <div class="tally" id="fm-tally"></div>
+  </div>
+</section>
+
+<!-- ============ PRACTICE: BOTH STEPS ============ -->
+<section id="p-both">
+  <div class="sec-head">
+    <span class="tasktag">Practice 3</span>
+    <h2>From diagram to acceleration</h2>
+  </div>
+  <p>Now put it together. Find the net force from the diagram, then divide by the mass. (Weights use g = 9.8 m/s².)</p>
+
+  <div class="card">
+    <div class="card-label"><span>Two steps</span><span class="score" id="bt-score">0 of 0</span></div>
+    <p class="cap" id="bt-cap"></p>
+    <div class="scene"><svg id="bt-svg" viewBox="0 0 520 360" role="img" aria-labelledby="bt-desc"><desc id="bt-desc"></desc></svg></div>
+    <div class="field">
+      <label for="bt-f">1 · Net force</label>
+      <input type="text" id="bt-f" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">N</span>
+      <select id="bt-dir" aria-label="Direction of the net force">
+        <option value="">Direction…</option>
+        <option value="up">up</option>
+        <option value="down">down</option>
+        <option value="left">left</option>
+        <option value="right">right</option>
+        <option value="none">none (F_net = 0)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="bt-a">2 · Acceleration</label>
+      <input type="text" id="bt-a" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">m/s²</span>
+    </div>
+    <div class="fb" id="bt-fb" aria-live="polite"></div>
+    <div class="btn-row"><button id="bt-check">Check</button><button class="ghost" id="bt-next">Next diagram</button></div>
+    <div class="tally-h">Your results by step</div>
+    <div class="tally" id="bt-tally"></div>
+  </div>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="sec-head"><h2>Watch-outs</h2></div>
+  <ul class="wo">
+    <li><span class="myth">The net force is all the forces added together.</span><span class="fact">Only forces pointing the <b>same way</b> add. Forces pointing opposite ways subtract. 50 N right and 20 N left is 30 N right, not 70 N.</span></li>
+    <li><span class="myth">The net force is the biggest force on the diagram.</span><span class="fact">The biggest force is usually only part of the story. Something else almost always pushes back against it.</span></li>
+    <li><span class="myth">Use the push (or pull) in F = ma.</span><span class="fact">Use <b>F<sub>net</sub></b>. A 10 kg box pushed with 50 N against 30 N of friction has F<sub>net</sub> = 20 N, so a = 2 m/s², not 5 m/s².</span></li>
+    <li><span class="myth">Mass and weight are the same thing.</span><span class="fact">Mass is in <b>kg</b>. Weight (F<sub>grav</sub>) is a force in <b>N</b>. A 10 kg box weighs 98 N. Use the mass in kg when you divide.</span></li>
+    <li><span class="myth">F<sub>net</sub> = 0 means the object is standing still.</span><span class="fact">F<sub>net</sub> = 0 means <b>a = 0</b>. The velocity isn't changing, so the object could be at rest or moving at a steady speed.</span></li>
+  </ul>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Seven questions on net force and Newton's second law.</p>
+  <div class="card" id="quiz"></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">That's page 2 of Unit 3</div>
+      <p>More Forces pages will show up on the unit page as we go.</p>
+    </div>
+    <a href="/physics/forces/">Back to Unit 3 →</a>
+  </div>
+</section>
+
+<footer>
+  <p>Determining the net force from a free-body diagram, and using Newton's second law (F<sub>net</sub> = m · a). The practice generates new problems every time.</p>
+  <p><a href="/physics/forces/">← Unit 3 — Forces</a> · <a href="/physics/forces/newtons-first-law/">← Page 1: Newton's First Law</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   shared helpers (same on every Unit 3 page)
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function randInt(lo,hi){ return lo + Math.floor(Math.random()*(hi-lo+1)); }
+var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* force colours and labels (match the CSS variables) */
+var FORCE = {
+  g:  { c:'#B23A2B', sym:'F<tspan baseline-shift="sub" font-size="70%">grav</tspan>',   html:'F<sub>grav</sub>',   name:'gravity' },
+  n:  { c:'#1B6CA8', sym:'F<tspan baseline-shift="sub" font-size="70%">norm</tspan>',   html:'F<sub>norm</sub>',   name:'normal force' },
+  f:  { c:'#A86A0C', sym:'F<tspan baseline-shift="sub" font-size="70%">frict</tspan>',   html:'F<sub>frict</sub>',   name:'friction' },
+  t:  { c:'#1E7F5C', sym:'F<tspan baseline-shift="sub" font-size="70%">tens</tspan>',   html:'F<sub>tens</sub>',   name:'tension' },
+  a:  { c:'#6B45B0', sym:'F<tspan baseline-shift="sub" font-size="70%">app</tspan>', html:'F<sub>app</sub>', name:'applied force' },
+  air:{ c:'#3E7C8A', sym:'F<tspan baseline-shift="sub" font-size="70%">air</tspan>', html:'F<sub>air</sub>', name:'air resistance' }
+};
+var SVGNS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs, parent){
+  var n = document.createElementNS(SVGNS, tag);
+  for(var k in attrs) n.setAttribute(k, attrs[k]);
+  if(parent) parent.appendChild(n);
+  return n;
+}
+/* Draw an arrow from (x1,y1) to (x2,y2). Returns the group. */
+function arrow(parent, x1, y1, x2, y2, color, width){
+  var g = svgEl('g', {}, parent), w = width || 4;
+  var dx = x2-x1, dy = y2-y1, L = Math.sqrt(dx*dx+dy*dy) || 1, ux = dx/L, uy = dy/L;
+  var head = Math.min(15, L*0.6), hw = head*0.55;
+  var bx = x2 - ux*head, by = y2 - uy*head;
+  svgEl('line', {x1:x1, y1:y1, x2:bx, y2:by, stroke:color, 'stroke-width':w, 'stroke-linecap':'round'}, g);
+  svgEl('path', {d:'M'+x2+' '+y2+' L'+(bx - uy*hw)+' '+(by + ux*hw)+' L'+(bx + uy*hw)+' '+(by - ux*hw)+' Z', fill:color}, g);
+  return g;
+}
+function label(parent, x, y, html, color, anchor, size){
+  var t = svgEl('text', {x:x, y:y, fill:color||'#16283C', 'font-family':'IBM Plex Mono,monospace', 'font-size':size||15, 'font-weight':600, 'text-anchor':anchor||'middle'}, parent);
+  t.innerHTML = html;
+  return t;
+}
+function clearSvg(svg){ Array.prototype.slice.call(svg.childNodes).forEach(function(n){ if(n.nodeName !== 'desc') svg.removeChild(n); }); }
+
+/* =========================================================
+   free-body diagram renderer
+   forces: [{k:'g'|'n'|'f'|'t'|'a'|'air', d:'up'|'down'|'left'|'right', m:<newtons>}]
+   Arrows start at the box edge, lengths scale with size.
+   Several forces in the same direction are drawn side by side.
+   ========================================================= */
+function drawFBD(svg, forces, opts){
+  opts = opts || {};
+  clearSvg(svg);
+  var W = 520, H = 360, cx = 260, cy = 180, half = 34, maxLen = 96, minLen = 28;
+  /* vertical and horizontal forces are each scaled to their own largest force,
+     so a small sideways push next to a heavy weight is still readable */
+  function axisMax(dirs){ return Math.max.apply(null, forces.filter(function(f){ return dirs.indexOf(f.d) >= 0; }).map(function(f){ return f.m; }).concat([1])); }
+  var sV = maxLen / axisMax(['up','down']), sH = maxLen / axisMax(['left','right']);
+  function len(m, d){ return Math.max(minLen, m * (d === 'up' || d === 'down' ? sV : sH)); }
+  /* box */
+  svgEl('rect', {x:cx-half, y:cy-half, width:half*2, height:half*2, rx:3, fill:'#fff', stroke:'#16283C', 'stroke-width':2.2}, svg);
+  if(opts.name) label(svg, cx, cy + 4, opts.name, '#5D6D7E', 'middle', 11);
+  var groups = { up:[], down:[], left:[], right:[] };
+  forces.forEach(function(f){ groups[f.d].push(f); });
+  Object.keys(groups).forEach(function(d){
+    var list = groups[d], n = list.length;
+    list.forEach(function(f, i){
+      var off = (i - (n-1)/2) * (n > 1 ? 34 : 0);
+      var L = len(f.m, d), c = FORCE[f.k].c, txt = FORCE[f.k].sym + ' ' + f.m + ' N';
+      if(d === 'up'){
+        arrow(svg, cx + off, cy - half, cx + off, cy - half - L, c, 4.5);
+        if(n > 1) label(svg, cx + off + (i === 0 ? -10 : 10), cy - half - L + 13, txt, c, i === 0 ? 'end' : 'start', 18);
+        else label(svg, cx + 12, cy - half - L + 12, txt, c, 'start', 18);
+      } else if(d === 'down'){
+        arrow(svg, cx + off, cy + half, cx + off, cy + half + L, c, 4.5);
+        if(n > 1) label(svg, cx + off + (i === 0 ? -10 : 10), cy + half + L - 4, txt, c, i === 0 ? 'end' : 'start', 18);
+        else label(svg, cx + 12, cy + half + L - 4, txt, c, 'start', 18);
+      } else if(d === 'right'){
+        arrow(svg, cx + half, cy + off, cx + half + L, cy + off, c, 4.5);
+        label(svg, cx + half + L + 8, cy + off + 6, txt, c, 'start', 18);
+      } else {
+        arrow(svg, cx - half, cy + off, cx - half - L, cy + off, c, 4.5);
+        label(svg, cx - half - L - 8, cy + off + 6, txt, c, 'end', 18);
+      }
+    });
+  });
+}
+function sumDir(forces, d){ return forces.filter(function(f){ return f.d === d; }).reduce(function(s,f){ return s + f.m; }, 0); }
+function listDir(forces, d){
+  var l = forces.filter(function(f){ return f.d === d; });
+  if(!l.length) return '0 N';
+  if(l.length === 1) return l[0].m + ' N';
+  return '(' + l.map(function(f){ return f.m; }).join(' + ') + ') N';
+}
+function describeForces(forces){
+  return forces.map(function(f){ return FORCE[f.k].name + ' ' + f.m + ' newtons ' + f.d; }).join(', ') + '.';
+}
+
+
+/* =========================================================
+   page helpers
+   ========================================================= */
+function fmt(x){ var r = Math.round(x*100)/100; return String(r); }
+function weightOf(m){ return Math.round(m*98)/10; }           /* m × 9.8, no float noise */
+function parseNum(s){ s = String(s).replace(/,/g,'').trim(); if(!/^[-+]?(\d+\.?\d*|\.\d+)/.test(s)) return NaN; return parseFloat(s); }
+function close(x, ans){ return Math.abs(x - ans) <= Math.max(0.011, Math.abs(ans)*0.01); }
+function r10(lo, hi){ return 10 * randInt(lo/10, hi/10); }
+function netWord(v, pos, neg){ return v === 0 ? '0 N' : fmt(Math.abs(v)) + ' N ' + (v > 0 ? pos : neg); }
+function netOf(forces){
+  var vy = sumDir(forces,'up') - sumDir(forces,'down'), vx = sumDir(forces,'right') - sumDir(forces,'left');
+  vy = Math.round(vy*10)/10; vx = Math.round(vx*10)/10;
+  var mag = Math.abs(vy) > 0 ? Math.abs(vy) : Math.abs(vx);
+  var dir = vy > 0 ? 'up' : vy < 0 ? 'down' : vx > 0 ? 'right' : vx < 0 ? 'left' : 'none';
+  return { vx:vx, vy:vy, mag:mag, dir:dir };
+}
+function ledgerTable(F, n){
+  function row(name, a, b, pos, neg, v){
+    var has = F.some(function(f){ return f.d === a || f.d === b; });
+    return '<tr><td>' + name + '</td><td>' + (has ? listDir(F,a) + ' ' + pos + ' − ' + listDir(F,b) + ' ' + neg : 'no ' + name.toLowerCase() + ' forces') + '</td><td class="z">' + netWord(v,pos,neg) + '</td></tr>';
+  }
+  return '<table class="ledger"><thead><tr><th>Direction</th><th>Add up</th><th>Total</th></tr></thead><tbody>' +
+    row('Vertical','up','down','up','down',n.vy) + row('Horizontal','right','left','right','left',n.vx) + '</tbody></table>';
+}
+function lock(ids, on){ ids.forEach(function(id){ el(id).disabled = on; }); }
+function onEnter(ids, fn){ ids.forEach(function(id){ el(id).addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); fn(); } }); }); }
+function renderTally(node, types, tally){
+  node.innerHTML = Object.keys(types).map(function(k){
+    var c = tally[k], miss = c.t > c.r;
+    return '<div class="tcell' + (miss ? ' miss' : '') + '"><span class="tl">' + types[k] + '</span><span class="tv">' + c.r + '/' + c.t + '</span></div>';
+  }).join('');
+}
+function newTally(types){ var t = {}; Object.keys(types).forEach(function(k){ t[k] = {r:0,t:0}; }); return t; }
+/* the "mass" line inside the box */
+function massLabel(svg, m){ label(svg, 260, 201, m + ' kg', '#16283C', 'middle', 12); }
+
+/* =========================================================
+   hero + worked example
+   ========================================================= */
+drawFBD(el('hero-svg'), [{k:'n',d:'up',m:98},{k:'g',d:'down',m:98},{k:'t',d:'right',m:60},{k:'f',d:'left',m:40}], {name:'sled'});
+massLabel(el('hero-svg'), 10);
+drawFBD(el('worked-svg'), [{k:'air',d:'up',m:300},{k:'g',d:'down',m:700}], {name:'skydiver'});
+
+/* =========================================================
+   Practice 1 · find the net force
+   ========================================================= */
+var NF_TYPES = { vert:'Up and down only', four:'Four forces', multi:'Two forces on one side', single:'Just one force' };
+function bal(p){ return Math.random() < p; }
+var NF_TEMPLATES = [
+  { type:'vert', name:'skydiver', cap:'A <b>skydiver</b> falling through the air.',
+    make:function(){ var w = r10(500,900), air = bal(.2) ? w : r10(100, w-100); return [{k:'air',d:'up',m:air},{k:'g',d:'down',m:w}]; } },
+  { type:'vert', name:'crate', cap:'A <b>crate</b> hanging from a crane cable.',
+    make:function(){ var w = r10(300,900), t = bal(.2) ? w : w + pick([1,-1]) * r10(50,200); return [{k:'t',d:'up',m:t},{k:'g',d:'down',m:w}]; } },
+  { type:'vert', name:'elevator', cap:'An <b>elevator</b> held by its cable.',
+    make:function(){ var w = 100*randInt(20,50), t = bal(.2) ? w : w + pick([1,-1]) * 100*randInt(1,8); return [{k:'t',d:'up',m:t},{k:'g',d:'down',m:w}]; } },
+  { type:'four', name:'box', cap:'A <b>box</b> being pushed across the floor.',
+    make:function(){ var w = r10(100,300), p = r10(40,150), f = bal(.2) ? p : r10(20, p-10), d = pick(['right','left']);
+      return [{k:'n',d:'up',m:w},{k:'g',d:'down',m:w},{k:'a',d:d,m:p},{k:'f',d:OPP[d],m:f}]; } },
+  { type:'four', name:'sled', cap:'A <b>sled</b> pulled through the snow by a rope.',
+    make:function(){ var w = r10(150,400), p = r10(40,120), f = bal(.2) ? p : r10(20, p-10), d = pick(['right','left']);
+      return [{k:'n',d:'up',m:w},{k:'g',d:'down',m:w},{k:'t',d:d,m:p},{k:'f',d:OPP[d],m:f}]; } },
+  { type:'four', name:'car', cap:'A <b>car</b> on a level road. (The road pushes it forward; air pushes back.)',
+    make:function(){ var w = 100*randInt(100,150), p = r10(300,900), air = bal(.2) ? p : r10(100,1200), d = pick(['right','left']);
+      if(air === p && Math.random() < .5) air = p - 100;
+      return [{k:'n',d:'up',m:w},{k:'g',d:'down',m:w},{k:'a',d:d,m:p},{k:'air',d:OPP[d],m:air}]; } },
+  { type:'multi', name:'box', cap:'Two students push a <b>box</b> across the floor.',
+    make:function(){ var w = r10(150,300), a = r10(20,60), b = r10(20,60), f = bal(.2) ? a+b : r10(10, a+b-10), d = pick(['right','left']);
+      return [{k:'n',d:'up',m:w},{k:'g',d:'down',m:w},{k:'a',d:d,m:a},{k:'a',d:d,m:b},{k:'f',d:OPP[d],m:f}]; } },
+  { type:'multi', name:'crate', cap:'A <b>crate</b> in a tug-of-war, sliding along the floor.',
+    make:function(){ var w = r10(200,400), small = r10(40,100), f = r10(10,40), big = small + f + (bal(.2) ? 0 : r10(10,60)), d = pick(['right','left']);
+      return [{k:'n',d:'up',m:w},{k:'g',d:'down',m:w},{k:'t',d:d,m:big},{k:'t',d:OPP[d],m:small},{k:'f',d:OPP[d],m:f}]; } },
+  { type:'single', name:'rock', cap:'A <b>rock</b> dropped off a bridge, just after release. Ignore air resistance.',
+    make:function(){ return [{k:'g',d:'down',m:5*randInt(2,8)}]; } },
+  { type:'single', name:'ball', cap:'A <b>ball</b> tossed straight up, at the top of its flight. Ignore air resistance.',
+    make:function(){ return [{k:'g',d:'down',m:pick([2,3,4,5,6])}]; } }
+];
+var OPP = { right:'left', left:'right', up:'down', down:'up' };
+
+var nfScore = Score(el('nf-score')), nfTally = newTally(NF_TYPES), nfCur = null, nfDone = false;
+function nfNew(){
+  var tp, guard = 0;
+  do { tp = pick(NF_TEMPLATES); guard++; } while(nfCur && guard < 10 && tp === nfCur.tp);
+  var forces = shuffle(tp.make());
+  nfCur = { tp:tp, forces:forces, net:netOf(forces) };
+  el('nf-cap').innerHTML = tp.cap;
+  drawFBD(el('nf-svg'), forces, {name:tp.name});
+  el('nf-desc').textContent = 'Free-body diagram. ' + describeForces(forces);
+  el('nf-mag').value = ''; el('nf-dir').value = '';
+  lock(['nf-mag','nf-dir','nf-check'], false); nfDone = false;
+  hideFb(el('nf-fb'));
+}
+function nfCheck(){
+  if(nfDone) return;
+  var p = nfCur, n = p.net, x = parseNum(el('nf-mag').value), d = el('nf-dir').value;
+  if(isNaN(x)){ setFb(el('nf-fb'),'hint','Type the size of the net force in the box (just the number).'); return; }
+  x = Math.abs(x);
+  if(n.mag !== 0 && !d){ setFb(el('nf-fb'),'hint','Pick a direction too. A net force needs a size <b>and</b> a direction.'); return; }
+  var ok = n.mag === 0 ? close(x,0) : (close(x,n.mag) && d === n.dir);
+  nfDone = true; lock(['nf-mag','nf-dir','nf-check'], true);
+  nfScore.add(ok); nfTally[p.tp.type].t++; if(ok) nfTally[p.tp.type].r++;
+  renderTally(el('nf-tally'), NF_TYPES, nfTally);
+
+  var ans = n.mag === 0 ? '0 N (balanced)' : fmt(n.mag) + ' N ' + n.dir, why = '';
+  if(ok){
+    why = 'F<sub>net</sub> = ' + ans + '.';
+    if(n.mag === 0) why += ' Everything cancels, so there’s no direction to give.' + (d && d !== 'none' ? ' (A net force of zero doesn’t point anywhere.)' : '');
+    else if(p.tp.type === 'single') why += ' With only one force, the net force is that force.';
+    else if(p.tp.type === 'multi') why += ' The two forces on one side added together first.';
+  } else {
+    why = 'F<sub>net</sub> = ' + ans + '.';
+    var F = p.forces, all = F.reduce(function(s,f){ return s + f.m; }, 0);
+    var axis = (n.vy !== 0) ? ['up','down'] : ['right','left'];
+    var axisAll = sumDir(F,axis[0]) + sumDir(F,axis[1]);
+    var biggest = Math.max.apply(null, F.map(function(f){ return f.m; }));
+    if(n.mag !== 0 && close(x,n.mag) && d !== n.dir) why += ' You had the right size. The direction comes from the bigger side: ' + n.dir + '.';
+    else if(n.mag !== 0 && close(x,n.mag) && d === n.dir) why += '';
+    else if(close(x, axisAll) && axisAll !== n.mag) why += ' It looks like you added forces that point opposite ways. Opposite forces <b>subtract</b>.';
+    else if(close(x, all) && all !== n.mag) why += ' It looks like you added every force on the diagram. Opposite forces subtract.';
+    else if(close(x, biggest) && biggest !== n.mag) why += ' That’s the biggest single force, but other forces push back against it.';
+    else if(n.mag === 0) why += ' Both directions cancel here.';
+  }
+  setFb(el('nf-fb'), ok ? 'good' : 'bad', '<p><b>' + (ok ? 'Right.' : 'Not this one.') + '</b> ' + why + '</p>' + ledgerTable(p.forces, n));
+}
+el('nf-check').addEventListener('click', nfCheck);
+el('nf-next').addEventListener('click', nfNew);
+onEnter(['nf-mag','nf-dir'], nfCheck);
+
+/* =========================================================
+   Practice 2 · F = ma (one step)
+   ========================================================= */
+var FM_TYPES = { a:'Find a', f:'Find F<sub>net</sub>', m:'Find m' };
+var OBJECTS = [
+  { n:'a lab cart',               ms:[1,2,3,4,5] },
+  { n:'a bowling ball',           ms:[5,6,7] },
+  { n:'a box',                    ms:[2,4,5,8,10,12] },
+  { n:'a shopping cart',          ms:[10,15,20,25] },
+  { n:'a sled and its rider',     ms:[40,50,60] },
+  { n:'a student on a skateboard',ms:[50,60,70] },
+  { n:'a car',                    ms:[800,1000,1200,1500], maxA:4 }
+];
+var ACCS = [0.5,1,1.5,2,2.5,3,4,5,6,8];
+var fmScore = Score(el('fm-score')), fmTally = newTally(FM_TYPES), fmCur = null, fmDone = false;
+function cap1(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+function fmNew(){
+  var kind, guard = 0;
+  do { kind = pick(['a','f','m']); guard++; } while(fmCur && guard < 6 && kind === fmCur.kind && Math.random() < .6);
+  var o = pick(OBJECTS), m = pick(o.ms), a, F;
+  do { a = pick(ACCS); F = m * a; } while((o.maxA && a > o.maxA) || F !== Math.round(F*10)/10);
+  var txt, lab, unit, ans;
+  if(kind === 'a'){ txt = 'A net force of <b>' + fmt(F) + ' N</b> acts on ' + o.n + ' with a mass of <b>' + m + ' kg</b>. What is its acceleration?'; lab = 'Acceleration'; unit = 'm/s²'; ans = a; }
+  else if(kind === 'f'){ txt = cap1(o.n) + ' with a mass of <b>' + m + ' kg</b> accelerates at <b>' + fmt(a) + ' m/s²</b>. What is the net force on it?'; lab = 'Net force'; unit = 'N'; ans = F; }
+  else { txt = 'A net force of <b>' + fmt(F) + ' N</b> gives ' + o.n + ' an acceleration of <b>' + fmt(a) + ' m/s²</b>. What is its mass?'; lab = 'Mass'; unit = 'kg'; ans = m; }
+  fmCur = { kind:kind, m:m, a:a, F:F, ans:ans, unit:unit };
+  el('fm-prob').innerHTML = txt; el('fm-lab').textContent = lab; el('fm-unit').textContent = unit;
+  el('fm-ans').value = ''; lock(['fm-ans','fm-check'], false); fmDone = false;
+  hideFb(el('fm-fb'));
+}
+function fmCheck(){
+  if(fmDone) return;
+  var p = fmCur, x = parseNum(el('fm-ans').value);
+  if(isNaN(x)){ setFb(el('fm-fb'),'hint','Type a number in the box. The unit is already there.'); return; }
+  var ok = close(x, p.ans);
+  fmDone = true; lock(['fm-ans','fm-check'], true);
+  fmScore.add(ok); fmTally[p.kind].t++; if(ok) fmTally[p.kind].r++;
+  renderTally(el('fm-tally'), FM_TYPES, fmTally);
+  var work, extra = '';
+  if(p.kind === 'a'){
+    work = 'a = F<sub>net</sub> / m<br>a = ' + fmt(p.F) + ' N / ' + p.m + ' kg<br>a = <b>' + fmt(p.a) + ' m/s²</b>';
+    if(!ok && close(x, p.m / p.F)) extra = ' You divided mass by force. It’s force divided by mass.';
+    else if(!ok && close(x, p.F * p.m)) extra = ' You multiplied. To find a, divide F<sub>net</sub> by m.';
+  } else if(p.kind === 'f'){
+    work = 'F<sub>net</sub> = m · a<br>F<sub>net</sub> = ' + p.m + ' kg × ' + fmt(p.a) + ' m/s²<br>F<sub>net</sub> = <b>' + fmt(p.F) + ' N</b>';
+    if(!ok && (close(x, p.m / p.a) || close(x, p.a / p.m))) extra = ' You divided. To find the force, multiply mass by acceleration.';
+  } else {
+    work = 'm = F<sub>net</sub> / a<br>m = ' + fmt(p.F) + ' N / ' + fmt(p.a) + ' m/s²<br>m = <b>' + p.m + ' kg</b>';
+    if(!ok && close(x, p.F * p.a)) extra = ' You multiplied. To find the mass, divide F<sub>net</sub> by a.';
+    else if(!ok && close(x, p.a / p.F)) extra = ' You divided the wrong way. It’s force divided by acceleration.';
+  }
+  setFb(el('fm-fb'), ok ? 'good' : 'bad', '<p><b>' + (ok ? 'Right.' : 'Not this one.') + '</b>' + extra + '</p><div class="work">' + work + '</div>');
+}
+el('fm-check').addEventListener('click', fmCheck);
+el('fm-next').addEventListener('click', fmNew);
+onEnter(['fm-ans'], fmCheck);
+
+/* =========================================================
+   Practice 3 · diagram → F_net → a
+   ========================================================= */
+var BT_TYPES = { f:'Step 1 · F<sub>net</sub>', a:'Step 2 · a' };
+function niceA(m, list){ var a, g = 0; do { a = pick(list); g++; } while(!Number.isInteger(m*a) && g < 50); return Number.isInteger(m*a) ? a : 1; }
+var BT_TEMPLATES = [
+  { name:'box', cap:function(m){ return 'A <b>' + m + ' kg box</b> is pushed across the floor.'; },
+    make:function(){ var m = pick([10,20,25,30,40,50]), w = weightOf(m), a = bal(.15) ? 0 : niceA(m,[0.5,1,1.5,2,3,4]), f = r10(20,100), d = pick(['right','left']);
+      return { m:m, forces:[{k:'n',d:'up',m:w},{k:'g',d:'down',m:w},{k:'a',d:d,m:f + m*a},{k:'f',d:OPP[d],m:f}] }; } },
+  { name:'sled', cap:function(m){ return 'A <b>' + m + ' kg sled</b> is pulled through the snow by a rope.'; },
+    make:function(){ var m = pick([10,20,30,40,50]), w = weightOf(m), a = bal(.15) ? 0 : niceA(m,[0.5,1,1.5,2,3]), f = r10(20,80), d = pick(['right','left']);
+      return { m:m, forces:[{k:'n',d:'up',m:w},{k:'g',d:'down',m:w},{k:'t',d:d,m:f + m*a},{k:'f',d:OPP[d],m:f}] }; } },
+  { name:'car', cap:function(m){ return 'A <b>' + m + ' kg car</b> on a level road. (The road pushes it forward; air pushes back.)'; },
+    make:function(){ var m = pick([1000,1200,1500]), w = weightOf(m), a = pick([1,2,3]), air = r10(200,600), d = pick(['right','left']);
+      return { m:m, forces:[{k:'n',d:'up',m:w},{k:'g',d:'down',m:w},{k:'a',d:d,m:air + m*a},{k:'air',d:OPP[d],m:air}] }; } },
+  { name:'crate', cap:function(m){ return 'A crane cable lifts a <b>' + m + ' kg crate</b>.'; },
+    make:function(){ var m = pick([50,100,200]), w = weightOf(m), a = pick([0.5,1,2]);
+      return { m:m, forces:[{k:'t',d:'up',m:Math.round((w + m*a)*10)/10},{k:'g',d:'down',m:w}] }; } },
+  { name:'skydiver', cap:function(m){ return 'A <b>' + m + ' kg skydiver</b> a few seconds after jumping.'; },
+    make:function(){ var m = pick([60,70,80]), w = weightOf(m), a = pick([2,4,5,6]);
+      return { m:m, forces:[{k:'air',d:'up',m:Math.round((w - m*a)*10)/10},{k:'g',d:'down',m:w}] }; } },
+  { name:'box', cap:function(m){ return 'A <b>' + m + ' kg box</b> slides across the floor and slows down. Nobody is pushing it.'; },
+    make:function(){ var m = pick([5,10,20]), w = weightOf(m), a = pick([1,2,3]), d = pick(['right','left']);
+      return { m:m, forces:[{k:'n',d:'up',m:w},{k:'g',d:'down',m:w},{k:'f',d:d,m:m*a}], note:'The box is sliding ' + OPP[d] + ' but slowing down, so the net force and the acceleration point ' + d + ', opposite the motion.' }; } }
+];
+var btScore = Score(el('bt-score')), btTally = newTally(BT_TYPES), btCur = null, btDone = false;
+function btNew(){
+  var tp, guard = 0;
+  do { tp = pick(BT_TEMPLATES); guard++; } while(btCur && guard < 10 && tp === btCur.tp);
+  var made = tp.make(), forces = shuffle(made.forces), n = netOf(forces);
+  btCur = { tp:tp, m:made.m, forces:forces, net:n, a:n.mag / made.m, note:made.note };
+  el('bt-cap').innerHTML = tp.cap(made.m);
+  drawFBD(el('bt-svg'), forces, {name:tp.name});
+  massLabel(el('bt-svg'), made.m);
+  el('bt-desc').textContent = 'Free-body diagram of a ' + made.m + ' kilogram ' + tp.name + '. ' + describeForces(forces);
+  ['bt-f','bt-a'].forEach(function(id){ el(id).value = ''; }); el('bt-dir').value = '';
+  lock(['bt-f','bt-dir','bt-a','bt-check'], false); btDone = false;
+  hideFb(el('bt-fb'));
+}
+function btCheck(){
+  if(btDone) return;
+  var p = btCur, n = p.net, xf = parseNum(el('bt-f').value), d = el('bt-dir').value, xa = parseNum(el('bt-a').value);
+  if(isNaN(xf) || isNaN(xa)){ setFb(el('bt-fb'),'hint','Fill in both boxes: the net force first, then the acceleration.'); return; }
+  xf = Math.abs(xf); xa = Math.abs(xa);
+  if(n.mag !== 0 && !d){ setFb(el('bt-fb'),'hint','Pick a direction for the net force too.'); return; }
+  var okF = n.mag === 0 ? close(xf,0) : (close(xf,n.mag) && d === n.dir);
+  var okA = close(xa, p.a);
+  btDone = true; lock(['bt-f','bt-dir','bt-a','bt-check'], true);
+  btScore.add(okF && okA);
+  btTally.f.t++; if(okF) btTally.f.r++;
+  btTally.a.t++; if(okA) btTally.a.r++;
+  renderTally(el('bt-tally'), BT_TYPES, btTally);
+
+  var head = okF && okA ? '<b>Both right.</b>' : (okF ? '<b>Step 1 right, step 2 not.</b>' : (okA ? '<b>Step 2 right, step 1 not.</b>' : '<b>Not this one.</b>'));
+  var tips = [];
+  if(!okF && n.mag !== 0 && close(xf,n.mag) && d !== n.dir) tips.push('Right size for F<sub>net</sub>, wrong direction. It points toward the bigger side.');
+  if(!okA){
+    var big = p.forces.filter(function(f){ return f.k !== 'g' && f.k !== 'n' && (f.d === n.dir); })[0];
+    if(big && close(xa, big.m / p.m) && big.m !== n.mag) tips.push('For a, it looks like you divided the ' + FORCE[big.k].name + ' by the mass. Use the <b>net</b> force.');
+    else if(close(xa, n.mag / weightOf(p.m))) tips.push('For a, it looks like you divided by the weight (in N). Divide by the <b>mass</b> in kg.');
+    else if(!okF && xf > 0 && close(xa, xf / p.m)) tips.push('Your step 2 matches your step 1 answer divided by the mass, so the method is right. Fix the net force and the rest follows.');
+  }
+  var aTxt = n.mag === 0 ? '0 m/s²' : fmt(p.a) + ' m/s² ' + n.dir;
+  var work = 'Step 1: F<sub>net</sub> = <b>' + (n.mag === 0 ? '0 N' : fmt(n.mag) + ' N ' + n.dir) + '</b><br>' +
+             'Step 2: a = F<sub>net</sub> / m = ' + fmt(n.mag) + ' N / ' + p.m + ' kg = <b>' + aTxt + '</b>';
+  var foot = n.mag === 0 ? 'The forces are balanced, so there’s no acceleration. The velocity stays the same.' : (p.note || 'The acceleration points the same way as the net force.');
+  setFb(el('bt-fb'), okF && okA ? 'good' : 'bad', '<p>' + head + (tips.length ? ' ' + tips.join(' ') : '') + '</p>' + ledgerTable(p.forces, n) + '<div class="work">' + work + '</div><p>' + foot + '</p>');
+}
+el('bt-check').addEventListener('click', btCheck);
+el('bt-next').addEventListener('click', btNew);
+onEnter(['bt-f','bt-dir','bt-a'], btCheck);
+
+/* =========================================================
+   quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'A free-body diagram shows F<sub>norm</sub> = 40 N up, F<sub>grav</sub> = 40 N down, F<sub>app</sub> = 25 N right, and F<sub>frict</sub> = 10 N left. What is the net force?',
+    opts:['35 N right','15 N right','25 N right','115 N'],
+    ans:1,
+    why:'Vertical: 40 − 40 = 0. Horizontal: 25 − 10 = 15 N right. Opposite forces subtract.' },
+  { stem:'Two people push a box to the right with 20 N and 30 N. Friction pushes left with 10 N. The vertical forces cancel. What is the net force?',
+    opts:['60 N right','20 N right','40 N right','0 N'],
+    ans:2,
+    why:'Same direction adds: 20 + 30 = 50 N right. Then subtract the 10 N left: 50 − 10 = 40 N right.' },
+  { stem:'A net force of 20 N acts on a 5 kg cart. What is its acceleration?',
+    opts:['4 m/s²','100 m/s²','0.25 m/s²','25 m/s²'],
+    ans:0,
+    why:'a = F<sub>net</sub> / m = 20 N / 5 kg = 4 m/s².' },
+  { stem:'The net force on an object is doubled. Its mass stays the same. What happens to its acceleration?',
+    opts:['It is cut in half','It stays the same','It doubles','It becomes four times as big'],
+    ans:2,
+    why:'Acceleration is proportional to net force. Twice the net force on the same mass gives twice the acceleration.' },
+  { stem:'The same net force acts on a 2 kg ball and a 4 kg ball. How does the 4 kg ball’s acceleration compare?',
+    opts:['Twice as big','Half as big','The same','Four times as big'],
+    ans:1,
+    why:'More mass means less acceleration. Twice the mass with the same net force gives half the acceleration.' },
+  { stem:'A 10 kg box is pushed with 50 N. Friction acts on it with 30 N. What is its acceleration?',
+    opts:['5 m/s²','8 m/s²','3 m/s²','2 m/s²'],
+    ans:3,
+    why:'Find the net force first: 50 − 30 = 20 N. Then a = 20 N / 10 kg = 2 m/s². Using just the 50 N push gives 5 m/s², which is too big.' },
+  { stem:'A car drives down a straight highway at a steady 25 m/s. What is the net force on it?',
+    opts:['0 N','A forward force, because it is moving','It depends on how heavy the car is','Equal to the car’s weight'],
+    ans:0,
+    why:'Steady speed in a straight line means a = 0, so F<sub>net</sub> = m · 0 = 0 N. The road’s push forward and the air pushing back cancel.' }
+];
+
+(function buildQuiz(){
+  var host = el('quiz'), html = '', answered = 0, right = 0;
+  QUIZ.forEach(function(q,qi){
+    html += '<div class="q"><p class="stem">' + (qi+1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o,oi){ html += '<button class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  html += '<div class="quiz-sum" id="quiz-sum" aria-live="polite"></div>';
+  host.innerHTML = html;
+  Array.prototype.forEach.call(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      Array.prototype.forEach.call(el('q'+qi).querySelectorAll('.opt'), function(other,i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      answered++; if(oi === q.ans) right++;
+      setFb(el('qfb'+qi), oi === q.ans ? 'good' : 'bad',
+        '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+      el('quiz-sum').textContent = right + ' of ' + answered + ' correct' + (answered === QUIZ.length ? ' · reload the page to try again' : '');
+    });
+  });
+})();
+
+/* boot */
+renderTally(el('nf-tally'), NF_TYPES, nfTally);
+renderTally(el('fm-tally'), FM_TYPES, fmTally);
+renderTally(el('bt-tally'), BT_TYPES, btTally);
+nfNew(); fmNew(); btNew();
+</script>
+</body>
+</html>
