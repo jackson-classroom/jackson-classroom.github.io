@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 3 Practice Exam — Reactions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#131E1D; --ink2:#3B4A48; --mute:#5F6D6B;
+  --wash:#E3E9E8; --card:#FBFCFB; --line:#C9D3D1; --line-soft:#E0E7E6;
+  --water:#12727F; --water-dk:#0B4E58; --water-lite:#BFDEE2;
+  --brass:#9A6E22; --brass-lite:#F5E9CF;
+  --ok:#26694A; --ok-bg:#E4F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  --display:"Instrument Serif",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(227,233,232,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+.bar-score{font-family:var(--mono);font-size:12px;color:var(--water-dk);margin-left:auto;font-variant-numeric:tabular-nums}
+
+header.hero{padding:64px 0 36px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--water-dk)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,7.4vw,74px);line-height:1;margin:16px 0 0;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--water-dk)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:50ch;color:var(--ink2);margin:20px 0 0}
+
+.how{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:28px 0 0}
+@media (max-width:820px){ .how{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:480px){ .how{grid-template-columns:1fr} }
+.how div{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 16px;font-size:15px;color:var(--ink2)}
+.how b{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--water-dk);font-weight:500;margin-bottom:4px}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:28px 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--water);color:var(--water-dk)}
+
+section{padding:40px 0 16px;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:4px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--water-dk);background:var(--water-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.4vw,40px);line-height:1.08;margin:0;letter-spacing:-.01em}
+.sec-link{font-size:14.5px;color:var(--mute);margin:6px 0 0}
+p{margin:14px 0}
+a{color:var(--water-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.smallprint{font-size:14.5px;color:var(--mute)}
+
+/* one card per question */
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:20px 22px;margin:18px 0}
+.qcard.right{border-left:3px solid var(--ok)}
+.qcard.wrong{border-left:3px solid var(--no)}
+.qhead{display:flex;gap:10px;align-items:baseline;margin-bottom:6px}
+.qnum{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--water-dk);white-space:nowrap}
+.qkind{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-left:auto;white-space:nowrap}
+.stem{font-weight:500;margin:0 0 12px;line-height:1.75}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:10px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.7}
+.opt:hover{border-color:var(--water);background:#fff;color:var(--ink)}
+.opt .letter{font-family:var(--mono);font-size:13px;color:var(--mute);margin-right:8px}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.94}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F6F8F7;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--water-dk);border-color:var(--water-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--water)}
+button[disabled]{opacity:.45;cursor:default}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2.5px solid var(--water);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center}
+
+input[type=text]{font-family:var(--mono);font-size:18px;font-variant-numeric:tabular-nums;border:1px solid #93A5A2;border-radius:3px;padding:8px 10px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(19,30,29,.12)}
+input[type=text][disabled]{background:var(--line-soft);color:var(--ink2)}
+input.wide{width:100%;max-width:520px}
+input.num{width:150px}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.unit-tag{font-family:var(--mono);font-size:15px;color:var(--mute)}
+::placeholder{font-family:var(--body);font-style:italic;font-size:14.5px;color:#7F8D8B;opacity:1}
+.typing-tip{font-size:14px;color:var(--mute);margin:8px 0 0}
+.typing-tip kbd{font-family:var(--mono);font-size:13px;color:var(--ink2);background:#fff;border:1px solid var(--line);border-radius:3px;padding:1px 5px}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none;line-height:1.7}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1B4E36}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--water);color:var(--ink2)}
+.fb b{font-weight:600}
+
+/* chemistry text */
+.eq{font-family:var(--mono);font-size:1.02em}
+.eqline{font-family:var(--mono);font-size:clamp(17px,3.2vw,21px);font-weight:500;text-align:center;padding:12px 8px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;margin:4px 0 12px;line-height:2}
+.st{font-size:.68em;color:var(--mute);font-weight:400}
+.co{color:var(--water-dk)}
+.opx{color:var(--mute);margin:0 .05em}
+.nw{white-space:nowrap}
+.nuc{display:inline-flex;flex-direction:column;align-items:flex-end;font-size:.6em;line-height:1.04;vertical-align:.56em;margin:0 .08em 0 .12em;font-variant-numeric:tabular-nums}
+
+/* balancing boxes */
+.coefrow{line-height:2.8}
+input.coef{width:48px;padding:4px 4px;margin:0 3px 0 0;text-align:center;font-size:18px;vertical-align:middle}
+
+/* nuclear blank: top and bottom stacked beside the symbol box */
+.blank{display:inline-flex;align-items:center;gap:4px;vertical-align:middle;margin:0 2px}
+.blank .bn{display:flex;flex-direction:column;gap:4px}
+.blank .bt,.blank .bb{width:64px;height:32px;font-size:16px;padding:2px 6px;text-align:right}
+.blank .bs{width:70px;height:44px;font-size:20px;padding:2px 8px}
+.blank input::placeholder{font-size:12px}
+
+/* results */
+.results{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.big-score{font-family:var(--mono);font-size:clamp(34px,7vw,52px);font-weight:500;line-height:1;font-variant-numeric:tabular-nums}
+.big-score small{font-size:.38em;color:var(--mute);font-weight:400;margin-left:8px}
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0 6px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft)}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td .tag-ok{color:var(--ok);font-weight:600}
+td .tag-no{color:var(--no);font-weight:600}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#EDF2F1;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#C3D0CE}
+.next .nt{font-family:var(--display);font-size:26px;color:#fff;margin:0 0 4px}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F6F8F7;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--water-lite)}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .qcard{padding:16px}
+  .results{padding:16px}
+  .bar-score{margin-left:0;width:100%}
+  th,td{padding:7px 6px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Unit 3 Practice Exam</span>
+    <span class="bar-sub">30 questions · all eight topics</span>
+    <span class="bar-score" id="bar-score" aria-live="polite"></span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 3 · Practice exam</div>
+  <h1>All of Unit 3, in <em>one</em> sitting.</h1>
+  <p class="lede">Thirty questions covering all eight topics, from writing equations to half-life. Every answer is checked as soon as you give it, with an explanation, so you'll know exactly what to go back and study.</p>
+  <div class="how">
+    <div><b>Have out</b>Your Chem Ref sheet (ion charges, activity series, solubility chart), a periodic table and a calculator.</div>
+    <div><b>Multiple choice</b>Click an answer. You get one try, then it shows the right answer and why.</div>
+    <div><b>Type-in</b>Type your answer and press Check. You get one check, unless the checker can't read what you typed.</div>
+    <div><b>At the end</b>Your score by topic, with a link to the page to review for anything you missed.</div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a topic" id="jump"></nav>
+
+<div id="exam"></div>
+
+<section id="results">
+  <div class="sec-head"><span class="tasktag">Your results</span><h2>How you did</h2></div>
+  <div class="results">
+    <div class="big-score" id="r-total"></div>
+    <p class="smallprint" id="r-note" style="margin-bottom:0"></p>
+    <table>
+      <thead><tr><th>Topic</th><th>Correct</th><th>Next step</th></tr></thead>
+      <tbody id="r-body"></tbody>
+    </table>
+    <div class="btn-row">
+      <button type="button" class="ghost" id="r-reset">Clear my answers and start over</button>
+    </div>
+  </div>
+
+  <div class="next">
+    <div>
+      <div class="nt">Unit 3 — Reactions</div>
+      <p>Go back to any topic page to review and practice more.</p>
+    </div>
+    <a href="/chemistry/reactions/">&#8592; Back to Unit 3</a>
+  </div>
+</section>
+
+<footer>
+  <p>Unit 3 practice exam: writing and balancing equations, reaction types, the activity series, double replacement, predicting products, nuclear reactions and half-life.</p>
+  <p><a href="/chemistry/reactions/half-life/">&#8592; Page 8: Half-Life</a> &nbsp;·&nbsp; <a href="/chemistry/reactions/">Unit 3 — Reactions</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function each(list, fn){ Array.prototype.forEach.call(list, fn); }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/*CORE-START*/
+/* =========================================================
+   core: formulas, answers, checking (no DOM)
+   ========================================================= */
+var SYMBOLS = ('H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr ' +
+  'Rb Sr Y Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re ' +
+  'Os Ir Pt Au Hg Tl Pb Bi Po At Rn Fr Ra Ac Th Pa U Np Pu Am Cm Bk Cf Es Fm Md No Lr Rf Db Sg Bh Hs Mt Ds Rg Cn Nh ' +
+  'Fl Mc Lv Ts Og').split(' ');
+function plainDigits(s){ return String(s).replace(/[₀-₉]/g, function(ch){ return String(ch.charCodeAt(0) - 0x2080); }); }
+
+/* 'Ca(NO3)2' -> { ok, counts } ; same rules as the balancing page */
+function parseFormula(str){
+  var s = plainDigits(str).replace(/\s+/g,''), i = 0;
+  if(!s) return { ok:false, err:'an empty formula' };
+  function num(){
+    var m = /^\d+/.exec(s.slice(i));
+    if(!m) return 1;
+    i += m[0].length;
+    var n = parseInt(m[0],10);
+    if(n === 0) throw 'a subscript of 0';
+    return n;
+  }
+  function group(depth){
+    var items = [];
+    while(i < s.length){
+      var ch = s.charAt(i);
+      if(ch === '('){
+        i++;
+        var inner = group(depth + 1);
+        if(s.charAt(i) !== ')') throw 'an unclosed parenthesis';
+        i++;
+        var k = num();
+        inner.forEach(function(o){ o.n *= k; });
+        items = items.concat(inner);
+      } else if(ch === ')'){
+        if(depth === 0) throw 'an extra closing parenthesis';
+        return items;
+      } else if(/[A-Z]/.test(ch)){
+        var sym = ch; i++;
+        if(/[a-z]/.test(s.charAt(i))){ sym += s.charAt(i); i++; }
+        if(SYMBOLS.indexOf(sym) === -1) throw '"' + sym + '", which is not an element symbol';
+        items.push({ el:sym, n:num() });
+      } else if(/[a-z]/.test(ch)){
+        throw 'a lowercase "' + ch + '" (element symbols start with a capital letter)';
+      } else {
+        throw 'the character "' + ch + '"';
+      }
+    }
+    if(depth > 0) throw 'an unclosed parenthesis';
+    return items;
+  }
+  try {
+    var counts = {};
+    group(0).forEach(function(o){ counts[o.el] = (counts[o.el] || 0) + o.n; });
+    return { ok:true, f:s, counts:counts };
+  } catch(e){ return { ok:false, err:String(e) }; }
+}
+
+/* typed products: 'Mg(NO3)2(aq) + Pb(s)' or 'NR' -> { ok, nr, terms:[{f, st}] } ; coefficients are ignored */
+function parseProducts(str){
+  var s = plainDigits(String(str || '')).replace(/\s+/g,'');
+  if(!s) return { ok:false, err:'Type your answer first.' };
+  if(/^nr$/i.test(s) || /^noreaction$/i.test(s)) return { ok:true, nr:true, terms:[] };
+  s = s.replace(/^(-+>|=+>?|→)/, '');            // a leading arrow is fine
+  var parts = s.split('+'), terms = [];
+  for(var i = 0; i < parts.length; i++){
+    var t = parts[i];
+    if(!t) return { ok:false, err:'There is an empty spot next to a + sign.' };
+    var m = /^(\d*)(.+?)(?:\((s|l|g|aq)\))?$/i.exec(t);
+    if(!m) return { ok:false, err:'I couldn’t read "' + esc(t) + '".' };
+    var pf = parseFormula(m[2]);
+    if(!pf.ok) return { ok:false, err:'In <span class="mono">' + esc(m[2]) + '</span> I found ' + esc(pf.err) + '.' };
+    terms.push({ f:pf.f, st: m[3] ? m[3].toLowerCase() : '' });
+  }
+  return { ok:true, nr:false, terms:terms };
+}
+function sameFormula(a, b){
+  var alias = { HOH:'H2O' };
+  return (alias[a] || a) === (alias[b] || b);
+}
+/* expected: 'NR' or [{ f, st:[accepted states] }] -> { ok, missingState, notes:[] } */
+function judgeProducts(expected, got){
+  if(expected === 'NR') return { ok:got.nr, notes: got.nr ? [] : ['nrExpected'] };
+  if(got.nr) return { ok:false, notes:['notNr'] };
+  if(got.terms.some(function(t){ return !t.st; })) return { ok:false, missingState:true };
+  var used = got.terms.map(function(){ return false; }), notes = [], ok = true;
+  expected.forEach(function(x){
+    var j = -1;
+    got.terms.forEach(function(t, i){ if(j === -1 && !used[i] && sameFormula(t.f, x.f)) j = i; });
+    if(j === -1){ ok = false; notes.push('missing:' + x.f); return; }
+    used[j] = true;
+    if(x.st.indexOf(got.terms[j].st) === -1){ ok = false; notes.push('state:' + x.f); }
+  });
+  got.terms.forEach(function(t, i){ if(!used[i]){ ok = false; notes.push('extra:' + t.f); } });
+  return { ok:ok, notes:notes };
+}
+
+/* coefficients typed into boxes; blank = 1 */
+function readCoefs(values){
+  var out = [];
+  for(var i = 0; i < values.length; i++){
+    var v = String(values[i]).trim();
+    if(v === '') out.push(1);
+    else if(/^\d+$/.test(v) && parseInt(v,10) >= 1) out.push(parseInt(v,10));
+    else return null;
+  }
+  return out;
+}
+function gcd(a,b){ while(b){ var t = a % b; a = b; b = t; } return a; }
+function judgeCoefs(ans, got){
+  if(ans.every(function(a,i){ return a === got[i]; })) return 'correct';
+  var k = got[0] / ans[0];
+  if(Math.round(k) === k && k > 1 && ans.every(function(a,i){ return a * k === got[i]; })) return 'notLowest';
+  return 'wrong';
+}
+
+/* numbers: '15', '15 mg', '11,460 years', '1/8' */
+function parseNumber(str){
+  var s = String(str || '').replace(/,/g,'').replace(/−/g,'-').trim();
+  var m = /^([+-]?\d*\.?\d+)\s*(?:\/\s*(\d*\.?\d+))?\s*[a-zA-Zµμ. ]*$/.exec(s);
+  if(!m) return null;
+  var v = parseFloat(m[1]);
+  if(m[2] != null){ var d = parseFloat(m[2]); if(!d) return null; v = v / d; }
+  return v;
+}
+function near(x, y){ return Math.abs(x - y) <= Math.max(1e-9, Math.abs(y) * 0.01); }
+
+/* nuclear blank: { a, z, s } against { A, Z, s } */
+function readInt(v){
+  v = String(v == null ? '' : v).trim().replace(/[−–—]/g,'-');
+  if(v === '') return null;
+  if(!/^[+-]?\d+$/.test(v)) return NaN;
+  return parseInt(v,10);
+}
+function judgeNuc(want, got){
+  if(got.a === null || got.z === null || !String(got.s).trim()) return 'incomplete';
+  if(isNaN(got.a) || isNaN(got.z)) return 'nan';
+  var s = String(got.s).trim();
+  var symOk = s === want.s ||
+    (want.s === 'e' && ['e','e-','e+','β','β-','β+'].indexOf(s) !== -1) ||
+    (want.s === 'He' && want.A === 4 && s === 'α') ||
+    (want.s === 'H' && want.A === 1 && (s === 'p' || s === 'p+')) ||
+    (want.s.length === 2 && s.toLowerCase() === want.s.toLowerCase());
+  return got.a === want.A && got.z === want.Z && symOk ? 'correct' : 'wrong';
+}
+/*CORE-END*/
+
+/* =========================================================
+   rendering chemistry
+   ========================================================= */
+function fHtml(f){ return esc(f).replace(/(\d+)/g, '<sub>$1</sub>'); }
+/* 'Ca(NO3)2(aq)' or '2H2O(l)' -> html */
+function termHtml(t){
+  var m = /^(\d*)(.+?)(?:\((s|l|g|aq)\))?$/.exec(t.trim());
+  if(!m) return esc(t);
+  return (m[1] ? '<span class="co">' + m[1] + '</span>' : '') + fHtml(m[2]) + (m[3] ? '<span class="st">(' + m[3] + ')</span>' : '');
+}
+function eqHtml(src){
+  var sides = src.split('->');
+  /* each term stays on one line; an equation may wrap between terms on a narrow screen */
+  function side(x){ return x.trim().split(/\s\+\s/).map(function(t){ return '<span class="nw">' + (t.trim() === 'NR' || t.trim() === '?' ? '<b>' + t.trim() + '</b>' : termHtml(t)) + '</span>'; }).join(' <span class="opx">+</span> '); }
+  return '<span class="eq">' + side(sides[0]) + (sides.length > 1 ? ' <span class="opx">→</span> ' + side(sides[1]) : '') + '</span>';
+}
+function nucHtml(A, Z, s){
+  var bot = Z < 0 ? '−' + (-Z) : (s === 'e' && Z > 0 ? '+' + Z : String(Z));
+  return '<span class="nw"><span class="nuc"><span>' + A + '</span><span>' + bot + '</span></span>' + s + '</span>';
+}
+/* {{equation}}  [[formula(state)]]  <<A,Z,sym>> */
+function fmt(s){
+  return s.replace(/\{\{([^}]+)\}\}/g, function(_, x){ return eqHtml(x); })
+          .replace(/\[\[([^\]]+)\]\]/g, function(_, x){ return '<span class="eq nw">' + termHtml(x) + '</span>'; })
+          .replace(/<<(-?\d+),(-?\d+),([^>]+)>>/g, function(_, a, z, sy){ return '<span class="eq">' + nucHtml(a, Number(z), sy) + '</span>'; });
+}
+function nucEqHtml(parts){
+  return '<span class="eq">' + parts.map(function(p){ return p === '->' ? '<span class="opx">→</span>' : p === '+' ? '<span class="opx">+</span>' : p; }).join(' ') + '</span>';
+}
+
+/* =========================================================
+   the exam
+   ========================================================= */
+var TOPICS = [
+  { key:'write',   name:'Writing Equations',   url:'/chemistry/reactions/writing-equations/' },
+  { key:'balance', name:'Balancing Equations', url:'/chemistry/reactions/balancing-equations/' },
+  { key:'types',   name:'Types of Reactions',  url:'/chemistry/reactions/types-of-reactions/' },
+  { key:'act',     name:'The Activity Series', url:'/chemistry/reactions/activity-series/' },
+  { key:'dr',      name:'Double Replacement',  url:'/chemistry/reactions/double-replacement/' },
+  { key:'pred',    name:'Predicting Products', url:'/chemistry/reactions/predicting-products/' },
+  { key:'nuc',     name:'Nuclear Reactions',   url:'/chemistry/reactions/nuclear-reactions/' },
+  { key:'hl',      name:'Half-Life',           url:'/chemistry/reactions/half-life/' }
+];
+var TYPES5 = ['Combination','Decomposition','Single replacement','Double replacement','Combustion'];
+
+var EXAM = [
+  /* ---------------- writing equations ---------------- */
+  { topic:'write', type:'mc',
+    stem:'Which skeleton equation matches this sentence? <i>Solid magnesium is added to aqueous hydrochloric acid, HCl, producing aqueous magnesium chloride and hydrogen gas.</i>',
+    opts:['{{Mg(s) + HCl(aq) -> MgCl2(aq) + H2(g)}}','{{Mg(s) + HCl(aq) -> MgCl2(aq) + H(g)}}','{{Mg(s) + HCl(aq) -> MgCl(aq) + H2(g)}}','{{Mg(s) + HCl(l) -> MgCl2(l) + H2(g)}}'],
+    ans:0,
+    why:'Mg<sup>2+</sup> needs two Cl<sup>−</sup>, so magnesium chloride is MgCl<sub>2</sub>. Hydrogen gas standing alone is diatomic, H<sub>2</sub>. "Aqueous" means (aq), not (l). It’s a skeleton, so it isn’t balanced yet.' },
+  { topic:'write', type:'mc',
+    stem:'Which skeleton equation matches this sentence? <i>Solid sodium reacts with chlorine gas to form solid sodium chloride.</i>',
+    opts:['{{Na(s) + Cl(g) -> NaCl(s)}}','{{Na(s) + Cl2(g) -> NaCl(s)}}','{{Na(s) + Cl2(g) -> NaCl2(s)}}','{{Na2(s) + Cl2(g) -> Na2Cl2(s)}}'],
+    ans:1,
+    why:'Chlorine gas on its own is Cl<sub>2</sub>. Inside the compound, the charges set the subscripts: Na<sup>+</sup> and Cl<sup>−</sup> cancel one-to-one, so the product is NaCl. The 2 in Cl<sub>2</sub> never carries into the compound, and sodium is not diatomic.' },
+  { topic:'write', type:'mc',
+    stem:'Which element is <b>not</b> written as a diatomic molecule when it stands alone?',
+    opts:['Bromine','Hydrogen','Helium','Iodine'],
+    ans:2,
+    why:'The seven diatomic elements are H<sub>2</sub>, N<sub>2</sub>, O<sub>2</sub>, F<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub> and I<sub>2</sub>. Helium is a noble gas and exists as single atoms, He. Don’t mix up hydrogen and helium.' },
+  { topic:'write', type:'formula',
+    stem:'Write the formula, with its state symbol, for <b>aqueous calcium nitrate</b>.',
+    expect:[{ f:'Ca(NO3)2', st:['aq'] }],
+    answer:'[[Ca(NO3)2(aq)]]',
+    why:'Ca<sup>2+</sup> needs two NO<sub>3</sub><sup>−</sup> ions, and a polyatomic ion you need more than one of goes in parentheses: Ca(NO<sub>3</sub>)<sub>2</sub>. "Aqueous" means dissolved in water, so the state is (aq).' },
+
+  /* ---------------- balancing ---------------- */
+  { topic:'balance', type:'coef',
+    stem:'Balance this equation. Use the lowest whole-number coefficients, and leave a box blank for 1.',
+    eq:'Fe(s) + O2(g) -> Fe2O3(s)', ans:[4,3,2],
+    why:'Oxygen first: 2 on the left and 3 on the right, so use 3O<sub>2</sub> and 2Fe<sub>2</sub>O<sub>3</sub> (6 O each). That makes 4 Fe on the right, so 4Fe on the left. Fe 4 = 4, O 6 = 6.' },
+  { topic:'balance', type:'mc',
+    stem:'When {{C5H12(l) + O2(g) -> CO2(g) + H2O(g)}} is balanced in lowest terms, what is the coefficient in front of O<sub>2</sub>?',
+    opts:['5','6','8','16'],
+    ans:2,
+    why:'Carbon first: 5CO<sub>2</sub>. Hydrogen next: 12 H means 6H<sub>2</sub>O. Oxygen last: 5 × 2 + 6 × 1 = 16 O atoms on the right, which is 8 O<sub>2</sub> molecules. 16 counts oxygen atoms, not O<sub>2</sub> molecules.' },
+  { topic:'balance', type:'coef',
+    stem:'Balance this equation. Use the lowest whole-number coefficients, and leave a box blank for 1.',
+    eq:'Na3PO4(aq) + CaCl2(aq) -> Ca3(PO4)2(s) + NaCl(aq)', ans:[2,3,1,6],
+    why:'Keep phosphate whole. Ca<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub> has 2 PO<sub>4</sub>, so 2Na<sub>3</sub>PO<sub>4</sub>. It has 3 Ca, so 3CaCl<sub>2</sub>. That gives 6 Na and 6 Cl, so 6NaCl.' },
+  { topic:'balance', type:'number',
+    stem:'How many oxygen atoms are in [[4Al(NO3)3]]?',
+    ans:36, unit:'O atoms',
+    answer:'36',
+    why:'Each nitrate has 3 O. The 3 after the parentheses means 3 nitrates per formula unit: 9 O. The coefficient 4 multiplies everything: 4 × 3 × 3 = 36.' },
+
+  /* ---------------- types ---------------- */
+  { topic:'types', type:'mc',
+    stem:'What type of reaction is {{2HgO(s) -> 2Hg(l) + O2(g)}}?',
+    opts:TYPES5, ans:1,
+    why:'One compound breaks apart into simpler substances, here its two elements. One reactant alone always means decomposition.' },
+  { topic:'types', type:'mc',
+    stem:'What type of reaction is {{CaO(s) + H2O(l) -> Ca(OH)2(s)}}?',
+    opts:TYPES5, ans:0,
+    why:'Two compounds go in, but they don’t trade partners. They join into one product, and one product means combination.' },
+  { topic:'types', type:'mc',
+    stem:'Which of these is a combustion reaction?',
+    opts:['{{2Mg(s) + O2(g) -> 2MgO(s)}}','{{C3H8(g) + 5O2(g) -> 3CO2(g) + 4H2O(g)}}','{{2H2(g) + O2(g) -> 2H2O(g)}}','{{S(s) + O2(g) -> SO2(g)}}'],
+    ans:1,
+    why:'In this class, combustion is a fuel containing carbon and hydrogen reacting with O<sub>2</sub> to make CO<sub>2</sub> and H<sub>2</sub>O. The other three are two elements joining into one product, which is combination, even though they burn.' },
+  { topic:'types', type:'mc',
+    stem:'Which of these is a double replacement reaction?',
+    opts:['{{Zn(s) + 2HCl(aq) -> ZnCl2(aq) + H2(g)}}','{{BaCl2(aq) + K2CO3(aq) -> BaCO3(s) + 2KCl(aq)}}','{{2NaCl(l) -> 2Na(s) + Cl2(g)}}','{{Cl2(g) + 2NaBr(aq) -> 2NaCl(aq) + Br2(l)}}'],
+    ans:1,
+    why:'Two ionic compounds swap partners: Ba<sup>2+</sup> picks up CO<sub>3</sub><sup>2−</sup> and K<sup>+</sup> picks up Cl<sup>−</sup>. The first and last are single replacement (a free element and a compound), and the third is decomposition.' },
+
+  /* ---------------- activity series ---------------- */
+  { topic:'act', type:'mc',
+    stem:'Use your activity series. Which free metal would react with CuSO<sub>4</sub>(aq) but <b>not</b> with FeSO<sub>4</sub>(aq)?',
+    opts:['Magnesium','Zinc','Nickel','Silver'],
+    ans:2,
+    why:'The metal has to sit below iron but above copper. Nickel does, so it replaces copper but not iron. Magnesium and zinc are above both, so they react with both. Silver is below both, so it reacts with neither.' },
+  { topic:'act', type:'mc',
+    stem:'Which of these pairs gives <b>no reaction (NR)</b>?',
+    opts:['[[Mg(s)]] + [[HCl(aq)]]','[[Zn(s)]] + [[CuSO4(aq)]]','[[Ag(s)]] + [[HCl(aq)]]','[[Cl2(g)]] + [[NaBr(aq)]]'],
+    ans:2,
+    why:'Silver sits below hydrogen on the activity series, so it can’t replace the hydrogen in an acid. Magnesium is above hydrogen, zinc is above copper, and chlorine is above bromine in column 17, so the others all react.' },
+  { topic:'act', type:'products',
+    stem:'Predict the products. Include a state on every product, or type NR if nothing happens. You don’t need to balance.',
+    react:'Mg(s) + Pb(NO3)2(aq)',
+    expect:[{ f:'Mg(NO3)2', st:['aq'] }, { f:'Pb', st:['s'] }],
+    answer:'{{Mg(s) + Pb(NO3)2(aq) -> Mg(NO3)2(aq) + Pb(s)}}',
+    why:'Magnesium is above lead on the activity series, so it reacts. Mg<sup>2+</sup> with two NO<sub>3</sub><sup>−</sup> is Mg(NO<sub>3</sub>)<sub>2</sub>, which is S on the chart, so (aq). Lead comes out as the free metal, Pb(s).' },
+
+  /* ---------------- double replacement ---------------- */
+  { topic:'dr', type:'mc',
+    stem:'Use your solubility chart. Which compound comes out as a precipitate when it forms in water?',
+    opts:['[[NaNO3]]','[[KCl]]','[[BaSO4]]','[[NH4Cl]]'],
+    ans:2,
+    why:'The Ba<sup>2+</sup> row, SO<sub>4</sub><sup>2−</sup> column says I, insoluble, so BaSO<sub>4</sub> forms a solid. Sodium, potassium and ammonium compounds are S across the whole chart.' },
+  { topic:'dr', type:'mc',
+    stem:'These pairs of solutions are mixed. Which pair gives <b>NR</b>?',
+    opts:['[[AgNO3(aq)]] + [[NaCl(aq)]]','[[KNO3(aq)]] + [[NaCl(aq)]]','[[BaCl2(aq)]] + [[Na2SO4(aq)]]','[[HCl(aq)]] + [[NaOH(aq)]]'],
+    ans:1,
+    why:'Swapping gives KCl and NaNO<sub>3</sub>, and both are S, so every ion stays dissolved and nothing happens. AgCl and BaSO<sub>4</sub> are precipitates, and HCl + NaOH makes water.' },
+  { topic:'dr', type:'mc',
+    stem:'What is the net ionic equation for {{CuCl2(aq) + 2NaOH(aq) -> Cu(OH)2(s) + 2NaCl(aq)}}?',
+    opts:['Cu<sup>2+</sup>(aq) + 2OH<sup>−</sup>(aq) → Cu(OH)<sub>2</sub>(s)',
+          'Na<sup>+</sup>(aq) + Cl<sup>−</sup>(aq) → NaCl(aq)',
+          'Cu<sup>2+</sup>(aq) + 2Cl<sup>−</sup>(aq) + 2Na<sup>+</sup>(aq) + 2OH<sup>−</sup>(aq) → Cu(OH)<sub>2</sub>(s) + 2Na<sup>+</sup>(aq) + 2Cl<sup>−</sup>(aq)',
+          'Cu<sup>2+</sup>(aq) + OH<sup>−</sup>(aq) → CuOH(s)'],
+    ans:0,
+    why:'Na<sup>+</sup> and Cl<sup>−</sup> are dissolved before and after, so they’re spectators. Cross them out and what’s left is the copper and hydroxide ions forming the solid. The third choice is the complete ionic equation, with the spectators still in. The last one ignores copper’s 2+ charge.' },
+  { topic:'dr', type:'products',
+    stem:'Predict the products. Include a state on every product, or type NR if nothing happens. You don’t need to balance.',
+    react:'HNO3(aq) + KOH(aq)',
+    expect:[{ f:'KNO3', st:['aq'] }, { f:'H2O', st:['l'] }],
+    answer:'{{HNO3(aq) + KOH(aq) -> KNO3(aq) + H2O(l)}}',
+    why:'H<sup>+</sup> meets OH<sup>−</sup>, so water forms, and water is the liquid, (l). The other product is K<sup>+</sup> with NO<sub>3</sub><sup>−</sup>: KNO<sub>3</sub>, which is S, so (aq). An acid plus a hydroxide always reacts.' },
+
+  /* ---------------- predicting products ---------------- */
+  { topic:'pred', type:'products',
+    stem:'Predict the products. Include a state on every product, or type NR if nothing happens. You don’t need to balance.',
+    react:'Ca(s) + Cl2(g)',
+    expect:[{ f:'CaCl2', st:['s'] }],
+    answer:'{{Ca(s) + Cl2(g) -> CaCl2(s)}}',
+    why:'Two elements combine. Ca<sup>2+</sup> and Cl<sup>−</sup> make CaCl<sub>2</sub>. It formed from two elements with no water around to dissolve it, so it’s a solid, (s).' },
+  { topic:'pred', type:'mc',
+    stem:'What are the products of [[Cu(s)]] + [[Zn(NO3)2(aq)]]?',
+    opts:['[[Cu(NO3)2(aq)]] + [[Zn(s)]]','[[CuNO3(aq)]] + [[Zn(s)]]','[[Cu(NO3)2(s)]] + [[Zn(aq)]]','NR'],
+    ans:3,
+    why:'Copper sits below zinc on the activity series, so it can’t push zinc out. When the answer is NR, you don’t write any products at all.' },
+  { topic:'pred', type:'products',
+    stem:'Predict the products. Include a state on every product, or type NR if nothing happens. You don’t need to balance.',
+    react:'FeCl3(aq) + NaOH(aq)',
+    expect:[{ f:'Fe(OH)3', st:['s'] }, { f:'NaCl', st:['aq'] }],
+    answer:'{{FeCl3(aq) + 3NaOH(aq) -> Fe(OH)3(s) + 3NaCl(aq)}}',
+    why:'Three Cl<sup>−</sup> means the iron is Fe<sup>3+</sup>, so with OH<sup>−</sup> it’s Fe(OH)<sub>3</sub>. The Fe<sup>3+</sup> row, OH<sup>−</sup> column says I, so it’s a precipitate, (s). NaCl is S, so (aq).' },
+  { topic:'pred', type:'mc',
+    stem:'Which set of products has the correct formulas and states for [[Zn(s)]] + [[HCl(aq)]]?',
+    opts:['[[ZnCl2(aq)]] + [[H2(g)]]','[[ZnCl2(s)]] + [[H2(g)]]','[[ZnCl(aq)]] + [[H(g)]]','[[ZnCl2(aq)]] + [[H2(aq)]]'],
+    ans:0,
+    why:'Zinc is above hydrogen, so it reacts. Zn<sup>2+</sup> with two Cl<sup>−</sup> is ZnCl<sub>2</sub>, which is S on the chart, so (aq). Hydrogen leaves as bubbles of diatomic H<sub>2</sub> gas.' },
+
+  /* ---------------- nuclear ---------------- */
+  { topic:'nuc', type:'mc',
+    stem:'A nucleus gives off a beta particle, <<0,-1,e>>. What happens to its atomic number?',
+    opts:['It goes down by 2','It goes down by 1','It goes up by 1','It doesn’t change'],
+    ans:2,
+    why:'A neutron in the nucleus turns into a proton and throws out the electron. One more proton raises the atomic number by 1. In the bookkeeping: Z = Z<sub>new</sub> + (−1), so Z<sub>new</sub> = Z + 1.' },
+  { topic:'nuc', type:'nuc',
+    stem:'Fill in the missing nucleus. Use your periodic table.',
+    parts:['<<232,90,Th>>','->','BLANK','+','<<4,2,He>>'],
+    want:{ A:228, Z:88, s:'Ra' },
+    answer:'<<232,90,Th>> → <<228,88,Ra>> + <<4,2,He>>',
+    why:'Top: 232 = A + 4, so A = 228. Bottom: 90 = Z + 2, so Z = 88, which is radium. Thorium-232 gives off an alpha particle and becomes radium-228.' },
+  { topic:'nuc', type:'nuc',
+    stem:'Fill in the missing particle.',
+    parts:['<<15,8,O>>','->','<<15,7,N>>','+','BLANK'],
+    want:{ A:0, Z:1, s:'e' },
+    answer:'<<15,8,O>> → <<15,7,N>> + <<0,1,e>>',
+    why:'Top: 15 = 15 + A, so A = 0. Bottom: 8 = 7 + Z, so Z = +1. Zero on top and +1 on the bottom is a positron. This is positron emission.' },
+  { topic:'nuc', type:'mc',
+    stem:'<<2,1,H>> + <<3,2,He>> → <<4,2,He>> + <<1,1,H>> is an example of:',
+    opts:['Fission','Fusion','Alpha decay','Beta decay'],
+    ans:1,
+    why:'Two light nuclei join into a heavier one, which is fusion. Fission is a heavy nucleus splitting apart, and decay starts with a single nucleus.' },
+
+  /* ---------------- half-life ---------------- */
+  { topic:'hl', type:'number',
+    stem:'Xenon-133, used in lung scans, has a half-life of 5.2 days. A hospital has 64 mg of it. How much is left after 20.8 days?',
+    ans:4, unit:'mg',
+    answer:'4 mg',
+    why:'20.8 ÷ 5.2 = 4 half-lives. 64 → 32 → 16 → 8 → 4 mg. Halve once per half-life; don’t divide by 4.' },
+  { topic:'hl', type:'mc',
+    stem:'Radon-222 has a half-life of 3.8 days. How long until only 1/16 of a sample is left?',
+    opts:['3.8 days','7.6 days','15.2 days','60.8 days'],
+    ans:2,
+    why:'1 → 1/2 → 1/4 → 1/8 → 1/16 is 4 halvings, so 4 × 3.8 = 15.2 days. 60.8 days uses the 16 as if it were the number of half-lives.' },
+  { topic:'hl', type:'number',
+    stem:'A 200 g sample of a radioactive isotope decays to 12.5 g in 48 days. What is its half-life?',
+    ans:12, unit:'days',
+    answer:'12 days',
+    why:'200 → 100 → 50 → 25 → 12.5 is 4 halvings, so 48 days ÷ 4 = 12 days per half-life.' }
+];
+
+/* =========================================================
+   building and grading
+   ========================================================= */
+var STATE = [];   // per question: null (not answered) | true | false
+var KIND_LABEL = { mc:'Multiple choice', formula:'Type-in', coef:'Type-in', number:'Type-in', products:'Type-in', nuc:'Type-in' };
+var LETTERS = 'ABCD';
+
+function qInputHtml(q, i){
+  var id = 'q' + i;
+  switch(q.type){
+    case 'mc':
+      return '<div class="opts">' + q.opts.map(function(o, oi){
+        return '<button type="button" class="opt" data-q="' + i + '" data-o="' + oi + '"><span class="letter">' + (LETTERS[oi] || oi + 1) + '</span>' + fmt(o) + '</button>';
+      }).join('') + '</div>';
+    case 'formula':
+      return '<div class="field"><input type="text" class="wide" id="' + id + '-in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Formula with state" placeholder="Type the formula and its state"></div>' +
+        '<p class="typing-tip">Type subscripts as plain numbers and put the state right after the formula, like <kbd>Na2SO4(aq)</kbd>.</p>' + checkRow(i);
+    case 'products':
+      return '<div class="eqline">' + eqHtml(q.react + ' -> ?') + '</div>' +
+        '<div class="field"><input type="text" class="wide" id="' + id + '-in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Products, or NR" placeholder="Type the products, or NR"></div>' +
+        '<p class="typing-tip">Separate products with <kbd>+</kbd>, type subscripts as plain numbers, and put a state right after each formula.</p>' + checkRow(i);
+    case 'coef':
+      var sides = q.eq.split('->'), k = 0;
+      function side(x){ return x.trim().split(/\s\+\s/).map(function(t){
+        var box = '<input type="text" class="coef" id="' + id + '-c' + (k++) + '" inputmode="numeric" autocomplete="off" aria-label="Coefficient for ' + esc(t.replace(/\((s|l|g|aq)\)$/, '')) + '">';
+        return '<span class="nw">' + box + termHtml(t) + '</span>';
+      }).join(' <span class="opx">+</span> '); }
+      return '<div class="eqline coefrow">' + side(sides[0]) + ' <span class="opx">→</span> ' + side(sides[1]) + '</div>' + checkRow(i);
+    case 'number':
+      return '<div class="field"><input type="text" class="num" id="' + id + '-in" autocomplete="off" aria-label="Your answer" placeholder="Type a number"><span class="unit-tag">' + q.unit + '</span></div>' + checkRow(i);
+    case 'nuc':
+      var blank = '<span class="blank" id="' + id + '-b"><span class="bn">' +
+        '<input type="text" class="bt" inputmode="numeric" autocomplete="off" aria-label="Top number (mass number)" placeholder="top">' +
+        '<input type="text" class="bb" autocomplete="off" aria-label="Bottom number (atomic number)" placeholder="bottom"></span>' +
+        '<input type="text" class="bs" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Symbol" placeholder="symbol"></span>';
+      return '<div class="eqline">' + nucEqHtml(q.parts.map(function(p){ return p === 'BLANK' ? blank : fmt(p); })) + '</div>' +
+        '<p class="typing-tip">Type the top number, the bottom number and the symbol. For a negative bottom number, type a minus sign.</p>' + checkRow(i);
+  }
+}
+function checkRow(i){ return '<div class="btn-row"><button type="button" class="chk" data-q="' + i + '">Check</button></div>'; }
+
+function buildExam(){
+  var html = '', n = 0;
+  TOPICS.forEach(function(t, ti){
+    html += '<section id="t-' + t.key + '"><div class="sec-head"><span class="tasktag">Part ' + (ti + 1) + '</span><h2>' + t.name + '</h2></div>' +
+      '<p class="sec-link">Review: <a href="' + t.url + '">' + t.name + '</a></p>';
+    EXAM.forEach(function(q, i){
+      if(q.topic !== t.key) return;
+      n++;
+      html += '<div class="qcard" id="card' + i + '"><div class="qhead"><span class="qnum">Question ' + n + '</span><span class="qkind">' + KIND_LABEL[q.type] + '</span></div>' +
+        '<p class="stem">' + fmt(q.stem) + '</p>' + qInputHtml(q, i) + '<div class="fb" id="q' + i + '-fb" aria-live="polite"></div></div>';
+    });
+    html += '</section>';
+  });
+  el('exam').innerHTML = html;
+  el('jump').innerHTML = TOPICS.map(function(t){ return '<a href="#t-' + t.key + '">' + t.name + '</a>'; }).join('') + '<a href="#results">Results</a>';
+  STATE = EXAM.map(function(){ return null; });
+
+  each(document.querySelectorAll('.opt'), function(b){ b.addEventListener('click', function(){ answerMc(Number(b.dataset.q), Number(b.dataset.o)); }); });
+  each(document.querySelectorAll('.chk'), function(b){ b.addEventListener('click', function(){ check(Number(b.dataset.q)); }); });
+  EXAM.forEach(function(q, i){
+    each(el('card' + i).querySelectorAll('input'), function(inp){
+      inp.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); check(i); } });
+    });
+  });
+  updateScore();
+}
+
+function finish(i, ok, html){
+  STATE[i] = ok;
+  var card = el('card' + i);
+  card.classList.add(ok ? 'right' : 'wrong');
+  each(card.querySelectorAll('input, .chk'), function(x){ x.disabled = true; });
+  setFb(el('q' + i + '-fb'), ok ? 'good' : 'bad', html);
+  updateScore();
+}
+function answerMc(i, oi){
+  if(STATE[i] !== null) return;
+  var q = EXAM[i], ok = oi === q.ans;
+  each(el('card' + i).querySelectorAll('.opt'), function(b, bi){
+    b.disabled = true;
+    if(bi === q.ans) b.classList.add('reveal');
+  });
+  el('card' + i).querySelectorAll('.opt')[oi].classList.add(ok ? 'picked-yes' : 'picked-no');
+  finish(i, ok, '<b>' + (ok ? 'Correct.' : 'Not this one. The answer is ' + LETTERS[q.ans] + '.') + '</b> ' + fmt(q.why));
+}
+function hint(i, html){ setFb(el('q' + i + '-fb'), 'hint', html); }
+
+function check(i){
+  if(STATE[i] !== null) return;
+  var q = EXAM[i], id = 'q' + i, ok, extra = '';
+  switch(q.type){
+    case 'formula':
+    case 'products':
+      var got = parseProducts(el(id + '-in').value);
+      if(!got.ok){ hint(i, '<b>I couldn’t read that.</b> ' + got.err + ' This try doesn’t count; fix it and check again.'); return; }
+      if(q.type === 'formula' && (got.nr || got.terms.length !== 1)){ hint(i, 'Type one formula with its state, like <span class="mono">Na2SO4(aq)</span>.'); return; }
+      var res = judgeProducts(q.type === 'products' ? q.expect : q.expect, got);
+      if(res.missingState){ hint(i, '<b>Add a state</b> right after ' + (q.type === 'formula' ? 'the formula' : 'each formula') + ': (s), (l), (g) or (aq). This try doesn’t count.'); return; }
+      ok = res.ok;
+      if(!ok){
+        var notes = res.notes.map(function(n){
+          var p = n.split(':');
+          if(p[0] === 'nrExpected') return 'This one is NR.';
+          if(p[0] === 'notNr') return 'This reaction does happen, so it isn’t NR.';
+          if(p[0] === 'state') return 'The formula ' + fHtml(p[1]) + ' is right, but its state isn’t.';
+          return null;
+        }).filter(Boolean);
+        extra = notes.length ? notes.join(' ') + ' ' : '';
+      }
+      finish(i, ok, '<b>' + (ok ? 'Correct.' : 'Not quite.') + '</b> ' + extra + (ok ? '' : 'Answer: ' + fmt(q.answer) + '. ') + fmt(q.why));
+      return;
+    case 'coef':
+      var boxes = el('card' + i).querySelectorAll('input.coef');
+      var coefs = readCoefs(Array.prototype.map.call(boxes, function(b){ return b.value; }));
+      if(!coefs){ hint(i, 'Coefficients are whole numbers, 1 or more. Leave a box blank for 1. This try doesn’t count.'); return; }
+      var v = judgeCoefs(q.ans, coefs);
+      ok = v === 'correct';
+      var ansEq = q.eq.split('->').map(function(s){ return s.trim().split(/\s\+\s/); });
+      var k = 0, shown = ansEq.map(function(side){ return side.map(function(t){ var c = q.ans[k++]; return (c > 1 ? c : '') + t; }).join(' + '); }).join(' -> ');
+      finish(i, ok, '<b>' + (ok ? 'Correct.' : v === 'notLowest' ? 'Balanced, but not in lowest terms.' : 'Not balanced.') + '</b> ' +
+        (ok ? '' : 'Answer: ' + eqHtml(shown) + '. ') + fmt(q.why));
+      return;
+    case 'number':
+      var num = parseNumber(el(id + '-in').value);
+      if(num === null){ hint(i, 'Type a number. This try doesn’t count.'); return; }
+      ok = near(num, q.ans);
+      finish(i, ok, '<b>' + (ok ? 'Correct: ' + q.answer + '.' : 'Not quite. The answer is ' + q.answer + '.') + '</b> ' + fmt(q.why));
+      return;
+    case 'nuc':
+      var b = el(id + '-b');
+      var g = { a:readInt(b.querySelector('.bt').value), z:readInt(b.querySelector('.bb').value), s:b.querySelector('.bs').value };
+      var r = judgeNuc(q.want, g);
+      if(r === 'incomplete'){ hint(i, 'Fill in all three boxes: the top number, the bottom number and the symbol. This try doesn’t count.'); return; }
+      if(r === 'nan'){ hint(i, 'The top and bottom numbers are whole numbers. For a negative one, type a minus sign. This try doesn’t count.'); return; }
+      ok = r === 'correct';
+      finish(i, ok, '<b>' + (ok ? 'Correct.' : 'Not quite.') + '</b> ' + (ok ? '' : 'Answer: ' + fmt(q.answer) + '. ') + fmt(q.why));
+      return;
+  }
+}
+
+function updateScore(){
+  var done = STATE.filter(function(s){ return s !== null; }).length;
+  var right = STATE.filter(function(s){ return s === true; }).length;
+  el('bar-score').textContent = done + ' of ' + EXAM.length + ' answered · ' + right + ' correct';
+  el('r-total').innerHTML = right + '<small>of ' + EXAM.length + ' correct</small>';
+  el('r-note').textContent = done === EXAM.length
+    ? 'You’ve answered every question. ' + Math.round(right / EXAM.length * 100) + '% overall.'
+    : done + ' of ' + EXAM.length + ' answered so far. Unanswered questions aren’t counted as wrong.';
+  el('r-body').innerHTML = TOPICS.map(function(t){
+    var idx = [];
+    EXAM.forEach(function(q, i){ if(q.topic === t.key) idx.push(i); });
+    var a = idx.filter(function(i){ return STATE[i] !== null; }).length;
+    var c = idx.filter(function(i){ return STATE[i] === true; }).length;
+    var step;
+    if(a < idx.length) step = '<span class="smallprint">' + (idx.length - a) + ' still to answer</span>';
+    else if(c === idx.length) step = '<span class="tag-ok">Solid</span>';
+    else step = '<span class="tag-no">Review</span> <a href="' + t.url + '">' + t.name + '</a>';
+    return '<tr><td><a href="#t-' + t.key + '">' + t.name + '</a></td><td class="n">' + c + ' of ' + idx.length + '</td><td>' + step + '</td></tr>';
+  }).join('');
+}
+
+el('r-reset').addEventListener('click', function(){
+  if(STATE.some(function(s){ return s !== null; }) && !window.confirm('Clear all of your answers and start the exam over?')) return;
+  buildExam();
+  window.scrollTo({ top: el('exam').offsetTop - 80, behavior:'smooth' });
+});
+
+buildExam();
+</script>
+</body>
+</html>
