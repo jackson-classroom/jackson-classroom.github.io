@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Half-Life — Halving Over Time</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#131E1D; --ink2:#3B4A48; --mute:#5F6D6B;
+  --wash:#E3E9E8; --card:#FBFCFB; --line:#C9D3D1; --line-soft:#E0E7E6;
+  --water:#12727F; --water-dk:#0B4E58; --water-lite:#BFDEE2;
+  --brass:#9A6E22; --brass-lite:#F5E9CF;
+  --ok:#26694A; --ok-bg:#E4F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  --display:"Instrument Serif",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(227,233,232,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:64px 0 44px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--water-dk)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,7.4vw,74px);line-height:1;margin:16px 0 0;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--water-dk)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:47ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: a halving table and its bars */
+.sig-readout{margin:38px 0 0;padding:24px 26px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.sig-calc{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.sig-grid{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:24px;align-items:center}
+.sig-rows{margin-top:12px;display:grid;gap:4px;max-width:400px}
+.sig-r{display:grid;grid-template-columns:4.2em 4.6em 1fr;align-items:baseline;gap:10px;font-family:var(--mono);font-size:clamp(17px,3.4vw,22px);font-weight:500;font-variant-numeric:tabular-nums;border-bottom:1px dashed var(--line);padding-bottom:3px}
+.sig-r .tg{font-size:12px;font-weight:400;letter-spacing:.04em;color:var(--mute);white-space:nowrap}
+.sig-r .u{font-size:.6em;font-weight:400;color:var(--mute)}
+th .u{text-transform:none;letter-spacing:0}
+.sig-r.head{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:400;border-bottom:none}
+.sig-r.hl{color:var(--water-dk)}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px}
+.sig-note b{color:var(--water-dk);font-weight:600}
+.sig-fig svg{display:block;width:100%;height:auto}
+.bar-r{fill:var(--water)}
+.bar-g{fill:none;stroke:var(--line);stroke-dasharray:3 3}
+.bar-t{font-family:var(--mono);font-size:11px;fill:var(--ink2);text-anchor:middle}
+.bar-t.m{fill:var(--mute)}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--water);color:var(--water-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--water-dk);background:var(--water-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.4vw,40px);line-height:1.08;margin:0;letter-spacing:-.01em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--water-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.note{border-left:3px solid var(--brass);background:var(--brass-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:24px 0}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--water);border-radius:0 4px 4px 0;padding:18px 20px;min-width:0}
+.rulecard .op{font-family:var(--display);font-size:30px;line-height:1;color:var(--water-dk)}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard .ex{font-family:var(--mono);font-size:13.5px;color:var(--water-dk);margin-top:8px}
+.rulecard.miss{border-left-color:var(--no)}
+.rulecard.miss h4{margin-top:0}
+.rulecard .wrong{font-family:var(--mono);font-size:14.5px;color:var(--mute);text-decoration:line-through;text-decoration-color:var(--no);text-decoration-thickness:2px;margin:6px 0}
+.rulecard .right{font-family:var(--mono);font-size:14.5px;color:var(--ok);margin:6px 0}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.setup{font-size:15px;color:var(--ink2);margin:0 0 14px}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F6F8F7;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--water-dk);border-color:var(--water-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--water)}
+button[disabled]{opacity:.45;cursor:default}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2.5px solid var(--water);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid #93A5A2;border-radius:3px;padding:9px 11px;width:170px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(19,30,29,.12)}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:14px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:120px}
+.unit-tag{font-family:var(--mono);font-size:15px;color:var(--mute)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1B4E36}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--water);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb .mono{font-size:15px}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab[aria-selected="true"]{background:var(--ink);color:#F6F8F7;border-color:var(--ink)}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft)}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45}
+.opt:hover{border-color:var(--water);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.94}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#EDF2F1;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#C3D0CE}
+.next .nt{font-family:var(--display);font-size:26px;color:#fff;margin:0 0 4px}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F6F8F7;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--water-lite)}
+
+/* ---------- decay simulator ---------- */
+.sim-wrap{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:20px;align-items:start;margin-top:12px}
+.sim-field{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px}
+.sim-field svg{display:block;width:100%;height:auto}
+.dot-a{fill:var(--water)}
+.dot-d{fill:#fff;stroke:#B5C2C0;stroke-width:1}
+.sim-read{font-family:var(--mono);font-size:clamp(26px,5vw,34px);font-weight:500;line-height:1.1;font-variant-numeric:tabular-nums}
+.sim-read small{display:block;font-size:12px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-top:4px}
+.sim-log{margin:12px 0 0;font-size:14px}
+.sim-log th,.sim-log td{padding:5px 6px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--ink2);margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:50%}
+.legend i.a{background:var(--water)}
+.legend i.d{background:#fff;border:1px solid #B5C2C0}
+
+/* ---------- halving tables ---------- */
+.htable{margin:14px 0 0;background:#fff;border:1px solid var(--line-soft);border-radius:3px}
+.htable th{background:var(--card)}
+.htable td{font-family:var(--mono);font-size:16px;font-variant-numeric:tabular-nums}
+.htable td:first-child{color:var(--mute);width:6.5em}
+.htable tr.new td{background:var(--brass-lite)}
+.htable tr.done td{background:var(--ok-bg)}
+.htable input[type=text]{width:100%;max-width:150px;font-size:16px;padding:5px 8px}
+.htable input.good{border-color:var(--ok);background:var(--ok-bg)}
+.htable input.bad{border-color:var(--no);background:var(--no-bg)}
+.htable .pend{color:#A8B4B2}
+.wk-count{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto}
+.wk-text{min-height:4.4em}
+.wk-q{font-size:17px;margin:4px 0 0}
+.frac-tab td{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.prob{font-size:17.5px;line-height:1.55;margin:4px 0 0}
+.prob b{font-weight:600}
+.scaf{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
+.scaf-lab{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--water-dk)}
+button.small{font-size:12px;padding:6px 11px}
+
+::placeholder{font-family:var(--body);font-style:italic;font-size:14px;color:#7F8D8B;opacity:1}
+.typing-tip{font-size:14px;color:var(--mute);margin:8px 0 0}
+.typing-tip kbd{font-family:var(--mono);font-size:13px;color:var(--ink2);background:#fff;border:1px solid var(--line);border-radius:3px;padding:1px 5px}
+
+@media (max-width:700px){
+  .sim-wrap{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:16px}
+  .sig-readout{padding:20px 18px}
+  .sig-grid{grid-template-columns:1fr}
+  .sig-fig{max-width:270px;margin:0 auto}
+  .field label{min-width:auto;flex:1 1 100%}
+  .htable th,.htable td{padding:6px 6px}
+  .htable td:first-child{width:auto}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+  .dot-a,.dot-d{transition:fill .25s}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Half-Life</span>
+    <span class="bar-sub">Halving tables · amount left · finding the time</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 3 · Half-life</div>
+  <h1>Half of what's <em>left</em>, every time.</h1>
+  <p class="lede">A radioactive sample doesn't run out on a schedule. In each half-life, half of the nuclei that are still there decay. So the amount goes 64 → 32 → 16 → 8, getting smaller and smaller but never all gone at once.</p>
+
+  <div class="sig-readout">
+    <div class="sig-grid">
+      <div>
+        <div class="sig-calc">Sodium-24 · half-life 15 hours</div>
+        <div class="sig-rows">
+          <div class="sig-r head"><span>Time</span><span>Left</span><span></span></div>
+          <div class="sig-r"><span>0 h</span><span>64<span class="u"> mg</span></span><span class="tg">the start</span></div>
+          <div class="sig-r"><span>15 h</span><span>32<span class="u"> mg</span></span><span class="tg">1 half-life</span></div>
+          <div class="sig-r hl"><span>30 h</span><span>16<span class="u"> mg</span></span><span class="tg">2 half-lives</span></div>
+          <div class="sig-r"><span>45 h</span><span>8<span class="u"> mg</span></span><span class="tg">3 half-lives</span></div>
+          <div class="sig-r"><span>60 h</span><span>4<span class="u"> mg</span></span><span class="tg">4 half-lives</span></div>
+        </div>
+        <div class="sig-note">After two half-lives the sodium-24 isn't gone. <b>16 mg, a quarter of it, is still there.</b></div>
+      </div>
+      <div class="sig-fig">
+        <svg viewBox="0 0 270 196" role="img" aria-label="Bar chart: 64, 32, 16, 8, 4, 2 and 1 milligrams left after 0 through 6 half-lives">
+          <line x1="12" y1="164" x2="262" y2="164" stroke="#9FB0AD"/>
+          <rect class="bar-r" x="18" y="24" width="26" height="140"/><text class="bar-t" x="31" y="18">64</text>
+          <rect class="bar-g" x="53" y="24" width="26" height="70"/><rect class="bar-r" x="53" y="94" width="26" height="70"/><text class="bar-t" x="66" y="88">32</text>
+          <rect class="bar-g" x="88" y="94" width="26" height="35"/><rect class="bar-r" x="88" y="129" width="26" height="35"/><text class="bar-t" x="101" y="123">16</text>
+          <rect class="bar-g" x="123" y="129" width="26" height="17.5"/><rect class="bar-r" x="123" y="146.5" width="26" height="17.5"/><text class="bar-t" x="136" y="140">8</text>
+          <rect class="bar-r" x="158" y="155.25" width="26" height="8.75"/><text class="bar-t" x="171" y="149">4</text>
+          <rect class="bar-r" x="193" y="159.6" width="26" height="4.4"/><text class="bar-t" x="206" y="153">2</text>
+          <rect class="bar-r" x="228" y="161.8" width="26" height="2.2"/><text class="bar-t" x="241" y="155">1</text>
+          <text class="bar-t m" x="31" y="178">0</text><text class="bar-t m" x="66" y="178">1</text><text class="bar-t m" x="101" y="178">2</text>
+          <text class="bar-t m" x="136" y="178">3</text><text class="bar-t m" x="171" y="178">4</text><text class="bar-t m" x="206" y="178">5</text><text class="bar-t m" x="241" y="178">6</text>
+          <text class="bar-t m" x="136" y="193">half-lives</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#what">What half-life means</a>
+  <a href="#table">The halving table</a>
+  <a href="#kinds">Five questions</a>
+  <a href="#watch">Watch-outs</a>
+  <a href="#practice">Practice</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ WHAT ============ -->
+<section id="what">
+  <div class="sec-head"><span class="tasktag">The idea</span><h2>What half-life means</h2></div>
+  <p>The <b>half-life</b> of a radioactive isotope is the time it takes for half of the nuclei in a sample to decay. Every isotope has its own, and they range from a fraction of a second to billions of years.</p>
+  <table>
+    <thead><tr><th>Isotope</th><th>Half-life</th><th>Where you'd meet it</th></tr></thead>
+    <tbody>
+      <tr><td>Fluorine-18</td><td class="n">110 minutes</td><td>PET scans</td></tr>
+      <tr><td>Technetium-99m</td><td class="n">6.0 hours</td><td>Hospital imaging scans</td></tr>
+      <tr><td>Radon-222</td><td class="n">3.8 days</td><td>A gas that seeps into basements</td></tr>
+      <tr><td>Cobalt-60</td><td class="n">5.3 years</td><td>Cancer radiation therapy</td></tr>
+      <tr><td>Carbon-14</td><td class="n">5730 years</td><td>Dating ancient wood and bone</td></tr>
+      <tr><td>Uranium-238</td><td class="n">4.5 billion years</td><td>Dating the oldest rocks on Earth</td></tr>
+    </tbody>
+  </table>
+  <p>The decayed nuclei don't vanish. Each one has turned into its daughter nuclide, the product from its nuclear equation. Half-life only tracks how much of the <i>original</i> radioactive isotope is left.</p>
+
+  <h3>Random for one, predictable for many</h3>
+  <p>Nobody can say when one particular nucleus will decay. Each one just has a 50% chance of decaying during the next half-life, a lot like a coin toss. With thousands of nuclei, though, very close to half of them decay every half-life. Try it: every dot below is one radioactive nucleus.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Decay simulator</span></div>
+    <div class="tabs" role="tablist" aria-label="Sample size" id="sim-tabs">
+      <button type="button" class="tab" role="tab" data-n="100" aria-selected="true">100 nuclei</button>
+      <button type="button" class="tab" role="tab" data-n="1000" aria-selected="false">1,000 nuclei</button>
+    </div>
+    <div class="sim-wrap">
+      <div>
+        <div class="sim-field" id="sim-field"></div>
+        <div class="legend"><span><i class="a"></i>still radioactive</span><span><i class="d"></i>decayed</span></div>
+      </div>
+      <div>
+        <div class="sim-read" id="sim-read" aria-live="polite"></div>
+        <div class="btn-row">
+          <button type="button" id="sim-go">Wait one half-life</button>
+          <button type="button" class="ghost" id="sim-reset">Start over</button>
+        </div>
+        <table class="sim-log">
+          <thead><tr><th>Half-lives</th><th>Left</th><th>Exactly half</th></tr></thead>
+          <tbody id="sim-log"></tbody>
+        </table>
+      </div>
+    </div>
+    <p class="smallprint" style="margin-bottom:0">Run it a few times. With 100 nuclei the count wanders away from exact halves; with 1,000 it stays much closer. Real samples have trillions of nuclei, so they follow the halving pattern almost perfectly.</p>
+  </div>
+</section>
+
+<!-- ============ TABLE ============ -->
+<section id="table">
+  <div class="sec-head"><span class="tasktag">The method</span><h2>The halving table</h2></div>
+  <p>Every half-life problem here works out to a whole number of half-lives, so you never need a formula. You need a table with one row per half-life.</p>
+  <ol>
+    <li><b>Start the table.</b> Row 0 is time 0 and the amount you start with.</li>
+    <li><b>Count the half-lives.</b> Number of half-lives = total time ÷ half-life.</li>
+    <li><b>Halve, one row at a time.</b> Each row adds one half-life to the time and cuts the amount in half.</li>
+    <li><b>Read the answer</b> from the row the question asks about.</li>
+  </ol>
+
+  <div class="card">
+    <div class="card-label"><span>Worked example</span><span class="wk-count" id="wk-count"></span></div>
+    <div class="tabs" role="tablist" aria-label="Choose a worked example" id="wk-tabs"></div>
+    <p class="wk-q" id="wk-q"></p>
+    <div id="wk-table"></div>
+    <div class="fb hint show wk-text" id="wk-text" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="wk-next">Next step</button>
+      <button type="button" class="ghost" id="wk-prev">Back</button>
+      <button type="button" class="ghost" id="wk-restart">Start over</button>
+    </div>
+  </div>
+
+  <h3>Fractions and percents</h3>
+  <p>If the question asks what fraction is left, start the table at 1, the whole sample. Each half-life doubles the bottom number of the fraction. No exponents needed.</p>
+  <table class="frac-tab">
+    <thead><tr><th>Half-lives</th><th>Fraction left</th><th>Percent left</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td>1</td><td>100%</td></tr>
+      <tr><td>1</td><td>1/2</td><td>50%</td></tr>
+      <tr><td>2</td><td>1/4</td><td>25%</td></tr>
+      <tr><td>3</td><td>1/8</td><td>12.5%</td></tr>
+      <tr><td>4</td><td>1/16</td><td>6.25%</td></tr>
+      <tr><td>5</td><td>1/32</td><td>3.125%</td></tr>
+      <tr><td>6</td><td>1/64</td><td>about 1.6%</td></tr>
+      <tr><td>7</td><td>1/128</td><td>about 0.8%</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ KINDS ============ -->
+<section id="kinds">
+  <div class="sec-head"><span class="tasktag">Same table, different blank</span><h2>Five kinds of questions</h2></div>
+  <p>Every half-life question gives you some of the table and asks for the rest. Work out which piece is missing, and you know what to do.</p>
+  <div class="rulebox">
+    <div class="rulecard"><div class="op">1</div><h4>How much is left?</h4><p>Count the half-lives (time ÷ half-life), then halve the starting amount that many times.</p><div class="ex">48 g, 3 half-lives: 48 → 24 → 12 → 6 g</div></div>
+    <div class="rulecard"><div class="op">2</div><h4>What fraction is left?</h4><p>Same as #1, but start from 1. Each half-life doubles the bottom of the fraction.</p><div class="ex">4 half-lives: 1 → 1/2 → 1/4 → 1/8 → 1/16</div></div>
+    <div class="rulecard"><div class="op">3</div><h4>How long did it take?</h4><p>Halve until you reach the amount that's left. Count the halvings, then multiply by the half-life.</p><div class="ex">1/8 left = 3 halvings; 3 × 2.7 days = 8.1 days</div></div>
+    <div class="rulecard"><div class="op">4</div><h4>What's the half-life?</h4><p>Halve until you reach the amount that's left. Count the halvings, then divide the total time by that count.</p><div class="ex">80 → 40 → 20 → 10 in 12 days: 12 ÷ 3 = 4 days</div></div>
+    <div class="rulecard"><div class="op">5</div><h4>How much was there at the start?</h4><p>Count the half-lives, then double backward from the amount left, once per half-life.</p><div class="ex">5 g left after 2 half-lives: 5 → 10 → 20 g</div></div>
+  </div>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="sec-head"><span class="tasktag">Common mistakes</span><h2>Watch-outs</h2></div>
+  <div class="rulebox">
+    <div class="rulecard miss">
+      <h4>"Two half-lives and it's all gone"</h4>
+      <p>Half plus half sounds like a whole, but the second half-life only removes half of what's <i>left</i>. After two half-lives, a quarter of the sample is still there.</p>
+      <div class="wrong">100 g → 50 g → 0 g</div>
+      <div class="right">100 g → 50 g → 25 g</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Dividing by the number of half-lives</h4>
+      <p>Three half-lives doesn't mean "divide by 3." It means halve three times.</p>
+      <div class="wrong">160 g ÷ 3 = 53 g</div>
+      <div class="right">160 → 80 → 40 → 20 g</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Halving three times isn't ÷ 6</h4>
+      <p>÷ 2 ÷ 2 ÷ 2 is ÷ 8. When in doubt, write out the table instead of shortcutting.</p>
+    </div>
+    <div class="rulecard miss">
+      <h4>Counting row 0</h4>
+      <p>Row 0 is the start, before any time passes. If your last row is row 4, that's 4 half-lives, not 5.</p>
+    </div>
+    <div class="rulecard miss">
+      <h4>Stopping at the number of half-lives</h4>
+      <p>If the question asks <i>how long</i>, "3" isn't a time. Multiply by the half-life: 3 × 5.2 days = 15.6 days.</p>
+    </div>
+    <div class="rulecard miss">
+      <h4>Removing the same amount each time</h4>
+      <p>80 → 40 removes 40 g, but 40 → 20 removes only 20 g. Each half-life takes half of what's left, so less and less decays.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRACTICE ============ -->
+<section id="practice">
+  <div class="sec-head"><span class="tasktag">Practice</span><h2>Halving practice</h2></div>
+  <p>Pick a kind of question, or mix them up. Build the halving table underneath if it helps: press <b>Add a half-life</b> for each new row, and each box turns green when it's right. Then type your answer and press <b>Check</b>.</p>
+  <p class="smallprint">Your score counts a problem as solved when your first check is right. Using "Show answer" counts as a miss.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Generated problems</span><span class="score" id="p-score">0 of 0</span></div>
+    <div class="tabs" role="tablist" aria-label="Kind of question" id="p-tabs">
+      <button type="button" class="tab" role="tab" data-k="amount" aria-selected="true">Amount left</button>
+      <button type="button" class="tab" role="tab" data-k="fraction" aria-selected="false">Fraction left</button>
+      <button type="button" class="tab" role="tab" data-k="time" aria-selected="false">Find the time</button>
+      <button type="button" class="tab" role="tab" data-k="halflife" aria-selected="false">Find the half-life</button>
+      <button type="button" class="tab" role="tab" data-k="mix" aria-selected="false">Mix it up</button>
+    </div>
+    <p class="prob" id="p-prob" style="margin-top:16px"></p>
+    <div class="field">
+      <label for="p-in" id="p-label">Your answer</label>
+      <input type="text" id="p-in" autocomplete="off" spellcheck="false" placeholder="Type a number">
+      <span class="unit-tag" id="p-unit"></span>
+    </div>
+    <p class="typing-tip" id="p-tip"></p>
+    <div class="btn-row">
+      <button type="button" id="p-check">Check</button>
+      <button type="button" class="ghost" id="p-show">Show answer</button>
+      <button type="button" class="ghost" id="p-new">New problem</button>
+    </div>
+    <div class="fb" id="p-fb" aria-live="polite"></div>
+
+    <div class="scaf">
+      <div class="scaf-lab">Your halving table</div>
+      <div id="h-table"></div>
+      <div class="btn-row" style="margin-top:10px">
+        <button type="button" class="ghost small" id="h-add">Add a half-life</button>
+        <button type="button" class="ghost small" id="h-del">Remove last row</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Eight questions on what half-life means, halving tables, and working backward.</p>
+  <div class="card" id="quiz"></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">Unit 3 — Chemical Reactions</div>
+      <p>That's the last topic page in this unit. Head back to the unit page for all eight.</p>
+    </div>
+    <a href="/chemistry/reactions/">&#8592; Back to Unit 3</a>
+  </div>
+</section>
+
+<footer>
+  <p>Half-life with whole numbers of half-lives: halving tables, fractions left, and working backward to the time, the half-life or the starting amount. The practice problems are generated fresh every time.</p>
+  <p><a href="/chemistry/reactions/nuclear-reactions/">&#8592; Page 7: Nuclear Reactions</a> &nbsp;·&nbsp; <a href="/chemistry/reactions/">Unit 3 — Chemical Reactions</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function each(list, fn){ Array.prototype.forEach.call(list, fn); }
+function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+
+/*CORE-START*/
+/* =========================================================
+   core: isotopes, numbers, problems, judging (no DOM)
+   ========================================================= */
+/* [name, half-life, decimals shown, time unit, where it's used] ; real half-lives, rounded */
+var ISO = [
+  ['technetium-99m', 6.0, 1, 'hours',         'used for hospital imaging scans'],
+  ['iodine-123',     13,  0, 'hours',         'used for thyroid scans'],
+  ['fluorine-18',    110, 0, 'minutes',       'used in PET scans'],
+  ['nitrogen-13',    10,  0, 'minutes',       'used in PET heart scans'],
+  ['sodium-24',      15,  0, 'hours',         'used to trace leaks in underground pipes'],
+  ['thallium-201',   73,  0, 'hours',         'used in heart scans'],
+  ['iodine-131',     8.0, 1, 'days',          'used to treat thyroid disease'],
+  ['radon-222',      3.8, 1, 'days',          'the radioactive gas that seeps into basements'],
+  ['gold-198',       2.7, 1, 'days',          'used in cancer treatment'],
+  ['phosphorus-32',  14,  0, 'days',          'used in biology research'],
+  ['xenon-133',      5.2, 1, 'days',          'used in lung scans'],
+  ['chromium-51',    28,  0, 'days',          'used to tag red blood cells'],
+  ['iridium-192',    74,  0, 'days',          'used to inspect welds in pipelines'],
+  ['polonium-210',   138, 0, 'days',          'used in anti-static brushes'],
+  ['cobalt-60',      5.3, 1, 'years',         'used in cancer radiation therapy'],
+  ['hydrogen-3',     12.3,1, 'years',         'used in glow-in-the-dark exit signs'],
+  ['americium-241',  432, 0, 'years',         'used in smoke detectors'],
+  ['radium-226',     1600,0, 'years',         'once used to paint glowing watch dials'],
+  ['carbon-14',      5730,0, 'years',         'used to date ancient wood and bone'],
+  ['potassium-40',   1.3, 1, 'billion years', 'found in rocks, and even in bananas', 3]   // more half-lives than this would be older than Earth
+].map(function(r){ return { name:r[0], t:r[1], dp:r[2], unit:r[3], use:r[4], maxN:r[5] || 6 }; });
+
+/* amounts left over that keep every row of the table tidy */
+var NICE_END = [1, 1.5, 2, 2.5, 3, 4, 5, 6, 7.5, 10, 12, 12.5, 15, 20, 25];
+
+function commas(s){
+  var parts = String(s).split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return parts.join('.');
+}
+/* up to 4 decimals, trailing zeros dropped */
+function fmt(x){ return commas(String(Math.round(x * 10000) / 10000)); }
+/* a half-life as given: 6.0, 2.7, 5730 */
+function fmtHL(iso){ return commas(iso.t.toFixed(iso.dp)); }
+/* an elapsed time: n × half-life, rounded to the half-life's decimals, trailing zeros dropped */
+function fmtTime(x, iso){ return fmt(Number(x.toFixed(iso.dp))); }
+function pow2(n){ var p = 1; for(var i = 0; i < n; i++) p *= 2; return p; }
+function fracText(n){ return n === 0 ? '1' : '1/' + pow2(n); }
+function near(x, y){ return Math.abs(x - y) <= Math.max(1e-9, Math.abs(y) * 0.01); }
+
+/* '15', '15 mg', '1/8', '12.5%', '22,920 years' -> { v, pct, frac } or null */
+function parseAnswer(str){
+  var s = String(str || '').replace(/,/g,'').replace(/−/g,'-').trim();
+  var m = /^([+-]?\d*\.?\d+)\s*(?:\/\s*(\d*\.?\d+))?\s*(%)?\s*[a-zA-Zµμ. ]*$/.exec(s);
+  if(!m) return null;
+  var v = parseFloat(m[1]);
+  if(m[2] != null){ var d = parseFloat(m[2]); if(!d) return null; v = v / d; }
+  if(m[3]) v = v / 100;
+  return { v:v, pct:!!m[3], frac:m[2] != null };
+}
+
+/* types: amount, fraction, time, halflife, start */
+function makeProblem(type, avoidName){
+  var pool = ISO.filter(function(i){ return i.name !== avoidName; }), iso = pick(pool);
+  var maxN = (type === 'fraction' || type === 'time') ? 6 : 5;
+  var n = Math.random() < 0.1 ? 1 : 2 + Math.floor(Math.random() * (maxN - 1));
+  n = Math.min(n, iso.maxN);
+  var E, S, tries = 0;
+  do { E = pick(NICE_END); S = E * pow2(n); tries++; } while(S > 800 && tries < 50);
+  if(S > 800){ E = 1; S = pow2(n); }
+  var unit = /scan|thyroid|heart|blood|cancer|lung/.test(iso.use) ? 'mg' : 'g';
+  var form = type === 'time' && Math.random() < 0.5 ? 'frac' : 'amt';
+  var p = { type:type, iso:iso, n:n, S:S, E:E, unit:unit, form:form, elapsed:n * iso.t };
+  p.answer = { amount:E, fraction:1 / pow2(n), time:p.elapsed, halflife:iso.t, start:S }[type];
+  return p;
+}
+function problemText(p){
+  var nm = cap(p.iso.name), hl = fmtHL(p.iso) + ' ' + p.iso.unit, tt = fmtTime(p.elapsed, p.iso) + ' ' + p.iso.unit;
+  var amt = function(x){ return fmt(x) + ' ' + p.unit; };
+  switch(p.type){
+    case 'amount':   return nm + ', ' + p.iso.use + ', has a half-life of ' + hl + '. You start with <b>' + amt(p.S) + '</b>. How much is left after <b>' + tt + '</b>?';
+    case 'fraction': return nm + ' has a half-life of ' + hl + '. What fraction of a sample is left after <b>' + tt + '</b>?';
+    case 'time':     return p.form === 'frac'
+      ? 'Only <b>' + fracText(p.n) + '</b> of the ' + p.iso.name + ' in a sample is left. Its half-life is ' + hl + '. How much time has passed?'
+      : 'A <b>' + amt(p.S) + '</b> sample of ' + p.iso.name + ' (half-life ' + hl + ') decays until only <b>' + amt(p.E) + '</b> is left. How much time has passed?';
+    case 'halflife': return 'A <b>' + amt(p.S) + '</b> sample of ' + p.iso.name + ', ' + p.iso.use + ', decays to <b>' + amt(p.E) + '</b> in <b>' + tt + '</b>. What is its half-life?';
+    case 'start':    return nm + ' has a half-life of ' + hl + '. After <b>' + tt + '</b>, <b>' + amt(p.E) + '</b> of it is left. How much was there at the start?';
+  }
+}
+function answerUnit(p){
+  return { amount:p.unit, fraction:'of the sample', time:p.iso.unit, halflife:p.iso.unit, start:p.unit }[p.type];
+}
+function answerText(p){
+  if(p.type === 'fraction') return fracText(p.n);
+  if(p.type === 'time') return fmtTime(p.elapsed, p.iso) + ' ' + p.iso.unit;
+  if(p.type === 'halflife') return fmtHL(p.iso) + ' ' + p.iso.unit;
+  return fmt(p.answer) + ' ' + p.unit;
+}
+/* row k of the full halving table */
+function tableRow(p, k){
+  var useFrac = p.type === 'fraction' || (p.type === 'time' && p.form === 'frac');
+  return { k:k, time:k * p.iso.t, amt: useFrac ? 1 / pow2(k) : p.S / pow2(k), frac:useFrac };
+}
+
+/* judge a typed answer -> { ok, code } */
+function judge(p, got){
+  if(!got) return { ok:false, code:'unreadable' };
+  var v = got.v, n = p.n, T = p.iso.t, t = p.elapsed, S = p.S, E = p.E;
+  if(p.type === 'fraction' && !got.pct && !got.frac && v > 1 && near(v / 100, p.answer)) return { ok:true, code:'percentNoSign' };
+  if(near(v, p.answer)) return { ok:true, code:'ok' };
+  var c = 'other';
+  switch(p.type){
+    case 'amount':
+      if(v === 0) c = 'gone';
+      else if(n > 1 && near(v, S / n)) c = 'divN';
+      else if(n > 1 && near(v, S / (2 * n))) c = 'div2N';
+      else if(near(v, E * 2) || near(v, E / 2)) c = 'offByOne';
+      else if(near(v, S - E)) c = 'decayed';
+      break;
+    case 'fraction':
+      if(v === 0) c = 'gone';
+      else if(n > 1 && near(v, 1 / (2 * n))) c = 'div2N';
+      else if(n > 1 && near(v, 1 / n)) c = 'divN';
+      else if(near(v, 2 / pow2(n)) || near(v, 1 / pow2(n + 1))) c = 'offByOne';
+      else if(near(v, 1 - 1 / pow2(n))) c = 'decayed';
+      break;
+    case 'time':
+      if(near(v, n)) c = 'countOnly';
+      else if(near(v, (n - 1) * T) || near(v, (n + 1) * T)) c = 'offByOne';
+      else if(near(v, pow2(n) * T)) c = 'ratioAsCount';
+      break;
+    case 'halflife':
+      if(near(v, n)) c = 'countOnly';
+      else if(near(v, t * n)) c = 'multiplied';
+      else if(near(v, t / pow2(n))) c = 'ratioAsCount';
+      else if((n > 1 && near(v, t / (n - 1))) || near(v, t / (n + 1))) c = 'offByOne';
+      break;
+    case 'start':
+      if(n > 1 && near(v, E * 2 * n)) c = 'times2N';
+      else if(n > 1 && near(v, E * n)) c = 'timesN';
+      else if(near(v, E * pow2(n - 1)) || near(v, E * pow2(n + 1))) c = 'offByOne';
+      else if(near(v, E / pow2(n))) c = 'halvedInstead';
+      break;
+  }
+  return { ok:false, code:c };
+}
+/*CORE-END*/
+
+/* =========================================================
+   1. decay simulator
+   ========================================================= */
+var SIM = { n:100, alive:[], k:0, history:[] };
+function simBuild(){
+  var cols = SIM.n === 100 ? 10 : 40, rows = SIM.n / cols, gap = SIM.n === 100 ? 26 : 10, r = SIM.n === 100 ? 9.5 : 3.6;
+  var w = cols * gap, h = rows * gap, html = '<svg viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="' + SIM.n + ' radioactive nuclei">';
+  for(var i = 0; i < SIM.n; i++){
+    var x = (i % cols) * gap + gap / 2, y = Math.floor(i / cols) * gap + gap / 2;
+    html += '<circle id="d' + i + '" class="dot-a" cx="' + x + '" cy="' + y + '" r="' + r + '"/>';
+  }
+  el('sim-field').innerHTML = html + '</svg>';
+  SIM.alive = []; for(var j = 0; j < SIM.n; j++) SIM.alive.push(true);
+  SIM.k = 0; SIM.history = [SIM.n];
+  simRender();
+}
+function simLeft(){ return SIM.alive.filter(Boolean).length; }
+function simStep(){
+  if(SIM.k >= 8) return;
+  SIM.alive.forEach(function(a, i){
+    if(a && Math.random() < 0.5){ SIM.alive[i] = false; el('d' + i).setAttribute('class','dot-d'); }
+  });
+  SIM.k++;
+  SIM.history.push(simLeft());
+  simRender();
+}
+function simRender(){
+  var left = simLeft();
+  el('sim-read').innerHTML = left + ' <span style="font-size:.55em;color:var(--mute)">of ' + commas(SIM.n) + '</span><small>still radioactive after ' + SIM.k + ' half-li' + (SIM.k === 1 ? 'fe' : 'ves') + '</small>';
+  el('sim-log').innerHTML = SIM.history.map(function(c, k){
+    return '<tr><td class="n">' + k + '</td><td class="n">' + commas(c) + '</td><td class="n">' + fmt(SIM.n / pow2(k)) + '</td></tr>';
+  }).join('');
+  el('sim-go').disabled = SIM.k >= 8 || left === 0;
+}
+el('sim-go').addEventListener('click', simStep);
+el('sim-reset').addEventListener('click', simBuild);
+each(el('sim-tabs').querySelectorAll('.tab'), function(b){
+  b.addEventListener('click', function(){
+    SIM.n = Number(b.dataset.n);
+    each(el('sim-tabs').querySelectorAll('.tab'), function(o){ o.setAttribute('aria-selected', String(o === b)); });
+    simBuild();
+  });
+});
+
+/* =========================================================
+   2. worked examples
+   rows: [time, amount] strings ; '' = not filled in yet
+   ========================================================= */
+var WORKED = [
+  { title:'How much is left?', q:'An 80 g sample has a half-life of 10 minutes. How much is left after 30 minutes?',
+    head:['Half-lives','Time (min)','Amount (g)'],
+    steps:[
+      { rows:[['0','80']], t:'<b>Start the table.</b> Row 0 is time 0 and the whole 80 g sample.' },
+      { rows:[['0','80']], t:'<b>Count the half-lives.</b> 30 min ÷ 10 min = 3 half-lives. The table needs 3 more rows.' },
+      { rows:[['0','80'],['10','40']], t:'<b>One half-life.</b> Add 10 minutes. Half of 80 g is 40 g.' },
+      { rows:[['0','80'],['10','40'],['20','20']], t:'<b>Two half-lives.</b> Half of what’s left: 20 g. Not zero!' },
+      { rows:[['0','80'],['10','40'],['20','20'],['30','10']], done:true, t:'<b>Three half-lives.</b> 10 g is left after 30 minutes. That’s 1/8 of the 80 g you started with.' }
+    ] },
+  { title:'Find the half-life', q:'A 96 mg sample of iodine-123 decays to 12 mg in 39 hours. What is its half-life?',
+    head:['Half-lives','Time (h)','Amount (mg)'],
+    steps:[
+      { rows:[['0','96']], t:'<b>Start the table.</b> 96 mg at time 0. You don’t know the half-life yet, so the times have to wait.' },
+      { rows:[['0','96'],['?','48'],['?','24'],['?','12']], t:'<b>Halve until you reach 12 mg.</b> 96 → 48 → 24 → 12. That took 3 halvings, so 39 hours is 3 half-lives.' },
+      { rows:[['0','96'],['13','48'],['26','24'],['39','12']], done:true, t:'<b>Divide.</b> 39 hours ÷ 3 half-lives = <b>13 hours</b> per half-life. The times fill in at 13, 26 and 39 hours.' }
+    ] },
+  { title:'Find the time', q:'A piece of wood has 1/16 of the carbon-14 it had when it was alive. Carbon-14’s half-life is 5730 years. How old is the wood?',
+    head:['Half-lives','Time (years)','Fraction left'],
+    steps:[
+      { rows:[['0','1']], t:'<b>Start the table at 1,</b> the whole amount of carbon-14 the wood had when it was alive.' },
+      { rows:[['0','1'],['?','1/2'],['?','1/4'],['?','1/8'],['?','1/16']], t:'<b>Halve until you reach 1/16.</b> That’s 4 halvings, so 4 half-lives have passed.' },
+      { rows:[['0','1'],['5,730','1/2'],['11,460','1/4'],['17,190','1/8'],['22,920','1/16']], done:true, t:'<b>Multiply.</b> 4 × 5730 years = <b>22,920 years</b> old.' }
+    ] }
+];
+var wkIdx = 0, wkStep = 0;
+(function buildWkTabs(){
+  el('wk-tabs').innerHTML = WORKED.map(function(w,i){
+    return '<button type="button" class="tab" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '">' + w.title + '</button>';
+  }).join('');
+  each(el('wk-tabs').querySelectorAll('.tab'), function(b){
+    b.addEventListener('click', function(){
+      wkIdx = Number(b.dataset.i); wkStep = 0;
+      each(el('wk-tabs').querySelectorAll('.tab'), function(o){ o.setAttribute('aria-selected', String(o === b)); });
+      wkRender();
+    });
+  });
+})();
+function wkRender(){
+  var w = WORKED[wkIdx], s = w.steps[wkStep], prev = wkStep ? w.steps[wkStep - 1].rows.length : 1;
+  var html = '<table class="htable"><thead><tr>' + w.head.map(function(h){ return '<th>' + h.replace(/(\([^)]+\))/, '<span class="u">$1</span>') + '</th>'; }).join('') + '</tr></thead><tbody>';
+  s.rows.forEach(function(r, k){
+    var cls = s.done && k === s.rows.length - 1 ? 'done' : (k >= prev ? 'new' : '');
+    html += '<tr' + (cls ? ' class="' + cls + '"' : '') + '><td>' + k + '</td><td' + (r[0] === '?' ? ' class="pend"' : '') + '>' + r[0] + '</td><td>' + r[1] + '</td></tr>';
+  });
+  el('wk-table').innerHTML = html + '</tbody></table>';
+  el('wk-q').textContent = w.q;
+  el('wk-text').innerHTML = s.t;
+  el('wk-count').textContent = 'Step ' + (wkStep + 1) + ' of ' + w.steps.length;
+  el('wk-next').disabled = wkStep === w.steps.length - 1;
+  el('wk-prev').disabled = wkStep === 0;
+}
+el('wk-next').addEventListener('click', function(){ if(wkStep < WORKED[wkIdx].steps.length - 1){ wkStep++; wkRender(); } });
+el('wk-prev').addEventListener('click', function(){ if(wkStep > 0){ wkStep--; wkRender(); } });
+el('wk-restart').addEventListener('click', function(){ wkStep = 0; wkRender(); });
+
+/* =========================================================
+   3. practice
+   ========================================================= */
+var pScore = Score(el('p-score'));
+var pKind = 'amount';
+var P = null;
+var MIX = ['amount','fraction','time','halflife','start'];
+
+function pNew(){
+  var type = pKind === 'mix' ? pick(MIX) : pKind;
+  P = makeProblem(type, P ? P.iso.name : null);
+  P.scored = false; P.done = false; P.rows = 1;
+  el('p-prob').innerHTML = problemText(P);
+  el('p-in').value = '';
+  el('p-unit').textContent = answerUnit(P);
+  el('p-label').textContent = { amount:'Amount left', fraction:'Fraction left', time:'Time passed', halflife:'Half-life', start:'Starting amount' }[P.type];
+  el('p-in').placeholder = P.type === 'fraction' ? 'Type a fraction' : 'Type a number';
+  el('p-tip').innerHTML = P.type === 'fraction'
+    ? 'Type a fraction like <kbd>1/4</kbd>. A decimal or a percent works too.'
+    : 'Type just the number. The unit is already there.';
+  hideFb(el('p-fb'));
+  hBuild();
+}
+
+function hint(p, code){
+  var n = p.n, iso = p.iso, hl = fmtHL(iso) + ' ' + iso.unit, tt = fmtTime(p.elapsed, iso) + ' ' + iso.unit;
+  var count = '<span class="mono">' + tt + ' ÷ ' + hl + '</span>';
+  switch(code){
+    case 'unreadable': return 'Type a number' + (p.type === 'fraction' ? ', a fraction like 1/4, or a percent.' : '.');
+    case 'gone':     return '<b>It’s never all gone after a whole number of half-lives.</b> Each half-life removes half of what’s left, so something is always still there.';
+    case 'divN':     return '<b>You divided by the number of half-lives.</b> ' + n + ' half-lives doesn’t mean ÷ ' + n + '. It means halve ' + n + ' times, one row of your table per half-life.';
+    case 'div2N':    return '<b>Halving ' + n + ' times isn’t ÷ ' + (2 * n) + '.</b> It’s ÷ 2, ' + n + ' times in a row. Build the table one row at a time.';
+    case 'offByOne': return '<b>Count the half-lives again.</b> ' + (p.type === 'amount' || p.type === 'fraction' || p.type === 'start' ? count + '. ' : '') +
+      'Row 0 is the start and doesn’t count as a half-life.';
+    case 'decayed':  return '<b>That’s how much decayed.</b> The question asks how much is still left.';
+    case 'countOnly':return p.type === 'time'
+      ? '<b>That’s the number of half-lives, not the time.</b> Multiply it by the half-life, ' + hl + '.'
+      : '<b>That’s the number of half-lives.</b> Divide the total time, ' + tt + ', by it to get the length of one half-life.';
+    case 'ratioAsCount': return p.type === 'time'
+      ? '<b>Count halvings, not the size of the drop.</b> ' + (p.form === 'frac' ? fracText(n) + ' doesn’t mean ' + pow2(n) + ' half-lives.' : 'Going from ' + fmt(p.S) + ' to ' + fmt(p.E) + ' ' + p.unit + ' doesn’t take ' + pow2(n) + ' half-lives.') + ' Halve one row at a time and count the rows.'
+      : '<b>Count halvings, not the size of the drop.</b> Halve ' + fmt(p.S) + ' ' + p.unit + ' one row at a time until you reach ' + fmt(p.E) + ' ' + p.unit + ', and count the rows.';
+    case 'multiplied': return '<b>Divide, don’t multiply.</b> The total time is split evenly over the half-lives, so one half-life is shorter than the total.';
+    case 'times2N':  return '<b>Doubling ' + n + ' times isn’t × ' + (2 * n) + '.</b> It’s × 2, ' + n + ' times in a row. Work backward one row at a time.';
+    case 'timesN':   return '<b>Double, don’t multiply by ' + n + '.</b> Going backward one half-life doubles the amount. Do that once per half-life.';
+    case 'halvedInstead': return '<b>Going back in time, the amount gets bigger.</b> Double backward from ' + fmt(p.E) + ' ' + p.unit + ', once per half-life.';
+  }
+  switch(p.type){
+    case 'amount':   return '<b>Not quite.</b> Count the half-lives (' + count + '), then halve ' + fmt(p.S) + ' ' + p.unit + ' that many times.';
+    case 'fraction': return '<b>Not quite.</b> Count the half-lives (' + count + '), then halve 1 that many times: 1/2, 1/4, 1/8 …';
+    case 'time':     return '<b>Not quite.</b> Halve until you reach what’s left, count the halvings, then multiply by ' + hl + '.';
+    case 'halflife': return '<b>Not quite.</b> Halve ' + fmt(p.S) + ' ' + p.unit + ' until you reach ' + fmt(p.E) + ' ' + p.unit + '. Count the halvings, then divide ' + tt + ' by that count.';
+    case 'start':    return '<b>Not quite.</b> Count the half-lives (' + count + '), then double ' + fmt(p.E) + ' ' + p.unit + ' that many times.';
+  }
+}
+function workText(p){
+  var rows = [];
+  for(var k = 0; k <= p.n; k++) rows.push(tableRow(p, k));
+  var chain = rows.map(function(r){ return r.frac ? fracText(r.k) : fmt(r.amt); }).join(' → ');
+  var hl = fmtHL(p.iso), u = p.iso.unit;
+  var cnt = fmtTime(p.elapsed, p.iso) + ' ÷ ' + hl + ' = ' + p.n + ' half-li' + (p.n === 1 ? 'fe' : 'ves');
+  switch(p.type){
+    case 'amount':   return cnt + '. ' + chain + ' ' + p.unit + '.';
+    case 'fraction': return cnt + '. ' + chain + '.';
+    case 'time':     return chain + (p.form === 'frac' ? '' : ' ' + p.unit) + ' is ' + p.n + ' halvings. ' + p.n + ' × ' + hl + ' ' + u + ' = ' + fmtTime(p.elapsed, p.iso) + ' ' + u + '.';
+    case 'halflife': return chain + ' ' + p.unit + ' is ' + p.n + ' halvings. ' + fmtTime(p.elapsed, p.iso) + ' ' + u + ' ÷ ' + p.n + ' = ' + hl + ' ' + u + '.';
+    case 'start':    return cnt + '. Doubling backward: ' + rows.slice().reverse().map(function(r){ return fmt(r.amt); }).join(' → ') + ' ' + p.unit + '.';
+  }
+}
+function pCheck(){
+  if(!P || P.done) return;
+  var raw = el('p-in').value, fb = el('p-fb');
+  if(!raw.trim()){ setFb(fb,'hint','Type your answer first.'); return; }
+  var res = judge(P, parseAnswer(raw));
+  if(res.code === 'unreadable'){ setFb(fb,'hint', hint(P, 'unreadable')); return; }
+  if(!P.scored){ P.scored = true; pScore.add(res.ok); }
+  if(res.ok){
+    P.done = true;
+    setFb(fb,'good','<b>Correct: ' + answerText(P) + '.</b> <span class="mono">' + workText(P) + '</span>' +
+      (res.code === 'percentNoSign' ? ' Add a % sign when you answer as a percent.' : ''));
+    hFillAll();
+    return;
+  }
+  setFb(fb,'bad', hint(P, res.code));
+}
+function pShow(){
+  if(!P) return;
+  if(!P.scored){ P.scored = true; pScore.add(false); }
+  P.done = true;
+  el('p-in').value = P.type === 'fraction' ? fracText(P.n) : (P.type === 'time' ? fmtTime(P.elapsed, P.iso) : P.type === 'halflife' ? fmtHL(P.iso) : fmt(P.answer));
+  setFb(el('p-fb'),'hint','<b>Answer: ' + answerText(P) + '.</b> <span class="mono">' + workText(P) + '</span>');
+  hFillAll();
+}
+el('p-check').addEventListener('click', pCheck);
+el('p-show').addEventListener('click', pShow);
+el('p-new').addEventListener('click', pNew);
+el('p-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') pCheck(); });
+each(el('p-tabs').querySelectorAll('.tab'), function(b){
+  b.addEventListener('click', function(){
+    pKind = b.dataset.k;
+    each(el('p-tabs').querySelectorAll('.tab'), function(o){ o.setAttribute('aria-selected', String(o === b)); });
+    P = null;
+    pNew();
+  });
+});
+
+/* ---- the student's halving table ---- */
+function hBuild(){
+  var r0 = tableRow(P, 0), knownStart = P.type !== 'start';
+  var html = '<table class="htable"><thead><tr><th>Half-lives</th><th>Time <span class="u">(' + P.iso.unit + ')</span></th><th>' +
+    (r0.frac ? 'Fraction left' : 'Amount <span class="u">(' + P.unit + ')</span>') + '</th></tr></thead><tbody id="h-body">';
+  html += '<tr><td>0</td><td>0</td><td>' + (knownStart ? (r0.frac ? '1' : fmt(r0.amt)) : hInput(0, 'amt')) + '</td></tr>';
+  el('h-table').innerHTML = html + '</tbody></table>';
+  P.rows = 1;
+  hWire();
+  hButtons();
+}
+function hInput(k, col){
+  return '<input type="text" data-k="' + k + '" data-c="' + col + '" autocomplete="off" aria-label="' + (col === 'time' ? 'Time' : 'Amount') + ' after ' + k + ' half-lives">';
+}
+function hAdd(){
+  if(P.rows > 10) return;
+  var k = P.rows, tr = document.createElement('tr');
+  tr.innerHTML = '<td>' + k + '</td><td>' + hInput(k, 'time') + '</td><td>' + hInput(k, 'amt') + '</td>';
+  el('h-body').appendChild(tr);
+  P.rows++;
+  hWire();
+  hButtons();
+  tr.querySelector('input').focus();
+}
+function hDel(){
+  if(P.rows <= 1) return;
+  var body = el('h-body');
+  body.removeChild(body.lastChild);
+  P.rows--;
+  hButtons();
+}
+function hButtons(){
+  el('h-add').disabled = P.rows > 10;
+  el('h-del').disabled = P.rows <= 1;
+}
+function hJudge(inp){
+  var k = Number(inp.dataset.k), r = tableRow(P, k), got = parseAnswer(inp.value);
+  if(!inp.value.trim()) return null;
+  if(!got) return false;
+  return inp.dataset.c === 'time' ? near(got.v, r.time) : near(got.v, r.amt);
+}
+function hWire(){
+  each(el('h-table').querySelectorAll('input'), function(inp){
+    if(inp.dataset.wired) return;
+    inp.dataset.wired = '1';
+    inp.addEventListener('input', function(){
+      var ok = hJudge(inp);
+      inp.classList.remove('bad');
+      inp.classList.toggle('good', ok === true);
+    });
+    inp.addEventListener('blur', function(){
+      var ok = hJudge(inp);
+      inp.classList.toggle('bad', ok === false);
+    });
+    inp.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); hAdd(); } });
+  });
+}
+function hFillAll(){
+  while(P.rows <= P.n) hAdd();
+  each(el('h-table').querySelectorAll('input'), function(inp){
+    var r = tableRow(P, Number(inp.dataset.k));
+    if(hJudge(inp) !== true) inp.value = inp.dataset.c === 'time' ? fmtTime(r.time, P.iso) : (r.frac ? fracText(r.k) : fmt(r.amt));
+    inp.classList.remove('bad');
+    inp.classList.add('good');
+  });
+}
+el('h-add').addEventListener('click', hAdd);
+el('h-del').addEventListener('click', hDel);
+
+/* =========================================================
+   4. quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'What is the half-life of a radioactive isotope?',
+    opts:['Half the time it takes for the whole sample to decay','The time it takes for half of the radioactive nuclei in a sample to decay','The time it takes for a nucleus to lose half its protons','Half of the isotope’s mass number'],
+    ans:1,
+    why:'Half-life is the time for half of the nuclei to decay. It’s not half of the time to finish: the sample never finishes in a whole number of half-lives.' },
+  { stem:'A 40 g sample has a half-life of 5 days. How much is left after 10 days?',
+    opts:['0 g, because two halves make a whole','8 g','10 g','20 g'],
+    ans:2,
+    why:'10 days ÷ 5 days = 2 half-lives. 40 → 20 → 10 g. The second half-life only removes half of the 20 g that’s left. 8 g comes from dividing 40 by 5.' },
+  { stem:'What fraction of a sample is left after 3 half-lives?',
+    opts:['1/3','1/6','1/8','3/8'],
+    ans:2,
+    why:'1 → 1/2 → 1/4 → 1/8. Each half-life doubles the bottom of the fraction. 1/6 comes from ÷ 2 ÷ 3 instead of halving three times.' },
+  { stem:'Roughly what percent of a sample is left after 5 half-lives?',
+    opts:['About 50%','About 10%','About 3%','0%'],
+    ans:2,
+    why:'1/2, 1/4, 1/8, 1/16, 1/32. One thirty-second is 3.125%: small, but not zero.' },
+  { stem:'A 200 mg sample decays to 25 mg in 18 hours. What is the half-life?',
+    opts:['2.25 hours','6 hours','9 hours','54 hours'],
+    ans:1,
+    why:'200 → 100 → 50 → 25 is 3 halvings, so 18 hours ÷ 3 = 6 hours. 2.25 divides by 8, the size of the drop, instead of the number of halvings. 54 multiplies when it should divide.' },
+  { stem:'Cobalt-60 has a half-life of 5.3 years. A cobalt-60 source has 1/4 as much cobalt-60 as when it was new. How old is it?',
+    opts:['1.3 years','5.3 years','10.6 years','21.2 years'],
+    ans:2,
+    why:'1 → 1/2 → 1/4 is 2 halvings, so 2 × 5.3 = 10.6 years. 21.2 years uses the 4 in 1/4 as if it were the number of half-lives.' },
+  { stem:'Which statement about one single radioactive nucleus is true?',
+    opts:['It will decay after exactly one half-life','It has a 50% chance of decaying during the next half-life, but no one can say exactly when','Half of it decays every half-life','It can’t decay unless other nuclei are around'],
+    ans:1,
+    why:'Decay is random for any one nucleus. Half-life describes large groups: with huge numbers of nuclei, very close to half decay each half-life.' },
+  { stem:'A 10 g sample and a 100 g sample of the same isotope sit side by side. How do their half-lives compare?',
+    opts:['The 100 g sample’s half-life is 10 times longer','The 10 g sample’s half-life is longer','They’re the same','The 100 g sample’s half-life is shorter, because more nuclei decay at once'],
+    ans:2,
+    why:'Half-life belongs to the isotope, not the sample. Both lose half of what they have every half-life: the 100 g sample just loses more grams each time.' }
+];
+(function buildQuiz(){
+  var host = el('quiz'), html = '';
+  QUIZ.forEach(function(q,qi){
+    html += '<div class="q"><p class="stem">' + (qi+1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o,oi){ html += '<button type="button" class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  host.innerHTML = html;
+  each(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      each(el('q'+qi).querySelectorAll('.opt'), function(other,i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      setFb(el('qfb'+qi), oi === q.ans ? 'good' : 'bad', '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+    });
+  });
+})();
+
+/* boot */
+simBuild();
+wkRender();
+pNew();
+</script>
+</body>
+</html>

@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuclear Reactions — Balancing the Nucleus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#131E1D; --ink2:#3B4A48; --mute:#5F6D6B;
+  --wash:#E3E9E8; --card:#FBFCFB; --line:#C9D3D1; --line-soft:#E0E7E6;
+  --water:#12727F; --water-dk:#0B4E58; --water-lite:#BFDEE2;
+  --brass:#9A6E22; --brass-lite:#F5E9CF;
+  --ok:#26694A; --ok-bg:#E4F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  --display:"Instrument Serif",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(227,233,232,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:64px 0 44px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--water-dk)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,7.4vw,74px);line-height:1;margin:16px 0 0;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--water-dk)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:47ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: americium decay and its two tallies */
+.sig-readout{margin:38px 0 0;padding:24px 26px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.sig-calc{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.sig-grid{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;align-items:center}
+.sig-eq{font-family:var(--mono);font-size:clamp(26px,5.6vw,40px);font-weight:500;line-height:1.5;letter-spacing:-.02em;margin-top:10px}
+.sig-rows{margin-top:12px;display:grid;gap:6px;max-width:400px}
+.sig-r{display:grid;grid-template-columns:4.2em 1fr auto;align-items:baseline;gap:10px;font-family:var(--mono);font-size:clamp(16px,3.2vw,21px);font-weight:500;font-variant-numeric:tabular-nums;border-bottom:1px dashed var(--line);padding-bottom:4px;color:var(--ok)}
+.sig-r .tg{font-size:12px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.sig-r .lab{font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2)}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px}
+.sig-note b{color:var(--water-dk);font-weight:600}
+.sig-fig svg{display:block;width:100%;height:auto}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--water);color:var(--water-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--water-dk);background:var(--water-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.4vw,40px);line-height:1.08;margin:0;letter-spacing:-.01em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--water-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.note{border-left:3px solid var(--brass);background:var(--brass-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:24px 0}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--water);border-radius:0 4px 4px 0;padding:18px 20px;min-width:0}
+.rulecard .op{font-family:var(--display);font-size:30px;line-height:1;color:var(--water-dk)}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard.miss{border-left-color:var(--no)}
+.rulecard.miss h4{margin-top:0}
+.rulecard .eqline{font-size:17px;padding:8px 6px;margin:8px 0}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.setup{font-size:15px;color:var(--ink2);margin:0 0 14px}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F6F8F7;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--water-dk);border-color:var(--water-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--water)}
+button[disabled]{opacity:.45;cursor:default}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2.5px solid var(--water);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1B4E36}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--water);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb .mono{font-size:15px}
+.fb .work{display:block;font-family:var(--mono);font-size:14.5px;margin-top:6px}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab[aria-selected="true"]{background:var(--ink);color:#F6F8F7;border-color:var(--ink)}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft)}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px;line-height:1.9}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.7}
+.opt:hover{border-color:var(--water);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.94}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#EDF2F1;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#C3D0CE}
+.next .nt{font-family:var(--display);font-size:26px;color:#fff;margin:0 0 4px}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F6F8F7;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--water-lite)}
+
+/* ---------- nuclear notation ---------- */
+/* mass number stacked over atomic number, right-aligned, in front of the symbol */
+.nw{white-space:nowrap}
+.nuc{display:inline-flex;flex-direction:column;align-items:flex-end;font-size:.6em;line-height:1.04;vertical-align:.56em;margin:0 .08em 0 .12em;font-variant-numeric:tabular-nums}
+.co{color:var(--water-dk);margin-right:.18em}
+.arr{margin:0 .35em}
+.plus{color:var(--mute);margin:0 .3em}
+.eqline{font-family:var(--mono);font-size:clamp(18px,3.4vw,23px);font-weight:500;text-align:center;padding:14px 8px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;margin:12px 0;line-height:2}
+.eqlab{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:12px 0 -6px}
+.eqlab.no{color:var(--no)}
+.eqlab.yes{color:var(--ok)}
+.inl{font-family:var(--mono);font-size:1.05em;white-space:nowrap}
+
+/* anatomy of a nuclear symbol */
+.anat{display:grid;grid-template-columns:auto minmax(0,1fr);gap:26px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px 24px;margin:22px 0}
+.anat-sym{font-family:var(--mono);font-size:clamp(64px,13vw,96px);font-weight:500;line-height:1.5;padding:0 6px}
+.anat-sym .nuc span:first-child{color:var(--water-dk)}
+.anat-sym .nuc span:last-child{color:var(--brass)}
+.anat dl{margin:0;display:grid;gap:12px}
+.anat dt{font-family:var(--mono);font-size:12px;letter-spacing:.09em;text-transform:uppercase;font-weight:600}
+.anat dt.top{color:var(--water-dk)}
+.anat dt.bot{color:var(--brass)}
+.anat dd{margin:2px 0 0;font-size:15.5px;color:var(--ink2)}
+
+/* particle cards */
+.keygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:22px 0}
+.key{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 16px;min-width:0}
+.key .k{font-family:var(--mono);font-size:30px;font-weight:500;line-height:1.5}
+.key .kn{font-weight:600;font-size:15.5px;margin-top:2px}
+.key p{margin:6px 0 0;font-size:15px;color:var(--ink2)}
+.key .ks{font-family:var(--mono);font-size:13px;margin-top:8px;color:var(--water-dk)}
+
+/* drills */
+.drill-big{font-family:var(--mono);font-size:clamp(34px,7vw,50px);font-weight:500;line-height:1.6}
+.drill-name{font-size:clamp(22px,4vw,28px);font-family:var(--display);line-height:1.2}
+.yn{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.yn button{min-width:130px}
+.yn button.sym{font-size:22px;min-width:84px;padding:4px 12px;line-height:1.6}
+.yn button.picked-yes{background:var(--ok);border-color:var(--ok);color:#fff}
+.yn button.picked-no{background:var(--no);border-color:var(--no);color:#fff}
+.yn button.right-one{background:var(--ok-bg);color:var(--ok);border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.yn button[disabled].right-one,.yn button[disabled].picked-yes,.yn button[disabled].picked-no{opacity:1}
+
+/* the fill-in blank: top and bottom boxes stacked, symbol box beside them */
+.neq{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 4px;padding:18px 10px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;margin-top:12px;font-family:var(--mono);font-size:clamp(22px,4vw,28px);font-weight:500;line-height:2}
+.neq .tm{white-space:nowrap}
+.blank{display:inline-flex;align-items:center;gap:4px;vertical-align:middle;margin:0 2px}
+.blank .bn{display:flex;flex-direction:column;gap:4px}
+.blank input{font-family:var(--mono);font-variant-numeric:tabular-nums;border:1px solid #93A5A2;border-radius:3px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(19,30,29,.12);margin:0}
+.blank .bt,.blank .bb{width:64px;height:32px;font-size:16px;padding:2px 6px;text-align:right}
+.blank .bs{width:70px;height:44px;font-size:22px;padding:2px 8px}
+.blank input.good{border-color:var(--ok);background:var(--ok-bg)}
+.blank input.bad{border-color:var(--no);background:var(--no-bg)}
+.blank input::placeholder{font-size:12px}
+.bc{width:52px;height:40px;font-family:var(--mono);font-size:20px;text-align:center;border:1px solid #93A5A2;border-radius:3px;box-shadow:inset 0 1px 3px rgba(19,30,29,.12);margin-right:.2em;vertical-align:middle}
+.bc.good{border-color:var(--ok);background:var(--ok-bg)}
+.bc.bad{border-color:var(--no);background:var(--no-bg)}
+.bw{display:inline-flex;flex-direction:column;align-items:center;gap:2px;vertical-align:middle}
+.bw .cap{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);line-height:1.2}
+.rx-kind{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--water-dk)}
+.prompt{font-size:17px;margin:4px 0 0}
+.prompt b{font-weight:600}
+
+/* top/bottom ledger used by the worked examples */
+.ledger{display:grid;gap:6px;margin-top:14px}
+.lrow{display:grid;grid-template-columns:7.5em minmax(0,1fr) auto;gap:12px;align-items:baseline;padding:7px 12px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.lrow .ll{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute)}
+.lrow .lx{font-size:16.5px}
+.lrow .ls{font-size:12.5px;color:var(--mute);white-space:nowrap}
+.lrow.ok{background:var(--ok-bg);border-color:#C3DCCB}
+.lrow.ok .ls{color:var(--ok)}
+.unk{color:var(--brass);font-weight:600}
+.hlv{background:var(--brass-lite);box-shadow:inset 0 -2px 0 var(--brass);padding:0 2px;border-radius:2px}
+.wk-count{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto}
+.wk-text{min-height:5.2em}
+
+/* figures */
+.figgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:24px 0}
+.figcard{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px 20px;min-width:0}
+.figcard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:10px 0 6px}
+.figcard p{margin:6px 0 0;font-size:15px;color:var(--ink2)}
+.figcard .eqline{font-size:clamp(15px,2.6vw,18px);padding:8px 4px;margin:10px 0 0}
+.figcard svg{display:block;width:100%;height:auto}
+.figcard .f-t{font-size:13px}
+figure.pen{margin:22px 0;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:14px 12px 8px}
+figure.pen svg{display:block;width:100%;height:auto}
+figure.pen figcaption{font-size:14px;color:var(--mute);margin-top:6px;text-align:center}
+.np{fill:var(--brass);stroke:#fff;stroke-width:1.2}
+.nn{fill:#9FB0AD;stroke:#fff;stroke-width:1.2}
+.f-t{font-family:var(--mono);font-size:11px;fill:var(--ink)}
+.f-tc{text-anchor:middle;dominant-baseline:central}
+.f-line{stroke:var(--ink2);stroke-width:1.6;fill:none}
+.f-dash{stroke:var(--mute);stroke-width:1.2;stroke-dasharray:3 4;fill:none}
+.f-big{fill:var(--brass-lite);stroke:var(--brass);stroke-width:1.5}
+.f-mid{fill:#E4EEEF;stroke:var(--water);stroke-width:1.5}
+
+.typing-tip{font-size:14px;color:var(--mute);margin:10px 0 0}
+.typing-tip kbd{font-family:var(--mono);font-size:13px;color:var(--ink2);background:#fff;border:1px solid var(--line);border-radius:3px;padding:1px 5px}
+button.mini{font-size:15px;padding:2px 10px;margin-left:4px;vertical-align:baseline}
+::placeholder{font-family:var(--body);font-style:italic;color:#7F8D8B;opacity:1}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:16px}
+  .sig-readout{padding:20px 18px}
+  .sig-grid{grid-template-columns:1fr}
+  .sig-fig{max-width:250px;margin:0 auto}
+  .anat{grid-template-columns:1fr;gap:12px}
+  .anat-sym{text-align:center}
+  .lrow{grid-template-columns:1fr auto}
+  .lrow .ll{grid-column:1 / -1}
+  .neq{padding:14px 4px;gap:10px 2px}
+  .yn button{flex:1 1 130px;min-width:0}
+  .yn button.sym{flex:1 1 70px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Nuclear Reactions</span>
+    <span class="bar-sub">Radioactivity · decay particles · balancing nuclear equations</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 3 · Nuclear reactions</div>
+  <h1>The element can change. The <em>numbers</em> can't.</h1>
+  <p class="lede">Every reaction so far kept its atoms: whatever went in came out, just with new partners. A nuclear reaction happens inside the nucleus, so one element can become another. What still has to balance is two numbers: the mass number on top and the atomic number on the bottom.</p>
+
+  <div class="sig-readout">
+    <div class="sig-grid">
+      <div>
+        <div class="sig-calc">Inside a smoke detector · nuclear bookkeeping</div>
+        <div class="sig-eq" data-nq="Am241 -> Np237 + a"></div>
+        <div class="sig-rows">
+          <div class="sig-r"><span class="lab">Top</span><span>241 → 237 + 4</span><span class="tg">241 = 241</span></div>
+          <div class="sig-r"><span class="lab">Bottom</span><span>95 → 93 + 2</span><span class="tg">95 = 95</span></div>
+        </div>
+        <div class="sig-note">The americium nucleus throws out an alpha particle. <b>95 protons drop to 93, so americium becomes neptunium.</b> Both totals still match.</div>
+      </div>
+      <div class="sig-fig" aria-hidden="true">
+        <svg viewBox="0 0 280 200">
+          <circle class="nn" cx="80.8" cy="77.7" r="7.2"/><circle class="nn" cx="96" cy="77.7" r="7.2"/><circle class="np" cx="111.2" cy="77.7" r="7.2"/>
+          <circle class="np" cx="73.2" cy="90.8" r="7.2"/><circle class="nn" cx="88.4" cy="90.8" r="7.2"/><circle class="nn" cx="103.6" cy="90.8" r="7.2"/><circle class="np" cx="118.8" cy="90.8" r="7.2"/>
+          <circle class="nn" cx="65.6" cy="104" r="7.2"/><circle class="nn" cx="80.8" cy="104" r="7.2"/><circle class="np" cx="96" cy="104" r="7.2"/><circle class="np" cx="111.2" cy="104" r="7.2"/><circle class="nn" cx="126.4" cy="104" r="7.2"/>
+          <circle class="nn" cx="73.2" cy="117.2" r="7.2"/><circle class="np" cx="88.4" cy="117.2" r="7.2"/><circle class="nn" cx="103.6" cy="117.2" r="7.2"/><circle class="np" cx="118.8" cy="117.2" r="7.2"/>
+          <circle class="nn" cx="80.8" cy="130.3" r="7.2"/><circle class="np" cx="96" cy="130.3" r="7.2"/><circle class="nn" cx="111.2" cy="130.3" r="7.2"/>
+          <line class="f-dash" x1="140" y1="88" x2="190" y2="64"/>
+          <line class="f-dash" x1="138" y1="102" x2="192" y2="80"/>
+          <circle class="np" cx="214" cy="50" r="7.2"/><circle class="nn" cx="228" cy="50" r="7.2"/>
+          <circle class="nn" cx="214" cy="64" r="7.2"/><circle class="np" cx="228" cy="64" r="7.2"/>
+          <text class="f-t f-tc" x="221" y="90">alpha particle</text>
+          <text class="f-t f-tc" x="96" y="156">neptunium-237</text>
+          <text class="f-t f-tc" x="96" y="171" style="fill:var(--mute)">(was americium-241)</text>
+          <circle class="np" cx="72" cy="192" r="5"/><text class="f-t" x="81" y="196">proton</text>
+          <circle class="nn" cx="150" cy="192" r="5"/><text class="f-t" x="159" y="196">neutron</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#what">What radioactivity is</a>
+  <a href="#symbols">Nuclear symbols</a>
+  <a href="#particles">The particles</a>
+  <a href="#balance">Balancing</a>
+  <a href="#fission">Fission &amp; fusion</a>
+  <a href="#solve">Missing pieces</a>
+  <a href="#watch">Watch-outs</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ WHAT ============ -->
+<section id="what">
+  <div class="sec-head"><span class="tasktag">The basics</span><h2>What radioactivity is</h2></div>
+  <p>Every nucleus is a tight bundle of protons and neutrons. Most combinations hold together forever. Some don't: they have the wrong mix of protons and neutrons, or just too many of both. Those nuclei are <b>unstable</b>.</p>
+  <p>Sooner or later, an unstable nucleus settles down by throwing out a particle, a burst of energy, or both. That's <b>radioactive decay</b>, and whatever comes flying out is <b>radiation</b>. Nothing has to start it. Heating the sample, dissolving it or bonding it to something else won't speed it up or slow it down, because none of those reach the nucleus.</p>
+
+  <div class="rulebox">
+    <div class="rulecard">
+      <div class="op">Chemical</div>
+      <h4>Electrons and bonds</h4>
+      <p>Atoms share or trade electrons and bond to new partners. Every atom comes through unchanged, so the same elements appear on both sides. You balance by counting atoms.</p>
+    </div>
+    <div class="rulecard">
+      <div class="op">Nuclear</div>
+      <h4>Inside the nucleus</h4>
+      <p>Protons and neutrons are lost, gained or changed, so the element itself can change. The energy released is enormous by comparison. You balance by totaling mass numbers and atomic numbers.</p>
+    </div>
+  </div>
+  <p>The nucleus you start with is the <b>parent</b>. The new nucleus it turns into is the <b>daughter</b>.</p>
+
+  <h3>How far radiation gets</h3>
+  <p>The three most common kinds of radiation are stopped by different materials. The heavier and more charged the particle, the sooner it's stopped.</p>
+  <figure class="pen">
+    <svg viewBox="0 0 600 205" role="img" aria-label="Alpha radiation is stopped by paper, beta by thin aluminum, and gamma only by thick lead or concrete">
+      <defs>
+        <marker id="ah-pen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3B4A48"/></marker>
+      </defs>
+      <rect x="236" y="16" width="5" height="160" fill="#fff" stroke="#9FB0AD"/>
+      <rect x="356" y="16" width="12" height="160" fill="#C9D3D1"/>
+      <rect x="478" y="16" width="36" height="160" fill="#5F6D6B"/>
+      <text class="f-t" x="8" y="44" style="font-size:13px">α alpha</text>
+      <text class="f-t" x="8" y="99" style="font-size:13px">β beta</text>
+      <text class="f-t" x="8" y="154" style="font-size:13px">γ gamma</text>
+      <line class="f-line" x1="92" y1="40" x2="231" y2="40" marker-end="url(#ah-pen)"/>
+      <line class="f-line" x1="92" y1="95" x2="351" y2="95" marker-end="url(#ah-pen)"/>
+      <polyline class="f-line" marker-end="url(#ah-pen)" points="92,150 95,152.5 98,154.5 101,155.8 104,155.9 107,155 110,153.2 113,150.8 116,148.3 119,146.1 122,144.5 125,144 128,144.5 131,146.1 134,148.3 137,150.9 140,153.3 143,155.1 146,155.9 149,155.8 152,154.5 155,152.5 158,150 161,147.5 164,145.4 167,144.2 170,144.1 173,145 176,146.8 179,149.2 182,151.7 185,154 188,155.5 191,156 194,155.4 197,153.9 200,151.7 203,149.1 206,146.7 209,144.9 212,144.1 215,144.3 218,145.5 221,147.5 224,150 227,152.5 230,154.6 233,155.8 236,155.9 239,155 242,153.2 245,150.8 248,148.3 251,146 254,144.5 257,144 260,144.6 263,146.1 266,148.4 269,150.9 272,153.3 275,155.1 278,155.9 281,155.7 284,154.5 287,152.4 290,149.9 293,147.4 296,145.4 299,144.2 302,144.1 305,145 308,146.8 311,149.2 314,151.8 317,154 320,155.5 323,156 326,155.4 329,153.9 332,151.6 335,149.1 338,146.7 341,144.9 344,144 347,144.3 350,145.5 353,147.6 356,150.1 359,152.6 362,154.6 365,155.8 368,155.9 371,155 374,153.2 377,150.8 380,148.2 383,146 386,144.5 389,144 392,144.6 395,146.2 398,148.4 401,151 404,153.3 407,155.1 410,156 413,155.7 416,154.5 419,152.4 422,149.9 425,147.4 428,145.4 431,144.2 434,144.1 437,145 440,146.9 443,149.3 446,151.8 449,154 452,155.5 455,156 458,155.4 461,153.8 464,151.6 467,149 470,150"/>
+      <text class="f-t f-tc" x="238" y="192">paper</text>
+      <text class="f-t f-tc" x="362" y="192">thin aluminum</text>
+      <text class="f-t f-tc" x="496" y="192">thick lead</text>
+    </svg>
+    <figcaption>Alpha particles can't get through a sheet of paper or the outer layer of your skin. Gamma rays pass through both and need thick lead or concrete.</figcaption>
+  </figure>
+
+  <div class="note"><b>No state symbols.</b> Nuclear equations don't carry (s), (l), (g) or (aq). The nucleus doesn't care whether its atom is in a solid, a liquid or a gas, so this is the one place in Unit 3 where states drop out.</div>
+</section>
+
+<!-- ============ SYMBOLS ============ -->
+<section id="symbols">
+  <div class="sec-head"><span class="tasktag">Isotope notation</span><h2>Reading a nuclear symbol</h2></div>
+  <p>In a nuclear equation, every nucleus and every particle is written with two numbers stacked in front of its symbol.</p>
+
+  <div class="anat">
+    <div class="anat-sym" data-nt="[[U238]]"></div>
+    <dl>
+      <div><dt class="top">Top · mass number</dt><dd>Protons plus neutrons. This uranium has 238 of them in total.</dd></div>
+      <div><dt class="bot">Bottom · atomic number</dt><dd>Protons only. This is what makes it uranium: every atom with 92 protons is uranium.</dd></div>
+      <div><dt>Neutrons · top minus bottom</dt><dd>238 − 92 = 146 neutrons.</dd></div>
+    </dl>
+  </div>
+
+  <p>An isotope is named by its element and its mass number: <b>uranium-238</b> is the symbol above. The name gives you the top number. Get the bottom number from your periodic table.</p>
+  <div class="note"><b>The top number is a count, not the atomic mass.</b> Your periodic table lists uranium's average atomic mass, 238.03. A nuclear symbol uses the whole-number mass number of one isotope: 238, or 235, or 234.</div>
+
+  <div class="card">
+    <div class="card-label"><span>Write the symbol</span><span class="score" id="y-score">0 of 0</span></div>
+    <p class="setup">Use your periodic table. Type the top number, the bottom number and the element symbol for:</p>
+    <div class="drill-name" id="y-name"></div>
+    <div class="neq" id="y-eq"></div>
+    <p class="typing-tip">Capitalize only the first letter of the symbol, like <kbd>Rn</kbd>.</p>
+    <div class="btn-row">
+      <button type="button" id="y-check">Check</button>
+      <button type="button" class="ghost" id="y-new">New isotope</button>
+    </div>
+    <div class="fb" id="y-fb" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ============ PARTICLES ============ -->
+<section id="particles">
+  <div class="sec-head"><span class="tasktag">Reference chart</span><h2>The particles</h2></div>
+  <p>Six particles show up in nuclear equations. Each one gets a top and a bottom number, just like a nucleus. For a particle, the bottom number is its charge. That's what lets one rule balance every equation.</p>
+
+  <div class="keygrid">
+    <div class="key"><div class="k" data-nt="[[a]]"></div><div class="kn">Alpha particle</div><p>A helium nucleus: 2 protons and 2 neutrons. Sometimes written with α instead of He.</p><div class="ks">Released: top −4, bottom −2</div></div>
+    <div class="key"><div class="k" data-nt="[[b]]"></div><div class="kn">Beta particle</div><p>A fast electron. It forms when a neutron in the nucleus turns into a proton. Sometimes written with β.</p><div class="ks">Released: bottom +1</div></div>
+    <div class="key"><div class="k" data-nt="[[b+]]"></div><div class="kn">Positron</div><p>Like an electron, but with a +1 charge. It forms when a proton turns into a neutron.</p><div class="ks">Released: bottom −1</div></div>
+    <div class="key"><div class="k" data-nt="[[p]]"></div><div class="kn">Proton</div><p>A hydrogen-1 nucleus. Also written with p instead of H.</p><div class="ks">Released: top −1, bottom −1</div></div>
+    <div class="key"><div class="k" data-nt="[[n]]"></div><div class="kn">Neutron</div><p>No charge, so its bottom number is 0. Neutrons start fission and come out of it.</p><div class="ks">Released: top −1</div></div>
+    <div class="key"><div class="k" data-nt="[[g]]"></div><div class="kn">Gamma ray</div><p>High-energy light. No mass and no charge, so it changes neither number.</p><div class="ks">Released: no change, energy leaves</div></div>
+  </div>
+
+  <div class="note"><b>Why does losing a beta particle raise the atomic number?</b> The electron doesn't come from around the atom. A neutron inside the nucleus turns into a proton and an electron, and the electron is thrown out. One more proton means the atomic number goes up by 1. In the bookkeeping, a parent with a bottom number of 6 gives 6 = Z + (−1), so Z = 7.</div>
+
+  <div class="card">
+    <div class="card-label"><span>Know your particles</span><span class="score" id="t-score">0 of 0</span></div>
+    <p class="setup" id="t-ask"></p>
+    <div id="t-show"></div>
+    <div class="yn" id="t-opts"></div>
+    <div class="btn-row"><button type="button" class="ghost" id="t-new">Next</button></div>
+    <div class="fb" id="t-fb" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ============ BALANCE ============ -->
+<section id="balance">
+  <div class="sec-head"><span class="tasktag">Two rules</span><h2>Balancing a nuclear equation</h2></div>
+  <p>Total the top numbers on each side of the arrow. Then total the bottom numbers. In every nuclear reaction, both totals match.</p>
+  <div class="rulebox">
+    <div class="rulecard"><div class="op">Top</div><h4>Mass numbers balance</h4><p>Protons plus neutrons going in equals protons plus neutrons coming out. In the smoke detector, 241 = 237 + 4.</p></div>
+    <div class="rulecard"><div class="op">Bottom</div><h4>Atomic numbers balance</h4><p>The total charge stays the same. A −1 counts as −1: in carbon-14's decay, 6 = 7 + (−1).</p></div>
+  </div>
+  <p>That's all you need to fill in a missing piece. The missing piece has two unknown numbers, and you have two rules to find them.</p>
+  <ol>
+    <li><b>Set it up.</b> Write the equation with a blank for the missing piece.</li>
+    <li><b>Top.</b> Total the top numbers on each side. The missing top number is whatever makes the two sides match.</li>
+    <li><b>Bottom.</b> Do the same with the bottom numbers. Watch the signs on −1 and +1.</li>
+    <li><b>Name it.</b> For a nucleus, look up the bottom number on your periodic table. For a particle, match both numbers to the chart above.</li>
+  </ol>
+  <p>A number in front, like <span class="inl" data-nt="[[2n]]"></span>, means two of that particle. It multiplies both the top and the bottom number.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Worked example</span><span class="wk-count" id="wk-count"></span></div>
+    <div class="tabs" role="tablist" aria-label="Choose a worked example" id="wk-tabs"></div>
+    <div class="neq" id="wk-eq"></div>
+    <div class="ledger" id="wk-ledger"></div>
+    <div class="fb hint show wk-text" id="wk-text" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="wk-next">Next step</button>
+      <button type="button" class="ghost" id="wk-prev">Back</button>
+      <button type="button" class="ghost" id="wk-restart">Start over</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FISSION & FUSION ============ -->
+<section id="fission">
+  <div class="sec-head"><span class="tasktag">Splitting and joining</span><h2>Fission, fusion and bombardment</h2></div>
+  <p>Decay happens on its own. These reactions don't: something has to hit the nucleus, or two nuclei have to be forced together. The bookkeeping is exactly the same.</p>
+
+  <div class="figgrid">
+    <div class="figcard">
+      <svg viewBox="0 0 300 124" role="img" aria-label="A neutron hits a uranium-235 nucleus, which splits into xenon-140, strontium-94 and two neutrons">
+        <defs><marker id="ah-fi" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3B4A48"/></marker></defs>
+        <circle class="nn" cx="14" cy="62" r="6"/><text class="f-t f-tc" x="14" y="46">n</text>
+        <line class="f-line" x1="24" y1="62" x2="50" y2="62" marker-end="url(#ah-fi)"/>
+        <circle class="f-big" cx="90" cy="62" r="35"/><text class="f-t f-tc" x="90" y="62">U-235</text>
+        <line class="f-line" x1="131" y1="62" x2="160" y2="62" marker-end="url(#ah-fi)"/>
+        <circle class="f-mid" cx="196" cy="33" r="28"/><text class="f-t f-tc" x="196" y="33">Xe-140</text>
+        <circle class="f-mid" cx="196" cy="94" r="22"/><text class="f-t f-tc" x="196" y="94">Sr-94</text>
+        <line class="f-line" x1="224" y1="56" x2="252" y2="44" marker-end="url(#ah-fi)"/>
+        <line class="f-line" x1="224" y1="72" x2="252" y2="84" marker-end="url(#ah-fi)"/>
+        <circle class="nn" cx="262" cy="40" r="6"/><circle class="nn" cx="262" cy="88" r="6"/>
+        <text class="f-t f-tc" x="278" y="40">n</text><text class="f-t f-tc" x="278" y="88">n</text>
+      </svg>
+      <h4>Fission: a heavy nucleus splits</h4>
+      <div class="eqline" data-nq="U235 + n -> Xe140 + Sr94 + 2n"></div>
+      <p>A neutron hits uranium-235, and it splits into two medium-sized nuclei, a few neutrons and a lot of energy. Those new neutrons can split more uranium nuclei, which keeps the reaction going. Nuclear power plants run on it.</p>
+    </div>
+    <div class="figcard">
+      <svg viewBox="0 0 300 124" role="img" aria-label="Two hydrogen-2 nuclei join into helium-3 and give off a neutron">
+        <defs><marker id="ah-fu" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3B4A48"/></marker></defs>
+        <circle class="f-mid" cx="36" cy="36" r="17"/><text class="f-t f-tc" x="36" y="36">H-2</text>
+        <circle class="f-mid" cx="36" cy="90" r="17"/><text class="f-t f-tc" x="36" y="90">H-2</text>
+        <line class="f-line" x1="58" y1="42" x2="122" y2="58" marker-end="url(#ah-fu)"/>
+        <line class="f-line" x1="58" y1="84" x2="122" y2="68" marker-end="url(#ah-fu)"/>
+        <circle class="f-big" cx="154" cy="62" r="24"/><text class="f-t f-tc" x="154" y="62">He-3</text>
+        <line class="f-line" x1="184" y1="62" x2="234" y2="62" marker-end="url(#ah-fu)"/>
+        <circle class="nn" cx="246" cy="62" r="6"/><text class="f-t f-tc" x="246" y="46">n</text>
+      </svg>
+      <h4>Fusion: light nuclei join</h4>
+      <div class="eqline" data-nq="H2 + H2 -> He3 + n"></div>
+      <p>Two very light nuclei are forced together and become one heavier nucleus, giving off a lot of energy. The Sun shines because hydrogen nuclei in its core fuse into helium.</p>
+    </div>
+    <div class="figcard">
+      <h4 style="margin-top:0">Bombardment: hit it with a particle</h4>
+      <div class="eqline" data-nq="N14 + a -> O17 + p"></div>
+      <p>Fire a particle at a nucleus and it can stick, knock something loose, or both. In 1919 Ernest Rutherford aimed alpha particles at nitrogen and got oxygen and a proton. It was the first time anyone turned one element into another on purpose. Hospitals use the same idea to make the radioactive isotopes for medical scans.</p>
+    </div>
+  </div>
+
+  <div class="note"><b>Count the coefficient.</b> In the fission equation, <span class="inl" data-nt="[[2n]]"></span> means two neutrons. The top total on the right is 140 + 94 + 2 × 1 = 236, which matches 235 + 1 on the left. Forgetting the 2 is the most common fission mistake.</div>
+</section>
+
+<!-- ============ SOLVE ============ -->
+<section id="solve">
+  <div class="sec-head"><span class="tasktag">Practice</span><h2>Solve for the missing piece</h2></div>
+  <p>Every problem is a real nuclear reaction. Fill in each blank with its top number, bottom number and symbol, then press <b>Check</b>. Keep your periodic table handy.</p>
+  <ul>
+    <li><b>Decay:</b> one piece of a decay equation is missing.</li>
+    <li><b>From words:</b> you're given the isotope and the type of decay. Write the whole equation.</li>
+    <li><b>Fission, fusion &amp; more:</b> reactions where nuclei are hit or joined. Sometimes the missing piece is the number of neutrons.</li>
+  </ul>
+  <p class="smallprint">Your score counts a problem as solved when your first check is right. Using "Show answer" counts as a miss.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Missing pieces</span><span class="score" id="s-score">0 of 0</span></div>
+    <div class="tabs" role="tablist" aria-label="Problem set" id="s-tabs">
+      <button type="button" class="tab" role="tab" data-set="decay" aria-selected="true">Decay</button>
+      <button type="button" class="tab" role="tab" data-set="word" aria-selected="false">From words</button>
+      <button type="button" class="tab" role="tab" data-set="other" aria-selected="false">Fission, fusion &amp; more</button>
+    </div>
+    <div style="margin-top:14px">
+      <div class="rx-kind" id="s-kind"></div>
+      <p class="prompt" id="s-prompt"></p>
+    </div>
+    <div class="neq" id="s-eq"></div>
+    <p class="typing-tip">For a negative bottom number, type a minus sign: <kbd>-1</kbd>. For a gamma ray, type <kbd>g</kbd> or use this button: <button type="button" class="ghost mini" id="s-gamma" aria-label="Put gamma into the symbol box">γ</button></p>
+    <div class="btn-row">
+      <button type="button" id="s-check">Check</button>
+      <button type="button" class="ghost" id="s-show">Show answer</button>
+      <button type="button" class="ghost" id="s-new">New problem</button>
+    </div>
+    <div class="fb" id="s-fb" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="sec-head"><span class="tasktag">Common mistakes</span><h2>Watch-outs</h2></div>
+  <div class="rulebox">
+    <div class="rulecard miss">
+      <h4>Keeping the old element</h4>
+      <p>Alpha decay of americium-241:</p>
+      <div class="eqlab no">&#10007; Wrong</div>
+      <div class="eqline" data-nq="Am241 -> Am237 + a"></div>
+      <div class="eqlab yes">&#10003; Right</div>
+      <div class="eqline" data-nq="Am241 -> Np237 + a"></div>
+      <p>The bottom number dropped from 95 to 93, so it isn't americium anymore. A new atomic number means a new element.</p>
+    </div>
+    <div class="rulecard miss">
+      <h4>Getting the beta sign backwards</h4>
+      <p>Beta decay of cesium-137:</p>
+      <div class="eqlab no">&#10007; Wrong</div>
+      <div class="eqline" data-nq="Cs137 -> Xe137 + b"></div>
+      <div class="eqlab yes">&#10003; Right</div>
+      <div class="eqline" data-nq="Cs137 -> Ba137 + b"></div>
+      <p>55 = Z + (−1) means Z = 56, which is barium. Releasing a beta particle <i>raises</i> the atomic number.</p>
+    </div>
+    <div class="rulecard miss">
+      <h4>Flipping the alpha numbers</h4>
+      <p>An alpha particle is <span class="inl" data-nt="[[a]]"></span>: a helium-4 nucleus, and helium is element 2. The 4 goes on top and the 2 on the bottom.</p>
+    </div>
+    <div class="rulecard miss">
+      <h4>Forgetting the coefficient</h4>
+      <p><span class="inl" data-nt="[[3n]]"></span> is three neutrons: 3 on top and 0 on the bottom. Multiply before you total.</p>
+    </div>
+    <div class="rulecard miss">
+      <h4>Using the atomic mass</h4>
+      <p>Uranium-238's top number is 238, not 238.03. Mass numbers are always whole numbers.</p>
+    </div>
+    <div class="rulecard miss">
+      <h4>Adding states</h4>
+      <p>Leave off (s), (l), (g) and (aq). Nuclear equations don't use them.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Eight questions on radioactivity, nuclear symbols, the particles, and missing pieces.</p>
+  <div class="card" id="quiz"></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">Next: Half-Life</div>
+      <p>A radioactive sample doesn't disappear all at once. Learn to predict how much is left after each half-life.</p>
+    </div>
+    <a href="/chemistry/reactions/half-life/">Go to page 8 &#8594;</a>
+  </div>
+</section>
+
+<footer>
+  <p>Nuclear reactions: radioactivity, nuclear symbols, the six particles, and balancing nuclear equations by mass number and atomic number. Every practice reaction is a real one, and they're drawn fresh every time.</p>
+  <p><a href="/chemistry/reactions/predicting-products/">&#8592; Page 6: Predicting Products</a> &nbsp;·&nbsp; <a href="/chemistry/reactions/">Unit 3 — Chemical Reactions</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function each(list, fn){ Array.prototype.forEach.call(list, fn); }
+function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+
+/*CORE-START*/
+/* =========================================================
+   core: elements, particles, reactions, checking (no DOM)
+   ========================================================= */
+var SYMBOLS = ('H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr ' +
+  'Rb Sr Y Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re ' +
+  'Os Ir Pt Au Hg Tl Pb Bi Po At Rn Fr Ra Ac Th Pa U Np Pu Am Cm Bk Cf Es Fm Md No Lr Rf Db Sg Bh Hs Mt Ds Rg Cn Nh ' +
+  'Fl Mc Lv Ts Og').split(' ');
+var NAMES = ('hydrogen helium lithium beryllium boron carbon nitrogen oxygen fluorine neon sodium magnesium aluminum ' +
+  'silicon phosphorus sulfur chlorine argon potassium calcium scandium titanium vanadium chromium manganese iron cobalt ' +
+  'nickel copper zinc gallium germanium arsenic selenium bromine krypton rubidium strontium yttrium zirconium niobium ' +
+  'molybdenum technetium ruthenium rhodium palladium silver cadmium indium tin antimony tellurium iodine xenon cesium ' +
+  'barium lanthanum cerium praseodymium neodymium promethium samarium europium gadolinium terbium dysprosium holmium ' +
+  'erbium thulium ytterbium lutetium hafnium tantalum tungsten rhenium osmium iridium platinum gold mercury thallium ' +
+  'lead bismuth polonium astatine radon francium radium actinium thorium protactinium uranium neptunium plutonium ' +
+  'americium curium berkelium californium einsteinium fermium mendelevium nobelium lawrencium rutherfordium dubnium ' +
+  'seaborgium bohrium hassium meitnerium darmstadtium roentgenium copernicium nihonium flerovium moscovium livermorium ' +
+  'tennessine oganesson').split(' ');
+function zOf(sym){ return SYMBOLS.indexOf(sym) + 1; }        // 0 when not an element
+function nameOfZ(z){ return NAMES[z - 1] || ''; }
+
+/* the six particles; bottom number is the charge */
+var PART = {
+  a:   { A:4, Z:2,  s:'He', name:'alpha particle', decay:'alpha decay',
+         why:'An alpha particle is a helium-4 nucleus: 2 protons and 2 neutrons, so 4 on top and 2 on the bottom.' },
+  b:   { A:0, Z:-1, s:'e',  name:'beta particle',  decay:'beta decay',
+         why:'A beta particle is an electron: almost no mass, so 0 on top, and a −1 charge on the bottom.' },
+  'b+':{ A:0, Z:1,  s:'e',  name:'positron',       decay:'positron emission',
+         why:'A positron is like an electron with a positive charge: 0 on top, +1 on the bottom.' },
+  p:   { A:1, Z:1,  s:'H',  name:'proton',
+         why:'A proton is a hydrogen-1 nucleus: mass number 1, charge +1. It can be written with H or with p.' },
+  n:   { A:1, Z:0,  s:'n',  name:'neutron',
+         why:'A neutron has a mass number of 1 and no charge, so its bottom number is 0.' },
+  g:   { A:0, Z:0,  s:'γ',  name:'gamma ray',      decay:'gamma emission',
+         why:'A gamma ray is pure energy, with no mass and no charge: 0 on top and 0 on the bottom.' }
+};
+var PART_ORDER = ['a','b','b+','p','n','g'];
+
+/* 'U235', 'Tc99m', '2n', 'b+' -> { c, A, Z, s, part, m } */
+function parseTerm(str){
+  var m = /^(\d*)(b\+|[abpng]|[A-Z][a-z]?\d+m?)$/.exec(String(str).trim());
+  if(!m) throw 'cannot read term "' + str + '"';
+  var c = m[1] ? parseInt(m[1],10) : 1, body = m[2];
+  if(PART[body]) return { c:c, A:PART[body].A, Z:PART[body].Z, s:PART[body].s, part:body, m:false };
+  var mm = /^([A-Z][a-z]?)(\d+)(m?)$/.exec(body), z = zOf(mm[1]);
+  if(!z) throw 'unknown element "' + mm[1] + '"';
+  return { c:c, A:parseInt(mm[2],10), Z:z, s:mm[1], part:null, m:mm[3] === 'm' };
+}
+/* 'Ra226 -> Rn222 + a' -> { L:[terms], R:[terms] } ; terms are separated by ' + ' with spaces */
+function parseRx(src){
+  var sides = src.split('->');
+  if(sides.length !== 2) throw 'need exactly one arrow: ' + src;
+  function side(txt){ return txt.trim().split(/\s\+\s/).map(parseTerm); }
+  return { src:src, L:side(sides[0]), R:side(sides[1]) };
+}
+function termsOf(rx){ return rx.L.concat(rx.R); }
+function sideTotals(terms){
+  var A = 0, Z = 0;
+  terms.forEach(function(t){ A += t.c*t.A; Z += t.c*t.Z; });
+  return { A:A, Z:Z };
+}
+function isBalanced(rx){
+  var l = sideTotals(rx.L), r = sideTotals(rx.R);
+  return l.A === r.A && l.Z === r.Z;
+}
+/* which decay a one-parent reaction shows: 'a', 'b', 'b+', 'g' or null */
+function decayKind(rx){
+  if(rx.L.length !== 1) return null;
+  var ps = rx.R.map(function(t){ return t.part; });
+  var order = ['a','b','b+','g'];
+  for(var i = 0; i < order.length; i++){ if(ps.indexOf(order[i]) !== -1) return order[i]; }
+  return null;
+}
+function termName(t){
+  if(t.part) return PART[t.part].name;
+  if(t.s === 'H' && t.A === 1) return 'proton';
+  return nameOfZ(t.Z) + '-' + t.A + (t.m ? 'm' : '');
+}
+
+/* ---- reaction banks: real reactions only ---- */
+var DECAY_SRC = [
+  // alpha
+  'Ra226 -> Rn222 + a', 'Rn222 -> Po218 + a', 'Po218 -> Pb214 + a', 'Po214 -> Pb210 + a', 'Po210 -> Pb206 + a',
+  'Th230 -> Ra226 + a', 'U234 -> Th230 + a', 'Th232 -> Ra228 + a', 'Th228 -> Ra224 + a', 'Ra224 -> Rn220 + a',
+  'Rn220 -> Po216 + a', 'Po216 -> Pb212 + a', 'Am241 -> Np237 + a', 'Np237 -> Pa233 + a', 'Sm147 -> Nd143 + a',
+  'Gd152 -> Sm148 + a', 'Cf252 -> Cm248 + a',
+  // beta
+  'H3 -> He3 + b', 'C14 -> N14 + b', 'Na24 -> Mg24 + b', 'Si32 -> P32 + b', 'P32 -> S32 + b', 'S35 -> Cl35 + b',
+  'K40 -> Ca40 + b', 'Ca45 -> Sc45 + b', 'Fe59 -> Co59 + b', 'Co60 -> Ni60 + b', 'Ni63 -> Cu63 + b',
+  'Kr85 -> Rb85 + b', 'Rb87 -> Sr87 + b', 'Y90 -> Zr90 + b', 'Tc99 -> Ru99 + b', 'Xe133 -> Cs133 + b',
+  'Cs137 -> Ba137 + b', 'Au198 -> Hg198 + b', 'Pb210 -> Bi210 + b', 'Bi210 -> Po210 + b', 'Pb212 -> Bi212 + b',
+  'Pb214 -> Bi214 + b', 'Bi214 -> Po214 + b', 'Ra228 -> Ac228 + b', 'Ac228 -> Th228 + b', 'Th234 -> Pa234 + b',
+  // positron
+  'N13 -> C13 + b+', 'O15 -> N15 + b+', 'F18 -> O18 + b+', 'Ne19 -> F19 + b+', 'Na22 -> Ne22 + b+',
+  'Mg23 -> Na23 + b+', 'Al26 -> Mg26 + b+', 'P30 -> Si30 + b+', 'Cl34 -> S34 + b+', 'K38 -> Ar38 + b+',
+  'Sc44 -> Ca44 + b+', 'Co55 -> Fe55 + b+', 'Ga68 -> Zn68 + b+', 'Rb82 -> Kr82 + b+',
+  // gamma, alone or alongside another particle
+  'Tc99m -> Tc99 + g', 'Ba137m -> Ba137 + g', 'Kr83m -> Kr83 + g', 'In113m -> In113 + g',
+  'Co60 -> Ni60 + b + g', 'Na24 -> Mg24 + b + g', 'Ra226 -> Rn222 + a + g', 'Am241 -> Np237 + a + g'
+];
+var DECAY = DECAY_SRC.map(function(s){ var rx = parseRx(s); rx.kind = 'decay'; return rx; });
+
+/* [reaction, kind, what it is] ; the note is shown only after the problem is solved */
+var OTHER_SRC = [
+  ['N14 + a -> O17 + p',          'bomb',    'Rutherford, 1919: the first time anyone changed one element into another on purpose.'],
+  ['Be9 + a -> C12 + n',          'bomb',    'Chadwick, 1932: the experiment that discovered the neutron.'],
+  ['Al27 + a -> P30 + n',         'bomb',    'Irène and Frédéric Joliot-Curie, 1934: the first radioactive isotope made in a lab.'],
+  ['Li7 + p -> 2a',               'bomb',    'Cockcroft and Walton, 1932: the first nucleus split with a particle accelerator.'],
+  ['N14 + n -> C14 + p',          'bomb',    'How carbon-14 forms high in the atmosphere. It’s the carbon-14 that radiocarbon dating measures.'],
+  ['B10 + n -> Li7 + a',          'bomb',    'Why boron is so good at soaking up neutrons.'],
+  ['Co59 + n -> Co60',            'bomb',    'How cobalt-60 for cancer radiation therapy is made.'],
+  ['Mo98 + n -> Mo99',            'bomb',    'One way to make molybdenum-99, which decays into the technetium-99m used in medical scans.'],
+  ['S32 + n -> P32 + p',          'bomb',    'How phosphorus-32 for medicine and biology research is made.'],
+  ['O18 + p -> F18 + n',          'bomb',    'How hospitals make the fluorine-18 used in PET scans.'],
+  ['Li6 + n -> H3 + a',           'bomb',    'One way to make hydrogen-3 (tritium), which lights up glow-in-the-dark exit signs.'],
+  ['Bi209 + Fe58 -> Mt266 + n',   'bomb',    '1982: how meitnerium, element 109, was first made.'],
+  ['U235 + n -> Xe140 + Sr94 + 2n','fission','Fission of uranium-235, the fuel in most nuclear power plants.'],
+  ['U235 + n -> Ba144 + Kr89 + 3n','fission','Fission of uranium-235. It splits a slightly different way almost every time.'],
+  ['U235 + n -> Cs137 + Rb96 + 3n','fission','Fission of uranium-235. Cesium-137 is one of the long-lived products in used fuel.'],
+  ['U235 + n -> La143 + Br90 + 3n','fission','Fission of uranium-235.'],
+  ['U235 + n -> Te137 + Zr97 + 2n','fission','Fission of uranium-235.'],
+  ['H2 + H2 -> He3 + n',          'fusion',  'Deuterium fusion, the kind tested in experimental fusion reactors.'],
+  ['H2 + H2 -> H3 + p',           'fusion',  'The other way two deuterium nuclei can fuse.'],
+  ['H1 + H1 -> H2 + b+',          'fusion',  'The first step of fusion in the Sun.'],
+  ['H2 + H1 -> He3 + g',          'fusion',  'The second step of fusion in the Sun.'],
+  ['He3 + He3 -> He4 + 2p',       'fusion',  'The last step in the Sun: hydrogen has become helium-4.'],
+  ['H2 + He3 -> He4 + p',         'fusion',  'A fusion reaction studied for future power plants.'],
+  ['3a -> C12',                   'fusion',  'How older stars make carbon: three helium nuclei fuse.'],
+  ['C12 + a -> O16',              'fusion',  'How stars make oxygen from carbon.']
+];
+var OTHER = OTHER_SRC.map(function(r){ var rx = parseRx(r[0]); rx.kind = r[1]; rx.note = r[2]; return rx; });
+var KIND_LABEL = { decay:'Radioactive decay', bomb:'Bombardment', fission:'Fission', fusion:'Fusion' };
+
+/* isotopes for the "write the symbol" drill: every nucleus in the decay bank */
+var ISOTOPES = (function(){
+  var seen = {}, out = [];
+  DECAY.forEach(function(rx){
+    termsOf(rx).forEach(function(t){
+      if(t.part || t.m) return;
+      var key = t.s + t.A;
+      if(!seen[key]){ seen[key] = 1; out.push(t); }
+    });
+  });
+  return out;
+})();
+
+/* ---- problems ----
+   blanks: [{ k: index into termsOf(rx), type: 'nuc' | 'coef' }] */
+function pickOther(pool, avoid){
+  var p = pool.filter(function(rx){ return rx.src !== avoid; });
+  return pick(p.length ? p : pool);
+}
+function makeDecayProblem(avoid){
+  var rx = pickOther(DECAY, avoid), nL = rx.L.length, ts = termsOf(rx);
+  var prod = -1, part = -1, gam = -1;
+  rx.R.forEach(function(t,j){
+    if(!t.part) prod = nL + j;
+    else if(t.part === 'g') gam = nL + j;
+    else part = nL + j;
+  });
+  if(part === -1) part = gam;                     // pure gamma: the gamma ray is the particle
+  var r = Math.random(), k;
+  if(ts[0].m) k = r < 0.5 ? prod : part;          // a metastable parent can't be typed, so never blank it
+  else k = r < 0.5 ? prod : r < 0.85 ? part : 0;
+  return { set:'decay', rx:rx, blanks:[{ k:k, type:'nuc' }] };
+}
+function makeWordProblem(avoid){
+  var pool = DECAY.filter(function(rx){
+    var d = decayKind(rx);
+    return (d === 'a' || d === 'b' || d === 'b+') && rx.R.length === 2;
+  });
+  var rx = pickOther(pool, avoid);
+  return { set:'word', rx:rx, blanks:[{ k:0, type:'nuc' }, { k:1, type:'nuc' }, { k:2, type:'nuc' }] };
+}
+function makeOtherProblem(avoid){
+  var rx = pickOther(OTHER, avoid), ts = termsOf(rx), nL = rx.L.length;
+  var coefIdx = -1;
+  ts.forEach(function(t,j){ if(t.c > 1 && t.A > 0) coefIdx = j; });
+  if(coefIdx !== -1 && Math.random() < (rx.kind === 'fission' ? 0.4 : 0.25)){
+    return { set:'other', rx:rx, blanks:[{ k:coefIdx, type:'coef' }] };
+  }
+  var choices = [];
+  if(rx.kind === 'fission'){
+    rx.R.forEach(function(t,j){ if(!t.part) choices.push(nL + j); });   // a fragment
+  } else {
+    ts.forEach(function(t,j){ choices.push(j); });
+  }
+  return { set:'other', rx:rx, blanks:[{ k:pick(choices), type:'nuc' }] };
+}
+
+/* ---- reading and judging answers ---- */
+function readInt(v){
+  v = String(v == null ? '' : v).trim().replace(/[−–—]/g,'-');
+  if(v === '') return null;
+  if(!/^[+-]?\d+$/.test(v)) return NaN;
+  return parseInt(v,10);
+}
+/* 'ok' | 'case' (right symbol, wrong capitals) | 'empty' | 'no' */
+function symCheck(t, s){
+  s = String(s || '').trim().replace(/−/g,'-');
+  if(!s) return 'empty';
+  var low = s.toLowerCase();
+  if(t.part === 'g') return ['γ','g','y','gamma'].indexOf(low) !== -1 ? 'ok' : 'no';
+  if(t.part === 'b' || t.part === 'b+') return ['e','e-','e+','β','β-','β+'].indexOf(s) !== -1 ? 'ok' : 'no';
+  if(t.part === 'n') return s === 'n' ? 'ok' : 'no';
+  if(t.s === 'H' && t.A === 1 && (s === 'p' || s === 'p+')) return 'ok';
+  if(t.s === 'He' && t.A === 4 && s === 'α') return 'ok';
+  if(s === t.s) return 'ok';
+  if(low === t.s.toLowerCase()) return 'case';
+  return 'no';
+}
+/* the value the blank term needs for key 'A' or 'Z' so both sides match.
+   tweak(t, key) can replace other terms' values to model a mistake; noCoef ignores every coefficient. */
+function solveFor(rx, k, key, tweak, noCoef){
+  var ts = termsOf(rx), nL = rx.L.length, L = 0, R = 0;
+  ts.forEach(function(t,j){
+    if(j === k) return;
+    var v = tweak ? tweak(t, key) : t[key], c = noCoef ? 1 : t.c;
+    if(j < nL) L += c*v; else R += c*v;
+  });
+  var c = noCoef ? 1 : ts[k].c;
+  return (k < nL ? R - L : L - R) / c;
+}
+function flipSign(t, key){ return key === 'Z' && (t.part === 'b' || t.part === 'b+') ? -t.Z : t[key]; }
+function swapAlpha(t, key){ return t.part === 'a' ? (key === 'A' ? 2 : 4) : t[key]; }
+
+/* judge one nucleus/particle blank: got = { a, z, s } */
+function judgeNuc(rx, k, got){
+  var t = termsOf(rx)[k];
+  if(got.a === null || got.z === null || !String(got.s || '').trim()) return { kind:'incomplete' };
+  if(isNaN(got.a) || isNaN(got.z)) return { kind:'nan' };
+  var sc = symCheck(t, got.s);
+  if(got.a === t.A && got.z === t.Z) return { kind: sc === 'ok' ? 'correct' : sc === 'case' ? 'case' : 'sym' };
+  var res = { kind:'nums', topOk: got.a === t.A, botOk: got.z === t.Z, trap:null };
+  var hasE = termsOf(rx).some(function(x,j){ return j !== k && (x.part === 'b' || x.part === 'b+'); });
+  var hasA = termsOf(rx).some(function(x,j){ return j !== k && x.part === 'a'; });
+  var hasC = termsOf(rx).some(function(x){ return x.c > 1; });
+  if(hasE && got.a === t.A && got.z === solveFor(rx, k, 'Z', flipSign)) res.trap = 'sign';
+  else if(hasA && got.a === solveFor(rx, k, 'A', swapAlpha) && got.z === solveFor(rx, k, 'Z', swapAlpha)) res.trap = 'alpha';
+  else if(hasC && got.a === solveFor(rx, k, 'A', null, true) && got.z === solveFor(rx, k, 'Z', null, true)) res.trap = 'coef';
+  else if(k > 0 && rx.L.length === 1 && got.a === rx.L[0].A && got.z === rx.L[0].Z) res.trap = 'copy';
+  else if(got.a === t.Z && got.z === t.A) res.trap = 'swap';
+  return res;
+}
+/*CORE-END*/
+
+/* =========================================================
+   rendering
+   ========================================================= */
+function botText(t){ return t.Z < 0 ? '−' + (-t.Z) : (t.part === 'b+' ? '+1' : String(t.Z)); }
+function nucHtml(t){
+  return '<span class="nw"><span class="nuc"><span>' + t.A + (t.m ? 'm' : '') + '</span><span>' + botText(t) + '</span></span>' + t.s + '</span>';
+}
+function termHtml(t){ return (t.c > 1 ? '<span class="co">' + t.c + '</span>' : '') + nucHtml(t); }
+function rxHtml(rx){
+  function side(ts){ return ts.map(termHtml).join('<span class="plus">+</span>'); }
+  return side(rx.L) + '<span class="arr">→</span>' + side(rx.R);
+}
+/* [[Co60]] -> one term ; {{Co60 -> Ni60 + b}} -> a whole equation */
+function fmtT(s){
+  return s.replace(/\{\{([^}]+)\}\}/g, function(_, src){ return '<span class="inl">' + rxHtml(parseRx(src)) + '</span>'; })
+          .replace(/\[\[([^\]]+)\]\]/g, function(_, src){ return '<span class="inl">' + termHtml(parseTerm(src)) + '</span>'; });
+}
+function signed(v){ return v < 0 ? '(−' + (-v) + ')' : String(v); }
+function valText(t, key, v){ return key === 'Z' && t.part === 'b+' && v === t.Z ? '(+1)' : signed(v); }
+
+/* "226 = ? + 4" style setup; blank k shows '?' (or its value when fill is given) */
+function setupLine(rx, k, key, blankType, fill){
+  var nL = rx.L.length;
+  function side(ts, off){
+    return ts.map(function(t,j){
+      var idx = off + j;
+      if(idx === k && blankType === 'coef'){
+        return (fill != null ? fill : '<b class="unk">?</b>') + ' × ' + valText(t, key, t[key]);
+      }
+      var core = idx === k ? (fill != null ? valText(t, key, fill) : '<b class="unk">?</b>') : valText(t, key, t[key]);
+      return t.c > 1 ? t.c + ' × ' + core : core;
+    }).join(' + ');
+  }
+  return side(rx.L, 0) + ' = ' + side(rx.R, nL);
+}
+function workLines(rx){
+  var l = sideTotals(rx.L), r = sideTotals(rx.R);
+  return '<span class="work">Top: ' + setupLine(rx, -1, 'A') + '  (' + l.A + ' = ' + r.A + ')</span>' +
+         '<span class="work">Bottom: ' + setupLine(rx, -1, 'Z') + '  (' + l.Z + ' = ' + r.Z + ')</span>';
+}
+
+function blankHtml(id){
+  return '<span class="blank" id="' + id + '">' +
+    '<span class="bn">' +
+      '<input type="text" class="bt" inputmode="numeric" autocomplete="off" aria-label="Top number (mass number)" placeholder="top">' +
+      '<input type="text" class="bb" autocomplete="off" aria-label="Bottom number (atomic number)" placeholder="bottom">' +
+    '</span>' +
+    '<input type="text" class="bs" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Symbol" placeholder="symbol">' +
+  '</span>';
+}
+function readBlank(node){
+  return { a:readInt(node.querySelector('.bt').value), z:readInt(node.querySelector('.bb').value), s:node.querySelector('.bs').value };
+}
+function fillBlank(node, t){
+  node.querySelector('.bt').value = t.A;
+  node.querySelector('.bb').value = t.Z < 0 ? '-' + (-t.Z) : (t.part === 'b+' ? '+1' : t.Z);
+  node.querySelector('.bs').value = t.s;
+}
+function markBlank(node, parts){
+  ['bt','bb','bs'].forEach(function(c){
+    var inp = node.querySelector('.' + c);
+    inp.classList.remove('good','bad');
+    if(parts && parts[c] != null) inp.classList.add(parts[c] ? 'good' : 'bad');
+  });
+}
+function article(w){ return /^[aeiou]/i.test(w) ? 'an ' + w : 'a ' + w; }
+
+/* static equations and terms in the page text */
+each(document.querySelectorAll('[data-nq]'), function(n){ n.innerHTML = rxHtml(parseRx(n.getAttribute('data-nq'))); });
+each(document.querySelectorAll('[data-nt]'), function(n){
+  n.innerHTML = n.getAttribute('data-nt').replace(/\[\[([^\]]+)\]\]/g, function(_, s){ return termHtml(parseTerm(s)); });
+});
+
+/* =========================================================
+   1. write the symbol
+   ========================================================= */
+var yState = null, yScore = Score(el('y-score'));
+function yNew(){
+  var t;
+  do { t = pick(ISOTOPES); } while(yState && t === yState.t && ISOTOPES.length > 1);
+  yState = { t:t, scored:false };
+  el('y-name').textContent = cap(termName(t));
+  el('y-eq').innerHTML = blankHtml('y-b');
+  hideFb(el('y-fb'));
+  each(el('y-eq').querySelectorAll('input'), function(inp){
+    inp.addEventListener('keydown', function(e){ if(e.key === 'Enter') yCheck(); });
+  });
+}
+function yCheck(){
+  var t = yState.t, node = el('y-b'), got = readBlank(node), fb = el('y-fb');
+  if(got.a === null || got.z === null || !got.s.trim()){ setFb(fb,'hint','Fill in all three boxes: the top number, the bottom number and the symbol.'); return; }
+  if(isNaN(got.a) || isNaN(got.z)){ setFb(fb,'hint','The top and bottom numbers are whole numbers.'); return; }
+  var sc = symCheck(t, got.s), first = !yState.scored;
+  var topOk = got.a === t.A, botOk = got.z === t.Z, symOk = sc === 'ok' || sc === 'case';
+  markBlank(node, { bt:topOk, bb:botOk, bs:symOk });
+  if(first){ yState.scored = true; yScore.add(topOk && botOk && symOk); }
+  if(topOk && botOk && symOk){
+    setFb(fb,'good','<b>Correct: <span class="inl">' + nucHtml(t) + '</span>.</b> ' + cap(nameOfZ(t.Z)) + ' has ' + t.Z + ' protons, and ' +
+      t.A + ' − ' + t.Z + ' = ' + (t.A - t.Z) + ' neutrons.' + (sc === 'case' ? ' Write the symbol as <b>' + t.s + '</b>: capital first letter, lowercase second.' : ''));
+    return;
+  }
+  var msg = [];
+  if(got.a === t.Z && got.z === t.A) msg.push('<b>Top and bottom are switched.</b> The mass number goes on top and the atomic number on the bottom.');
+  else {
+    if(!topOk) msg.push('<b>Top:</b> the mass number is the number in the isotope’s name.');
+    if(!botOk) msg.push('<b>Bottom:</b> the atomic number is the number of protons. Find ' + nameOfZ(t.Z) + ' on your periodic table.' +
+      (Math.abs(got.z - t.A) < 3 ? ' That’s not the mass in the name.' : ''));
+  }
+  if(!symOk){
+    var tz = zOf(got.s.trim());
+    msg.push('<b>Symbol:</b> ' + (tz ? got.s.trim() + ' is ' + nameOfZ(tz) + '. ' : '') + 'Look up the symbol for ' + nameOfZ(t.Z) + '.');
+  }
+  setFb(fb,'bad', msg.join(' '));
+}
+el('y-check').addEventListener('click', yCheck);
+el('y-new').addEventListener('click', yNew);
+
+/* =========================================================
+   2. know your particles
+   ========================================================= */
+var tState = null, tScore = Score(el('t-score'));
+function tNew(){
+  var key, mode = Math.random() < 0.5 ? 'sym' : 'name';
+  do { key = pick(PART_ORDER); } while(tState && key === tState.key);
+  tState = { key:key, mode:mode, done:false };
+  var t = parseTerm(key);
+  if(mode === 'sym'){
+    el('t-ask').textContent = 'Which particle is this?';
+    el('t-show').innerHTML = '<div class="drill-big">' + nucHtml(t) + '</div>';
+    el('t-opts').innerHTML = PART_ORDER.map(function(k){ return '<button type="button" data-k="' + k + '">' + cap(PART[k].name) + '</button>'; }).join('');
+  } else {
+    el('t-ask').textContent = 'Which symbol is this particle?';
+    el('t-show').innerHTML = '<div class="drill-name">' + cap(PART[key].name) + '</div>';
+    el('t-opts').innerHTML = PART_ORDER.map(function(k){ return '<button type="button" class="sym" data-k="' + k + '" aria-label="' + PART[k].name + ' symbol">' + nucHtml(parseTerm(k)) + '</button>'; }).join('');
+  }
+  each(el('t-opts').querySelectorAll('button'), function(b){ b.addEventListener('click', function(){ tAnswer(b); }); });
+  hideFb(el('t-fb'));
+}
+function tAnswer(btn){
+  if(tState.done) return;
+  tState.done = true;
+  var ok = btn.dataset.k === tState.key;
+  tScore.add(ok);
+  each(el('t-opts').querySelectorAll('button'), function(b){
+    b.disabled = true;
+    if(b.dataset.k === tState.key) b.classList.add(ok ? 'picked-yes' : 'right-one');
+  });
+  if(!ok) btn.classList.add('picked-no');
+  var t = parseTerm(tState.key);
+  setFb(el('t-fb'), ok ? 'good' : 'bad', '<b>' + (ok ? 'Yes.' : 'Not that one.') + '</b> <span class="inl">' + nucHtml(t) + '</span> is ' +
+    article(PART[tState.key].name) + '. ' + PART[tState.key].why);
+}
+el('t-new').addEventListener('click', tNew);
+
+/* =========================================================
+   3. worked examples
+   ========================================================= */
+var WORKED = [
+  { title:'Alpha: radium-226', src:'Ra226 -> Rn222 + a', k:1, steps:[
+    { show:{}, t:'<b>Set it up.</b> Radium-226 gives off an alpha particle, [[a]]. Radium is element 88, so the parent is [[Ra226]]. The new nucleus goes in the blank.' },
+    { show:{A:1}, hl:'A', t:'<b>Top numbers.</b> The left side totals 226. The right side is the blank plus 4: 226 = A + 4, so A = 222.' },
+    { show:{A:1,Z:1}, hl:'Z', t:'<b>Bottom numbers.</b> 88 = Z + 2, so Z = 86.' },
+    { show:{A:1,Z:1,s:1}, hl:'s', t:'<b>Name it.</b> Element 86 on the periodic table is radon. Radium-226 (the parent) became radon-222 (the daughter).' }
+  ] },
+  { title:'Beta: cobalt-60', src:'Co60 -> Ni60 + b', k:1, steps:[
+    { show:{}, t:'<b>Set it up.</b> Cobalt-60, used in cancer radiation therapy, gives off a beta particle, [[b]]. Cobalt is element 27.' },
+    { show:{A:1}, hl:'A', t:'<b>Top numbers.</b> 60 = A + 0, so A = 60. A beta particle has almost no mass, so the mass number doesn’t change.' },
+    { show:{A:1,Z:1}, hl:'Z', t:'<b>Bottom numbers.</b> 27 = Z + (−1). Add 1 to both sides: Z = 28. The atomic number went <i>up</i>, because a neutron turned into a proton.' },
+    { show:{A:1,Z:1,s:1}, hl:'s', t:'<b>Name it.</b> Element 28 is nickel. Cobalt-60 became nickel-60.' }
+  ] },
+  { title:'Find the particle: sodium-22', src:'Na22 -> Ne22 + b+', k:2, steps:[
+    { show:{}, t:'<b>Set it up.</b> Sodium-22 turns into neon-22 and gives off something. This time the missing piece is the particle.' },
+    { show:{A:1}, hl:'A', t:'<b>Top numbers.</b> 22 = 22 + A, so A = 0.' },
+    { show:{A:1,Z:1}, hl:'Z', t:'<b>Bottom numbers.</b> 11 = 10 + Z, so Z = +1.' },
+    { show:{A:1,Z:1,s:1}, hl:'s', t:'<b>Name it.</b> 0 on top and +1 on the bottom is a positron, [[b+]]. This is positron emission.' }
+  ] },
+  { title:'Fission: uranium-235', src:'U235 + n -> Xe140 + Sr94 + 2n', k:3, steps:[
+    { show:{}, t:'<b>Set it up.</b> A neutron splits uranium-235. One piece is xenon-140; find the other. The 2 in front of [[n]] means two neutrons come out.' },
+    { show:{A:1}, hl:'A', t:'<b>Top numbers.</b> Left: 235 + 1 = 236. Right: 140 + A + 2 × 1 = 142 + A. So 236 = 142 + A, and A = 94.' },
+    { show:{A:1,Z:1}, hl:'Z', t:'<b>Bottom numbers.</b> Left: 92 + 0 = 92. Right: 54 + Z + 2 × 0 = 54 + Z. So Z = 38.' },
+    { show:{A:1,Z:1,s:1}, hl:'s', t:'<b>Name it.</b> Element 38 is strontium. The missing piece is strontium-94.' }
+  ] }
+];
+WORKED.forEach(function(w){ w.rx = parseRx(w.src); });
+var wkIdx = 0, wkStep = 0;
+(function buildWkTabs(){
+  el('wk-tabs').innerHTML = WORKED.map(function(w,i){
+    return '<button type="button" class="tab" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '">' + w.title + '</button>';
+  }).join('');
+  each(el('wk-tabs').querySelectorAll('.tab'), function(b){
+    b.addEventListener('click', function(){
+      wkIdx = Number(b.dataset.i); wkStep = 0;
+      each(el('wk-tabs').querySelectorAll('.tab'), function(o){ o.setAttribute('aria-selected', String(o === b)); });
+      wkRender();
+    });
+  });
+})();
+function wkRender(){
+  var w = WORKED[wkIdx], s = w.steps[wkStep], rx = w.rx, ts = termsOf(rx), t = ts[w.k], nL = rx.L.length;
+  function partial(){
+    var top = s.show.A ? '<span' + (s.hl === 'A' ? ' class="hlv"' : '') + '>' + t.A + '</span>' : '<b class="unk">?</b>';
+    var bot = s.show.Z ? '<span' + (s.hl === 'Z' ? ' class="hlv"' : '') + '>' + botText(t) + '</span>' : '<b class="unk">?</b>';
+    var sym = s.show.s ? '<span' + (s.hl === 's' ? ' class="hlv"' : '') + '>' + t.s + '</span>' : '<b class="unk">?</b>';
+    return '<span class="nw"><span class="nuc"><span>' + top + '</span><span>' + bot + '</span></span>' + sym + '</span>';
+  }
+  function side(list, off){
+    return list.map(function(x,j){ return '<span class="tm">' + (off + j === w.k ? (x.c > 1 ? '<span class="co">' + x.c + '</span>' : '') + partial() : termHtml(x)) + '</span>'; })
+      .join('<span class="plus">+</span>');
+  }
+  el('wk-eq').innerHTML = side(rx.L, 0) + '<span class="arr">→</span>' + side(rx.R, nL);
+  var rows = [['A','Top · mass'], ['Z','Bottom · atomic']].map(function(r){
+    var key = r[0], known = !!s.show[key];
+    var l = sideTotals(rx.L)[key], rr = sideTotals(rx.R)[key];
+    return '<div class="lrow' + (known ? ' ok' : '') + '"><span class="ll">' + r[1] + '</span>' +
+      '<span class="lx">' + setupLine(rx, w.k, key, 'nuc', known ? t[key] : null) + '</span>' +
+      '<span class="ls">' + (known ? l + ' = ' + rr : 'solve for ?') + '</span></div>';
+  });
+  el('wk-ledger').innerHTML = rows.join('');
+  el('wk-text').innerHTML = fmtT(s.t);
+  el('wk-count').textContent = 'Step ' + (wkStep + 1) + ' of ' + w.steps.length;
+  el('wk-next').disabled = wkStep === w.steps.length - 1;
+  el('wk-prev').disabled = wkStep === 0;
+}
+el('wk-next').addEventListener('click', function(){ if(wkStep < WORKED[wkIdx].steps.length - 1){ wkStep++; wkRender(); } });
+el('wk-prev').addEventListener('click', function(){ if(wkStep > 0){ wkStep--; wkRender(); } });
+el('wk-restart').addEventListener('click', function(){ wkStep = 0; wkRender(); });
+
+/* =========================================================
+   4. missing pieces
+   ========================================================= */
+var sScore = Score(el('s-score'));
+var sSet = 'decay';
+var S = null;   // current problem: { set, rx, blanks, scored, done }
+var MAKERS = { decay:makeDecayProblem, word:makeWordProblem, other:makeOtherProblem };
+var WORD_CAPS = ['starting nucleus', 'new nucleus', 'particle'];
+
+function sNew(){
+  S = MAKERS[sSet](S ? S.rx.src : null);
+  S.scored = false; S.done = false;
+  var rx = S.rx, ts = termsOf(rx), nL = rx.L.length;
+  var dk = decayKind(rx);
+  el('s-kind').textContent = KIND_LABEL[rx.kind];
+  if(S.set === 'word'){
+    el('s-prompt').innerHTML = '<b>' + cap(termName(rx.L[0])) + '</b> undergoes <b>' + PART[dk].decay + '</b>. Write the nuclear equation.';
+  } else if(S.blanks[0].type === 'coef'){
+    el('s-prompt').textContent = 'How many ' + (ts[S.blanks[0].k].part === 'n' ? 'neutrons' : ts[S.blanks[0].k].part === 'a' ? 'alpha particles' : ts[S.blanks[0].k].part === 'p' ? 'protons' : 'of these') + ' does it take to balance the equation?';
+  } else {
+    el('s-prompt').textContent = 'Find the missing piece.';
+  }
+  function cell(t, idx){
+    var b = null;
+    S.blanks.forEach(function(x, bi){ if(x.k === idx) b = { x:x, bi:bi }; });
+    if(!b) return termHtml(t);
+    if(b.x.type === 'coef'){
+      return '<input type="text" class="bc" id="s-b' + b.bi + '" inputmode="numeric" autocomplete="off" aria-label="Number of ' + termName(t) + 's" placeholder="#">' + nucHtml(t);
+    }
+    var html = (t.c > 1 ? '<span class="co">' + t.c + '</span>' : '') + blankHtml('s-b' + b.bi);
+    if(S.set === 'word') html = '<span class="bw">' + blankHtml('s-b' + b.bi) + '<span class="cap">' + WORD_CAPS[b.bi] + '</span></span>';
+    return html;
+  }
+  function side(list, off){ return list.map(function(t,j){ return '<span class="tm">' + cell(t, off + j) + '</span>'; }).join('<span class="plus">+</span>'); }
+  el('s-eq').innerHTML = side(rx.L, 0) + '<span class="arr">→</span>' + side(rx.R, nL);
+  each(el('s-eq').querySelectorAll('input'), function(inp){
+    inp.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); sCheck(); } });
+    inp.addEventListener('input', function(){ inp.classList.remove('good','bad'); });
+  });
+  hideFb(el('s-fb'));
+}
+
+/* one hint per wrong blank; never gives the final numbers away */
+function nucHint(rx, k, res, got){
+  var t = termsOf(rx)[k];
+  var top = 'Top: <span class="mono">' + setupLine(rx, k, 'A', 'nuc') + '</span>';
+  var bot = 'Bottom: <span class="mono">' + setupLine(rx, k, 'Z', 'nuc') + '</span>';
+  switch(res.kind){
+    case 'incomplete': return 'Fill in all three boxes: the top number, the bottom number and the symbol.';
+    case 'nan': return 'The top and bottom numbers are whole numbers. For a negative bottom number, type a minus sign: -1.';
+    case 'case': return null;
+    case 'sym':
+      if(t.part || (t.s === 'H' && t.A === 1)){
+        var nm = termName(t);
+        var s = String(got.s).trim();
+        var extra = s === 'N' ? ' Capital N is nitrogen; a neutron is a lowercase n.' : s === 'P' ? ' Capital P is phosphorus; a proton is written with H or p.' : s === 'E' ? ' Use a lowercase e.' : '';
+        return '<b>Your numbers are right</b>: that’s ' + article(nm) + '. Check its symbol on the particle chart.' + extra;
+      }
+      var tz = zOf(String(got.s).trim()), parent = rx.L.length === 1 && k > 0 ? rx.L[0] : null;
+      if(parent && String(got.s).trim() === parent.s && t.Z !== parent.Z)
+        return '<b>Your numbers are right, but the element changed.</b> The bottom number is now ' + t.Z + ', not ' + parent.Z + '. Find element ' + t.Z + ' on your periodic table.';
+      return '<b>Your numbers are right.</b> ' + (tz ? esc(got.s) + ' is ' + nameOfZ(tz) + ', element ' + tz + '. ' : '') + 'Find element ' + t.Z + ' on your periodic table for the symbol.';
+    case 'nums':
+      if(res.trap === 'sign') return '<b>Check the sign.</b> A ' + (termsOf(rx).some(function(x){ return x.part === 'b'; }) ? '−1' : '+1') +
+        ' on the bottom has to be counted with its sign. ' + bot;
+      if(res.trap === 'alpha') return '<b>The alpha numbers are flipped.</b> An alpha particle is 4 on top and 2 on the bottom. ' + top + ' &nbsp; ' + bot;
+      if(res.trap === 'coef') return '<b>Count the coefficient.</b> A number in front multiplies both the top and the bottom number. ' + top + ' &nbsp; ' + bot;
+      if(res.trap === 'copy') return '<b>That’s the starting nucleus again.</b> Something left the nucleus, so the numbers have to change. ' + top + ' &nbsp; ' + bot;
+      if(res.trap === 'swap') return '<b>Top and bottom are switched.</b> Mass number goes on top, atomic number on the bottom.';
+      if(res.topOk) return '<b>Your top number is right.</b> Recheck the bottom. ' + bot;
+      if(res.botOk) return '<b>Your bottom number is right.</b> Recheck the top. ' + top;
+      return '<b>Both numbers are off.</b> Total each side, then find what makes them match. ' + top + ' &nbsp; ' + bot;
+  }
+  return '';
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function solvedHtml(rx){
+  var dk = decayKind(rx), d = dk && PART[dk].decay;
+  return '<span class="inl">' + rxHtml(rx) + '</span>' + workLines(rx) +
+    (d && rx.kind === 'decay' ? '<span style="display:block;margin-top:6px">This is <b>' + d + '</b>.</span>' : '') +
+    (rx.note ? '<span class="smallprint" style="display:block;margin-top:6px">' + rx.note + '</span>' : '');
+}
+
+function sCheck(){
+  if(!S || S.done) return;
+  var rx = S.rx, ts = termsOf(rx), fb = el('s-fb');
+  var b0 = S.blanks[0];
+
+  /* coefficient blank */
+  if(b0.type === 'coef'){
+    var inp = el('s-b0'), v = readInt(inp.value), want = ts[b0.k].c;
+    if(v === null || isNaN(v) || v < 1){ setFb(fb,'hint','Type a whole number, like 2.'); return; }
+    var ok = v === want;
+    inp.classList.add(ok ? 'good' : 'bad');
+    if(!S.scored){ S.scored = true; sScore.add(ok); }
+    if(ok){ S.done = true; setFb(fb,'good','<b>Correct.</b> ' + solvedHtml(rx)); return; }
+    setFb(fb,'bad','<b>Not quite.</b> Each ' + termName(ts[b0.k]) + ' adds ' + ts[b0.k].A + ' to the top total. Top: <span class="mono">' +
+      setupLine(rx, b0.k, 'A', 'coef') + '</span>');
+    return;
+  }
+
+  /* word problems: three blanks, and the two products may be in either order */
+  if(S.set === 'word'){
+    var nodes = [el('s-b0'), el('s-b1'), el('s-b2')], gots = nodes.map(readBlank);
+    if(gots.some(function(g){ return g.a === null || g.z === null || !String(g.s).trim(); })){
+      setFb(fb,'hint','Fill in every box: a top number, a bottom number and a symbol for each piece.'); return;
+    }
+    if(gots.some(function(g){ return isNaN(g.a) || isNaN(g.z); })){
+      setFb(fb,'hint','The top and bottom numbers are whole numbers. For a negative bottom number, type a minus sign: -1.'); return;
+    }
+    var swapped = false;
+    var direct = [judgeNuc(rx,1,gots[1]), judgeNuc(rx,2,gots[2])];
+    var cross = [judgeNuc(rx,2,gots[1]), judgeNuc(rx,1,gots[2])];
+    function good(r){ return r.kind === 'correct' || r.kind === 'case'; }
+    if(!(good(direct[0]) && good(direct[1])) && good(cross[0]) && good(cross[1])) swapped = true;
+    var rP = judgeNuc(rx,0,gots[0]);
+    var rD = swapped ? cross[1] : direct[0], rQ = swapped ? cross[0] : direct[1];
+    var all = good(rP) && good(rD) && good(rQ);
+    [[nodes[0], rP], [nodes[swapped ? 2 : 1], rD], [nodes[swapped ? 1 : 2], rQ]].forEach(function(p){
+      var r = p[1];
+      markBlank(p[0], { bt:r.kind !== 'nums' || r.topOk, bb:r.kind !== 'nums' || r.botOk, bs:good(r) ? true : r.kind === 'sym' ? false : null });
+    });
+    if(!S.scored){ S.scored = true; sScore.add(all); }
+    if(all){ S.done = true; setFb(fb,'good','<b>Correct.</b> ' + solvedHtml(rx)); return; }
+    var dk = decayKind(rx), lines = [];
+    if(!good(rP)) lines.push('<b>Starting nucleus:</b> the name gives the top number. The bottom number is ' + nameOfZ(rx.L[0].Z) + '’s atomic number from your periodic table.' +
+      (rP.kind === 'sym' ? ' Check the symbol too.' : ''));
+    if(!good(rQ)) lines.push('<b>Particle:</b> ' + PART[dk].decay + ' gives off ' + article(PART[dk].name) + '. Check the particle chart for its numbers and symbol.');
+    if(!good(rD)){
+      if(!good(rP)) lines.push('<b>New nucleus:</b> fix the starting nucleus first, then balance the top and bottom totals.');
+      else lines.push('<b>New nucleus:</b> ' + (nucHint(rx, 1, rD, gots[swapped ? 2 : 1]) || ''));
+    }
+    setFb(fb,'bad', lines.join('<br>'));
+    return;
+  }
+
+  /* one nucleus or particle blank */
+  var node = el('s-b0'), got = readBlank(node), res = judgeNuc(rx, b0.k, got);
+  if(res.kind === 'incomplete' || res.kind === 'nan'){ setFb(fb,'hint', nucHint(rx, b0.k, res, got)); return; }
+  var right = res.kind === 'correct' || res.kind === 'case';
+  markBlank(node, { bt: res.kind !== 'nums' || res.topOk, bb: res.kind !== 'nums' || res.botOk, bs: right ? true : res.kind === 'sym' ? false : null });
+  if(!S.scored){ S.scored = true; sScore.add(right); }
+  if(right){
+    S.done = true;
+    setFb(fb,'good','<b>Correct.</b> ' + (res.kind === 'case' ? 'Write the symbol as <b>' + ts[b0.k].s + '</b>, with only the first letter capitalized. ' : '') + solvedHtml(rx));
+    return;
+  }
+  setFb(fb,'bad', nucHint(rx, b0.k, res, got));
+}
+function sShow(){
+  if(!S) return;
+  if(!S.scored){ S.scored = true; sScore.add(false); }
+  S.done = true;
+  var ts = termsOf(S.rx);
+  S.blanks.forEach(function(b, bi){
+    var node = el('s-b' + bi);
+    if(b.type === 'coef'){ node.value = ts[b.k].c; node.classList.remove('bad'); node.classList.add('good'); }
+    else { fillBlank(node, ts[b.k]); markBlank(node, { bt:true, bb:true, bs:true }); }
+  });
+  setFb(el('s-fb'),'hint','<b>Answer:</b> ' + solvedHtml(S.rx));
+}
+el('s-check').addEventListener('click', sCheck);
+el('s-show').addEventListener('click', sShow);
+el('s-new').addEventListener('click', sNew);
+el('s-gamma').addEventListener('click', function(){
+  var boxes = el('s-eq').querySelectorAll('.bs');
+  if(!boxes.length) return;
+  var target = Array.prototype.filter.call(boxes, function(b){ return b === document.activeElement; })[0] || boxes[boxes.length - 1];
+  target.value = 'γ';
+  target.classList.remove('good','bad');
+  target.focus();
+});
+each(el('s-tabs').querySelectorAll('.tab'), function(b){
+  b.addEventListener('click', function(){
+    sSet = b.dataset.set;
+    each(el('s-tabs').querySelectorAll('.tab'), function(o){ o.setAttribute('aria-selected', String(o === b)); });
+    S = null;
+    sNew();
+  });
+});
+
+/* =========================================================
+   5. quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'What makes a nuclear reaction different from the other reactions in this unit?',
+    opts:['Atoms trade partners, but every atom comes through unchanged','The nucleus changes, so one element can turn into another','Electrons move from one atom to another','The products always have more mass than the reactants'],
+    ans:1,
+    why:'Chemical reactions only rearrange electrons and bonds, so the same elements appear on both sides. A nuclear reaction changes the protons and neutrons themselves, and a new number of protons means a new element.' },
+  { stem:'In [[Po210]], what does the 84 tell you?',
+    opts:['The number of neutrons','The number of protons, which is what makes it polonium','Protons plus neutrons','Its mass in grams'],
+    ans:1,
+    why:'The bottom number is the atomic number: 84 protons, and every atom with 84 protons is polonium. The top number, 210, counts protons and neutrons together, so there are 210 − 84 = 126 neutrons.' },
+  { stem:'How many neutrons are in [[U235]]?',
+    opts:['92','143','235','327'],
+    ans:1,
+    why:'235 − 92 = 143. The 235 counts protons and neutrons together, and 92 of them are protons.' },
+  { stem:'Polonium-210 gives off an alpha particle. Which nucleus is left?',
+    opts:['[[Pb206]]','[[Po206]]','[[Hg208]]','[[Pb210]]'],
+    ans:0,
+    why:'Top: 210 = A + 4, so A = 206. Bottom: 84 = Z + 2, so Z = 82, which is lead. [[Po206]] keeps the old element even though the atomic number changed, [[Hg208]] flips the alpha numbers, and [[Pb210]] forgot to subtract 4 from the top.' },
+  { stem:'[[P32]] → [[S32]] + ____. Which particle goes in the blank?',
+    opts:['[[b]] beta particle','[[b+]] positron','[[p]] proton','[[g]] gamma ray'],
+    ans:0,
+    why:'Top: 32 = 32 + A, so A = 0. Bottom: 15 = 16 + Z, so Z = −1. Zero on top and −1 on the bottom is a beta particle. The atomic number went up by 1, which is what beta decay does.' },
+  { stem:'A nucleus gives off a gamma ray and nothing else. What happens to its mass number and atomic number?',
+    opts:['Both drop by 1','The mass number stays the same and the atomic number goes up by 1','Neither changes; the nucleus just loses energy','It splits into two smaller nuclei'],
+    ans:2,
+    why:'A gamma ray is [[g]]: zero on top and zero on the bottom. It’s pure energy, so the nucleus keeps the same protons and neutrons. It’s the same isotope, just with less energy.' },
+  { stem:'Which statement describes fusion?',
+    opts:['A heavy nucleus splits into two medium-sized nuclei','Light nuclei join to make a heavier nucleus','A nucleus gives off an alpha particle','An atom gains an electron'],
+    ans:1,
+    why:'Fusion joins light nuclei, like the hydrogen that fuses into helium in the Sun. Fission is the opposite: a heavy nucleus splitting apart.' },
+  { stem:'[[U235]] + [[n]] → [[Cs137]] + [[Rb96]] + ___ [[n]]. How many neutrons come out?',
+    opts:['1','2','3','4'],
+    ans:2,
+    why:'Top, left: 235 + 1 = 236. Top, right so far: 137 + 96 = 233. The neutrons make up the other 3, and each neutron has a top number of 1, so 3 neutrons. The bottom checks too: 92 = 55 + 37 + 3 × 0.' }
+];
+(function buildQuiz(){
+  var host = el('quiz'), html = '';
+  QUIZ.forEach(function(q,qi){
+    html += '<div class="q"><p class="stem">' + (qi+1) + '. ' + fmtT(q.stem) + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o,oi){ html += '<button type="button" class="opt" data-q="' + qi + '" data-o="' + oi + '">' + fmtT(o) + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  host.innerHTML = html;
+  each(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      each(el('q'+qi).querySelectorAll('.opt'), function(other,i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      setFb(el('qfb'+qi), oi === q.ans ? 'good' : 'bad', '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + fmtT(q.why));
+    });
+  });
+})();
+
+/* boot */
+yNew();
+tNew();
+wkRender();
+sNew();
+</script>
+</body>
+</html>
