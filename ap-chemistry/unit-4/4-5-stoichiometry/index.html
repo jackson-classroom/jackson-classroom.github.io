@@ -8,6 +8,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/ap-chemistry/topic.css">
+<style>
+.roadmap{display:grid;grid-template-columns:repeat(7,auto);align-items:center;justify-content:start;gap:8px;margin:18px 0 8px}
+.roadmap .node{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:10px 14px;font-weight:600;text-align:center;white-space:nowrap}
+.roadmap .node.mol{border-color:var(--acc);background:var(--acc-lite);color:var(--acc-dk)}
+.roadmap .op{font-family:var(--mono);font-size:11.5px;color:var(--mute);text-align:center;line-height:1.3}
+.roadmap .op b{display:block;font-size:18px;color:var(--ink2);font-weight:400}
+.sides{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0 0}
+.sides .mini p{margin:4px 0 0}
+.readrow{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;gap:4px 18px;font-size:15.5px;margin:12px 0}
+.readrow .h{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+@media (max-width:760px){
+  .roadmap{grid-template-columns:1fr;justify-items:start}
+  .roadmap .op{text-align:left;padding-left:14px}
+  .roadmap .op b{display:inline;margin-right:6px}
+}
+</style>
 </head>
 <body>
 
@@ -24,18 +40,204 @@
   <div class="eyebrow">AP Chemistry · Unit 4 Chemical Reactions · Topic 4.5</div>
   <h1><em>Stoichiometry</em></h1>
   <p class="lede">The coefficients in a balanced equation are a recipe written in moles. Stoichiometry uses them to predict how much product forms and which reactant runs out first.</p>
+  <p class="lo-line"><b>Learning objective 4.5.A</b> Explain changes in the amounts of reactants and products based on the balanced reaction equation for a chemical process.</p>
 
   <div class="board" aria-label="Key ideas in this topic">
-    <div class="idea"><span class="code">Q1</span><span class="lq">How much product can I make?</span><span class="d">Mole ratios from the balanced equation</span></div>
-    <div class="idea"><span class="code">Q2</span><span class="lq">Which reactant runs out first?</span><span class="d">Finding the limiting reactant and what’s left over</span></div>
-    <div class="idea"><span class="code">Q3</span><span class="lq">What if it’s a gas or a solution?</span><span class="d">Using molarity and PV = nRT inside a stoichiometry problem</span></div>
+    <a class="idea" href="#ratios"><span class="code">Q1</span><span class="lq">How much product can I make?</span><span class="d">Mole ratios from the balanced equation, and the road map from grams to grams</span></a>
+    <a class="idea" href="#limiting"><span class="code">Q2</span><span class="lq">Which reactant runs out first?</span><span class="d">Finding the limiting reactant and what’s left over, with a BCA table</span></a>
+    <a class="idea" href="#gases"><span class="code">Q3</span><span class="lq">What if it’s a gas or a solution?</span><span class="d">Using molarity and PV = nRT inside a stoichiometry problem</span></a>
     <div class="board-foot"><span><b>Unit 4</b> Chemical Reactions · 7–9% of the AP Exam</span><span><b>Before this</b> <a href="/ap-chemistry/unit-4/4-4-physical-and-chemical-changes/">4.4 Physical and Chemical Changes</a></span></div>
   </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#ratios">Mole ratios</a>
+    <a href="#map">The road map</a>
+    <a href="#limiting">Limiting reactant</a>
+    <a href="#gases">Gases and solutions</a>
+    <a href="#trainer">Mass to mass</a>
+    <a href="#bca">BCA tables</a>
+    <a href="#check">Check yourself</a>
+  </nav>
 </header>
 
-<section id="tools">
-  <div class="sec-head"><span class="tag plain">Coming soon</span><h2>Tools and practice</h2></div>
-  <div class="soon-card"><p>Interactive tools, worked examples, and AP-style practice for Topic 4.5 aren’t posted yet. The three questions above are the ones this topic answers.</p></div>
+<!-- =========================================================
+     4.5.A.1 / 4.5.A.2  MOLE RATIOS
+     ========================================================= -->
+<section id="ratios">
+  <div class="sec-head"><span class="tag">4.5.A.1–2</span><h2>Coefficients are mole ratios</h2></div>
+  <div class="def">
+    <span class="ek">4.5.A.1</span>
+    <div class="term">Conservation makes it possible</div>
+    <p>Because atoms are conserved in a chemical process, you can calculate the amount of product from a known amount of reactant, or the amount of reactant needed for a known amount of product.</p>
+  </div>
+  <div class="def">
+    <span class="ek">4.5.A.2</span>
+    <div class="term">What the coefficients mean</div>
+    <p>The coefficients in a balanced equation give the proportions of the substances involved. They’re used in calculations based on the mole.</p>
+  </div>
+  <p>Read <span data-eq="N2(g) + 3H2(g) -> 2NH3(g)"></span> three ways:</p>
+  <div class="tablewrap"><div class="readrow">
+    <span class="h">Read as</span><span class="h">N<sub>2</sub></span><span class="h">H<sub>2</sub></span><span class="h">NH<sub>3</sub></span>
+    <span>Particles</span><span>1 molecule</span><span>3 molecules</span><span>2 molecules</span>
+    <span>Moles</span><span>1 mol</span><span>3 mol</span><span>2 mol</span>
+    <span>Grams</span><span>28.02 g</span><span>6.05 g</span><span>34.07 g</span>
+  </div></div>
+  <p>The particle and mole rows follow the coefficients. The gram row doesn’t: it’s 28.02 : 6.05 : 34.07, not 1 : 3 : 2. Mass is conserved (28.02 + 6.05 = 34.07), but the ratio only works in moles.</p>
+  <div class="note"><b>Always go through moles.</b> A mole ratio can connect moles of one substance to moles of another. It can never connect grams to grams directly.</div>
+</section>
+
+<!-- =========================================================
+     ROAD MAP
+     ========================================================= -->
+<section id="map">
+  <div class="sec-head"><span class="tag">4.5.A.2</span><h2>The road map</h2></div>
+  <p>Every stoichiometry problem crosses the same bridge: into moles of what you know, across the mole ratio, and out of moles of what you want.</p>
+  <div class="roadmap" aria-label="Grams of A, divided by molar mass, gives moles of A; times the mole ratio gives moles of B; times molar mass gives grams of B.">
+    <span class="node">grams of A</span>
+    <span class="op"><b>→</b>÷ molar mass of A</span>
+    <span class="node mol">moles of A</span>
+    <span class="op"><b>→</b>× mole ratio B / A</span>
+    <span class="node mol">moles of B</span>
+    <span class="op"><b>→</b>× molar mass of B</span>
+    <span class="node">grams of B</span>
+  </div>
+  <p>The moles don’t have to come from grams. These enter or leave at either “moles” box:</p>
+  <div class="sides">
+    <div class="mini"><div class="n">Particles</div><p>moles = particles ÷ 6.022 × 10<sup>23</sup></p></div>
+    <div class="mini"><div class="n">Solutions</div><p>moles = <i>M</i> × <i>V</i> (in liters)</p></div>
+    <div class="mini"><div class="n">Gases</div><p>moles = <i>PV</i> / <i>RT</i></p></div>
+  </div>
+
+  <h3>Worked example: grams to grams</h3>
+  <p>Iron is made by reducing iron(III) oxide with carbon monoxide: <span data-eq="Fe2O3(s) + 3CO(g) -> 2Fe(s) + 3CO2(g)"></span>. What mass of iron can be made from 50.0 g of Fe<sub>2</sub>O<sub>3</sub> with excess CO?</p>
+  <div class="chain">
+    <span>50.0 g Fe<sub>2</sub>O<sub>3</sub></span><span class="x">×</span>
+    <span class="frac"><span>1 mol Fe<sub>2</sub>O<sub>3</sub></span><span>159.70 g Fe<sub>2</sub>O<sub>3</sub></span></span><span class="x">×</span>
+    <span class="frac"><span>2 mol Fe</span><span>1 mol Fe<sub>2</sub>O<sub>3</sub></span></span><span class="x">×</span>
+    <span class="frac"><span>55.85 g Fe</span><span>1 mol Fe</span></span><span>= <b>35.0 g Fe</b></span>
+  </div>
+  <p>“Excess CO” tells you CO won’t run out, so Fe<sub>2</sub>O<sub>3</sub> decides how much iron forms.</p>
+</section>
+
+<!-- =========================================================
+     LIMITING REACTANT
+     ========================================================= -->
+<section id="limiting">
+  <div class="sec-head"><span class="tag">4.5.A.1</span><h2>Which reactant runs out first?</h2></div>
+  <p>When neither reactant is in excess, one of them runs out first and stops the reaction. That’s the <b>limiting reactant</b>. Whatever is left of the other one is the <b>excess reactant</b>. You saw this in 4.3 with particles:</p>
+  <div class="bxa" data-fig="lim"></div>
+  <div class="plegend" data-legend="H O"></div>
+  <p class="figcap"><span data-eq="2H2(g) + O2(g) -> 2H2O(g)"></span>: six H<sub>2</sub> need only three O<sub>2</sub>, so H<sub>2</sub> runs out first even though there are more H<sub>2</sub> molecules. One O<sub>2</sub> is left over.</p>
+
+  <h3>The method</h3>
+  <ol>
+    <li>Convert every reactant to moles.</li>
+    <li>Divide each by its coefficient. The <b>smallest</b> result is the limiting reactant. That number is how many “sets” of the reaction can happen.</li>
+    <li>Calculate every product, and the amount of excess reactant used, from the limiting reactant only.</li>
+  </ol>
+  <div class="note"><b>Compare moles ÷ coefficient, never grams.</b> The reactant with the smaller mass, or even the smaller number of moles, isn’t automatically the limiting one.</div>
+
+  <h3>Worked example with a BCA table</h3>
+  <p>14.0 g of N<sub>2</sub> and 6.05 g of H<sub>2</sub> react: <span data-eq="N2(g) + 3H2(g) -> 2NH3(g)"></span>. Moles: N<sub>2</sub> = 14.0 / 28.02 = 0.500 mol; H<sub>2</sub> = 6.05 / 2.016 = 3.00 mol. Divide by coefficients: N<sub>2</sub> 0.500 / 1 = 0.500 and H<sub>2</sub> 3.00 / 3 = 1.00, so <b>N<sub>2</sub> is limiting</b>.</p>
+  <p>A <b>BCA table</b> (Before, Change, After) keeps track of every substance in moles:</p>
+  <div class="tablewrap"><table class="bca" style="max-width:520px">
+    <tr><th></th><th>N<sub>2</sub></th><th>H<sub>2</sub></th><th>NH<sub>3</sub></th></tr>
+    <tr><td>BEFORE</td><td>0.500</td><td>3.00</td><td>0</td></tr>
+    <tr><td>CHANGE</td><td>−0.500</td><td>−1.50</td><td>+1.00</td></tr>
+    <tr><td>AFTER</td><td>0</td><td>1.50</td><td>1.00</td></tr>
+  </table></div>
+  <p>The Change row is in the ratio of the coefficients, 1 : 3 : 2, with reactants going down and products going up. The limiting reactant ends at zero. So 1.00 mol NH<sub>3</sub> × 17.03 g/mol = <b>17.0 g NH<sub>3</sub></b> forms, and 1.50 mol (3.02 g) of H<sub>2</sub> is left over.</p>
+</section>
+
+<!-- =========================================================
+     4.5.A.3  GASES AND SOLUTIONS
+     ========================================================= -->
+<section id="gases">
+  <div class="sec-head"><span class="tag">4.5.A.3</span><h2>Gases and solutions</h2></div>
+  <div class="def">
+    <span class="ek">4.5.A.3</span>
+    <div class="term">Combining with other relationships</div>
+    <p>Stoichiometry can be combined with the ideal gas law and with molarity to work quantitatively with gases and solutions.</p>
+  </div>
+
+  <h3>Solutions: a precipitation from Topic 4.2</h3>
+  <p>50.0 mL of 0.200 <i>M</i> BaCl<sub>2</sub> is mixed with 40.0 mL of 0.300 <i>M</i> Na<sub>2</sub>SO<sub>4</sub>. What mass of BaSO<sub>4</sub> precipitates?</p>
+  <ul>
+    <li>Moles from <i>M</i> × <i>V</i>: Ba<sup>2+</sup> = 0.200 × 0.0500 L = 0.0100 mol; SO<sub>4</sub><sup>2−</sup> = 0.300 × 0.0400 L = 0.0120 mol.</li>
+    <li>The net ionic equation gives the ratio: <span data-eq="Ba^2+(aq) + SO4^2-(aq) -> BaSO4(s)"></span>, 1 : 1. Ba<sup>2+</sup> is limiting.</li>
+    <li>0.0100 mol BaSO<sub>4</sub> × 233.39 g/mol = <b>2.33 g BaSO<sub>4</sub></b>, with 0.0020 mol SO<sub>4</sub><sup>2−</sup> left in solution.</li>
+  </ul>
+
+  <h3>Gases: an airbag</h3>
+  <p>An airbag inflates when sodium azide decomposes: <span data-eq="2NaN3(s) -> 2Na(s) + 3N2(g)"></span>. What mass of NaN<sub>3</sub> produces 65.0 L of N<sub>2</sub> at 1.00 atm and 25 °C?</p>
+  <div class="chain">
+    <span><i>n</i> = <i>PV</i>/<i>RT</i> = </span>
+    <span class="frac"><span>(1.00 atm)(65.0 L)</span><span>(0.08206 L·atm/mol·K)(298 K)</span></span>
+    <span>= 2.66 mol N<sub>2</sub></span>
+  </div>
+  <div class="chain">
+    <span>2.66 mol N<sub>2</sub></span><span class="x">×</span>
+    <span class="frac"><span>2 mol NaN<sub>3</sub></span><span>3 mol N<sub>2</sub></span></span><span class="x">×</span>
+    <span class="frac"><span>65.02 g NaN<sub>3</sub></span><span>1 mol NaN<sub>3</sub></span></span><span>= <b>115 g NaN<sub>3</sub></b></span>
+  </div>
+</section>
+
+<!-- =========================================================
+     TRAINER: MASS TO MASS
+     ========================================================= -->
+<section id="trainer">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Mass to mass, one step at a time</h2></div>
+  <p>A new problem each time. Fill in each step of the road map and check. Answers within 1% count, so rounding along the way is fine.</p>
+  <div class="card">
+    <div class="card-label"><span>Grams to grams</span><span class="score" id="t-score">0 solved</span></div>
+    <p class="prompt" id="t-q"></p>
+    <p class="given" id="t-mm"></p>
+    <div class="calc">
+      <label for="t1" id="t1l"></label><span><input class="ans" id="t1" inputmode="decimal" autocomplete="off"><span class="unit">mol</span></span>
+      <label for="t2" id="t2l"></label><span><input class="ans" id="t2" inputmode="decimal" autocomplete="off"><span class="unit">mol</span></span>
+      <label for="t3" id="t3l"></label><span><input class="ans" id="t3" inputmode="decimal" autocomplete="off"><span class="unit">g</span></span>
+    </div>
+    <div class="fb" id="t-fb" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="t-check">Check</button>
+      <button type="button" class="ghost" id="t-show">Show the solution</button>
+      <button type="button" class="ghost" id="t-new">New problem →</button>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     TRAINER: BCA
+     ========================================================= -->
+<section id="bca">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Limiting reactant: fill the BCA table</h2></div>
+  <p>The Before row is filled in. Choose the limiting reactant, then fill in the Change and After rows in moles. Use negative numbers for what’s used up.</p>
+  <div class="card">
+    <div class="card-label"><span>Before · Change · After</span><span class="score" id="b-score">0 solved</span></div>
+    <p class="prompt" id="b-q"></p>
+    <div class="calc" style="grid-template-columns:auto auto;justify-content:start">
+      <label for="b-lim">Limiting reactant</label>
+      <select id="b-lim" class="ans" style="width:auto"></select>
+    </div>
+    <div class="tablewrap"><table class="bca" id="b-table"></table></div>
+    <div class="fb" id="b-fb" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="b-check">Check</button>
+      <button type="button" class="ghost" id="b-show">Show the table</button>
+      <button type="button" class="ghost" id="b-new">New problem →</button>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PRACTICE
+     ========================================================= -->
+<section id="check">
+  <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
+  <p>Eight multiple-choice questions written in AP style, with numbers you can handle without a calculator, then two calculator-style written responses.</p>
+  <p class="score" id="mc-score" style="margin:0"></p>
+  <div class="card" id="mc"></div>
+  <div class="card" id="frq"></div>
 
   <div class="next">
     <div><p class="nt">Up next: 4.6 Introduction to Titration</p><p>Titrant and analyte · the equivalence point · finding an unknown concentration</p></div>
@@ -44,11 +246,231 @@
 </section>
 
 <footer>
-  <p>Topic 4.5 Stoichiometry, following the AP Chemistry course framework.</p>
+  <p>Topic 4.5 Stoichiometry, following the AP Chemistry course framework (Learning Objective 4.5.A). Molar masses use the atomic masses on the AP periodic table. Practice questions are original and written in AP style, and the trainers generate a new problem every time.</p>
   <p><a href="/ap-chemistry/unit-4/">← Unit 4 — Chemical Reactions</a></p>
 </footer>
 
 </div><!-- /wrap -->
 
+<script src="/ap-chemistry/topic.js"></script>
+<script src="/ap-chemistry/particles.js"></script>
+<script>
+/* ---------- figure ---------- */
+document.querySelector('[data-fig="lim"]').innerHTML =
+  "<div>" + PART.box({label:"Before", items:[["H2",6],["O2",4]], seed:"45-lim-1"}) + '</div><span class="arrow" aria-hidden="true">→</span><div>' +
+  PART.box({label:"After", items:[["H2O",6],["O2",1]], seed:"45-lim-2"}) + "</div>";
+document.querySelectorAll("[data-legend]").forEach(function(el){ el.outerHTML = PART.legend(el.dataset.legend.split(" ")); });
+
+/* ---------- shared problem bank ---------- */
+var BANK = [
+  "Fe2O3(s) + 3CO(g) -> 2Fe(s) + 3CO2(g)",
+  "2Al(s) + 3Cl2(g) -> 2AlCl3(s)",
+  "N2(g) + 3H2(g) -> 2NH3(g)",
+  "CH4(g) + 2O2(g) -> CO2(g) + 2H2O(l)",
+  "2KClO3(s) -> 2KCl(s) + 3O2(g)",
+  "C3H8(g) + 5O2(g) -> 3CO2(g) + 4H2O(l)",
+  "4Fe(s) + 3O2(g) -> 2Fe2O3(s)",
+  "2Mg(s) + O2(g) -> 2MgO(s)",
+  "2C2H6(g) + 7O2(g) -> 4CO2(g) + 6H2O(l)",
+  "CaCO3(s) -> CaO(s) + CO2(g)"
+];
+function sidesOf(eq){ return eq.split(" -> ").map(function(s){ return s.split(" + ").map(APC.parse); }); }
+function f(p){ return APC.term({n:1, f:p.f, z:"", st:""}); }     // a formula, formatted
+function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
+function mark(input, ok){ input.classList.toggle("ok", ok); input.classList.toggle("no", !ok); }
+
+/* ---------- mass-to-mass trainer ---------- */
+(function(){
+  var P, solved = 0, done;
+  var q = document.getElementById("t-q"), mm = document.getElementById("t-mm"), fb = document.getElementById("t-fb"),
+      ins = [document.getElementById("t1"), document.getElementById("t2"), document.getElementById("t3")];
+  function make(){
+    var eq = pick(BANK), sd = sidesOf(eq), all = sd[0].concat(sd[1]);
+    var g = pick(sd[0]), w = pick(all.filter(function(x){ return x !== g; }));
+    var mass = +(5 + Math.random() * 75).toPrecision(3);
+    var n1 = mass / APC.molar(g.f), n2 = n1 * w.n / g.n;
+    return {eq:eq, g:g, w:w, wReact:sd[0].indexOf(w) >= 0, mass:mass, n1:n1, n2:n2, m3:n2 * APC.molar(w.f)};
+  }
+  function load(){
+    P = make(); done = false;
+    q.innerHTML = "For the reaction " + APC.fmt(P.eq) + ", what mass of " + f(P.w) + " is " + (P.wReact ? "needed to react completely with " : "produced from ") +
+      "<b>" + APC.sig(P.mass, 3) + " g</b> of " + f(P.g) + "?";
+    mm.innerHTML = "Molar masses: " + f(P.g) + " " + APC.molar(P.g.f).toFixed(2) + " g/mol · " + f(P.w) + " " + APC.molar(P.w.f).toFixed(2) + " g/mol";
+    document.getElementById("t1l").innerHTML = "1. Moles of " + f(P.g);
+    document.getElementById("t2l").innerHTML = "2. Moles of " + f(P.w);
+    document.getElementById("t3l").innerHTML = "3. Mass of " + f(P.w);
+    ins.forEach(function(i){ i.value = ""; i.className = "ans"; });
+    fb.className = "fb";
+  }
+  function chainHtml(){
+    return '<div class="chain"><span>' + APC.sig(P.mass, 3) + " g " + f(P.g) + '</span><span class="x">×</span>' +
+      '<span class="frac"><span>1 mol ' + f(P.g) + "</span><span>" + APC.molar(P.g.f).toFixed(2) + " g " + f(P.g) + '</span></span><span class="x">×</span>' +
+      '<span class="frac"><span>' + P.w.n + " mol " + f(P.w) + "</span><span>" + P.g.n + " mol " + f(P.g) + '</span></span><span class="x">×</span>' +
+      '<span class="frac"><span>' + APC.molar(P.w.f).toFixed(2) + " g " + f(P.w) + "</span><span>1 mol " + f(P.w) + "</span></span>" +
+      "<span>= <b>" + APC.sig(P.m3, 3) + " g " + f(P.w) + "</b></span></div>";
+  }
+  document.getElementById("t-check").addEventListener("click", function(){
+    var v = ins.map(function(i){ return APC.num(i.value); }), want = [P.n1, P.n2, P.m3], ok = v.map(function(x, k){ return APC.close(x, want[k]); });
+    ok.forEach(function(o, k){ mark(ins[k], o); });
+    if(ok.every(Boolean)){
+      if(!done){ solved++; document.getElementById("t-score").textContent = solved + " solved"; }
+      done = true;
+      fb.className = "fb show good"; fb.innerHTML = "<p><b>Right.</b> The whole path in one line:</p>" + chainHtml(); return;
+    }
+    var k = ok.indexOf(false), msg;
+    if(!isFinite(v[k])) msg = "Step " + (k + 1) + " is empty or isn’t a number I can read. Try a form like 0.0125 or 1.25e-2.";
+    else if(k === 0) msg = "Step 1: divide the mass of " + f(P.g) + " by its molar mass.";
+    else if(k === 1) msg = APC.close(v[1], P.n1 * P.g.n / P.w.n) ? "Step 2: the ratio is upside down. Multiply by " + P.w.n + " mol " + f(P.w) + " / " + P.g.n + " mol " + f(P.g) + "."
+                                                                : "Step 2: multiply the moles from step 1 by the mole ratio from the coefficients, " + P.w.n + " : " + P.g.n + ".";
+    else msg = "Step 3: multiply the moles of " + f(P.w) + " by its molar mass.";
+    fb.className = "fb show bad"; fb.innerHTML = "<b>Not yet.</b> " + msg;
+  });
+  document.getElementById("t-show").addEventListener("click", function(){
+    done = true;
+    [P.n1, P.n2, P.m3].forEach(function(x, k){ ins[k].value = APC.sig(x, 3); mark(ins[k], true); });
+    fb.className = "fb show hint"; fb.innerHTML = "<p>Here’s the solution. Try the next one on your own.</p>" + chainHtml();
+  });
+  document.getElementById("t-new").addEventListener("click", load);
+  load();
+})();
+
+/* ---------- BCA trainer ---------- */
+(function(){
+  var P, solved = 0, done;
+  var q = document.getElementById("b-q"), table = document.getElementById("b-table"), lim = document.getElementById("b-lim"), fb = document.getElementById("b-fb");
+  function make(){
+    for(var t = 0; t < 200; t++){
+      var eq = pick(BANK), sd = sidesOf(eq);
+      if(sd[0].length !== 2) continue;
+      var R = sd[0], Pr = sd[1];
+      var before = R.map(function(){ return (2 + Math.floor(Math.random() * 11)) / 10; });   // 0.20 to 1.20 mol
+      var sets = R.map(function(p, i){ return before[i] / p.n; });
+      var x = Math.min.apply(null, sets), li = sets.indexOf(x);
+      if(Math.abs(sets[0] - sets[1]) < 1e-9) continue;                                     // keep one reactant clearly limiting
+      var all = R.concat(Pr), b = before.concat(Pr.map(function(){ return 0; }));
+      var ch = all.map(function(p, i){ return (i < R.length ? -1 : 1) * p.n * x; });
+      return {eq:eq, R:R, all:all, before:b, change:ch, after:b.map(function(v, i){ return v + ch[i]; }), li:li};
+    }
+  }
+  function cell(row, i){ return '<td><input class="ans" data-r="' + row + '" data-i="' + i + '" inputmode="decimal" autocomplete="off" aria-label="' + row + " " + P.all[i].f + '"></td>'; }
+  function load(){
+    P = make(); done = false;
+    q.innerHTML = APC.fmt(P.eq) + "<br>" + P.R.map(function(p, i){ return APC.sig(P.before[i], 2) + " mol " + f(p); }).join(" and ") + " are mixed and react until one runs out.";
+    lim.innerHTML = '<option value="">choose…</option>' + P.R.map(function(p, i){ return '<option value="' + i + '">' + p.f + "</option>"; }).join("");
+    lim.className = "ans";
+    table.innerHTML = "<tr><th></th>" + P.all.map(function(p){ return "<th>" + f(p) + "</th>"; }).join("") + "</tr>" +
+      "<tr><td>BEFORE</td>" + P.before.map(function(v){ return "<td>" + (v ? APC.sig(v, 2) : "0") + "</td>"; }).join("") + "</tr>" +
+      "<tr><td>CHANGE</td>" + P.all.map(function(_, i){ return cell("change", i); }).join("") + "</tr>" +
+      "<tr><td>AFTER</td>" + P.all.map(function(_, i){ return cell("after", i); }).join("") + "</tr>";
+    fb.className = "fb";
+  }
+  // Before values are given to the hundredth, so an answer rounded to the hundredth counts too.
+  function near(v, want){ return isFinite(v) && Math.abs(v - want) <= Math.max(0.006, 0.015 * Math.abs(want)); }
+  document.getElementById("b-check").addEventListener("click", function(){
+    var msgs = [], allOk = true;
+    var limOk = lim.value === String(P.li);
+    mark(lim, limOk);
+    if(!limOk){ allOk = false; msgs.push("Limiting reactant: divide each reactant’s moles by its coefficient. The smaller result runs out first."); }
+    var signFlip = false, negAfter = false;
+    table.querySelectorAll("input").forEach(function(inp){
+      var i = +inp.dataset.i, row = inp.dataset.r, v = APC.num(inp.value), want = P[row][i], ok = near(v, want);
+      mark(inp, ok);
+      if(!ok){ allOk = false; if(row === "change" && near(-v, want)) signFlip = true; if(row === "after" && v < 0) negAfter = true; }
+    });
+    if(signFlip) msgs.push("Check the signs in the Change row: reactants are used up (negative) and products form (positive).");
+    if(negAfter) msgs.push("Nothing can end below zero. If an After value is negative, that reactant ran out first.");
+    if(allOk){
+      if(!done){ solved++; document.getElementById("b-score").textContent = solved + " solved"; }
+      done = true;
+      fb.className = "fb show good";
+      fb.innerHTML = "<b>Right.</b> " + f(P.R[P.li]) + " is limiting, so it ends at zero, and every Change is in the ratio of the coefficients.";
+      return;
+    }
+    if(!msgs.length) msgs.push("The Change row has to be in the same ratio as the coefficients, " + P.all.map(function(p){ return p.n; }).join(" : ") + ", scaled to the limiting reactant. After = Before + Change.");
+    fb.className = "fb show bad"; fb.innerHTML = "<p><b>Not yet.</b></p>" + msgs.map(function(m){ return "<p>" + m + "</p>"; }).join("");
+  });
+  document.getElementById("b-show").addEventListener("click", function(){
+    done = true; lim.value = String(P.li); mark(lim, true);
+    table.querySelectorAll("input").forEach(function(inp){
+      var v = P[inp.dataset.r][+inp.dataset.i];
+      inp.value = Math.abs(v) < 1e-9 ? "0" : (v > 0 && inp.dataset.r === "change" ? "+" : "") + APC.sig(v, 3); mark(inp, true);
+    });
+    var x = P.before[P.li] / P.R[P.li].n;
+    fb.className = "fb show hint";
+    fb.innerHTML = "Moles ÷ coefficient: " + P.R.map(function(p, i){ return f(p) + " " + APC.sig(P.before[i] / p.n, 3); }).join(", ") +
+      ". The smallest, " + APC.sig(x, 3) + ", is the number of reaction sets, so each Change is its coefficient × " + APC.sig(x, 3) + ".";
+  });
+  document.getElementById("b-new").addEventListener("click", load);
+  load();
+})();
+
+/* ---------- practice ---------- */
+APC.mc(document.getElementById("mc"), document.getElementById("mc-score"), [
+ {q:"According to the equation [[2C2H6(g) + 7O2(g) -> 4CO2(g) + 6H2O(g)]], how many moles of O<sub>2</sub> are needed to react completely with 0.40 mol of C<sub>2</sub>H<sub>6</sub>?",
+  c:["0.11 mol", "0.80 mol", "1.4 mol", "2.8 mol"],
+  a:2,
+  e:"0.40 mol C<sub>2</sub>H<sub>6</sub> × (7 mol O<sub>2</sub> / 2 mol C<sub>2</sub>H<sub>6</sub>) = 1.4 mol O<sub>2</sub>. (A) flips the ratio, and (D) multiplies by 7 without dividing by 2."},
+
+ {q:"A mixture of 4.0 mol of Al and 4.0 mol of Cl<sub>2</sub> reacts according to the equation [[2Al(s) + 3Cl2(g) -> 2AlCl3(s)]]. Which of the following is correct?",
+  c:["Al is the limiting reactant, and 4.0 mol of AlCl<sub>3</sub> forms.",
+     "Cl<sub>2</sub> is the limiting reactant, and about 2.7 mol of AlCl<sub>3</sub> forms.",
+     "Cl<sub>2</sub> is the limiting reactant, and 4.0 mol of AlCl<sub>3</sub> forms.",
+     "Neither reactant is limiting, because equal numbers of moles are present."],
+  a:1,
+  e:"Divide by coefficients: Al 4.0 / 2 = 2.0, Cl<sub>2</sub> 4.0 / 3 ≈ 1.3, so Cl<sub>2</sub> runs out first. 4.0 mol Cl<sub>2</sub> × (2 / 3) ≈ 2.7 mol AlCl<sub>3</sub>. Equal moles doesn’t mean equal use: the reaction needs 1.5 Cl<sub>2</sub> for every Al."},
+
+ {q:"Equal masses of H<sub>2</sub> and O<sub>2</sub> are mixed and react to form water: [[2H2(g) + O2(g) -> 2H2O(g)]]. Which reactant is limiting, and why?",
+  c:["O<sub>2</sub>, because the equal masses contain far fewer moles of O<sub>2</sub> than are needed to react with all of the H<sub>2</sub>",
+     "H<sub>2</sub>, because it has the smaller molar mass",
+     "H<sub>2</sub>, because its coefficient in the equation is larger",
+     "Neither, because equal masses of reactants react completely"],
+  a:0,
+  e:"An O<sub>2</sub> molecule has about 16 times the mass of an H<sub>2</sub> molecule, so equal masses give about 16 times as many moles of H<sub>2</sub>. The reaction needs only 2 H<sub>2</sub> per O<sub>2</sub>, so O<sub>2</sub> runs out long before H<sub>2</sub> does."},
+
+ {q:"What volume of 0.200 <i>M</i> [[AgNO3]] is needed to precipitate all of the chloride ions from 25.0 mL of 0.100 <i>M</i> [[CaCl2]]?",
+  c:["6.25 mL", "12.5 mL", "50.0 mL", "25.0 mL"],
+  a:3,
+  e:"Moles of CaCl<sub>2</sub> = 0.100 × 0.0250 L = 0.00250 mol, which contains 0.00500 mol Cl<sup>−</sup>. Ag<sup>+</sup> + Cl<sup>−</sup> → AgCl is 1 : 1, so 0.00500 mol Ag<sup>+</sup> is needed: 0.00500 / 0.200 <i>M</i> = 0.0250 L. (B) forgets that each CaCl<sub>2</sub> has two chloride ions."},
+
+ {q:"Potassium chlorate decomposes when heated: [[2KClO3(s) -> 2KCl(s) + 3O2(g)]]. What mass of KClO<sub>3</sub> (molar mass 122.55 g/mol) must decompose to produce 0.30 mol of O<sub>2</sub>?",
+  c:["12.3 g", "24.5 g", "36.8 g", "55.1 g"],
+  a:1,
+  e:"0.30 mol O<sub>2</sub> × (2 mol KClO<sub>3</sub> / 3 mol O<sub>2</sub>) = 0.20 mol KClO<sub>3</sub>, and 0.20 × 122.55 ≈ 24.5 g. (C) skips the mole ratio, and (D) flips it."},
+
+ {q:"The diagram shows a mixture of N<sub>2</sub> and H<sub>2</sub> before they react according to the equation [[N2(g) + 3H2(g) -> 2NH3(g)]]. " + PART.legend(["N","H"]) +
+    '<div class="bxa one">' + PART.box({label:"Before", items:[["N2",2],["H2",9]], seed:"45-q6"}) + "</div>" +
+    "Which statement correctly describes the reaction when it goes to completion?",
+  c:["H<sub>2</sub> is limiting, and 6 molecules of NH<sub>3</sub> form.",
+     "N<sub>2</sub> is limiting, and 2 molecules of NH<sub>3</sub> form.",
+     "H<sub>2</sub> is limiting, and 3 molecules of NH<sub>3</sub> form.",
+     "N<sub>2</sub> is limiting, and 4 molecules of NH<sub>3</sub> form."],
+  a:3,
+  e:"2 N<sub>2</sub> can react with 6 H<sub>2</sub> to make 4 NH<sub>3</sub>, leaving 3 H<sub>2</sub> unreacted. There are more H<sub>2</sub> molecules, but there aren’t enough N<sub>2</sub> to use them all."},
+
+ {q:"A solution containing 0.010 mol of [[BaCl2]] is mixed with a solution containing 0.050 mol of [[Na2SO4]], and [[BaSO4]] precipitates. Which change would double the mass of BaSO<sub>4</sub> produced?",
+  c:["Doubling the amount of Na<sub>2</sub>SO<sub>4</sub>",
+     "Doubling the total volume of water",
+     "Doubling the amount of BaCl<sub>2</sub>",
+     "Using a more concentrated Na<sub>2</sub>SO<sub>4</sub> solution that contains the same number of moles"],
+  a:2,
+  e:"Ba<sup>2+</sup> and SO<sub>4</sub><sup>2−</sup> react 1 : 1, so BaCl<sub>2</sub> (0.010 mol) is limiting and sulfate is already in excess. Only more of the limiting reactant makes more product. Changing the water volume or the concentration without changing moles does nothing."},
+
+ {q:"For the reaction [[N2(g) + 3H2(g) -> 2NH3(g)]], which of the following statements is correct?",
+  c:["Every 1 g of N<sub>2</sub> reacts with 3 g of H<sub>2</sub>.",
+     "The mass of NH<sub>3</sub> formed equals the total mass of N<sub>2</sub> and H<sub>2</sub> that react.",
+     "Every 1 g of N<sub>2</sub> that reacts produces 2 g of NH<sub>3</sub>.",
+     "The total number of molecules is the same before and after the reaction."],
+  a:1,
+  e:"Atoms, and therefore mass, are conserved. The coefficients are mole ratios, not mass ratios, so (A) and (C) are wrong, and (D) fails because four molecules of reactants become two of product."}
+]);
+
+APC.frq(document.getElementById("frq"), [
+ {q:"<p>A student mixes 50.0 mL of 0.200 <i>M</i> [[Pb(NO3)2(aq)]] with 50.0 mL of 0.300 <i>M</i> [[KI(aq)]], and a yellow precipitate of [[PbI2]] (molar mass 461.0 g/mol) forms.</p><p>(a) Write the balanced net ionic equation for the reaction.</p><p>(b) Identify the limiting reactant. Justify your answer with a calculation.</p><p>(c) Calculate the mass of PbI<sub>2</sub> that forms.</p><p>(d) Calculate the concentration of K<sup>+</sup> in the mixture after the reaction.</p>",
+  m:"<p><b>(a)</b> [[Pb^2+(aq) + 2I^-(aq) -> PbI2(s)]]</p><p><b>(b)</b> Pb<sup>2+</sup>: 0.200 × 0.0500 = 0.0100 mol. I<sup>−</sup>: 0.300 × 0.0500 = 0.0150 mol. Reacting all the Pb<sup>2+</sup> would take 0.0200 mol I<sup>−</sup>, but only 0.0150 mol is present, so <b>I<sup>−</sup> (from KI) is limiting</b>.</p><p><b>(c)</b> 0.0150 mol I<sup>−</sup> × (1 mol PbI<sub>2</sub> / 2 mol I<sup>−</sup>) = 0.00750 mol PbI<sub>2</sub> × 461.0 g/mol = <b>3.46 g</b>.</p><p><b>(d)</b> K<sup>+</sup> is a spectator, so all 0.0150 mol is still dissolved, now in 100.0 mL: 0.0150 / 0.1000 L = <b>0.150 <i>M</i></b>.</p><p class='note'><b>Scoring watch-out:</b> in (d), use the total volume after mixing, 100.0 mL, not 50.0 mL.</p>"},
+
+ {q:"<p>A 2.50 g sample of impure limestone is heated until all of the calcium carbonate decomposes: [[CaCO3(s) -> CaO(s) + CO2(g)]]. The CO<sub>2</sub> collected occupies 0.512 L at 1.00 atm and 298 K. Assume none of the impurities produces a gas.</p><p>(a) Calculate the number of moles of CO<sub>2</sub> produced.</p><p>(b) Calculate the mass of CaCO<sub>3</sub> (molar mass 100.09 g/mol) in the sample.</p><p>(c) Calculate the percent by mass of CaCO<sub>3</sub> in the limestone.</p>",
+  m:"<p><b>(a)</b> <i>n</i> = <i>PV</i>/<i>RT</i> = (1.00 atm)(0.512 L) / (0.08206 L·atm/mol·K × 298 K) = <b>0.0209 mol CO<sub>2</sub></b>.</p><p><b>(b)</b> CaCO<sub>3</sub> and CO<sub>2</sub> are 1 : 1, so 0.0209 mol CaCO<sub>3</sub> × 100.09 g/mol = <b>2.10 g</b>.</p><p><b>(c)</b> 2.10 g / 2.50 g × 100 = <b>83.8%</b> (84.0% if you round to 2.10 g first).</p><p class='note'><b>Connection to 1.4:</b> this is the composition of a mixture, found by stoichiometry instead of elemental analysis.</p>"}
+]);
+</script>
 </body>
 </html>

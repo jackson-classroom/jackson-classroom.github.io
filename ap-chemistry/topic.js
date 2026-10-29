@@ -95,11 +95,48 @@ var APC = (function(){
     }).join("");
   }
 
+  // Atomic masses as printed on the AP Chemistry periodic table.
+  var MASS = {H:1.008, He:4.00, Li:6.94, C:12.01, N:14.01, O:16.00, F:19.00, Na:22.99, Mg:24.31, Al:26.98, Si:28.09,
+              P:30.97, S:32.06, Cl:35.45, K:39.10, Ca:40.08, Cr:52.00, Mn:54.94, Fe:55.85, Co:58.93, Ni:58.69, Cu:63.55,
+              Zn:65.38, Br:79.90, Ag:107.87, I:126.90, Ba:137.33, Pb:207.2};
+
+  // Count atoms in a formula, parentheses included: "Pb(NO3)2" -> {Pb:1, N:2, O:6}
+  function atoms(f){
+    var i = 0;
+    function group(){
+      var out = {};
+      while(i < f.length && f[i] !== ")"){
+        var part;
+        if(f[i] === "("){ i++; part = group(); i++; }
+        else { var m = /^[A-Z][a-z]?/.exec(f.slice(i)); i += m[0].length; part = {}; part[m[0]] = 1; }
+        var n = /^\d+/.exec(f.slice(i)), k = 1;
+        if(n){ k = +n[0]; i += n[0].length; }
+        for(var e in part) out[e] = (out[e] || 0) + part[e] * k;
+      }
+      return out;
+    }
+    return group();
+  }
+  function molar(f){ var a = atoms(f), m = 0; for(var e in a) m += MASS[e] * a[e]; return m; }
+
+  // A number a student typed: accepts 0.0125, 1.25e-2, 1.25 x 10^-2, 1.25×10-2. NaN if unreadable.
+  function num(s){
+    s = String(s).trim().replace(/,/g, "").replace(/−/g, "-").replace(/\s+/g, "");
+    var m = /^([-+]?\d*\.?\d+)(?:[x×*]10\^?([-+]?\d+))?$/i.exec(s);
+    if(m) return parseFloat(m[1]) * (m[2] !== undefined ? Math.pow(10, +m[2]) : 1);
+    return /^[-+]?(\d*\.?\d+)(e[-+]?\d+)?$/i.test(s) ? parseFloat(s) : NaN;
+  }
+  // Within a relative tolerance (default 1%), so rounding at each step still counts.
+  function close(got, want, tol){ return isFinite(got) && Math.abs(got - want) <= (tol || 0.01) * Math.abs(want) + 1e-12; }
+  // Round to n significant figures for display.
+  function sig(x, n){ if(x === 0) return "0"; var d = Math.max(0, (n || 3) - 1 - Math.floor(Math.log10(Math.abs(x)))); return x.toFixed(Math.min(d, 8)); }
+
   function renderAll(root){
     (root || document).querySelectorAll("[data-eq]").forEach(function(el){ el.innerHTML = fmt(el.getAttribute("data-eq")); });
   }
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", function(){ renderAll(); });
   else renderAll();
 
-  return { parse:parse, term:term, fmt:fmt, rich:rich, shuffle:shuffle, mc:mc, frq:frq, renderAll:renderAll };
+  return { parse:parse, term:term, fmt:fmt, rich:rich, shuffle:shuffle, mc:mc, frq:frq, renderAll:renderAll,
+           MASS:MASS, atoms:atoms, molar:molar, num:num, close:close, sig:sig };
 })();
