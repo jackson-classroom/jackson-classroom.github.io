@@ -8,13 +8,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/ap-chemistry/topic.css">
+<style>
+.obs-tag{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+.done-box{text-align:center;padding:10px 0 4px}
+.done-box .big{font-family:var(--display);font-weight:700;font-size:40px;letter-spacing:-.02em;color:var(--acc-dk)}
+</style>
 </head>
 <body>
 
 <nav class="bar">
   <div class="bar-in">
     <span class="bar-title"><a href="/ap-chemistry/unit-4/">4.1 Introduction for Reactions</a></span>
-    <span class="bar-sub">Physical vs. chemical change · evidence of a reaction · gases, precipitates, color, and temperature</span>
+    <span class="bar-sub">Physical vs. chemical change · evidence of a reaction · when the evidence misleads</span>
   </div>
 </nav>
 
@@ -24,18 +29,164 @@
   <div class="eyebrow">AP Chemistry · Unit 4 Chemical Reactions · Topic 4.1</div>
   <h1>Introduction for <em>Reactions</em></h1>
   <p class="lede">Bubbles, a new solid, a color change, a jump in temperature: each is a clue that new substances formed. This topic is about telling a chemical change from a physical one using what you can observe.</p>
+  <p class="lo-line"><b>Learning objective 4.1.A</b> Identify evidence of chemical and physical changes in matter.</p>
 
   <div class="board" aria-label="Key ideas in this topic">
-    <div class="idea"><span class="code">Q1</span><span class="lq">Did a new substance form?</span><span class="d">The difference between a physical change and a chemical change</span></div>
-    <div class="idea"><span class="code">Q2</span><span class="lq">What counts as evidence?</span><span class="d">Gas formation, a precipitate, a color change, heat or light</span></div>
-    <div class="idea"><span class="code">Q3</span><span class="lq">Can the evidence fool you?</span><span class="d">Physical changes that look like reactions, such as the bubbles in boiling water</span></div>
+    <a class="idea" href="#composition"><span class="code">Q1</span><span class="lq">Did a new substance form?</span><span class="d">Physical and chemical change come down to composition</span></a>
+    <a class="idea" href="#evidence"><span class="code">Q2</span><span class="lq">What counts as evidence?</span><span class="d">Heat or light, a gas, a precipitate, a color change</span></a>
+    <a class="idea" href="#traps"><span class="code">Q3</span><span class="lq">Can the evidence fool you?</span><span class="d">Physical changes that give the same clues, and reactions that give almost none</span></a>
     <div class="board-foot"><span><b>Unit 4</b> Chemical Reactions · 7–9% of the AP Exam</span><span><b>Before this</b> <a href="/ap-chemistry/unit-3/3-13-beer-lambert-law/">3.13 Beer-Lambert Law</a></span></div>
   </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#composition">Physical vs. chemical</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#traps">When evidence misleads</a>
+    <a href="#sort">Physical or chemical?</a>
+    <a href="#check">Check yourself</a>
+  </nav>
 </header>
 
-<section id="tools">
-  <div class="sec-head"><span class="tag plain">Coming soon</span><h2>Tools and practice</h2></div>
-  <div class="soon-card"><p>Interactive tools, worked examples, and AP-style practice for Topic 4.1 aren’t posted yet. The three questions above are the ones this topic answers.</p></div>
+<!-- =========================================================
+     4.1.A.1 / 4.1.A.2  COMPOSITION
+     ========================================================= -->
+<section id="composition">
+  <div class="sec-head"><span class="tag">4.1.A</span><h2>It comes down to composition</h2></div>
+  <p>Every change in matter is either physical or chemical. The difference isn’t how dramatic it looks. It’s whether the substance you end up with is the same substance you started with.</p>
+
+  <div class="def">
+    <span class="ek">4.1.A.1</span>
+    <div class="term">Physical change</div>
+    <p>A substance’s properties change, but its composition doesn’t. The most common physical changes are <b>phase changes</b> (melting, freezing, boiling, condensing, sublimation) and <b>forming or separating mixtures</b> (dissolving, filtering, distilling).</p>
+  </div>
+  <div class="def">
+    <span class="ek">4.1.A.2</span>
+    <div class="term">Chemical change</div>
+    <p>Substances are transformed into <b>new substances</b>, usually with different compositions. Atoms are rearranged into new combinations, so what’s left has different properties from what you started with.</p>
+  </div>
+
+  <h3>Same starting material, two different changes</h3>
+  <p>Both of these start with liquid water and both make bubbles of gas. Only one makes a new substance.</p>
+  <div class="grid2">
+    <div class="mini keep">
+      <div class="n">Physical · boiling</div>
+      <h4>The bubbles are still water</h4>
+      <div class="eqline"><span data-eq="H2O(l) -> H2O(g)"></span></div>
+      <p>The molecules move apart into the gas phase. Cool the gas and you get the same liquid back.</p>
+    </div>
+    <div class="mini">
+      <div class="n">Chemical · electrolysis</div>
+      <h4>The bubbles are new substances</h4>
+      <div class="eqline"><span data-eq="2H2O(l) -> 2H2(g) + O2(g)"></span></div>
+      <p>The O–H bonds break and the atoms recombine. Hydrogen and oxygen have completely different properties from water.</p>
+    </div>
+  </div>
+  <p>So the question to ask is always the same: <b>after the change, is it still the same substance?</b> The observations in the next section are how you gather evidence to answer it.</p>
+</section>
+
+<!-- =========================================================
+     4.1.A.2  EVIDENCE
+     ========================================================= -->
+<section id="evidence">
+  <div class="sec-head"><span class="tag">4.1.A.2</span><h2>Clues that a chemical change happened</h2></div>
+  <p>You can’t watch atoms rearrange, so you look for signs that something with new properties has formed. The course framework names four kinds of evidence.</p>
+  <div class="grid2">
+    <div class="mini">
+      <div class="n">Heat or light</div>
+      <h4>Magnesium burns with a blinding white light</h4>
+      <div class="eqline"><span data-eq="2Mg(s) + O2(g) -> 2MgO(s)"></span></div>
+      <p>The shiny metal becomes a white powder. Energy released as heat or light, or absorbed so the surroundings cool, is a sign that bonds were broken and formed.</p>
+    </div>
+    <div class="mini">
+      <div class="n">Formation of a gas</div>
+      <h4>Zinc fizzes in hydrochloric acid</h4>
+      <div class="eqline"><span data-eq="Zn(s) + 2HCl(aq) -> ZnCl2(aq) + H2(g)"></span></div>
+      <p>Nothing is boiling. The bubbles are hydrogen, a gas that wasn’t there before.</p>
+    </div>
+    <div class="mini">
+      <div class="n">Formation of a precipitate</div>
+      <h4>Two colorless solutions make a yellow solid</h4>
+      <div class="eqline"><span data-eq="Pb(NO3)2(aq) + 2KI(aq) -> PbI2(s) + 2KNO3(aq)"></span></div>
+      <p>A <b>precipitate</b> is an insoluble solid that forms when two solutions are mixed. Here, PbI<sub>2</sub> wasn’t present in either one.</p>
+    </div>
+    <div class="mini">
+      <div class="n">Color change</div>
+      <h4>Copper wire turns a colorless solution blue</h4>
+      <div class="eqline"><span data-eq="Cu(s) + 2AgNO3(aq) -> Cu(NO3)2(aq) + 2Ag(s)"></span></div>
+      <p>The blue comes from Cu<sup>2+</sup> ions that weren’t in solution before, and silver crystals grow on the wire.</p>
+    </div>
+  </div>
+  <div class="note"><b>Possible evidence, not proof.</b> The framework calls these <em>possible</em> evidence for a reason: every one of them can also happen without a chemical change. A strong argument uses the clue to point to a specific new substance.</div>
+</section>
+
+<!-- =========================================================
+     TRAPS
+     ========================================================= -->
+<section id="traps">
+  <div class="sec-head"><span class="tag plain">Watch out</span><h2>When the evidence misleads</h2></div>
+  <p>Each clue has a physical-change look-alike. These are the ones AP questions like to use.</p>
+  <div class="grid2">
+    <div class="mini keep">
+      <div class="n">Bubbles without a reaction</div>
+      <h4>Boiling, or opening a soda</h4>
+      <p>Bubbles in boiling water are H<sub>2</sub>O(g). Bubbles from a freshly opened soda are CO<sub>2</sub> that was already dissolved and is coming back out of solution. Neither one is a new substance.</p>
+    </div>
+    <div class="mini keep">
+      <div class="n">Temperature change without a reaction</div>
+      <h4>An instant cold pack</h4>
+      <div class="eqline"><span data-eq="NH4NO3(s) -> NH4^+(aq) + NO3^-(aq)"></span></div>
+      <p>Dissolving ammonium nitrate makes the pack cold. Dissolving forms a mixture, so it’s usually classified as physical. For ionic solids the case can be argued either way, which is exactly what <a href="/ap-chemistry/unit-4/4-4-physical-and-chemical-changes/">Topic 4.4</a> takes up.</p>
+    </div>
+    <div class="mini keep">
+      <div class="n">Color change without a reaction</div>
+      <h4>Diluting a solution, or subliming iodine</h4>
+      <div class="eqline"><span data-eq="I2(s) -> I2(g)"></span></div>
+      <p>Adding water to a blue CuSO<sub>4</sub> solution makes it paler, but the Cu<sup>2+</sup> ions are just more spread out. Heating dark gray solid iodine gives a violet vapor that’s still I<sub>2</sub>.</p>
+    </div>
+    <div class="mini keep">
+      <div class="n">A solid without a reaction</div>
+      <h4>Freezing, or crystals from a cooling solution</h4>
+      <div class="eqline"><span data-eq="H2O(l) -> H2O(s)"></span></div>
+      <p>A liquid freezing, or crystals of a solute coming out of a saturated solution as it cools, gives you a solid that is the same substance as before.</p>
+    </div>
+  </div>
+
+  <h3>And the opposite trap</h3>
+  <p>Some chemical changes give you almost nothing to see. Mix hydrochloric acid with sodium hydroxide and the result is still a clear, colorless solution. The only clue is that it gets warm.</p>
+  <div class="eqline"><span data-eq="HCl(aq) + NaOH(aq) -> NaCl(aq) + H2O(l)"></span></div>
+  <p>New water molecules form from H<sup>+</sup> and OH<sup>−</sup>, and that’s a chemical change even without a gas, a precipitate, or a color. You’ll write the net ionic equation for this reaction in <a href="/ap-chemistry/unit-4/4-2-net-ionic-equations/">Topic 4.2</a>.</p>
+  <div class="note"><b>Evidence suggests; composition decides.</b> When a question asks you to justify a claim, name the observation <em>and</em> say what new substance it indicates. “It bubbled” isn’t enough. “A gas formed at room temperature, so the bubbles can’t be boiling, and the gas is a new substance” is.</div>
+</section>
+
+<!-- =========================================================
+     INTERACTIVE: SORT
+     ========================================================= -->
+<section id="sort">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Physical or chemical?</h2></div>
+  <p>Fourteen observations, in random order. Half of them are traps from the section above. Decide whether each describes a physical change or a chemical change.</p>
+  <div class="card" id="sorter">
+    <div class="card-label"><span id="s-count">Observation 1 of 14</span><span class="score" id="s-score">0 correct</span></div>
+    <div id="s-body">
+      <p class="prompt" id="s-prompt"></p>
+      <div class="pick2">
+        <button type="button" class="pbtn" data-pick="p">Physical change</button>
+        <button type="button" class="pbtn" data-pick="c">Chemical change</button>
+      </div>
+      <div class="fb" id="s-fb" aria-live="polite"></div>
+      <div class="btn-row"><button type="button" id="s-next" hidden>Next observation →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PRACTICE
+     ========================================================= -->
+<section id="check">
+  <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
+  <p>Six multiple-choice questions written in AP style, then one written response. Each multiple-choice answer is explained as soon as you pick it.</p>
+  <p class="score" id="mc-score" style="margin:0"></p>
+  <div class="card" id="mc"></div>
+  <div class="card" id="frq"></div>
 
   <div class="next">
     <div><p class="nt">Up next: 4.2 Net Ionic Equations</p><p>Molecular, complete ionic, and net ionic equations · spectator ions · which substances to split into ions</p></div>
@@ -44,11 +195,150 @@
 </section>
 
 <footer>
-  <p>Topic 4.1 Introduction for Reactions, following the AP Chemistry course framework.</p>
+  <p>Topic 4.1 Introduction for Reactions, following the AP Chemistry course framework (Learning Objective 4.1.A). Practice questions are original and written in AP style. The observation sorter reshuffles every time you load the page.</p>
   <p><a href="/ap-chemistry/unit-4/">← Unit 4 — Chemical Reactions</a></p>
 </footer>
 
 </div><!-- /wrap -->
 
+<script src="/ap-chemistry/topic.js"></script>
+<script>
+/* ---------- Physical or chemical? ---------- */
+var OBS = [
+  {t:"Two colorless solutions, [[Pb(NO3)2(aq)]] and [[KI(aq)]], are mixed, and a bright yellow solid appears.", a:"c",
+   e:"A <b>precipitate</b> formed. The yellow solid, PbI<sub>2</sub>, is a new substance that wasn’t in either solution."},
+  {t:"A strip of magnesium burns with a blinding white light and leaves a white powder.", a:"c",
+   e:"Light is released and the shiny metal becomes a white powder with completely different properties: Mg has become MgO."},
+  {t:"Zinc is dropped into hydrochloric acid at room temperature. Bubbles form, and the gas pops when a flame is held near it.", a:"c",
+   e:"Nothing is boiling, so the bubbles aren’t a phase change. The gas is hydrogen, a new substance."},
+  {t:"Hydrochloric acid and sodium hydroxide solutions are mixed. Nothing visible happens, but the temperature rises by 6 °C.", a:"c",
+   e:"No gas, solid, or color, but H<sup>+</sup> and OH<sup>−</sup> combine to form water, releasing heat. One clue can be enough."},
+  {t:"An iron nail left outdoors develops a flaky, reddish-brown coating.", a:"c",
+   e:"Rust is an iron oxide, a new substance with different properties from iron metal."},
+  {t:"A copper wire is placed in colorless [[AgNO3(aq)]]. The solution slowly turns blue, and silvery crystals grow on the wire.", a:"c",
+   e:"The blue is Cu<sup>2+</sup> ions that weren’t there before, and the crystals are silver metal. Both are new substances."},
+  {t:"Baking soda and vinegar are mixed and fizz vigorously at room temperature.", a:"c",
+   e:"The gas is CO<sub>2</sub>, produced when acetic acid reacts with sodium hydrogen carbonate. It wasn’t present in either starting material."},
+  {t:"A pot of water is heated until it boils and fills with bubbles.", a:"p",
+   e:"The bubbles are H<sub>2</sub>O(g). Same substance, new phase."},
+  {t:"Dark gray solid iodine is heated gently, and a violet vapor appears.", a:"p",
+   e:"Sublimation: I<sub>2</sub>(s) → I<sub>2</sub>(g). The color changed, but the substance is still I<sub>2</sub>."},
+  {t:"Water is added to a dark blue copper(II) sulfate solution, and it turns pale blue.", a:"p",
+   e:"Dilution. The same Cu<sup>2+</sup> ions are spread through more water, so the color is lighter."},
+  {t:"Sugar is stirred into water until it disappears.", a:"p",
+   e:"Dissolving forms a mixture. The sugar molecules stay intact: C<sub>12</sub>H<sub>22</sub>O<sub>11</sub>(s) → C<sub>12</sub>H<sub>22</sub>O<sub>11</sub>(aq)."},
+  {t:"Salt water is distilled. Pure water collects in one flask, and solid salt is left behind in the other.", a:"p",
+   e:"Separating a mixture. The water and the salt are the same substances they were before they were mixed."},
+  {t:"A bottle of soda is opened, and bubbles rush to the top.", a:"p",
+   e:"The CO<sub>2</sub> was already dissolved in the soda. It’s coming out of solution, not forming."},
+  {t:"A beaker of melted candle wax cools and turns solid.", a:"p",
+   e:"Freezing is a phase change. The wax is the same substance, liquid or solid."}
+];
+
+(function(){
+  var order, k, right, answered;
+  var prompt = document.getElementById("s-prompt"), fb = document.getElementById("s-fb"),
+      next = document.getElementById("s-next"), body = document.getElementById("s-body"),
+      count = document.getElementById("s-count"), score = document.getElementById("s-score"),
+      btns = document.querySelectorAll("#sorter .pbtn");
+
+  function start(){ order = APC.shuffle(OBS); k = 0; right = 0; show(); }
+  function show(){
+    var o = order[k];
+    answered = false;
+    count.textContent = "Observation " + (k + 1) + " of " + order.length;
+    score.textContent = right + " correct";
+    prompt.innerHTML = APC.rich(o.t);
+    fb.className = "fb";
+    next.hidden = true;
+    btns.forEach(function(b){ b.className = "pbtn"; b.disabled = false; });
+  }
+  btns.forEach(function(b){
+    b.addEventListener("click", function(){
+      if(answered) return;
+      answered = true;
+      var o = order[k], ok = b.dataset.pick === o.a;
+      if(ok) right++;
+      btns.forEach(function(x){
+        x.disabled = true;
+        if(x === b) x.classList.add(ok ? "yes" : "no");
+        else if(x.dataset.pick === o.a) x.classList.add("reveal");
+      });
+      fb.className = "fb show " + (ok ? "good" : "bad");
+      fb.innerHTML = "<b>" + (ok ? "Right: " : "It’s a ") + (o.a === "c" ? "chemical change." : "physical change.") + "</b> " + o.e;
+      score.textContent = right + " correct";
+      next.hidden = false;
+      next.textContent = k + 1 < order.length ? "Next observation →" : "See your score";
+      next.focus();
+    });
+  });
+  next.addEventListener("click", function(){
+    k++;
+    if(k < order.length){ show(); return; }
+    count.textContent = "Done";
+    body.innerHTML = '<div class="done-box"><div class="big">' + right + " / " + order.length + "</div>" +
+      "<p>" + (right === order.length ? "Every trap avoided." : "Look back at any you missed: most traps are bubbles, color, or temperature without a new substance.") + "</p>" +
+      '<div class="btn-row" style="justify-content:center"><button type="button" id="s-again">Shuffle and go again</button></div></div>';
+    document.getElementById("s-again").addEventListener("click", function(){ location.reload(); });
+  });
+  start();
+})();
+
+/* ---------- Practice ---------- */
+APC.mc(document.getElementById("mc"), document.getElementById("mc-score"), [
+ {q:"Which of the following observations provides the best evidence that a chemical change has occurred?",
+  c:["Bubbles form when a beaker of water is heated to 100 °C.",
+     "A yellow solid forms when two colorless solutions are mixed.",
+     "A white solid dissolves completely in water to form a colorless solution.",
+     "A blue solution becomes lighter in color when water is added to it."],
+  a:1,
+  e:"A precipitate forming from two solutions means a new, insoluble substance was produced. (A) is boiling, (C) is dissolving, which forms a mixture, and (D) is dilution. All three are physical changes."},
+
+ {q:"A student mixes 50.0 mL of 1.0 <i>M</i> [[HCl(aq)]] with 50.0 mL of 1.0 <i>M</i> [[NaOH(aq)]]. The mixture stays clear and colorless and no bubbles form, but the temperature rises from 22.0 °C to 28.6 °C. Which conclusion is best supported by the observations?",
+  c:["No chemical change occurred, because no gas or precipitate formed.",
+     "Only a physical change occurred, because the mixture is still a colorless solution.",
+     "The temperature change cannot be evidence of a chemical change, because temperature also changes during physical changes.",
+     "A chemical change occurred, and the temperature increase is evidence that a new substance formed."],
+  a:3,
+  e:"The heat released is evidence that bonds formed: H<sup>+</sup> and OH<sup>−</sup> combined to make H<sub>2</sub>O. A reaction doesn’t need a gas or a precipitate. (C) is half right: a temperature change alone isn’t proof, but it is still evidence, and here it points to a known reaction."},
+
+ {q:"Which of the following is a physical change, even though it involves a change in color?",
+  c:["Solid iodine is heated gently and forms a violet vapor.",
+     "A copper wire placed in [[AgNO3(aq)]] turns the solution blue.",
+     "An iron nail left outdoors forms a reddish-brown coating.",
+     "A piece of magnesium burns and leaves a white powder."],
+  a:0,
+  e:"Sublimation, [[I2(s) -> I2(g)]], is a phase change: the vapor is still I<sub>2</sub>. The other three each produce a new substance: Cu<sup>2+</sup> ions and silver, iron oxide, and magnesium oxide."},
+
+ {q:"A sample of solid calcium carbonate is heated strongly. The mass of the solid decreases, and the gas given off turns limewater cloudy, a test for [[CO2]]. Which statement best explains the observations?",
+  c:["The solid melted, which is a physical change.",
+     "Water trapped in the solid evaporated, which is a physical change.",
+     "The solid decomposed into new substances, [[CaO(s)]] and [[CO2(g)]], which is a chemical change.",
+     "The solid sublimed, so the gas is [[CaCO3(g)]]."],
+  a:2,
+  e:"The gas is identified as CO<sub>2</sub>, and the solid left behind has lost mass, so its composition changed: [[CaCO3(s) -> CaO(s) + CO2(g)]]. Melting wouldn’t change the mass, and the limewater test rules out water vapor and CaCO<sub>3</sub>."},
+
+ {q:"Which of the following processes separates a sample into its components through a physical change?",
+  c:["Passing an electric current through water produces [[H2(g)]] and [[O2(g)]].",
+     "Heating mercury(II) oxide produces mercury and oxygen.",
+     "Distilling salt water produces pure water and solid sodium chloride.",
+     "Hydrogen peroxide decomposes into water and oxygen."],
+  a:2,
+  e:"Distillation separates a mixture, and both the water and the salt keep their identities. The other three break a single compound into new substances, which is a chemical change. Electrolysis sounds like a separation, but it splits H<sub>2</sub>O itself into H<sub>2</sub> and O<sub>2</sub>."},
+
+ {q:"When a clear, colorless liquid is heated, bubbles form. Which additional observation would provide the strongest evidence that the bubbles result from a chemical change?",
+  c:["The collected gas relights a glowing splint, and the liquid that remains boils at a different temperature than the original liquid.",
+     "The bubbles stop forming when heating stops.",
+     "The gas, when collected and cooled, condenses back into the original liquid.",
+     "The volume of the liquid decreases as heating continues."],
+  a:0,
+  e:"(A) shows two new substances: a gas that supports combustion (oxygen) and a remaining liquid with a different boiling point. (B) and (D) are also true of boiling, and (C) shows the gas is the <em>same</em> substance, which points to a physical change."}
+]);
+
+APC.frq(document.getElementById("frq"), [
+ {q:"<p>A student places a strip of zinc metal into a beaker of blue [[CuSO4(aq)]]. After 20 minutes, the blue color has faded, a reddish-brown solid has formed on the zinc strip, and the beaker feels slightly warm.</p><p>(a) Identify two observations that are evidence of a chemical change.</p><p>(b) The student claims that the fading of the blue color alone proves a chemical change occurred. Explain why this claim is not justified, and describe what makes the overall evidence stronger.</p>",
+  m:"<p><b>(a)</b> Any two of: a reddish-brown solid with different properties from zinc formed on the strip; the blue color of the solution faded; the beaker got warm, so energy was released.</p><p><b>(b)</b> The blue color comes from Cu<sup>2+</sup>(aq). A solution can get paler with no new substance at all, for example when it’s diluted, so a fading color by itself could be a physical change. The case is stronger because several observations point to the same new substances: the blue fades <em>while</em> a reddish-brown solid (copper metal) appears, consistent with [[Zn(s) + Cu^2+(aq) -> Zn^2+(aq) + Cu(s)]]. Copper metal and colorless Zn<sup>2+</sup>(aq) were not present at the start.</p><p class='note'><b>Scoring watch-out:</b> “the color changed” earns little on its own. Tie each observation to a specific new substance.</p>"}
+]);
+</script>
 </body>
 </html>
