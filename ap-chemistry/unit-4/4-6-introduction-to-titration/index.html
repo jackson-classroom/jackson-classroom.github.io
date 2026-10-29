@@ -128,14 +128,14 @@
   </ul>
 
   <h3>Worked example: a 1 : 2 ratio</h3>
-  <p>20.00 mL of H<sub>2</sub>SO<sub>4</sub> is titrated with 0.1000 <i>M</i> NaOH, and 31.40 mL is needed: <span data-eq="H2SO4(aq) + 2NaOH(aq) -> Na2SO4(aq) + 2H2O(l)"></span>.</p>
+  <p>Titrations aren’t only acid–base. Here, 20.00 mL of CaCl<sub>2</sub> is titrated with 0.1000 <i>M</i> AgNO<sub>3</sub>, and 31.40 mL is needed to precipitate all the chloride: <span data-eq="CaCl2(aq) + 2AgNO3(aq) -> 2AgCl(s) + Ca(NO3)2(aq)"></span>.</p>
   <div class="chain">
     <span>0.03140 L</span><span class="x">×</span>
-    <span class="frac"><span>0.1000 mol NaOH</span><span>1 L</span></span><span class="x">×</span>
-    <span class="frac"><span>1 mol H<sub>2</sub>SO<sub>4</sub></span><span>2 mol NaOH</span></span><span>= 1.570 × 10<sup>−3</sup> mol H<sub>2</sub>SO<sub>4</sub></span>
+    <span class="frac"><span>0.1000 mol AgNO<sub>3</sub></span><span>1 L</span></span><span class="x">×</span>
+    <span class="frac"><span>1 mol CaCl<sub>2</sub></span><span>2 mol AgNO<sub>3</sub></span></span><span>= 1.570 × 10<sup>−3</sup> mol CaCl<sub>2</sub></span>
   </div>
-  <p>[H<sub>2</sub>SO<sub>4</sub>] = 1.570 × 10<sup>−3</sup> mol / 0.02000 L = <b>0.07850 <i>M</i></b>.</p>
-  <div class="note"><b>The trap.</b> “At the equivalence point, moles of titrant = moles of analyte” is only true for a 1 : 1 reaction. Here it takes two NaOH for every H<sub>2</sub>SO<sub>4</sub>, and skipping the ratio doubles the answer.</div>
+  <p>[CaCl<sub>2</sub>] = 1.570 × 10<sup>−3</sup> mol / 0.02000 L = <b>0.07850 <i>M</i></b>.</p>
+  <div class="note"><b>The trap.</b> “At the equivalence point, moles of titrant = moles of analyte” is only true for a 1 : 1 reaction. Each CaCl<sub>2</sub> has two chloride ions, so it takes two AgNO<sub>3</sub> for every CaCl<sub>2</sub>, and skipping the ratio doubles the answer.</div>
 </section>
 
 <!-- =========================================================
@@ -148,7 +148,7 @@
     <div class="mini">
       <div class="n">Precipitation</div>
       <div class="eqline"><span data-eq="Ag^+(aq) + Cl^-(aq) -> AgCl(s)"></span></div>
-      <p>AgNO<sub>3</sub> titrant finds the chloride in a sample. Moles of Ag<sup>+</sup> at the equivalence point equal moles of Cl<sup>−</sup>.</p>
+      <p>AgNO<sub>3</sub> titrant finds the chloride in a sample, as in the CaCl<sub>2</sub> example above. At the equivalence point, moles of Ag<sup>+</sup> added equal moles of Cl<sup>−</sup>.</p>
     </div>
     <div class="mini">
       <div class="n">Oxidation–reduction</div>
@@ -163,7 +163,7 @@
      ========================================================= -->
 <section id="virtual">
   <div class="sec-head"><span class="tag">Interactive</span><h2>Virtual titration</h2></div>
-  <p>Find the concentration of an unknown acid. Add NaOH quickly at first, then slow down to single drops. Stop at the first pink that stays, record the buret reading, and work the calculation.</p>
+  <p>Find the concentration of an HCl solution. Add NaOH quickly at first, then slow down to single drops. Stop at the first pink that stays, record the buret reading, and work the calculation.</p>
   <div class="card">
     <div class="card-label"><span id="v-title">Titration</span><span class="score" id="v-score">0 completed</span></div>
     <p class="prompt" id="v-task"></p>
@@ -286,9 +286,7 @@ document.getElementById("setup-art").innerHTML = rig(18, .35, 0, "fl-setup") +
 
 /* ---------- virtual titration ---------- */
 var ACIDS = [
-  {f:"HCl", eq:"HCl(aq) + NaOH(aq) -> NaCl(aq) + H2O(l)", r:1, lo:.0800, hi:.1500},
-  {f:"HNO3", eq:"HNO3(aq) + NaOH(aq) -> NaNO3(aq) + H2O(l)", r:1, lo:.0800, hi:.1500},
-  {f:"H2SO4", eq:"H2SO4(aq) + 2NaOH(aq) -> Na2SO4(aq) + 2H2O(l)", r:2, lo:.0400, hi:.0750}
+  {f:"HCl", eq:"HCl(aq) + NaOH(aq) -> NaCl(aq) + H2O(l)", r:1, lo:.0800, hi:.1500}
 ];
 (function(){
   var T, solved = 0, Cb = 0.1000, Va = 25.00;
@@ -356,7 +354,7 @@ var ACIDS = [
     var k = ok.indexOf(false), msg = [
       "Volume delivered is the final reading minus the initial reading: " + T.recorded.toFixed(2) + " − " + T.start.toFixed(2) + ".",
       "Moles of NaOH = molarity × volume in liters. Convert mL to L first.",
-      T.acid.r === 1 ? "The ratio is 1 : 1, so moles of acid equal moles of NaOH." : "Use the ratio: 1 mol H<sub>2</sub>SO<sub>4</sub> reacts with 2 mol NaOH, so divide moles of NaOH by 2.",
+      "HCl and NaOH react 1 : 1, so moles of HCl equal moles of NaOH.",
       "Concentration = moles of acid ÷ volume of the acid sample in liters (" + (Va / 1000).toFixed(5) + " L)."][k];
     fb2.className = "fb show bad"; fb2.innerHTML = "<b>Step " + (k + 1) + ".</b> " + msg;
   });
@@ -436,10 +434,10 @@ APC.mc(document.getElementById("mc"), document.getElementById("mc-score"), [
   a:1,
   e:"Moles NaOH = 0.100 × 0.03000 L = 0.00300 mol = moles HCl (1 : 1). [HCl] = 0.00300 / 0.02500 L = 0.120 <i>M</i>. (A) divides the volumes the wrong way, and (C) applies a 2 : 1 ratio that isn’t there."},
 
- {q:"A 20.0 mL sample of H<sub>2</sub>SO<sub>4</sub> is titrated with 0.200 <i>M</i> NaOH: [[H2SO4(aq) + 2NaOH(aq) -> Na2SO4(aq) + 2H2O(l)]]. The equivalence point is reached after 25.0 mL of NaOH is added. What is the concentration of the H<sub>2</sub>SO<sub>4</sub>?",
+ {q:"A 20.0 mL sample of CaCl<sub>2</sub> is titrated with 0.200 <i>M</i> AgNO<sub>3</sub>: [[CaCl2(aq) + 2AgNO3(aq) -> 2AgCl(s) + Ca(NO3)2(aq)]]. The equivalence point is reached after 25.0 mL of AgNO<sub>3</sub> is added. What is the concentration of the CaCl<sub>2</sub>?",
   c:["0.250 <i>M</i>", "0.0625 <i>M</i>", "0.125 <i>M</i>", "0.500 <i>M</i>"],
   a:2,
-  e:"Moles NaOH = 0.200 × 0.0250 L = 0.00500 mol. It takes 2 NaOH per H<sub>2</sub>SO<sub>4</sub>, so moles H<sub>2</sub>SO<sub>4</sub> = 0.00250 mol, and 0.00250 / 0.0200 L = 0.125 <i>M</i>. (A) ignores the 1 : 2 ratio."},
+  e:"Moles AgNO<sub>3</sub> = 0.200 × 0.0250 L = 0.00500 mol. It takes 2 AgNO<sub>3</sub> per CaCl<sub>2</sub>, so moles CaCl<sub>2</sub> = 0.00250 mol, and 0.00250 / 0.0200 L = 0.125 <i>M</i>. (A) ignores the 1 : 2 ratio."},
 
  {q:"Which of the following best describes the equivalence point of a titration?",
   c:["The point at which the analyte has been completely consumed by the titrant, in the ratio given by the balanced equation",
@@ -477,8 +475,8 @@ APC.mc(document.getElementById("mc"), document.getElementById("mc-score"), [
 ]);
 
 APC.frq(document.getElementById("frq"), [
- {q:"<p>A student titrates a 25.00 mL sample of Ba(OH)<sub>2</sub>(aq) of unknown concentration with 0.150 <i>M</i> HCl, using phenolphthalein, which turns from pink to colorless at the endpoint. The reaction is [[2HCl(aq) + Ba(OH)2(aq) -> BaCl2(aq) + 2H2O(l)]]. The initial buret reading is 0.85 mL, and the reading at the endpoint is 33.35 mL.</p><p>(a) Calculate the volume of HCl delivered.</p><p>(b) Calculate the number of moles of HCl delivered.</p><p>(c) Calculate the concentration of the Ba(OH)<sub>2</sub>.</p><p>(d) An air bubble was in the buret tip at the start and disappeared during the titration. Is the calculated concentration of Ba(OH)<sub>2</sub> too high, too low, or unaffected? Justify your answer.</p>",
-  m:"<p><b>(a)</b> 33.35 − 0.85 = <b>32.50 mL</b>.</p><p><b>(b)</b> 0.150 mol/L × 0.03250 L = <b>4.88 × 10<sup>−3</sup> mol HCl</b>.</p><p><b>(c)</b> 4.875 × 10<sup>−3</sup> mol HCl × (1 mol Ba(OH)<sub>2</sub> / 2 mol HCl) = 2.44 × 10<sup>−3</sup> mol, and 2.44 × 10<sup>−3</sup> mol / 0.02500 L = <b>0.0975 <i>M</i></b>.</p><p><b>(d)</b> Too high. Part of the drop in the buret level was the bubble leaving the tip, not HCl entering the flask, so the recorded volume is larger than the volume actually delivered. That overstates the moles of HCl, and therefore the moles and concentration of Ba(OH)<sub>2</sub>.</p><p class='note'><b>Scoring watch-out:</b> in (c), using a 1 : 1 ratio gives 0.195 <i>M</i>, twice the right answer.</p>"},
+ {q:"<p>A student titrates a 25.00 mL sample of HCl(aq) of unknown concentration with 0.150 <i>M</i> NaOH, using phenolphthalein, which is colorless in the HCl and turns pink at the endpoint. The reaction is [[HCl(aq) + NaOH(aq) -> NaCl(aq) + H2O(l)]]. The initial buret reading is 0.85 mL, and the reading at the endpoint is 33.35 mL.</p><p>(a) Calculate the volume of NaOH delivered.</p><p>(b) Calculate the number of moles of NaOH delivered.</p><p>(c) Calculate the concentration of the HCl.</p><p>(d) An air bubble was in the buret tip at the start and disappeared during the titration. Is the calculated concentration of HCl too high, too low, or unaffected? Justify your answer.</p>",
+  m:"<p><b>(a)</b> 33.35 − 0.85 = <b>32.50 mL</b>.</p><p><b>(b)</b> 0.150 mol/L × 0.03250 L = <b>4.88 × 10<sup>−3</sup> mol NaOH</b>.</p><p><b>(c)</b> HCl and NaOH react 1 : 1, so moles HCl = 4.875 × 10<sup>−3</sup> mol, and 4.875 × 10<sup>−3</sup> mol / 0.02500 L = <b>0.195 <i>M</i></b>.</p><p><b>(d)</b> Too high. Part of the drop in the buret level was the bubble leaving the tip, not NaOH entering the flask, so the recorded volume is larger than the volume actually delivered. That overstates the moles of NaOH, and therefore the moles and concentration of HCl.</p><p class='note'><b>Scoring watch-out:</b> convert to liters before multiplying. 0.150 × 32.50 gives 4.88, a thousand times too many moles.</p>"},
 
  {q:"<p>A 25.00 mL sample of a solution containing Fe<sup>2+</sup> is titrated with 0.0200 <i>M</i> KMnO<sub>4</sub>: [[MnO4^-(aq) + 5Fe^2+(aq) + 8H^+(aq) -> Mn^2+(aq) + 5Fe^3+(aq) + 4H2O(l)]]. The endpoint is reached after 15.20 mL of KMnO<sub>4</sub> is added.</p><p>(a) Calculate the number of moles of MnO<sub>4</sub><sup>−</sup> added.</p><p>(b) Calculate the concentration of Fe<sup>2+</sup> in the sample.</p><p>(c) No separate indicator is added. Explain how the student can tell that the endpoint has been reached.</p>",
   m:"<p><b>(a)</b> 0.0200 mol/L × 0.01520 L = <b>3.04 × 10<sup>−4</sup> mol MnO<sub>4</sub><sup>−</sup></b>.</p><p><b>(b)</b> 3.04 × 10<sup>−4</sup> × 5 = 1.52 × 10<sup>−3</sup> mol Fe<sup>2+</sup>, and 1.52 × 10<sup>−3</sup> / 0.02500 L = <b>0.0608 <i>M</i></b>.</p><p><b>(c)</b> MnO<sub>4</sub><sup>−</sup> is intensely purple, while Mn<sup>2+</sup> is nearly colorless. As long as Fe<sup>2+</sup> remains, each drop of permanganate reacts and its color disappears. Once the Fe<sup>2+</sup> is used up, the next drop of MnO<sub>4</sub><sup>−</sup> has nothing to react with, and the solution stays pink. That first lasting pink is the endpoint.</p>"}
