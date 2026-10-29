@@ -61,7 +61,7 @@ var APC = (function(){
     function tally(){ if(scoreEl) scoreEl.textContent = "Answered " + answered + " of " + qs.length + " · Correct " + right; }
     host.innerHTML = qs.map(function(q, i){
       return '<div class="q" data-i="' + i + '"><div class="qnum">Question ' + (i + 1) + '</div>' +
-        '<p class="qtext">' + rich(q.q) + '</p><div class="choices">' +
+        '<div class="qtext">' + rich(q.q) + '</div><div class="choices">' +
         q.c.map(function(c, j){
           return '<button type="button" class="choice" data-j="' + j + '"><span class="ltr">' + "ABCD"[j] + '</span><span>' + rich(c) + "</span></button>";
         }).join("") + '</div><div class="expl" hidden></div></div>';
