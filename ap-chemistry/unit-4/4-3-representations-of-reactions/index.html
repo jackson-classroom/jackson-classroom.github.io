@@ -8,6 +8,26 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/ap-chemistry/topic.css">
+<style>
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:20px 0}
+.rules .mini h4{margin-top:4px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 0}
+.pair .tag{display:inline-block;margin-bottom:6px}
+.pair .tag.bad{color:#7A2B20;background:var(--no-bg)}
+.pair .tag.good{color:#1C4A30;background:var(--ok-bg)}
+.readsteps{margin:10px 0 0;padding-left:22px}
+.steppers{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:16px 0 0}
+.stp{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:3px;padding:8px 10px}
+.stp .who{flex:1;min-width:0}
+.stp .who small{display:block;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.04em}
+.stp button{width:30px;height:30px;padding:0;font-size:16px;line-height:1}
+.stp .n{font-family:var(--mono);font-size:17px;min-width:22px;text-align:center}
+table.atoms{border-collapse:collapse;margin:10px 0 0;font-size:14.5px}
+table.atoms th,table.atoms td{border:1px solid var(--line);padding:4px 10px;text-align:center}
+table.atoms th{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--mute);letter-spacing:.05em}
+td.off{background:var(--no-bg);color:#7A2B20;font-weight:600}
+@media (max-width:480px){ .pair{grid-template-columns:1fr} }
+</style>
 </head>
 <body>
 
@@ -24,18 +44,158 @@
   <div class="eyebrow">AP Chemistry · Unit 4 Chemical Reactions · Topic 4.3</div>
   <h1><em>Representations</em> of Reactions</h1>
   <p class="lede">A balanced equation and a particle diagram should tell the same story. This topic is about moving between the two and checking that every atom is accounted for.</p>
+  <p class="lo-line"><b>Learning objective 4.3.A</b> Represent a given chemical reaction or physical process with a consistent particulate model.</p>
 
   <div class="board" aria-label="Key ideas in this topic">
-    <div class="idea"><span class="code">Q1</span><span class="lq">What does this equation look like?</span><span class="d">Drawing particle diagrams for reactions and physical processes</span></div>
-    <div class="idea"><span class="code">Q2</span><span class="lq">Which equation matches the picture?</span><span class="d">Reading a particle diagram as a balanced equation</span></div>
-    <div class="idea"><span class="code">Q3</span><span class="lq">Is anything missing?</span><span class="d">Checking that atoms are conserved and leftover particles are shown</span></div>
+    <a class="idea" href="#consistent"><span class="code">Q1</span><span class="lq">What does this equation look like?</span><span class="d">The four things every consistent particle diagram gets right</span></a>
+    <a class="idea" href="#read"><span class="code">Q2</span><span class="lq">Which equation matches the picture?</span><span class="d">Reading a before-and-after diagram as a balanced equation</span></a>
+    <a class="idea" href="#mistakes"><span class="code">Q3</span><span class="lq">Is anything missing?</span><span class="d">The diagram mistakes that lose points, from leftovers to broken polyatomic ions</span></a>
     <div class="board-foot"><span><b>Unit 4</b> Chemical Reactions · 7–9% of the AP Exam</span><span><b>Before this</b> <a href="/ap-chemistry/unit-4/4-2-net-ionic-equations/">4.2 Net Ionic Equations</a></span></div>
   </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#consistent">Consistent diagrams</a>
+    <a href="#read">Diagram to equation</a>
+    <a href="#solutions">Ions in solution</a>
+    <a href="#physical">Physical processes</a>
+    <a href="#mistakes">Common mistakes</a>
+    <a href="#fill">Fill the after box</a>
+    <a href="#check">Check yourself</a>
+  </nav>
 </header>
 
-<section id="tools">
-  <div class="sec-head"><span class="tag plain">Coming soon</span><h2>Tools and practice</h2></div>
-  <div class="soon-card"><p>Interactive tools, worked examples, and AP-style practice for Topic 4.3 aren’t posted yet. The three questions above are the ones this topic answers.</p></div>
+<!-- =========================================================
+     4.3.A.1  CONSISTENT DIAGRAMS
+     ========================================================= -->
+<section id="consistent">
+  <div class="sec-head"><span class="tag">4.3.A.1</span><h2>What a consistent diagram shows</h2></div>
+  <div class="def">
+    <span class="ek">4.3.A.1</span>
+    <div class="term">Equations and particles</div>
+    <p>A balanced chemical equation, in any of its forms, can be translated into a particle representation, and a particle representation can be translated back into an equation.</p>
+  </div>
+  <p>Hydrogen burns in oxygen: <span data-eq="2H2(g) + O2(g) -> 2H2O(g)"></span>. Here is a container that starts with four H<sub>2</sub> molecules and three O<sub>2</sub> molecules, before and after the reaction.</p>
+  <div class="bxa" data-fig="water"></div>
+  <div class="plegend" data-legend="H O"></div>
+  <p class="figcap">The four H<sub>2</sub> react with two of the O<sub>2</sub>. The third O<sub>2</sub> has nothing left to react with, so it’s still there afterward. Count the atoms: 8 H and 6 O in both boxes.</p>
+
+  <p>Every diagram like this has to get four things right.</p>
+  <div class="rules">
+    <div class="mini"><div class="n">1 · Atoms</div><h4>Every atom is conserved</h4><p>Count each element in both boxes. The numbers must match.</p></div>
+    <div class="mini"><div class="n">2 · Formulas</div><h4>Every particle matches its formula</h4><p>H<sub>2</sub> is a pair of atoms, NH<sub>3</sub> is one N with three H, and NO<sub>3</sub><sup>−</sup> is one unit.</p></div>
+    <div class="mini"><div class="n">3 · Ratios</div><h4>What reacts matches the coefficients</h4><p>H<sub>2</sub> and O<sub>2</sub> react 2 : 1 above, and H<sub>2</sub>O forms in the same amount as H<sub>2</sub> used.</p></div>
+    <div class="mini"><div class="n">4 · Leftovers and states</div><h4>What doesn’t react stays</h4><p>Unreacted particles stay in the after box, unchanged. Gases spread out, liquids crowd together, and solids pack into a lattice.</p></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     DIAGRAM TO EQUATION
+     ========================================================= -->
+<section id="read">
+  <div class="sec-head"><span class="tag">4.3.A.1</span><h2>From a picture back to an equation</h2></div>
+  <p>Nitrogen and hydrogen react to form ammonia. Write the equation using only the diagram.</p>
+  <div class="bxa" data-fig="ammonia"></div>
+  <div class="plegend" data-legend="H N"></div>
+  <ol class="readsteps">
+    <li><b>Count each particle in both boxes.</b> Before: 3 N<sub>2</sub>, 6 H<sub>2</sub>. After: 4 NH<sub>3</sub>, 1 N<sub>2</sub>.</li>
+    <li><b>Set aside what didn’t change.</b> One N<sub>2</sub> is in both boxes, so it never reacted.</li>
+    <li><b>What disappeared is a reactant; what appeared is a product.</b> 2 N<sub>2</sub> and 6 H<sub>2</sub> were used up and 4 NH<sub>3</sub> formed: <span data-eq="2N2 + 6H2 -> 4NH3"></span>.</li>
+    <li><b>Reduce to the lowest whole numbers:</b> <span data-eq="N2(g) + 3H2(g) -> 2NH3(g)"></span>.</li>
+  </ol>
+  <div class="note"><b>Leftovers aren’t products.</b> Writing <span data-eq="3N2 + 6H2 -> 4NH3 + N2"></span> technically balances, but the N<sub>2</sub> on the right never reacted. An equation shows only what changed.</div>
+</section>
+
+<!-- =========================================================
+     IONS IN SOLUTION
+     ========================================================= -->
+<section id="solutions">
+  <div class="sec-head"><span class="tag">4.3.A.1</span><h2>Ionic compounds in solution</h2></div>
+  <p>Diagrams of reactions in water follow everything from Topic 4.2. Here, silver nitrate and sodium chloride solutions are mixed. Water molecules aren’t drawn, which is common in AP diagrams.</p>
+  <div class="bxa" data-fig="ppt"></div>
+  <div class="plegend" data-legend="Ag Cl Na N O"></div>
+  <p class="figcap">Net ionic equation: <span data-eq="Ag^+(aq) + Cl^-(aq) -> AgCl(s)"></span></p>
+  <ul>
+    <li><b>Dissolved ionic compounds are separate ions.</b> There are no AgNO<sub>3</sub> or NaCl “molecules” in the solution.</li>
+    <li><b>The precipitate is a packed solid,</b> with Ag<sup>+</sup> and Cl<sup>−</sup> alternating in a lattice.</li>
+    <li><b>Spectators are still there.</b> Na<sup>+</sup> and NO<sub>3</sub><sup>−</sup> are in the after box, dissolved and unchanged.</li>
+  </ul>
+</section>
+
+<!-- =========================================================
+     PHYSICAL PROCESSES
+     ========================================================= -->
+<section id="physical">
+  <div class="sec-head"><span class="tag">4.3.A</span><h2>Physical processes</h2></div>
+  <p>The learning objective includes physical processes too. In a physical change, the particles themselves don’t change. Only their arrangement does.</p>
+  <h3>Water boiling</h3>
+  <p><span data-eq="H2O(l) -> H2O(g)"></span>: the same eight molecules, close together in the liquid and spread out in the gas.</p>
+  <div class="bxa" data-fig="boil"></div>
+  <h3>Sodium chloride dissolving</h3>
+  <p><span data-eq="NaCl(s) -> Na^+(aq) + Cl^-(aq)"></span>: the lattice comes apart into separate ions, with water molecules not drawn.</p>
+  <div class="bxa" data-fig="dissolve"></div>
+  <div class="plegend" data-legend="H O Na Cl"></div>
+</section>
+
+<!-- =========================================================
+     MISTAKES
+     ========================================================= -->
+<section id="mistakes">
+  <div class="sec-head"><span class="tag plain">Watch out</span><h2>Diagrams that lose the point</h2></div>
+  <p>Each of these breaks one of the four rules.</p>
+  <div class="grid2">
+    <div class="mini">
+      <div class="n">Ionic compounds drawn as pairs</div>
+      <div class="pair" data-pair="pairs"></div>
+      <p>NaCl(aq) is separate Na<sup>+</sup> and Cl<sup>−</sup> ions. Drawing them stuck together shows a solid that didn’t dissolve.</p>
+    </div>
+    <div class="mini">
+      <div class="n">Leftover reactant left out</div>
+      <div class="pair" data-pair="leftover"></div>
+      <p>The mixture started with 2 N<sub>2</sub> and 3 H<sub>2</sub>. Only one N<sub>2</sub> can react; without the other, 2 N atoms vanish.</p>
+    </div>
+    <div class="mini">
+      <div class="n">Polyatomic ions broken apart</div>
+      <div class="pair" data-pair="poly"></div>
+      <p>KNO<sub>3</sub>(aq) contains K<sup>+</sup> and NO<sub>3</sub><sup>−</sup>. The nitrate ion stays one unit; it doesn’t fall apart into N and O atoms.</p>
+    </div>
+    <div class="mini">
+      <div class="n">Diatomic elements as single atoms</div>
+      <div class="pair" data-pair="diatomic"></div>
+      <p>Oxygen gas is O<sub>2</sub>. Six separate O atoms is a different substance from three O<sub>2</sub> molecules.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     INTERACTIVE
+     ========================================================= -->
+<section id="fill">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Fill the after box</h2></div>
+  <p>Each mixture reacts until one reactant runs out. Use the buttons to put the right number of each particle in the after box, then check. The atom count shows you exactly what’s off.</p>
+  <div class="card">
+    <div class="card-label"><span>Reaction goes to completion</span><span class="score" id="f-score">0 solved</span></div>
+    <p class="prompt" id="f-eq"></p>
+    <div id="f-legend"></div>
+    <div class="bxa"><div id="f-before"></div><span class="arrow">→</span><div id="f-after"></div></div>
+    <div class="steppers" id="f-steps"></div>
+    <div class="fb" id="f-fb" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="f-check">Check</button>
+      <button type="button" class="ghost" id="f-show">Show the answer</button>
+      <button type="button" class="ghost" id="f-new">New mixture →</button>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PRACTICE
+     ========================================================= -->
+<section id="check">
+  <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
+  <p>Six multiple-choice questions written in AP style, most of them built around particle diagrams, then two written responses.</p>
+  <p class="score" id="mc-score" style="margin:0"></p>
+  <div class="card" id="mc"></div>
+  <div class="card" id="frq"></div>
 
   <div class="next">
     <div><p class="nt">Up next: 4.4 Physical and Chemical Changes</p><p>Bonds broken vs. attractions overcome · classifying processes · why dissolving is a gray area</p></div>
@@ -44,11 +204,194 @@
 </section>
 
 <footer>
-  <p>Topic 4.3 Representations of Reactions, following the AP Chemistry course framework.</p>
+  <p>Topic 4.3 Representations of Reactions, following the AP Chemistry course framework (Learning Objective 4.3.A). Practice questions are original and written in AP style. The after-box mixtures are generated fresh each time.</p>
   <p><a href="/ap-chemistry/unit-4/">← Unit 4 — Chemical Reactions</a></p>
 </footer>
 
 </div><!-- /wrap -->
 
+<script src="/ap-chemistry/topic.js"></script>
+<script src="/ap-chemistry/particles.js"></script>
+<script>
+/* ---------- figures in the notes ---------- */
+var FIG = {
+  water:    [{label:"Before", items:[["H2",4],["O2",3]], seed:"water-1"}, {label:"After", items:[["H2O",4],["O2",1]], seed:"water-2"}],
+  ammonia:  [{label:"Before", items:[["N2",3],["H2",6]], seed:"nh3-1"}, {label:"After", items:[["NH3",4],["N2",1]], seed:"nh3-2"}],
+  ppt:      [{label:"Just mixed", items:[["Ag+",3],["NO3-",3],["Na+",3],["Cl-",3]], seed:"ppt-1"},
+             {label:"After", items:[["Na+",3],["NO3-",3]], solid:{ions:["Ag+","Cl-"], n:3}, seed:"ppt-2"}],
+  boil:     [{label:"Liquid", items:[["H2O",8]], dense:.5, seed:"boil-1"}, {label:"Gas", items:[["H2O",8]], seed:"boil-2"}],
+  dissolve: [{label:"Solid", items:[], solid:{ions:["Na+","Cl-"], n:4}, seed:"dis-1"}, {label:"Dissolved", items:[["Na+",4],["Cl-",4]], seed:"dis-2"}]
+};
+document.querySelectorAll("[data-fig]").forEach(function(el){
+  var f = FIG[el.dataset.fig];
+  el.innerHTML = "<div>" + PART.box(f[0]) + '</div><span class="arrow" aria-hidden="true">→</span><div>' + PART.box(f[1]) + "</div>";
+});
+document.querySelectorAll("[data-legend]").forEach(function(el){ el.outerHTML = PART.legend(el.dataset.legend.split(" ")); });
+
+var PAIRS = {
+  pairs:    [{items:[["NaCl",4]], seed:"m1a"}, {items:[["Na+",4],["Cl-",4]], seed:"m1b"}],
+  leftover: [{items:[["NH3",2]], seed:"m2a"}, {items:[["NH3",2],["N2",1]], seed:"m2b"}],
+  poly:     [{items:[["K+",3],["N",3],["O",9]], seed:"m3a"}, {items:[["K+",3],["NO3-",3]], seed:"m3b"}],
+  diatomic: [{items:[["O",6]], seed:"m4a"}, {items:[["O2",3]], seed:"m4b"}]
+};
+document.querySelectorAll("[data-pair]").forEach(function(el){
+  var p = PAIRS[el.dataset.pair];
+  function sm(o){ o.w = 200; o.h = 130; return PART.box(o); }
+  el.innerHTML = '<div><span class="tag bad">Not consistent</span>' + sm(p[0]) + '</div><div><span class="tag good">Consistent</span>' + sm(p[1]) + "</div>";
+});
+
+/* ---------- fill the after box ---------- */
+var RXNS = ["N2(g) + 3H2(g) -> 2NH3(g)", "2H2(g) + O2(g) -> 2H2O(g)", "2CO(g) + O2(g) -> 2CO2(g)", "2NO(g) + O2(g) -> 2NO2(g)",
+            "CH4(g) + 2O2(g) -> CO2(g) + 2H2O(g)", "2SO2(g) + O2(g) -> 2SO3(g)", "N2(g) + O2(g) -> 2NO(g)", "X2(g) + 3Y2(g) -> 2XY3(g)"];
+
+function tally(list, counts){
+  var t = {};
+  list.forEach(function(p, i){ var a = PART.atoms(p.f); for(var e in a) t[e] = (t[e] || 0) + a[e] * counts[i]; });
+  return t;
+}
+function makeMixture(prev){
+  for(var tries = 0; tries < 500; tries++){
+    var eq = RXNS[Math.floor(Math.random() * RXNS.length)];
+    var sd = eq.split(" -> ").map(function(s){ return s.split(" + ").map(APC.parse); });
+    var R = sd[0], P = sd[1], x = 1 + Math.floor(Math.random() * 3), ex = Math.floor(Math.random() * (R.length + 1)), extra = 1 + Math.floor(Math.random() * 2);
+    var before = R.map(function(p, i){ return p.n * x + (i === ex ? extra : 0); });
+    var after = R.map(function(p, i){ return i === ex ? extra : 0; }).concat(P.map(function(p){ return p.n * x; }));
+    var nb = before.reduce(function(a, b){ return a + b; }), na = after.reduce(function(a, b){ return a + b; });
+    var key = eq + before.join(",");
+    if(nb >= 4 && nb <= 12 && na <= 12 && key !== prev) return {eq:eq, R:R, P:P, before:before, after:after, ex:ex, key:key};
+  }
+}
+
+(function(){
+  var m, counts, solved = 0, done;
+  var eqEl = document.getElementById("f-eq"), bEl = document.getElementById("f-before"), aEl = document.getElementById("f-after"),
+      steps = document.getElementById("f-steps"), fb = document.getElementById("f-fb"), legend = document.getElementById("f-legend");
+  var all = function(){ return m.R.concat(m.P); };
+
+  function drawAfter(){
+    var items = all().map(function(p, i){ return [p.f, counts[i]]; });
+    aEl.innerHTML = PART.box({label:"After", items:items, seed:"after-" + counts.join("-")});
+    steps.querySelectorAll(".n").forEach(function(n, i){ n.textContent = counts[i]; });
+  }
+  function load(){
+    m = makeMixture(m && m.key); done = false;
+    counts = all().map(function(){ return 0; });
+    eqEl.innerHTML = APC.fmt(m.eq);
+    legend.innerHTML = PART.legend(Object.keys(tally(m.R, m.before)));
+    bEl.innerHTML = PART.box({label:"Before", items:m.R.map(function(p, i){ return [p.f, m.before[i]]; }), seed:m.key});
+    steps.innerHTML = all().map(function(p, i){
+      return '<div class="stp"><span class="who">' + APC.term({n:1, f:p.f, z:"", st:""}) + "<small>" + (i < m.R.length ? "left over" : "made") + "</small></span>" +
+        '<button type="button" class="ghost" data-i="' + i + '" data-d="-1" aria-label="One fewer ' + p.f + '">−</button><span class="n">0</span>' +
+        '<button type="button" class="ghost" data-i="' + i + '" data-d="1" aria-label="One more ' + p.f + '">+</button></div>';
+    }).join("");
+    fb.className = "fb";
+    drawAfter();
+  }
+  steps.addEventListener("click", function(e){
+    var b = e.target.closest("button"); if(!b || done) return;
+    var i = +b.dataset.i; counts[i] = Math.max(0, Math.min(12, counts[i] + +b.dataset.d));
+    fb.className = "fb"; drawAfter();
+  });
+  function atomTable(t0, t1){
+    var els = Object.keys(t0);
+    return '<table class="atoms"><tr><th>Atom</th>' + els.map(function(e){ return "<th>" + e + "</th>"; }).join("") + "</tr>" +
+      "<tr><td>Before</td>" + els.map(function(e){ return "<td>" + t0[e] + "</td>"; }).join("") + "</tr>" +
+      "<tr><td>After</td>" + els.map(function(e){ return '<td class="' + ((t1[e] || 0) !== t0[e] ? "off" : "") + '">' + (t1[e] || 0) + "</td>"; }).join("") + "</tr></table>";
+  }
+  function leftoverNote(){
+    if(m.ex >= m.R.length) return "Nothing is left over: the reactants started in exactly the ratio the equation needs.";
+    var p = m.R[m.ex];
+    return "The extra " + APC.term({n:1, f:p.f, z:"", st:""}) + " had nothing left to react with, so it’s still in the box.";
+  }
+  document.getElementById("f-check").addEventListener("click", function(){
+    var t0 = tally(m.R, m.before), t1 = tally(all(), counts), conserved = Object.keys(t0).every(function(e){ return t0[e] === (t1[e] || 0); }) &&
+             Object.keys(t1).every(function(e){ return t0[e] !== undefined || !t1[e]; });
+    var right = counts.every(function(c, i){ return c === m.after[i]; });
+    if(right){
+      if(!done){ solved++; document.getElementById("f-score").textContent = solved + " solved"; }
+      done = true;
+      fb.className = "fb show good";
+      fb.innerHTML = "<p><b>Right.</b> Every atom is accounted for, and the reaction ran until a reactant was used up. " + leftoverNote() + "</p>" + atomTable(t0, t1);
+      return;
+    }
+    fb.className = "fb show bad";
+    if(!conserved){
+      var off = Object.keys(t0).filter(function(e){ return t0[e] !== (t1[e] || 0); });
+      fb.innerHTML = "<p><b>Atoms aren’t conserved.</b> " + off.map(function(e){ return "Count the " + e + " atoms: " + t0[e] + " before, " + (t1[e] || 0) + " after."; }).join(" ") + "</p>" + atomTable(t0, t1);
+    } else if(m.R.every(function(p, i){ return counts[i] >= p.n; })){
+      fb.innerHTML = "<p><b>Every atom is accounted for, but the reaction isn’t finished.</b> There are still enough reactant particles in the after box to react again. Keep going until one reactant runs out.</p>" + atomTable(t0, t1);
+    } else {
+      fb.innerHTML = "<p><b>The atoms balance, but those aren’t the products in the ratio the equation requires.</b> Check the coefficients.</p>" + atomTable(t0, t1);
+    }
+  });
+  document.getElementById("f-show").addEventListener("click", function(){
+    counts = m.after.slice(); done = true; drawAfter();
+    fb.className = "fb show hint";
+    fb.innerHTML = "<p>Here’s the after box. " + leftoverNote() + " Try a new mixture on your own.</p>" + atomTable(tally(m.R, m.before), tally(all(), counts));
+  });
+  document.getElementById("f-new").addEventListener("click", load);
+  load();
+})();
+
+/* ---------- practice ---------- */
+function opt(o){ o.w = 220; o.h = 150; return PART.box(o); }
+function fig2(a, b){ return '<div class="bxa">' + "<div>" + PART.box(a) + '</div><span class="arrow" aria-hidden="true">→</span><div>' + PART.box(b) + "</div></div>"; }
+
+APC.mc(document.getElementById("mc"), document.getElementById("mc-score"), [
+ {q:"Elements X and Y react, as shown in the diagram below. " + PART.legend(["X","Y"]) +
+    fig2({label:"Before", items:[["X2",3],["Y2",6]], seed:"q1a"}, {label:"After", items:[["XY3",4],["X2",1]], seed:"q1b"}) +
+    "Which of the following equations best represents the reaction?",
+  c:["[[X2 + 3Y2 -> 2XY3]]", "[[3X2 + 6Y2 -> 4XY3 + X2]]", "[[X2 + Y2 -> XY3]]", "[[X2 + 3Y2 -> X2Y6]]"],
+  a:0,
+  e:"Two X<sub>2</sub> and six Y<sub>2</sub> were used up and four XY<sub>3</sub> formed, which reduces to (A). (B) counts the leftover X<sub>2</sub> as a product even though it never reacted. (C) isn’t balanced. (D) balances, but the diagram shows XY<sub>3</sub> particles, not X<sub>2</sub>Y<sub>6</sub>."},
+
+ {q:"Carbon monoxide reacts with oxygen: [[2CO(g) + O2(g) -> 2CO2(g)]]. The box shows the mixture before the reaction. " + PART.legend(["C","O"]) +
+    '<div class="bxa one">' + PART.box({label:"Before", items:[["CO",4],["O2",3]], seed:"q2"}) + "</div>" +
+    "Which box best represents the contents after the reaction goes to completion?",
+  c:[opt({items:[["CO2",4]], seed:"q2a"}), opt({items:[["CO2",2],["CO",2],["O2",2]], seed:"q2b"}), opt({items:[["CO2",4],["O2",1]], seed:"q2c"}), opt({items:[["CO2",4],["O2",2]], seed:"q2d"})],
+  a:2,
+  e:"Four CO need only two O<sub>2</sub>, so one O<sub>2</sub> is left over, and four CO<sub>2</sub> form. Check the oxygen atoms: 4 + 6 = 10 before, and 8 + 2 = 10 in (C). (A) loses two O atoms, (D) gains two, and (B) conserves atoms but stops early: there’s still CO and O<sub>2</sub> available to react."},
+
+ {q:"Solutions of [[Pb(NO3)2]] and [[KI]] are mixed, and a yellow precipitate of [[PbI2]] forms. The box shows the ions just after mixing; water molecules are not shown. " + PART.legend(["Pb","I","K","N","O"]) +
+    '<div class="bxa one">' + PART.box({label:"Just mixed", items:[["Pb2+",2],["NO3-",4],["K+",4],["I-",4]], seed:"q3"}) + "</div>" +
+    "Which box best represents the mixture after the reaction?",
+  c:[opt({items:[], solid:{ions:["Pb2+","I-","I-"], n:2}, seed:"q3a"}),
+     opt({items:[["PbI2",2],["K+",4],["NO3-",4]], seed:"q3b"}),
+     opt({items:[["Pb2+",2],["I-",4],["K+",4],["NO3-",4]], seed:"q3c"}),
+     opt({items:[["K+",4],["NO3-",4]], solid:{ions:["Pb2+","I-","I-"], n:2}, seed:"q3d"})],
+  a:3,
+  e:"Pb<sup>2+</sup> and I<sup>−</sup> leave the solution as a packed solid, and the spectators K<sup>+</sup> and NO<sub>3</sub><sup>−</sup> stay dissolved, so (D). (A) makes the spectators disappear. (B) draws the precipitate as separate PbI<sub>2</sub> molecules floating in solution. (C) shows no reaction at all."},
+
+ {q:"The box shows a sample of liquid water. " + PART.legend(["H","O"]) +
+    '<div class="bxa one">' + PART.box({label:"Liquid", items:[["H2O",8]], dense:.5, seed:"q4"}) + "</div>" +
+    "Which box best represents the same sample after it has completely boiled?",
+  c:[opt({items:[["H2",8],["O2",4]], seed:"q4a"}), opt({items:[["H2O",8]], seed:"q4b"}), opt({items:[["H",16],["O",8]], seed:"q4c"}), opt({items:[["H2O",6]], seed:"q4d"})],
+  a:1,
+  e:"Boiling is a physical change: the same eight H<sub>2</sub>O molecules, now spread out as a gas. (A) shows water decomposing into new substances, (C) shows every bond broken, and (D) loses two molecules."},
+
+ {q:"Which box best represents the result of dissolving solid sodium chloride in water? Water molecules are not shown. " + PART.legend(["Na","Cl"]),
+  c:[opt({items:[["NaCl",4]], seed:"q5a"}), opt({items:[["Na",4],["Cl2",2]], seed:"q5b"}), opt({items:[["Na+",4],["Cl-",4]], seed:"q5c"}), opt({items:[], solid:{ions:["Na+","Cl-"], n:4}, seed:"q5d"})],
+  a:2,
+  e:"A dissolved ionic compound is separate ions spread through the water, so (C). (A) shows the ions still paired, which is undissolved NaCl. (B) shows sodium atoms and chlorine molecules, which are different substances. (D) is the undissolved solid."},
+
+ {q:"Nitrogen monoxide reacts with oxygen: [[2NO(g) + O2(g) -> 2NO2(g)]]. A student draws the diagram below for a mixture that goes to completion. " + PART.legend(["N","O"]) +
+    fig2({label:"Before", items:[["NO",4],["O2",2]], seed:"q6a"}, {label:"Student’s after", items:[["NO2",4],["O2",1]], seed:"q6b"}) +
+    "Which statement best explains why the student’s diagram is incorrect?",
+  c:["Oxygen atoms are not conserved: the before box has 8 O atoms, but the after box has 10.",
+     "Nitrogen atoms are not conserved: the after box has more N atoms than the before box.",
+     "NO<sub>2</sub> should be drawn as separate N and O atoms, because it is a product.",
+     "The reaction should stop before all of the NO is used up."],
+  a:0,
+  e:"Before: 4 NO and 2 O<sub>2</sub> have 4 + 4 = 8 O atoms. After: 4 NO<sub>2</sub> and 1 O<sub>2</sub> have 8 + 2 = 10. The 4 NO need exactly 2 O<sub>2</sub>, so nothing should be left over. The N atoms (4 and 4) are fine."}
+]);
+
+APC.frq(document.getElementById("frq"), [
+ {q:"<p>A rigid container holds 6 molecules of H<sub>2</sub> and 2 molecules of O<sub>2</sub>, which react according to the equation [[2H2(g) + O2(g) -> 2H2O(g)]].</p><p>(a) How many molecules of each substance are in the container after the reaction goes to completion?</p><p>(b) A student draws the after box with 6 molecules of H<sub>2</sub>O and nothing else. Explain what is wrong with the drawing.</p>",
+  m:"<p><b>(a)</b> 4 H<sub>2</sub>O and 2 H<sub>2</sub>. The 2 O<sub>2</sub> react with 4 H<sub>2</sub>, so O<sub>2</sub> runs out first and 2 H<sub>2</sub> are left over.</p><p><b>(b)</b> The drawing doesn’t conserve oxygen. The container starts with 4 O atoms (in 2 O<sub>2</sub>), but 6 H<sub>2</sub>O would contain 6 O atoms. There isn’t enough oxygen to turn all the hydrogen into water, so 2 H<sub>2</sub> molecules must remain unreacted.</p><p class='note'><b>Scoring watch-out:</b> say which atom isn’t conserved and give the counts. “It’s not balanced” alone usually doesn’t earn the point.</p>"},
+
+ {q:"<p>A student is asked to draw a particle diagram of Na<sub>2</sub>SO<sub>4</sub>(aq), without showing water molecules.</p><p>(a) For every 6 Na<sup>+</sup> ions in the diagram, how many sulfate particles should appear, and how should each one be drawn?</p><p>(b) The student draws each sulfate with two sodium particles touching it. Explain why this drawing is not consistent with the formula and state of the solute.</p>",
+  m:"<p><b>(a)</b> 3 sulfate ions. The formula Na<sub>2</sub>SO<sub>4</sub> has two Na<sup>+</sup> for every SO<sub>4</sub><sup>2−</sup>. Each sulfate is drawn as one unit, an S atom bonded to four O atoms, carrying a 2− charge.</p><p><b>(b)</b> The (aq) means the ionic compound has dissolved, and a dissolved ionic compound exists as separate ions spread through the water. Drawing Na<sup>+</sup> stuck to each SO<sub>4</sub><sup>2−</sup> shows intact Na<sub>2</sub>SO<sub>4</sub> formula units, which is undissolved solid. The ions should be drawn apart from each other, still in a 2 : 1 ratio.</p>"}
+]);
+</script>
 </body>
 </html>

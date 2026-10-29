@@ -8,6 +8,28 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/ap-chemistry/topic.css">
+<style>
+/* energy comparison: one series, so one color, direct labels, no legend */
+.ebars{margin:18px 0 6px;display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:10px 14px;align-items:center}
+.ebars .lab{font-size:15px;color:var(--ink2);line-height:1.3}
+.ebars .lab small{display:block;font-family:var(--mono);font-size:11.5px;color:var(--mute)}
+.ebars .track{display:flex;align-items:center;gap:8px;min-width:0}
+.ebars .bar{height:14px;min-width:4px;background:var(--acc);border-radius:0 4px 4px 0}
+.ebars .val{font-family:var(--mono);font-size:13px;color:var(--ink);white-space:nowrap}
+.obs{width:100%;border-collapse:collapse;margin:18px 0;font-size:15.5px;background:var(--card)}
+.obs th,.obs td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+.obs th{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);background:var(--line-soft)}
+.obs td:last-child{white-space:nowrap;font-weight:600}
+.pick3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.pick3 .pbtn{font-size:13px;line-height:1.35}
+.hyd{display:grid;grid-template-columns:repeat(2,minmax(0,220px));gap:14px;margin:16px 0 6px;justify-content:start}
+.hyd .pbox{max-width:220px}
+@media (max-width:600px){
+  .pick3{grid-template-columns:1fr}
+  .ebars{grid-template-columns:1fr}
+  .obs td:last-child{white-space:normal}
+}
+</style>
 </head>
 <body>
 
@@ -24,18 +46,148 @@
   <div class="eyebrow">AP Chemistry · Unit 4 Chemical Reactions · Topic 4.4</div>
   <h1>Physical and Chemical <em>Changes</em></h1>
   <p class="lede">At the particle level, the line between physical and chemical change comes down to what gets broken: chemical bonds or intermolecular attractions. Some processes, like dissolving a salt, can be argued either way.</p>
+  <p class="lo-line"><b>Learning objective 4.4.A</b> Explain the relationship between macroscopic characteristics and bond interactions for: (a) chemical processes, (b) physical processes.</p>
 
   <div class="board" aria-label="Key ideas in this topic">
-    <div class="idea"><span class="code">Q1</span><span class="lq">What’s actually being broken?</span><span class="d">Chemical bonds in chemical changes, intermolecular attractions in physical ones</span></div>
-    <div class="idea"><span class="code">Q2</span><span class="lq">Is it physical or chemical?</span><span class="d">Classifying processes like phase changes and reactions</span></div>
-    <div class="idea"><span class="code">Q3</span><span class="lq">What about dissolving salt?</span><span class="d">Arguing a case that has evidence on both sides</span></div>
+    <a class="idea" href="#bonds"><span class="code">Q1</span><span class="lq">What’s actually being broken?</span><span class="d">Chemical bonds in chemical changes, intermolecular attractions in physical ones</span></a>
+    <a class="idea" href="#observe"><span class="code">Q2</span><span class="lq">Is it physical or chemical?</span><span class="d">Connecting what you observe to what happens to the particles</span></a>
+    <a class="idea" href="#gray"><span class="code">Q3</span><span class="lq">What about dissolving salt?</span><span class="d">Arguing a case that has evidence on both sides</span></a>
     <div class="board-foot"><span><b>Unit 4</b> Chemical Reactions · 7–9% of the AP Exam</span><span><b>Before this</b> <a href="/ap-chemistry/unit-4/4-3-representations-of-reactions/">4.3 Representations of Reactions</a></span></div>
   </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#bonds">Bonds vs. attractions</a>
+    <a href="#energy">How much energy</a>
+    <a href="#observe">What you observe</a>
+    <a href="#gray">The gray area</a>
+    <a href="#sort">What’s being broken?</a>
+    <a href="#check">Check yourself</a>
+  </nav>
 </header>
 
-<section id="tools">
-  <div class="sec-head"><span class="tag plain">Coming soon</span><h2>Tools and practice</h2></div>
-  <div class="soon-card"><p>Interactive tools, worked examples, and AP-style practice for Topic 4.4 aren’t posted yet. The three questions above are the ones this topic answers.</p></div>
+<!-- =========================================================
+     4.4.A.1  BONDS VS. ATTRACTIONS
+     ========================================================= -->
+<section id="bonds">
+  <div class="sec-head"><span class="tag">4.4.A.1</span><h2>Bonds or attractions?</h2></div>
+  <div class="def">
+    <span class="ek">4.4.A.1</span>
+    <div class="term">Classifying by interactions</div>
+    <p>Processes that break and/or form <b>chemical bonds</b> are typically classified as chemical processes. Processes that change only <b>intermolecular interactions</b>, such as phase changes, are typically classified as physical processes.</p>
+  </div>
+  <div class="grid2">
+    <div class="mini">
+      <div class="n">Chemical bonds</div>
+      <h4>Hold atoms together within a particle</h4>
+      <p>Covalent bonds inside molecules (the O–H bonds in water), ionic bonds holding a lattice of ions together, and metallic bonds. Break them and rearrange the atoms, and you have new substances.</p>
+    </div>
+    <div class="mini keep">
+      <div class="n">Intermolecular forces</div>
+      <h4>Attractions between separate particles</h4>
+      <p>Hydrogen bonding, dipole–dipole forces, and London dispersion forces. Overcome them and the particles move apart, but each particle is unchanged.</p>
+    </div>
+  </div>
+
+  <h3>Same water, two different processes</h3>
+  <p><b>Boiling</b>, <span data-eq="H2O(l) -> H2O(g)"></span>: the hydrogen bonds between molecules are overcome. Every H<sub>2</sub>O molecule is still intact.</p>
+  <div class="bxa" data-fig="boil"></div>
+  <p><b>Electrolysis</b>, <span data-eq="2H2O(l) -> 2H2(g) + O2(g)"></span>: the O–H bonds inside the molecules break, and new H–H and O=O bonds form.</p>
+  <div class="bxa" data-fig="electro"></div>
+  <div class="plegend" data-legend="H O"></div>
+</section>
+
+<!-- =========================================================
+     ENERGY
+     ========================================================= -->
+<section id="energy">
+  <div class="sec-head"><span class="tag">4.4.A</span><h2>How much energy each one takes</h2></div>
+  <p>Intermolecular forces are much weaker than the chemical bonds inside molecules. For one mole of water:</p>
+  <div class="ebars" id="ebars" role="img" aria-label="Energy per mole of water: melting ice 6.0 kilojoules, boiling water 40.7 kilojoules, breaking both O–H bonds about 930 kilojoules."></div>
+  <p class="figcap">Breaking the bonds inside water molecules takes more than 20 times the energy of boiling the water. That’s why water boils at 100 °C, but decomposing water into H<sub>2</sub> and O<sub>2</sub> just by heating it takes temperatures above 2000 °C.</p>
+  <div class="note"><b>Macroscopic clue.</b> A process that happens at a modest temperature, like melting or boiling a molecular substance, is usually overcoming intermolecular forces. A large energy change, or a substance with new properties, points to bonds being broken and formed.</div>
+</section>
+
+<!-- =========================================================
+     OBSERVATIONS
+     ========================================================= -->
+<section id="observe">
+  <div class="sec-head"><span class="tag">4.4.A(a–b)</span><h2>What you observe, and why</h2></div>
+  <p>The learning objective asks you to connect what you can see, a <em>macroscopic</em> characteristic, to the interactions between particles.</p>
+  <table class="obs">
+    <tr><th>What you observe</th><th>What’s happening to the particles</th><th>Process</th></tr>
+    <tr><td>Ice melts at 0 °C and refreezes when cooled.</td><td>Hydrogen bonds between H<sub>2</sub>O molecules are disrupted. The O–H bonds within each molecule stay intact.</td><td>Physical</td></tr>
+    <tr><td>Iodine crystals turn into a violet vapor when warmed.</td><td>Dispersion forces between I<sub>2</sub> molecules are overcome. The I–I bond in each molecule stays intact.</td><td>Physical</td></tr>
+    <tr><td>Magnesium burns with a bright light and leaves a white powder.</td><td>Metallic bonds in Mg and the O=O bonds in O<sub>2</sub> break; ionic bonds form in MgO, a new substance.</td><td>Chemical</td></tr>
+    <tr><td>Hydrogen peroxide fizzes with MnO<sub>2</sub>, and the gas relights a glowing splint.</td><td>O–O bonds in H<sub>2</sub>O<sub>2</sub> break, and O=O bonds form in new O<sub>2</sub> molecules.</td><td>Chemical</td></tr>
+  </table>
+</section>
+
+<!-- =========================================================
+     4.4.A.2  THE GRAY AREA
+     ========================================================= -->
+<section id="gray">
+  <div class="sec-head"><span class="tag">4.4.A.2</span><h2>When a physical process breaks bonds</h2></div>
+  <div class="def">
+    <span class="ek">4.4.A.2</span>
+    <div class="term">Dissolving a salt</div>
+    <p>Sometimes physical processes involve breaking chemical bonds. Dissolving a salt in water breaks ionic bonds and forms ion–dipole interactions between the ions and water, so plausible arguments can be made for calling it either a physical or a chemical process.</p>
+  </div>
+  <p>When NaCl dissolves, each ion leaves the lattice and is surrounded by water molecules. The partly negative oxygen ends face Na<sup>+</sup>, and the partly positive hydrogen ends face Cl<sup>−</sup>.</p>
+  <div class="hyd" id="hyd"></div>
+  <div class="plegend" data-legend="Na Cl O H"></div>
+  <div class="grid2">
+    <div class="mini keep">
+      <div class="n">The case for physical</div>
+      <ul style="margin:8px 0 0;padding-left:18px;font-size:15.5px;color:var(--ink2)">
+        <li>No new substance forms. The Na<sup>+</sup> and Cl<sup>−</sup> ions in solution are the same ions that made up the solid.</li>
+        <li>Evaporate the water and you get NaCl back.</li>
+        <li>Dissolving forms a mixture, which Topic 4.1 calls a physical change.</li>
+      </ul>
+    </div>
+    <div class="mini">
+      <div class="n">The case for chemical</div>
+      <ul style="margin:8px 0 0;padding-left:18px;font-size:15.5px;color:var(--ink2)">
+        <li>The ionic bonds between Na<sup>+</sup> and Cl<sup>−</sup> in the lattice are broken.</li>
+        <li>New ion–dipole interactions form between the ions and water molecules.</li>
+        <li>Properties change: the solution conducts electricity, and solid NaCl doesn’t.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note"><b>On the AP Exam,</b> the course framework treats both claims as plausible. What earns the point is the reasoning: name the interactions that are broken (ionic bonds in the lattice) and the ones that form (ion–dipole interactions with water).</div>
+  <h3>Other physical processes that break bonds</h3>
+  <p>Melting an ionic solid or a covalent network solid is a phase change, so it’s typically called physical, but it breaks bonds. NaCl melts at 801 °C because the ionic bonds holding the lattice together must be broken. Quartz, SiO<sub>2</sub>, melts at about 1700 °C because covalent Si–O bonds must be broken. Melting points that high are a clue that bonds, not just intermolecular forces, are involved.</p>
+</section>
+
+<!-- =========================================================
+     INTERACTIVE: SORT
+     ========================================================= -->
+<section id="sort">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>What’s being broken?</h2></div>
+  <p>Twelve processes, in random order. For each one, decide what happens at the particle level.</p>
+  <div class="card" id="sorter">
+    <div class="card-label"><span id="s-count">Process 1 of 12</span><span class="score" id="s-score">0 correct</span></div>
+    <div id="s-body">
+      <p class="prompt" id="s-prompt"></p>
+      <div class="pick3">
+        <button type="button" class="pbtn" data-pick="imf">Only intermolecular forces change<br><small>physical</small></button>
+        <button type="button" class="pbtn" data-pick="bond">Bonds break and new bonds form<br><small>chemical</small></button>
+        <button type="button" class="pbtn" data-pick="gray">Bonds break, but no new substance<br><small>physical, but bonds break</small></button>
+      </div>
+      <div class="fb" id="s-fb" aria-live="polite"></div>
+      <div class="btn-row"><button type="button" id="s-next" hidden>Next process →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PRACTICE
+     ========================================================= -->
+<section id="check">
+  <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
+  <p>Six multiple-choice questions written in AP style, then two written responses.</p>
+  <p class="score" id="mc-score" style="margin:0"></p>
+  <div class="card" id="mc"></div>
+  <div class="card" id="frq"></div>
 
   <div class="next">
     <div><p class="nt">Up next: 4.5 Stoichiometry</p><p>Mole ratios · limiting reactant · gas and solution stoichiometry</p></div>
@@ -44,11 +196,164 @@
 </section>
 
 <footer>
-  <p>Topic 4.4 Physical and Chemical Changes, following the AP Chemistry course framework.</p>
+  <p>Topic 4.4 Physical and Chemical Changes, following the AP Chemistry course framework (Learning Objective 4.4.A). Practice questions are original and written in AP style. Energy values are per mole of water: enthalpy of fusion 6.0 kJ/mol, enthalpy of vaporization 40.7 kJ/mol at 100 °C, and two O–H bonds at an average of about 465 kJ/mol each.</p>
   <p><a href="/ap-chemistry/unit-4/">← Unit 4 — Chemical Reactions</a></p>
 </footer>
 
 </div><!-- /wrap -->
 
+<script src="/ap-chemistry/topic.js"></script>
+<script src="/ap-chemistry/particles.js"></script>
+<script>
+/* ---------- figures ---------- */
+var FIG = {
+  boil:    [{label:"Liquid", items:[["H2O",6]], dense:.5, seed:"44-boil-1"}, {label:"Gas", items:[["H2O",6]], seed:"44-boil-2"}],
+  electro: [{label:"Before", items:[["H2O",6]], dense:.5, seed:"44-el-1"}, {label:"After", items:[["H2",6],["O2",3]], seed:"44-el-2"}]
+};
+document.querySelectorAll("[data-fig]").forEach(function(el){
+  var f = FIG[el.dataset.fig];
+  el.innerHTML = "<div>" + PART.box(f[0]) + '</div><span class="arrow" aria-hidden="true">→</span><div>' + PART.box(f[1]) + "</div>";
+});
+document.querySelectorAll("[data-legend]").forEach(function(el){ el.outerHTML = PART.legend(el.dataset.legend.split(" ")); });
+
+// An ion with four water molecules around it. Water's H atoms point along +y in its template,
+// so a cation gets its waters turned H-out and an anion gets them turned H-in.
+function hydrated(ion, caption, aria){
+  var k = 1.45, cx = 110 / k, cy = 80 / k, cation = /\+$/.test(ion), d = cation ? 27 : 33, parts = [];
+  [45, 135, 225, 315].forEach(function(deg){
+    var t = deg * Math.PI / 180;
+    parts.push({sp:"H2O", x:cx + d * Math.cos(t), y:cy + d * Math.sin(t), rot:cation ? deg - 90 : deg + 90});
+  });
+  parts.push({sp:ion, x:cx, y:cy});
+  return "<div>" + PART.figure(220, 160, parts, "", aria, k) + '<p class="figcap">' + caption + "</p></div>";
+}
+document.getElementById("hyd").innerHTML =
+  hydrated("Na+", "Na<sup>+</sup>: oxygen ends of water point in", "A sodium ion surrounded by four water molecules, oxygen ends toward the ion") +
+  hydrated("Cl-", "Cl<sup>−</sup>: hydrogen ends of water point in", "A chloride ion surrounded by four water molecules, hydrogen ends toward the ion");
+
+/* ---------- energy bars ---------- */
+(function(){
+  var rows = [["Melting ice", "H₂O(s) → H₂O(l)", 6.0, "6.0 kJ/mol"],
+              ["Boiling water", "H₂O(l) → H₂O(g)", 40.7, "40.7 kJ/mol"],
+              ["Breaking both O–H bonds", "H₂O → 2H + O", 930, "≈ 930 kJ/mol"]];
+  document.getElementById("ebars").innerHTML = rows.map(function(r){
+    return '<div class="lab">' + r[0] + "<small>" + r[1] + '</small></div><div class="track" title="' + r[0] + ": " + r[3] + '">' +
+      '<div class="bar" style="width:calc((100% - 110px) * ' + (r[2] / 930).toFixed(4) + ')"></div><span class="val">' + r[3] + "</span></div>";
+  }).join("");
+})();
+
+/* ---------- sorter ---------- */
+var PROC = [
+  {t:"Ice melts at 0 °C.", a:"imf", e:"Hydrogen bonds between H<sub>2</sub>O molecules are disrupted. The O–H bonds inside each molecule stay intact."},
+  {t:"Ethanol evaporates from an open dish.", a:"imf", e:"The attractions between ethanol molecules are overcome. Each C<sub>2</sub>H<sub>5</sub>OH molecule is unchanged in the vapor."},
+  {t:"Iodine crystals sublime into a violet vapor.", a:"imf", e:"Dispersion forces between I<sub>2</sub> molecules are overcome. The I–I bonds stay intact."},
+  {t:"Steam condenses into droplets on a cold window.", a:"imf", e:"Hydrogen bonds form between H<sub>2</sub>O molecules as they come together. No bonds within the molecules change."},
+  {t:"Sugar dissolves in water.", a:"imf", e:"Attractions between sucrose molecules are replaced by attractions to water. The sucrose molecules themselves stay intact."},
+  {t:"Methane burns in oxygen: [[CH4(g) + 2O2(g) -> CO2(g) + 2H2O(g)]]", a:"bond", e:"C–H and O=O bonds break, and C=O and O–H bonds form. Carbon dioxide and water are new substances."},
+  {t:"Water is electrolyzed into hydrogen gas and oxygen gas.", a:"bond", e:"O–H bonds break, and new H–H and O=O bonds form."},
+  {t:"Hydrogen peroxide decomposes into water and oxygen.", a:"bond", e:"O–O bonds in H<sub>2</sub>O<sub>2</sub> break, and O=O bonds form in new O<sub>2</sub> molecules."},
+  {t:"Sodium metal reacts with chlorine gas to form sodium chloride.", a:"bond", e:"Metallic bonds in Na and the Cl–Cl bond break, and ionic bonds form in NaCl, a new substance."},
+  {t:"Solid sodium chloride dissolves in water.", a:"gray", e:"Ionic bonds in the lattice break, and ion–dipole interactions form with water. The ions are the same ones that were in the solid. This is the case the framework says can be argued either way."},
+  {t:"Solid sodium chloride melts at 801 °C.", a:"gray", e:"The ionic bonds holding the lattice together break, but the liquid is still Na<sup>+</sup> and Cl<sup>−</sup>. It’s a phase change that breaks bonds."},
+  {t:"Quartz, SiO<sub>2</sub>, melts at about 1700 °C.", a:"gray", e:"Quartz is a covalent network solid, so melting it breaks Si–O covalent bonds. It’s still a phase change, with no new substance."}
+];
+var NAMES = {imf:"Only intermolecular forces change", bond:"Bonds break and new bonds form", gray:"Bonds break, but no new substance"};
+(function(){
+  var order, k, right, answered;
+  var prompt = document.getElementById("s-prompt"), fb = document.getElementById("s-fb"), next = document.getElementById("s-next"),
+      body = document.getElementById("s-body"), count = document.getElementById("s-count"), score = document.getElementById("s-score"),
+      btns = document.querySelectorAll("#sorter .pbtn");
+  function show(){
+    var o = order[k];
+    answered = false;
+    count.textContent = "Process " + (k + 1) + " of " + order.length;
+    score.textContent = right + " correct";
+    prompt.innerHTML = APC.rich(o.t);
+    fb.className = "fb"; next.hidden = true;
+    btns.forEach(function(b){ b.className = "pbtn"; b.disabled = false; });
+  }
+  btns.forEach(function(b){
+    b.addEventListener("click", function(){
+      if(answered) return;
+      answered = true;
+      var o = order[k], ok = b.dataset.pick === o.a;
+      if(ok) right++;
+      btns.forEach(function(x){
+        x.disabled = true;
+        if(x === b) x.classList.add(ok ? "yes" : "no");
+        else if(x.dataset.pick === o.a) x.classList.add("reveal");
+      });
+      fb.className = "fb show " + (ok ? "good" : "bad");
+      fb.innerHTML = "<b>" + (ok ? "Right: " : "It’s “") + NAMES[o.a] + (ok ? "." : ".”") + "</b> " + o.e;
+      score.textContent = right + " correct";
+      next.hidden = false;
+      next.textContent = k + 1 < order.length ? "Next process →" : "See your score";
+      next.focus();
+    });
+  });
+  next.addEventListener("click", function(){
+    k++;
+    if(k < order.length){ show(); return; }
+    count.textContent = "Done";
+    body.innerHTML = '<p class="prompt" style="text-align:center">' + right + " of " + order.length + " correct</p>" +
+      '<div class="btn-row" style="justify-content:center"><button type="button" id="s-again">Shuffle and go again</button></div>';
+    document.getElementById("s-again").addEventListener("click", function(){ location.reload(); });
+  });
+  order = APC.shuffle(PROC); k = 0; right = 0; show();
+})();
+
+/* ---------- practice ---------- */
+APC.mc(document.getElementById("mc"), document.getElementById("mc-score"), [
+ {q:"When liquid ethanol, [[C2H5OH]], boils, which of the following is overcome?",
+  c:["Covalent bonds between the carbon and oxygen atoms in each molecule",
+     "Intermolecular forces between ethanol molecules",
+     "Ionic bonds between ethanol molecules",
+     "Covalent bonds between the oxygen and hydrogen atoms in each molecule"],
+  a:1,
+  e:"Boiling is a phase change: the molecules separate from each other, but each C<sub>2</sub>H<sub>5</sub>OH molecule stays intact. (A) and (D) would break the molecule apart into new substances, and ethanol has no ionic bonds."},
+
+ {q:"Which of the following processes involves breaking covalent bonds within molecules?",
+  c:["Sublimation of [[I2(s)]]", "Melting of ice", "Dissolving sucrose in water", "Decomposition of [[H2O2]] into [[H2O]] and [[O2]]"],
+  a:3,
+  e:"Decomposing hydrogen peroxide breaks O–O bonds and forms O=O bonds in new O<sub>2</sub> molecules. The other three only overcome intermolecular forces; the molecules stay intact."},
+
+ {q:"A student claims that dissolving [[NaCl(s)]] in water is a chemical process. Which of the following is the best particle-level evidence supporting the student’s claim?",
+  c:["The NaCl can be recovered by evaporating the water.",
+     "The solid NaCl disappears from view.",
+     "Ionic bonds between Na<sup>+</sup> and Cl<sup>−</sup> are broken, and new ion–dipole interactions form between the ions and water molecules.",
+     "The ions in solution are the same Na<sup>+</sup> and Cl<sup>−</sup> ions that made up the solid."],
+  a:2,
+  e:"The argument for a chemical process rests on bonds breaking and new interactions forming. (A) and (D) support the opposite claim, that dissolving is physical. (B) is an observation, not particle-level evidence."},
+
+ {q:"Water boils at 100 °C at 1 atm, but decomposing water into [[H2(g)]] and [[O2(g)]] by heating alone requires temperatures above 2000 °C. Which of the following best explains the difference?",
+  c:["Boiling overcomes intermolecular forces between molecules, which are much weaker than the covalent O–H bonds that must break to decompose water.",
+     "Boiling breaks the O–H bonds, while decomposition breaks the hydrogen bonds between molecules.",
+     "Hydrogen bonds between water molecules are stronger than the covalent bonds within them.",
+     "Decomposing water requires breaking ionic bonds, which are stronger than covalent bonds."],
+  a:0,
+  e:"Overcoming hydrogen bonds takes about 41 kJ/mol, while breaking both O–H bonds takes over 900 kJ/mol. (B) reverses the two processes, (C) has the strengths backward, and water has no ionic bonds."},
+
+ {q:"Which of the following processes is typically classified as a physical change even though chemical bonds are broken?",
+  c:["Burning magnesium in air", "Melting solid NaCl at 801 °C", "Boiling water at 100 °C", "Rusting of iron"],
+  a:1,
+  e:"Melting NaCl breaks the ionic bonds holding the lattice together, but no new substance forms; it’s a phase change. Boiling water is physical but breaks no chemical bonds, and burning and rusting are chemical changes."},
+
+ {q:"Which statement correctly describes what happens at the particle level when iodine sublimes, [[I2(s) -> I2(g)]]?",
+  c:["I–I covalent bonds break, forming separate iodine atoms.",
+     "New I–I bonds form as the solid becomes a gas.",
+     "Dispersion forces between I<sub>2</sub> molecules are overcome, and the I–I bonds stay intact.",
+     "Ionic bonds between I<sup>+</sup> and I<sup>−</sup> ions are broken."],
+  a:2,
+  e:"I<sub>2</sub> is a nonpolar molecule held in the solid by London dispersion forces. Sublimation overcomes those forces; the gas is still I<sub>2</sub> molecules, as the equation shows."}
+]);
+
+APC.frq(document.getElementById("frq"), [
+ {q:"<p>Solid sodium chloride dissolves in water.</p><p>(a) Describe the interactions that are broken and the interactions that form as NaCl dissolves.</p><p>(b) Give one argument that dissolving NaCl is a physical process and one argument that it is a chemical process.</p>",
+  m:"<p><b>(a)</b> The ionic bonds between Na<sup>+</sup> and Cl<sup>−</sup> ions in the crystal lattice are broken, and some hydrogen bonds between water molecules are disrupted. Ion–dipole interactions form: the partially negative oxygen ends of water molecules surround Na<sup>+</sup>, and the partially positive hydrogen ends surround Cl<sup>−</sup>.</p><p><b>(b)</b> <i>Physical:</i> no new substance forms; the dissolved ions are the same Na<sup>+</sup> and Cl<sup>−</sup> ions, and evaporating the water recovers NaCl. <i>Chemical:</i> ionic bonds are broken and new interactions form between the ions and water, and the solution has new properties, such as conducting electricity.</p><p class='note'><b>Scoring watch-out:</b> either classification can be justified. Name the specific interactions; “the bonds break” without saying which ones usually doesn’t earn the point.</p>"},
+
+ {q:"<p>Sodium chloride melts at 801 °C, and ice melts at 0 °C.</p><p>(a) Identify the interactions that are overcome when each substance melts.</p><p>(b) Explain why the melting points are so different.</p><p>(c) Is each melting process physical or chemical? Justify your answer.</p>",
+  m:"<p><b>(a)</b> NaCl: the ionic bonds, the Coulombic attractions between Na<sup>+</sup> and Cl<sup>−</sup> ions in the lattice. Ice: hydrogen bonds between H<sub>2</sub>O molecules; the covalent O–H bonds within each molecule stay intact.</p><p><b>(b)</b> The attraction between full positive and negative charges on ions is much stronger than the hydrogen bonds between neutral, polar water molecules. More energy, and so a much higher temperature, is needed to overcome the ionic bonds.</p><p><b>(c)</b> Both are typically classified as physical because they are phase changes and no new substance forms: liquid NaCl is still Na<sup>+</sup> and Cl<sup>−</sup>, and liquid water is still H<sub>2</sub>O. Melting NaCl is an example of a physical process that breaks chemical bonds.</p>"}
+]);
+</script>
 </body>
 </html>
