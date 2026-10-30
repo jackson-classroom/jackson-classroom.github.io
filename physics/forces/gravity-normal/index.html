@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gravity &amp; Normal Force — Weight = m · g</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Physics · Unit 3 · Forces — shared page system
+   (identical block on every Unit 3 page)
+   ========================================================= */
+:root{
+  --ink:#16283C; --ink2:#3D4F63; --mute:#5D6D7E;
+  --paper:#EDF1F4; --card:#FBFCFD; --line:#CBD7E1; --line-soft:#E1E8EE;
+  --acc:#1B6CA8; --acc-dk:#0F4A78; --acc-lite:#D3E4F2;
+  --warm:#9A6410; --warm-lite:#FBEFD6;
+  --ok:#1F6E4D; --ok-bg:#E3F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  /* one colour per force, used on every page */
+  --f-g:#B23A2B;    /* gravity / weight      */
+  --f-n:#1B6CA8;    /* normal                */
+  --f-f:#A86A0C;    /* friction              */
+  --f-t:#1E7F5C;    /* tension               */
+  --f-a:#6B45B0;    /* applied               */
+  --f-air:#3E7C8A;  /* air resistance / drag */
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+  background-image:linear-gradient(to right,rgba(150,178,199,.17) 1px,transparent 1px),linear-gradient(to bottom,rgba(150,178,199,.17) 1px,transparent 1px);
+  background-size:26px 26px}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(237,241,244,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:60px 0 40px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc-dk)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(38px,6.4vw,64px);line-height:1.02;margin:16px 0 0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--acc)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:48ch;color:var(--ink2);margin:20px 0 0}
+
+.board{margin:36px 0 0;padding:22px 24px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.board-cap{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+.board svg{display:block;width:100%;height:auto}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft)}
+.sig-note b{color:var(--acc-dk);font-weight:600}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--acc);color:var(--acc-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(27px,4.2vw,38px);line-height:1.1;margin:0;letter-spacing:-.02em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--acc-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.nw{white-space:nowrap}
+.note{border-left:3px solid var(--warm);background:var(--warm-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.law{font-family:var(--display);font-size:clamp(20px,2.8vw,25px);font-weight:500;line-height:1.35;letter-spacing:-.01em;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:0 4px 4px 0;padding:18px 22px;margin:22px 0}
+.law small{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:6px;font-weight:400}
+
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:24px 0}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:0 4px 4px 0;padding:18px 20px}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard .form{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--acc-dk);margin:2px 0 0;line-height:1.5}
+.rulecard .ex{font-family:var(--body);font-size:14.5px;color:var(--ink);background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:7px 10px;margin-top:10px}
+.rulecard.warn{border-left-color:var(--warm)}
+
+/* force labels: F with a coloured subscript tag */
+.F{font-family:var(--mono);font-weight:600;white-space:nowrap}
+.F.g{color:var(--f-g)} .F.n{color:var(--f-n)} .F.f{color:var(--f-f)} .F.t{color:var(--f-t)} .F.a{color:var(--f-a)} .F.air{color:var(--f-air)} .F.net{color:var(--ink)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.setup{font-size:16px;color:var(--ink2);margin:0 0 14px}
+.scene{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:8px}
+.scene svg{display:block;width:100%;height:auto;max-width:540px;margin:0 auto}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F5F8FA;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--acc-dk);border-color:var(--acc-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--acc)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--acc);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+/* Input boxes: clearly fillable. Placeholder text is a short instruction, never a sample answer. */
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid #93A6B8;border-radius:3px;padding:9px 11px;width:150px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(22,40,60,.12)}
+::placeholder{font-family:var(--body);font-style:italic;font-size:15px;color:#7E8E9D;opacity:1}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:170px}
+.unit{font-family:var(--mono);font-size:15px;color:var(--ink2)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1A4B35}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--acc);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb p{margin:6px 0 0}
+.fb p:first-child{margin-top:0}
+
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-top:14px}
+.cbtn{background:#fff;color:var(--ink);border:1px solid var(--line);font-size:13px;padding:11px 10px;text-align:center}
+.cbtn:hover{background:#fff;color:var(--ink);border-color:var(--acc)}
+.cbtn.yes{background:var(--ok-bg);border-color:var(--ok);color:#1A4B35}
+.cbtn.no{background:var(--no-bg);border-color:var(--no);color:#7E2A1D}
+.cbtn.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.cbtn[disabled]{cursor:default}
+
+.tally-h{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:20px 0 8px}
+.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px}
+.tcell{border:1px solid var(--line-soft);border-radius:3px;padding:7px 10px;background:#fff}
+.tcell .tl{display:block;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.04em}
+.tcell .tv{font-family:var(--mono);font-size:15px;color:var(--ink)}
+.tcell.miss{border-color:#E3B7AE;background:#FDF6F4}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab:hover{background:var(--line-soft);color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--ink);color:#F5F8FA;border-color:var(--ink)}
+.panel{display:none;padding-top:12px}
+.panel.on{display:block}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.tbl{overflow-x:auto;margin:18px 0;-webkit-overflow-scrolling:touch}
+.tbl table{margin:0}
+
+.wo{list-style:none;padding:0;margin:20px 0}
+.wo li{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 18px;margin:10px 0}
+.wo .myth{display:block;font-size:15px;color:var(--no);text-decoration:line-through;text-decoration-color:rgba(169,58,42,.55);margin-bottom:4px}
+.wo .fact{font-size:16px}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45;letter-spacing:0}
+.opt:hover{border-color:var(--acc);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.95}
+.quiz-sum{font-family:var(--mono);font-size:13px;color:var(--ink2);margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft)}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#E9EFF4;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#BCCADA}
+.next .nt{font-family:var(--display);font-weight:600;font-size:24px;color:#fff;margin:0 0 4px;letter-spacing:-.01em}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F5F8FA;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--acc-lite)}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:14px}
+  .scene{padding:2px}
+  .board{padding:16px 14px}
+  .field label{min-width:auto;flex:1 1 100%}
+  .choices{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+/* ======== end shared block ======== */
+
+/* ---- page: hero pair ---- */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.duo figure{margin:0;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px 10px 12px}
+.duo figcaption{font-family:var(--mono);font-size:12.5px;color:var(--ink2);text-align:center;margin-top:4px;line-height:1.45}
+.duo figcaption b{display:block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.duo .is-r b{color:var(--f-n)} .duo .is-p b{color:var(--f-a)}
+@media (max-width:560px){.duo{grid-template-columns:1fr}}
+
+/* ---- page: method ladder ---- */
+.ladder{list-style:none;padding:0;margin:20px 0;counter-reset:step}
+.ladder li{counter-increment:step;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:baseline;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:12px 16px;margin:8px 0}
+.ladder li::before{content:counter(step);font-family:var(--mono);font-size:13px;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;text-align:center;padding:2px 0}
+.ladder small{display:block;color:var(--mute);font-size:14.5px;margin-top:2px}
+
+/* ---- page: worked example ---- */
+.worked{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:18px;align-items:center}
+@media (max-width:640px){.worked{grid-template-columns:1fr}}
+
+/* ---- page: ledger (sum per direction) ---- */
+.ledger{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:14px;margin:10px 0 4px;background:rgba(255,255,255,.55)}
+.ledger th,.ledger td{padding:6px 8px;border-bottom:1px solid rgba(22,40,60,.12);text-align:left;vertical-align:top}
+.ledger th{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:inherit;opacity:.75;font-weight:500}
+.ledger td.z{font-weight:600}
+.verdict{font-family:var(--mono);font-size:13.5px;margin-top:8px}
+
+/* ---- page: press-on-the-box sim ---- */
+.sim-ctrl{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 4px}
+.sim-ctrl label{font-size:15px;color:var(--ink2)}
+.sim-ctrl input[type=range]{flex:1 1 120px;min-width:110px;accent-color:var(--f-a)}
+.sim-ctrl output{font-family:var(--mono);font-size:16px;font-weight:600;color:var(--f-a);min-width:150px;font-variant-numeric:tabular-nums}
+.sim-ends{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--mute);margin:0 0 12px}
+.readout{margin:0;font-size:15px}
+.readout th{width:38%;white-space:nowrap}
+.readout td{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.state{font-family:var(--mono);font-size:13.5px;line-height:1.5;padding:10px 12px;border-radius:0 3px 3px 0;margin-top:12px;border-left:3px solid var(--f-n);background:var(--acc-lite);color:var(--acc-dk)}
+.state.off{border-left-color:var(--no);background:var(--no-bg);color:#7E2A1D}
+
+/* ---- page: work shown in feedback ---- */
+.work{font-family:var(--mono);font-size:14.5px;line-height:1.7;margin:8px 0 0;padding:8px 12px;background:rgba(255,255,255,.6);border-radius:3px}
+
+/* ---- page: practice ---- */
+.cap{font-size:16px;color:var(--ink2);margin:0 0 10px}
+.cap b{color:var(--ink)}
+.prob{font-size:18px;line-height:1.55;margin:0 0 6px;color:var(--ink)}
+.scene-note{font-family:var(--mono);font-size:12.5px;color:var(--mute);text-align:center;margin:8px 0 0}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.rulebox.two{grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Gravity &amp; Normal Force</span>
+    <span class="bar-sub">F<sub>grav</sub> = m · g · F<sub>norm</sub> from the vertical forces</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 3 · Forces · Page 3</div>
+  <h1>Gravity pulls down. <em>The surface pushes back.</em></h1>
+  <p class="lede">F<sub>grav</sub> is Earth pulling on an object, and it only depends on the mass: F<sub>grav</sub> = m · g. F<sub>norm</sub> is a surface pushing back on whatever presses on it. They're equal only when nothing else pushes up or down.</p>
+
+  <div class="board">
+    <div class="board-cap">Same book, same table</div>
+    <div class="duo">
+      <figure class="is-r">
+        <svg id="hero-a" viewBox="0 0 520 360" role="img" aria-label="A 2 kilogram book resting on a table. Normal force 19.6 newtons up, gravity 19.6 newtons down."></svg>
+        <figcaption><b>Just resting</b>A 2 kg book on a table<br>F<sub>norm</sub> = F<sub>grav</sub> = 19.6 N</figcaption>
+      </figure>
+      <figure class="is-p">
+        <svg id="hero-b" viewBox="0 0 520 360" role="img" aria-label="The same book pressed down with 10 newtons. Normal force 29.6 newtons up, gravity 19.6 newtons down, applied force 10 newtons down."></svg>
+        <figcaption><b>Pushed down</b>Same book, pressed with 10 N<br>F<sub>norm</sub> = 19.6 + 10 = 29.6 N</figcaption>
+      </figure>
+    </div>
+    <div class="sig-note">Gravity didn't change. The table pushes back with <b>whatever it takes</b> to keep the book from sinking into it.</div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#grav">Gravity</a>
+  <a href="#p-grav">Practice: find F<sub>grav</sub></a>
+  <a href="#norm">Normal force</a>
+  <a href="#press">Push or pull the box</a>
+  <a href="#p-norm">Practice: find F<sub>norm</sub></a>
+  <a href="#watch">Watch-outs</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ GRAVITY ============ -->
+<section id="grav">
+  <div class="sec-head"><h2>The force of gravity</h2></div>
+  <p>The <b>force of gravity</b> (<span class="F g">F<sub>grav</sub></span>) is Earth pulling on an object. It's also called the object's <b>weight</b>. It always points straight down, and it's on the free-body diagram of anything near Earth, whether it's sitting still, sliding, or flying through the air.</p>
+
+  <div class="law"><small>Force of gravity (weight)</small>An object's weight is its mass times the strength of gravity.<br><span class="mono" style="font-size:.95em">F<sub>grav</sub> = m · g</span></div>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Symbol</th><th>Means</th><th>Unit</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">F<sub>grav</sub></td><td>force of gravity (weight)</td><td class="mono">N</td></tr>
+      <tr><td class="mono">m</td><td>mass</td><td class="mono">kg</td></tr>
+      <tr><td class="mono">g</td><td>strength of gravity. On Earth, g = 9.8 m/s².</td><td class="mono">m/s²</td></tr>
+    </tbody>
+  </table></div>
+  <p>g is the same for every object. A bowling ball has a bigger weight than a marble because it has more <b>mass</b>, not because gravity is stronger for it. In our problems, use g = 9.8 m/s² unless the problem says otherwise.</p>
+
+  <h3>Mass and weight are not the same thing</h3>
+  <div class="rulebox">
+    <div class="rulecard">
+      <div class="form">m, in kg</div>
+      <h4>Mass</h4>
+      <p>How much stuff is in an object. It's the same everywhere: on Earth, on the Moon, or floating in space.</p>
+      <div class="ex">A 60 kg student is 60 kg everywhere.</div>
+    </div>
+    <div class="rulecard warn">
+      <div class="form">F<sub>grav</sub>, in N</div>
+      <h4>Weight</h4>
+      <p>A force: how hard gravity pulls on that mass. It changes if g changes.</p>
+      <div class="ex">On Earth, the 60 kg student weighs 60 × 9.8 = 588 N.</div>
+    </div>
+  </div>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Where</th><th>g (m/s²)</th><th>Weight of a 60 kg student</th></tr></thead>
+    <tbody>
+      <tr><td>Earth</td><td class="num">9.8</td><td class="num">588 N</td></tr>
+      <tr><td>Moon</td><td class="num">1.6</td><td class="num">96 N</td></tr>
+      <tr><td>Mars</td><td class="num">3.7</td><td class="num">222 N</td></tr>
+      <tr><td>Jupiter</td><td class="num">24.8</td><td class="num">1488 N</td></tr>
+    </tbody>
+  </table></div>
+  <p class="smallprint">The mass stays 60 kg in every row. Only the weight changes.</p>
+</section>
+
+<!-- ============ PRACTICE: F_GRAV ============ -->
+<section id="p-grav">
+  <div class="sec-head">
+    <span class="tasktag">Practice 1</span>
+    <h2>Find the force of gravity</h2>
+  </div>
+  <p>Use g = 9.8 m/s² on Earth. A new problem is generated every time.</p>
+
+  <div class="card">
+    <div class="card-label"><span>F<sub>grav</sub> = m · g</span><span class="score" id="gw-score">0 of 0</span></div>
+    <p class="prob" id="gw-prob"></p>
+    <div class="field">
+      <label for="gw-ans" id="gw-lab">Weight</label>
+      <input type="text" id="gw-ans" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit" id="gw-unit">N</span>
+    </div>
+    <div class="fb" id="gw-fb" aria-live="polite"></div>
+    <div class="btn-row"><button id="gw-check">Check</button><button class="ghost" id="gw-next">Next problem</button></div>
+    <div class="tally-h">Your results by kind of problem</div>
+    <div class="tally" id="gw-tally"></div>
+  </div>
+</section>
+
+<!-- ============ NORMAL FORCE ============ -->
+<section id="norm">
+  <div class="sec-head"><h2>The normal force</h2></div>
+  <p>The <b>normal force</b> (<span class="F n">F<sub>norm</sub></span>) is a surface pushing back on an object that's pressing on it. "Normal" means <b>perpendicular</b>: the push points straight out of the surface. A floor or table pushes straight up. A wall pushes straight out from the wall, sideways.</p>
+  <p>There's no equation like F<sub>grav</sub> = m · g for the normal force. The surface pushes back with <b>whatever it takes</b> to keep the object from sinking into it. You find F<sub>norm</sub> from the free-body diagram: if the object isn't moving up or down, the vertical forces have to cancel.</p>
+
+  <div class="rulebox two">
+    <div class="rulecard">
+      <div class="form">F<sub>norm</sub> = F<sub>grav</sub></div>
+      <h4>Just resting</h4>
+      <p>Nothing else pushes up or down, so the surface holds up exactly the weight.</p>
+      <div class="ex">A 98 N box on the floor → F<sub>norm</sub> = 98 N</div>
+    </div>
+    <div class="rulecard">
+      <div class="form">F<sub>norm</sub> = F<sub>grav</sub> + push</div>
+      <h4>Pushed down</h4>
+      <p>Your push points the same way as gravity, so the surface has to push back harder.</p>
+      <div class="ex">98 N box, pushed down with 20 N → F<sub>norm</sub> = 118 N</div>
+    </div>
+    <div class="rulecard">
+      <div class="form">F<sub>norm</sub> = F<sub>grav</sub> − pull</div>
+      <h4>Pulled up (but not lifted)</h4>
+      <p>Your pull holds up part of the weight, so the surface doesn't have to push as hard.</p>
+      <div class="ex">98 N box, pulled up with 30 N → F<sub>norm</sub> = 68 N</div>
+    </div>
+    <div class="rulecard warn">
+      <div class="form">F<sub>norm</sub> = F<sub>grav</sub></div>
+      <h4>Pushed sideways</h4>
+      <p>A sideways force doesn't push into the floor or lift off it, so it doesn't change F<sub>norm</sub>.</p>
+      <div class="ex">98 N cart, pushed sideways with 40 N → F<sub>norm</sub> = 98 N</div>
+    </div>
+  </div>
+
+  <h3>The method</h3>
+  <ol class="ladder">
+    <li><div><b>Find F<sub>grav</sub>.</b> F<sub>grav</sub> = m × 9.8.</div></li>
+    <li><div><b>List every other up or down force.</b> A push down, a pull up, a rope.<small>Ignore left–right forces. They don't change F<sub>norm</sub> on a level surface.</small></div></li>
+    <li><div><b>Make up = down.</b> F<sub>norm</sub> is whatever up-force is missing so the vertical forces cancel.</div></li>
+  </ol>
+
+  <h3>Worked example</h3>
+  <div class="worked">
+    <div class="scene"><svg id="worked-svg" viewBox="0 0 520 360" role="img" aria-label="A 5 kilogram box pushed down with 20 newtons. Gravity 49 newtons down, applied force 20 newtons down, normal force 69 newtons up."></svg></div>
+    <div>
+      <p style="margin-top:0">A 5 kg box sits on a table. You press straight down on it with 20 N.</p>
+      <table class="ledger" style="background:transparent">
+        <thead><tr><th>Step</th><th>Work</th></tr></thead>
+        <tbody>
+          <tr><td>F<sub>grav</sub></td><td>5 kg × 9.8 = 49 N down</td></tr>
+          <tr><td>Down</td><td>49 N + 20 N = 69 N</td></tr>
+          <tr><td>Up = down</td><td class="z">F<sub>norm</sub> = 69 N up</td></tr>
+        </tbody>
+      </table>
+      <p class="verdict"><b>F<sub>norm</sub> = 69 N.</b> More than the box's weight, because the table also holds up your push.</p>
+    </div>
+  </div>
+
+  <div class="note"><b>No contact, no normal force.</b> F<sub>norm</sub> only exists where an object touches a surface. A ball in the air, a skydiver, or a lamp hanging from a chain has no normal force on its free-body diagram.</div>
+</section>
+
+<!-- ============ PUSH OR PULL ============ -->
+<section id="press">
+  <div class="sec-head">
+    <span class="tasktag">Try it</span>
+    <h2>Push or pull the box</h2>
+  </div>
+  <p>A 5 kg box sits on a table, so F<sub>grav</sub> = 5 × 9.8 = 49 N. Drag the slider to push down on the box or pull up on it, and watch the normal force.</p>
+
+  <div class="card">
+    <div class="sim-ctrl">
+      <label for="pr-hand">Your hand</label>
+      <input type="range" id="pr-hand" min="-70" max="70" step="1" value="0" aria-describedby="pr-ends">
+      <output id="pr-out" for="pr-hand">no hand</output>
+    </div>
+    <div class="sim-ends" id="pr-ends"><span>← pull up</span><span>push down →</span></div>
+    <div class="worked">
+      <div class="scene"><svg id="pr-svg" viewBox="0 0 520 360" role="img" aria-labelledby="pr-desc"><desc id="pr-desc"></desc></svg></div>
+      <div>
+        <table class="readout"><tbody>
+          <tr><th>Gravity</th><td><span class="F g">F<sub>grav</sub></span> 49 N down</td></tr>
+          <tr><th>Your hand</th><td><span class="F a">F<sub>app</sub></span> <span id="pr-app">0 N</span></td></tr>
+          <tr><th>Normal force</th><td><span class="F n">F<sub>norm</sub></span> <span id="pr-n">49 N up</span></td></tr>
+          <tr><th>Net force</th><td id="pr-net">0 N</td></tr>
+        </tbody></table>
+        <div class="state" id="pr-state" aria-live="polite"></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="ghost" id="pr-reset">Reset</button></div>
+  </div>
+
+  <h3>Things to try</h3>
+  <ol class="ladder">
+    <li><div><b>Push down harder and harder.</b> What happens to F<sub>norm</sub>? Does F<sub>grav</sub> change?</div></li>
+    <li><div><b>Pull up with 20 N, then 40 N.</b> How much does the table have to push now?</div></li>
+    <li><div><b>Pull up with exactly 49 N.</b> How hard is the table pushing? What happens if you pull a little harder?</div></li>
+  </ol>
+</section>
+
+<!-- ============ PRACTICE: F_NORM ============ -->
+<section id="p-norm">
+  <div class="sec-head">
+    <span class="tasktag">Practice 2</span>
+    <h2>Find the normal force</h2>
+  </div>
+  <p>Find F<sub>grav</sub> first, then make the vertical forces cancel to find F<sub>norm</sub>. Every object stays on its surface. (g = 9.8 m/s².)</p>
+
+  <div class="card">
+    <div class="card-label"><span>Two steps</span><span class="score" id="fn-score">0 of 0</span></div>
+    <p class="cap" id="fn-cap"></p>
+    <div class="scene"><svg id="fn-svg" viewBox="0 0 520 360" role="img" aria-labelledby="fn-desc"><desc id="fn-desc"></desc></svg></div>
+    <p class="scene-note" id="fn-note"></p>
+    <div class="field">
+      <label for="fn-g">1 · Force of gravity</label>
+      <input type="text" id="fn-g" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">N</span>
+    </div>
+    <div class="field">
+      <label for="fn-n">2 · Normal force</label>
+      <input type="text" id="fn-n" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">N</span>
+    </div>
+    <div class="fb" id="fn-fb" aria-live="polite"></div>
+    <div class="btn-row"><button id="fn-check">Check</button><button class="ghost" id="fn-next">Next problem</button></div>
+    <div class="tally-h">Your results by kind of problem</div>
+    <div class="tally" id="fn-tally"></div>
+  </div>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="sec-head"><h2>Watch-outs</h2></div>
+  <ul class="wo">
+    <li><span class="myth">The normal force is always equal to the weight.</span><span class="fact">Only when nothing else pushes up or down. Push down on a box and F<sub>norm</sub> gets <b>bigger</b>. Pull up on it and F<sub>norm</sub> gets <b>smaller</b>.</span></li>
+    <li><span class="myth">Mass and weight are the same thing.</span><span class="fact">Mass is in <b>kg</b> and stays the same everywhere. Weight (F<sub>grav</sub>) is a force in <b>N</b> and depends on g. An astronaut has the same mass on the Moon, but a much smaller weight.</span></li>
+    <li><span class="myth">Heavier objects have a bigger g.</span><span class="fact">g = 9.8 m/s² for everything on Earth. A heavier object has a bigger <b>weight</b> because it has more mass: F<sub>grav</sub> = m · g.</span></li>
+    <li><span class="myth">The normal force always points up.</span><span class="fact">It points straight out of the surface. A floor pushes up, but a wall pushes sideways. Press a book flat against a wall and the wall's F<sub>norm</sub> points away from the wall.</span></li>
+    <li><span class="myth">Every free-body diagram has a normal force.</span><span class="fact">F<sub>norm</sub> needs contact with a surface. A thrown ball, a skydiver, or a lamp hanging from a chain has F<sub>grav</sub> but no F<sub>norm</sub>.</span></li>
+  </ul>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Seven questions on the force of gravity and the normal force.</p>
+  <div class="card" id="quiz"></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">Next: Friction</div>
+      <p>Static vs. kinetic friction, and calculating the force of friction from F<sub>norm</sub>.</p>
+    </div>
+    <a href="/physics/forces/friction/">Go to page 4 →</a>
+  </div>
+</section>
+
+<footer>
+  <p>The force of gravity (F<sub>grav</sub> = m · g), mass vs. weight, and finding the normal force from the vertical forces on a free-body diagram. The practice generates new problems every time.</p>
+  <p><a href="/physics/forces/">← Unit 3 — Forces</a> · <a href="/physics/forces/net-force/">← Page 2: Net Force &amp; F = ma</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   shared helpers (same on every Unit 3 page)
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function randInt(lo,hi){ return lo + Math.floor(Math.random()*(hi-lo+1)); }
+var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* force colours and labels (match the CSS variables) */
+var FORCE = {
+  g:  { c:'#B23A2B', sym:'F<tspan baseline-shift="sub" font-size="70%">grav</tspan>',   html:'F<sub>grav</sub>',   name:'gravity' },
+  n:  { c:'#1B6CA8', sym:'F<tspan baseline-shift="sub" font-size="70%">norm</tspan>',   html:'F<sub>norm</sub>',   name:'normal force' },
+  f:  { c:'#A86A0C', sym:'F<tspan baseline-shift="sub" font-size="70%">frict</tspan>',   html:'F<sub>frict</sub>',   name:'friction' },
+  t:  { c:'#1E7F5C', sym:'F<tspan baseline-shift="sub" font-size="70%">tens</tspan>',   html:'F<sub>tens</sub>',   name:'tension' },
+  a:  { c:'#6B45B0', sym:'F<tspan baseline-shift="sub" font-size="70%">app</tspan>', html:'F<sub>app</sub>', name:'applied force' },
+  air:{ c:'#3E7C8A', sym:'F<tspan baseline-shift="sub" font-size="70%">air</tspan>', html:'F<sub>air</sub>', name:'air resistance' }
+};
+var SVGNS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs, parent){
+  var n = document.createElementNS(SVGNS, tag);
+  for(var k in attrs) n.setAttribute(k, attrs[k]);
+  if(parent) parent.appendChild(n);
+  return n;
+}
+/* Draw an arrow from (x1,y1) to (x2,y2). Returns the group. */
+function arrow(parent, x1, y1, x2, y2, color, width){
+  var g = svgEl('g', {}, parent), w = width || 4;
+  var dx = x2-x1, dy = y2-y1, L = Math.sqrt(dx*dx+dy*dy) || 1, ux = dx/L, uy = dy/L;
+  var head = Math.min(15, L*0.6), hw = head*0.55;
+  var bx = x2 - ux*head, by = y2 - uy*head;
+  svgEl('line', {x1:x1, y1:y1, x2:bx, y2:by, stroke:color, 'stroke-width':w, 'stroke-linecap':'round'}, g);
+  svgEl('path', {d:'M'+x2+' '+y2+' L'+(bx - uy*hw)+' '+(by + ux*hw)+' L'+(bx + uy*hw)+' '+(by - ux*hw)+' Z', fill:color}, g);
+  return g;
+}
+function label(parent, x, y, html, color, anchor, size){
+  var t = svgEl('text', {x:x, y:y, fill:color||'#16283C', 'font-family':'IBM Plex Mono,monospace', 'font-size':size||15, 'font-weight':600, 'text-anchor':anchor||'middle'}, parent);
+  t.innerHTML = html;
+  return t;
+}
+function clearSvg(svg){ Array.prototype.slice.call(svg.childNodes).forEach(function(n){ if(n.nodeName !== 'desc') svg.removeChild(n); }); }
+
+/* =========================================================
+   free-body diagram renderer
+   forces: [{k:'g'|'n'|'f'|'t'|'a'|'air', d:'up'|'down'|'left'|'right', m:<newtons>}]
+   Arrows start at the box edge, lengths scale with size.
+   Several forces in the same direction are drawn side by side.
+   ========================================================= */
+function drawFBD(svg, forces, opts){
+  opts = opts || {};
+  clearSvg(svg);
+  var W = 520, H = 360, cx = 260, cy = 180, half = 34, maxLen = 96, minLen = 28;
+  /* vertical and horizontal forces are each scaled to their own largest force,
+     so a small sideways push next to a heavy weight is still readable */
+  function axisMax(dirs){ return Math.max.apply(null, forces.filter(function(f){ return dirs.indexOf(f.d) >= 0; }).map(function(f){ return f.m; }).concat([1])); }
+  var sV = maxLen / axisMax(['up','down']), sH = maxLen / axisMax(['left','right']);
+  function len(m, d){ return Math.max(minLen, m * (d === 'up' || d === 'down' ? sV : sH)); }
+  /* box */
+  svgEl('rect', {x:cx-half, y:cy-half, width:half*2, height:half*2, rx:3, fill:'#fff', stroke:'#16283C', 'stroke-width':2.2}, svg);
+  if(opts.name) label(svg, cx, cy + 4, opts.name, '#5D6D7E', 'middle', 11);
+  var groups = { up:[], down:[], left:[], right:[] };
+  forces.forEach(function(f){ groups[f.d].push(f); });
+  Object.keys(groups).forEach(function(d){
+    var list = groups[d], n = list.length;
+    list.forEach(function(f, i){
+      var off = (i - (n-1)/2) * (n > 1 ? 34 : 0);
+      var L = len(f.m, d), c = FORCE[f.k].c, txt = FORCE[f.k].sym + ' ' + f.m + ' N';
+      if(d === 'up'){
+        arrow(svg, cx + off, cy - half, cx + off, cy - half - L, c, 4.5);
+        if(n > 1) label(svg, cx + off + (i === 0 ? -10 : 10), cy - half - L + 13, txt, c, i === 0 ? 'end' : 'start', 18);
+        else label(svg, cx + 12, cy - half - L + 12, txt, c, 'start', 18);
+      } else if(d === 'down'){
+        arrow(svg, cx + off, cy + half, cx + off, cy + half + L, c, 4.5);
+        if(n > 1) label(svg, cx + off + (i === 0 ? -10 : 10), cy + half + L - 4, txt, c, i === 0 ? 'end' : 'start', 18);
+        else label(svg, cx + 12, cy + half + L - 4, txt, c, 'start', 18);
+      } else if(d === 'right'){
+        arrow(svg, cx + half, cy + off, cx + half + L, cy + off, c, 4.5);
+        label(svg, cx + half + L + 8, cy + off + 6, txt, c, 'start', 18);
+      } else {
+        arrow(svg, cx - half, cy + off, cx - half - L, cy + off, c, 4.5);
+        label(svg, cx - half - L - 8, cy + off + 6, txt, c, 'end', 18);
+      }
+    });
+  });
+}
+function sumDir(forces, d){ return forces.filter(function(f){ return f.d === d; }).reduce(function(s,f){ return s + f.m; }, 0); }
+function listDir(forces, d){
+  var l = forces.filter(function(f){ return f.d === d; });
+  if(!l.length) return '0 N';
+  if(l.length === 1) return l[0].m + ' N';
+  return '(' + l.map(function(f){ return f.m; }).join(' + ') + ') N';
+}
+function describeForces(forces){
+  return forces.map(function(f){ return FORCE[f.k].name + ' ' + f.m + ' newtons ' + f.d; }).join(', ') + '.';
+}
+
+
+
+/* =========================================================
+   page helpers
+   ========================================================= */
+function fmt(x){ var r = Math.round(x*100)/100; return String(r); }
+function weightOf(m){ return Math.round(m*98)/10; }           /* m × 9.8, no float noise */
+function parseNum(s){ s = String(s).replace(/,/g,'').trim(); if(!/^[-+]?(\d+\.?\d*|\.\d+)/.test(s)) return NaN; return parseFloat(s); }
+function close(x, ans){ return Math.abs(x - ans) <= Math.max(0.011, Math.abs(ans)*0.01); }
+function lock(ids, on){ ids.forEach(function(id){ el(id).disabled = on; }); }
+function onEnter(ids, fn){ ids.forEach(function(id){ el(id).addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); fn(); } }); }); }
+function renderTally(node, types, tally){
+  node.innerHTML = Object.keys(types).map(function(k){
+    var c = tally[k], miss = c.t > c.r;
+    return '<div class="tcell' + (miss ? ' miss' : '') + '"><span class="tl">' + types[k] + '</span><span class="tv">' + c.r + '/' + c.t + '</span></div>';
+  }).join('');
+}
+function newTally(types){ var t = {}; Object.keys(types).forEach(function(k){ t[k] = {r:0,t:0}; }); return t; }
+/* the "mass" line inside the box */
+function massLabel(svg, m){ label(svg, 260, 201, m + ' kg', '#16283C', 'middle', 12); }
+
+/* =========================================================
+   hero + worked example
+   ========================================================= */
+drawFBD(el('hero-a'), [{k:'n',d:'up',m:19.6},{k:'g',d:'down',m:19.6}], {name:'book'});
+drawFBD(el('hero-b'), [{k:'n',d:'up',m:29.6},{k:'g',d:'down',m:19.6},{k:'a',d:'down',m:10}], {name:'book'});
+drawFBD(el('worked-svg'), [{k:'n',d:'up',m:69},{k:'g',d:'down',m:49},{k:'a',d:'down',m:20}], {name:'box'});
+massLabel(el('worked-svg'), 5);
+
+/* =========================================================
+   Push or pull the box
+   5 kg box on a table, F_grav = 49 N.
+   Slider: positive = push down, negative = pull up.
+   ========================================================= */
+var PR_W = 49;
+function prState(h){
+  var F = [{k:'g',d:'down',m:PR_W}], N = Math.max(0, PR_W + h);
+  if(N > 0) F.unshift({k:'n',d:'up',m:N});
+  if(h > 0) F.push({k:'a',d:'down',m:h});
+  if(h < 0) F.push({k:'a',d:'up',m:-h});
+  return { F:F, N:N, net: N > 0 ? 0 : -h - PR_W };
+}
+var prMsg = '';
+function prRender(){
+  var h = Number(el('pr-hand').value), s = prState(h);
+  drawFBD(el('pr-svg'), s.F, {name:'box'});
+  massLabel(el('pr-svg'), 5);
+  el('pr-desc').textContent = 'Free-body diagram of the 5 kilogram box. ' + describeForces(s.F);
+  el('pr-out').textContent = h > 0 ? 'push down ' + h + ' N' : h < 0 ? 'pull up ' + (-h) + ' N' : 'no hand';
+  el('pr-app').textContent = h === 0 ? '0 N' : Math.abs(h) + ' N ' + (h > 0 ? 'down' : 'up');
+  el('pr-n').textContent = s.N === 0 ? '0 N' : s.N + ' N up';
+  el('pr-net').textContent = s.net === 0 ? '0 N' : s.net + ' N up';
+  var msg, off = false;
+  if(h === 0) msg = 'Just resting. The table holds up the weight: F<sub>norm</sub> = F<sub>grav</sub> = 49 N.';
+  else if(h > 0) msg = 'Pushing down. The table holds up the weight <i>and</i> your push: F<sub>norm</sub> = 49 + ' + h + ' = ' + s.N + ' N.';
+  else if(s.N > 0) msg = 'Pulling up. Your hand holds up part of the weight, so the table pushes less: F<sub>norm</sub> = 49 − ' + (-h) + ' = ' + s.N + ' N.';
+  else if(s.net === 0) msg = 'Your pull holds up all 49 N. The table isn’t pushing at all: F<sub>norm</sub> = 0. The box is just barely touching it.';
+  else { msg = 'Lifted off. The box isn’t touching the table, so F<sub>norm</sub> = 0. The forces are unbalanced and the box accelerates upward.'; off = true; }
+  if(msg !== prMsg){ prMsg = msg; el('pr-state').innerHTML = msg; el('pr-state').className = 'state' + (off ? ' off' : ''); }
+}
+el('pr-hand').addEventListener('input', prRender);
+el('pr-reset').addEventListener('click', function(){ el('pr-hand').value = 0; prRender(); });
+
+/* =========================================================
+   Practice 1 · find F_grav (or the mass)
+   ========================================================= */
+var GW_TYPES = { w:'Mass → weight', m:'Weight → mass', p:'Other worlds' };
+var GW_OBJ = [
+  { n:'student',      ms:[45,50,55,60,65,70,75] },
+  { n:'backpack',     ms:[4,5,6,8,10,12] },
+  { n:'bowling ball', ms:[5,6,7] },
+  { n:'dog',          ms:[8,10,15,20,25,30] },
+  { n:'crate',        ms:[20,25,40,50,80] },
+  { n:'car',          ms:[1000,1200,1500] }
+];
+var GW_SPACE = [ { n:'astronaut', ms:[70,80,90,100] }, { n:'rover', ms:[200,500,900] }, { n:'lander', ms:[1000,1500,2000] } ];
+var GW_WORLD = [ { n:'the Moon', g:1.6 }, { n:'Mars', g:3.7 }, { n:'Jupiter', g:24.8 } ];
+var gwScore = Score(el('gw-score')), gwTally = newTally(GW_TYPES), gwCur = null, gwDone = false;
+function gwNew(){
+  var kind, guard = 0;
+  do { kind = pick(['w','w','m','p']); guard++; } while(gwCur && guard < 6 && kind === gwCur.kind && Math.random() < .6);
+  var p = { kind:kind };
+  if(kind === 'p'){
+    var o = pick(GW_SPACE), w = pick(GW_WORLD);
+    p.o = o; p.m = pick(o.ms); p.world = w; p.ans = Math.round(p.m*w.g*100)/100;
+    p.txt = 'A <b>' + p.m + ' kg</b> ' + o.n + ' is on ' + w.n + ', where g = <b>' + w.g + ' m/s²</b>. What is the ' + o.n + '’s weight there?';
+  } else {
+    p.o = pick(GW_OBJ); p.m = pick(p.o.ms); p.W = weightOf(p.m);
+    if(kind === 'w'){ p.ans = p.W; p.txt = 'A ' + p.o.n + ' has a mass of <b>' + p.m + ' kg</b>. What is the ' + p.o.n + '’s weight on Earth?'; }
+    else { p.ans = p.m; p.txt = 'A ' + p.o.n + ' weighs <b>' + fmt(p.W) + ' N</b> on Earth. What is the ' + p.o.n + '’s mass?'; }
+  }
+  gwCur = p;
+  el('gw-prob').innerHTML = p.txt;
+  el('gw-lab').innerHTML = kind === 'm' ? 'Mass' : 'Weight (F<sub>grav</sub>)';
+  el('gw-unit').textContent = kind === 'm' ? 'kg' : 'N';
+  el('gw-ans').value = ''; lock(['gw-ans','gw-check'], false); gwDone = false;
+  hideFb(el('gw-fb'));
+}
+function gwCheck(){
+  if(gwDone) return;
+  var p = gwCur, x = parseNum(el('gw-ans').value);
+  if(isNaN(x)){ setFb(el('gw-fb'),'hint','Type a number in the box. The unit is already there.'); return; }
+  x = Math.abs(x);
+  var ok = close(x, p.ans);
+  gwDone = true; lock(['gw-ans','gw-check'], true);
+  gwScore.add(ok); gwTally[p.kind].t++; if(ok) gwTally[p.kind].r++;
+  renderTally(el('gw-tally'), GW_TYPES, gwTally);
+
+  var tip = '', work;
+  if(p.kind === 'w'){
+    work = 'F<sub>grav</sub> = m · g = ' + p.m + ' kg × 9.8 m/s² = <b>' + fmt(p.W) + ' N</b>';
+    if(!ok && close(x, p.m)) tip = ' That’s the mass. Weight is a force in N: multiply by 9.8.';
+    else if(!ok && close(x, p.m / 9.8)) tip = ' It looks like you divided. To get the weight, multiply the mass by 9.8.';
+    else if(!ok && close(x, p.m * 10)) tip = ' Close. Use g = 9.8 m/s², not 10.';
+  } else if(p.kind === 'm'){
+    work = 'F<sub>grav</sub> = m · g, so m = F<sub>grav</sub> / g<br>m = ' + fmt(p.W) + ' N / 9.8 m/s² = <b>' + p.m + ' kg</b>';
+    if(!ok && close(x, p.W * 9.8)) tip = ' It looks like you multiplied. To go from weight back to mass, divide by 9.8.';
+    else if(!ok && close(x, p.W)) tip = ' That’s the weight in N. Mass is in kg: divide the weight by 9.8.';
+  } else {
+    work = 'F<sub>grav</sub> = m · g = ' + p.m + ' kg × ' + p.world.g + ' m/s² = <b>' + fmt(p.ans) + ' N</b>';
+    if(!ok && close(x, weightOf(p.m))) tip = ' That’s the weight on Earth. Use the g for ' + p.world.n + ': ' + p.world.g + ' m/s².';
+    else if(!ok && close(x, p.m)) tip = ' That’s the mass, which is the same everywhere. Weight is mass times g.';
+  }
+  var foot = p.kind === 'p' ? '<p>The ' + p.o.n + '’s mass is still ' + p.m + ' kg on ' + p.world.n + '. Only the weight changes.</p>' : '';
+  setFb(el('gw-fb'), ok ? 'good' : 'bad', '<p><b>' + (ok ? 'Right.' : 'Not this one.') + '</b>' + tip + '</p><div class="work">' + work + '</div>' + foot);
+}
+el('gw-check').addEventListener('click', gwCheck);
+el('gw-next').addEventListener('click', gwNew);
+onEnter(['gw-ans'], gwCheck);
+
+/* =========================================================
+   Practice 2 · F_grav → F_norm
+   Only the given push or pull is drawn until the answer is checked.
+   ========================================================= */
+var FN_TYPES = { rest:'Just resting', down:'Pushed down', up:'Pulled up', side:'Pushed sideways' };
+var FN_TEMPLATES = [
+  { type:'rest', name:'box', ms:[2,5,8,10,15,20],
+    cap:function(p){ return 'A <b>' + p.m + ' kg box</b> sits on a level table.'; } },
+  { type:'rest', name:'TV', ms:[10,12,15,20,25],
+    cap:function(p){ return 'A <b>' + p.m + ' kg TV</b> sits on a level stand.'; } },
+  { type:'down', name:'box', k:'a', ms:[2,5,8,10,15,20],
+    cap:function(p){ return 'A <b>' + p.m + ' kg box</b> sits on the floor. You push straight down on it with <b>' + p.P + ' N</b>.'; } },
+  { type:'down', name:'suitcase', k:'a', ms:[8,10,12,15,20],
+    cap:function(p){ return 'A <b>' + p.m + ' kg suitcase</b> sits on the floor. You press straight down on it with <b>' + p.P + ' N</b> to get it to close.'; } },
+  { type:'up', name:'box', k:'a', ms:[5,8,10,15,20,25],
+    cap:function(p){ return 'A <b>' + p.m + ' kg box</b> sits on the floor. You pull straight up on it with <b>' + p.P + ' N</b>, but it doesn’t lift off.'; } },
+  { type:'up', name:'crate', k:'t', ms:[20,25,30,40,50],
+    cap:function(p){ return 'A rope pulls straight up on a <b>' + p.m + ' kg crate</b> with <b>' + p.P + ' N</b>. The crate stays on the floor.'; } },
+  { type:'side', name:'cart', k:'a', ms:[5,8,10,12,15,20],
+    cap:function(p){ return 'You push a <b>' + p.m + ' kg cart</b> across a level floor with <b>' + p.P + ' N</b>. (Ignore friction.)'; } },
+  { type:'side', name:'sled', k:'t', ms:[10,15,20,25,30],
+    cap:function(p){ return 'A rope pulls a <b>' + p.m + ' kg sled</b> across smooth, level ice with <b>' + p.P + ' N</b>.'; } }
+];
+var fnScore = Score(el('fn-score')), fnTally = newTally(FN_TYPES), fnCur = null, fnDone = false;
+function fnMake(tp){
+  var m = pick(tp.ms), W = weightOf(m), P = 0, d = null, N = W;
+  if(tp.type === 'down'){ P = 5*randInt(1,12); d = 'down'; N = W + P; }
+  else if(tp.type === 'up'){ P = 5*randInt(1, Math.min(60, Math.floor((W - 5)/5))); d = 'up'; N = W - P; }
+  else if(tp.type === 'side'){ P = 5*randInt(2,16); d = pick(['right','left']); }
+  return { tp:tp, m:m, W:W, P:P, N:Math.round(N*10)/10, given: tp.k ? [{k:tp.k, d:d, m:P}] : [] };
+}
+function fnDraw(full){
+  var p = fnCur, F = p.given.slice();
+  if(full){ F.unshift({k:'n',d:'up',m:p.N}); F.push({k:'g',d:'down',m:p.W}); }
+  drawFBD(el('fn-svg'), F, {name:p.tp.name});
+  massLabel(el('fn-svg'), p.m);
+  el('fn-desc').textContent = 'Free-body diagram of the ' + p.m + ' kilogram ' + p.tp.name + (full ? '. ' + describeForces(F) : (F.length ? ', with gravity and the normal force not drawn yet. ' + describeForces(F) : ', with no forces drawn yet.'));
+  el('fn-note').innerHTML = full ? 'F<sub>grav</sub> and F<sub>norm</sub> added.' : (F.length ? 'Only the given force is drawn. Finding F<sub>grav</sub> and F<sub>norm</sub> is the job.' : 'No forces drawn yet. Finding F<sub>grav</sub> and F<sub>norm</sub> is the job.');
+}
+function fnNew(){
+  var tp, guard = 0;
+  do { tp = pick(FN_TEMPLATES); guard++; } while(fnCur && guard < 10 && tp.type === fnCur.tp.type);
+  fnCur = fnMake(tp);
+  el('fn-cap').innerHTML = tp.cap(fnCur);
+  fnDraw(false);
+  el('fn-g').value = ''; el('fn-n').value = '';
+  lock(['fn-g','fn-n','fn-check'], false); fnDone = false;
+  hideFb(el('fn-fb'));
+}
+function fnCheck(){
+  if(fnDone) return;
+  var p = fnCur, t = p.tp.type, xg = parseNum(el('fn-g').value), xn = parseNum(el('fn-n').value);
+  if(isNaN(xg) || isNaN(xn)){ setFb(el('fn-fb'),'hint','Fill in both boxes: F<sub>grav</sub> first, then F<sub>norm</sub>.'); return; }
+  xg = Math.abs(xg); xn = Math.abs(xn);
+  var okG = close(xg, p.W), okN = close(xn, p.N);
+  fnDone = true; lock(['fn-g','fn-n','fn-check'], true);
+  fnScore.add(okG && okN); fnTally[t].t++; if(okG && okN) fnTally[t].r++;
+  renderTally(el('fn-tally'), FN_TYPES, fnTally);
+  fnDraw(true);
+
+  var tips = [];
+  if(!okG){
+    if(close(xg, p.m)) tips.push('Step 1: that’s the mass. Multiply by 9.8 to get F<sub>grav</sub> in N.');
+    else if(close(xg, p.m * 10)) tips.push('Step 1: use g = 9.8 m/s², not 10.');
+  }
+  if(!okN){
+    if(t === 'down' && close(xn, p.W)) tips.push('Step 2: the floor holds up the weight <i>and</i> your push. Pushing down makes F<sub>norm</sub> bigger.');
+    else if(t === 'down' && close(xn, p.W - p.P)) tips.push('Step 2: your push points down, the same way as gravity, so it adds.');
+    else if(t === 'up' && close(xn, p.W)) tips.push('Step 2: the pull holds up part of the weight, so the floor pushes less. Subtract the pull.');
+    else if(t === 'up' && close(xn, p.W + p.P)) tips.push('Step 2: the pull points up, so it helps the floor hold the weight. Subtract it.');
+    else if(t === 'side' && (close(xn, p.W + p.P) || close(xn, p.W - p.P) || close(xn, p.P))) tips.push('Step 2: that force is sideways, so it doesn’t change F<sub>norm</sub>. Only up and down forces matter.');
+    else if(!okG && close(xn, t === 'down' ? xg + p.P : t === 'up' ? xg - p.P : xg)) tips.push('Your step 2 follows from your step 1 answer, so the method is right. Fix F<sub>grav</sub> and the rest follows.');
+  }
+
+  var head = okG && okN ? '<b>Both right.</b>' : (okG ? '<b>Step 1 right, step 2 not.</b>' : (okN ? '<b>Step 2 right, step 1 not.</b>' : '<b>Not this one.</b>'));
+  var work = 'Step 1: F<sub>grav</sub> = ' + p.m + ' kg × 9.8 = <b>' + fmt(p.W) + ' N down</b><br>';
+  if(t === 'rest') work += 'Step 2: nothing else pushes up or down, so F<sub>norm</sub> = F<sub>grav</sub> = <b>' + fmt(p.N) + ' N up</b>';
+  else if(t === 'side') work += 'Step 2: the ' + p.P + ' N is sideways, so nothing else pushes up or down.<br>F<sub>norm</sub> = F<sub>grav</sub> = <b>' + fmt(p.N) + ' N up</b>';
+  else if(t === 'down') work += 'Step 2: down = ' + fmt(p.W) + ' N + ' + p.P + ' N. Up has to match.<br>F<sub>norm</sub> = <b>' + fmt(p.N) + ' N up</b>';
+  else work += 'Step 2: up = down, so F<sub>norm</sub> + ' + p.P + ' N = ' + fmt(p.W) + ' N<br>F<sub>norm</sub> = ' + fmt(p.W) + ' − ' + p.P + ' = <b>' + fmt(p.N) + ' N up</b>';
+  setFb(el('fn-fb'), okG && okN ? 'good' : 'bad', '<p>' + head + (tips.length ? ' ' + tips.join(' ') : '') + '</p><div class="work">' + work + '</div>');
+}
+el('fn-check').addEventListener('click', fnCheck);
+el('fn-next').addEventListener('click', fnNew);
+onEnter(['fn-g','fn-n'], fnCheck);
+
+/* =========================================================
+   quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'A student has a mass of 50 kg. What is the student’s weight on Earth?',
+    opts:['50 N','5.1 N','490 N','59.8 N'],
+    ans:2,
+    why:'F<sub>grav</sub> = m · g = 50 kg × 9.8 m/s² = 490 N. 50 is the mass in kg, not the weight.' },
+  { stem:'An astronaut has a mass of 80 kg on Earth. What is the astronaut’s mass on the Moon?',
+    opts:['80 kg','13 kg','128 kg','0 kg'],
+    ans:0,
+    why:'Mass doesn’t change from place to place. The astronaut’s <i>weight</i> is smaller on the Moon (80 × 1.6 = 128 N), but the mass is still 80 kg.' },
+  { stem:'A 10 kg box rests on a level table. Nothing else pushes or pulls on it. What is the normal force?',
+    opts:['10 N','98 N','0 N','108 N'],
+    ans:1,
+    why:'F<sub>grav</sub> = 10 × 9.8 = 98 N. Nothing else acts up or down, so the table pushes up with 98 N to cancel it.' },
+  { stem:'You push straight down on that same 10 kg box with 30 N. What is the normal force now?',
+    opts:['98 N','68 N','30 N','128 N'],
+    ans:3,
+    why:'Down: 98 N + 30 N = 128 N. The box isn’t moving, so the table has to push up with 128 N.' },
+  { stem:'Instead, you pull straight up on the 10 kg box with 30 N. It stays on the table. What is the normal force?',
+    opts:['68 N','98 N','128 N','30 N'],
+    ans:0,
+    why:'Your pull holds up 30 N of the 98 N weight, so the table only has to push up with 98 − 30 = 68 N.' },
+  { stem:'A 20 kg cart is pushed across a level floor with a sideways force of 40 N. What is the normal force on the cart?',
+    opts:['236 N','196 N','156 N','40 N'],
+    ans:1,
+    why:'F<sub>grav</sub> = 20 × 9.8 = 196 N. The 40 N push is sideways, so it doesn’t change the up–down forces. F<sub>norm</sub> = 196 N.' },
+  { stem:'Which of these has <b>no</b> normal force acting on it?',
+    opts:['A book on a shelf','A person standing on the floor','A ball flying through the air','A box being pushed across the floor'],
+    ans:2,
+    why:'The normal force needs contact with a surface. The ball in the air isn’t touching anything, so only F<sub>grav</sub> acts on it (ignoring air resistance).' }
+];
+
+(function buildQuiz(){
+  var host = el('quiz'), html = '', answered = 0, right = 0;
+  QUIZ.forEach(function(q,qi){
+    html += '<div class="q"><p class="stem">' + (qi+1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o,oi){ html += '<button class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  html += '<div class="quiz-sum" id="quiz-sum" aria-live="polite"></div>';
+  host.innerHTML = html;
+  Array.prototype.forEach.call(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      Array.prototype.forEach.call(el('q'+qi).querySelectorAll('.opt'), function(other,i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      answered++; if(oi === q.ans) right++;
+      setFb(el('qfb'+qi), oi === q.ans ? 'good' : 'bad',
+        '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+      el('quiz-sum').textContent = right + ' of ' + answered + ' correct' + (answered === QUIZ.length ? ' · reload the page to try again' : '');
+    });
+  });
+})();
+
+/* boot */
+renderTally(el('gw-tally'), GW_TYPES, gwTally);
+renderTally(el('fn-tally'), FN_TYPES, fnTally);
+prRender();
+gwNew(); fnNew();
+</script>
+</body>
+</html>
