@@ -8,6 +8,29 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/ap-chemistry/topic.css">
+<style>
+/* an equation with a role label under each species */
+.leq{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px 12px;margin:16px 0;background:var(--card);border:1px solid var(--line-soft);border-radius:3px;padding:12px 14px}
+.leq .col{display:flex;flex-direction:column;align-items:center;gap:7px;min-width:80px}
+.leq .col .eqn{font-size:20px;line-height:1.5}
+.leq .op{font-size:20px;line-height:1.5;color:var(--mute)}
+.lab{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;border-radius:2px;padding:2px 6px;text-align:center;white-space:nowrap}
+.lab.p1{background:var(--amber-lite);color:#7A4A08}
+.lab.p2{background:var(--acc-lite);color:var(--acc-dk)}
+.leq select{font-family:var(--mono);font-size:12.5px;padding:5px 4px;border:1px solid var(--line);border-radius:3px;background:#fff;color:var(--ink);max-width:150px}
+.leq select.ok{border-color:var(--ok);background:var(--ok-bg)}
+.leq select.no{border-color:var(--no);background:var(--no-bg)}
+.pairkey{font-family:var(--mono);font-size:12px;color:var(--mute);margin:-6px 0 0}
+.pairkey b{font-weight:600;padding:1px 5px;border-radius:2px}
+.pairkey .p1{background:var(--amber-lite);color:#7A4A08}
+.pairkey .p2{background:var(--acc-lite);color:var(--acc-dk)}
+table.chg{border-collapse:collapse;width:100%;font-size:15.5px;margin:16px 0;background:var(--card)}
+table.chg th,table.chg td{border-bottom:1px solid var(--line-soft);padding:8px 10px;text-align:left;vertical-align:middle}
+table.chg th{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.pick4{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.pick4 .pbtn{font-family:var(--body);font-size:19px;letter-spacing:0}
+.drill-sp{font-size:30px;margin:6px 0 0}
+</style>
 </head>
 <body>
 
@@ -24,31 +47,341 @@
   <div class="eyebrow">AP Chemistry · Unit 4 Chemical Reactions · Topic 4.8</div>
   <h1>Introduction to <em>Acid-Base</em> Reactions</h1>
   <p class="lede">In a Brønsted–Lowry acid–base reaction, a proton (H<sup>+</sup>) moves from one particle to another. Tracking that proton lets you name the acid, the base, and the conjugate each one becomes.</p>
+  <p class="lo-line"><b>Learning objective 4.8.A</b> Identify species as Brønsted–Lowry acids, bases, and/or conjugate acid–base pairs, based on proton-transfer involving those species.</p>
 
   <div class="board" aria-label="Key ideas in this topic">
-    <div class="idea"><span class="code">Q1</span><span class="lq">Who gives, who takes?</span><span class="d">Brønsted–Lowry acids donate protons; bases accept them</span></div>
-    <div class="idea"><span class="code">Q2</span><span class="lq">What do they become?</span><span class="d">Conjugate acid–base pairs</span></div>
-    <div class="idea"><span class="code">Q3</span><span class="lq">Can water be both?</span><span class="d">Amphoteric substances like water</span></div>
+    <a class="idea" href="#bl"><span class="code">Q1</span><span class="lq">Who gives, who takes?</span><span class="d">Brønsted–Lowry acids donate protons; bases accept them</span></a>
+    <a class="idea" href="#conj"><span class="code">Q2</span><span class="lq">What do they become?</span><span class="d">Conjugate acid–base pairs</span></a>
+    <a class="idea" href="#water"><span class="code">Q3</span><span class="lq">Can water be both?</span><span class="d">Water as an acid and as a base</span></a>
     <div class="board-foot"><span><b>Unit 4</b> Chemical Reactions · 7–9% of the AP Exam</span><span><b>Before this</b> <a href="/ap-chemistry/unit-4/4-7-types-of-chemical-reactions/">4.7 Types of Chemical Reactions</a></span></div>
   </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#bl">Acids and bases</a>
+    <a href="#spot">Spotting the transfer</a>
+    <a href="#conj">Conjugate pairs</a>
+    <a href="#water">Water</a>
+    <a href="#label">Label the reaction</a>
+    <a href="#drill">Conjugate drill</a>
+    <a href="#check">Check yourself</a>
+  </nav>
 </header>
 
-<section id="tools">
-  <div class="sec-head"><span class="tag plain">Coming soon</span><h2>Tools and practice</h2></div>
-  <div class="soon-card"><p>Interactive tools, worked examples, and AP-style practice for Topic 4.8 aren’t posted yet. The three questions above are the ones this topic answers.</p></div>
+<!-- =========================================================
+     4.8.A.1  BRØNSTED-LOWRY
+     ========================================================= -->
+<section id="bl">
+  <div class="sec-head"><span class="tag">4.8.A.1</span><h2>Brønsted–Lowry acids and bases</h2></div>
+  <div class="def">
+    <span class="ek">4.8.A.1</span>
+    <div class="term">Brønsted–Lowry acid and base</div>
+    <p>A Brønsted–Lowry <b>acid</b> is a proton donor. A Brønsted–Lowry <b>base</b> is a proton acceptor.</p>
+  </div>
+  <p>A hydrogen atom is one proton and one electron. Take the electron away and all that's left is the proton, so <b>H<sup>+</sup> and “proton” mean the same thing</b>. An acid–base reaction moves one H<sup>+</sup> from the acid to the base:</p>
+  <div class="leq" data-leq="HCl(aq) + H2O(l) -> H3O^+(aq) + Cl^-(aq)" data-roles="a b ca cb"></div>
+  <p>HCl gives up its H<sup>+</sup>, so it's the acid. H<sub>2</sub>O takes the H<sup>+</sup>, so it's the base. H<sub>3</sub>O<sup>+</sup> is <b>hydronium</b>, a water molecule carrying an extra proton.</p>
+  <p>Notice that nothing about HCl changes except that it lost an H<sup>+</sup>. That's the whole reaction: one proton, moved from one particle to another.</p>
+</section>
+
+<!-- =========================================================
+     SPOTTING THE TRANSFER
+     ========================================================= -->
+<section id="spot">
+  <div class="sec-head"><span class="tag">4.8.A</span><h2>Spotting the transfer</h2></div>
+  <p>Match each reactant with the product it turns into, then compare the two formulas.</p>
+  <div class="grid2">
+    <div class="mini"><div class="n">The acid</div><h4>Loses one H, charge goes down by 1</h4><p>A neutral acid becomes a −1 ion. A −1 ion becomes −2.</p></div>
+    <div class="mini keep"><div class="n">The base</div><h4>Gains one H, charge goes up by 1</h4><p>A neutral base becomes a +1 ion. A −2 ion becomes −1.</p></div>
+  </div>
+  <div class="tablewrap"><table class="chg">
+    <thead><tr><th>Reactant → product</th><th>What changed</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td><span data-eq="HCl -> Cl^-"></span></td><td>lost one H, charge 0 → −1</td><td><b>acid</b></td></tr>
+      <tr><td><span data-eq="H2O -> H3O^+"></span></td><td>gained one H, charge 0 → +1</td><td><b>base</b></td></tr>
+      <tr><td><span data-eq="NH3 -> NH4^+"></span></td><td>gained one H, charge 0 → +1</td><td><b>base</b></td></tr>
+      <tr><td><span data-eq="H2O -> OH^-"></span></td><td>lost one H, charge 0 → −1</td><td><b>acid</b></td></tr>
+      <tr><td><span data-eq="HSO4^- -> SO4^2-"></span></td><td>lost one H, charge −1 → −2</td><td><b>acid</b></td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><b>About the double arrow.</b> Some equations on this page use ⇌. It means the proton can move in both directions: the products can hand it back. Which direction wins is a Unit 8 question. Here you only need to say who gives and who takes in the reaction as written.</div>
+</section>
+
+<!-- =========================================================
+     4.8.A.3  CONJUGATE PAIRS
+     ========================================================= -->
+<section id="conj">
+  <div class="sec-head"><span class="tag">4.8.A.3</span><h2>Conjugate acid–base pairs</h2></div>
+  <div class="def">
+    <span class="ek">4.8.A.3</span>
+    <div class="term">Conjugate acid–base pair</div>
+    <p>When an acid or base ionizes in water, the conjugate acid–base pairs can be identified. The two members of a pair differ by exactly <b>one H<sup>+</sup></b>.</p>
+  </div>
+  <div class="grid2">
+    <div class="mini"><div class="n">Conjugate base</div><h4>The acid, minus one H<sup>+</sup></h4><p>Remove one H and make the charge one more negative.</p><div class="eqline"><span data-eq="HSO4^- -> SO4^2-"></span></div></div>
+    <div class="mini keep"><div class="n">Conjugate acid</div><h4>The base, plus one H<sup>+</sup></h4><p>Add one H and make the charge one more positive.</p><div class="eqline"><span data-eq="NH3 -> NH4^+"></span></div></div>
+  </div>
+  <p>Every proton transfer has <b>two</b> pairs: the acid with its conjugate base, and the base with its conjugate acid. Each pair is one reactant and one product.</p>
+  <div class="leq" data-leq="NH3(aq) + H2O(l) <=> NH4^+(aq) + OH^-(aq)" data-roles="b a ca cb"></div>
+  <p class="pairkey"><b class="p1">amber</b> acid and its conjugate base · <b class="p2">blue</b> base and its conjugate acid</p>
+  <p>The names make sense if you read the reaction backward: NH<sub>4</sub><sup>+</sup> can give its proton back to OH<sup>−</sup>, so NH<sub>4</sub><sup>+</sup> really is an acid, and OH<sup>−</sup> really is a base.</p>
+  <h3>The three mistakes that cost points</h3>
+  <ul>
+    <li><b>Forgetting the charge.</b> The conjugate base of HSO<sub>4</sub><sup>−</sup> is SO<sub>4</sub><sup>2−</sup>, not SO<sub>4</sub><sup>−</sup>. Removing H<sup>+</sup> removes a positive charge.</li>
+    <li><b>Going the wrong way.</b> The conjugate <i>base</i> of HSO<sub>4</sub><sup>−</sup> has fewer H's (SO<sub>4</sub><sup>2−</sup>). H<sub>2</sub>SO<sub>4</sub> is its conjugate <i>acid</i>.</li>
+    <li><b>Pairing the two reactants.</b> HCl and H<sub>2</sub>O aren't a conjugate pair. A pair is one reactant and the product it becomes.</li>
+  </ul>
+</section>
+
+<!-- =========================================================
+     4.8.A.2  WATER
+     ========================================================= -->
+<section id="water">
+  <div class="sec-head"><span class="tag">4.8.A.2</span><h2>Water: acid or base</h2></div>
+  <div class="def">
+    <span class="ek">4.8.A.2</span>
+    <div class="term">Water in acid–base reactions</div>
+    <p>In aqueous solution, water plays an important role in many acid–base reactions. Its structure lets it <b>accept</b> a proton from some dissolved species and <b>donate</b> a proton to others.</p>
+  </div>
+  <p class="eqlab">Water as a base: it takes a proton from HNO<sub>3</sub></p>
+  <div class="leq" data-leq="HNO3(aq) + H2O(l) -> H3O^+(aq) + NO3^-(aq)" data-roles="a b ca cb"></div>
+  <p class="eqlab">Water as an acid: it gives a proton to NH<sub>3</sub></p>
+  <div class="leq" data-leq="NH3(aq) + H2O(l) <=> NH4^+(aq) + OH^-(aq)" data-roles="b a ca cb"></div>
+  <p class="eqlab">Water as both: one molecule gives, the other takes</p>
+  <div class="leq" data-leq="H2O(l) + H2O(l) <=> H3O^+(aq) + OH^-(aq)" data-roles="a b ca cb"></div>
+  <p>A species that can act as either an acid or a base is <b>amphoteric</b>. To be amphoteric, it needs an H it can give up <i>and</i> room to take on one more. Water qualifies, and so do ions like HCO<sub>3</sub><sup>−</sup> and HSO<sub>4</sub><sup>−</sup>.</p>
+  <div class="note"><b>Two ways to write it.</b> H<sup>+</sup>(aq) and H<sub>3</sub>O<sup>+</sup>(aq) mean the same thing. A bare proton in water is always attached to a water molecule, so H<sub>3</sub>O<sup>+</sup> is the more accurate picture. <a href="/ap-chemistry/unit-8/">Unit 8</a> picks up from here with pH and the strength of acids and bases.</div>
+</section>
+
+<!-- =========================================================
+     LABEL THE REACTION
+     ========================================================= -->
+<section id="label">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Label the reaction</h2></div>
+  <p>Label every species: acid, base, conjugate acid, or conjugate base. Match each reactant to the product it becomes, then look at who lost the H<sup>+</sup>.</p>
+  <div class="card">
+    <div class="card-label"><span>Proton transfer</span><span class="score" id="l-score">0 of 0</span></div>
+    <div class="leq" id="l-eq" style="background:#fff"></div>
+    <div class="fb" id="l-fb" aria-live="polite"></div>
+    <div class="btn-row"><button type="button" id="l-check">Check</button><button type="button" class="ghost" id="l-next">Next reaction →</button></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     CONJUGATE DRILL
+     ========================================================= -->
+<section id="drill">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Conjugate drill</h2></div>
+  <p>Write the conjugate in your head first, then pick it. Watch the charge.</p>
+  <div class="card">
+    <div class="card-label"><span id="d-ask">Conjugate</span><span class="score" id="d-score">0 of 0</span></div>
+    <p class="prompt" id="d-prompt"></p>
+    <div class="drill-sp" id="d-sp"></div>
+    <div class="pick4" id="d-choices"></div>
+    <div class="fb" id="d-fb" aria-live="polite"></div>
+    <div class="btn-row"><button type="button" id="d-next">Next →</button></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PRACTICE
+     ========================================================= -->
+<section id="check">
+  <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
+  <p>Six multiple-choice questions written in AP style, then two written responses.</p>
+  <p class="score" id="mc-score" style="margin:0"></p>
+  <div class="card" id="mc"></div>
+  <div class="card" id="frq"></div>
 
   <div class="next">
-    <div><p class="nt">Up next: 4.9 Oxidation-Reduction (Redox) Reactions</p><p>Oxidation numbers · oxidized vs. reduced · balancing half-reactions</p></div>
+    <div><p class="nt">Up next: 4.9 Oxidation-Reduction (Redox) Reactions</p><p>Oxidation numbers · oxidized vs. reduced · combining half-reactions</p></div>
     <a href="/ap-chemistry/unit-4/4-9-oxidation-reduction-redox-reactions/">Go to 4.9 →</a>
   </div>
 </section>
 
 <footer>
-  <p>Topic 4.8 Introduction to Acid-Base Reactions, following the AP Chemistry course framework.</p>
+  <p>Topic 4.8 Introduction to Acid-Base Reactions, following the AP Chemistry course framework (Learning Objective 4.8.A). Practice questions are original and written in AP style. Strong and weak acids, pH, and K<sub>w</sub> are in Unit 8.</p>
   <p><a href="/ap-chemistry/unit-4/">← Unit 4 — Chemical Reactions</a></p>
 </footer>
 
 </div><!-- /wrap -->
 
+<script src="/ap-chemistry/topic.js"></script>
+<script>
+/* ---------- an equation with a role under each species ---------- */
+var ROLE = {a:["acid","p1"], cb:["conjugate base","p1"], b:["base","p2"], ca:["conjugate acid","p2"]};
+function species(eq){
+  var bits = eq.split(/ (->|<=>) /);
+  return {L:bits[0].split(" + "), arrow:bits[1] === "<=>" ? "⇌" : "→", R:bits[2].split(" + ")};
+}
+/* under(sp, i) returns what goes under species i (a label or a select) */
+function leq(eq, under){
+  var s = species(eq), all = s.L.concat(s.R), h = "";
+  all.forEach(function(t, i){
+    if(i === s.L.length) h += '<span class="op">' + s.arrow + "</span>";
+    else if(i > 0) h += '<span class="op">+</span>';
+    h += '<div class="col">' + APC.fmt(t) + under(t, i) + "</div>";
+  });
+  return h;
+}
+function labelHTML(role){ return '<span class="lab ' + ROLE[role][1] + '">' + ROLE[role][0] + "</span>"; }
+document.querySelectorAll("[data-leq]").forEach(function(el){
+  var roles = el.getAttribute("data-roles").split(" ");
+  el.innerHTML = leq(el.getAttribute("data-leq"), function(t, i){ return labelHTML(roles[i]); });
+});
+
+/* ---------- label the reaction ---------- */
+var LR = [
+  {eq:"HCl(aq) + H2O(l) -> H3O^+(aq) + Cl^-(aq)", r:"a b ca cb"},
+  {eq:"NH3(aq) + H2O(l) <=> NH4^+(aq) + OH^-(aq)", r:"b a ca cb"},
+  {eq:"HF(aq) + H2O(l) <=> H3O^+(aq) + F^-(aq)", r:"a b ca cb"},
+  {eq:"H2O(l) + CN^-(aq) <=> HCN(aq) + OH^-(aq)", r:"a b ca cb"},
+  {eq:"HSO4^-(aq) + H2O(l) <=> SO4^2-(aq) + H3O^+(aq)", r:"a b cb ca"},
+  {eq:"CO3^2-(aq) + H2O(l) <=> HCO3^-(aq) + OH^-(aq)", r:"b a ca cb"},
+  {eq:"NH4^+(aq) + OH^-(aq) <=> NH3(aq) + H2O(l)", r:"a b cb ca"},
+  {eq:"HCO3^-(aq) + H2O(l) <=> H2CO3(aq) + OH^-(aq)", r:"b a ca cb"},
+  {eq:"HCO3^-(aq) + H2O(l) <=> CO3^2-(aq) + H3O^+(aq)", r:"a b cb ca"},
+  {eq:"HC2H3O2(aq) + H2O(l) <=> C2H3O2^-(aq) + H3O^+(aq)", r:"a b cb ca"},
+  {eq:"H2PO4^-(aq) + OH^-(aq) <=> HPO4^2-(aq) + H2O(l)", r:"a b cb ca"},
+  {eq:"HS^-(aq) + H2O(l) <=> H2S(aq) + OH^-(aq)", r:"b a ca cb"},
+  {eq:"H2O(l) + H2O(l) <=> H3O^+(aq) + OH^-(aq)", r:"a b ca cb"},
+  {eq:"HNO3(aq) + NH3(aq) -> NO3^-(aq) + NH4^+(aq)", r:"a b cb ca"}
+];
+function plain(t){ var p = APC.parse(t); p.st = ""; p.n = 1; return APC.term(p); }
+(function(){
+  var deck = [], cur, done = 0, right = 0;
+  var box = document.getElementById("l-eq"), fb = document.getElementById("l-fb");
+  function next(){
+    if(!deck.length) deck = APC.shuffle(LR);
+    cur = deck.pop(); cur.done = false;
+    cur.roles = cur.r.split(" ");
+    box.innerHTML = leq(cur.eq, function(t, i){
+      return '<select aria-label="Role of ' + t.replace(/\(.*\)$/, "").replace("^", "") + '" data-i="' + i + '"><option value="">Choose…</option>' +
+        Object.keys(ROLE).map(function(k){ return '<option value="' + k + '">' + ROLE[k][0] + "</option>"; }).join("") + "</select>";
+    });
+    fb.className = "fb";
+    document.getElementById("l-check").disabled = false;
+  }
+  document.getElementById("l-check").addEventListener("click", function(){
+    if(cur.done) return;
+    var sels = box.querySelectorAll("select"), got = [].map.call(sels, function(s){ return s.value; });
+    if(got.indexOf("") >= 0){ fb.className = "fb show hint"; fb.innerHTML = "Choose a role for all four species first."; return; }
+    var s = species(cur.eq), want = cur.roles.slice();
+    /* two identical reactants (water + water) can be labeled either way round */
+    if(s.L[0] === s.L[1] && got[0] === want[1] && got[1] === want[0]) want = [want[1], want[0], want[2], want[3]];
+    var ok = got.every(function(g, i){ return g === want[i]; });
+    cur.done = true; done++; if(ok) right++;
+    document.getElementById("l-score").textContent = right + " of " + done;
+    sels.forEach(function(sel, i){ sel.classList.add(got[i] === want[i] ? "ok" : "no"); sel.disabled = true; });
+    var all = s.L.concat(s.R), find = function(r){ return all[cur.roles.indexOf(r)]; };
+    var A = find("a"), CB = find("cb"), B = find("b"), CA = find("ca");
+    fb.className = "fb show " + (ok ? "good" : "bad");
+    fb.innerHTML = "<p><b>" + (ok ? "All four right." : "Not quite.") + "</b> " + plain(A) + " gives an H<sup>+</sup> and becomes " + plain(CB) +
+      ", so " + plain(A) + " is the acid and " + plain(CB) + " is its conjugate base. " + plain(B) + " takes the H<sup>+</sup> and becomes " + plain(CA) +
+      ", so " + plain(B) + " is the base and " + plain(CA) + " is its conjugate acid.</p>" +
+      '<div class="leq" style="background:rgba(255,255,255,.65)">' + leq(cur.eq, function(t, i){ return labelHTML(cur.roles[i]); }) + "</div>";
+    document.getElementById("l-check").disabled = true;
+  });
+  document.getElementById("l-next").addEventListener("click", next);
+  next();
+})();
+
+/* ---------- conjugate drill ---------- */
+var PAIRS = [["H3O^+","H2O"], ["H2O","OH^-"], ["NH4^+","NH3"], ["HCl","Cl^-"], ["HF","F^-"], ["HNO3","NO3^-"], ["H2SO4","HSO4^-"],
+  ["HSO4^-","SO4^2-"], ["H2CO3","HCO3^-"], ["HCO3^-","CO3^2-"], ["H3PO4","H2PO4^-"], ["H2PO4^-","HPO4^2-"], ["HPO4^2-","PO4^3-"],
+  ["HC2H3O2","C2H3O2^-"], ["HCN","CN^-"], ["H2S","HS^-"], ["HS^-","S^2-"], ["HClO","ClO^-"]];
+function withCharge(t, q){ var f = APC.parse(t).f; return q === 0 ? f : f + "^" + (Math.abs(q) === 1 ? "" : Math.abs(q)) + (q > 0 ? "+" : "-"); }
+function q(t){ return APC.zval(APC.parse(t).z); }
+(function(){
+  var cur, done = 0, right = 0, last;
+  var box = document.getElementById("d-choices"), fb = document.getElementById("d-fb");
+  function make(){
+    var pr, base, guard = 0;
+    do { pr = PAIRS[Math.floor(Math.random() * PAIRS.length)]; base = Math.random() < .5; guard++; } while(guard < 20 && last && pr === last[0] && base === last[1]);
+    last = [pr, base];
+    /* base === true: asked for the conjugate base of pr[0]; otherwise the conjugate acid of pr[1] */
+    var given = base ? pr[0] : pr[1], ans = base ? pr[1] : pr[0], dq = base ? -1 : 1;
+    var opp = PAIRS.filter(function(p){ return base ? p[1] === given : p[0] === given; })[0];
+    var c = [{f:ans, k:"right"}, {f:withCharge(ans, q(given)), k:"charge"}, {f:withCharge(given, q(given) + dq), k:"h"},
+             opp ? {f:base ? opp[0] : opp[1], k:"way"} : {f:withCharge(ans, q(given) - dq), k:"sign"}];
+    var seen = {};
+    c = c.filter(function(o){ if(seen[o.f]) return false; seen[o.f] = 1; return true; });
+    return {given:given, ans:ans, base:base, opts:APC.shuffle(c)};
+  }
+  function show(){
+    cur = make();
+    document.getElementById("d-ask").textContent = cur.base ? "Conjugate base" : "Conjugate acid";
+    document.getElementById("d-prompt").innerHTML = "What is the conjugate " + (cur.base ? "base" : "acid") + " of";
+    document.getElementById("d-sp").innerHTML = APC.fmt(cur.given) + "?";
+    box.innerHTML = cur.opts.map(function(o, i){ return '<button type="button" class="pbtn" data-i="' + i + '">' + APC.fmt(o.f) + "</button>"; }).join("");
+    box.querySelectorAll(".pbtn").forEach(function(b){ b.addEventListener("click", function(){ pick(+b.dataset.i, b); }); });
+    fb.className = "fb";
+  }
+  function pick(i, b){
+    if(cur.done) return;
+    cur.done = true;
+    var o = cur.opts[i], ok = o.k === "right", G = APC.fmt(cur.given), A = APC.fmt(cur.ans);
+    done++; if(ok) right++;
+    document.getElementById("d-score").textContent = right + " of " + done;
+    box.querySelectorAll(".pbtn").forEach(function(x, j){
+      x.disabled = true;
+      if(x === b) x.classList.add(ok ? "yes" : "no");
+      else if(cur.opts[j].k === "right") x.classList.add("reveal");
+    });
+    var rule = cur.base ? "Remove one H<sup>+</sup> from " + G + ": one fewer H, and the charge goes down by 1. That gives " + A + "."
+                        : "Add one H<sup>+</sup> to " + G + ": one more H, and the charge goes up by 1. That gives " + A + ".";
+    var why = {right:"", charge:"The H count is right, but the charge didn’t change. Moving an H<sup>+</sup> moves a + charge too.",
+      h:"The charge changed, but the H count didn’t. A conjugate differs by a whole H<sup>+</sup>: the H and its charge.",
+      way:"That one goes the other direction: it’s the conjugate " + (cur.base ? "acid" : "base") + " of " + G + ".",
+      sign:"The H count is right, but the charge moved the wrong way."}[o.k];
+    fb.className = "fb show " + (ok ? "good" : "bad");
+    fb.innerHTML = "<p><b>" + (ok ? "Right." : "Not quite.") + "</b> " + why + "</p><p>" + rule + "</p>";
+  }
+  document.getElementById("d-next").addEventListener("click", show);
+  show();
+})();
+
+/* ---------- practice ---------- */
+APC.mc(document.getElementById("mc"), document.getElementById("mc-score"), [
+ {q:"[[HF(aq) + H2O(l) <=> H3O^+(aq) + F^-(aq)]]<br>Which of the following is a conjugate acid–base pair in the reaction above?",
+  c:["HF and H<sub>2</sub>O", "HF and F<sup>−</sup>", "H<sub>2</sub>O and F<sup>−</sup>", "H<sub>3</sub>O<sup>+</sup> and F<sup>−</sup>"],
+  a:1,
+  e:"HF loses one H<sup>+</sup> to become F<sup>−</sup>, so they differ by exactly one H<sup>+</sup>. The other pair is H<sub>2</sub>O and H<sub>3</sub>O<sup>+</sup>. (A) pairs the two reactants, and (D) pairs the two products."},
+
+ {q:"[[NH3(aq) + H2O(l) <=> NH4^+(aq) + OH^-(aq)]]<br>In the reaction above, H<sub>2</sub>O acts as",
+  c:["a Brønsted–Lowry acid, because it donates a proton to NH<sub>3</sub>", "a Brønsted–Lowry base, because it accepts a proton from NH<sub>3</sub>",
+     "a Brønsted–Lowry base, because it forms OH<sup>−</sup>", "neither an acid nor a base, because it is the solvent"],
+  a:0,
+  e:"H<sub>2</sub>O becomes OH<sup>−</sup>: it lost an H<sup>+</sup>, and NH<sub>3</sub> gained it to become NH<sub>4</sub><sup>+</sup>. A proton donor is a Brønsted–Lowry acid. Forming OH<sup>−</sup> is the result of losing a proton, not a sign of being a base."},
+
+ {q:"What is the conjugate base of [[HSO4^-]]?",
+  c:["[[H2SO4]]", "[[SO4^2-]]", "[[SO4^-]]", "[[HSO4^2-]]"],
+  a:1,
+  e:"Remove one H<sup>+</sup>: one fewer H, and the charge drops from −1 to −2. (A) is the conjugate acid, (C) forgets the charge, and (D) changes the charge without removing the H."},
+
+ {q:"What is the conjugate acid of [[HPO4^2-]]?",
+  c:["[[PO4^3-]]", "[[H2PO4^-]]", "[[H3PO4]]", "[[H2PO4^2-]]"],
+  a:1,
+  e:"Add one H<sup>+</sup>: one more H, and the charge rises from −2 to −1. (A) is the conjugate base, (C) adds two H<sup>+</sup>, and (D) adds an H without changing the charge."},
+
+ {q:"Which of the following species can act as both a Brønsted–Lowry acid and a Brønsted–Lowry base?",
+  c:["[[HCO3^-]]", "[[Cl^-]]", "[[CO3^2-]]", "[[NH4^+]]"],
+  a:0,
+  e:"HCO<sub>3</sub><sup>−</sup> can give up its H<sup>+</sup> to become CO<sub>3</sub><sup>2−</sup>, or take one on to become H<sub>2</sub>CO<sub>3</sub>. Cl<sup>−</sup> and CO<sub>3</sub><sup>2−</sup> have no H to donate, so they can’t be acids. NH<sub>4</sub><sup>+</sup> can donate, but adding another H<sup>+</sup> would give NH<sub>5</sub><sup>2+</sup>, which doesn’t exist."},
+
+ {q:"[[HCl(aq) + H2O(l) -> H3O^+(aq) + Cl^-(aq)]]<br>Which statement about the reaction above is correct?",
+  c:["H<sub>2</sub>O is a base because it accepts a proton from HCl.", "HCl is a base because it contains a chloride ion.",
+     "H<sub>3</sub>O<sup>+</sup> is the conjugate base of H<sub>2</sub>O.", "Cl<sup>−</sup> is the conjugate acid of HCl."],
+  a:0,
+  e:"H<sub>2</sub>O takes the H<sup>+</sup> and becomes H<sub>3</sub>O<sup>+</sup>, which makes it a proton acceptor and H<sub>3</sub>O<sup>+</sup> its conjugate <i>acid</i>. Cl<sup>−</sup> is the conjugate <i>base</i> of HCl, since it’s HCl minus a proton."}
+]);
+
+APC.frq(document.getElementById("frq"), [
+ {q:"<p>Acetic acid reacts with water: [[HC2H3O2(aq) + H2O(l) <=> C2H3O2^-(aq) + H3O^+(aq)]]</p><p>(a) Identify the Brønsted–Lowry acid and the Brønsted–Lowry base among the reactants. Justify your answer.</p><p>(b) Identify both conjugate acid–base pairs.</p><p>(c) In the reverse reaction, which species acts as the Brønsted–Lowry acid? Justify your answer.</p>",
+  m:"<p><b>(a)</b> <b>HC<sub>2</sub>H<sub>3</sub>O<sub>2</sub> is the acid</b>: it donates a proton and becomes C<sub>2</sub>H<sub>3</sub>O<sub>2</sub><sup>−</sup>. <b>H<sub>2</sub>O is the base</b>: it accepts that proton and becomes H<sub>3</sub>O<sup>+</sup>.</p><p><b>(b)</b> HC<sub>2</sub>H<sub>3</sub>O<sub>2</sub> / C<sub>2</sub>H<sub>3</sub>O<sub>2</sub><sup>−</sup>, and H<sub>3</sub>O<sup>+</sup> / H<sub>2</sub>O. Each pair differs by one H<sup>+</sup>.</p><p><b>(c)</b> <b>H<sub>3</sub>O<sup>+</sup></b>. In the reverse reaction it donates a proton to C<sub>2</sub>H<sub>3</sub>O<sub>2</sub><sup>−</sup>, becoming H<sub>2</sub>O.</p>"},
+
+ {q:"<p>Water can act as either a Brønsted–Lowry acid or a Brønsted–Lowry base.</p><p>(a) Write the equation for the reaction in which H<sub>2</sub>O acts as a base with HNO<sub>3</sub>.</p><p>(b) Write the equation for the reaction in which H<sub>2</sub>O acts as an acid with NH<sub>3</sub>.</p><p>(c) Using your answers, explain what feature of a water molecule allows it to play both roles.</p>",
+  m:"<p><b>(a)</b> [[HNO3(aq) + H2O(l) -> H3O^+(aq) + NO3^-(aq)]]</p><p><b>(b)</b> [[NH3(aq) + H2O(l) <=> NH4^+(aq) + OH^-(aq)]]</p><p><b>(c)</b> A water molecule has H atoms it can give up as H<sup>+</sup> (becoming OH<sup>−</sup>, as in b), and it can also take on an extra H<sup>+</sup> (becoming H<sub>3</sub>O<sup>+</sup>, as in a). Which role it plays depends on what it’s reacting with: it gives a proton to a base and takes one from an acid.</p>"}
+]);
+</script>
 </body>
 </html>

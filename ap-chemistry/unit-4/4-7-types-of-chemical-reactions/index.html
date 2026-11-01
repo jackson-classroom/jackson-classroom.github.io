@@ -8,6 +8,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/ap-chemistry/topic.css">
+<style>
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:22px 0}
+.grid3 .eqline{margin:10px 0 0}
+.pick3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.pick4{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.pick4 .pbtn{font-family:var(--body);font-size:18px;letter-spacing:0}
+.swap{counter-reset:s;list-style:none;padding:0;margin:18px 0}
+.swap li{counter-increment:s;position:relative;padding-left:40px;margin:12px 0}
+.swap li::before{content:counter(s);position:absolute;left:0;top:1px;width:26px;height:26px;border-radius:50%;background:var(--acc-lite);color:var(--acc-dk);font-family:var(--mono);font-size:13px;display:flex;align-items:center;justify-content:center}
+.rule{font-family:var(--display);font-weight:600;font-size:clamp(19px,2.6vw,23px);line-height:1.35;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:0 4px 4px 0;padding:16px 20px;margin:22px 0}
+.rule small{display:block;font-family:var(--mono);font-size:11.5px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:4px}
+.fb .eqline{background:rgba(255,255,255,.65)}
+@media (max-width:600px){ .pick3{grid-template-columns:1fr} }
+</style>
 </head>
 <body>
 
@@ -23,19 +37,208 @@
 <header class="hero">
   <div class="eyebrow">AP Chemistry · Unit 4 Chemical Reactions · Topic 4.7</div>
   <h1><em>Types</em> of Chemical Reactions</h1>
-  <p class="lede">Most reactions in AP Chemistry fall into three families: acid–base, oxidation–reduction, and precipitation. Recognizing the family tells you what’s actually being transferred or formed.</p>
+  <p class="lede">Most reactions in AP Chemistry fall into three families: acid–base, oxidation–reduction, and precipitation. To sort one, ask what actually changes hands: a proton, electrons, or partners.</p>
+  <p class="lo-line"><b>Learning objective 4.7.A</b> Identify a reaction as acid–base, oxidation–reduction, or precipitation.</p>
 
   <div class="board" aria-label="Key ideas in this topic">
-    <div class="idea"><span class="code">Q1</span><span class="lq">Is a proton changing hands?</span><span class="d">Acid–base reactions</span></div>
-    <div class="idea"><span class="code">Q2</span><span class="lq">Are electrons changing hands?</span><span class="d">Oxidation–reduction (redox) reactions</span></div>
-    <div class="idea"><span class="code">Q3</span><span class="lq">Is a solid forming from solution?</span><span class="d">Precipitation reactions</span></div>
+    <a class="idea" href="#acidbase"><span class="code">Q1</span><span class="lq">Is a proton changing hands?</span><span class="d">Acid–base reactions</span></a>
+    <a class="idea" href="#redox"><span class="code">Q2</span><span class="lq">Are electrons changing hands?</span><span class="d">Oxidation–reduction (redox) reactions</span></a>
+    <a class="idea" href="#precip"><span class="code">Q3</span><span class="lq">Is a solid forming from solution?</span><span class="d">Precipitation reactions</span></a>
     <div class="board-foot"><span><b>Unit 4</b> Chemical Reactions · 7–9% of the AP Exam</span><span><b>Before this</b> <a href="/ap-chemistry/unit-4/4-6-introduction-to-titration/">4.6 Introduction to Titration</a></span></div>
   </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#families">Three families</a>
+    <a href="#acidbase">Acid–base</a>
+    <a href="#redox">Redox</a>
+    <a href="#precip">Precipitation</a>
+    <a href="#traps">Look-alikes</a>
+    <a href="#sort">Classify it</a>
+    <a href="#ppt">Find the precipitate</a>
+    <a href="#check">Check yourself</a>
+  </nav>
 </header>
 
-<section id="tools">
-  <div class="sec-head"><span class="tag plain">Coming soon</span><h2>Tools and practice</h2></div>
-  <div class="soon-card"><p>Interactive tools, worked examples, and AP-style practice for Topic 4.7 aren’t posted yet. The three questions above are the ones this topic answers.</p></div>
+<!-- =========================================================
+     THREE FAMILIES
+     ========================================================= -->
+<section id="families">
+  <div class="sec-head"><span class="tag">4.7.A</span><h2>Three questions, three families</h2></div>
+  <p>Don't sort a reaction by what it looks like. Sort it by what moves.</p>
+  <div class="grid3">
+    <div class="mini">
+      <div class="n">Acid–base</div>
+      <h4>A proton (H<sup>+</sup>) moves</h4>
+      <div class="eqline"><span data-eq="H^+(aq) + OH^-(aq) -> H2O(l)"></span></div>
+      <p>The acid gives up an H<sup>+</sup>, and the base takes it.</p>
+    </div>
+    <div class="mini">
+      <div class="n">Oxidation–reduction</div>
+      <h4>Electrons move</h4>
+      <div class="eqline"><span data-eq="Zn(s) + Cu^2+(aq) -> Zn^2+(aq) + Cu(s)"></span></div>
+      <p>Oxidation numbers change. Electrons go from the species oxidized to the species reduced.</p>
+    </div>
+    <div class="mini">
+      <div class="n">Precipitation</div>
+      <h4>A solid forms from ions</h4>
+      <div class="eqline"><span data-eq="Ag^+(aq) + Cl^-(aq) -> AgCl(s)"></span></div>
+      <p>Ions in solution find new partners, and one new pair is insoluble.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     ACID-BASE
+     ========================================================= -->
+<section id="acidbase">
+  <div class="sec-head"><span class="tag">4.7.A</span><h2>Acid–base: a proton changes hands</h2></div>
+  <div class="def">
+    <div class="term">Acid–base reaction</div>
+    <p>Acid–base reactions involve the transfer of one or more <b>protons</b> (H<sup>+</sup> ions) from one chemical species to another.</p>
+  </div>
+  <p>A hydrogen atom that has lost its only electron is just a proton, so “H<sup>+</sup>” and “proton” mean the same thing. In this unit, look for an acid such as HCl or HNO<sub>3</sub> reacting with a hydroxide such as NaOH, or with water. Follow the H<sup>+</sup>: it starts on the acid and ends up on the base.</p>
+  <p class="eqlab">Molecular equation</p>
+  <div class="eqline"><span data-eq="HCl(aq) + NaOH(aq) -> NaCl(aq) + H2O(l)"></span></div>
+  <p class="eqlab">Net ionic equation: the H<sup>+</sup> from the acid joins the OH<sup>−</sup> from the base</p>
+  <div class="eqline"><span data-eq="H^+(aq) + OH^-(aq) -> H2O(l)"></span></div>
+  <p class="eqlab">With water as the base</p>
+  <div class="eqline"><span data-eq="HCl(aq) + H2O(l) -> H3O^+(aq) + Cl^-(aq)"></span></div>
+  <div class="note"><b>What's next.</b> <a href="/ap-chemistry/unit-4/4-8-introduction-to-acid-base-reactions/">4.8</a> names the acid, the base, and what each one becomes. Strong vs. weak acids and pH wait until <a href="/ap-chemistry/unit-8/">Unit 8</a>.</div>
+</section>
+
+<!-- =========================================================
+     REDOX
+     ========================================================= -->
+<section id="redox">
+  <div class="sec-head"><span class="tag">4.7.A</span><h2>Redox: electrons change hands</h2></div>
+  <div class="def">
+    <div class="term">Oxidation–reduction (redox) reaction</div>
+    <p>Redox reactions involve the transfer of one or more <b>electrons</b> between chemical species, shown by changes in <b>oxidation numbers</b>. Electrons move from the species that is <b>oxidized</b> to the species that is <b>reduced</b>.</p>
+  </div>
+  <p>An oxidation number is the charge an atom would have if every bond were ionic. If an element's oxidation number goes <b>up</b>, it lost electrons and was oxidized. If it goes <b>down</b>, it gained electrons and was reduced. The numbers above each atom here show the change:</p>
+  <div class="eqline"><span data-ox="Zn(s) + Cu^2+(aq) -> Zn^2+(aq) + Cu(s)" data-mark="Zn:up Cu:down"></span></div>
+  <p class="oxkey"><span class="up">amber</span> = oxidized (number goes up) · <span class="down">blue</span> = reduced (number goes down)</p>
+  <p>Zinc goes from 0 to +2, so each zinc atom lost two electrons. Copper goes from +2 to 0, so each Cu<sup>2+</sup> gained them. <a href="/ap-chemistry/unit-4/4-9-oxidation-reduction-redox-reactions/">4.9</a> covers the rules for assigning oxidation numbers.</p>
+
+  <h3>Combustion is redox</h3>
+  <div class="def">
+    <div class="term">Combustion</div>
+    <p>Combustion is an important kind of redox reaction in which a substance reacts with <b>oxygen gas</b>. Complete combustion of a hydrocarbon produces <b>carbon dioxide and water</b>.</p>
+  </div>
+  <div class="eqline"><span data-ox="CH4(g) + 2O2(g) -> CO2(g) + 2H2O(g)" data-mark="C:up O:down"></span></div>
+  <p>Carbon goes from −4 to +4 (oxidized), and oxygen goes from 0 to −2 (reduced). Compounds with C, H, and O, like ethanol, also burn completely to CO<sub>2</sub> and H<sub>2</sub>O.</p>
+
+  <h3>A quick clue</h3>
+  <p>An element on its own, like Zn(s), O<sub>2</sub>(g), or Cl<sub>2</sub>(g), on either side of the equation almost always means redox. A free element has an oxidation number of 0, and once it's in a compound or an ion, it doesn't.</p>
+  <div class="grid2">
+    <div class="mini"><div class="n">Elements combine</div><div class="eqline"><span data-eq="2Na(s) + Cl2(g) -> 2NaCl(s)"></span></div></div>
+    <div class="mini"><div class="n">A compound breaks into elements</div><div class="eqline"><span data-eq="2H2O(l) -> 2H2(g) + O2(g)"></span></div></div>
+    <div class="mini"><div class="n">A metal replaces a metal ion</div><div class="eqline"><span data-eq="Cu(s) + 2Ag^+(aq) -> Cu^2+(aq) + 2Ag(s)"></span></div></div>
+    <div class="mini"><div class="n">Combustion</div><div class="eqline"><span data-eq="2Mg(s) + O2(g) -> 2MgO(s)"></span></div></div>
+  </div>
+  <p>The clue tells you where to look. Confirming it still means finding an oxidation number that changes.</p>
+</section>
+
+<!-- =========================================================
+     PRECIPITATION
+     ========================================================= -->
+<section id="precip">
+  <div class="sec-head"><span class="tag">4.7.A</span><h2>Precipitation: a solid forms from solution</h2></div>
+  <div class="def">
+    <div class="term">Precipitation reaction</div>
+    <p>Precipitation reactions usually involve mixing ions in aqueous solution to produce an <b>insoluble</b> or sparingly soluble ionic compound, the precipitate.</p>
+  </div>
+  <div class="rule"><small>The one solubility rule to know</small>All sodium (Na<sup>+</sup>), potassium (K<sup>+</sup>), ammonium (NH<sub>4</sub><sup>+</sup>), and nitrate (NO<sub>3</sub><sup>−</sup>) salts are soluble in water.</div>
+
+  <h3>Swap partners</h3>
+  <ol class="swap">
+    <li><b>Write the ions in each solution.</b> [[Pb(NO3)2]] gives Pb<sup>2+</sup> and NO<sub>3</sub><sup>−</sup>; [[KI]] gives K<sup>+</sup> and I<sup>−</sup>.</li>
+    <li><b>Swap partners.</b> The two possible new compounds are PbI<sub>2</sub> and KNO<sub>3</sub>. Use the charges to write each formula: Pb<sup>2+</sup> needs two I<sup>−</sup>.</li>
+    <li><b>Apply the rule.</b> KNO<sub>3</sub> has K<sup>+</sup> and NO<sub>3</sub><sup>−</sup>, so it stays dissolved. The yellow solid has to be PbI<sub>2</sub>.</li>
+  </ol>
+  <p class="eqlab">Molecular equation</p>
+  <div class="eqline"><span data-eq="Pb(NO3)2(aq) + 2KI(aq) -> PbI2(s) + 2KNO3(aq)"></span></div>
+  <p class="eqlab">Net ionic equation (K<sup>+</sup> and NO<sub>3</sub><sup>−</sup> are spectators)</p>
+  <div class="eqline"><span data-eq="Pb^2+(aq) + 2I^-(aq) -> PbI2(s)"></span></div>
+
+  <div class="note"><b>What the rule can and can't tell you.</b> It only tells you what's definitely soluble. If every possible new compound contains Na<sup>+</sup>, K<sup>+</sup>, NH<sub>4</sub><sup>+</sup>, or NO<sub>3</sub><sup>−</sup>, no precipitate can form. Mixing KCl and NaNO<sub>3</sub> just gives a solution of four ions. When you need to know that some other compound is insoluble, an AP question tells you, for example by saying that a precipitate forms.</div>
+</section>
+
+<!-- =========================================================
+     LOOK-ALIKES
+     ========================================================= -->
+<section id="traps">
+  <div class="sec-head"><span class="tag plain">Watch out</span><h2>Look-alikes</h2></div>
+  <p>These are the reactions AP questions use to catch students who classify by appearance.</p>
+  <div class="grid2">
+    <div class="mini">
+      <div class="n">An acid is there, but it's redox</div>
+      <div class="eqline"><span data-ox="Zn(s) + 2HCl(aq) -> ZnCl2(aq) + H2(g)" data-mark="Zn:up H:down"></span></div>
+      <p>Zinc goes from 0 to +2 and hydrogen from +1 to 0. Electrons move from Zn to H<sup>+</sup>, so this is redox, not acid–base.</p>
+    </div>
+    <div class="mini">
+      <div class="n">OH<sup>−</sup> is there, but it's precipitation</div>
+      <div class="eqline"><span data-ox="Fe^3+(aq) + 3OH^-(aq) -> Fe(OH)3(s)"></span></div>
+      <p>No proton moves and no oxidation number changes. The ions just combine into an insoluble solid.</p>
+    </div>
+    <div class="mini">
+      <div class="n">Something breaks apart, but it's not redox</div>
+      <div class="eqline"><span data-ox="CaCO3(s) -> CaO(s) + CO2(g)"></span></div>
+      <p>Every oxidation number stays the same (Ca +2, C +4, O −2), so no electrons move. It isn't in any of the three families.</p>
+    </div>
+    <div class="mini">
+      <div class="n">One element, two roles</div>
+      <div class="eqline"><span data-ox="2H2O2(aq) -> 2H2O(l) + O2(g)"></span></div>
+      <p>Oxygen in H<sub>2</sub>O<sub>2</sub> is −1. Some of it goes to −2 (reduced) and some to 0 (oxidized). Same element, both roles: still redox.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     CLASSIFY IT
+     ========================================================= -->
+<section id="sort">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Classify the reaction</h2></div>
+  <p>For each reaction, decide what changes hands. Twelve reactions, shuffled each time.</p>
+  <div class="card" id="sorter">
+    <div class="card-label"><span id="s-count">Reaction 1 of 12</span><span class="score" id="s-score">0 correct</span></div>
+    <div id="s-body">
+      <div class="eqline" id="s-eq" style="font-size:19px"></div>
+      <div class="pick3">
+        <button type="button" class="pbtn" data-pick="ab">Acid–base</button>
+        <button type="button" class="pbtn" data-pick="rx">Redox</button>
+        <button type="button" class="pbtn" data-pick="pp">Precipitation</button>
+      </div>
+      <div class="fb" id="s-fb" aria-live="polite"></div>
+      <div class="btn-row"><button type="button" id="s-next" hidden>Next reaction →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     FIND THE PRECIPITATE
+     ========================================================= -->
+<section id="ppt">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Find the precipitate</h2></div>
+  <p>Two solutions are mixed and a precipitate forms. Swap partners, write the formulas from the charges, and use the solubility rule to pick the solid. A new pair is generated every time.</p>
+  <div class="card">
+    <div class="card-label"><span>Which one is the solid?</span><span class="score" id="p-score">0 of 0</span></div>
+    <p class="prompt" id="p-prompt"></p>
+    <div class="pick4" id="p-choices"></div>
+    <div class="fb" id="p-fb" aria-live="polite"></div>
+    <div class="btn-row"><button type="button" id="p-next">New pair →</button></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PRACTICE
+     ========================================================= -->
+<section id="check">
+  <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
+  <p>Seven multiple-choice questions written in AP style, then two written responses.</p>
+  <p class="score" id="mc-score" style="margin:0"></p>
+  <div class="card" id="mc"></div>
+  <div class="card" id="frq"></div>
 
   <div class="next">
     <div><p class="nt">Up next: 4.8 Introduction to Acid-Base Reactions</p><p>Brønsted–Lowry acids and bases · conjugate acid–base pairs · water as an acid and a base</p></div>
@@ -44,11 +247,217 @@
 </section>
 
 <footer>
-  <p>Topic 4.7 Types of Chemical Reactions, following the AP Chemistry course framework.</p>
+  <p>Topic 4.7 Types of Chemical Reactions, following the AP Chemistry course framework (Learning Objective 4.7.A). Practice questions are original and written in AP style. The sorter shuffles every time, and the precipitate finder makes a new pair every time.</p>
   <p><a href="/ap-chemistry/unit-4/">← Unit 4 — Chemical Reactions</a></p>
 </footer>
 
 </div><!-- /wrap -->
 
+<script src="/ap-chemistry/topic.js"></script>
+<script>
+/* the [[...]] formulas in the swap-partners steps */
+document.querySelectorAll(".swap li").forEach(function(li){ li.innerHTML = APC.rich(li.innerHTML); });
+
+/* ---------- classify the reaction ---------- */
+var RX = [
+  {eq:"Pb(NO3)2(aq) + 2KI(aq) -> PbI2(s) + 2KNO3(aq)", a:"pp",
+   e:"Pb<sup>2+</sup> and I<sup>−</sup> swap onto new partners and form solid PbI<sub>2</sub>. KNO<sub>3</sub> stays dissolved. No oxidation number changes and no proton moves."},
+  {eq:"Zn(s) + Cu^2+(aq) -> Zn^2+(aq) + Cu(s)", a:"rx", mark:"Zn:up Cu:down",
+   e:"Zinc loses two electrons (0 → +2) and Cu<sup>2+</sup> gains them (+2 → 0)."},
+  {eq:"HCl(aq) + NaOH(aq) -> NaCl(aq) + H2O(l)", a:"ab",
+   e:"The H<sup>+</sup> from HCl ends up on the OH<sup>−</sup>, making water. No oxidation numbers change."},
+  {eq:"CH4(g) + 2O2(g) -> CO2(g) + 2H2O(g)", a:"rx", mark:"C:up O:down",
+   e:"Combustion is redox. Carbon goes from −4 to +4 and oxygen from 0 to −2."},
+  {eq:"Ag^+(aq) + Cl^-(aq) -> AgCl(s)", a:"pp",
+   e:"Two ions from solution combine into an insoluble solid. Ag stays +1 and Cl stays −1."},
+  {eq:"Zn(s) + 2HCl(aq) -> ZnCl2(aq) + H2(g)", a:"rx", mark:"Zn:up H:down",
+   e:"There's an acid, but electrons move: zinc goes from 0 to +2, and hydrogen from +1 to 0. That makes it redox."},
+  {eq:"2Na(s) + Cl2(g) -> 2NaCl(s)", a:"rx", mark:"Na:up Cl:down",
+   e:"Two free elements combine. Sodium goes from 0 to +1 and chlorine from 0 to −1."},
+  {eq:"FeCl3(aq) + 3NaOH(aq) -> Fe(OH)3(s) + 3NaCl(aq)", a:"pp",
+   e:"OH<sup>−</sup> is there, but no proton moves. Fe<sup>3+</sup> and OH<sup>−</sup> combine into solid Fe(OH)<sub>3</sub>, and NaCl stays dissolved. Fe stays +3."},
+  {eq:"HCl(aq) + H2O(l) -> H3O^+(aq) + Cl^-(aq)", a:"ab",
+   e:"HCl gives its H<sup>+</sup> to a water molecule, which becomes H<sub>3</sub>O<sup>+</sup>."},
+  {eq:"2H2O2(aq) -> 2H2O(l) + O2(g)", a:"rx",
+   e:"Oxygen starts at −1 in H<sub>2</sub>O<sub>2</sub>. Some goes to −2 in H<sub>2</sub>O (reduced) and some to 0 in O<sub>2</sub> (oxidized)."},
+  {eq:"BaCl2(aq) + Na2SO4(aq) -> BaSO4(s) + 2NaCl(aq)", a:"pp",
+   e:"Ba<sup>2+</sup> and SO<sub>4</sub><sup>2−</sup> form solid BaSO<sub>4</sub>. NaCl has Na<sup>+</sup>, so it stays dissolved."},
+  {eq:"C2H5OH(l) + 3O2(g) -> 2CO2(g) + 3H2O(g)", a:"rx", mark:"C:up O:down",
+   e:"Ethanol burning in oxygen is combustion. Carbon goes from −2 to +4 and oxygen from 0 to −2."},
+  {eq:"H^+(aq) + OH^-(aq) -> H2O(l)", a:"ab",
+   e:"This is the net ionic equation for an acid reacting with a hydroxide: a proton moves onto OH<sup>−</sup>."},
+  {eq:"Fe2O3(s) + 3CO(g) -> 2Fe(s) + 3CO2(g)", a:"rx", mark:"Fe:down C:up",
+   e:"Iron goes from +3 to 0 (reduced) and carbon from +2 to +4 (oxidized)."},
+  {eq:"CaCl2(aq) + Na2CO3(aq) -> CaCO3(s) + 2NaCl(aq)", a:"pp",
+   e:"Ca<sup>2+</sup> and CO<sub>3</sub><sup>2−</sup> form solid CaCO<sub>3</sub>. NaCl stays dissolved."},
+  {eq:"HNO3(aq) + KOH(aq) -> KNO3(aq) + H2O(l)", a:"ab",
+   e:"The H<sup>+</sup> from HNO<sub>3</sub> joins the OH<sup>−</sup> to make water. KNO<sub>3</sub> stays dissolved, so nothing precipitates."}
+];
+(function(){
+  var order = APC.shuffle(RX).slice(0, 12), k = 0, right = 0, answered;
+  var eq = document.getElementById("s-eq"), fb = document.getElementById("s-fb"), next = document.getElementById("s-next"),
+      body = document.getElementById("s-body"), count = document.getElementById("s-count"), score = document.getElementById("s-score"),
+      btns = document.querySelectorAll("#sorter .pbtn"), NAMES = {ab:"Acid–base", rx:"Redox", pp:"Precipitation"};
+  function show(){
+    answered = false;
+    count.textContent = "Reaction " + (k + 1) + " of " + order.length;
+    score.textContent = right + " correct";
+    eq.innerHTML = APC.fmt(order[k].eq);
+    fb.className = "fb"; next.hidden = true;
+    btns.forEach(function(b){ b.className = "pbtn"; b.disabled = false; });
+  }
+  btns.forEach(function(b){
+    b.addEventListener("click", function(){
+      if(answered) return;
+      answered = true;
+      var o = order[k], ok = b.dataset.pick === o.a, mark = {};
+      if(ok) right++;
+      btns.forEach(function(x){
+        x.disabled = true;
+        if(x === b) x.classList.add(ok ? "yes" : "no");
+        else if(x.dataset.pick === o.a) x.classList.add("reveal");
+      });
+      (o.mark || "").split(" ").forEach(function(m){ var p = m.split(":"); if(p[1]) mark[p[0]] = p[1]; });
+      fb.className = "fb show " + (ok ? "good" : "bad");
+      fb.innerHTML = "<p><b>" + NAMES[o.a] + ".</b> " + o.e + "</p>" +
+        (o.a === "rx" ? '<div class="eqline">' + APC.oxfmt(o.eq, mark) + "</div>" : "");
+      score.textContent = right + " correct";
+      next.hidden = false;
+      next.textContent = k + 1 < order.length ? "Next reaction →" : "See your score";
+      next.focus();
+    });
+  });
+  next.addEventListener("click", function(){
+    k++;
+    if(k < order.length){ show(); return; }
+    count.textContent = "Done";
+    body.innerHTML = '<p class="prompt" style="text-align:center">' + right + " of " + order.length + " correct</p>" +
+      '<div class="btn-row" style="justify-content:center"><button type="button" id="s-again">Shuffle and go again</button></div>';
+    document.getElementById("s-again").addEventListener("click", function(){ location.reload(); });
+  });
+  show();
+})();
+
+/* ---------- find the precipitate ----------
+   A metal nitrate is mixed with a sodium or potassium salt. Only pairs whose
+   swapped product really is insoluble are used. */
+var METAL = {Ag:1, Pb:2, Ba:2, Ca:2, Cu:2, Fe:3, Mg:2, Ni:2, Zn:2};
+var ANION = {Cl:{z:1, name:"chloride"}, Br:{z:1, name:"bromide"}, I:{z:1, name:"iodide"}, SO4:{z:2, poly:1}, CO3:{z:2, poly:1},
+             OH:{z:1, poly:1}, PO4:{z:3, poly:1}, CrO4:{z:2, poly:1}};
+var INSOL = {Ag:["Cl","Br","I","CO3","PO4","CrO4"], Pb:["I","SO4","CO3","CrO4","PO4"], Ba:["SO4","CO3","PO4","CrO4"], Ca:["CO3","PO4"],
+             Cu:["OH","CO3","PO4"], Fe:["OH","PO4"], Mg:["OH","CO3","PO4"], Ni:["OH","CO3"], Zn:["OH","CO3"]};
+function gcd(a, b){ return b ? gcd(b, a % b) : a; }
+function grp(f, n, poly){ return n === 1 ? f : (poly ? "(" + f + ")" + n : f + n); }
+function salt(c, cz, an, az, poly){ var g = gcd(cz, az); return grp(c, az / g, false) + grp(an, cz / g, poly); }
+function ion(f, z, sign){ return f + "^" + (z === 1 ? "" : z) + sign; }
+function co(n){ return n > 1 ? n : ""; }
+(function(){
+  var done = 0, right = 0, cur;
+  var prompt = document.getElementById("p-prompt"), box = document.getElementById("p-choices"), fb = document.getElementById("p-fb");
+  function make(){
+    var pairs = [];
+    Object.keys(INSOL).forEach(function(m){ INSOL[m].forEach(function(x){ pairs.push([m, x]); }); });
+    var pr, guard = 0;
+    do { pr = pairs[Math.floor(Math.random() * pairs.length)]; guard++; } while(cur && guard < 20 && pr[0] === cur.m && pr[1] === cur.x);
+    var m = pr[0], x = pr[1], cz = METAL[m], A = ANION[x], az = A.z, alk = Math.random() < .5 ? "Na" : "K";
+    var L = cz * az / gcd(cz, az), a = L / cz, b = L / az;
+    var c = {m:m, x:x, cz:cz, az:az, alk:alk, a:a, b:b, L:L,
+      nit: salt(m, cz, "NO3", 1, true), other: salt(alk, 1, x, az, A.poly), ppt: salt(m, cz, x, az, A.poly), sol: alk + "NO3"};
+    /* wrong formulas: charges ignored */
+    var wrong = [grp(m, 1) + grp(x, 1, A.poly), grp(m, 1) + grp(x, cz, A.poly), grp(m, az) + grp(x, 1, A.poly), grp(m, 1) + grp(x, 2, A.poly), grp(m, 2) + grp(x, 1, A.poly)]
+      .filter(function(f){ return f !== c.ppt; })[0];
+    var fourth = cz > 1 ? alk + "(NO3)" + cz : c.nit;
+    c.opts = APC.shuffle([{f:c.ppt, k:"right"}, {f:c.sol, k:"sol"}, {f:wrong, k:"formula"}, {f:fourth, k:cz > 1 ? "solformula" : "reactant"}]);
+    return c;
+  }
+  function show(){
+    cur = make();
+    var r = APC.shuffle([cur.nit, cur.other]);
+    prompt.innerHTML = "Solutions of " + APC.fmt(r[0] + "(aq)") + " and " + APC.fmt(r[1] + "(aq)") + " are mixed, and a precipitate forms. What is the precipitate?";
+    box.innerHTML = cur.opts.map(function(o, i){ return '<button type="button" class="pbtn" data-i="' + i + '">' + APC.fmt(o.f) + "</button>"; }).join("");
+    box.querySelectorAll(".pbtn").forEach(function(b){ b.addEventListener("click", function(){ pick(+b.dataset.i, b); }); });
+    fb.className = "fb";
+  }
+  function pick(i, b){
+    if(cur.done) return;
+    cur.done = true;
+    var o = cur.opts[i], ok = o.k === "right", c = cur;
+    done++; if(ok) right++;
+    document.getElementById("p-score").textContent = right + " of " + done;
+    box.querySelectorAll(".pbtn").forEach(function(x, j){
+      x.disabled = true;
+      if(x === b) x.classList.add(ok ? "yes" : "no");
+      else if(c.opts[j].k === "right") x.classList.add("reveal");
+    });
+    var mi = ion(c.m, c.cz, "+"), xi = ion(c.x, c.az, "-"), alki = c.alk + "^+";
+    var why = {
+      right: "",
+      sol: APC.fmt(c.sol) + " can't be the solid: every compound with Na<sup>+</sup>, K<sup>+</sup>, NH<sub>4</sub><sup>+</sup>, or NO<sub>3</sub><sup>−</sup> is soluble.",
+      formula: "Right ions, wrong formula. The charges have to cancel: " + APC.fmt(mi) + " and " + APC.fmt(xi) + " combine as " + APC.fmt(c.ppt) + ".",
+      solformula: "That formula carries the subscript over from " + APC.fmt(c.nit) + ". " + APC.fmt(c.alk + "^+") + " pairs with " + APC.fmt("NO3^-") + " one to one, and either way it's a soluble nitrate.",
+      reactant: APC.fmt(c.nit) + " is one of the solutions you started with, so it was already dissolved."
+    }[o.k];
+    fb.className = "fb show " + (ok ? "good" : "bad");
+    fb.innerHTML = "<p><b>" + (ok ? "Right." : "Not quite.") + "</b> " + why + "</p>" +
+      "<p>Ions in solution: " + APC.fmt(mi) + ", " + APC.fmt("NO3^-") + ", " + APC.fmt(alki) + ", and " + APC.fmt(xi) + ". Swapping partners gives " +
+      APC.fmt(c.ppt) + " and " + APC.fmt(c.sol) + ". " + APC.fmt(c.sol) + " is soluble, so the precipitate is " + APC.fmt(c.ppt) + ".</p>" +
+      '<p class="eqlab">Molecular equation</p><div class="eqline">' +
+      APC.fmt(co(c.a) + c.nit + "(aq) + " + co(c.b) + c.other + "(aq) -> " + c.ppt + "(s) + " + co(c.L) + c.sol + "(aq)") + "</div>" +
+      '<p class="eqlab">Net ionic equation</p><div class="eqline">' +
+      APC.fmt(co(c.a) + mi + "(aq) + " + co(c.b) + xi + "(aq) -> " + c.ppt + "(s)") + "</div>";
+  }
+  document.getElementById("p-next").addEventListener("click", show);
+  show();
+})();
+
+/* ---------- practice ---------- */
+APC.mc(document.getElementById("mc"), document.getElementById("mc-score"), [
+ {q:"Which of the following is an oxidation–reduction reaction?",
+  c:["[[Pb(NO3)2(aq) + 2KI(aq) -> PbI2(s) + 2KNO3(aq)]]", "[[HCl(aq) + NaOH(aq) -> NaCl(aq) + H2O(l)]]",
+     "[[CaCO3(s) -> CaO(s) + CO2(g)]]", "[[Mg(s) + 2HCl(aq) -> MgCl2(aq) + H2(g)]]"],
+  a:3,
+  e:"Mg goes from 0 to +2 and H goes from +1 to 0, so electrons move from Mg to H<sup>+</sup>. (A) is precipitation and (B) is acid–base. In (C), every oxidation number stays the same (Ca +2, C +4, O −2), so it isn’t redox even though a compound breaks apart."},
+
+ {q:"Solutions of [[Na2CO3(aq)]] and [[Ca(NO3)2(aq)]] are mixed, and a white precipitate forms. What is the precipitate?",
+  c:["[[NaNO3]]", "[[CaCO3]]", "[[Ca(NO3)2]]", "[[Na2CO3]]"],
+  a:1,
+  e:"Swapping partners gives CaCO<sub>3</sub> and NaNO<sub>3</sub>. Every sodium salt and every nitrate is soluble, so NaNO<sub>3</sub> stays dissolved and the solid must be CaCO<sub>3</sub>. (C) and (D) are the solutions that were mixed."},
+
+ {q:"Which pair of solutions will <b>not</b> form a precipitate when mixed?",
+  c:["[[AgNO3(aq)]] and [[NaCl(aq)]]", "[[Pb(NO3)2(aq)]] and [[KI(aq)]]", "[[KCl(aq)]] and [[NaNO3(aq)]]", "[[BaCl2(aq)]] and [[K2SO4(aq)]]"],
+  a:2,
+  e:"The possible new compounds are KNO<sub>3</sub> and NaCl. Each contains K<sup>+</sup>, Na<sup>+</sup>, or NO<sub>3</sub><sup>−</sup>, so both are soluble and no solid can form. The other pairs form AgCl, PbI<sub>2</sub>, and BaSO<sub>4</sub>."},
+
+ {q:"Propane, [[C3H8(g)]], undergoes complete combustion. What are the products?",
+  c:["[[CO2(g)]] and [[H2O(g)]]", "[[C(s)]] and [[H2O(g)]]", "[[CO2(g)]] and [[H2(g)]]", "[[CO(g)]] and [[H2(g)]]"],
+  a:0,
+  e:"Complete combustion of a hydrocarbon in oxygen produces carbon dioxide and water: [[C3H8(g) + 5O2(g) -> 3CO2(g) + 4H2O(g)]]."},
+
+ {q:"The reaction [[Fe^3+(aq) + 3OH^-(aq) -> Fe(OH)3(s)]] is best classified as which of the following?",
+  c:["Acid–base, because OH<sup>−</sup> is a base", "Precipitation, because an insoluble solid forms from ions in solution",
+     "Redox, because Fe<sup>3+</sup> changes from an ion to a solid", "Redox, because OH<sup>−</sup> gains electrons"],
+  a:1,
+  e:"No proton is transferred and no oxidation number changes: Fe stays +3, O stays −2, and H stays +1. Ions from solution combine into a solid, which makes it precipitation."},
+
+ {q:"In the reaction [[2Al(s) + 3Cu^2+(aq) -> 2Al^3+(aq) + 3Cu(s)]], electrons are transferred",
+  c:["from Al to Cu<sup>2+</sup>", "from Cu<sup>2+</sup> to Al", "from Al<sup>3+</sup> to Cu", "from Cu to Al<sup>3+</sup>"],
+  a:0,
+  e:"Aluminum goes from 0 to +3, so it loses electrons (oxidized). Copper goes from +2 to 0, so Cu<sup>2+</sup> gains them (reduced). Electrons move from the species oxidized to the species reduced."},
+
+ {q:"Which of the following reactions involves the transfer of a proton?",
+  c:["[[HNO3(aq) + KOH(aq) -> KNO3(aq) + H2O(l)]]", "[[2Mg(s) + O2(g) -> 2MgO(s)]]",
+     "[[AgNO3(aq) + NaBr(aq) -> AgBr(s) + NaNO3(aq)]]", "[[Cu(s) + 2Ag^+(aq) -> Cu^2+(aq) + 2Ag(s)]]"],
+  a:0,
+  e:"The H<sup>+</sup> from HNO<sub>3</sub> moves onto OH<sup>−</sup> to form water, so it’s acid–base. (B) and (D) transfer electrons, and (C) is precipitation."}
+]);
+
+APC.frq(document.getElementById("frq"), [
+ {q:"<p>A student mixes solutions of [[AgNO3(aq)]] and [[K2CrO4(aq)]], and a red-brown precipitate forms.</p><p>(a) Identify the precipitate. Justify your answer using a solubility rule.</p><p>(b) Write the balanced net ionic equation for the reaction.</p><p>(c) A classmate says the reaction is redox because the color changes. Is the classmate correct? Justify your answer using oxidation numbers.</p>",
+  m:"<p><b>(a)</b> Swapping partners gives Ag<sub>2</sub>CrO<sub>4</sub> and KNO<sub>3</sub>. All potassium salts and all nitrates are soluble, so KNO<sub>3</sub> stays dissolved. The precipitate is <b>Ag<sub>2</sub>CrO<sub>4</sub></b>.</p><p><b>(b)</b> [[2Ag^+(aq) + CrO4^2-(aq) -> Ag2CrO4(s)]]</p><p><b>(c)</b> No. Ag is +1 before and after, Cr is +6 in CrO<sub>4</sub><sup>2−</sup> and in Ag<sub>2</sub>CrO<sub>4</sub>, and O is −2 throughout. No oxidation number changes, so no electrons are transferred. A color change is evidence of a reaction, but this one is precipitation.</p>"},
+
+ {q:"<p>Methanol, [[CH3OH(l)]], is used as a fuel. It burns completely in oxygen.</p><p>(a) Write the balanced equation for the complete combustion of methanol.</p><p>(b) Determine the oxidation number of carbon in CH<sub>3</sub>OH and in CO<sub>2</sub>.</p><p>(c) Identify the element that is oxidized and the element that is reduced. Justify your answer.</p>",
+  m:"<p><b>(a)</b> [[2CH3OH(l) + 3O2(g) -> 2CO2(g) + 4H2O(g)]]</p><p><b>(b)</b> In CH<sub>3</sub>OH, H is +1 and O is −2: <i>x</i> + 4(+1) + (−2) = 0, so C is <b>−2</b>. In CO<sub>2</sub>: <i>x</i> + 2(−2) = 0, so C is <b>+4</b>.</p><p><b>(c)</b> <b>Carbon is oxidized</b>: its oxidation number increases from −2 to +4, so it loses electrons. <b>Oxygen is reduced</b>: it goes from 0 in O<sub>2</sub> to −2 in CO<sub>2</sub> and H<sub>2</sub>O, so it gains electrons. Hydrogen stays +1.</p>"}
+]);
+</script>
 </body>
 </html>

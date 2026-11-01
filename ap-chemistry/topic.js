@@ -4,11 +4,13 @@
    Chemical notation, written as plain text:
      2Na^+(aq)   coefficient 2, Na, charge +, state aq
      SO4^2-(aq)  digits in a formula become subscripts
-     A + B -> C  equation; " + " separates species
+     A + B -> C  equation; " + " separates species; A <=> B is ⇌
    Use it three ways:
      <span data-eq="Pb^2+(aq) + 2I^-(aq) -> PbI2(s)"></span>   (formatted on load)
      APC.fmt("...")                                           (returns HTML)
      "Mix [[AgNO3(aq)]] with ..."  inside APC.rich / practice  (inline formulas)
+   Oxidation numbers written above each atom:
+     <span data-ox="Zn(s) + Cu^2+(aq) -> Zn^2+(aq) + Cu(s)" data-mark="Zn:up Cu:down"></span>
    ============================================================ */
 var APC = (function(){
 
@@ -40,11 +42,13 @@ var APC = (function(){
 
   function side(str){ return str.split(" + ").map(function(t){ return term(t); }).join(" + "); }
 
-  // A whole equation (or a lone species) as HTML.
-  function fmt(eq){
-    var parts = eq.split(" -> ");
-    return '<span class="eqn">' + parts.map(side).join(' <span class="arr">→</span> ') + "</span>";
+  // A whole equation (or a lone species) as HTML. " -> " is →, " <=> " is ⇌.
+  function arrows(eq, sideFn){
+    return eq.split(/ (->|<=>) /).map(function(b, i){
+      return i % 2 ? ' <span class="arr">' + (b === "<=>" ? "⇌" : "→") + "</span> " : sideFn(b);
+    }).join("");
   }
+  function fmt(eq){ return '<span class="eqn">' + arrows(eq, side) + "</span>"; }
 
   // Text with [[...]] chemistry inside it.
   function rich(s){ return String(s).replace(/\[\[(.+?)\]\]/g, function(_, x){ return fmt(x); }); }
@@ -131,12 +135,61 @@ var APC = (function(){
   // Round to n significant figures for display.
   function sig(x, n){ if(x === 0) return "0"; var d = Math.max(0, (n || 3) - 1 - Math.floor(Math.log10(Math.abs(x)))); return x.toFixed(Math.min(d, 8)); }
 
+  // Charge string to a number: "" 0, "+" 1, "2-" -2.
+  function zval(z){ if(!z) return 0; var k = parseInt(z, 10); return (isNaN(k) ? 1 : k) * (z.slice(-1) === "-" ? -1 : 1); }
+
+  /* Oxidation numbers, using the AP rules in priority order. Every element in the
+     table gets its usual value; the one element left over is solved for so the total
+     equals the charge. If every element is in the table, the lowest-priority one is
+     solved for, which handles peroxides (H2O2), metal hydrides (NaH), ClO3^-, and OF2.
+     Returns {El: number} with each rule used in .why, or null if two elements are unknown. */
+  var OXR = [["F",-1,"F is always −1"],
+             ["Li",1,"Group 1"],["Na",1,"Group 1"],["K",1,"Group 1"],["Rb",1,"Group 1"],["Cs",1,"Group 1"],
+             ["Be",2,"Group 2"],["Mg",2,"Group 2"],["Ca",2,"Group 2"],["Sr",2,"Group 2"],["Ba",2,"Group 2"],
+             ["Al",3,"Al is +3"],["H",1,"H is +1"],["O",-2,"O is −2"],
+             ["Cl",-1,"Cl is −1"],["Br",-1,"Br is −1"],["I",-1,"I is −1"]];
+  function oxNums(s){
+    var p = typeof s === "string" ? parse(s) : s, a = atoms(p.f), els = Object.keys(a), q = zval(p.z), out = {};
+    if(els.length === 1){ out[els[0]] = q / a[els[0]]; out.why = []; out.solved = els[0]; return out; }
+    var known = OXR.filter(function(r){ return a[r[0]]; }),
+        unknown = els.filter(function(e){ return !OXR.some(function(r){ return r[0] === e; }); });
+    if(!unknown.length) unknown = [known.pop()[0]];
+    if(unknown.length > 1) return null;
+    var sum = 0;
+    known.forEach(function(r){ out[r[0]] = r[1]; sum += r[1] * a[r[0]]; });
+    out[unknown[0]] = (q - sum) / a[unknown[0]];
+    out.why = known; out.solved = unknown[0];
+    return out;
+  }
+  function oxs(v){ return v === 0 ? "0" : (v > 0 ? "+" : "−") + Math.abs(v); }
+
+  // One species with each atom's oxidation number written above it.
+  // mark: {El: "up" | "down"} colors that element's numbers (oxidized / reduced).
+  function oxterm(s, mark){
+    var p = parse(s), ox = oxNums(p), h = "";
+    p.f.replace(/([A-Z][a-z]?)|(\d+)|([()])/g, function(_, el, d, par){
+      if(el) h += '<span class="oxe"><span class="oxn' + (mark && mark[el] ? " " + mark[el] : "") + '">' + (ox ? oxs(ox[el]) : "") + "</span>" + el + "</span>";
+      else if(d) h += "<sub>" + d + "</sub>";
+      else h += par;
+    });
+    return '<span class="sp">' + (p.n > 1 ? p.n : "") + h + charge(p.z) + (p.st ? "(" + p.st + ")" : "") + "</span>";
+  }
+  function oxfmt(eq, mark){
+    return '<span class="eqn ox">' + arrows(eq, function(str){ return str.split(" + ").map(function(t){ return oxterm(t, mark); }).join(" + "); }) + "</span>";
+  }
+
   function renderAll(root){
     (root || document).querySelectorAll("[data-eq]").forEach(function(el){ el.innerHTML = fmt(el.getAttribute("data-eq")); });
+    (root || document).querySelectorAll("[data-ox]").forEach(function(el){
+      var mark = {};
+      (el.getAttribute("data-mark") || "").split(" ").forEach(function(m){ var k = m.split(":"); if(k[1]) mark[k[0]] = k[1]; });
+      el.innerHTML = oxfmt(el.getAttribute("data-ox"), mark);
+    });
   }
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", function(){ renderAll(); });
   else renderAll();
 
   return { parse:parse, term:term, fmt:fmt, rich:rich, shuffle:shuffle, mc:mc, frq:frq, renderAll:renderAll,
-           MASS:MASS, atoms:atoms, molar:molar, num:num, close:close, sig:sig };
+           MASS:MASS, atoms:atoms, molar:molar, num:num, close:close, sig:sig,
+           zval:zval, oxNums:oxNums, oxs:oxs, oxterm:oxterm, oxfmt:oxfmt };
 })();
