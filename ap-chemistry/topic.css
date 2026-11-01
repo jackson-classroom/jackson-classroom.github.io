@@ -123,6 +123,17 @@ li{margin:7px 0}
 .eqlab{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:14px 0 0}
 .sp.gone{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--no);color:var(--mute)}
 
+/* Oxidation numbers above each atom: <span data-ox="..." data-mark="Zn:up Cu:down"></span>.
+   "up" (oxidized) is amber, "down" (reduced) is blue. */
+.eqn.ox{display:inline-block;line-height:1.5;padding-top:.95em}
+.oxe{position:relative;display:inline-block}
+.oxn{position:absolute;left:50%;bottom:100%;transform:translateX(-50%);margin-bottom:-.1em;font-family:var(--mono);font-size:.5em;line-height:1;letter-spacing:-.06em;color:var(--mute);white-space:nowrap}
+.oxn.up{color:var(--amber);font-weight:600}
+.oxn.down{color:var(--acc);font-weight:600}
+.oxkey{font-family:var(--mono);font-size:12px;color:var(--mute);margin:4px 0 0}
+.oxkey .up{color:var(--amber);font-weight:600}
+.oxkey .down{color:var(--acc);font-weight:600}
+
 /* Interactive panels */
 .card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
 .card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}

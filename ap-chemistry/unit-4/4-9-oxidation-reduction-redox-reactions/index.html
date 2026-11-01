@@ -8,13 +8,53 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/ap-chemistry/topic.css">
+<style>
+table.rules{border-collapse:collapse;width:100%;font-size:15.5px;margin:16px 0;background:var(--card)}
+table.rules th,table.rules td{border-bottom:1px solid var(--line-soft);padding:9px 10px;text-align:left;vertical-align:top}
+table.rules th{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+table.rules td:first-child{font-family:var(--mono);color:var(--acc-dk);width:28px}
+.alg{font-family:var(--mono);font-size:14.5px;line-height:1.75;margin:8px 0 0;color:var(--ink)}
+.alg b{color:var(--acc-dk);font-weight:600}
+.ordered{counter-reset:s;list-style:none;padding:0;margin:18px 0}
+.ordered li{counter-increment:s;position:relative;padding-left:40px;margin:12px 0}
+.ordered li::before{content:counter(s);position:absolute;left:0;top:1px;width:26px;height:26px;border-radius:50%;background:var(--acc-lite);color:var(--acc-dk);font-family:var(--mono);font-size:13px;display:flex;align-items:center;justify-content:center}
+.big{font-size:20px}
+.oxq{font-size:34px;margin:4px 0 0}
+.oxq .tgt{color:var(--acc-dk);text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:5px}
+.inrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0 0}
+.inrow label{font-size:15.5px;color:var(--ink2)}
+.stepnote{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--acc-dk);margin:20px 0 0}
+.elrow{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0}
+.elrow .pbtn{min-width:64px;font-family:var(--body);font-size:17px;letter-spacing:0;padding:9px 14px}
+.pbtn.sel{background:var(--acc-lite);border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
+.halfrow{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:center;margin:8px 0}
+.halfrow .hl{font-family:var(--mono);font-size:13px;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;text-align:center;padding:4px 0}
+.halfrow .eqline{margin:0}
+.mults{display:flex;flex-wrap:wrap;gap:10px 22px;margin:8px 0 0;align-items:center}
+.mults label{font-family:var(--mono);font-size:14px;color:var(--ink2)}
+input.ans.co{width:46px;text-align:center;padding:5px 4px}
+.coline{display:flex;flex-wrap:wrap;align-items:center;gap:8px 6px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px 12px;margin:8px 0 0}
+.coline .cof{display:inline-flex;align-items:center;gap:3px;white-space:nowrap}
+.coline .op{color:var(--mute);padding:0 2px}
+.combo{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;align-items:center;background:var(--card);border:1px solid var(--line-soft);border-radius:3px;padding:12px 14px;margin:14px 0}
+.combo .cl{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);white-space:nowrap}
+.combo .ce{overflow-x:auto}
+.combo .sep{grid-column:1/-1;border-top:1px solid var(--line);margin:2px 0}
+.combo .fin .eqn{font-weight:600}
+.fb .combo{background:rgba(255,255,255,.65)}
+@media (max-width:600px){
+  .combo{grid-template-columns:minmax(0,1fr);gap:2px}
+  .combo .cl{margin-top:8px}
+  .oxq{font-size:28px}
+}
+</style>
 </head>
 <body>
 
 <nav class="bar">
   <div class="bar-in">
     <span class="bar-title"><a href="/ap-chemistry/unit-4/">4.9 Oxidation-Reduction (Redox) Reactions</a></span>
-    <span class="bar-sub">Oxidation numbers · oxidized vs. reduced · balancing half-reactions</span>
+    <span class="bar-sub">Oxidation numbers · oxidized vs. reduced · combining half-reactions</span>
   </div>
 </nav>
 
@@ -23,19 +63,226 @@
 <header class="hero">
   <div class="eyebrow">AP Chemistry · Unit 4 Chemical Reactions · Topic 4.9</div>
   <h1>Oxidation-Reduction (<em>Redox</em>) Reactions</h1>
-  <p class="lede">In a redox reaction, electrons move from one species to another. Oxidation numbers track where the electrons went, and half-reactions let you balance both atoms and charge.</p>
+  <p class="lede">In a redox reaction, electrons move from one species to another. Oxidation numbers show where they went, and half-reactions show each side of the trade separately.</p>
+  <p class="lo-line"><b>Learning objective 4.9.A</b> Represent a balanced redox reaction equation using half-reactions.</p>
 
   <div class="board" aria-label="Key ideas in this topic">
-    <div class="idea"><span class="code">Q1</span><span class="lq">Where did the electrons go?</span><span class="d">Assigning oxidation numbers</span></div>
-    <div class="idea"><span class="code">Q2</span><span class="lq">What was oxidized? What was reduced?</span><span class="d">Oxidizing and reducing agents</span></div>
-    <div class="idea"><span class="code">Q3</span><span class="lq">How do I balance it?</span><span class="d">Half-reactions balanced for both atoms and charge</span></div>
+    <a class="idea" href="#oxnum"><span class="code">Q1</span><span class="lq">Where did the electrons go?</span><span class="d">Assigning oxidation numbers</span></a>
+    <a class="idea" href="#change"><span class="code">Q2</span><span class="lq">What was oxidized? What was reduced?</span><span class="d">Following the change in oxidation numbers</span></a>
+    <a class="idea" href="#combine"><span class="code">Q3</span><span class="lq">How do the halves fit together?</span><span class="d">Combining balanced half-reactions</span></a>
     <div class="board-foot"><span><b>Unit 4</b> Chemical Reactions · 7–9% of the AP Exam</span><span><b>Before this</b> <a href="/ap-chemistry/unit-4/4-8-introduction-to-acid-base-reactions/">4.8 Introduction to Acid-Base Reactions</a></span></div>
   </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#oxnum">Oxidation numbers</a>
+    <a href="#p-ox">Practice: oxidation numbers</a>
+    <a href="#change">Oxidized or reduced?</a>
+    <a href="#p-who">Practice: who changed?</a>
+    <a href="#half">Half-reactions</a>
+    <a href="#combine">Combining them</a>
+    <a href="#p-combine">Practice: combine</a>
+    <a href="#check">Check yourself</a>
+  </nav>
 </header>
 
-<section id="tools">
-  <div class="sec-head"><span class="tag plain">Coming soon</span><h2>Tools and practice</h2></div>
-  <div class="soon-card"><p>Interactive tools, worked examples, and AP-style practice for Topic 4.9 aren’t posted yet. The three questions above are the ones this topic answers.</p></div>
+<!-- =========================================================
+     SKILL 1  OXIDATION NUMBERS
+     ========================================================= -->
+<section id="oxnum">
+  <div class="sec-head"><span class="tag">Skill 1</span><h2>Assigning oxidation numbers</h2></div>
+  <p>An <b>oxidation number</b> is the charge an atom would have if every bond were ionic, with the shared electrons all given to the more electronegative atom. For a monatomic ion it's the real charge. For an atom in a molecule or a polyatomic ion, it's bookkeeping that lets you track electrons.</p>
+  <p>Oxidation numbers are written sign first, like +3 or −2, so they don't get mixed up with ion charges (3+, 2−).</p>
+
+  <h3>The rules</h3>
+  <p>When two rules disagree, the one higher on the list wins.</p>
+  <div class="tablewrap"><table class="rules">
+    <thead><tr><th>#</th><th>Rule</th><th>Examples</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>An element by itself is <b>0</b>.</td><td>Fe, O<sub>2</sub>, Cl<sub>2</sub>, S<sub>8</sub></td></tr>
+      <tr><td>2</td><td>A monatomic ion is its <b>charge</b>.</td><td>Fe<sup>3+</sup> is +3; S<sup>2−</sup> is −2</td></tr>
+      <tr><td>3</td><td>The oxidation numbers <b>add up to the overall charge</b>: 0 for a neutral compound, the ion's charge for a polyatomic ion.</td><td>In SO<sub>4</sub><sup>2−</sup>, they total −2</td></tr>
+      <tr><td>4</td><td>F is always <b>−1</b>. In compounds, group 1 metals are <b>+1</b>, group 2 metals are <b>+2</b>, and Al is <b>+3</b>.</td><td>Na in NaCl is +1; Ca in CaCO<sub>3</sub> is +2</td></tr>
+      <tr><td>5</td><td>H is <b>+1</b>, except −1 when bonded to a metal.</td><td>+1 in H<sub>2</sub>O; −1 in NaH</td></tr>
+      <tr><td>6</td><td>O is <b>−2</b>, except −1 in peroxides.</td><td>−2 in H<sub>2</sub>O; −1 in H<sub>2</sub>O<sub>2</sub></td></tr>
+      <tr><td>7</td><td>Cl, Br, and I are <b>−1</b>, except when bonded to O.</td><td>−1 in NaCl; +5 in ClO<sub>3</sub><sup>−</sup></td></tr>
+    </tbody>
+  </table></div>
+  <p><b>The method:</b> use the rules for every atom you can, then solve for the one that's left so the total comes out right.</p>
+
+  <div class="grid2">
+    <div class="mini">
+      <div class="n">A polyatomic ion</div>
+      <h4>S in <span data-eq="SO4^2-"></span></h4>
+      <p class="alg">O is −2: 4 × (−2) = −8<br>Total must be −2<br>x + (−8) = −2 → <b>x = +6</b></p>
+    </div>
+    <div class="mini">
+      <div class="n">A compound</div>
+      <h4>Cr in <span data-eq="K2Cr2O7"></span></h4>
+      <p class="alg">K is +1: 2 × (+1) = +2<br>O is −2: 7 × (−2) = −14<br>2x + 2 − 14 = 0 → <b>x = +6</b></p>
+    </div>
+    <div class="mini">
+      <div class="n">An exception</div>
+      <h4>O in <span data-eq="H2O2"></span></h4>
+      <p class="alg">H is +1 (rule 5 beats rule 6): 2 × (+1) = +2<br>2x + 2 = 0 → <b>x = −1</b> (a peroxide)</p>
+    </div>
+    <div class="mini">
+      <div class="n">Two of the same element</div>
+      <h4>C in <span data-eq="C2O4^2-"></span></h4>
+      <p class="alg">O is −2: 4 × (−2) = −8<br>2x − 8 = −2 → <b>x = +3</b><br>Each C is +3, not the total.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PRACTICE: OXIDATION NUMBERS
+     ========================================================= -->
+<section id="p-ox">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Practice: oxidation numbers</h2></div>
+  <p>Find the oxidation number of the underlined element. Type it with its sign, like +6 or −2. A new species comes up every time.</p>
+  <div class="card">
+    <div class="card-label"><span>Oxidation number</span><span class="score" id="o-score">0 of 0</span></div>
+    <p class="prompt">What is the oxidation number of <b id="o-el"></b> in</p>
+    <div class="oxq" id="o-sp"></div>
+    <div class="inrow">
+      <label for="o-ans">Oxidation number</label>
+      <input class="ans" id="o-ans" inputmode="text" autocomplete="off" placeholder="e.g. +6">
+      <button type="button" id="o-check">Check</button>
+      <button type="button" class="ghost" id="o-next">Next →</button>
+    </div>
+    <div class="fb" id="o-fb" aria-live="polite"></div>
+    <div class="tablewrap"><table class="bca" id="o-tally" style="margin-top:18px"></table></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SKILL 2  OXIDIZED OR REDUCED
+     ========================================================= -->
+<section id="change">
+  <div class="sec-head"><span class="tag">Skill 2</span><h2>Oxidized or reduced?</h2></div>
+  <div class="grid2">
+    <div class="mini"><div class="n">Oxidation</div><h4>Loses electrons: the number goes up</h4><p>Zn → Zn<sup>2+</sup>: 0 to +2. Losing two negative electrons makes the atom two units more positive.</p></div>
+    <div class="mini keep"><div class="n">Reduction</div><h4>Gains electrons: the number goes down</h4><p>Cu<sup>2+</sup> → Cu: +2 to 0. The oxidation number is literally <i>reduced</i>.</p></div>
+  </div>
+  <p>One way to remember it: <b>OIL RIG</b>, oxidation is loss, reduction is gain (of electrons). The two always happen together. Electrons move <b>from the species that is oxidized to the species that is reduced</b>, so every electron lost is gained by something else.</p>
+
+  <h3>Reading a reaction</h3>
+  <p>Assign an oxidation number to every atom, then look for the ones that change.</p>
+  <div class="eqline big"><span data-ox="Fe2O3(s) + 3CO(g) -> 2Fe(s) + 3CO2(g)" data-mark="Fe:down C:up"></span></div>
+  <p class="oxkey"><span class="up">amber</span> = oxidized (number goes up) · <span class="down">blue</span> = reduced (number goes down)</p>
+  <p>Iron goes from +3 to 0, so iron is reduced. Carbon goes from +2 to +4, so carbon is oxidized. Oxygen is −2 everywhere, so it isn't involved in the electron transfer at all.</p>
+  <div class="eqline big"><span data-ox="MnO4^-(aq) + 5Fe^2+(aq) + 8H^+(aq) -> Mn^2+(aq) + 5Fe^3+(aq) + 4H2O(l)" data-mark="Mn:down Fe:up"></span></div>
+  <p>This is the titration reaction from <a href="/ap-chemistry/unit-4/4-6-introduction-to-titration/">4.6</a>. Manganese goes from +7 to +2 (reduced) and iron from +2 to +3 (oxidized). H and O don't change.</p>
+  <div class="note"><b>Element or species?</b> Read what the question asks. “Which element is oxidized?” wants <i>iron</i>. “Which species is oxidized?” wants the particle that contains it: <i>Fe<sup>2+</sup></i>. You may also see the terms <b>oxidizing agent</b> (the species that gets reduced, MnO<sub>4</sub><sup>−</sup> here) and <b>reducing agent</b> (the species that gets oxidized, Fe<sup>2+</sup> here).</div>
+</section>
+
+<!-- =========================================================
+     PRACTICE: WHO CHANGED
+     ========================================================= -->
+<section id="p-who">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Practice: who changed?</h2></div>
+  <p>Assign oxidation numbers in your head (or on paper), then pick the element that is oxidized and the element that is reduced.</p>
+  <div class="card">
+    <div class="card-label"><span>Oxidized or reduced?</span><span class="score" id="w-score">0 of 0</span></div>
+    <div class="eqline big" id="w-eq" style="background:#fff"></div>
+    <p class="stepnote">Which element is oxidized?</p>
+    <div class="elrow" id="w-ox"></div>
+    <p class="stepnote">Which element is reduced?</p>
+    <div class="elrow" id="w-red"></div>
+    <div class="fb" id="w-fb" aria-live="polite"></div>
+    <div class="btn-row"><button type="button" id="w-check">Check</button><button type="button" class="ghost" id="w-next">Next reaction →</button></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     4.9.A.1  HALF-REACTIONS
+     ========================================================= -->
+<section id="half">
+  <div class="sec-head"><span class="tag">4.9.A.1</span><h2>Half-reactions</h2></div>
+  <div class="def">
+    <span class="ek">4.9.A.1</span>
+    <div class="term">Half-reactions</div>
+    <p>Balanced chemical equations for redox reactions can be constructed from half-reactions.</p>
+  </div>
+  <p>A half-reaction shows one side of the electron trade on its own, with the electrons written in. The electrons tell you which half it is:</p>
+  <p class="eqlab">Oxidation: electrons are a product (they're lost)</p>
+  <div class="eqline"><span data-eq="Zn(s) -> Zn^2+(aq) + 2e^-"></span></div>
+  <p class="eqlab">Reduction: electrons are a reactant (they're gained)</p>
+  <div class="eqline"><span data-eq="Cu^2+(aq) + 2e^- -> Cu(s)"></span></div>
+  <p>A balanced half-reaction balances <b>atoms and charge</b>. In the oxidation above, the left side has a charge of 0, and the right side has +2 + 2(−1) = 0.</p>
+
+  <h3>Writing a simple half-reaction</h3>
+  <p>For a metal, a monatomic ion, or a diatomic element, the number of electrons is the change in oxidation number times the number of atoms that change:</p>
+  <ul>
+    <li><span data-eq="Al(s) -> Al^3+(aq) + 3e^-"></span>: one Al, 0 → +3, so 3 electrons.</li>
+    <li><span data-eq="2Br^-(aq) -> Br2(l) + 2e^-"></span>: two Br, each −1 → 0, so 2 electrons.</li>
+    <li><span data-eq="Cl2(g) + 2e^- -> 2Cl^-(aq)"></span>: two Cl, each 0 → −1, so 2 electrons gained.</li>
+  </ul>
+  <div class="note"><b>In our class:</b> when a half-reaction includes H<sup>+</sup>, OH<sup>−</sup>, or H<sub>2</sub>O, like the permanganate one below, it will be given to you already balanced. You won't have to balance half-reactions in acidic or basic solution from scratch. You do need to write simple ones like those above, and combine any pair you're given.</div>
+</section>
+
+<!-- =========================================================
+     SKILL 3  COMBINING
+     ========================================================= -->
+<section id="combine">
+  <div class="sec-head"><span class="tag">Skill 3</span><h2>Combining half-reactions</h2></div>
+  <p>Electrons can't pile up anywhere: every electron the oxidation releases, the reduction has to take. So the half-reactions have to be scaled until the electrons match.</p>
+  <ol class="ordered">
+    <li><b>Match the electrons.</b> Multiply each half-reaction by the smallest whole number that makes electrons lost equal electrons gained.</li>
+    <li><b>Add the half-reactions.</b> Everything on the left goes on the left, everything on the right on the right.</li>
+    <li><b>Cancel.</b> The electrons must cancel completely. Also cancel anything else that shows up on both sides, usually H<sup>+</sup> or H<sub>2</sub>O.</li>
+    <li><b>Check.</b> Atoms balance, and the total charge is the same on both sides.</li>
+  </ol>
+
+  <h3>Worked example: different electron counts</h3>
+  <p>Aluminum metal in a solution of Cu<sup>2+</sup>. Aluminum gives 3 electrons and copper takes 2, so both are scaled to 6.</p>
+  <div class="combo" data-hox="Al(s) -> Al^3+(aq) + 3e^-" data-hred="Cu^2+(aq) + 2e^- -> Cu(s)"></div>
+
+  <h3>Worked example: given half-reactions with H<sup>+</sup> and H<sub>2</sub>O</h3>
+  <p>The 4.6 titration. The permanganate half-reaction is given balanced; your job is only to combine.</p>
+  <div class="combo" data-hox="Fe^2+(aq) -> Fe^3+(aq) + e^-" data-hred="MnO4^-(aq) + 8H^+(aq) + 5e^- -> Mn^2+(aq) + 4H2O(l)"></div>
+
+  <h3>Worked example: something else cancels</h3>
+  <p>Hydrogen peroxide reacting with permanganate. After adding, H<sup>+</sup> appears on both sides, so 10 of them cancel.</p>
+  <div class="combo" data-hox="H2O2(aq) -> O2(g) + 2H^+(aq) + 2e^-" data-hred="MnO4^-(aq) + 8H^+(aq) + 5e^- -> Mn^2+(aq) + 4H2O(l)"></div>
+</section>
+
+<!-- =========================================================
+     PRACTICE: COMBINE
+     ========================================================= -->
+<section id="p-combine">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Practice: combine the half-reactions</h2></div>
+  <p>Two balanced half-reactions are given. Work all three steps, then check. Leave a coefficient box empty for 1.</p>
+  <div class="card">
+    <div class="card-label"><span>Combine</span><span class="score" id="c-score">0 completed</span></div>
+    <div class="halfrow"><span class="hl">A</span><div class="eqline" id="c-a" style="background:#fff"></div></div>
+    <div class="halfrow"><span class="hl">B</span><div class="eqline" id="c-b" style="background:#fff"></div></div>
+    <p class="stepnote">1 · Which half-reaction is the oxidation?</p>
+    <div class="pick2" id="c-which"><button type="button" class="pbtn" data-h="0">A</button><button type="button" class="pbtn" data-h="1">B</button></div>
+    <p class="stepnote">2 · Multiply each one so the electrons match</p>
+    <div class="mults">
+      <label>A × <input class="ans co" id="c-ma" inputmode="numeric" autocomplete="off" aria-label="Multiplier for half-reaction A"></label>
+      <label>B × <input class="ans co" id="c-mb" inputmode="numeric" autocomplete="off" aria-label="Multiplier for half-reaction B"></label>
+    </div>
+    <p class="stepnote">3 · Write the balanced equation</p>
+    <div class="coline" id="c-final"></div>
+    <div class="fb" id="c-fb" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="c-check">Check</button>
+      <button type="button" class="ghost" id="c-show">Show the work</button>
+      <button type="button" class="ghost" id="c-next">Next pair →</button>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PRACTICE
+     ========================================================= -->
+<section id="check">
+  <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
+  <p>Eight multiple-choice questions written in AP style, then two written responses.</p>
+  <p class="score" id="mc-score" style="margin:0"></p>
+  <div class="card" id="mc"></div>
+  <div class="card" id="frq"></div>
 
   <div class="next">
     <div><p class="nt">Up next: 5.1 Reaction Rates</p><p>Measuring reaction rate · factors that affect rate · relating rates with coefficients</p></div>
@@ -44,11 +291,385 @@
 </section>
 
 <footer>
-  <p>Topic 4.9 Oxidation-Reduction (Redox) Reactions, following the AP Chemistry course framework.</p>
+  <p>Topic 4.9 Oxidation-Reduction (Redox) Reactions, following the AP Chemistry course framework (Learning Objective 4.9.A). Practice questions are original and written in AP style. Half-reactions with H<sup>+</sup>, OH<sup>−</sup>, or H<sub>2</sub>O are given balanced; balancing them in acidic or basic solution isn't covered here.</p>
   <p><a href="/ap-chemistry/unit-4/">← Unit 4 — Chemical Reactions</a></p>
 </footer>
 
 </div><!-- /wrap -->
 
+<script src="/ap-chemistry/topic.js"></script>
+<script>
+/* ---------- practice: oxidation numbers ---------- */
+var OXQ = [
+  ["Fe(s)","Fe","el"], ["O2(g)","O","el"], ["Cl2(g)","Cl","el"], ["S8(s)","S","el"], ["Fe^3+(aq)","Fe","el"], ["S^2-(aq)","S","el"],
+  ["Cu^+(aq)","Cu","el"], ["Al^3+(aq)","Al","el"],
+  ["SO2","S","cmp"], ["SO3","S","cmp"], ["H2SO4","S","cmp"], ["H2S","S","cmp"], ["NH3","N","cmp"], ["NO2","N","cmp"], ["N2O","N","cmp"],
+  ["HNO3","N","cmp"], ["N2H4","N","cmp"], ["CO2","C","cmp"], ["CO","C","cmp"], ["CH4","C","cmp"], ["CH3OH","C","cmp"], ["MnO2","Mn","cmp"],
+  ["KMnO4","Mn","cmp"], ["Cr2O3","Cr","cmp"], ["Fe2O3","Fe","cmp"], ["K2Cr2O7","Cr","cmp"], ["NaClO3","Cl","cmp"], ["HClO","Cl","cmp"],
+  ["TiCl4","Ti","cmp"], ["FeCl3","Fe","cmp"], ["PCl5","P","cmp"], ["SF6","S","cmp"],
+  ["SO4^2-","S","ion"], ["SO3^2-","S","ion"], ["HSO4^-","S","ion"], ["NO3^-","N","ion"], ["NO2^-","N","ion"], ["NH4^+","N","ion"],
+  ["CO3^2-","C","ion"], ["C2O4^2-","C","ion"], ["MnO4^-","Mn","ion"], ["Cr2O7^2-","Cr","ion"], ["CrO4^2-","Cr","ion"], ["ClO^-","Cl","ion"],
+  ["ClO4^-","Cl","ion"], ["PO4^3-","P","ion"], ["IO3^-","I","ion"], ["S2O3^2-","S","ion"],
+  ["H2O2","O","sp"], ["Na2O2","O","sp"], ["BaO2","O","sp"], ["NaH","H","sp"], ["CaH2","H","sp"], ["OF2","O","sp"]
+];
+var OXT = {el:"Elements and ions", cmp:"Compounds", ion:"Polyatomic ions", sp:"Special cases"};
+var HALO = {Cl:1, Br:1, I:1};
+function sgn(n){ return n < 0 ? "− " + Math.abs(n) : "+ " + n; }
+function explainOx(t, el){
+  var p = APC.parse(t), a = APC.atoms(p.f), q = APC.zval(p.z), ox = APC.oxNums(p), v = ox[el], lines = [];
+  if(Object.keys(a).length === 1)
+    return q === 0 ? "An element by itself has an oxidation number of 0, no matter how many atoms are bonded together."
+                   : "A monatomic ion’s oxidation number is its charge: " + APC.oxs(v) + ".";
+  var sum = 0;
+  ox.why.forEach(function(r){
+    var n = a[r[0]], tot = n * r[1]; sum += tot;
+    lines.push(r[0] + " is " + APC.oxs(r[1]) + (/^Group/.test(r[2]) ? " (" + r[2].toLowerCase() + " metal)" : "") + (n > 1 ? ": " + n + " × (" + APC.oxs(r[1]) + ") = " + APC.oxs(tot) : ""));
+  });
+  lines.push("The total must equal " + (q === 0 ? "0 (a neutral compound)" : "the ion’s charge, " + APC.oxs(q)));
+  lines.push((a[el] > 1 ? a[el] : "") + "x " + sgn(sum) + " = " + (q < 0 ? "−" + -q : q) + " → <b>x = " + APC.oxs(v) + "</b>");
+  var note = "";
+  if(el === "O" && v === -1) note = "O is −1 here because this is a peroxide: the rule for H or the metal outranks the rule for O.";
+  else if(el === "O" && v > 0) note = "O is positive here because it’s bonded to F, and F is always −1.";
+  else if(el === "H" && v === -1) note = "H is −1 here because it’s bonded to a metal (a metal hydride).";
+  else if(HALO[el] && v > 0) note = el + " is usually −1, but not when it’s bonded to oxygen.";
+  else if(a[el] > 1) note = "That’s the oxidation number of <i>each</i> " + el + " atom, not the total.";
+  return '<p class="alg">' + lines.join("<br>") + "</p>" + (note ? "<p>" + note + "</p>" : "");
+}
+function markTarget(t, el){
+  var p = APC.parse(t), h = "";
+  p.f.replace(/([A-Z][a-z]?)|(\d+)|([()])/g, function(_, e, d, par){
+    if(e) h += e === el ? '<span class="tgt">' + e + "</span>" : e;
+    else if(d) h += "<sub>" + d + "</sub>";
+    else h += par;
+  });
+  return '<span class="eqn"><span class="sp">' + h + (p.z ? "<sup>" + p.z.replace("-", "−") + "</sup>" : "") + (p.st ? "(" + p.st + ")" : "") + "</span></span>";
+}
+(function(){
+  var cur, done = 0, right = 0, tally = {}, deck = [];
+  Object.keys(OXT).forEach(function(k){ tally[k] = [0, 0]; });
+  var inp = document.getElementById("o-ans"), fb = document.getElementById("o-fb");
+  function renderTally(){
+    document.getElementById("o-tally").innerHTML = "<tr><th></th>" + Object.keys(OXT).map(function(k){ return "<th>" + OXT[k] + "</th>"; }).join("") +
+      "</tr><tr><td>Right</td>" + Object.keys(OXT).map(function(k){ return "<td>" + tally[k][0] + " / " + tally[k][1] + "</td>"; }).join("") + "</tr>";
+  }
+  function next(){
+    if(!deck.length) deck = APC.shuffle(OXQ);
+    cur = deck.pop(); cur.done = false;
+    document.getElementById("o-el").textContent = cur[1];
+    document.getElementById("o-sp").innerHTML = markTarget(cur[0], cur[1]);
+    inp.value = ""; inp.className = "ans"; inp.disabled = false; fb.className = "fb";
+    document.getElementById("o-check").disabled = false;
+  }
+  function check(){
+    if(cur.done) return;
+    var raw = inp.value.trim(), x = APC.num(raw), v = APC.oxNums(cur[0])[cur[1]];
+    if(!isFinite(x)){ fb.className = "fb show hint"; fb.innerHTML = "Type a number with its sign, like +6, −2, or 0."; return; }
+    cur.done = true; done++;
+    var ok = Math.abs(x - v) < 1e-9;
+    if(ok) right++;
+    tally[cur[2]][1]++; if(ok) tally[cur[2]][0]++;
+    renderTally();
+    document.getElementById("o-score").textContent = right + " of " + done;
+    inp.className = "ans " + (ok ? "ok" : "no"); inp.disabled = true;
+    document.getElementById("o-check").disabled = true;
+    var tip = "";
+    if(!ok && Math.abs(x) === Math.abs(v)) tip = " Right size, wrong sign.";
+    else if(!ok && APC.atoms(APC.parse(cur[0]).f)[cur[1]] > 1 && Math.abs(x - v * APC.atoms(APC.parse(cur[0]).f)[cur[1]]) < 1e-9) tip = " That’s the total for all the " + cur[1] + " atoms. Divide by how many there are.";
+    fb.className = "fb show " + (ok ? "good" : "bad");
+    fb.innerHTML = "<p><b>" + (ok ? "Right: " : "Not quite. It’s ") + APC.oxs(v) + ".</b>" + tip + "</p>" + explainOx(cur[0], cur[1]);
+    document.getElementById("o-next").focus();
+  }
+  document.getElementById("o-check").addEventListener("click", check);
+  inp.addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); cur.done ? next() : check(); } });
+  document.getElementById("o-next").addEventListener("click", function(){ next(); inp.focus(); });
+  renderTally();
+  next();
+})();
+
+/* ---------- practice: who changed ---------- */
+var WHO = [
+  "Zn(s) + Cu^2+(aq) -> Zn^2+(aq) + Cu(s)", "Cu(s) + 2Ag^+(aq) -> Cu^2+(aq) + 2Ag(s)", "2Na(s) + Cl2(g) -> 2NaCl(s)",
+  "2Mg(s) + O2(g) -> 2MgO(s)", "CH4(g) + 2O2(g) -> CO2(g) + 2H2O(g)", "Fe2O3(s) + 3CO(g) -> 2Fe(s) + 3CO2(g)",
+  "Zn(s) + 2HCl(aq) -> ZnCl2(aq) + H2(g)", "2H2O2(aq) -> 2H2O(l) + O2(g)", "2Al(s) + 3Cl2(g) -> 2AlCl3(s)",
+  "Cl2(g) + 2Br^-(aq) -> 2Cl^-(aq) + Br2(l)", "2Fe^3+(aq) + Sn^2+(aq) -> 2Fe^2+(aq) + Sn^4+(aq)",
+  "MnO4^-(aq) + 5Fe^2+(aq) + 8H^+(aq) -> Mn^2+(aq) + 5Fe^3+(aq) + 4H2O(l)",
+  "Cr2O7^2-(aq) + 6I^-(aq) + 14H^+(aq) -> 2Cr^3+(aq) + 3I2(s) + 7H2O(l)", "2H2(g) + O2(g) -> 2H2O(l)",
+  "C2H5OH(l) + 3O2(g) -> 2CO2(g) + 3H2O(g)", "2SO2(g) + O2(g) -> 2SO3(g)", "N2(g) + 3H2(g) -> 2NH3(g)",
+  "2KClO3(s) -> 2KCl(s) + 3O2(g)", "3Cu(s) + 8H^+(aq) + 2NO3^-(aq) -> 3Cu^2+(aq) + 2NO(g) + 4H2O(l)",
+  "2Al(s) + Fe2O3(s) -> Al2O3(s) + 2Fe(s)"
+];
+/* For each element: the oxidation numbers on each side, whether it went up or down,
+   and the total change (electrons lost if positive, gained if negative). */
+function changes(eq){
+  var s = eq.split(" -> "), out = {}, order = [];
+  [0, 1].forEach(function(side){
+    s[side].split(" + ").forEach(function(t){
+      var p = APC.parse(t), a = APC.atoms(p.f), ox = APC.oxNums(p);
+      Object.keys(a).forEach(function(el){
+        if(!out[el]){ out[el] = {L:[], R:[], tot:0}; order.push(el); }
+        var v = ox[el], o = out[el];
+        (side ? o.R : o.L).indexOf(v) < 0 && (side ? o.R : o.L).push(v);
+        o.tot += (side ? 1 : -1) * p.n * a[el] * v;
+      });
+    });
+  });
+  order.forEach(function(el){
+    var o = out[el];
+    o.up = o.R.some(function(r){ return o.L.some(function(l){ return r > l; }); });
+    o.down = o.R.some(function(r){ return o.L.some(function(l){ return r < l; }); });
+  });
+  return {els:order, by:out};
+}
+function list(v){ return v.map(APC.oxs).join(" and "); }
+(function(){
+  var cur, done = 0, right = 0, deck = [];
+  var fb = document.getElementById("w-fb"), rows = {ox:document.getElementById("w-ox"), red:document.getElementById("w-red")};
+  function next(){
+    if(!deck.length) deck = APC.shuffle(WHO);
+    var eq = deck.pop();
+    cur = {eq:eq, ch:changes(eq), pick:{}, done:false};
+    document.getElementById("w-eq").innerHTML = APC.fmt(eq);
+    ["ox", "red"].forEach(function(k){
+      rows[k].innerHTML = cur.ch.els.map(function(el){ return '<button type="button" class="pbtn" data-el="' + el + '">' + el + "</button>"; }).join("");
+      rows[k].querySelectorAll(".pbtn").forEach(function(b){
+        b.addEventListener("click", function(){
+          if(cur.done) return;
+          cur.pick[k] = b.dataset.el;
+          rows[k].querySelectorAll(".pbtn").forEach(function(x){ x.classList.toggle("sel", x === b); });
+        });
+      });
+    });
+    fb.className = "fb";
+    document.getElementById("w-check").disabled = false;
+  }
+  document.getElementById("w-check").addEventListener("click", function(){
+    if(cur.done) return;
+    if(!cur.pick.ox || !cur.pick.red){ fb.className = "fb show hint"; fb.innerHTML = "Pick one element in each row first."; return; }
+    var by = cur.ch.by, okO = by[cur.pick.ox].up, okR = by[cur.pick.red].down, mark = {};
+    cur.done = true; done++; if(okO && okR) right++;
+    document.getElementById("w-score").textContent = right + " of " + done;
+    ["ox", "red"].forEach(function(k){
+      rows[k].querySelectorAll(".pbtn").forEach(function(b){
+        var el = b.dataset.el, want = k === "ox" ? by[el].up : by[el].down;
+        b.disabled = true; b.classList.remove("sel");
+        if(el === cur.pick[k]) b.classList.add(want ? "yes" : "no");
+        else if(want) b.classList.add("reveal");
+      });
+    });
+    var ups = cur.ch.els.filter(function(e){ return by[e].up; }), downs = cur.ch.els.filter(function(e){ return by[e].down; });
+    var same = ups.length === 1 && downs.length === 1 && ups[0] === downs[0];
+    if(!same){ ups.forEach(function(e){ mark[e] = "up"; }); downs.forEach(function(e){ mark[e] = "down"; }); }
+    var lines = cur.ch.els.map(function(e){
+      var o = by[e];
+      if(o.up && o.down) return "<b>" + e + "</b>: " + list(o.L) + " → " + list(o.R) + ". Some goes up and some goes down, so " + e + " is both oxidized and reduced.";
+      if(o.up) return "<b>" + e + "</b>: " + list(o.L) + " → " + list(o.R) + ". Goes up, so " + e + " is oxidized.";
+      if(o.down) return "<b>" + e + "</b>: " + list(o.L) + " → " + list(o.R) + ". Goes down, so " + e + " is reduced.";
+      return e + " stays " + list(o.L) + ".";
+    });
+    var eLine = !same && ups.length === 1 && downs.length === 1 ? "<p>" + by[ups[0]].tot + " electrons move from " + ups[0] + " to " + downs[0] + " as written.</p>" : "";
+    fb.className = "fb show " + (okO && okR ? "good" : "bad");
+    fb.innerHTML = "<p><b>" + (okO && okR ? "Both right." : (okO ? "Oxidized right, reduced not." : (okR ? "Reduced right, oxidized not." : "Not quite."))) + "</b></p>" +
+      '<div class="eqline">' + APC.oxfmt(cur.eq, mark) + "</div><p>" + lines.join("<br>") + "</p>" + eLine;
+    document.getElementById("w-check").disabled = true;
+  });
+  document.getElementById("w-next").addEventListener("click", next);
+  next();
+})();
+
+/* ---------- combining half-reactions ---------- */
+function gcd(a, b){ return b ? gcd(b, a % b) : a; }
+function half(str){ var s = str.split(" -> "); return {str:str, L:s[0].split(" + ").map(APC.parse), R:s[1].split(" + ").map(APC.parse)}; }
+function isE(p){ return p.f === "e"; }
+function eOf(h){ return h.L.concat(h.R).filter(isE)[0].n; }
+function isOx(h){ return h.R.some(isE); }
+function key(p){ return p.f + "|" + p.z + "|" + p.st; }
+var SOLV = {"H|+|aq":1, "H2O||l":1, "OH|-|aq":1};
+function scale(list, m){ return list.map(function(p){ return {n:p.n * m, f:p.f, z:p.z, st:p.st}; }); }
+function merge(lists){
+  var out = [], at = {};
+  lists.forEach(function(l){ l.forEach(function(p){
+    var k = key(p);
+    if(at[k] === undefined){ at[k] = out.length; out.push({n:p.n, f:p.f, z:p.z, st:p.st}); } else out[at[k]].n += p.n;
+  }); });
+  /* electrons and H+ / H2O / OH- go last on each side */
+  return out.filter(function(p){ return !SOLV[key(p)] && !isE(p); }).concat(out.filter(function(p){ return SOLV[key(p)] && !isE(p); }), out.filter(isE));
+}
+function combine(ox, red){
+  var eo = eOf(ox), er = eOf(red), L = eo * er / gcd(eo, er), mo = L / eo, mr = L / er;
+  var o = {L:scale(ox.L, mo), R:scale(ox.R, mo)}, r = {L:scale(red.L, mr), R:scale(red.R, mr)};
+  var addL = merge([o.L, r.L]), addR = merge([o.R, r.R]);
+  var finL = addL.map(function(p){ return {n:p.n, f:p.f, z:p.z, st:p.st}; }), finR = addR.map(function(p){ return {n:p.n, f:p.f, z:p.z, st:p.st}; }), gone = [];
+  finL.forEach(function(p){
+    var q = finR.filter(function(x){ return key(x) === key(p); })[0];
+    if(q){ var k = Math.min(p.n, q.n); p.n -= k; q.n -= k; if(!isE(p)) gone.push({n:k, f:p.f, z:p.z, st:p.st}); }
+  });
+  return {eo:eo, er:er, L:L, mo:mo, mr:mr, o:o, r:r, addL:addL, addR:addR, gone:gone,
+          finL:finL.filter(function(p){ return p.n > 0; }), finR:finR.filter(function(p){ return p.n > 0; })};
+}
+function charge(list){ return list.reduce(function(s, p){ return s + p.n * APC.zval(p.z); }, 0); }
+/* sL / sR: optional tests for which species to strike through on each side */
+function eqHTML(L, R, sL, sR){
+  function side(list, s){ return list.map(function(p){ return APC.term(p, s && s(p) ? "gone" : ""); }).join(" + "); }
+  return '<span class="eqn">' + side(L, sL) + ' <span class="arr">→</span> ' + side(R, sR) + "</span>";
+}
+function workHTML(ox, red){
+  var c = combine(ox, red), left = {}, right = {};
+  c.finL.forEach(function(p){ left[key(p)] = p.n; });
+  c.finR.forEach(function(p){ right[key(p)] = p.n; });
+  /* strike a species only if nothing of it is left on that side */
+  function sL(p){ return isE(p) || (c.gone.some(function(g){ return key(g) === key(p); }) && !left[key(p)]); }
+  function sR(p){ return isE(p) || (c.gone.some(function(g){ return key(g) === key(p); }) && !right[key(p)]); }
+  var h = '<span class="cl">Oxidation × ' + c.mo + '</span><span class="ce">' + eqHTML(c.o.L, c.o.R) + "</span>" +
+          '<span class="cl">Reduction × ' + c.mr + '</span><span class="ce">' + eqHTML(c.r.L, c.r.R) + "</span>" +
+          '<span class="sep"></span>' +
+          '<span class="cl">Add</span><span class="ce">' + eqHTML(c.addL, c.addR, sL, sR) + "</span>";
+  var cancel = c.L + " e<sup>−</sup> on each side cancel." + c.gone.map(function(g){
+    var k = key(g), one = {n:1, f:g.f, z:g.z, st:g.st}, rest = left[k] ? ["left", left[k]] : right[k] ? ["right", right[k]] : null;
+    return " " + APC.term(g) + " also cancels from each side" + (rest ? ", leaving " + APC.term({n:rest[1], f:g.f, z:g.z, st:g.st}) + " on the " + rest[0] : "") + ".";
+  }).join("");
+  h += '<span class="cl"></span><span class="ce" style="font-size:15px;color:var(--ink2)">' + cancel + "</span>";
+  h += '<span class="cl">Balanced</span><span class="ce fin">' + eqHTML(c.finL, c.finR) + "</span>";
+  var qL = charge(c.finL), qR = charge(c.finR);
+  h += '<span class="cl">Check</span><span class="ce" style="font-size:15px;color:var(--ink2)">Charge: ' + APC.oxs(qL) + " on the left, " + APC.oxs(qR) +
+       " on the right. Electrons: " + c.L + " lost, " + c.L + " gained.</span>";
+  return h;
+}
+document.querySelectorAll(".combo").forEach(function(el){ el.innerHTML = workHTML(half(el.dataset.hox), half(el.dataset.hred)); });
+
+var PAIRS = [
+  ["Zn(s) -> Zn^2+(aq) + 2e^-", "Ag^+(aq) + e^- -> Ag(s)"],
+  ["Al(s) -> Al^3+(aq) + 3e^-", "Cu^2+(aq) + 2e^- -> Cu(s)"],
+  ["Fe^2+(aq) -> Fe^3+(aq) + e^-", "MnO4^-(aq) + 8H^+(aq) + 5e^- -> Mn^2+(aq) + 4H2O(l)"],
+  ["2I^-(aq) -> I2(s) + 2e^-", "Cr2O7^2-(aq) + 14H^+(aq) + 6e^- -> 2Cr^3+(aq) + 7H2O(l)"],
+  ["Mg(s) -> Mg^2+(aq) + 2e^-", "2H^+(aq) + 2e^- -> H2(g)"],
+  ["Sn^2+(aq) -> Sn^4+(aq) + 2e^-", "Fe^3+(aq) + e^- -> Fe^2+(aq)"],
+  ["2Br^-(aq) -> Br2(l) + 2e^-", "Cl2(g) + 2e^- -> 2Cl^-(aq)"],
+  ["Cu(s) -> Cu^2+(aq) + 2e^-", "NO3^-(aq) + 4H^+(aq) + 3e^- -> NO(g) + 2H2O(l)"],
+  ["H2O2(aq) -> O2(g) + 2H^+(aq) + 2e^-", "MnO4^-(aq) + 8H^+(aq) + 5e^- -> Mn^2+(aq) + 4H2O(l)"],
+  ["Ni(s) -> Ni^2+(aq) + 2e^-", "Au^3+(aq) + 3e^- -> Au(s)"],
+  ["Fe(s) -> Fe^2+(aq) + 2e^-", "O2(g) + 4H^+(aq) + 4e^- -> 2H2O(l)"],
+  ["SO2(g) + 2H2O(l) -> SO4^2-(aq) + 4H^+(aq) + 2e^-", "Cr2O7^2-(aq) + 14H^+(aq) + 6e^- -> 2Cr^3+(aq) + 7H2O(l)"],
+  ["Zn(s) -> Zn^2+(aq) + 2e^-", "Fe^3+(aq) + e^- -> Fe^2+(aq)"],
+  ["Al(s) -> Al^3+(aq) + 3e^-", "Ag^+(aq) + e^- -> Ag(s)"]
+];
+(function(){
+  var cur, deck = [], solved = 0;
+  var fb = document.getElementById("c-fb"), fin = document.getElementById("c-final"), ma = document.getElementById("c-ma"), mb = document.getElementById("c-mb");
+  var which = document.querySelectorAll("#c-which .pbtn");
+  function next(){
+    if(!deck.length) deck = APC.shuffle(PAIRS);
+    var pr = deck.pop(), ox = half(pr[0]), red = half(pr[1]), flip = Math.random() < .5;
+    cur = {ox:ox, red:red, h:flip ? [red, ox] : [ox, red], oxAt:flip ? 1 : 0, c:combine(ox, red), pick:null, solved:false};
+    document.getElementById("c-a").innerHTML = APC.fmt(cur.h[0].str);
+    document.getElementById("c-b").innerHTML = APC.fmt(cur.h[1].str);
+    var all = cur.c.finL.concat(cur.c.finR), nL = cur.c.finL.length, h = "";
+    all.forEach(function(p, i){
+      if(i === nL) h += '<span class="op">→</span>';
+      else if(i > 0) h += '<span class="op">+</span>';
+      h += '<span class="cof"><input class="ans co" data-i="' + i + '" inputmode="numeric" autocomplete="off" aria-label="Coefficient of ' + p.f + '">' +
+           APC.term({n:1, f:p.f, z:p.z, st:p.st}) + "</span>";
+    });
+    fin.innerHTML = h;
+    [ma, mb].forEach(function(i){ i.value = ""; i.className = "ans co"; });
+    which.forEach(function(b){ b.className = "pbtn"; });
+    fb.className = "fb";
+  }
+  which.forEach(function(b){
+    b.addEventListener("click", function(){ cur.pick = +b.dataset.h; which.forEach(function(x){ x.className = "pbtn" + (x === b ? " sel" : ""); }); });
+  });
+  function ints(v){ v = v.trim(); if(v === "") return 1; return /^\d+$/.test(v) ? +v : NaN; }
+  document.getElementById("c-check").addEventListener("click", function(){
+    var c = cur.c, msgs = [];
+    /* step 1 */
+    var ok1 = cur.pick === cur.oxAt;
+    if(cur.pick === null) msgs.push("<b>Step 1.</b> Pick the oxidation half-reaction.");
+    else if(!ok1) msgs.push("<b>Step 1.</b> In an oxidation, electrons are a <i>product</i>: the species loses them.");
+    which.forEach(function(b){ b.classList.remove("yes", "no"); if(cur.pick !== null && +b.dataset.h === cur.pick) b.classList.add(ok1 ? "yes" : "no"); });
+    /* step 2: multipliers for A and B */
+    var want = cur.oxAt === 0 ? [c.mo, c.mr] : [c.mr, c.mo], es = cur.oxAt === 0 ? [c.eo, c.er] : [c.er, c.eo];
+    var m = [ints(ma.value), ints(mb.value)], ok2 = m[0] === want[0] && m[1] === want[1];
+    [ma, mb].forEach(function(inp, i){ inp.classList.toggle("ok", m[i] === want[i]); inp.classList.toggle("no", m[i] !== want[i]); });
+    if(!ok2){
+      if(m[0] * es[0] === m[1] * es[1] && m[0] > 0) msgs.push("<b>Step 2.</b> Those make the electrons match, but they aren’t the smallest whole numbers that do.");
+      else msgs.push("<b>Step 2.</b> A involves " + es[0] + " e<sup>−</sup> and B involves " + es[1] + ". Multiply so both come to the same number, the smallest one both divide into.");
+    }
+    /* step 3: coefficients */
+    var all = c.finL.concat(c.finR), boxes = fin.querySelectorAll("input"), got = [].map.call(boxes, function(b){ return ints(b.value); });
+    var ok3 = got.every(function(g, i){ return g === all[i].n; });
+    boxes.forEach(function(b, i){ b.classList.toggle("ok", got[i] === all[i].n); b.classList.toggle("no", got[i] !== all[i].n); });
+    if(!ok3){
+      var k = got[0] / all[0].n;
+      if(k > 1 && Number.isInteger(k) && got.every(function(g, i){ return g === k * all[i].n; })) msgs.push("<b>Step 3.</b> That’s balanced, but every coefficient can be divided by " + k + ".");
+      else msgs.push("<b>Step 3.</b> Multiply each half-reaction through by its number, add them, then cancel the electrons" + (c.gone.length ? " and anything else on both sides" : "") + ".");
+    }
+    if(ok1 && ok2 && ok3){
+      if(!cur.solved){ cur.solved = true; solved++; document.getElementById("c-score").textContent = solved + " completed"; }
+      fb.className = "fb show good";
+      fb.innerHTML = "<p><b>Balanced.</b></p><div class=\"combo\">" + workHTML(cur.ox, cur.red) + "</div>";
+    } else {
+      fb.className = "fb show bad";
+      fb.innerHTML = msgs.map(function(x){ return "<p>" + x + "</p>"; }).join("");
+    }
+  });
+  document.getElementById("c-show").addEventListener("click", function(){
+    fb.className = "fb show hint";
+    fb.innerHTML = "<p><b>Here’s the work.</b> Try the next pair on your own.</p><div class=\"combo\">" + workHTML(cur.ox, cur.red) + "</div>";
+  });
+  document.getElementById("c-next").addEventListener("click", next);
+  next();
+})();
+
+/* ---------- practice ---------- */
+APC.mc(document.getElementById("mc"), document.getElementById("mc-score"), [
+ {q:"What is the oxidation number of chromium in [[Cr2O7^2-]]?",
+  c:["+6", "+7", "+12", "−2"],
+  a:0,
+  e:"O is −2: 7 × (−2) = −14. The total must be −2, so 2<i>x</i> − 14 = −2 and <i>x</i> = +6. (C) is the total for both Cr atoms, and (B) forgets the ion’s charge."},
+
+ {q:"What is the oxidation number of oxygen in hydrogen peroxide, [[H2O2]]?",
+  c:["−2", "−1", "0", "+1"],
+  a:1,
+  e:"H is +1, so 2(+1) + 2<i>x</i> = 0 and <i>x</i> = −1. Peroxides are the exception to O being −2."},
+
+ {q:"[[2Fe^3+(aq) + Sn^2+(aq) -> 2Fe^2+(aq) + Sn^4+(aq)]]<br>Which species is oxidized in the reaction above?",
+  c:["[[Fe^3+]]", "[[Sn^2+]]", "[[Fe^2+]]", "[[Sn^4+]]"],
+  a:1,
+  e:"Tin goes from +2 to +4, so Sn<sup>2+</sup> loses electrons and is oxidized. Fe<sup>3+</sup> goes from +3 to +2 and is reduced. (C) and (D) are products, not the species that reacted."},
+
+ {q:"[[Fe2O3(s) + 3CO(g) -> 2Fe(s) + 3CO2(g)]]<br>Which element is reduced in the reaction above?",
+  c:["Fe, from +3 to 0", "C, from +2 to +4", "O, from −2 to 0", "No element is reduced, because no ions are present."],
+  a:0,
+  e:"Iron’s oxidation number drops from +3 to 0, so it gains electrons. Carbon goes up from +2 to +4 (oxidized). Oxygen is −2 in every compound here. Redox doesn’t require ions: oxidation numbers track electrons in any substance."},
+
+ {q:"Which of the following half-reactions represents an oxidation?",
+  c:["[[Cl2(g) + 2e^- -> 2Cl^-(aq)]]", "[[Fe^3+(aq) + e^- -> Fe^2+(aq)]]", "[[Cu(s) -> Cu^2+(aq) + 2e^-]]", "[[2H^+(aq) + 2e^- -> H2(g)]]"],
+  a:2,
+  e:"In an oxidation, electrons are lost, so they appear as a product. Copper goes from 0 to +2. The other three gain electrons, so they’re reductions."},
+
+ {q:"[[Al(s) -> Al^3+(aq) + 3e^-]]<br>[[Cu^2+(aq) + 2e^- -> Cu(s)]]<br>Which balanced equation results from combining the half-reactions above?",
+  c:["[[Al(s) + Cu^2+(aq) -> Al^3+(aq) + Cu(s)]]", "[[2Al(s) + 3Cu^2+(aq) -> 2Al^3+(aq) + 3Cu(s)]]",
+     "[[3Al(s) + 2Cu^2+(aq) -> 3Al^3+(aq) + 2Cu(s)]]", "[[Al(s) + 3Cu^2+(aq) -> Al^3+(aq) + 3Cu(s)]]"],
+  a:1,
+  e:"Al loses 3 e<sup>−</sup> and Cu<sup>2+</sup> gains 2. Multiply the oxidation by 2 and the reduction by 3 so 6 electrons cancel. Check the charge: 3(+2) = +6 on the left and 2(+3) = +6 on the right. (A) has the atoms balanced but not the charge (+2 vs. +3)."},
+
+ {q:"[[MnO4^-(aq) + 8H^+(aq) + 5e^- -> Mn^2+(aq) + 4H2O(l)]]<br>[[Fe^2+(aq) -> Fe^3+(aq) + e^-]]<br>When these half-reactions are combined, how many Fe<sup>2+</sup> ions react with each MnO<sub>4</sub><sup>−</sup> ion?",
+  c:["1", "4", "5", "8"],
+  a:2,
+  e:"Each MnO<sub>4</sub><sup>−</sup> takes 5 electrons, and each Fe<sup>2+</sup> gives up 1, so the iron half-reaction is multiplied by 5. (D) is the number of H<sup>+</sup>."},
+
+ {q:"How many electrons are transferred in the reaction [[2Al(s) + 3Cu^2+(aq) -> 2Al^3+(aq) + 3Cu(s)]] as written?",
+  c:["2", "3", "5", "6"],
+  a:3,
+  e:"Two Al atoms each lose 3 electrons: 2 × 3 = 6. Three Cu<sup>2+</sup> ions each gain 2: 3 × 2 = 6. The electrons lost equal the electrons gained."}
+]);
+
+APC.frq(document.getElementById("frq"), [
+ {q:"<p>An acidified solution of potassium dichromate is mixed with a solution of potassium iodide. The two half-reactions are:</p><p>[[Cr2O7^2-(aq) + 14H^+(aq) + 6e^- -> 2Cr^3+(aq) + 7H2O(l)]]<br>[[2I^-(aq) -> I2(s) + 2e^-]]</p><p>(a) Determine the oxidation number of chromium in Cr<sub>2</sub>O<sub>7</sub><sup>2−</sup> and in Cr<sup>3+</sup>.</p><p>(b) Identify the species that is oxidized and the species that is reduced. Justify your answer.</p><p>(c) Combine the half-reactions to write the balanced net ionic equation.</p><p>(d) How many moles of I<sup>−</sup> react with 0.010 mol of Cr<sub>2</sub>O<sub>7</sub><sup>2−</sup>?</p>",
+  m:"<p><b>(a)</b> In Cr<sub>2</sub>O<sub>7</sub><sup>2−</sup>: 2<i>x</i> + 7(−2) = −2, so Cr is <b>+6</b>. In Cr<sup>3+</sup>, it’s <b>+3</b>.</p><p><b>(b)</b> <b>I<sup>−</sup> is oxidized</b>: iodine goes from −1 to 0, losing electrons. <b>Cr<sub>2</sub>O<sub>7</sub><sup>2−</sup> is reduced</b>: chromium goes from +6 to +3, gaining electrons.</p><p><b>(c)</b> Multiply the iodide half-reaction by 3 so both involve 6 electrons, add, and cancel the electrons:<br>[[Cr2O7^2-(aq) + 6I^-(aq) + 14H^+(aq) -> 2Cr^3+(aq) + 3I2(s) + 7H2O(l)]]<br>Charge check: −2 − 6 + 14 = +6 on the left and 2(+3) = +6 on the right.</p><p><b>(d)</b> The ratio is 6 I<sup>−</sup> : 1 Cr<sub>2</sub>O<sub>7</sub><sup>2−</sup>, so 0.010 × 6 = <b>0.060 mol I<sup>−</sup></b>.</p>"},
+
+ {q:"<p>A copper wire is placed in a colorless solution of silver nitrate, AgNO<sub>3</sub>. Over time, silver crystals grow on the wire and the solution turns blue.</p><p>(a) Write the balanced oxidation half-reaction.</p><p>(b) Write the balanced reduction half-reaction.</p><p>(c) Combine them to write the balanced net ionic equation.</p><p>(d) Identify the spectator ion. Explain why it doesn’t appear in the net ionic equation.</p>",
+  m:"<p><b>(a)</b> [[Cu(s) -> Cu^2+(aq) + 2e^-]] (the blue color is Cu<sup>2+</sup>)</p><p><b>(b)</b> [[Ag^+(aq) + e^- -> Ag(s)]] (the crystals are silver metal)</p><p><b>(c)</b> Multiply the reduction by 2 so 2 electrons cancel:<br>[[Cu(s) + 2Ag^+(aq) -> Cu^2+(aq) + 2Ag(s)]]<br>Charge: +2 on each side.</p><p><b>(d)</b> <b>NO<sub>3</sub><sup>−</sup></b>. It is in solution before and after the reaction, unchanged, and its oxidation numbers don’t change. Because it doesn’t take part in the electron transfer, it cancels out of the net ionic equation.</p>"}
+]);
+</script>
 </body>
 </html>
