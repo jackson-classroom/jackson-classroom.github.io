@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.2 Consumer Behavior | AP Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1D2433; --ink2:#3F4859; --mute:#626B7C;
+  --wash:#F1EEE8; --card:#FCFBF9; --line:#D5CFC4; --line-soft:#E6E1D8;
+  --indigo:#3A55A0; --indigo-dk:#273C78; --indigo-lite:#DCE3F4;   /* demographic + brand */
+  --amber:#A8670F; --amber-dk:#7A4A08; --amber-lite:#F6E7CB;      /* psychographic */
+  --ok:#2E6B47; --ok-bg:#E3F0E7;
+  --no:#A63D2F; --no-bg:#F7E5E1;
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:64px}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(241,238,232,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:900px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+.bar a{color:inherit;text-decoration:none}
+
+header.hero{padding:60px 0 36px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--indigo-dk)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(40px,7vw,68px);line-height:1;margin:16px 0 0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--indigo)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:50ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: the four learning objectives as a path */
+.board{margin:34px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--card);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.lo{padding:18px 18px 20px;border-left:1px solid var(--line-soft);text-decoration:none;color:var(--ink);display:block;position:relative}
+.lo:first-child{border-left:none}
+.lo:hover{background:#fff}
+.lo .code{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--indigo-dk);background:var(--indigo-lite);border-radius:2px;padding:2px 7px}
+.lo .lq{display:block;font-family:var(--display);font-weight:600;font-size:19px;line-height:1.2;margin:12px 0 6px;letter-spacing:-.01em}
+.lo .d{display:block;font-size:14px;color:var(--mute);line-height:1.45}
+.board-foot{grid-column:1/-1;border-top:1px solid var(--line-soft);padding:10px 18px;font-family:var(--mono);font-size:12px;color:var(--ink2);display:flex;gap:6px 18px;flex-wrap:wrap}
+.board-foot b{color:var(--indigo-dk);font-weight:600}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:22px 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--indigo);color:var(--indigo-dk)}
+
+section{padding:46px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo-dk);background:var(--indigo-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+.tag.amber{color:var(--amber-dk);background:var(--amber-lite)}
+.tag.plain{color:var(--ink2);background:var(--line-soft)}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(27px,4.2vw,38px);line-height:1.08;margin:0;letter-spacing:-.02em}
+h3{font-family:var(--display);font-weight:600;font-size:20px;letter-spacing:-.01em;margin:34px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--indigo-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.nw{white-space:nowrap}
+.lo-line{font-family:var(--mono);font-size:13px;color:var(--ink2);margin:10px 0 0;max-width:70ch}
+.lo-line b{color:var(--indigo-dk);font-weight:600}
+
+.def{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:0 4px 4px 0;padding:16px 20px;margin:22px 0}
+.def .term{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.def p{margin:6px 0 0;font-size:17px}
+.def .ek{font-family:var(--mono);font-size:11px;color:var(--mute);float:right;margin-left:12px}
+
+.note{border-left:3px solid var(--amber);background:var(--amber-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.pf{border:1px solid var(--line);background:var(--card);border-radius:4px;padding:18px 20px;margin:24px 0}
+.pf .pf-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ok);margin-bottom:4px}
+
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:22px 0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:22px 0}
+.mini{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px 18px}
+.mini .n{font-family:var(--mono);font-size:12px;color:var(--indigo-dk)}
+.mini h4{font-family:var(--body);font-size:16px;font-weight:600;margin:6px 0 4px}
+.mini p{margin:0;font-size:15.5px;color:var(--ink2)}
+
+.kind{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--indigo);border-radius:4px;padding:18px 20px}
+.kind.psy{border-top-color:var(--amber)}
+.kind .kh{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.01em;color:var(--indigo-dk)}
+.kind.psy .kh{color:var(--amber-dk)}
+.kind .ks{font-size:15px;color:var(--ink2);margin:4px 0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--mono);font-size:12.5px;border-radius:2px;padding:3px 8px;background:var(--indigo-lite);color:var(--indigo-dk)}
+.kind.psy .chip{background:var(--amber-lite);color:var(--amber-dk)}
+.kind .tip{font-size:14.5px;color:var(--mute);margin:12px 0 0}
+
+.tools-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:20px 0}
+.tl{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 18px}
+.tl .tl-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+.tl ul{margin:0;padding-left:18px;font-size:15.5px}
+.tl li{margin:4px 0}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.prompt{font-size:clamp(18px,2.6vw,21px);font-weight:500;line-height:1.45;margin:4px 0 0}
+.prompt .who{display:block;font-family:var(--mono);font-size:12px;color:var(--mute);font-weight:400;margin-bottom:6px;letter-spacing:.04em}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F7F6F3;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--indigo-dk);border-color:var(--indigo-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--indigo)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--indigo);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+.pick2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.pbtn{background:#fff;color:var(--ink);border:1px solid var(--line);font-size:14px;padding:13px 10px;text-align:center}
+.pbtn:hover{background:#fff;color:var(--ink);border-color:var(--indigo)}
+.pbtn.demo{border-top:3px solid var(--indigo)}
+.pbtn.psy{border-top:3px solid var(--amber)}
+.pbtn.yes{background:var(--ok-bg);border-color:var(--ok);color:#1C4A30}
+.pbtn.no{background:var(--no-bg);border-color:var(--no);color:#7A2B20}
+.pbtn.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.pbtn[disabled]{cursor:default}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1C4A30}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7A2B20}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--indigo);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb p{margin:6px 0 0}
+.fb p:first-child{margin-top:0}
+
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45;letter-spacing:0}
+.opt:hover{border-color:var(--indigo);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.96}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto;margin:18px 0;-webkit-overflow-scrolling:touch}
+.tbl table{margin:0}
+
+.prod-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 6px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px;letter-spacing:.02em}
+.tab:hover{background:var(--line-soft);color:var(--ink);border-color:var(--indigo)}
+.tab[aria-selected="true"]{background:var(--ink);color:#F7F6F3;border-color:var(--ink)}
+.prod-desc{font-size:15.5px;color:var(--ink2);margin:8px 0 14px}
+/* ---------- relationship dashboard ---------- */
+.dash{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.slider{margin:0 0 12px}
+.slider label{display:flex;justify-content:space-between;gap:10px;font-size:14.5px;color:var(--ink2)}
+.slider label b{font-family:var(--mono);font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.slider input{width:100%;accent-color:var(--indigo)}
+.tactics{display:flex;flex-direction:column;gap:6px;margin:6px 0 0}
+.tact{display:flex;gap:10px;align-items:flex-start;text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);font-family:var(--body);font-size:14.5px;letter-spacing:0;padding:9px 12px;line-height:1.4}
+.tact:hover{background:#fff;color:var(--ink);border-color:var(--indigo)}
+.tact .box{font-family:var(--mono);font-size:12px;width:16px;height:16px;border:1.5px solid var(--line);border-radius:2px;flex:none;margin-top:2px;display:flex;align-items:center;justify-content:center}
+.tact[aria-pressed="true"]{border-color:var(--ok);background:var(--ok-bg)}
+.tact[aria-pressed="true"] .box{background:var(--ok);border-color:var(--ok);color:#fff}
+.tact small{display:block;color:var(--mute);font-size:13px}
+.formula{font-family:var(--mono);font-size:15px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px 12px;margin:8px 0;line-height:1.6}
+.formula .eq{color:var(--indigo-dk);font-weight:500}
+.bars{margin:14px 0 0}
+.barrow{display:grid;grid-template-columns:120px 1fr 86px;gap:10px;align-items:center;margin:8px 0;font-size:14px}
+.barrow .bl{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2)}
+.barrow .track{height:18px;background:var(--line-soft);border-radius:2px;overflow:hidden}
+.barrow .fill{height:100%;border-radius:2px;transition:width .25s ease}
+.barrow .bv{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.big{font-family:var(--display);font-weight:700;font-size:30px;line-height:1.1;letter-spacing:-.01em}
+
+/* ---------- practice ---------- */
+.problem{font-size:17px;line-height:1.55;margin:0}
+.problem .mono{font-size:16px}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:14px 0 0}
+.field label{font-size:15px;color:var(--ink2)}
+input.ans{font-family:var(--mono);font-size:19px;border:1px solid #9AA2AE;box-shadow:inset 0 1px 3px rgba(29,36,51,.12);border-radius:3px;padding:8px 10px;width:170px;background:#fff;color:var(--ink)}
+.work{font-family:var(--mono);font-size:14px;line-height:1.7}
+
+.q{border-top:1px solid var(--line-soft);padding:22px 0 6px}
+.q:first-child{border-top:none;padding-top:4px}
+.q .qn{font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.06em}
+.q .stem{font-weight:500;margin:4px 0 0}
+.stim{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:14px 16px;margin:0 0 6px}
+.stim p{margin:0 0 8px;font-size:15.5px}
+.stim table{margin:6px 0 0}
+.qsum{font-family:var(--display);font-weight:700;font-size:22px;margin:18px 0 0}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#ECEDEF;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#BFC5CF}
+.next .nt{font-family:var(--display);font-weight:700;font-size:24px;color:#fff;margin:0 0 4px}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F7F6F3;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--indigo-lite)}
+
+@media (max-width:760px){
+  .board{grid-template-columns:1fr 1fr}
+  .lo:nth-child(3){border-left:none}
+  .lo:nth-child(n+3){border-top:1px solid var(--line-soft)}
+  .seg,.pb,.dash{grid-template-columns:1fr}
+  .seg{display:flex;flex-direction:column;gap:16px}
+  .seg-left,.seg-right{display:contents}
+  .step1{order:1} .viz{order:2} .step2{order:3} .person{order:4;margin-top:0}
+  .build-btn{margin-top:0}
+  .persona{position:static}
+  .stats{grid-template-columns:1fr 1fr}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .bar-sub{display:none}
+  .card{padding:16px}
+  .lo{padding:14px}
+  .lo .lq{font-size:17px}
+  .row2{grid-template-columns:1fr}
+  .barrow{grid-template-columns:86px 1fr 74px}
+}
+@media (max-width:380px){
+  .board{grid-template-columns:1fr}
+  .lo{border-left:none;border-top:1px solid var(--line-soft)}
+  .lo:first-child{border-top:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){.barrow .fill{transition:none}}
+@media print{ body{background:#fff} .bar,.jump,.btn-row,.next{display:none} }
+
+/* ---------- 2.2 page ---------- */
+.lo .code{white-space:nowrap}
+.quote{font-size:16px;color:var(--ink2);font-style:italic}
+.fac{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--indigo);border-radius:4px;padding:14px 16px}
+.fac .fh{font-family:var(--display);font-weight:700;font-size:19px;color:var(--indigo-dk);letter-spacing:-.01em}
+.fac p{margin:4px 0 0;font-size:15px;color:var(--ink2)}
+.fac .ex{font-size:14px;color:var(--mute);margin-top:8px}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:20px 0}
+
+/* backpack decision */
+.bps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 0}
+.bp{display:flex;flex-direction:column;gap:6px;text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:14px;font-family:var(--body);font-size:14.5px;letter-spacing:0;line-height:1.4}
+.bp:hover{background:#fff;color:var(--ink);border-color:var(--indigo)}
+.bp[aria-pressed="true"]{border-color:var(--indigo);box-shadow:inset 0 0 0 2px var(--indigo);background:#FAFBFF}
+.bp .bn{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01em}
+.bp .bpr{font-family:var(--display);font-weight:700;font-size:26px;line-height:1.1}
+.bp .row{display:block;padding:5px 7px;border-radius:3px;background:var(--wash)}
+.bp .row b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.bp .changed{background:var(--amber-lite);box-shadow:inset 0 0 0 1px var(--amber)}
+.bp .bpr.changed{border-radius:3px;padding:0 4px}
+.why4{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.why4 label{display:inline-flex;align-items:center;gap:7px;font-size:15px;background:#fff;border:1px solid var(--line);border-radius:3px;padding:7px 11px;cursor:pointer}
+.why4 input{width:16px;height:16px;accent-color:var(--indigo)}
+.twists{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0}
+.twists button[aria-pressed="true"]{background:var(--amber-lite);color:var(--amber-dk);border-color:var(--amber)}
+.log{font-family:var(--mono);font-size:13px;color:var(--ink2);margin:10px 0 0}
+.stepl{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin:18px 0 4px}
+
+/* rational vs habitual */
+.kind.hab{border-top-color:var(--amber)}
+.kind.hab .kh{color:var(--amber-dk)}
+.verdict{font-family:var(--display);font-weight:700;font-size:22px;line-height:1.2;margin:14px 0 4px}
+.verdict.go{color:var(--ok)} .verdict.skip{color:var(--amber-dk)}
+.presets2{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+
+/* four influences */
+.infl{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:20px 0}
+.ig{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:4px;padding:14px 16px;position:relative}
+.ig .ek2{position:absolute;right:12px;top:10px;font-family:var(--mono);font-size:11px;color:var(--mute)}
+.ig .ih{font-family:var(--display);font-weight:700;font-size:19px;color:var(--c);margin-bottom:8px}
+.ig .chip{background:var(--wash);color:var(--ink2);font-size:11.5px}
+.ig p{margin:10px 0 0;font-size:14.5px;color:var(--ink2)}
+.pick4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
+.pick4 .pbtn{font-size:13px;padding:11px 6px;border-top:3px solid var(--c)}
+/* store walk-through */
+.store{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:18px;align-items:start}
+.store .fb{margin-top:0}
+.map{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,64px);gap:6px;background:#fff;border:1px solid var(--line-soft);border-radius:4px;padding:8px}
+.map .z{border-radius:3px;background:var(--wash);color:var(--mute);font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;text-align:center;padding:4px;line-height:1.25}
+.map button.z{background:#FFF7E2;border:1.5px dashed #D9B85A;color:#5A4410;cursor:pointer;font-weight:600;letter-spacing:.02em}
+.map button.z:hover{background:#FFEFC2;color:#5A4410;border-color:#B8932E}
+.map button.z.seen{background:var(--ok-bg);border:1.5px solid var(--ok);color:#1C4A30}
+.map button.z.on{box-shadow:inset 0 0 0 2px var(--indigo)}
+
+/* laws and technology */
+.pat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.pat div{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:12px 14px}
+.pat b{display:block;font-family:var(--display);font-size:17px}
+.pat span{font-size:14px;color:var(--mute)}
+.cause{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;padding:2px 7px;margin-bottom:6px}
+.cause.law{background:var(--indigo-lite);color:var(--indigo-dk)}
+.cause.tech{background:var(--amber-lite);color:var(--amber-dk)}
+
+/* principles */
+.prins{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin:20px 0}
+.prin{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 16px;border-left:4px solid var(--c)}
+.prin .pnm{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:-.01em;color:var(--c)}
+.prin .tell{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin:2px 0 8px}
+.prin p{margin:0;font-size:15px;color:var(--ink2)}
+.prin .mv{margin-top:8px;font-size:14.5px;color:var(--ink)}
+.prin .mv b{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:500;display:block}
+.pick7{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
+.pick7 .pbtn{font-size:13px;padding:11px 6px;border-top:3px solid var(--c)}
+.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:6px;margin:16px 0 0}
+.tcell{border:1px solid var(--line-soft);border-radius:3px;padding:6px 9px;background:#fff;border-top:3px solid var(--c)}
+.tcell .tlab{display:block;font-family:var(--mono);font-size:10.5px;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
+.tcell .tval{font-family:var(--mono);font-size:15px}
+.tcell.miss{background:#FDF6F4}
+
+/* mock ads */
+.stage{background:var(--wash);border:1px solid var(--line-soft);border-radius:4px;padding:18px 14px;margin:6px 0 0}
+.ad{background:#fff;border:1px solid var(--line);border-radius:10px;max-width:430px;margin:0 auto;overflow:hidden;font-family:var(--body);box-shadow:0 2px 6px rgba(29,36,51,.07);line-height:1.4}
+.ad .kind-l{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.ad.prod .img{height:96px;background:linear-gradient(135deg,#ECE6DA,#DCD3C3);position:relative;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:15px;color:#9C9282;letter-spacing:.06em;text-transform:uppercase}
+.ad.prod .badge{position:absolute;left:10px;top:10px;background:var(--ink);color:#fff;font-size:12.5px;font-weight:600;border-radius:3px;padding:4px 9px;max-width:calc(100% - 20px)}
+.ad.prod .body{padding:12px 14px}
+.ad.prod .pn{font-weight:600;font-size:16px}
+.ad.prod .pp{font-family:var(--mono);font-size:15px;margin-top:2px}
+.ad.prod .ps{font-size:13.5px;color:var(--mute);margin-top:4px}
+.ad.push{border-radius:18px;background:#F6F6F8;padding:12px 14px;display:grid;grid-template-columns:38px minmax(0,1fr);gap:11px;align-items:start}
+.ad.push .ic{width:38px;height:38px;border-radius:10px;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-family:var(--display);font-size:18px}
+.ad.push .top{display:flex;justify-content:space-between;font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.04em}
+.ad.push .t{font-weight:600;font-size:15.5px;margin-top:1px}
+.ad.push .b{font-size:14.5px;color:var(--ink2)}
+.ad.mail{padding:12px 16px}
+.ad.mail .mh{display:flex;justify-content:space-between;font-size:13px;color:var(--mute)}
+.ad.mail .from{font-weight:600;color:var(--ink)}
+.ad.mail .subj{font-weight:600;font-size:16px;margin-top:4px}
+.ad.mail .prev{color:var(--mute);font-size:14.5px;margin-top:2px}
+.ad.sign{background:#FFF7E2;border:2px solid #D9B85A;text-align:center;padding:22px 18px;font-family:var(--display);font-size:23px;font-weight:700;line-height:1.2;color:#5A4410;border-radius:6px}
+.ad.sign small{display:block;font-family:var(--body);font-size:14.5px;font-weight:500;margin-top:8px;color:#6E5A22}
+.ad.social{padding:12px 14px}
+.ad.social .wr{display:flex;gap:10px;align-items:center}
+.ad.social .av{width:36px;height:36px;border-radius:50%;background:var(--amber);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-family:var(--display);flex:none}
+.ad.social .h{font-weight:600;font-size:15px}
+.ad.social .meta{font-size:12.5px;color:var(--mute)}
+.ad.social .txt{margin-top:9px;font-size:15.5px}
+.ad.say{background:var(--indigo-lite);border-color:transparent;border-radius:16px 16px 16px 4px;padding:14px 16px;box-shadow:none}
+.ad.say .s{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--indigo-dk)}
+.ad.say .q2{font-size:16.5px;margin-top:4px}
+.ad.checkout{padding:14px 16px}
+.ad.checkout .ln{display:flex;justify-content:space-between;font-size:14.5px;padding:4px 0;border-bottom:1px solid var(--line-soft)}
+.ad.checkout .note2{font-size:14px;color:var(--ink2);margin-top:8px;background:var(--wash);border-radius:4px;padding:7px 9px}
+.ad.checkout .go{background:var(--ok);color:#fff;text-align:center;border-radius:6px;padding:9px;margin-top:10px;font-weight:600;font-size:15px}
+
+/* nudge builder */
+.nb{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.fld{display:block;margin:0 0 10px}
+.fld span{display:block;font-size:13.5px;color:var(--ink2);margin-bottom:2px}
+.fld input,.fld select,.fld textarea{width:100%;font-family:var(--body);font-size:15.5px;border:1px solid #9AA2AE;border-radius:3px;padding:7px 9px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 2px rgba(29,36,51,.10)}
+.fld textarea{min-height:64px;resize:vertical;line-height:1.45}
+::placeholder{font-style:italic;font-size:14px;color:#80889A;opacity:1}
+.honest{list-style:none;padding:0;margin:8px 0 0}
+.honest li{margin:6px 0}
+.honest label{display:flex;gap:8px;align-items:flex-start;font-size:15px;cursor:pointer}
+.honest input{width:17px;height:17px;margin-top:3px;accent-color:var(--ok);flex:none}
+
+@media (max-width:760px){
+  .bps{grid-template-columns:1fr}
+  .nb,.store{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .pick7,.pick4{grid-template-columns:1fr 1fr}
+  .pat{grid-template-columns:1fr}
+  .map{grid-template-rows:repeat(4,58px)}
+  .pick2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title"><a href="/ap-business/unit-2/">2.2 Consumer Behavior</a></span>
+    <span class="bar-sub">Needs and wants · rival goods · rational vs. habitual · laws and technology · principles of influence</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">AP Business · Unit 2 Marketing · Topic 2.2</div>
+  <h1>Consumer <em>Behavior</em></h1>
+  <p class="lede">Why do people buy what they buy? Some of it is need, some is want, some is habit, and some is a marketer nudging at just the right moment. Businesses study these forces to build their marketing and sales tactics. Knowing them makes you a sharper business owner and a harder sell as a shopper.</p>
+
+  <div class="board" aria-label="The four big questions in this topic">
+    <a class="lo" href="#why"><span class="code">2.2.A</span><span class="lq">Why buy this one?</span><span class="d">Needs and wants, rival goods, rational vs. habitual decisions</span></a>
+    <a class="lo" href="#shape"><span class="code">2.2.A</span><span class="lq">What shapes the choice?</span><span class="d">Personal, psychological, social, and situational influences</span></a>
+    <a class="lo" href="#patterns"><span class="code">2.2.B</span><span class="lq">What changes how we buy?</span><span class="d">Laws and technology reshape purchasing patterns</span></a>
+    <a class="lo" href="#influence"><span class="code">2.2.C</span><span class="lq">Why did I say yes?</span><span class="d">Cialdini’s principles of influence and sales tactics</span></a>
+    <div class="board-foot"><span><b>Project link</b> Customer, Task 2: develop a sales tactic drawing on principles of persuasion</span><span><b>Personal finance</b> Spending</span></div>
+  </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#why">Needs and rival goods</a>
+    <a href="#pick">Pick a backpack</a>
+    <a href="#factor">What drove it?</a>
+    <a href="#decide">Rational or habitual</a>
+    <a href="#worth">Worth shopping around?</a>
+    <a href="#shape">Four influences</a>
+    <a href="#store">Store walk-through</a>
+    <a href="#patterns">Laws and technology</a>
+    <a href="#influence">Principles of influence</a>
+    <a href="#tactic">Name that tactic</a>
+    <a href="#develop">Develop a sales tactic</a>
+    <a href="#check">Check yourself</a>
+  </nav>
+</header>
+
+<!-- =========================================================
+     Q1  NEEDS, WANTS, AND RIVAL GOODS
+     ========================================================= -->
+<section id="why">
+  <div class="sec-head"><span class="tag">2.2.A</span><h2>Why people buy, and why they buy <i>this</i> one</h2></div>
+
+  <div class="def">
+    <span class="ek">2.2.A.1</span>
+    <div class="term">From the course framework</div>
+    <p class="quote">“Consumers buy goods and services to meet basic needs and wants. When rival goods that meet the same needs and wants are available, consumer decisions regarding which products to buy are influenced by prices, differentiated product features, availability, and advertising.”</p>
+  </div>
+
+  <div class="grid2">
+    <div class="kind">
+      <div class="kh">Needs</div>
+      <div class="ks">What you have to have to live and get through your life.</div>
+      <div class="chips"><span class="chip">food</span><span class="chip">shelter</span><span class="chip">clothing</span><span class="chip">health care</span><span class="chip">getting to school or work</span></div>
+    </div>
+    <div class="kind psy">
+      <div class="kh">Wants</div>
+      <div class="ks">What makes life better or more fun, but you could live without.</div>
+      <div class="chips"><span class="chip">concert tickets</span><span class="chip">the newest phone</span><span class="chip">eating out</span><span class="chip">designer labels</span></div>
+    </div>
+  </div>
+  <p>Most purchases mix the two. You <b>need</b> shoes; you <b>want</b> the $180 pair. Businesses sell to both.</p>
+
+  <h3>Rival goods: same job, different products</h3>
+  <p><b>Rival goods</b> are different products that meet the same need or want: two brands of running shoes, or a bus pass and a bike. When rivals compete for your money, four things decide which one wins:</p>
+  <div class="grid4">
+    <div class="fac"><div class="fh">Price</div><p>What it costs compared with the others.</p><div class="ex">The store brand is $3 cheaper.</div></div>
+    <div class="fac"><div class="fh">Differentiated features</div><p>What sets it apart: quality, design, extras.</p><div class="ex">This bottle keeps drinks cold for 24 hours.</div></div>
+    <div class="fac"><div class="fh">Availability</div><p>Whether you can get it where and when you need it.</p><div class="ex">It’s the only one in stock today.</div></div>
+    <div class="fac"><div class="fh">Advertising</div><p>Whether you’ve heard of it, and what you’ve heard.</p><div class="ex">You saw the ad ten times this week.</div></div>
+  </div>
+
+  <!-- PICK A BACKPACK -->
+  <div class="card" id="pick">
+    <div class="card-label">Pick a backpack · you need one for school</div>
+    <p class="smallprint" style="margin:0">Three rival backpacks. They all do the job. Pick the one you would actually buy.</p>
+    <div class="bps" id="bps"></div>
+    <div id="pick-why" hidden>
+      <div class="stepl">What made you pick it? Choose any that apply.</div>
+      <div class="why4" id="why4"></div>
+      <div class="btn-row"><button id="why-go">See what it says</button></div>
+    </div>
+    <div class="fb" id="pick-fb"></div>
+    <div id="twist-box" hidden>
+      <div class="stepl">What if… (each one changes one factor, then pick again)</div>
+      <div class="twists" id="twists"></div>
+      <p class="log" id="pick-log"></p>
+      <div class="btn-row"><button class="ghost" id="pick-reset">Start over</button></div>
+    </div>
+  </div>
+
+  <!-- WHAT DROVE IT -->
+  <div class="card" id="factor">
+    <div class="card-label">What drove the decision? <span class="score" id="fac-score">0 of 0</span></div>
+    <p class="prompt" id="fac-item" aria-live="polite"></p>
+    <div class="opts" id="fac-opts"></div>
+    <div class="fb" id="fac-fb"></div>
+    <div class="btn-row"><button id="fac-next">Next shopper →</button></div>
+  </div>
+
+  <div class="pf">
+    <div class="pf-h">Personal finance link · Spending</div>
+    <p style="margin:0">Before you buy, name the factor that’s really pulling you. If the honest answer is “I’ve seen a lot of ads for it,” that’s fine, but it’s worth checking whether a rival does the same job for less.</p>
+  </div>
+</section>
+
+<!-- =========================================================
+     Q2  RATIONAL VS HABITUAL
+     ========================================================= -->
+<section id="decide">
+  <div class="sec-head"><span class="tag">2.2.A</span><h2>Think it through, or just grab it?</h2></div>
+  <p>Not every purchase gets the same amount of thought <span class="smallprint">(2.2.A.2)</span>. A rational process helps you find the product that best meets your needs and wants, but it isn’t free: it costs time spent gathering information.</p>
+  <div class="grid2">
+    <div class="kind">
+      <div class="kh">Rational decision-making</div>
+      <div class="ks">Systematically comparing the alternatives, using the information you can get.</div>
+      <p style="margin:0;font-size:15.5px">Used for <b>major purchases</b>: a home, a car, a laptop, a phone plan. It costs something: <b>time and effort</b> spent gathering information.</p>
+      <p class="tip">Rational doesn’t mean perfect. It means comparing the options on purpose instead of grabbing the first one.</p>
+    </div>
+    <div class="kind hab">
+      <div class="kh">Habitual (routine) decisions</div>
+      <div class="ks">Buying the same thing the same way, without much thought.</div>
+      <p style="margin:0;font-size:15.5px">Common for <b>small, repeated purchases</b>: coffee on the way to school, your usual toothpaste. It saves time, and that makes sense when comparing would cost more than it could save.</p>
+      <p class="tip">Habits are great news for the brand you’re loyal to, and a tough wall for its rivals to get past.</p>
+    </div>
+  </div>
+  <div class="note"><b>Habits can flip.</b> A routine purchase turns rational again when something changes: the price jumps, your income drops, or you learn something new, like a recall on your usual brand.</div>
+
+  <!-- WORTH SHOPPING AROUND -->
+  <div class="card" id="worth">
+    <div class="card-label">Is shopping around worth it?</div>
+    <div class="presets2" id="w-presets"></div>
+    <div class="dash">
+      <div>
+        <div class="slider"><label for="w-price">Price of the item <b id="w-price-v"></b></label><input type="range" id="w-price" min="0" max="100" step="1"></div>
+        <div class="slider"><label for="w-pct">How much comparing might save you <b id="w-pct-v"></b></label><input type="range" id="w-pct" min="0" max="40" step="1"></div>
+        <div class="slider"><label for="w-hrs">Time spent comparing <b id="w-hrs-v"></b></label><input type="range" id="w-hrs" min="0" max="40" step="1"></div>
+        <div class="slider"><label for="w-rate">What an hour of your time is worth <b id="w-rate-v"></b></label><input type="range" id="w-rate" min="0" max="40" step="1"></div>
+        <p class="smallprint" style="margin:4px 0 0">Not sure what your time is worth? Start with what you’d earn at a part-time job.</p>
+      </div>
+      <div>
+        <div class="bars">
+          <div class="barrow"><span class="bl">Could save</span><div class="track"><div class="fill" id="w-bar-s" style="background:var(--ok)"></div></div><span class="bv" id="w-bar-s-v"></span></div>
+          <div class="barrow"><span class="bl">Time costs</span><div class="track"><div class="fill" id="w-bar-t" style="background:var(--amber)"></div></div><span class="bv" id="w-bar-t-v"></span></div>
+        </div>
+        <p class="verdict" id="w-verdict"></p>
+        <p class="smallprint" id="w-why" style="margin:0"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RATIONAL OR HABITUAL -->
+  <div class="card" id="rh">
+    <div class="card-label">Rational or habitual? <span class="score" id="rh-score">0 of 0</span></div>
+    <p class="prompt" id="rh-item" aria-live="polite"></p>
+    <div class="pick2">
+      <button class="pbtn demo" id="rh-r">Rational: compares the options</button>
+      <button class="pbtn psy" id="rh-h">Habitual: same thing, little thought</button>
+    </div>
+    <div class="fb" id="rh-fb"></div>
+    <div class="btn-row"><button id="rh-next">Next purchase →</button></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     2.2.A.3–A.6  FOUR INFLUENCES
+     ========================================================= -->
+<section id="shape">
+  <div class="sec-head"><span class="tag">2.2.A</span><h2>What shapes the choice: four kinds of influence</h2></div>
+  <p>Two people can stand in front of the same shelf and make different choices. The course framework sorts the reasons into four groups. Each one shapes something different.</p>
+  <div class="infl">
+    <div class="ig" style="--c:var(--indigo)"><span class="ek2">2.2.A.3</span><div class="ih">Personal</div><div class="chips"><span class="chip">age</span><span class="chip">sex</span><span class="chip">education</span><span class="chip">income level</span><span class="chip">budget</span><span class="chip">occupation</span><span class="chip">lifestyle</span></div><p>Shapes <b>what you need and want, and what you can afford</b>.</p></div>
+    <div class="ig" style="--c:var(--amber)"><span class="ek2">2.2.A.4</span><div class="ih">Psychological</div><div class="chips"><span class="chip">values and beliefs</span><span class="chip">perceptions</span><span class="chip">learning</span><span class="chip">motivations</span></div><p>Shapes <b>your attitude toward a product and your willingness to buy</b>. <i>Learning</i> means associations from past experience: the brand that broke on you twice.</p></div>
+    <div class="ig" style="--c:#2E6B47"><span class="ek2">2.2.A.5</span><div class="ih">Social and cultural</div><div class="chips"><span class="chip">peers</span><span class="chip">family</span><span class="chip">social status</span><span class="chip">cultural norms</span><span class="chip">media</span></div><p>Shapes <b>what feels acceptable, desirable, or appropriate</b> to buy.</p></div>
+    <div class="ig" style="--c:#7A4FA0"><span class="ek2">2.2.A.6</span><div class="ih">Situational</div><div class="chips"><span class="chip">store design: noise, lighting, organization</span><span class="chip">timing</span><span class="chip">product availability</span></div><p>Creates <b>temporary conditions</b> that encourage or discourage buying right now.</p></div>
+  </div>
+  <p class="smallprint">Notice the link to 2.1: personal factors line up with demographic data, and psychological factors with psychographic data.</p>
+
+  <div class="card" id="infl">
+    <div class="card-label">Which kind of influence? <span class="score" id="inf-score">0 of 0</span></div>
+    <p class="prompt" id="inf-item" aria-live="polite"></p>
+    <div class="pick4" id="inf-opts"></div>
+    <div class="fb" id="inf-fb"></div>
+    <div class="btn-row"><button id="inf-next">Next shopper →</button></div>
+  </div>
+
+  <h3 id="store">Store walk-through: find the situational influences</h3>
+  <p>Stores are designed. Tap each spot in this (made-up) store to see how it nudges you while you’re there.</p>
+  <div class="card">
+    <div class="card-label">Main Street Market <span class="score" id="st-found">0 of 7 found</span></div>
+    <div class="store">
+      <div class="map" id="st-map"></div>
+      <div class="fb show hint" id="st-panel" aria-live="polite">Tap a highlighted spot in the store.</div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     Q3  LAWS AND TECHNOLOGY
+     ========================================================= -->
+<section id="patterns">
+  <div class="sec-head"><span class="tag">2.2.B</span><h2>When laws and technology change how we buy</h2></div>
+  <div class="def">
+    <span class="ek">2.2.B.1</span>
+    <div class="term">Purchasing pattern</div>
+    <p>A consumer’s typical routine for making purchases, including the <b>timing</b>, <b>frequency</b>, and <b>quantity</b> of purchases.</p>
+  </div>
+  <div class="pat">
+    <div><b>Timing</b><span>when you buy</span></div>
+    <div><b>Frequency</b><span>how often you buy</span></div>
+    <div><b>Quantity</b><span>how much you buy at once</span></div>
+  </div>
+  <p>Your pattern depends on where you live and work, your income, and the patterns of your family and friends. Two outside forces can change it:</p>
+  <div class="grid2">
+    <div class="mini"><span class="cause law">Laws</span> <span class="smallprint">(2.2.B.2)</span><h4>Regulate what you can buy, and when and where</h4><p><b>Consumer protection laws</b> keep fraudulent or unsafe products off the shelves. When a law makes a product harder to get, the need doesn’t go away, so people turn to <b>substitute products</b>.</p></div>
+    <div class="mini"><span class="cause tech">Technology</span> <span class="smallprint">(2.2.B.3)</span><h4>Makes new products and new ways to shop accessible</h4><p>The <b>internet</b> in the 1990s and <b>smartphones</b> in the 2010s changed how people shop, find information, and get entertainment. Streaming replaced buying DVDs; one-tap ordering makes people buy more often.</p></div>
+  </div>
+
+  <div class="card" id="pat">
+    <div class="card-label">What changed? <span class="score" id="pat-score">0 of 0</span></div>
+    <p class="prompt" id="pat-item" aria-live="polite"></p>
+    <div class="opts" id="pat-opts"></div>
+    <div class="fb" id="pat-fb"></div>
+    <div class="btn-row"><button id="pat-next">Next change →</button></div>
+  </div>
+
+  <div class="pf">
+    <div class="pf-h">Personal finance link · Spending</div>
+    <p style="margin:0">Technology that makes buying easier also makes spending easier. One-tap checkout, saved cards, automatic subscriptions, and “pay in 4” buttons all remove the pause where you’d normally ask, “Do I need this?” Put the pause back: check your subscriptions every few months and cancel the ones you forgot about.</p>
+  </div>
+</section>
+
+<!-- =========================================================
+     Q4  CIALDINI
+     ========================================================= -->
+<section id="influence">
+  <div class="sec-head"><span class="tag">2.2.C</span><h2>Cialdini’s principles of influence</h2></div>
+  <div class="def">
+    <span class="ek">2.2.C.1</span>
+    <div class="term">Principles of influence</div>
+    <p>Psychological factors, identified by psychologist Robert Cialdini, that cause people to comply with a request. Marketers build sales tactics on these principles to motivate consumers to buy.</p>
+  </div>
+  <p>There are seven. Learn the one-line “tell” for each, and you’ll start spotting them everywhere <span class="smallprint">(2.2.C.2–2.2.C.8)</span>.</p>
+  <div class="prins" id="prins"></div>
+
+  <h3>The four that get mixed up</h3>
+  <p>Authority, liking, consensus, and unity all involve <i>other people</i>. Ask <b>who</b> is persuading you, and why it works:</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Principle</th><th>It works because…</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td><b>Authority</b></td><td>the person is an <b>expert</b></td><td>A dentist recommends the toothpaste.</td></tr>
+      <tr><td><b>Liking</b></td><td>you <b>like</b> or relate to the person</td><td>Your favorite creator loves the snack.</td></tr>
+      <tr><td><b>Consensus</b></td><td><b>lots of people</b> already chose it</td><td>12,000 five-star reviews.</td></tr>
+      <tr><td><b>Unity</b></td><td>they’re <b>“one of us”</b>: you share an identity</td><td>“Made by gamers, for gamers.”</td></tr>
+    </tbody>
+  </table></div>
+  <p><b>Consistency vs. unity</b> trips people up too. <b>Consistency</b> is about your <i>self-image</i>: “for health-conscious people like you” works because you want to act like the person you think you are. <b>Unity</b> is about <i>belonging to a group</i>: “join our members-only community” or “help us design the next flavor.”</p>
+
+  <!-- NAME THAT TACTIC -->
+  <div class="card" id="tactic">
+    <div class="card-label">Name that tactic <span class="score" id="tac-score">0 of 0</span></div>
+    <p class="smallprint" style="margin:0 0 10px">Real kinds of marketing, fictional brands. Which principle is each one using?</p>
+    <div class="stage" id="tac-ad" aria-live="polite"></div>
+    <div class="pick7" id="tac-opts"></div>
+    <div class="fb" id="tac-fb"></div>
+    <div class="btn-row"><button id="tac-next">Next ad →</button></div>
+    <div class="tally" id="tac-tally"></div>
+  </div>
+
+  <div class="note"><b>Using them honestly.</b> Every principle can be used honestly or deceptively. A real limited edition is scarcity; a countdown timer that resets every time you reload the page is a lie. Real reviews are consensus; fake reviews are deception, and the Federal Trade Commission can penalize businesses that use them.</div>
+
+  <!-- DESIGN A NUDGE -->
+  <h3 id="develop">Develop a sales tactic</h3>
+  <p>This is the <b>project link</b> for this topic: <i>Customer, Task 2: develop a sales tactic drawing on principles of persuasion.</i> Pick a principle, name your target customer, and write the line they’d see. The ad builds itself as you type.</p>
+  <div class="card">
+    <div class="nb">
+      <div>
+        <label class="fld"><span>Principle</span><select id="n-prin"></select></label>
+        <label class="fld"><span>Product or business</span><input id="n-prod" placeholder="What are you selling?"></label>
+        <label class="fld"><span>Target customer</span><input id="n-who" placeholder="Who is this for? (from your 2.1 customer profile)"></label>
+        <label class="fld"><span>Format</span><select id="n-fmt"><option value="prod">Product page badge</option><option value="push">Phone notification</option><option value="mail">Email subject line</option><option value="sign">Store sign</option><option value="social">Social media post</option></select></label>
+        <label class="fld"><span>Your line</span><textarea id="n-line" placeholder="Write the message a customer would see"></textarea></label>
+        <label class="fld"><span>Why this principle should work on them</span><textarea id="n-fit" placeholder="Evaluate it: what about your target customer makes this principle effective?"></textarea></label>
+        <p class="smallprint" id="n-hint" style="margin:0"></p>
+      </div>
+      <div>
+        <div class="stage" id="n-ad"></div>
+        <div class="stepl">Honesty check</div>
+        <ul class="honest">
+          <li><label><input type="checkbox" class="hc"> It’s true. The scarcity, reviews, expert, or gift is real.</label></li>
+          <li><label><input type="checkbox" class="hc"> A customer would still be glad they bought it a month later.</label></li>
+          <li><label><input type="checkbox" class="hc"> It doesn’t hide the price or the terms.</label></li>
+        </ul>
+        <div class="fb show hint" id="n-out">Fill in the tactic and check the three boxes.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pf">
+    <div class="pf-h">Personal finance link · Spending</div>
+    <p style="margin:0 0 8px">When you feel pressure to buy, name the principle, then ask:</p>
+    <ul style="margin:0">
+      <li><b>Scarcity:</b> Would I still want it if there were plenty left?</li>
+      <li><b>Authority:</b> Who is this expert, and were they paid to say it?</li>
+      <li><b>Consensus:</b> Are the reviews real, and are those people like me?</li>
+      <li><b>Liking:</b> Would I buy this if someone I didn’t care about were selling it?</li>
+      <li><b>Reciprocity:</b> Do I owe them anything for a free sample? (No.)</li>
+      <li><b>Consistency:</b> Is my streak or past choice still a good reason now?</li>
+      <li><b>Unity:</b> Does being “one of us” require buying this?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- =========================================================
+     CHECK YOURSELF
+     ========================================================= -->
+<section id="check">
+  <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
+  <p>Twelve multiple-choice questions in the style of the AP Exam, covering all three learning objectives. The first three share one product page, like a set-based question on the exam.</p>
+  <div class="card" id="quiz"></div>
+  <div class="btn-row"><button class="ghost" id="quiz-reset">Start over</button></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">Next: 2.3 Market Research</div>
+      <p>You know why customers buy. Next: how a business finds out what they want.</p>
+    </div>
+    <a href="/ap-business/unit-2/">Back to Unit 2 →</a>
+  </div>
+</section>
+
+<footer>
+  <p>Topic 2.2 Consumer Behavior, following the AP Business with Personal Finance course framework (Learning Objectives 2.2.A–2.2.C). Businesses, people, and ads on this page are fictional. Practice items reshuffle every time you load the page.</p>
+  <p><a href="/ap-business/unit-2/">← Unit 2 — Marketing</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function shuffle(a){ a = a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; node.innerHTML = ''; }
+function money(x,dec){ if(dec===undefined) dec = (Math.abs(x-Math.round(x))<1e-9) ? 0 : 2; return '$' + x.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+var store = {
+  get:function(k){ try{ var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; }catch(e){ return null; } },
+  set:function(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+/* Cycles through a bank in random order without repeats until it runs out. */
+function Deck(bank){
+  var order = [], i = 0;
+  return { next:function(){ if(i >= order.length){ order = shuffle(bank); i = 0; } return order[i++]; } };
+}
+/* A one-question-at-a-time drill with a fixed set of answer buttons.
+   cfg: {bank:[[text, answerKey, why]], keys:[[key, label, color, short name for feedback]], item, opts, fb, next, score, cls, prefix} */
+function Drill(cfg){
+  var deck = Deck(cfg.bank), cur, done, sc = Score(el(cfg.score)), fb = el(cfg.fb), box = el(cfg.opts);
+  var label = {}; cfg.keys.forEach(function(k){ label[k[0]] = k[3] || k[1]; });
+  function show(){
+    cur = deck.next(); done = false; hideFb(fb);
+    el(cfg.item).innerHTML = (cfg.prefix ? '<span class="who">' + cfg.prefix + '</span>' : '') + cur[0];
+    box.innerHTML = '';
+    (cfg.shuffle ? shuffle(cfg.keys) : cfg.keys).forEach(function(k){
+      var b = document.createElement('button');
+      b.className = cfg.cls; b.textContent = k[1]; b.setAttribute('data-k', k[0]);
+      if(k[2]) b.style.setProperty('--c', k[2]);
+      b.onclick = function(){ answer(b, k[0]); };
+      box.appendChild(b);
+    });
+  }
+  function answer(b, k){
+    if(done) return; done = true;
+    var ok = k === cur[1]; sc.add(ok);
+    var yes = cfg.cls === 'opt' ? ' picked-yes' : ' yes', no = cfg.cls === 'opt' ? ' picked-no' : ' no';
+    Array.prototype.forEach.call(box.children, function(x){ x.disabled = true; if(!ok && x.getAttribute('data-k') === cur[1]) x.className += ' reveal'; });
+    b.className += ok ? yes : no;
+    setFb(fb, ok ? 'good' : 'bad', '<b>' + (ok ? 'Right: ' : 'Not quite. It’s ') + esc(label[cur[1]]).toLowerCase() + '.</b> ' + cur[2]);
+    el(cfg.next).focus();
+  }
+  el(cfg.next).onclick = show;
+  show();
+}
+
+/* =========================================================
+   2.2.A.1  Pick a backpack
+   ========================================================= */
+(function(){
+  var BASE = [
+    {id:'A', n:'TrailPack Basic', p:28, f:'Plain and sturdy. Two zip pockets.', a:'In stock at the store by school', ad:'No ads. You’ve never heard of it.'},
+    {id:'B', n:'Commuter Pro', p:64, f:'Padded laptop sleeve, waterproof, lifetime warranty', a:'Ships in 5–7 days', ad:'A few ads on sports sites'},
+    {id:'C', n:'Atlas Daypack', p:49, f:'Two pockets and a water bottle holder', a:'2-day shipping', ad:'In every other ad on your feed: “#1 back-to-school pick”'}
+  ];
+  var TWISTS = [
+    {t:'The Commuter Pro goes on sale', f:'p', id:'B', v:39, why:'price', good:true},
+    {t:'The TrailPack sells out by school', f:'a', id:'A', v:'Sold out. Ships in 2 weeks.', why:'availability', good:false},
+    {t:'The Atlas adds a laptop sleeve', f:'f', id:'C', v:'Laptop sleeve, two pockets, water bottle holder', why:'differentiated features', good:true},
+    {t:'Your friends start posting the TrailPack', f:'ad', id:'A', v:'Your whole team is posting it this week', why:'advertising (and your peers)', good:true}
+  ];
+  var FAC = [['price','Price'],['features','Differentiated features'],['availability','Availability'],['advertising','Advertising']];
+  var cur, picked = null, history = [], twist = null;
+  var box = el('bps'), fb = el('pick-fb');
+  function reset(){ cur = BASE.map(function(b){ return Object.assign({}, b); }); picked = null; history = []; twist = null; el('pick-why').hidden = true; el('twist-box').hidden = true; hideFb(fb); render(); renderTwists(); }
+  function render(){
+    box.innerHTML = '';
+    cur.forEach(function(b){
+      var ch = twist && twist.id === b.id ? twist.f : '';
+      var btn = document.createElement('button');
+      btn.className = 'bp'; btn.setAttribute('aria-pressed', picked === b.id ? 'true' : 'false');
+      btn.innerHTML = '<span class="bn">' + esc(b.n) + '</span>' +
+        '<span class="bpr' + (ch === 'p' ? ' changed' : '') + '">' + money(b.p) + '</span>' +
+        '<span class="row' + (ch === 'f' ? ' changed' : '') + '"><b>Features</b>' + esc(b.f) + '</span>' +
+        '<span class="row' + (ch === 'a' ? ' changed' : '') + '"><b>Availability</b>' + esc(b.a) + '</span>' +
+        '<span class="row' + (ch === 'ad' ? ' changed' : '') + '"><b>Advertising</b>' + esc(b.ad) + '</span>';
+      btn.onclick = function(){ choose(b); };
+      box.appendChild(btn);
+    });
+  }
+  function choose(b){
+    var before = picked;
+    picked = b.id; render();
+    if(!history.length){
+      history.push({id:b.id});
+      el('pick-why').hidden = false;
+      el('why4').innerHTML = FAC.map(function(f){ return '<label><input type="checkbox" value="' + f[0] + '"> ' + f[1] + '</label>'; }).join('');
+      return;
+    }
+    if(!twist) return;
+    var name = function(id){ return cur.filter(function(x){ return x.id === id; })[0].n; };
+    var line = before === b.id ? 'You stuck with the ' + name(b.id) + '. That change in ' + twist.why + ' wasn’t enough to move you.'
+             : (b.id === twist.id && twist.good) ? 'You switched to the ' + name(b.id) + '. One change in ' + twist.why + ' was enough to pull you over.'
+             : (before === twist.id && !twist.good) ? 'You switched away from the ' + name(before) + '. One change in ' + twist.why + ' pushed you to a rival.'
+             : 'You switched from the ' + name(before) + ' to the ' + name(b.id) + ' after the change in ' + twist.why + '.';
+    history.push({id:b.id, t:twist.t});
+    el('pick-log').innerHTML = line;
+    setFb(fb, 'hint', '<b>That’s a rival good competing.</b> The businesses can’t control your needs, but they can change the price, the features, how easy the product is to get, and how much you hear about it. Try another “what if.”');
+  }
+  el('why-go').onclick = function(){
+    var got = Array.prototype.filter.call(el('why4').querySelectorAll('input'), function(i){ return i.checked; }).map(function(i){ return i.value; });
+    if(!got.length){ setFb(fb, 'hint', 'Check at least one reason.'); return; }
+    var names = got.map(function(g){ return FAC.filter(function(f){ return f[0] === g; })[0][1].toLowerCase(); });
+    var p = cur.filter(function(x){ return x.id === picked; })[0];
+    setFb(fb, 'good', '<p><b>You chose the ' + esc(p.n) + ' because of ' + names.join(', ').replace(/, ([^,]*)$/, ' and $1') + '.</b></p>' +
+      '<p>Those are the four things the course framework says decide between rival goods: <b>price, differentiated features, availability, and advertising</b> (2.2.A.1). Each backpack was built to win on a different one: the TrailPack on price and being right there, the Commuter Pro on features, the Atlas on advertising.</p>');
+    el('pick-why').hidden = true;
+    el('twist-box').hidden = false;
+    el('pick-log').textContent = 'Now try a “what if.” Each one changes one factor for one backpack.';
+  };
+  function renderTwists(){
+    el('twists').innerHTML = '';
+    TWISTS.forEach(function(t){
+      var b = document.createElement('button'); b.className = 'ghost'; b.textContent = t.t; b.setAttribute('aria-pressed', 'false');
+      b.onclick = function(){
+        cur = BASE.map(function(x){ return Object.assign({}, x); });
+        cur.forEach(function(x){ if(x.id === t.id) x[t.f] = t.v; });
+        twist = t;
+        Array.prototype.forEach.call(el('twists').children, function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        render();
+        el('pick-log').innerHTML = '<b>' + esc(t.t) + '.</b> The changed detail is highlighted. Would you switch? Pick again.';
+        hideFb(fb);
+      };
+      el('twists').appendChild(b);
+    });
+  }
+  el('pick-reset').onclick = reset;
+  reset();
+})();
+
+/* =========================================================
+   2.2.A.1  What drove the decision?
+   ========================================================= */
+Drill({
+  item:'fac-item', opts:'fac-opts', fb:'fac-fb', next:'fac-next', score:'fac-score', cls:'opt', shuffle:false,
+  keys:[['price','Price'],['features','Differentiated features'],['availability','Availability'],['advertising','Advertising']],
+  bank:[
+    ['Two brands of AA batteries do the same job. Leo grabs the store brand because it’s $3 cheaper.', 'price', 'The products are the same; the lower price decided it.'],
+    ['A streaming service raises its price by $5 a month, so Sofia switches to a rival with similar shows.', 'price', 'The rival meets the same want, and the price change pushed her over.'],
+    ['Dev buys the generic allergy medicine, which has the same active ingredient as the name brand and costs half as much.', 'price', 'Same need met, lower price.'],
+    ['Ana buys the water bottle that keeps drinks cold for 24 hours, even though a cheaper bottle holds just as much.', 'features', 'She paid more for a feature that sets this bottle apart from its rivals.'],
+    ['Marcus picks the phone with the better camera because he runs a photography account.', 'features', 'The camera is a differentiated feature that matters to him.'],
+    ['A parent chooses the car seat that clicks in with one hand, even though it costs more.', 'features', 'Easy installation is a feature that sets this seat apart.'],
+    ['Jordan’s charger breaks the morning of a trip. The airport shop sells one brand, so that’s the one she buys.', 'availability', 'She bought what she could get, when and where she needed it.'],
+    ['The sneakers Kai wanted are sold out in his size, so he buys a similar pair that’s in stock.', 'availability', 'The first choice wasn’t available, so a rival won.'],
+    ['Priya orders from the grocery app that delivers in an hour instead of the one with a three-day wait.', 'availability', 'Getting it sooner is about availability.'],
+    ['After seeing the same catchy ad before every video for a week, Tyler tries that brand of energy bar.', 'advertising', 'Repeated ads made this brand the one he thought of first.'],
+    ['Mia had never heard of a new sports drink until she saw it on a stadium billboard. She tries it the next day.', 'advertising', 'Advertising made her aware of the product in the first place.'],
+    ['A sandwich shop’s commercial shows a melty grilled cheese, and Sam orders one that night instead of his usual burger.', 'advertising', 'The ad pulled him away from his usual choice.']
+  ]
+});
+
+/* =========================================================
+   2.2.A.2  Is shopping around worth it?
+   ========================================================= */
+(function(){
+  var P = el('w-price'), Pc = el('w-pct'), H = el('w-hrs'), R = el('w-rate'), fixed = null;
+  var PRESETS = [['Pack of gum', 2, 10, 1, 15], ['Running shoes', 120, 20, 4, 15], ['Laptop for school', 900, 15, 12, 15], ['Used car', 9000, 10, 32, 15]];
+  function priceOf(s){ var v = Math.pow(10, 4 * s / 100); return v < 20 ? Math.round(v * 2) / 2 : v < 200 ? Math.round(v) : v < 2000 ? Math.round(v / 10) * 10 : Math.round(v / 100) * 100; }
+  function sliderOf(price){ return Math.round(100 * Math.log10(price) / 4); }
+  function hrsTxt(q){ var h = q / 4; return h === 0 ? 'none' : h < 1 ? Math.round(h * 60) + ' min' : (h % 1 ? h.toFixed(2).replace(/0$/, '') : h) + (h === 1 ? ' hour' : ' hours'); }
+  function update(){
+    var price = fixed !== null ? fixed : priceOf(+P.value), pct = +Pc.value, hrs = +H.value / 4, rate = +R.value;
+    var save = price * pct / 100, cost = hrs * rate, mx = Math.max(save, cost, 0.01);
+    el('w-price-v').textContent = money(price);
+    el('w-pct-v').textContent = pct + '%';
+    el('w-hrs-v').textContent = hrsTxt(+H.value);
+    el('w-rate-v').textContent = money(rate) + '/hr';
+    el('w-bar-s').style.width = (100 * save / mx) + '%'; el('w-bar-s-v').textContent = money(save, save < 10 ? 2 : 0);
+    el('w-bar-t').style.width = (100 * cost / mx) + '%'; el('w-bar-t-v').textContent = money(cost, cost < 10 ? 2 : 0);
+    var v = el('w-verdict'), w = el('w-why');
+    if(save === 0 && cost === 0){ v.className = 'verdict'; v.textContent = 'Move the sliders.'; w.textContent = ''; return; }
+    if(save > cost){
+      v.className = 'verdict go'; v.textContent = 'Worth thinking it through';
+      w.innerHTML = 'Comparing could save about <b>' + money(save, 0) + '</b>, more than the <b>' + money(cost, 0) + '</b> your time is worth. A rational process pays for itself here.' +
+        (price >= 500 ? ' Big purchases also last a long time, so a mistake costs more. That’s why the course framework’s example of a rational process is buying a home.' : '');
+    } else {
+      v.className = 'verdict skip'; v.textContent = 'A habit is fine here';
+      w.innerHTML = 'Comparing would cost about <b>' + money(cost, cost < 10 ? 2 : 0) + '</b> in time to save about <b>' + money(save, save < 10 ? 2 : 0) + '</b>. That’s why small, repeated purchases are usually habitual.';
+    }
+  }
+  el('w-presets').innerHTML = PRESETS.map(function(p, i){ return '<button class="tab" data-i="' + i + '" aria-selected="false">' + p[0] + '</button>'; }).join('');
+  Array.prototype.forEach.call(el('w-presets').children, function(b){
+    b.onclick = function(){
+      var p = PRESETS[+b.dataset.i];
+      fixed = p[1]; P.value = sliderOf(p[1]); Pc.value = p[2]; H.value = p[3]; R.value = p[4];
+      Array.prototype.forEach.call(el('w-presets').children, function(x){ x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
+      update();
+    };
+  });
+  P.oninput = function(){ fixed = null; update(); };
+  [Pc, H, R].forEach(function(x){ x.oninput = update; });
+  el('w-presets').children[1].onclick();
+})();
+
+/* =========================================================
+   2.2.A.2  Rational or habitual?
+   ========================================================= */
+(function(){
+  var RA = 'r', HA = 'h';
+  var bank = [
+    ['Before buying her first car, Elena compares five models’ prices, gas mileage, and safety ratings over three weekends.', RA, 'A consequential purchase, with alternatives compared on purpose.'],
+    ['The Garcias compare three apartments’ rent, distance to work, and utility costs before signing a lease.', RA, 'A big, long-lasting decision made by systematically evaluating alternatives.'],
+    ['Your usual shampoo jumps from $6 to $11, so you compare a few brands’ prices before choosing one.', RA, 'A habit flipped to rational because the price changed.'],
+    ['After a recall on his usual brand of baby formula, Tom researches which brands are safe.', RA, 'New information turned a routine purchase into a rational one.'],
+    ['Jae reads laptop reviews and compares battery life and prices before buying one for college.', RA, 'He’s comparing alternatives before a major purchase.'],
+    ['Ruby compares data limits and monthly costs from three phone carriers before signing up.', RA, 'She’s gathering information to find the plan that best fits her needs.'],
+    ['Every morning on the way to school, Nate buys the same iced coffee without looking at the menu.', HA, 'This is the framework’s own example of a habitual purchase.'],
+    ['Kim tosses her usual toothpaste into the cart without checking other brands.', HA, 'Small, repeated, and done without comparing: habitual.'],
+    ['Every Friday, the Lees order pizza from the same place.', HA, 'A routine purchase made the same way every week.'],
+    ['Omar’s bus pass refills automatically every month.', HA, 'He doesn’t decide again each month; the routine runs itself.'],
+    ['Ava grabs the same pack of gum at the register whenever she’s at the store.', HA, 'Too small to be worth comparing, so it’s a habit.'],
+    ['Mr. Ortiz buys the same brand of coffee beans every two weeks.', HA, 'A repeated purchase made out of routine.']
+  ];
+  var deck = Deck(bank), cur, done, sc = Score(el('rh-score')), fb = el('rh-fb'), br = el('rh-r'), bh = el('rh-h');
+  function show(){
+    cur = deck.next(); done = false; hideFb(fb);
+    el('rh-item').textContent = cur[0];
+    [br, bh].forEach(function(b){ b.disabled = false; b.className = b.className.replace(/ (yes|no|reveal)/g, ''); });
+  }
+  function answer(k){
+    if(done) return; done = true;
+    var ok = k === cur[1]; sc.add(ok);
+    var btn = k === RA ? br : bh, right = cur[1] === RA ? br : bh;
+    btn.className += ok ? ' yes' : ' no'; if(!ok) right.className += ' reveal';
+    [br, bh].forEach(function(b){ b.disabled = true; });
+    setFb(fb, ok ? 'good' : 'bad', '<b>' + (ok ? 'Right: ' : 'Not quite. It’s ') + (cur[1] === RA ? 'rational' : 'habitual') + '.</b> ' + esc(cur[2]));
+    el('rh-next').focus();
+  }
+  br.onclick = function(){ answer(RA); };
+  bh.onclick = function(){ answer(HA); };
+  el('rh-next').onclick = show;
+  show();
+})();
+
+/* =========================================================
+   2.2.A.3–A.6  Which kind of influence?
+   ========================================================= */
+Drill({
+  item:'inf-item', opts:'inf-opts', fb:'inf-fb', next:'inf-next', score:'inf-score', cls:'pbtn', shuffle:false,
+  keys:[['per','Personal','var(--indigo)'],['psy','Psychological','var(--amber)'],['soc','Social and cultural','#2E6B47'],['sit','Situational','#7A4FA0']],
+  bank:[
+    ['Now that she’s retired, Ms. Patel buys fewer work clothes and more gardening supplies.', 'per', 'Age, occupation, and lifestyle are personal factors. They change what she needs and wants.'],
+    ['With a $40 weekly grocery budget, Diego buys store-brand cereal.', 'per', 'Budget is a personal factor: it shapes what he can afford.'],
+    ['A nurse buys three pairs of supportive shoes a year because she stands through 12-hour shifts.', 'per', 'Her occupation shapes what she needs.'],
+    ['After his parents both get raises, Theo’s family starts eating out twice a week.', 'per', 'Income level is a personal factor.'],
+    ['Lena only buys makeup that isn’t tested on animals.', 'psy', 'Values and beliefs are psychological factors.'],
+    ['Ben assumes the most expensive headphones must be the best ones.', 'psy', 'That’s a perception: a belief about price and quality.'],
+    ['After two phone cases from one brand cracked, Kayla won’t buy that brand again.', 'psy', 'This is learning: an association built from her own past experience.'],
+    ['Wanting to make varsity next year, Andre buys a jump-training program.', 'psy', 'An individual motivation is driving the purchase.'],
+    ['Everyone on Zoe’s soccer team wears the same brand of slides, so she buys a pair.', 'soc', 'Peers shape what feels desirable to buy.'],
+    ['Sam buys the same laundry detergent his mom always bought.', 'soc', 'Family is a social factor.'],
+    ['For Lunar New Year, Mei’s family buys red envelopes and new clothes.', 'soc', 'Cultural norms shape what is appropriate to buy.'],
+    ['Carlos buys a luxury watch to show he’s made it at work.', 'soc', 'He’s buying for social status.'],
+    ['Upbeat music in a clothing store keeps Ava browsing for an hour longer than she planned.', 'sit', 'Store design, here the sound, creates a temporary condition that encourages buying.'],
+    ['While waiting in line at checkout, Jay grabs a candy bar from the rack.', 'sit', 'Store organization and the moment (waiting in line) made the sale.'],
+    ['It suddenly starts pouring, and a street vendor sells out of umbrellas in ten minutes.', 'sit', 'Timing created a temporary reason to buy.'],
+    ['The store is out of Rosa’s usual pasta sauce, so she buys a different one.', 'sit', 'Product availability in the moment changed her choice.']
+  ]
+});
+
+/* =========================================================
+   2.2.A.6  Store walk-through
+   ========================================================= */
+(function(){
+  var CELLS = [
+    ['Produce', {k:'Lighting', t:'Bright, warm lights over the fruit and vegetables make them look fresher and more tempting.'}],
+    ['Speakers', {k:'Noise', t:'Slow, calm background music keeps shoppers relaxed, so they move slower and browse longer.'}],
+    ['Deli', null],
+    ['Milk and eggs', {k:'Organization', t:'Everyday staples are often at the back of the store, so you walk past many other products to reach them.'}],
+    ['Sign: today only', {k:'Timing', t:'A “today only” price gives you a temporary reason to buy now instead of later.'}],
+    ['Aisle 1', null],
+    ['Aisle 2', null],
+    ['End of aisle', {k:'Organization', t:'Displays at the end of an aisle catch your eye as you turn the corner. Brands often pay for this spot.'}],
+    ['Freezers', null],
+    ['Empty shelf', {k:'Product availability', t:'Your usual brand is out of stock, so today you buy a rival or skip it. That’s a temporary condition, not your normal choice.'}],
+    ['Aisle 3', null],
+    ['Pharmacy', null],
+    ['Entrance', {k:'Organization and timing', t:'The first thing you see is a seasonal display, timed to what people are shopping for this week, like back-to-school or a holiday.'}],
+    ['Cart corral', null],
+    ['Checkout', {k:'Organization and timing', t:'Candy, gum, and cold drinks sit where you wait in line with nothing to do. That’s the moment impulse buys happen.'}],
+    ['Exit', null]
+  ];
+  var seen = {}, total = CELLS.filter(function(c){ return c[1]; }).length, map = el('st-map');
+  function count(){ el('st-found').textContent = Object.keys(seen).length + ' of ' + total + ' found'; }
+  CELLS.forEach(function(c, i){
+    var z;
+    if(c[1]){
+      z = document.createElement('button'); z.className = 'z';
+      z.onclick = function(){
+        seen[i] = 1; count();
+        Array.prototype.forEach.call(map.querySelectorAll('button.z'), function(x){ x.classList.toggle('on', x === z); });
+        z.classList.add('seen');
+        var n = Object.keys(seen).length;
+        setFb(el('st-panel'), 'hint', '<p><b>' + esc(c[0]) + ' · ' + esc(c[1].k) + '</b></p><p>' + esc(c[1].t) + '</p>' +
+          (n === total ? '<p><b>All ' + total + ' found.</b> Every one is a situational influence: a temporary condition in the store, not something about who you are.</p>' : ''));
+      };
+    } else { z = document.createElement('div'); z.className = 'z'; }
+    z.textContent = c[0];
+    map.appendChild(z);
+  });
+  count();
+})();
+
+/* =========================================================
+   2.2.B  What changed?
+   ========================================================= */
+Drill({
+  item:'pat-item', opts:'pat-opts', fb:'pat-fb', next:'pat-next', score:'pat-score', cls:'opt', shuffle:false,
+  keys:[['timing','Timing: when they buy',null,'timing'],['freq','Frequency: how often they buy',null,'frequency'],['qty','Quantity: how much they buy at once',null,'quantity'],['sub','What they buy: a substitute product',null,'a switch to a substitute']],
+  bank:[
+    ['<span class="cause law">Law</span><br>A city bans single-use plastic bags at checkout. Shoppers start buying reusable bags.', 'sub', 'The law made the old product harder to get, and the need didn’t go away, so a substitute took its place.'],
+    ['<span class="cause law">Law</span><br>A state holds a sales-tax holiday on school supplies the first weekend of August. Families wait until that weekend to shop.', 'timing', 'The tax law shifted <i>when</i> people buy.'],
+    ['<span class="cause law">Law</span><br>A law limits pharmacies to selling two boxes of a certain cold medicine per customer per visit.', 'qty', 'The law caps <i>how much</i> someone can buy at once.'],
+    ['<span class="cause law">Law</span><br>A consumer protection law bans a toy made with small, powerful magnets after children were hurt. Parents buy a different building set instead.', 'sub', 'Consumer protection laws keep unsafe products off shelves, and families switch to a substitute that meets the same want.'],
+    ['<span class="cause law">Law</span><br>A town lets stores open on Sundays for the first time. Many families move their weekly grocery trip to Sunday afternoon.', 'timing', 'The law changed when stores can sell, which changed when people shop.'],
+    ['<span class="cause tech">Technology</span><br>Streaming apps let people watch movies anytime, and households stop buying DVDs.', 'sub', 'Streaming became a substitute that meets the same want, entertainment, in a new way.'],
+    ['<span class="cause tech">Technology</span><br>A coffee chain’s app lets customers order ahead in one tap. Regulars start stopping in four times a week instead of two.', 'freq', 'Easier ordering made people buy <i>more often</i>.'],
+    ['<span class="cause tech">Technology</span><br>Bulk delivery apps make huge packs easy to get, so a family starts buying paper towels 24 rolls at a time.', 'qty', 'Delivery changed <i>how much</i> they buy at once.'],
+    ['<span class="cause tech">Technology</span><br>A “pay in 4” button at checkout lets shoppers split a $200 purchase into payments, so some buy now instead of saving up first.', 'timing', 'The technology moved the purchase <i>earlier</i>. (It also makes overspending easier.)'],
+    ['<span class="cause tech">Technology</span><br>A razor company’s subscription ships new blades every month, so customers replace blades more regularly than before.', 'freq', 'Automatic shipments changed <i>how often</i> people buy.'],
+    ['<span class="cause tech">Technology</span><br>Smartphone shopping apps let people order from bed at 11 p.m., long after stores close.', 'timing', 'Smartphones changed <i>when</i> people can shop.']
+  ]
+});
+
+/* =========================================================
+   2.2.C  Principles, Name that tactic, Develop a sales tactic
+   ========================================================= */
+var PRIN = [
+  {k:'scarcity', n:'Scarcity', c:'#A63D2F', tell:'“It might run out.”', idea:'The rarer an item seems, the more people tend to want it.', move:'Phrases like “limited-time offer” or “only one left at this price” that create a sense of urgency.', check:'Would I still want it if there were plenty left?'},
+  {k:'authority', n:'Authority', c:'#273C78', tell:'“An expert says so.”', idea:'People tend to obey or follow authority figures.', move:'Expert spokespeople, such as doctors, endorse the product, or ads emphasize the credentials of service providers.', check:'Who is this expert, and were they paid to say it?'},
+  {k:'consensus', n:'Consensus', c:'#2E6B47', tell:'“Everyone else likes it.”', idea:'People tend to follow the norms of their social group.', move:'Promoting positive customer feedback to create a sense that most consumers like the product.', check:'Are the reviews real, and are those people like me?'},
+  {k:'liking', n:'Liking', c:'#B4547A', tell:'“Someone like me loves it.”', idea:'People are more likely to be influenced by people they like or relate to.', move:'Ads featuring people who look and act like the target customer, and salespeople who build personal rapport.', check:'Would I buy this if someone I didn’t care about were selling it?'},
+  {k:'reciprocity', n:'Reciprocity', c:'#A8670F', tell:'“They gave me something first.”', idea:'People feel obligated to give back when they receive something of value.', move:'Free trials, samples, and gifts that make people feel they should buy something in return.', check:'Do I owe them anything for a free sample? (No.)'},
+  {k:'consistency', n:'Consistency', c:'#3E7C8A', tell:'“That’s who I am.”', idea:'People tend to repeat behavior that matches their self-image.', move:'Appealing to identity, for example promoting a product as something health-conscious consumers buy.', check:'Is this really about who I am, or is it just a label on a product?'},
+  {k:'unity', n:'Unity', c:'#7A4FA0', tell:'“We’re in this together.”', idea:'People who feel part of a group are more likely to be influenced by that group.', move:'Building a community among target customers: an exclusive online group, or inviting them to co-create products.', check:'Does being “one of us” actually require buying this?'}
+];
+var PBY = {}; PRIN.forEach(function(p){ PBY[p.k] = p; });
+
+el('prins').innerHTML = PRIN.map(function(p){
+  return '<div class="prin" style="--c:' + p.c + '"><div class="pnm">' + p.n + '</div><div class="tell">' + p.tell + '</div><p>' + p.idea + '</p>' +
+    '<div class="mv"><b>Marketers’ move</b>' + p.move + '</div></div>';
+}).join('');
+
+/* A mock ad. d = {f:format, ...fields}. Every field is escaped. */
+function adHTML(d){
+  var e = function(k){ return esc(d[k] || ''); };
+  switch(d.f){
+    case 'prod': return '<div class="ad prod"><div class="img">' + (d.badge ? '<span class="badge">' + e('badge') + '</span>' : '') + 'product photo</div><div class="body"><div class="pn">' + e('name') + '</div>' + (d.price ? '<div class="pp">' + e('price') + '</div>' : '') + (d.sub ? '<div class="ps">' + e('sub') + '</div>' : '') + '</div></div>';
+    case 'push': return '<div class="ad push"><div class="ic">' + e('ic') + '</div><div><div class="top"><span>' + e('app') + '</span><span>now</span></div><div class="t">' + e('title') + '</div>' + (d.body ? '<div class="b">' + e('body') + '</div>' : '') + '</div></div>';
+    case 'mail': return '<div class="ad mail"><div class="mh"><span class="from">' + e('from') + '</span><span>9:41 AM</span></div><div class="subj">' + e('subj') + '</div>' + (d.prev ? '<div class="prev">' + e('prev') + '</div>' : '') + '</div>';
+    case 'sign': return '<div class="ad sign">' + e('big') + (d.small ? '<small>' + e('small') + '</small>' : '') + '</div>';
+    case 'social': return '<div class="ad social"><div class="wr"><div class="av">' + e('av') + '</div><div><div class="h">' + e('h') + '</div><div class="meta">' + e('meta') + '</div></div></div><div class="txt">' + e('txt') + '</div></div>';
+    case 'say': return '<div class="ad say"><div class="s">' + e('who') + '</div><div class="q2">“' + e('q') + '”</div></div>';
+    case 'checkout': return '<div class="ad checkout"><div class="kind-l">Checkout</div>' + d.lines.map(function(l){ return '<div class="ln"><span>' + esc(l[0]) + '</span><span>' + esc(l[1]) + '</span></div>'; }).join('') + '<div class="note2">' + e('note') + '</div><div class="go">' + e('go') + '</div></div>';
+  }
+  return '';
+}
+
+(function(){
+  var bank = [
+    {k:'scarcity', f:'prod', name:'Retro Runner 2 · Sunset', price:'$110', badge:'Only 1 left at this price', sub:'Limited release. Won’t be restocked.', why:'A tiny supply and a price that might disappear make the shoe feel more valuable right now.'},
+    {k:'scarcity', f:'push', app:'Beanline', ic:'B', title:'Pumpkin cold brew ends Sunday', body:'Limited-time only. Grab one before it’s gone.', why:'A deadline creates urgency: buy now or miss out.'},
+    {k:'scarcity', f:'mail', from:'Pixel Vault', subj:'Your cart expires in 10:00', prev:'We can only hold these items for a few more minutes.', why:'The countdown makes the items feel like they could disappear, pushing you to check out fast.'},
+    {k:'authority', f:'prod', name:'BrightSmile Whitening Strips', price:'$34', badge:'Recommended by 4 out of 5 dentists', sub:'Clinically tested', why:'Dentists are expert authority figures on teeth, so their endorsement carries weight.'},
+    {k:'authority', f:'social', av:'D', h:'@coach.dana', meta:'Certified strength coach · 12 years', txt:'As a certified trainer, this is the only protein powder I recommend to my athletes.', why:'The pitch leans on credentials and expertise, not on being likable or popular.'},
+    {k:'authority', f:'sign', big:'Tax returns prepared by licensed CPAs', small:'25 years of experience · fully certified staff', why:'Emphasizing the credentials of service providers is the authority principle.'},
+    {k:'consensus', f:'prod', name:'CloudSoft Hoodie', price:'$45', badge:'★ 4.8 · 12,400 reviews', sub:'#1 best seller in hoodies', why:'Thousands of positive reviews create a sense that most people like it.'},
+    {k:'consensus', f:'push', app:'QuizNest', ic:'Q', title:'Join 2 million students', body:'Most students in your grade studied with QuizNest for finals.', why:'It points to what most people in your group already do, so you follow the norm.'},
+    {k:'consensus', f:'sign', big:'Most popular!', small:'9 out of 10 customers add the combo', why:'It tells you what most customers choose.'},
+    {k:'liking', f:'social', av:'M', h:'@mayaeats', meta:'High school senior · 48K followers', txt:'ok you guys know I only post stuff I actually eat between practice and homework. this snack box is SO me.', why:'Maya looks and acts like the target customer, a busy student, so her followers relate to her.'},
+    {k:'liking', f:'say', who:'Salesperson at a shoe store', q:'Wait, you play club volleyball too? I played all through high school. Let me show you the pair I wore.', why:'The salesperson builds personal rapport by finding something in common.'},
+    {k:'liking', f:'sign', big:'Real students. Not models.', small:'Our back-to-school ads star students from your town.', why:'Featuring people who look and act like the target customer makes the brand easier to like.'},
+    {k:'reciprocity', f:'sign', big:'Free samples!', small:'Try our new cinnamon roll. On us.', why:'A free sample is a gift, and gifts make people feel they should buy something back.'},
+    {k:'reciprocity', f:'mail', from:'Harborview Hotel', subj:'A gift for you: we upgraded your room', prev:'Enjoy the ocean view on us. We hope you’ll stay with us again.', why:'A free upgrade is something of value given first, so guests feel like returning the favor.'},
+    {k:'reciprocity', f:'checkout', lines:[['StreamBox Premium', '$0.00'], ['After 30 days', '$12.99/mo']], note:'Your free 30-day trial starts today.', go:'Start free trial', why:'The free trial gives you something first, so paying later feels fair. (Set a reminder before trials end.)'},
+    {k:'consistency', f:'push', app:'LingoLeaf', ic:'L', title:'You’re a 47-day learner', body:'People who practice every day are the ones who become fluent. Keep it going.', why:'It ties the purchase to how you see yourself, a dedicated learner, so you keep repeating the behavior.'},
+    {k:'consistency', f:'prod', name:'Greenline Refill Pouch', price:'$9', badge:'For shoppers who care about the planet', sub:'Refill, don’t rebuy.', why:'It appeals to your identity as an eco-conscious shopper, like the framework’s “health-conscious consumers” example.'},
+    {k:'consistency', f:'sign', big:'You train hard. Fuel like it.', small:'Protein smoothies at the front desk', why:'It appeals to your self-image as a serious athlete.'},
+    {k:'unity', f:'social', av:'T', h:'@trailcrew', meta:'Sponsored', txt:'Built by climbers, for climbers. Welcome to the crew.', why:'It builds a sense of community: the brand and you belong to the same group.'},
+    {k:'unity', f:'mail', from:'Fizz Lab', subj:'Members only: vote on our next flavor', prev:'You and the rest of the Fizz Club get to decide what we make next.', why:'Inviting customers to co-create products builds a sense of community.'},
+    {k:'unity', f:'push', app:'Kicks Club', ic:'K', title:'You’re in: Kicks Insiders', body:'Welcome to our invite-only group chat for sneakerheads. Say hi to the crew.', why:'An exclusive online group makes customers feel like part of the brand’s community.'}
+  ];
+  var deck = Deck(bank), cur, done, sc = Score(el('tac-score')), fb = el('tac-fb'), box = el('tac-opts'), tally = {};
+  PRIN.forEach(function(p){ tally[p.k] = [0, 0]; });
+  function renderTally(){
+    el('tac-tally').innerHTML = PRIN.map(function(p){
+      var t = tally[p.k];
+      return '<div class="tcell' + (t[1] > t[0] ? ' miss' : '') + '" style="--c:' + p.c + '"><span class="tlab">' + p.n + '</span><span class="tval">' + t[0] + '/' + t[1] + '</span></div>';
+    }).join('');
+  }
+  function show(){
+    cur = deck.next(); done = false; hideFb(fb);
+    el('tac-ad').innerHTML = adHTML(cur);
+    box.innerHTML = '';
+    PRIN.forEach(function(p){
+      var b = document.createElement('button'); b.className = 'pbtn'; b.textContent = p.n; b.style.setProperty('--c', p.c);
+      b.onclick = function(){
+        if(done) return; done = true;
+        var ok = p.k === cur.k, a = PBY[cur.k]; sc.add(ok);
+        tally[cur.k][1]++; if(ok) tally[cur.k][0]++; renderTally();
+        Array.prototype.forEach.call(box.children, function(x){ x.disabled = true; if(!ok && x.textContent === a.n) x.className += ' reveal'; });
+        b.className += ok ? ' yes' : ' no';
+        setFb(fb, ok ? 'good' : 'bad',
+          '<p><b>' + (ok ? 'Right: ' : 'Not quite. ') + '</b>' + (ok ? a.n.toLowerCase() + ', ' + a.tell : 'You picked ' + p.n.toLowerCase() + ', ' + p.tell + ' This one is ' + a.n.toLowerCase() + ', ' + a.tell) + '</p>' +
+          '<p>' + esc(cur.why) + '</p><p class="smallprint" style="margin-top:6px"><b>Shopper’s check:</b> ' + esc(a.check) + '</p>');
+        el('tac-next').focus();
+      };
+      box.appendChild(b);
+    });
+  }
+  el('tac-next').onclick = show;
+  renderTally();
+  show();
+})();
+
+/* Develop a sales tactic: live preview, honesty check, saved in this browser */
+(function(){
+  var KEY = 'apb-2-2-tactic', sel = el('n-prin');
+  sel.innerHTML = '<option value="">Choose a principle</option>' + PRIN.map(function(p){ return '<option value="' + p.k + '">' + p.n + '</option>'; }).join('');
+  var F = ['n-prin', 'n-prod', 'n-who', 'n-fmt', 'n-line', 'n-fit'], boxes = document.querySelectorAll('.hc');
+  var saved = store.get(KEY);
+  if(saved){ F.forEach(function(id){ if(saved[id] !== undefined) el(id).value = saved[id]; }); (saved.hc || []).forEach(function(v, i){ if(boxes[i]) boxes[i].checked = v; }); }
+  function update(){
+    var v = {}; F.forEach(function(id){ v[id] = el(id).value; });
+    v.hc = Array.prototype.map.call(boxes, function(b){ return b.checked; });
+    store.set(KEY, v);
+    var p = PBY[v['n-prin']], prod = v['n-prod'].trim() || 'Your product', line = v['n-line'].trim() || 'Your line goes here', first = prod.charAt(0).toUpperCase();
+    el('n-hint').innerHTML = p ? '<b>' + p.n + ' ' + p.tell + '</b> ' + p.move : '';
+    var d = {prod:{f:'prod', name:prod, badge:line}, push:{f:'push', app:prod, ic:first, title:line}, mail:{f:'mail', from:prod, subj:line},
+             sign:{f:'sign', big:line, small:prod}, social:{f:'social', av:first, h:'@' + prod.toLowerCase().replace(/[^a-z0-9]+/g, ''), meta:'Sponsored', txt:line}}[v['n-fmt']];
+    el('n-ad').innerHTML = adHTML(d);
+    var miss = [];
+    if(!p) miss.push('choose a principle');
+    if(!v['n-who'].trim()) miss.push('name your target customer');
+    if(v['n-line'].trim().length < 8) miss.push('write the line customers would see');
+    if(v['n-fit'].trim().length < 15) miss.push('explain why the principle should work on that customer');
+    var honest = v.hc.every(Boolean);
+    var out = el('n-out');
+    if(miss.length){ setFb(out, 'hint', 'Still to do: ' + miss.join('; ') + '.'); return; }
+    if(!honest){ setFb(out, 'hint', '<b>Last step: the honesty check.</b> Check each box that’s true. If one isn’t, rework the tactic: one that only works by misleading people costs the business its reputation when customers find out.'); return; }
+    setFb(out, 'good', '<p><b>Your sales tactic</b></p><p>Using <b>' + p.n.toLowerCase() + '</b> for <b>' + esc(v['n-who'].trim()) + '</b>: “' + esc(line) + '”</p><p><b>Why it should work:</b> ' + esc(v['n-fit'].trim()) + '</p>');
+  }
+  F.forEach(function(id){ el(id).addEventListener('input', update); el(id).addEventListener('change', update); });
+  Array.prototype.forEach.call(boxes, function(b){ b.addEventListener('change', update); });
+  update();
+})();
+
+/* =========================================================
+   Check yourself (AP-style)
+   ========================================================= */
+(function(){
+  var STIM = '<div class="stim"><p><b>Fizz Lab</b>, a new craft soda company, launches a monthly subscription. Its product page includes these four lines:</p>' +
+    '<ol style="margin:4px 0 0;font-size:15.5px"><li>“Join 40,000 subscribers who rate us 4.9 stars.”</li><li>“Founding flavors available until June 30 only.”</li>' +
+    '<li>“Every new subscriber gets a free four-can sampler.”</li><li>“Members vote on next season’s flavor.”</li></ol></div>';
+  var Q = [
+    {set:true, stem:'Line 1 draws most directly on which of Cialdini’s principles of influence?', a:'Consensus', d:['Authority','Liking','Unity'], why:'Promoting positive customer feedback creates a sense that most consumers like the product: consensus. Authority would need an expert, liking someone the customer relates to, and unity a shared group identity.'},
+    {set:true, stem:'Line 2 draws most directly on which principle?', a:'Scarcity', d:['Reciprocity','Consistency','Consensus'], why:'A limited-time offer makes the flavors seem rare and creates urgency: scarcity.'},
+    {set:true, stem:'Which of the following best explains how line 4 could motivate customers to buy?', a:'It applies the unity principle by inviting customers to co-create products, building a sense of community.', d:['It applies the consistency principle, because members tend to vote the same way every season.','It applies the authority principle, because the company decides which flavor wins.','It applies the reciprocity principle, because members receive a vote in exchange for subscribing.'], why:'Inviting target customers to co-create products builds a sense of belonging to a group, which is unity.'},
+    {stem:'Two brands of wireless earbuds have similar features and prices. Amir buys the one that’s in stock at the store near his house today. Which factor most influenced his choice between these rival goods?', a:'Availability', d:['Price','Differentiated product features','Advertising'], why:'The products and prices were similar; he bought the one he could get right away.'},
+    {stem:'Which purchase is a consumer most likely to make using a rational process of systematically evaluating alternatives?', a:'Buying a home', d:['Buying a coffee on the way to work','Grabbing a pack of gum at checkout','Reordering the same shampoo as last month'], why:'Consequential purchases, like a home, are worth the time it takes to compare alternatives. The others are habitual or routine.'},
+    {stem:'Why do consumers make many small purchases out of habit instead of systematically comparing alternatives?', a:'A rational process costs time spent gathering information, which often isn’t worth it for small purchases.', d:['Habitual purchases always cost less than rationally chosen ones.','A rational process requires perfect information about every product.','Laws require systematic comparison only for major purchases.'], why:'A rational process helps find the best product but has costs, including time spent gathering information. For a small purchase, those costs can outweigh the benefit.'},
+    {stem:'Which of the following is an example of a personal factor shaping a buying decision?', a:'A college student with a tight monthly budget buys store-brand groceries.', d:['A shopper believes more expensive products are higher quality.','A teen buys the same sneakers as his friends.','A shopper buys an umbrella when it suddenly starts raining.'], why:'Budget is a personal factor. The others are psychological (a perception), social (peers), and situational (timing).'},
+    {stem:'Jada won’t buy from a phone-case brand after two of its cases cracked. Which kind of factor is shaping her decision?', a:'Psychological: learning from prior experience', d:['Personal: her income level','Social and cultural: cultural norms','Situational: product availability'], why:'Learning, meaning associations developed through prior experience, is a psychological factor that shapes her attitude toward the brand.'},
+    {stem:'A grocery store plays slow music, uses bright lighting in the produce section, and puts candy at the checkout lanes. These choices are best described as', a:'situational influences that create temporary conditions to encourage buying', d:['personal factors that shape what customers can afford','social and cultural factors that shape what is acceptable to buy','consumer protection laws that keep unsafe products off the shelves'], why:'Store design (noise, lighting, organization) is a situational influence.'},
+    {stem:'A consumer protection law bans the sale of a popular toy after it is found to be unsafe for young children. What is the most likely effect on consumer purchasing patterns?', a:'Parents buy substitute products that meet the same want.', d:['Parents stop buying toys, because the want disappears with the product.','The banned toy’s price falls, so more parents buy it.','Nothing changes, because laws affect businesses rather than consumers.'], why:'When a law makes a product harder to obtain, consumers find new ways to meet the same need or want, which gives rise to substitute products.'},
+    {stem:'The spread of smartphones in the 2010s most directly changed consumer purchasing patterns by', a:'making it possible to shop, compare prices, and order products from almost anywhere at any time', d:['requiring stores to match online prices','eliminating the need for consumers to make buying decisions','limiting which products consumers are allowed to buy online'], why:'Technology and innovation make new products and new ways of shopping and finding information accessible, which changes the timing, frequency, and quantity of purchases.'},
+    {stem:'A sunscreen brand is marketing to new parents, who worry most about their baby’s safety. Which sales tactic draws on the authority principle and is most likely to work for this target customer?', a:'Ads featuring a pediatrician who explains why the sunscreen is safe for infants', d:['A countdown timer showing that a sale ends in one hour','A free sample packet mailed to every customer','A popular athlete posting about the sunscreen after a workout'], why:'A pediatrician is an expert authority figure on exactly what these customers care about: safety. The timer is scarcity, the sample is reciprocity, and the athlete is liking, and none of them speak to safety.'}
+  ];
+  var quiz = el('quiz'), right = 0, answered = 0;
+  function build(){
+    right = 0; answered = 0;
+    quiz.innerHTML = '<div class="q" style="padding-top:4px"><span class="qn">QUESTIONS 1–3 REFER TO THE FOLLOWING INFORMATION</span>' + STIM + '</div>';
+    Q.forEach(function(q, i){
+      var d = document.createElement('div'); d.className = 'q';
+      d.innerHTML = '<span class="qn">QUESTION ' + (i + 1) + '</span><p class="stem">' + esc(q.stem) + '</p>';
+      var opts = document.createElement('div'); opts.className = 'opts';
+      var fb = document.createElement('div'); fb.className = 'fb';
+      shuffle([q.a].concat(q.d)).forEach(function(o, j){
+        var b = document.createElement('button'); b.className = 'opt';
+        b.innerHTML = '<span class="mono" style="color:var(--mute);margin-right:8px">(' + 'ABCD'[j] + ')</span>' + esc(o);
+        if(o === q.a) b.setAttribute('data-a', '1');
+        b.onclick = function(){
+          if(opts.getAttribute('data-done')) return; opts.setAttribute('data-done', '1');
+          var ok = o === q.a; answered++; if(ok) right++;
+          Array.prototype.forEach.call(opts.children, function(x){ x.disabled = true; if(!ok && x.getAttribute('data-a')) x.className += ' reveal'; });
+          b.className += ok ? ' picked-yes' : ' picked-no';
+          setFb(fb, ok ? 'good' : 'bad', '<b>' + (ok ? 'Correct.' : 'Not quite.') + '</b> ' + esc(q.why));
+          sum();
+        };
+        opts.appendChild(b);
+      });
+      d.appendChild(opts); d.appendChild(fb); quiz.appendChild(d);
+    });
+    var s = document.createElement('div'); s.className = 'q'; s.innerHTML = '<p class="qsum" id="qsum" aria-live="polite"></p>'; quiz.appendChild(s);
+    sum();
+  }
+  function sum(){
+    var n = Q.length, t = el('qsum');
+    if(answered < n) t.textContent = right + ' correct out of ' + answered + ' answered · ' + (n - answered) + ' to go';
+    else t.textContent = 'Final: ' + right + ' of ' + n + (right === n ? '. Perfect.' : right >= n - 2 ? '. Strong work.' : '. Review the sections above for the ones you missed.');
+  }
+  el('quiz-reset').onclick = build;
+  build();
+})();
+</script>
+</body>
+</html>
