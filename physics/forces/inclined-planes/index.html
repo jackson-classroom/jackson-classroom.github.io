@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inclined Planes — Splitting Gravity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Physics · Unit 3 · Forces — shared page system
+   (identical block on every Unit 3 page)
+   ========================================================= */
+:root{
+  --ink:#16283C; --ink2:#3D4F63; --mute:#5D6D7E;
+  --paper:#EDF1F4; --card:#FBFCFD; --line:#CBD7E1; --line-soft:#E1E8EE;
+  --acc:#1B6CA8; --acc-dk:#0F4A78; --acc-lite:#D3E4F2;
+  --warm:#9A6410; --warm-lite:#FBEFD6;
+  --ok:#1F6E4D; --ok-bg:#E3F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  /* one colour per force, used on every page */
+  --f-g:#B23A2B;    /* gravity / weight      */
+  --f-n:#1B6CA8;    /* normal                */
+  --f-f:#A86A0C;    /* friction              */
+  --f-t:#1E7F5C;    /* tension               */
+  --f-a:#6B45B0;    /* applied               */
+  --f-air:#3E7C8A;  /* air resistance / drag */
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+  background-image:linear-gradient(to right,rgba(150,178,199,.17) 1px,transparent 1px),linear-gradient(to bottom,rgba(150,178,199,.17) 1px,transparent 1px);
+  background-size:26px 26px}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(237,241,244,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:60px 0 40px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc-dk)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(38px,6.4vw,64px);line-height:1.02;margin:16px 0 0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--acc)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:48ch;color:var(--ink2);margin:20px 0 0}
+
+.board{margin:36px 0 0;padding:22px 24px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.board-cap{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+.board svg{display:block;width:100%;height:auto}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft)}
+.sig-note b{color:var(--acc-dk);font-weight:600}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--acc);color:var(--acc-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(27px,4.2vw,38px);line-height:1.1;margin:0;letter-spacing:-.02em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--acc-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.nw{white-space:nowrap}
+.note{border-left:3px solid var(--warm);background:var(--warm-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.law{font-family:var(--display);font-size:clamp(20px,2.8vw,25px);font-weight:500;line-height:1.35;letter-spacing:-.01em;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:0 4px 4px 0;padding:18px 22px;margin:22px 0}
+.law small{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:6px;font-weight:400}
+
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:24px 0}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:0 4px 4px 0;padding:18px 20px}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard .form{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--acc-dk);margin:2px 0 0;line-height:1.5}
+.rulecard .ex{font-family:var(--body);font-size:14.5px;color:var(--ink);background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:7px 10px;margin-top:10px}
+.rulecard.warn{border-left-color:var(--warm)}
+
+/* force labels: F with a coloured subscript tag */
+.F{font-family:var(--mono);font-weight:600;white-space:nowrap}
+.F.g{color:var(--f-g)} .F.n{color:var(--f-n)} .F.f{color:var(--f-f)} .F.t{color:var(--f-t)} .F.a{color:var(--f-a)} .F.air{color:var(--f-air)} .F.net{color:var(--ink)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.setup{font-size:16px;color:var(--ink2);margin:0 0 14px}
+.scene{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:8px}
+.scene svg{display:block;width:100%;height:auto;max-width:540px;margin:0 auto}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F5F8FA;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--acc-dk);border-color:var(--acc-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--acc)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--acc);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+/* Input boxes: clearly fillable. Placeholder text is a short instruction, never a sample answer. */
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid #93A6B8;border-radius:3px;padding:9px 11px;width:150px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(22,40,60,.12)}
+::placeholder{font-family:var(--body);font-style:italic;font-size:15px;color:#7E8E9D;opacity:1}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:170px}
+.unit{font-family:var(--mono);font-size:15px;color:var(--ink2)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1A4B35}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--acc);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb p{margin:6px 0 0}
+.fb p:first-child{margin-top:0}
+
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-top:14px}
+.cbtn{background:#fff;color:var(--ink);border:1px solid var(--line);font-size:13px;padding:11px 10px;text-align:center}
+.cbtn:hover{background:#fff;color:var(--ink);border-color:var(--acc)}
+.cbtn.yes{background:var(--ok-bg);border-color:var(--ok);color:#1A4B35}
+.cbtn.no{background:var(--no-bg);border-color:var(--no);color:#7E2A1D}
+.cbtn.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.cbtn[disabled]{cursor:default}
+
+.tally-h{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:20px 0 8px}
+.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px}
+.tcell{border:1px solid var(--line-soft);border-radius:3px;padding:7px 10px;background:#fff}
+.tcell .tl{display:block;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.04em}
+.tcell .tv{font-family:var(--mono);font-size:15px;color:var(--ink)}
+.tcell.miss{border-color:#E3B7AE;background:#FDF6F4}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab:hover{background:var(--line-soft);color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--ink);color:#F5F8FA;border-color:var(--ink)}
+.panel{display:none;padding-top:12px}
+.panel.on{display:block}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.tbl{overflow-x:auto;margin:18px 0;-webkit-overflow-scrolling:touch}
+.tbl table{margin:0}
+
+.wo{list-style:none;padding:0;margin:20px 0}
+.wo li{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 18px;margin:10px 0}
+.wo .myth{display:block;font-size:15px;color:var(--no);text-decoration:line-through;text-decoration-color:rgba(169,58,42,.55);margin-bottom:4px}
+.wo .fact{font-size:16px}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45;letter-spacing:0}
+.opt:hover{border-color:var(--acc);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.95}
+.quiz-sum{font-family:var(--mono);font-size:13px;color:var(--ink2);margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft)}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#E9EFF4;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#BCCADA}
+.next .nt{font-family:var(--display);font-weight:600;font-size:24px;color:#fff;margin:0 0 4px;letter-spacing:-.01em}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F5F8FA;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--acc-lite)}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:14px}
+  .scene{padding:2px}
+  .board{padding:16px 14px}
+  .field label{min-width:auto;flex:1 1 100%}
+  .choices{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+/* ======== end shared block ======== */
+
+/* ---- page: hero pair ---- */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.duo figure{margin:0;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px 10px 12px}
+.duo figcaption{font-family:var(--mono);font-size:12.5px;color:var(--ink2);text-align:center;margin-top:4px;line-height:1.45}
+.duo figcaption b{display:block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.duo .is-one b{color:var(--f-g)} .duo .is-two b{color:var(--acc-dk)}
+@media (max-width:560px){.duo{grid-template-columns:1fr}}
+
+/* ---- page: method ladder ---- */
+.ladder{list-style:none;padding:0;margin:20px 0;counter-reset:step}
+.ladder li{counter-increment:step;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:baseline;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:12px 16px;margin:8px 0}
+.ladder li::before{content:counter(step);font-family:var(--mono);font-size:13px;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;text-align:center;padding:2px 0}
+.ladder small{display:block;color:var(--mute);font-size:14.5px;margin-top:2px}
+
+/* ---- page: worked example ---- */
+.worked{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:18px;align-items:center}
+@media (max-width:640px){.worked{grid-template-columns:1fr}}
+
+/* ---- page: worked steps ---- */
+.steps{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.steps li{margin:0;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px 14px}
+.steps .sl{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:2px}
+.steps .eq{font-family:var(--mono);font-size:15.5px;color:var(--ink)}
+.steps .eq b{color:var(--acc-dk);font-weight:600}
+
+/* ---- page: sin / cos triangle ---- */
+.sohcah{list-style:none;padding:0;margin:14px 0}
+.sohcah li{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:10px 14px;margin:8px 0;font-size:16px}
+.sohcah .tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;padding:1px 6px;margin-right:6px}
+
+/* ---- page: tilt-the-ramp sim ---- */
+.sim-ctrl{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
+.sim-ctrl label{font-size:15px;color:var(--ink2);min-width:90px}
+.sim-ctrl input[type=range]{flex:1 1 120px;min-width:110px;accent-color:var(--acc)}
+.sim-ctrl output{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--acc-dk);min-width:64px;font-variant-numeric:tabular-nums}
+.toggle{display:inline-flex;gap:8px;align-items:center;font-size:15px;color:var(--ink2);cursor:pointer;margin:2px 0 12px}
+.toggle input{width:18px;height:18px;margin:0;accent-color:var(--acc)}
+.readout{margin:0;font-size:15px}
+.readout th{width:36%;white-space:nowrap}
+.readout td{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.state{font-family:var(--mono);font-size:13.5px;line-height:1.5;padding:10px 12px;border-radius:0 3px 3px 0;margin-top:12px;border-left:3px solid var(--acc);background:var(--acc-lite);color:var(--acc-dk)}
+.state.steep{border-left-color:var(--warm);background:var(--warm-lite);color:#6B4608}
+
+/* ---- page: work shown in feedback ---- */
+.work{font-family:var(--mono);font-size:14.5px;line-height:1.7;margin:8px 0 0;padding:8px 12px;background:rgba(255,255,255,.6);border-radius:3px}
+
+/* ---- page: practice ---- */
+.cap{font-size:16px;color:var(--ink2);margin:0 0 10px}
+.cap b{color:var(--ink)}
+.scene-note{font-family:var(--mono);font-size:12.5px;color:var(--mute);text-align:center;margin:8px 0 0}
+.nocaps{text-transform:none}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.wide .field label{min-width:235px}
+.rulebox.two{grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Inclined Planes</span>
+    <span class="bar-sub">F<sub>grav∥</sub> = F<sub>grav</sub> · sin θ, F<sub>grav⊥</sub> = F<sub>grav</sub> · cos θ</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 3 · Forces · Page 5</div>
+  <h1>Tilt the floor. <em>Split the gravity.</em></h1>
+  <p class="lede">On a ramp, gravity still points straight down, but the box can only slide along the ramp. So we split F<sub>grav</sub> into two pieces: F<sub>grav∥</sub> pulls the box <b>down the ramp</b>, and F<sub>grav⊥</sub> presses it <b>into the ramp</b>.</p>
+
+  <div class="board">
+    <div class="board-cap">Same 10 kg box, same 30° ramp</div>
+    <div class="duo">
+      <figure class="is-one">
+        <svg id="hero-a" viewBox="0 0 520 360" role="img" aria-label="A 10 kilogram box on a ramp tilted 30 degrees. Gravity 98 newtons straight down, normal force 84.87 newtons straight out of the ramp."></svg>
+        <figcaption><b>Gravity as one force</b>F<sub>grav</sub> points straight down, F<sub>norm</sub> points out of the ramp.<br>They don't line up, so they can't cancel.</figcaption>
+      </figure>
+      <figure class="is-two">
+        <svg id="hero-b" viewBox="0 0 520 360" role="img" aria-label="The same box with gravity split into two pieces. Parallel piece 49 newtons down the ramp, perpendicular piece 84.87 newtons into the ramp, normal force 84.87 newtons out of the ramp."></svg>
+        <figcaption><b>Gravity split in two</b>F<sub>grav⊥</sub> = 84.87 N cancels F<sub>norm</sub>.<br>F<sub>grav∥</sub> = 49 N is left over.</figcaption>
+      </figure>
+    </div>
+    <div class="sig-note">Gravity didn't change. We broke it into a piece <b>along the ramp</b> and a piece <b>into the ramp</b>. The piece along the ramp is what slides the box down.</div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#axes">Tilt your axes</a>
+  <a href="#split">Splitting gravity</a>
+  <a href="#p-split">Practice: split it</a>
+  <a href="#tilt">Tilt the ramp</a>
+  <a href="#slide">Sliding down</a>
+  <a href="#p-slide">Practice: F<sub>norm</sub> and a</a>
+  <a href="#frict">With friction</a>
+  <a href="#p-frict">Practice: with friction</a>
+  <a href="#watch">Watch-outs</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ TILT YOUR AXES ============ -->
+<section id="axes">
+  <div class="sec-head"><h2>Tilt your axes</h2></div>
+  <p>On a level floor, we sorted every force into up–down and left–right. On a ramp, the box doesn't move straight down or straight sideways. It slides <b>along the ramp</b>. So we tilt our axes to line up with the ramp.</p>
+
+  <div class="rulebox two">
+    <div class="rulecard">
+      <div class="form">∥ parallel</div>
+      <h4>Along the ramp</h4>
+      <p>The direction the box slides: down the ramp, or up it.</p>
+      <div class="ex">On this axis: <span class="F g">F<sub>grav∥</sub></span> (down the ramp), and <span class="F f">F<sub>frict</sub></span> (up the ramp) if there's friction.</div>
+    </div>
+    <div class="rulecard">
+      <div class="form">⊥ perpendicular</div>
+      <h4>Straight into or out of the ramp</h4>
+      <p>At a right angle to the ramp's surface. The box never moves this way. It doesn't sink into the ramp or float off it.</p>
+      <div class="ex">On this axis: <span class="F n">F<sub>norm</sub></span> (out of the ramp) and <span class="F g">F<sub>grav⊥</sub></span> (into the ramp).</div>
+    </div>
+  </div>
+
+  <div class="worked">
+    <div class="scene"><svg id="axes-svg" viewBox="0 0 520 360" role="img" aria-label="A box on a ramp with tilted dashed axes. One axis runs along the ramp, the other is perpendicular to it. The normal force lies on the perpendicular axis. Gravity points straight down and lies on neither axis."></svg></div>
+    <div>
+      <p style="margin-top:0"><span class="F n">F<sub>norm</sub></span> points straight out of the ramp, so it's already on the ⊥ axis. Friction runs along the surface, so it's already on the ∥ axis.</p>
+      <p><b>Gravity is the only force that doesn't line up.</b> It points straight down, tilted compared to both axes. So we split it into two pieces, one on each axis. It's the same idea as breaking a vector into x and y components, just with tilted axes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SPLITTING GRAVITY ============ -->
+<section id="split">
+  <div class="sec-head"><h2>Splitting gravity</h2></div>
+  <p>Find F<sub>grav</sub> the usual way (F<sub>grav</sub> = m · g), then split it using the angle of the ramp.</p>
+
+  <div class="law"><small>Splitting gravity on a ramp</small>The piece along the ramp uses sine. The piece into the ramp uses cosine.<br><span class="mono" style="font-size:.95em">F<sub>grav∥</sub> = F<sub>grav</sub> · sin θ</span><br><span class="mono" style="font-size:.95em">F<sub>grav⊥</sub> = F<sub>grav</sub> · cos θ</span></div>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Symbol</th><th>Means</th><th>Unit</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">F<sub>grav∥</sub></td><td>the piece of gravity <b>parallel</b> to the ramp. It pulls the object down the ramp.</td><td class="mono">N</td></tr>
+      <tr><td class="mono">F<sub>grav⊥</sub></td><td>the piece of gravity <b>perpendicular</b> to the ramp. It presses the object into the ramp.</td><td class="mono">N</td></tr>
+      <tr><td class="mono">F<sub>grav</sub></td><td>the whole force of gravity, m · g</td><td class="mono">N</td></tr>
+      <tr><td class="mono">θ</td><td>the angle of the ramp, measured up from level ground (say "theta")</td><td class="mono">degrees</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Why sin and cos?</h3>
+  <div class="worked">
+    <div class="scene"><svg id="tri-svg" viewBox="20 48 440 292" role="img" aria-label="Gravity drawn as the hypotenuse of a right triangle. The perpendicular piece runs from the box into the ramp, and the parallel piece runs from there down the ramp to the tip of gravity. The angle between gravity and the perpendicular piece is theta, the same as the ramp's angle."></svg></div>
+    <div>
+      <p style="margin-top:0">F<sub>grav</sub> and its two pieces make a right triangle, with F<sub>grav</sub> as the hypotenuse. The angle between F<sub>grav</sub> and F<sub>grav⊥</sub> is the <b>same angle θ as the ramp</b>. Tilt the ramp more, and the ⊥ direction tilts away from straight down by the same amount.</p>
+      <ul class="sohcah">
+        <li><span class="tag">cos</span>F<sub>grav⊥</sub> is <b>next to</b> θ (adjacent), so F<sub>grav⊥</sub> = F<sub>grav</sub> · cos θ.</li>
+        <li><span class="tag">sin</span>F<sub>grav∥</sub> is <b>across from</b> θ (opposite), so F<sub>grav∥</sub> = F<sub>grav</sub> · sin θ.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Check it with extreme angles</h3>
+  <p>If you ever forget which piece gets sin, think about the flattest and steepest ramps you can imagine.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Ramp angle θ</th><th class="nocaps">sin θ</th><th class="nocaps">cos θ</th><th>Along: <span class="nocaps">F<sub>grav∥</sub></span></th><th>Into: <span class="nocaps">F<sub>grav⊥</sub></span></th></tr></thead>
+    <tbody>
+      <tr><td>0° · level floor</td><td class="num">0</td><td class="num">1</td><td class="num">0 N</td><td class="num">100 N</td></tr>
+      <tr><td>15°</td><td class="num">0.259</td><td class="num">0.966</td><td class="num">25.9 N</td><td class="num">96.6 N</td></tr>
+      <tr><td>30°</td><td class="num">0.5</td><td class="num">0.866</td><td class="num">50 N</td><td class="num">86.6 N</td></tr>
+      <tr><td>45°</td><td class="num">0.707</td><td class="num">0.707</td><td class="num">70.7 N</td><td class="num">70.7 N</td></tr>
+      <tr><td>60°</td><td class="num">0.866</td><td class="num">0.5</td><td class="num">86.6 N</td><td class="num">50 N</td></tr>
+      <tr><td>90° · vertical wall</td><td class="num">1</td><td class="num">0</td><td class="num">100 N</td><td class="num">0 N</td></tr>
+    </tbody>
+  </table></div>
+  <p class="smallprint">A 100 N box on ramps of different steepness. F<sub>grav</sub> is 100 N in every row.</p>
+  <p>On a <b>level floor</b> (0°), nothing pulls the box along, and sin 0° = 0. All of gravity presses into the floor, so F<sub>grav⊥</sub> = F<sub>grav</sub>, just like page 3. On a <b>vertical wall</b> (90°), all of gravity pulls along the wall and nothing presses into it. The box just falls. The steeper the ramp, the more of gravity goes into F<sub>grav∥</sub>.</p>
+
+  <div class="note"><b>Put your calculator in degree mode.</b> Type sin 30. It should say 0.5. If it says −0.988, it's in radians mode: switch it to degrees before you do any ramp problems.</div>
+</section>
+
+<!-- ============ PRACTICE: SPLIT ============ -->
+<section id="p-split">
+  <div class="sec-head">
+    <span class="tasktag">Practice 1</span>
+    <h2>Split the gravity</h2>
+  </div>
+  <p>Find F<sub>grav</sub>, then split it into its two pieces. Use g = 9.8 m/s², and check that your calculator is in degree mode. A new problem is generated every time.</p>
+
+  <div class="card wide">
+    <div class="card-label"><span>Three steps</span><span class="score" id="sp-score">0 of 0</span></div>
+    <p class="cap" id="sp-cap"></p>
+    <div class="scene"><svg id="sp-svg" viewBox="0 0 520 360" role="img" aria-labelledby="sp-desc"><desc id="sp-desc"></desc></svg></div>
+    <p class="scene-note" id="sp-note"></p>
+    <div class="field">
+      <label for="sp-g">1 · Force of gravity, F<sub>grav</sub></label>
+      <input type="text" id="sp-g" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">N</span>
+    </div>
+    <div class="field">
+      <label for="sp-par">2 · Along the ramp, F<sub>grav∥</sub></label>
+      <input type="text" id="sp-par" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">N</span>
+    </div>
+    <div class="field">
+      <label for="sp-perp">3 · Into the ramp, F<sub>grav⊥</sub></label>
+      <input type="text" id="sp-perp" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">N</span>
+    </div>
+    <div class="fb" id="sp-fb" aria-live="polite"></div>
+    <div class="btn-row"><button id="sp-check">Check</button><button class="ghost" id="sp-next">Next problem</button></div>
+    <div class="tally-h">Your results by step</div>
+    <div class="tally" id="sp-tally"></div>
+  </div>
+</section>
+
+<!-- ============ TILT THE RAMP ============ -->
+<section id="tilt">
+  <div class="sec-head">
+    <span class="tasktag">Try it</span>
+    <h2>Tilt the ramp</h2>
+  </div>
+  <p>A box sits on a frictionless ramp. Drag the sliders to change how steep the ramp is and how heavy the box is, and watch the two pieces of gravity.</p>
+
+  <div class="card">
+    <div class="sim-ctrl">
+      <label for="tr-th">Ramp angle</label>
+      <input type="range" id="tr-th" min="0" max="60" step="1" value="30">
+      <output id="tr-th-out" for="tr-th">30°</output>
+    </div>
+    <div class="sim-ctrl">
+      <label for="tr-m">Mass</label>
+      <input type="range" id="tr-m" min="1" max="50" step="1" value="10">
+      <output id="tr-m-out" for="tr-m">10 kg</output>
+    </div>
+    <label class="toggle"><input type="checkbox" id="tr-split" checked><span>Split F<sub>grav</sub> into its two pieces</span></label>
+    <div class="worked">
+      <div class="scene"><svg id="tr-svg" viewBox="0 0 520 360" role="img" aria-labelledby="tr-desc"><desc id="tr-desc"></desc></svg></div>
+      <div>
+        <table class="readout"><tbody>
+          <tr><th>Gravity</th><td><span class="F g">F<sub>grav</sub></span> <span id="tr-g"></span></td></tr>
+          <tr><th>Along the ramp</th><td><span class="F g">F<sub>grav∥</sub></span> <span id="tr-par"></span></td></tr>
+          <tr><th>Into the ramp</th><td><span class="F g">F<sub>grav⊥</sub></span> <span id="tr-perp"></span></td></tr>
+          <tr><th>Normal force</th><td><span class="F n">F<sub>norm</sub></span> <span id="tr-n"></span></td></tr>
+          <tr><th>Net force</th><td id="tr-net"></td></tr>
+          <tr><th>Acceleration</th><td id="tr-a"></td></tr>
+        </tbody></table>
+        <div class="state" id="tr-state" aria-live="polite"></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="ghost" id="tr-reset">Reset</button></div>
+  </div>
+
+  <h3>Things to try</h3>
+  <ol class="ladder">
+    <li><div><b>Drag the angle down to 0°.</b> What is F<sub>grav∥</sub>? How does F<sub>norm</sub> compare to F<sub>grav</sub>?<small>That's a level floor, like page 3.</small></div></li>
+    <li><div><b>Now tilt the ramp steeper, a little at a time.</b> Which piece of gravity grows? Which one shrinks? What happens to F<sub>norm</sub>?</div></li>
+    <li><div><b>Find the angle where the two pieces are equal.</b></div></li>
+    <li><div><b>Set the angle to 30° and slide the mass from 1 kg to 50 kg.</b> Which numbers change? Which one doesn't?</div></li>
+  </ol>
+</section>
+
+<!-- ============ SLIDING DOWN ============ -->
+<section id="slide">
+  <div class="sec-head"><h2>Sliding down a ramp</h2></div>
+  <p>Once gravity is split, a ramp problem works just like a level-floor problem, one axis at a time. Start with a slippery ramp: no friction.</p>
+
+  <ol class="ladder">
+    <li><div><b>Find F<sub>grav</sub>.</b> F<sub>grav</sub> = m × 9.8.</div></li>
+    <li><div><b>Split it.</b> F<sub>grav∥</sub> = F<sub>grav</sub> · sin θ and F<sub>grav⊥</sub> = F<sub>grav</sub> · cos θ.</div></li>
+    <li><div><b>Perpendicular axis: F<sub>norm</sub> = F<sub>grav⊥</sub>.</b> The box doesn't sink into the ramp or lift off it, so the ⊥ forces cancel.<small>On a ramp, F<sub>norm</sub> is less than F<sub>grav</sub>.</small></div></li>
+    <li><div><b>Parallel axis: F<sub>net</sub> = F<sub>grav∥</sub>.</b> With no friction, F<sub>grav∥</sub> is the only force along the ramp.<small>F<sub>net</sub> points down the ramp.</small></div></li>
+    <li><div><b>a = F<sub>net</sub> / m.</b> Same as page 2.</div></li>
+  </ol>
+
+  <h3>Worked example</h3>
+  <div class="worked">
+    <div class="scene"><svg id="worked-svg" viewBox="0 0 520 360" role="img" aria-label="A 10 kilogram box on a frictionless 30 degree ramp. Gravity 98 newtons, split into 49 newtons down the ramp and 84.87 newtons into the ramp. Normal force 84.87 newtons out of the ramp."></svg></div>
+    <div>
+      <p style="margin-top:0">A 10 kg box slides down a frictionless ramp tilted at 30°.</p>
+      <ol class="steps">
+        <li><span class="sl">Step 1 · Gravity</span><span class="eq">F<sub>grav</sub> = 10 kg × 9.8 = 98 N</span></li>
+        <li><span class="sl">Step 2 · Split it</span><span class="eq">F<sub>grav∥</sub> = 98 N × sin 30° = 49 N<br>F<sub>grav⊥</sub> = 98 N × cos 30° = 84.87 N</span></li>
+        <li><span class="sl">Step 3 · Normal force</span><span class="eq">F<sub>norm</sub> = F<sub>grav⊥</sub> = <b>84.87 N</b></span></li>
+        <li><span class="sl">Step 4 · Net force</span><span class="eq">F<sub>net</sub> = F<sub>grav∥</sub> = <b>49 N down the ramp</b></span></li>
+        <li><span class="sl">Step 5 · Acceleration</span><span class="eq">a = 49 N / 10 kg = <b>4.9 m/s² down the ramp</b></span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="note"><b>Without friction, the mass doesn't matter.</b> A heavier box has a bigger F<sub>grav∥</sub>, but it also has more mass to speed up, and the two cancel: a = 9.8 × sin θ for every object. A 2 kg box and a 20 kg box slide down the same frictionless ramp side by side.</div>
+</section>
+
+<!-- ============ PRACTICE: SLIDE ============ -->
+<section id="p-slide">
+  <div class="sec-head">
+    <span class="tasktag">Practice 2</span>
+    <h2>Normal force and acceleration</h2>
+  </div>
+  <p>No friction on these ramps. Split gravity first, then find the normal force, the net force, and the acceleration. (g = 9.8 m/s².)</p>
+
+  <div class="card wide">
+    <div class="card-label"><span>Three steps</span><span class="score" id="sl-score">0 of 0</span></div>
+    <p class="cap" id="sl-cap"></p>
+    <div class="scene"><svg id="sl-svg" viewBox="0 0 520 360" role="img" aria-labelledby="sl-desc"><desc id="sl-desc"></desc></svg></div>
+    <p class="scene-note" id="sl-note"></p>
+    <div class="field">
+      <label for="sl-n">1 · Normal force</label>
+      <input type="text" id="sl-n" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">N</span>
+    </div>
+    <div class="field">
+      <label for="sl-net">2 · Net force (down the ramp)</label>
+      <input type="text" id="sl-net" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">N</span>
+    </div>
+    <div class="field">
+      <label for="sl-a">3 · Acceleration</label>
+      <input type="text" id="sl-a" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">m/s²</span>
+    </div>
+    <div class="fb" id="sl-fb" aria-live="polite"></div>
+    <div class="btn-row"><button id="sl-check">Check</button><button class="ghost" id="sl-next">Next problem</button></div>
+    <div class="tally-h">Your results by step</div>
+    <div class="tally" id="sl-tally"></div>
+  </div>
+</section>
+
+<!-- ============ WITH FRICTION ============ -->
+<section id="frict">
+  <div class="sec-head"><h2>Sliding down with friction</h2></div>
+  <p>If the ramp isn't slippery, friction acts on the sliding object too. It points <b>up the ramp</b>, opposite the sliding. It's the same equation as page 4, F<sub>frict</sub> = μ · F<sub>norm</sub>. The only change is that on a ramp, F<sub>norm</sub> = F<sub>grav⊥</sub>.</p>
+
+  <div class="law"><small>Friction on a ramp</small>Friction uses the normal force, and on a ramp that's the perpendicular piece of gravity.<br><span class="mono" style="font-size:.95em">F<sub>frict</sub> = μ · F<sub>norm</sub> = μ · F<sub>grav⊥</sub></span></div>
+
+  <ol class="ladder">
+    <li><div><b>Find F<sub>grav</sub> and split it.</b> Same as before.</div></li>
+    <li><div><b>F<sub>norm</sub> = F<sub>grav⊥</sub>.</b> Same as before.</div></li>
+    <li><div><b>F<sub>frict</sub> = μ · F<sub>norm</sub>.</b> It points up the ramp.<small>μ multiplies F<sub>norm</sub>, not F<sub>grav</sub> and not the mass.</small></div></li>
+    <li><div><b>F<sub>net</sub> = F<sub>grav∥</sub> − F<sub>frict</sub>.</b> F<sub>grav∥</sub> pulls down the ramp and friction pushes back up it, so subtract.</div></li>
+    <li><div><b>a = F<sub>net</sub> / m.</b></div></li>
+  </ol>
+
+  <h3>Worked example</h3>
+  <div class="worked">
+    <div class="scene"><svg id="worked-f-svg" viewBox="0 0 520 360" role="img" aria-label="A 20 kilogram sled sliding down a 30 degree hill. Gravity 196 newtons, split into 98 newtons down the hill and 169.74 newtons into the hill. Normal force 169.74 newtons out of the hill. Friction 16.97 newtons up the hill."></svg></div>
+    <div>
+      <p style="margin-top:0">A 20 kg sled slides down a snowy hill tilted at 30°. μ = 0.1.</p>
+      <ol class="steps">
+        <li><span class="sl">Step 1 · Gravity, split</span><span class="eq">F<sub>grav</sub> = 20 kg × 9.8 = 196 N<br>F<sub>grav∥</sub> = 196 N × sin 30° = 98 N<br>F<sub>grav⊥</sub> = 196 N × cos 30° = 169.74 N</span></li>
+        <li><span class="sl">Step 2 · Friction</span><span class="eq">F<sub>norm</sub> = F<sub>grav⊥</sub> = 169.74 N<br>F<sub>frict</sub> = 0.1 × 169.74 N = <b>16.97 N up the hill</b></span></li>
+        <li><span class="sl">Step 3 · Net force</span><span class="eq">F<sub>net</sub> = 98 N − 16.97 N = <b>81.03 N down the hill</b></span></li>
+        <li><span class="sl">Step 4 · Acceleration</span><span class="eq">a = 81.03 N / 20 kg = <b>4.05 m/s² down the hill</b></span></li>
+      </ol>
+    </div>
+  </div>
+  <p class="smallprint">Without friction, the sled would speed up at 9.8 × sin 30° = 4.9 m/s². Friction takes some of that away. Every object in our ramp problems is already sliding down, so this is kinetic friction, just like page 4.</p>
+</section>
+
+<!-- ============ PRACTICE: FRICTION ============ -->
+<section id="p-frict">
+  <div class="sec-head">
+    <span class="tasktag">Practice 3</span>
+    <h2>Friction, then acceleration</h2>
+  </div>
+  <p>Each object is already sliding down the ramp. Find the force of friction, then the net force, then the acceleration. (g = 9.8 m/s².)</p>
+
+  <div class="card wide">
+    <div class="card-label"><span>Three steps</span><span class="score" id="fr-score">0 of 0</span></div>
+    <p class="cap" id="fr-cap"></p>
+    <div class="scene"><svg id="fr-svg" viewBox="0 0 520 360" role="img" aria-labelledby="fr-desc"><desc id="fr-desc"></desc></svg></div>
+    <p class="scene-note" id="fr-note"></p>
+    <div class="field">
+      <label for="fr-f">1 · Force of friction</label>
+      <input type="text" id="fr-f" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">N</span>
+    </div>
+    <div class="field">
+      <label for="fr-net">2 · Net force (down the ramp)</label>
+      <input type="text" id="fr-net" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">N</span>
+    </div>
+    <div class="field">
+      <label for="fr-a">3 · Acceleration</label>
+      <input type="text" id="fr-a" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">m/s²</span>
+    </div>
+    <div class="fb" id="fr-fb" aria-live="polite"></div>
+    <div class="btn-row"><button id="fr-check">Check</button><button class="ghost" id="fr-next">Next problem</button></div>
+    <div class="tally-h">Your results by step</div>
+    <div class="tally" id="fr-tally"></div>
+  </div>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="sec-head"><h2>Watch-outs</h2></div>
+  <ul class="wo">
+    <li><span class="myth">On a ramp, F<sub>norm</sub> = F<sub>grav</sub>.</span><span class="fact">Only on a level floor. On a ramp, the surface only has to hold back the piece of gravity pressing into it: F<sub>norm</sub> = F<sub>grav⊥</sub> = F<sub>grav</sub> · cos θ, which is <b>less</b> than F<sub>grav</sub>.</span></li>
+    <li><span class="myth">F<sub>grav∥</sub> uses cos and F<sub>grav⊥</sub> uses sin.</span><span class="fact">It's the other way around. Check with a level floor (θ = 0°): nothing pulls the box along, and sin 0° = 0. So the piece <b>along</b> the ramp uses <b>sin</b>.</span></li>
+    <li><span class="myth">On a ramp, gravity points into the ramp (or down the ramp).</span><span class="fact">Gravity always points <b>straight down</b>. F<sub>grav∥</sub> and F<sub>grav⊥</sub> are two pieces of it. Once you split F<sub>grav</sub>, use the pieces <b>instead of</b> F<sub>grav</sub>, not on top of it, or you'll count gravity twice.</span></li>
+    <li><span class="myth">sin 30 = −0.988.</span><span class="fact">If your calculator says that, it's in <b>radians</b> mode. Switch it to degrees. sin 30° should be exactly 0.5.</span></li>
+    <li><span class="myth">A heavier box slides down a ramp faster.</span><span class="fact">Without friction, a = 9.8 × sin θ for every object. More mass means a bigger F<sub>grav∥</sub>, but also more mass to speed up, and the two cancel.</span></li>
+    <li><span class="myth">A steeper ramp pushes back harder.</span><span class="fact">Steeper means cos θ gets <b>smaller</b>, so F<sub>grav⊥</sub> and the normal force get smaller. On a vertical wall, the box isn't pressing on the surface at all.</span></li>
+  </ul>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Seven questions on splitting gravity and objects sliding down ramps.</p>
+  <div class="card" id="quiz"></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">That's page 5 of Unit 3</div>
+      <p>More Forces pages will show up on the unit page as we go.</p>
+    </div>
+    <a href="/physics/forces/">Back to Unit 3 →</a>
+  </div>
+</section>
+
+<footer>
+  <p>Splitting gravity on a ramp into F<sub>grav∥</sub> = F<sub>grav</sub> · sin θ and F<sub>grav⊥</sub> = F<sub>grav</sub> · cos θ, then finding the normal force and acceleration of an object sliding down, with and without friction. The practice generates new problems every time.</p>
+  <p><a href="/physics/forces/">← Unit 3 — Forces</a> · <a href="/physics/forces/friction/">← Page 4: Friction</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   shared helpers (same on every Unit 3 page)
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function randInt(lo,hi){ return lo + Math.floor(Math.random()*(hi-lo+1)); }
+var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* force colours and labels (match the CSS variables) */
+var FORCE = {
+  g:  { c:'#B23A2B', sym:'F<tspan baseline-shift="sub" font-size="70%">grav</tspan>',   html:'F<sub>grav</sub>',   name:'gravity' },
+  n:  { c:'#1B6CA8', sym:'F<tspan baseline-shift="sub" font-size="70%">norm</tspan>',   html:'F<sub>norm</sub>',   name:'normal force' },
+  f:  { c:'#A86A0C', sym:'F<tspan baseline-shift="sub" font-size="70%">frict</tspan>',   html:'F<sub>frict</sub>',   name:'friction' },
+  t:  { c:'#1E7F5C', sym:'F<tspan baseline-shift="sub" font-size="70%">tens</tspan>',   html:'F<sub>tens</sub>',   name:'tension' },
+  a:  { c:'#6B45B0', sym:'F<tspan baseline-shift="sub" font-size="70%">app</tspan>', html:'F<sub>app</sub>', name:'applied force' },
+  air:{ c:'#3E7C8A', sym:'F<tspan baseline-shift="sub" font-size="70%">air</tspan>', html:'F<sub>air</sub>', name:'air resistance' }
+};
+var SVGNS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs, parent){
+  var n = document.createElementNS(SVGNS, tag);
+  for(var k in attrs) n.setAttribute(k, attrs[k]);
+  if(parent) parent.appendChild(n);
+  return n;
+}
+/* Draw an arrow from (x1,y1) to (x2,y2). Returns the group. */
+function arrow(parent, x1, y1, x2, y2, color, width){
+  var g = svgEl('g', {}, parent), w = width || 4;
+  var dx = x2-x1, dy = y2-y1, L = Math.sqrt(dx*dx+dy*dy) || 1, ux = dx/L, uy = dy/L;
+  var head = Math.min(15, L*0.6), hw = head*0.55;
+  var bx = x2 - ux*head, by = y2 - uy*head;
+  svgEl('line', {x1:x1, y1:y1, x2:bx, y2:by, stroke:color, 'stroke-width':w, 'stroke-linecap':'round'}, g);
+  svgEl('path', {d:'M'+x2+' '+y2+' L'+(bx - uy*hw)+' '+(by + ux*hw)+' L'+(bx + uy*hw)+' '+(by - ux*hw)+' Z', fill:color}, g);
+  return g;
+}
+function label(parent, x, y, html, color, anchor, size){
+  var t = svgEl('text', {x:x, y:y, fill:color||'#16283C', 'font-family':'IBM Plex Mono,monospace', 'font-size':size||15, 'font-weight':600, 'text-anchor':anchor||'middle'}, parent);
+  t.innerHTML = html;
+  return t;
+}
+function clearSvg(svg){ Array.prototype.slice.call(svg.childNodes).forEach(function(n){ if(n.nodeName !== 'desc') svg.removeChild(n); }); }
+
+/* =========================================================
+   free-body diagram renderer
+   forces: [{k:'g'|'n'|'f'|'t'|'a'|'air', d:'up'|'down'|'left'|'right', m:<newtons>}]
+   Arrows start at the box edge, lengths scale with size.
+   Several forces in the same direction are drawn side by side.
+   ========================================================= */
+function drawFBD(svg, forces, opts){
+  opts = opts || {};
+  clearSvg(svg);
+  var W = 520, H = 360, cx = 260, cy = 180, half = 34, maxLen = 96, minLen = 28;
+  /* vertical and horizontal forces are each scaled to their own largest force,
+     so a small sideways push next to a heavy weight is still readable */
+  function axisMax(dirs){ return Math.max.apply(null, forces.filter(function(f){ return dirs.indexOf(f.d) >= 0; }).map(function(f){ return f.m; }).concat([1])); }
+  var sV = maxLen / axisMax(['up','down']), sH = maxLen / axisMax(['left','right']);
+  function len(m, d){ return Math.max(minLen, m * (d === 'up' || d === 'down' ? sV : sH)); }
+  /* box */
+  svgEl('rect', {x:cx-half, y:cy-half, width:half*2, height:half*2, rx:3, fill:'#fff', stroke:'#16283C', 'stroke-width':2.2}, svg);
+  if(opts.name) label(svg, cx, cy + 4, opts.name, '#5D6D7E', 'middle', 11);
+  var groups = { up:[], down:[], left:[], right:[] };
+  forces.forEach(function(f){ groups[f.d].push(f); });
+  Object.keys(groups).forEach(function(d){
+    var list = groups[d], n = list.length;
+    list.forEach(function(f, i){
+      var off = (i - (n-1)/2) * (n > 1 ? 34 : 0);
+      var L = len(f.m, d), c = FORCE[f.k].c, txt = FORCE[f.k].sym + ' ' + f.m + ' N';
+      if(d === 'up'){
+        arrow(svg, cx + off, cy - half, cx + off, cy - half - L, c, 4.5);
+        if(n > 1) label(svg, cx + off + (i === 0 ? -10 : 10), cy - half - L + 13, txt, c, i === 0 ? 'end' : 'start', 18);
+        else label(svg, cx + 12, cy - half - L + 12, txt, c, 'start', 18);
+      } else if(d === 'down'){
+        arrow(svg, cx + off, cy + half, cx + off, cy + half + L, c, 4.5);
+        if(n > 1) label(svg, cx + off + (i === 0 ? -10 : 10), cy + half + L - 4, txt, c, i === 0 ? 'end' : 'start', 18);
+        else label(svg, cx + 12, cy + half + L - 4, txt, c, 'start', 18);
+      } else if(d === 'right'){
+        arrow(svg, cx + half, cy + off, cx + half + L, cy + off, c, 4.5);
+        label(svg, cx + half + L + 8, cy + off + 6, txt, c, 'start', 18);
+      } else {
+        arrow(svg, cx - half, cy + off, cx - half - L, cy + off, c, 4.5);
+        label(svg, cx - half - L - 8, cy + off + 6, txt, c, 'end', 18);
+      }
+    });
+  });
+}
+function sumDir(forces, d){ return forces.filter(function(f){ return f.d === d; }).reduce(function(s,f){ return s + f.m; }, 0); }
+function listDir(forces, d){
+  var l = forces.filter(function(f){ return f.d === d; });
+  if(!l.length) return '0 N';
+  if(l.length === 1) return l[0].m + ' N';
+  return '(' + l.map(function(f){ return f.m; }).join(' + ') + ') N';
+}
+function describeForces(forces){
+  return forces.map(function(f){ return FORCE[f.k].name + ' ' + f.m + ' newtons ' + f.d; }).join(', ') + '.';
+}
+
+
+
+/* =========================================================
+   page helpers
+   ========================================================= */
+function fmt(x){ var r = Math.round(x*100)/100; return String(r); }
+function fmt3(x){ return String(Math.round(x*1000)/1000); }
+function weightOf(m){ return Math.round(m*98)/10; }           /* m × 9.8, no float noise */
+function parseNum(s){ s = String(s).replace(/,/g,'').trim(); if(!/^[-+]?(\d+\.?\d*|\.\d+)/.test(s)) return NaN; return parseFloat(s); }
+function close(x, ans){ return Math.abs(x - ans) <= Math.max(0.011, Math.abs(ans)*0.01); }
+function lock(ids, on){ ids.forEach(function(id){ el(id).disabled = on; }); }
+function onEnter(ids, fn){ ids.forEach(function(id){ el(id).addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); fn(); } }); }); }
+function renderTally(node, types, tally){
+  node.innerHTML = Object.keys(types).map(function(k){
+    var c = tally[k], miss = c.t > c.r;
+    return '<div class="tcell' + (miss ? ' miss' : '') + '"><span class="tl">' + types[k] + '</span><span class="tv">' + c.r + '/' + c.t + '</span></div>';
+  }).join('');
+}
+function newTally(types){ var t = {}; Object.keys(types).forEach(function(k){ t[k] = {r:0,t:0}; }); return t; }
+function clean(x){ return Math.round(x*1e6)/1e6; }              /* trims float noise like 48.99999999 */
+var RAD = Math.PI/180;
+function sinD(t){ return Math.sin(t*RAD); }
+function cosD(t){ return Math.cos(t*RAD); }
+/* split F_grav on a ramp tilted th degrees */
+function splitG(W, th){ return { par:clean(W*sinD(th)), perp:clean(W*cosD(th)) }; }
+
+/* the two pieces of gravity, drawn in gravity's colour with dashed shafts */
+FORCE.gpar  = { c:'#B23A2B', sym:'F<tspan baseline-shift="sub" font-size="70%">grav∥</tspan>', html:'F<sub>grav∥</sub>', name:'parallel piece of gravity' };
+FORCE.gperp = { c:'#B23A2B', sym:'F<tspan baseline-shift="sub" font-size="70%">grav⊥</tspan>', html:'F<sub>grav⊥</sub>', name:'perpendicular piece of gravity' };
+var INC_DIR = { g:'straight down', n:'straight out of the ramp', f:'up the ramp', gpar:'down the ramp', gperp:'into the ramp' };
+
+/* =========================================================
+   inclined-plane renderer
+   The ramp runs down to the right at th degrees, then the floor runs flat.
+   Arrows start at the centre of the box; F_grav is drawn LEN px long and
+   every other force is scaled to it.
+   o = { th, W (F_grav in N), forces:[{k:'g'|'n'|'f'|'gpar'|'gperp', m, ghost}],
+         nums (show N values), split (dotted lines that close the gravity rectangle),
+         tri (gravity triangle with θ marked at the box), axes (tilted dashed axes),
+         angle (text for the ramp-angle mark), tag (top-left caption),
+         cx, cy, len }
+   ========================================================= */
+function drawIncline(svg, o){
+  clearSvg(svg);
+  var cx = o.cx || 230, cy = o.cy || 140, LEN = o.len || 122, half = 26, minLen = 26, FS = 17;
+  var th = o.th || 0, c = cosD(th), s = sinD(th);
+  var d = [c, s], nv = [s, -c], ni = [-s, c], up = [-c, -s];   /* down the ramp, out of it, into it, up it */
+  function at(p, u, t){ return [p[0] + u[0]*t, p[1] + u[1]*t]; }
+  /* labels get a white halo so they stay readable where they cross the ramp line */
+  function lab(parent, x, y, html, col, an, size){
+    var t = label(parent, x, y, html, col, an, size);
+    t.setAttribute('stroke', '#fff'); t.setAttribute('stroke-width', 4); t.setAttribute('stroke-linejoin', 'round'); t.setAttribute('paint-order', 'stroke');
+    return t;
+  }
+  var O = [cx, cy], Q = at(O, nv, -half);                       /* Q: middle of the box's bottom face */
+
+  /* ground: ramp from far up-left down to corner C, then flat floor to the right */
+  var T0 = Math.min(300, (492 - Q[0]) / c, s > 0.001 ? (342 - Q[1]) / s : 1e9);
+  var C = at(Q, d, T0), A = at(Q, d, -900);
+  svgEl('path', {d:'M'+A[0]+' '+A[1]+' L'+C[0]+' '+C[1]+' L900 '+C[1]+' L900 1400 L'+A[0]+' 1400 Z', fill:'#E8EEF3'}, svg);
+  svgEl('path', {d:'M'+A[0]+' '+A[1]+' L'+C[0]+' '+C[1]+' L900 '+C[1], fill:'none', stroke:'#16283C', 'stroke-width':2.2, 'stroke-linejoin':'round'}, svg);
+
+  /* ramp angle, marked at the bottom corner */
+  if(o.angle && th > 0){
+    var R = 46, e1 = [C[0] - R, C[1]], e2 = [C[0] - R*c, C[1] - R*s];
+    svgEl('line', {x1:C[0], y1:C[1], x2:C[0] - R - 34, y2:C[1], stroke:'#7E8E9D', 'stroke-width':1.4, 'stroke-dasharray':'5 4'}, svg);
+    svgEl('path', {d:'M'+e1[0]+' '+e1[1]+' A'+R+' '+R+' 0 0 1 '+e2[0]+' '+e2[1], fill:'none', stroke:'#16283C', 'stroke-width':1.6}, svg);
+    if(th >= 28) label(svg, C[0] - (R+24)*cosD(th/2), C[1] - (R+24)*sinD(th/2) + 5, o.angle, '#16283C', 'middle', 16);
+    else label(svg, C[0] - R + 2, C[1] + 22, o.angle, '#16283C', 'middle', 16);
+  }
+
+  /* tilted axes */
+  if(o.axes){
+    [[d, 175, '∥'], [nv, 132, '⊥']].forEach(function(ax){
+      var p1 = at(O, ax[0], -ax[1]), p2 = at(O, ax[0], ax[1]), pl = at(O, ax[0], ax[1] + 16);
+      svgEl('line', {x1:p1[0], y1:p1[1], x2:p2[0], y2:p2[1], stroke:'#7E8E9D', 'stroke-width':1.5, 'stroke-dasharray':'7 5'}, svg);
+      label(svg, pl[0], pl[1] + 6, ax[2], '#3D4F63', 'middle', 19);
+    });
+  }
+
+  /* box, tilted with the ramp */
+  svgEl('rect', {x:cx-half, y:cy-half, width:half*2, height:half*2, rx:3, fill:'#fff', stroke:'#16283C', 'stroke-width':2.2, transform:'rotate(' + th + ' ' + cx + ' ' + cy + ')'}, svg);
+
+  var W = o.W || 1, scale = LEN / W;
+  function txt(k, m){ return FORCE[k].sym + (o.nums ? ' ' + fmt(m) + ' N' : ''); }
+  function shaft(gr, x1, y1, x2, y2, col, dashed){
+    var a = arrow(gr, x1, y1, x2, y2, col, 4.5);
+    if(dashed){ a.firstChild.setAttribute('stroke-dasharray', '8 5'); a.firstChild.setAttribute('stroke-linecap', 'butt'); }
+    return a;
+  }
+
+  if(o.tri){
+    /* F_grav as the hypotenuse; ⊥ from the box, ∥ from the end of ⊥ to the tip of F_grav */
+    var G = [cx, cy + LEN], P = at(O, ni, LEN*c), col = FORCE.g.c;
+    var mk = at(P, nv, 12), mk2 = at(mk, d, 12), mk3 = at(P, d, 12);
+    svgEl('path', {d:'M'+mk[0]+' '+mk[1]+' L'+mk2[0]+' '+mk2[1]+' L'+mk3[0]+' '+mk3[1], fill:'none', stroke:'#5D6D7E', 'stroke-width':1.4}, svg);
+    shaft(svg, O[0], O[1], G[0], G[1], col, false);
+    shaft(svg, O[0], O[1], P[0], P[1], col, true);
+    shaft(svg, P[0], P[1], G[0], G[1], col, true);
+    var r = 40, a1 = [cx, cy + r], a2 = at(O, ni, r);
+    svgEl('path', {d:'M'+a1[0]+' '+a1[1]+' A'+r+' '+r+' 0 0 1 '+a2[0]+' '+a2[1], fill:'none', stroke:'#16283C', 'stroke-width':1.6}, svg);
+    label(svg, cx - 57*sinD(th/2), cy + 57*cosD(th/2) + 5, 'θ', '#16283C', 'middle', 16);
+    /* each label sits outside its side of the triangle */
+    var mg = [cx + 12, cy + LEN*0.6], mp = at(at(O, ni, LEN*c/2), up, 24), mq = at(at(P, d, LEN*s/2), ni, 22);
+    label(svg, mg[0], mg[1], FORCE.g.sym, col, 'start', 18);
+    label(svg, mg[0], mg[1] + 24, 'hypotenuse', '#5D6D7E', 'start', 13).setAttribute('font-weight', 400);
+    label(svg, mp[0], mp[1], FORCE.gperp.sym, col, 'end', 18);
+    label(svg, mp[0], mp[1] + 24, 'next to θ', '#5D6D7E', 'end', 13).setAttribute('font-weight', 400);
+    label(svg, mq[0], mq[1] + 8, FORCE.gpar.sym, col, 'end', 18);
+    label(svg, mq[0], mq[1] + 32, 'across from θ', '#5D6D7E', 'end', 13).setAttribute('font-weight', 400);
+  } else {
+    var U = { g:[0,1], n:nv, f:up, gpar:d, gperp:ni }, tips = {};
+    if(o.split){
+      /* dotted lines from each piece to the tip of F_grav, closing the rectangle */
+      var G2 = [cx, cy + LEN], tp = at(O, d, LEN*s), tq = at(O, ni, LEN*c);
+      [tp, tq].forEach(function(t){ svgEl('line', {x1:t[0], y1:t[1], x2:G2[0], y2:G2[1], stroke:'#B23A2B', 'stroke-width':1.3, 'stroke-dasharray':'2 4', opacity:.7}, svg); });
+    }
+    o.forces.forEach(function(f){
+      if(f.m < 0.005) return;
+      var u = U[f.k], L = Math.max(minLen, f.m * scale), tip = at(O, u, L), col = FORCE[f.k].c;
+      var gr = svgEl('g', f.ghost ? {opacity:.3} : {}, svg);
+      shaft(gr, O[0], O[1], tip[0], tip[1], col, f.k === 'gpar' || f.k === 'gperp');
+      var x = tip[0], y = tip[1], an;
+      if(f.k === 'f'){
+        /* friction is short and points up the slope, where there's no room: label it on two lines just above the box */
+        lab(gr, cx + 8, cy - 64, FORCE.f.sym, col, 'end', FS);
+        if(o.nums) lab(gr, cx + 8, cy - 40, fmt(f.m) + ' N', col, 'end', FS);
+        return;
+      }
+      if(f.k === 'n'){ x += 10; y += 4; an = 'start'; }
+      else if(f.k === 'g'){ if(th > 45){ x -= 10; an = 'end'; } else { x += 10; an = 'start'; } y += 4; }
+      else if(f.k === 'gperp'){ x -= 10; y += 8; an = 'end'; }
+      else { x += 8; y += 16; an = 'start'; }
+      lab(gr, x, y, txt(f.k, f.m), col, an, FS);
+    });
+    svgEl('circle', {cx:cx, cy:cy, r:3.2, fill:'#16283C'}, svg);
+  }
+  if(o.tag) lab(svg, 16, 28, o.tag, '#5D6D7E', 'start', 14);
+}
+function describeIncline(o){
+  var parts = o.forces.map(function(f){
+    return FORCE[f.k].name + (o.nums ? ' ' + fmt(f.m) + ' newtons' : '') + ' ' + INC_DIR[f.k] + (f.ghost ? ' (faded: it has been split into its two pieces)' : '');
+  });
+  return (o.tag ? 'A ' + o.tag : 'A box') + ' on a ramp tilted ' + o.th + ' degrees. Forces: ' + parts.join(', ') + '.';
+}
+/* forces for a box on a ramp: whole F_grav, or F_grav faded with its two pieces */
+function rampForces(W, th, opts){
+  var sp = splitG(W, th), F = [];
+  if(opts.n) F.push({k:'n', m:sp.perp});
+  if(opts.f) F.push({k:'f', m:opts.f});
+  if(opts.split){ F.push({k:'g', m:W, ghost:true}, {k:'gperp', m:sp.perp}, {k:'gpar', m:sp.par}); }
+  else F.push({k:'g', m:W});
+  return F;
+}
+
+/* =========================================================
+   hero, axes, triangle, worked examples
+   ========================================================= */
+drawIncline(el('hero-a'), { th:30, W:98, nums:true, angle:'30°', tag:'10 kg box', forces:rampForces(98, 30, {n:true}) });
+drawIncline(el('hero-b'), { th:30, W:98, nums:true, angle:'30°', tag:'10 kg box', split:true, forces:rampForces(98, 30, {n:true, split:true}) });
+drawIncline(el('axes-svg'), { th:30, W:98, angle:'θ', axes:true, forces:rampForces(98, 30, {n:true}) });
+drawIncline(el('tri-svg'), { th:30, W:98, angle:'θ', tri:true, cx:200, cy:95, len:180, forces:[] });
+drawIncline(el('worked-svg'), { th:30, W:98, nums:true, angle:'30°', tag:'10 kg box', split:true, forces:rampForces(98, 30, {n:true, split:true}) });
+drawIncline(el('worked-f-svg'), { th:30, W:196, nums:true, angle:'30°', tag:'20 kg sled · μ = 0.1', split:true, forces:rampForces(196, 30, {n:true, split:true, f:clean(0.1*196*cosD(30))}) });
+
+/* =========================================================
+   Tilt the ramp (frictionless)
+   ========================================================= */
+var trMsg = '';
+function trRender(){
+  var th = Number(el('tr-th').value), m = Number(el('tr-m').value), W = weightOf(m), sp = splitG(W, th);
+  var a = clean(9.8*sinD(th)), show = el('tr-split').checked && th > 0;
+  var o = { th:th, W:W, nums:true, angle:th + '°', tag:m + ' kg box', split:show, forces:rampForces(W, th, {n:true, split:show}) };
+  drawIncline(el('tr-svg'), o);
+  el('tr-desc').textContent = describeIncline(o);
+  el('tr-th-out').textContent = th + '°';
+  el('tr-m-out').textContent = m + ' kg';
+  el('tr-g').textContent = fmt(W) + ' N';
+  el('tr-par').textContent = fmt(sp.par) + ' N';
+  el('tr-perp').textContent = fmt(sp.perp) + ' N';
+  el('tr-n').textContent = fmt(sp.perp) + ' N';
+  el('tr-net').textContent = th === 0 ? '0 N' : fmt(sp.par) + ' N down the ramp';
+  el('tr-a').textContent = th === 0 ? '0 m/s²' : fmt(a) + ' m/s² down the ramp';
+  var msg, steep = th > 45;
+  if(th === 0) msg = 'Level floor. sin 0° = 0, so F<sub>grav∥</sub> = 0 and nothing pulls the box along. All of gravity presses into the floor: F<sub>norm</sub> = F<sub>grav</sub>, just like page 3.';
+  else if(th < 45) msg = 'More of gravity presses into the ramp than pulls along it (F<sub>grav⊥</sub> &gt; F<sub>grav∥</sub>). The box slides down with a = 9.8 × sin ' + th + '° = ' + fmt(a) + ' m/s².';
+  else if(th === 45) msg = 'At 45°, sin θ = cos θ, so the two pieces are the same size. a = 9.8 × sin 45° = ' + fmt(a) + ' m/s².';
+  else msg = 'Steep ramp. Now more of gravity pulls down the ramp than into it (F<sub>grav∥</sub> &gt; F<sub>grav⊥</sub>). a = 9.8 × sin ' + th + '° = ' + fmt(a) + ' m/s².';
+  if(msg !== trMsg){ trMsg = msg; el('tr-state').innerHTML = msg; el('tr-state').className = 'state' + (steep ? ' steep' : ''); }
+}
+['tr-th','tr-m'].forEach(function(id){ el(id).addEventListener('input', trRender); });
+el('tr-split').addEventListener('change', trRender);
+el('tr-reset').addEventListener('click', function(){ el('tr-th').value = 30; el('tr-m').value = 10; el('tr-split').checked = true; trRender(); });
+
+/* =========================================================
+   Practice 1 · F_grav → F_grav∥ and F_grav⊥
+   Only F_grav is drawn until the answer is checked.
+   ========================================================= */
+var SP_TYPES = { g:'Step 1 · F<sub>grav</sub>', par:'Step 2 · F<sub>grav∥</sub>', perp:'Step 3 · F<sub>grav⊥</sub>' };
+var SP_OBJ = [
+  { n:'box',          s:'a ramp',         ms:[2,4,5,8,10,12,15,20] },
+  { n:'crate',        s:'a loading ramp', ms:[20,25,30,40,50] },
+  { n:'sled',         s:'a snowy hill',   ms:[5,10,15,20,25] },
+  { n:'skier',        s:'a ski slope',    ms:[50,60,70,80] },
+  { n:'suitcase',     s:'a ramp',         ms:[10,15,20,25] },
+  { n:'block of ice', s:'a ramp',         ms:[2,4,5,8,10] }
+];
+var SP_ANG = [10,15,20,25,30,35,40,50,55,60];   /* no 45°: sin and cos are equal there */
+var spScore = Score(el('sp-score')), spTally = newTally(SP_TYPES), spCur = null, spDone = false;
+function spDraw(full){
+  var p = spCur, o = { th:p.th, W:p.W, nums:full, split:full, angle:p.th + '°', tag:p.m + ' kg ' + p.o.n, forces:rampForces(p.W, p.th, {split:full}) };
+  drawIncline(el('sp-svg'), o);
+  el('sp-desc').textContent = describeIncline(o);
+  el('sp-note').innerHTML = full ? 'F<sub>grav</sub> split into its two pieces. The faded arrow is the whole F<sub>grav</sub>.' : 'Only F<sub>grav</sub> is drawn. Splitting it is the job.';
+}
+function spNew(){
+  var ob, th, guard = 0;
+  do { ob = pick(SP_OBJ); th = pick(SP_ANG); guard++; } while(spCur && guard < 12 && (ob === spCur.o || th === spCur.th));
+  var m = pick(ob.ms), W = weightOf(m), sp = splitG(W, th);
+  spCur = { o:ob, th:th, m:m, W:W, par:sp.par, perp:sp.perp };
+  el('sp-cap').innerHTML = 'A <b>' + m + ' kg ' + ob.n + '</b> slides down ' + ob.s + ' tilted at <b>' + th + '°</b>.';
+  spDraw(false);
+  ['sp-g','sp-par','sp-perp'].forEach(function(id){ el(id).value = ''; });
+  lock(['sp-g','sp-par','sp-perp','sp-check'], false); spDone = false;
+  hideFb(el('sp-fb'));
+}
+function spCheck(){
+  if(spDone) return;
+  var p = spCur, xg = parseNum(el('sp-g').value), xp = parseNum(el('sp-par').value), xq = parseNum(el('sp-perp').value);
+  if(isNaN(xg) || isNaN(xp) || isNaN(xq)){ setFb(el('sp-fb'),'hint','Fill in all three boxes: F<sub>grav</sub> first, then the two pieces.'); return; }
+  xg = Math.abs(xg); xp = Math.abs(xp); xq = Math.abs(xq);
+  var okG = close(xg, p.W), okP = close(xp, p.par), okQ = close(xq, p.perp);
+  spDone = true; lock(['sp-g','sp-par','sp-perp','sp-check'], true);
+  spScore.add(okG && okP && okQ);
+  spTally.g.t++; if(okG) spTally.g.r++;
+  spTally.par.t++; if(okP) spTally.par.r++;
+  spTally.perp.t++; if(okQ) spTally.perp.r++;
+  renderTally(el('sp-tally'), SP_TYPES, spTally);
+  spDraw(true);
+
+  /* radians mode is checked last: at some angles it lands near another mistake */
+  var tips = [], radTip = false;
+  function radians(){ if(!radTip){ radTip = true; tips.push('Your calculator looks like it’s in radians mode. Switch it to degrees: sin 30 should give 0.5.'); } }
+  if(!okG){
+    if(close(xg, p.m)) tips.push('Step 1: that’s the mass. Multiply by 9.8 to get F<sub>grav</sub> in N.');
+    else if(close(xg, p.m*10)) tips.push('Step 1: use g = 9.8 m/s², not 10.');
+  }
+  if(!okP && !okQ && close(xp, p.perp) && close(xq, p.par)) tips.push('Steps 2 and 3: you swapped sin and cos. The piece <b>along</b> the ramp uses sin θ, and the piece <b>into</b> the ramp uses cos θ.');
+  else {
+    if(!okP){
+      if(close(xp, p.perp)) tips.push('Step 2: that’s F<sub>grav⊥</sub>. The piece along the ramp uses sin θ.');
+      else if(close(xp, p.W)) tips.push('Step 2: that’s all of F<sub>grav</sub>. Multiply it by sin θ to get the piece along the ramp.');
+      else if(close(xp, p.m*sinD(p.th))) tips.push('Step 2: you split the mass. Split F<sub>grav</sub>, the force in N.');
+      else if(!okG && close(xp, xg*sinD(p.th))) tips.push('Your step 2 follows from your step 1 answer, so the method is right. Fix F<sub>grav</sub> and the rest follows.');
+      else if(close(xp, Math.abs(p.W*Math.sin(p.th))) || close(xp, Math.abs(xg*Math.sin(p.th)))) radians();
+    }
+    if(!okQ){
+      if(close(xq, p.par)) tips.push('Step 3: that’s F<sub>grav∥</sub>. The piece into the ramp uses cos θ.');
+      else if(close(xq, p.W)) tips.push('Step 3: that’s all of F<sub>grav</sub>. Multiply it by cos θ to get the piece into the ramp.');
+      else if(close(xq, p.m*cosD(p.th))) tips.push('Step 3: you split the mass. Split F<sub>grav</sub>, the force in N.');
+      else if(!okG && close(xq, xg*cosD(p.th))){ if(!(!okP && close(xp, xg*sinD(p.th)))) tips.push('Your step 3 follows from your step 1 answer, so the method is right there too.'); }
+      else if(close(xq, Math.abs(p.W*Math.cos(p.th))) || close(xq, Math.abs(xg*Math.cos(p.th)))) radians();
+    }
+  }
+  var head = okG && okP && okQ ? '<b>All three right.</b>' : (okG || okP || okQ ? '<b>Partly right.</b>' : '<b>Not this one.</b>');
+  var work = 'Step 1: F<sub>grav</sub> = ' + p.m + ' kg × 9.8 = <b>' + fmt(p.W) + ' N</b><br>' +
+             'Step 2: F<sub>grav∥</sub> = F<sub>grav</sub> · sin θ = ' + fmt(p.W) + ' N × sin ' + p.th + '° = <b>' + fmt(p.par) + ' N</b> down the ramp<br>' +
+             'Step 3: F<sub>grav⊥</sub> = F<sub>grav</sub> · cos θ = ' + fmt(p.W) + ' N × cos ' + p.th + '° = <b>' + fmt(p.perp) + ' N</b> into the ramp';
+  var foot = p.th > 45 ? 'This ramp is steeper than 45°, so F<sub>grav∥</sub> is the bigger piece.' : 'This ramp is less steep than 45°, so F<sub>grav⊥</sub> is the bigger piece.';
+  setFb(el('sp-fb'), okG && okP && okQ ? 'good' : 'bad', '<p>' + head + (tips.length ? ' ' + tips.join(' ') : '') + '</p><div class="work">' + work + '</div><p>' + foot + '</p>');
+}
+el('sp-check').addEventListener('click', spCheck);
+el('sp-next').addEventListener('click', spNew);
+onEnter(['sp-g','sp-par','sp-perp'], spCheck);
+
+/* =========================================================
+   Practice 2 · frictionless: F_norm → F_net → a
+   The pieces of gravity are drawn after the answer is checked.
+   ========================================================= */
+var SL_TYPES = { n:'Step 1 · F<sub>norm</sub>', net:'Step 2 · F<sub>net</sub>', a:'Step 3 · a' };
+var SL_OBJ = [
+  { n:'box',          ms:[2,5,8,10,15,20], cap:function(p){ return 'A <b>' + p.m + ' kg box</b> slides down a frictionless ramp tilted at <b>' + p.th + '°</b>.'; } },
+  { n:'block of ice', ms:[2,4,5,10],       cap:function(p){ return 'A <b>' + p.m + ' kg block of ice</b> slides down a smooth ramp tilted at <b>' + p.th + '°</b>. Ignore friction.'; } },
+  { n:'sled',         ms:[10,15,20,25],    cap:function(p){ return 'A <b>' + p.m + ' kg sled</b> slides down an icy hill tilted at <b>' + p.th + '°</b>. Ignore friction.'; } },
+  { n:'crate',        ms:[20,25,40,50],    cap:function(p){ return 'A <b>' + p.m + ' kg crate</b> slides down a frictionless loading ramp tilted at <b>' + p.th + '°</b>.'; } }
+];
+var SL_ANG = [10,15,20,25,30,35,40,45,50,60];
+var slScore = Score(el('sl-score')), slTally = newTally(SL_TYPES), slCur = null, slDone = false;
+function slDraw(full){
+  var p = slCur, o = { th:p.th, W:p.W, nums:full, split:full, angle:p.th + '°', tag:p.m + ' kg ' + p.o.n, forces:rampForces(p.W, p.th, {n:true, split:full}) };
+  drawIncline(el('sl-svg'), o);
+  el('sl-desc').textContent = describeIncline(o);
+  el('sl-note').innerHTML = full ? 'F<sub>grav⊥</sub> cancels F<sub>norm</sub>. F<sub>grav∥</sub> is left over: it’s the net force.' : 'Split F<sub>grav</sub> first. Its two pieces aren’t drawn yet.';
+}
+function slNew(){
+  var ob, th, guard = 0;
+  do { ob = pick(SL_OBJ); th = pick(SL_ANG); guard++; } while(slCur && guard < 12 && (ob === slCur.o || th === slCur.th));
+  var m = pick(ob.ms), W = weightOf(m), sp = splitG(W, th);
+  slCur = { o:ob, th:th, m:m, W:W, par:sp.par, perp:sp.perp, a:clean(sp.par/m) };
+  el('sl-cap').innerHTML = ob.cap(slCur);
+  slDraw(false);
+  ['sl-n','sl-net','sl-a'].forEach(function(id){ el(id).value = ''; });
+  lock(['sl-n','sl-net','sl-a','sl-check'], false); slDone = false;
+  hideFb(el('sl-fb'));
+}
+function slCheck(){
+  if(slDone) return;
+  var p = slCur, xn = parseNum(el('sl-n').value), xf = parseNum(el('sl-net').value), xa = parseNum(el('sl-a').value);
+  if(isNaN(xn) || isNaN(xf) || isNaN(xa)){ setFb(el('sl-fb'),'hint','Fill in all three boxes: the normal force, then the net force, then the acceleration.'); return; }
+  xn = Math.abs(xn); xf = Math.abs(xf); xa = Math.abs(xa);
+  var okN = close(xn, p.perp), okF = close(xf, p.par), okA = close(xa, p.a);
+  slDone = true; lock(['sl-n','sl-net','sl-a','sl-check'], true);
+  slScore.add(okN && okF && okA);
+  slTally.n.t++; if(okN) slTally.n.r++;
+  slTally.net.t++; if(okF) slTally.net.r++;
+  slTally.a.t++; if(okA) slTally.a.r++;
+  renderTally(el('sl-tally'), SL_TYPES, slTally);
+  slDraw(true);
+
+  var tips = [], radTip = false;
+  function radians(){ if(!radTip){ radTip = true; tips.push('Your calculator looks like it’s in radians mode. Switch it to degrees: sin 30 should give 0.5.'); } }
+  if(!okN){
+    if(close(xn, p.W)) tips.push('Step 1: that’s all of F<sub>grav</sub>. On a ramp, F<sub>norm</sub> only cancels the piece pressing into the ramp: F<sub>grav⊥</sub> = F<sub>grav</sub> · cos θ.');
+    else if(close(xn, p.par)) tips.push('Step 1: that’s F<sub>grav∥</sub>. F<sub>norm</sub> cancels the piece <b>into</b> the ramp, which uses cos θ.');
+    else if(close(xn, p.m*cosD(p.th))) tips.push('Step 1: you used the mass. Find F<sub>grav</sub> = m × 9.8 first, then split it.');
+    else if(close(xn, Math.abs(p.W*Math.cos(p.th)))) radians();
+  }
+  if(!okF){
+    if(close(xf, p.W)) tips.push('Step 2: only the piece of gravity along the ramp makes the box slide. F<sub>net</sub> = F<sub>grav∥</sub> = F<sub>grav</sub> · sin θ.');
+    else if(close(xf, p.perp)) tips.push('Step 2: that’s F<sub>grav⊥</sub>, and F<sub>norm</sub> cancels it. The net force is the piece along the ramp, F<sub>grav∥</sub>.');
+    else if(close(xf, p.W - p.perp)) tips.push('Step 2: on a ramp, F<sub>grav</sub> and F<sub>norm</sub> don’t point in opposite directions, so you can’t just subtract them. Split F<sub>grav</sub> first: F<sub>net</sub> = F<sub>grav∥</sub>.');
+    else if(close(xf, p.m*sinD(p.th))) tips.push('Step 2: you used the mass. Split F<sub>grav</sub> (in N), not the mass.');
+    else if(close(xf, Math.abs(p.W*Math.sin(p.th)))) radians();
+  }
+  if(!okA){
+    if(close(xa, 9.8)) tips.push('Step 3: 9.8 m/s² is for falling straight down. On a ramp, a = F<sub>net</sub> / m.');
+    else if(close(xa, p.par/p.W)) tips.push('Step 3: it looks like you divided by F<sub>grav</sub>. Divide by the mass in kg.');
+    else if(!okF && xf > 0 && close(xa, xf/p.m)) tips.push('Your step 3 follows from your step 2 answer, so the method is right there.');
+  }
+  var head = okN && okF && okA ? '<b>All three right.</b>' : (okN || okF || okA ? '<b>Partly right.</b>' : '<b>Not this one.</b>');
+  var work = 'F<sub>grav</sub> = ' + p.m + ' kg × 9.8 = ' + fmt(p.W) + ' N<br>' +
+             'F<sub>grav∥</sub> = ' + fmt(p.W) + ' N × sin ' + p.th + '° = ' + fmt(p.par) + ' N · F<sub>grav⊥</sub> = ' + fmt(p.W) + ' N × cos ' + p.th + '° = ' + fmt(p.perp) + ' N<br>' +
+             'Step 1: F<sub>norm</sub> = F<sub>grav⊥</sub> = <b>' + fmt(p.perp) + ' N</b><br>' +
+             'Step 2: no friction, so F<sub>net</sub> = F<sub>grav∥</sub> = <b>' + fmt(p.par) + ' N down the ramp</b><br>' +
+             'Step 3: a = F<sub>net</sub> / m = ' + fmt(p.par) + ' N / ' + p.m + ' kg = <b>' + fmt3(p.a) + ' m/s²</b> down the ramp';
+  var foot = 'Shortcut check: a = 9.8 × sin ' + p.th + '° = ' + fmt3(p.a) + ' m/s². Without friction, the mass cancels out.';
+  setFb(el('sl-fb'), okN && okF && okA ? 'good' : 'bad', '<p>' + head + (tips.length ? ' ' + tips.join(' ') : '') + '</p><div class="work">' + work + '</div><p>' + foot + '</p>');
+}
+el('sl-check').addEventListener('click', slCheck);
+el('sl-next').addEventListener('click', slNew);
+onEnter(['sl-n','sl-net','sl-a'], slCheck);
+
+/* =========================================================
+   Practice 3 · with friction: F_frict → F_net → a
+   Every object is already sliding down, and μ is small enough
+   that it keeps speeding up (F_grav∥ > F_frict).
+   ========================================================= */
+var FR_TYPES = { f:'Step 1 · F<sub>frict</sub>', net:'Step 2 · F<sub>net</sub>', a:'Step 3 · a' };
+var FR_OBJ = [
+  { n:'sled',     s:'a snowy hill',       mus:[0.05,0.1,0.15], ms:[10,15,20,25,40], angs:[20,25,30,35] },
+  { n:'box',      s:'a wooden ramp',      mus:[0.2,0.25,0.3],  ms:[2,5,8,10,15,20], angs:[30,35,40,45] },
+  { n:'crate',    s:'a metal chute',      mus:[0.2,0.3,0.4],   ms:[20,25,40,50],    angs:[35,40,45,50] },
+  { n:'kid',      s:'a playground slide', mus:[0.1,0.2,0.25],  ms:[20,25,30,35],    angs:[30,35,40] },
+  { n:'suitcase', s:'a carpeted ramp',    mus:[0.3,0.4],       ms:[10,15,20,25],    angs:[35,40,45,50] }
+];
+var frScore = Score(el('fr-score')), frTally = newTally(FR_TYPES), frCur = null, frDone = false;
+function frDraw(full){
+  var p = frCur, o = { th:p.th, W:p.W, nums:full, split:full, angle:p.th + '°', tag:p.m + ' kg ' + p.o.n + ' · μ = ' + p.mu, forces:rampForces(p.W, p.th, {n:true, split:full, f:full ? p.f : 0}) };
+  drawIncline(el('fr-svg'), o);
+  el('fr-desc').textContent = describeIncline(o);
+  el('fr-note').innerHTML = full ? 'Friction added. It points up the ramp, opposite the sliding.' : 'Friction isn’t drawn yet. Finding it is step 1.';
+}
+function frNew(){
+  var ob, th, mu, guard = 0;
+  do { ob = pick(FR_OBJ); th = pick(ob.angs); mu = pick(ob.mus); guard++; }
+  while(guard < 30 && ((frCur && ob === frCur.o) || mu >= 0.85*Math.tan(th*RAD)));
+  var m = pick(ob.ms), W = weightOf(m), sp = splitG(W, th), f = clean(mu*sp.perp), net = clean(sp.par - f);
+  frCur = { o:ob, th:th, mu:mu, m:m, W:W, par:sp.par, perp:sp.perp, f:f, net:net, a:clean(net/m) };
+  el('fr-cap').innerHTML = 'A <b>' + m + ' kg ' + ob.n + '</b> slides down ' + ob.s + ' tilted at <b>' + th + '°</b>. The coefficient of friction is <b>' + mu + '</b>.';
+  frDraw(false);
+  ['fr-f','fr-net','fr-a'].forEach(function(id){ el(id).value = ''; });
+  lock(['fr-f','fr-net','fr-a','fr-check'], false); frDone = false;
+  hideFb(el('fr-fb'));
+}
+function frCheck(){
+  if(frDone) return;
+  var p = frCur, xf = parseNum(el('fr-f').value), xn = parseNum(el('fr-net').value), xa = parseNum(el('fr-a').value);
+  if(isNaN(xf) || isNaN(xn) || isNaN(xa)){ setFb(el('fr-fb'),'hint','Fill in all three boxes: the friction, then the net force, then the acceleration.'); return; }
+  xf = Math.abs(xf); xn = Math.abs(xn); xa = Math.abs(xa);
+  var okF = close(xf, p.f), okN = close(xn, p.net), okA = close(xa, p.a);
+  frDone = true; lock(['fr-f','fr-net','fr-a','fr-check'], true);
+  frScore.add(okF && okN && okA);
+  frTally.f.t++; if(okF) frTally.f.r++;
+  frTally.net.t++; if(okN) frTally.net.r++;
+  frTally.a.t++; if(okA) frTally.a.r++;
+  renderTally(el('fr-tally'), FR_TYPES, frTally);
+  frDraw(true);
+
+  var tips = [];
+  if(!okF){
+    if(close(xf, p.mu*p.W)) tips.push('Step 1: you used all of F<sub>grav</sub>. On a ramp, F<sub>norm</sub> = F<sub>grav⊥</sub> = F<sub>grav</sub> · cos θ, so F<sub>frict</sub> = μ · F<sub>grav⊥</sub>.');
+    else if(close(xf, p.mu*p.par)) tips.push('Step 1: friction uses the normal force, which matches F<sub>grav⊥</sub> (cos θ), not F<sub>grav∥</sub>.');
+    else if(close(xf, p.mu*p.m*cosD(p.th)) || close(xf, p.mu*p.m)) tips.push('Step 1: μ multiplies a force in N, not the mass. Find F<sub>grav</sub> = m × 9.8, split it, then use F<sub>norm</sub> = F<sub>grav⊥</sub>.');
+    else if(close(xf, p.perp)) tips.push('Step 1: that’s F<sub>norm</sub>. Multiply it by μ to get the friction.');
+    else if(close(xf, Math.abs(p.mu*p.W*Math.cos(p.th)))) tips.push('Step 1: your calculator looks like it’s in radians mode. Switch it to degrees.');
+  }
+  if(!okN){
+    if(close(xn, p.par + p.f)) tips.push('Step 2: friction points <b>up</b> the ramp, opposite F<sub>grav∥</sub>, so subtract it.');
+    else if(close(xn, p.par)) tips.push('Step 2: that’s F<sub>grav∥</sub> alone. Friction pushes back up the ramp, so subtract it.');
+    else if(close(xn, p.W - p.f)) tips.push('Step 2: only the piece of gravity along the ramp counts here. Use F<sub>grav∥</sub>, not all of F<sub>grav</sub>.');
+    else if(!okF && close(xn, p.par - xf)) tips.push('Your step 2 follows from your step 1 answer, so the method is right. Fix the friction and the rest follows.');
+  }
+  if(!okA){
+    if(close(xa, p.par/p.m)) tips.push('Step 3: that’s the acceleration with no friction. Use F<sub>net</sub>, after friction is subtracted.');
+    else if(close(xa, p.net/p.W)) tips.push('Step 3: it looks like you divided by F<sub>grav</sub>. Divide by the mass in kg.');
+    else if(!okN && xn > 0 && close(xa, xn/p.m)) tips.push('Your step 3 follows from your step 2 answer, so the method is right there too.');
+  }
+  var head = okF && okN && okA ? '<b>All three right.</b>' : (okF || okN || okA ? '<b>Partly right.</b>' : '<b>Not this one.</b>');
+  var work = 'F<sub>grav</sub> = ' + p.m + ' kg × 9.8 = ' + fmt(p.W) + ' N<br>' +
+             'F<sub>grav∥</sub> = ' + fmt(p.W) + ' N × sin ' + p.th + '° = ' + fmt(p.par) + ' N · F<sub>grav⊥</sub> = ' + fmt(p.W) + ' N × cos ' + p.th + '° = ' + fmt(p.perp) + ' N<br>' +
+             'F<sub>norm</sub> = F<sub>grav⊥</sub> = ' + fmt(p.perp) + ' N<br>' +
+             'Step 1: F<sub>frict</sub> = μ · F<sub>norm</sub> = ' + p.mu + ' × ' + fmt(p.perp) + ' N = <b>' + fmt(p.f) + ' N up the ramp</b><br>' +
+             'Step 2: F<sub>net</sub> = F<sub>grav∥</sub> − F<sub>frict</sub> = ' + fmt(p.par) + ' N − ' + fmt(p.f) + ' N = <b>' + fmt(p.net) + ' N down the ramp</b><br>' +
+             'Step 3: a = F<sub>net</sub> / m = ' + fmt(p.net) + ' N / ' + p.m + ' kg = <b>' + fmt3(p.a) + ' m/s²</b> down the ramp';
+  var foot = 'With no friction it would be 9.8 × sin ' + p.th + '° = ' + fmt3(clean(9.8*sinD(p.th))) + ' m/s². Friction takes some of that away, but F<sub>grav∥</sub> is still bigger, so the ' + p.o.n + ' keeps speeding up.';
+  setFb(el('fr-fb'), okF && okN && okA ? 'good' : 'bad', '<p>' + head + (tips.length ? ' ' + tips.join(' ') : '') + '</p><div class="work">' + work + '</div><p>' + foot + '</p>');
+}
+el('fr-check').addEventListener('click', frCheck);
+el('fr-next').addEventListener('click', frNew);
+onEnter(['fr-f','fr-net','fr-a'], frCheck);
+
+/* =========================================================
+   quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'A box sits on a ramp. Which way does the force of gravity on it point?',
+    opts:['Straight down','Down the ramp','Straight into the ramp','It depends on how steep the ramp is'],
+    ans:0,
+    why:'Gravity always points straight down, on a ramp or anywhere else. F<sub>grav∥</sub> (down the ramp) and F<sub>grav⊥</sub> (into the ramp) are two pieces we split it into to do the math.' },
+  { stem:'Which piece of gravity pulls a box <b>down the ramp</b>?',
+    opts:['F<sub>grav∥</sub> = F<sub>grav</sub> · sin θ','F<sub>grav⊥</sub> = F<sub>grav</sub> · cos θ','F<sub>grav∥</sub> = F<sub>grav</sub> · cos θ','F<sub>norm</sub>'],
+    ans:0,
+    why:'The piece along the ramp is F<sub>grav∥</sub>, and it uses sin θ. Quick check: on a level floor (θ = 0°), sin 0° = 0, and nothing pulls the box along.' },
+  { stem:'A 10 kg box slides down a frictionless ramp tilted at 30°. What is F<sub>grav∥</sub>?',
+    opts:['49 N','84.87 N','98 N','4.9 N'],
+    ans:0,
+    why:'F<sub>grav</sub> = 10 × 9.8 = 98 N. F<sub>grav∥</sub> = 98 N × sin 30° = 49 N. 84.87 N is F<sub>grav⊥</sub>, which uses cos.' },
+  { stem:'For that same box, what is the normal force?',
+    opts:['98 N','84.87 N','49 N','0 N'],
+    ans:1,
+    why:'The ramp only has to hold back the piece of gravity pressing into it: F<sub>norm</sub> = F<sub>grav⊥</sub> = 98 N × cos 30° = 84.87 N. That’s less than the box’s weight.' },
+  { stem:'You make a ramp steeper. What happens to the normal force on a box sitting on it?',
+    opts:['It gets smaller','It gets bigger','It stays the same','It becomes equal to F<sub>grav</sub>'],
+    ans:0,
+    why:'F<sub>norm</sub> = F<sub>grav</sub> · cos θ, and cos θ gets smaller as θ gets bigger. Less of gravity presses into a steep ramp.' },
+  { stem:'A 2 kg box and a 20 kg box slide down the same frictionless ramp. Which one has the bigger acceleration?',
+    opts:['The 20 kg box','The 2 kg box','They’re the same','It depends on the angle'],
+    ans:2,
+    why:'The 20 kg box has 10 times the F<sub>grav∥</sub>, but also 10 times the mass. They cancel, and both have a = 9.8 × sin θ.' },
+  { stem:'A 5 kg box slides down a ramp tilted at 40°. The coefficient of friction is 0.2. What is its acceleration?',
+    opts:['6.30 m/s²','4.80 m/s²','4.34 m/s²','9.8 m/s²'],
+    ans:1,
+    why:'F<sub>grav</sub> = 49 N. F<sub>grav∥</sub> = 49 × sin 40° = 31.50 N and F<sub>grav⊥</sub> = 49 × cos 40° = 37.54 N. F<sub>frict</sub> = 0.2 × 37.54 = 7.51 N up the ramp. F<sub>net</sub> = 31.50 − 7.51 = 23.99 N, so a = 23.99 / 5 = 4.80 m/s². 6.30 m/s² leaves out friction, and 4.34 m/s² uses μ × F<sub>grav</sub> instead of μ × F<sub>grav⊥</sub>.' }
+];
+
+(function buildQuiz(){
+  var host = el('quiz'), html = '', answered = 0, right = 0;
+  QUIZ.forEach(function(q,qi){
+    html += '<div class="q"><p class="stem">' + (qi+1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o,oi){ html += '<button class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  html += '<div class="quiz-sum" id="quiz-sum" aria-live="polite"></div>';
+  host.innerHTML = html;
+  Array.prototype.forEach.call(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      Array.prototype.forEach.call(el('q'+qi).querySelectorAll('.opt'), function(other,i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      answered++; if(oi === q.ans) right++;
+      setFb(el('qfb'+qi), oi === q.ans ? 'good' : 'bad',
+        '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+      el('quiz-sum').textContent = right + ' of ' + answered + ' correct' + (answered === QUIZ.length ? ' · reload the page to try again' : '');
+    });
+  });
+})();
+
+/* boot */
+renderTally(el('sp-tally'), SP_TYPES, spTally);
+renderTally(el('sl-tally'), SL_TYPES, slTally);
+renderTally(el('fr-tally'), FR_TYPES, frTally);
+trRender();
+spNew(); slNew(); frNew();
+</script>
+</body>
+</html>
