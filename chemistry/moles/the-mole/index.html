@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Mole — Counting Atoms by Weighing Them</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#131E1D; --ink2:#3B4A48; --mute:#5F6D6B;
+  --wash:#E3E9E8; --card:#FBFCFB; --line:#C9D3D1; --line-soft:#E0E7E6;
+  --water:#12727F; --water-dk:#0B4E58; --water-lite:#BFDEE2;
+  --brass:#9A6E22; --brass-lite:#F5E9CF;
+  --ok:#26694A; --ok-bg:#E4F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  --lcd:#1E2B29; --lcd-ink:#BFEFD0;
+  --display:"Instrument Serif",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+sup{line-height:0;font-size:.72em}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(227,233,232,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:64px 0 44px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--water-dk)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,7.4vw,74px);line-height:1;margin:16px 0 0;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--water-dk)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:47ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: counting units, and one mole of carbon on a balance */
+.sig-readout{margin:38px 0 0;padding:24px 26px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.sig-calc{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.sig-grid{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;align-items:center}
+.sig-rows{margin-top:12px;display:grid;gap:4px}
+.sig-r{display:grid;grid-template-columns:5.4em minmax(0,1fr);align-items:baseline;gap:10px;font-family:var(--mono);font-size:clamp(17px,3.4vw,22px);font-weight:500;font-variant-numeric:tabular-nums;border-bottom:1px dashed var(--line);padding-bottom:3px}
+.sig-r .tg{font-size:12px;font-weight:400;letter-spacing:.04em;color:var(--mute);white-space:nowrap;margin-left:8px}
+.sig-r.head{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:400;border-bottom:none}
+.sig-r.hl{color:var(--water-dk)}
+.sig-r .huge{font-size:clamp(14px,2.5vw,18.5px);line-height:1.35;overflow-wrap:anywhere}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px}
+.sig-note b{color:var(--water-dk);font-weight:600}
+.sig-fig svg{display:block;width:100%;height:auto}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--water);color:var(--water-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--water-dk);background:var(--water-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.4vw,40px);line-height:1.08;margin:0;letter-spacing:-.01em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--water-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.note{border-left:3px solid var(--brass);background:var(--brass-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:24px 0}
+.rulebox.two{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.rulebox.one{grid-template-columns:minmax(0,1fr)}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--water);border-radius:0 4px 4px 0;padding:18px 20px;min-width:0}
+.rulecard .op{font-family:var(--display);font-size:30px;line-height:1.05;color:var(--water-dk)}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard .ex{font-family:var(--mono);font-size:13.5px;color:var(--water-dk);margin-top:8px}
+.rulecard.miss{border-left-color:var(--no)}
+.rulecard.miss h4{margin-top:0}
+.rulecard .wrong{font-family:var(--mono);font-size:14.5px;color:var(--mute);text-decoration:line-through;text-decoration-color:var(--no);text-decoration-thickness:2px;margin:6px 0}
+.rulecard .right{font-family:var(--mono);font-size:14.5px;color:var(--ok);margin:6px 0}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.setup{font-size:15px;color:var(--ink2);margin:0 0 14px}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F6F8F7;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--water-dk);border-color:var(--water-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--water)}
+button[disabled]{opacity:.45;cursor:default}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--water);outline-offset:2px}
+button.small{font-size:12px;padding:6px 11px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid #93A5A2;border-radius:3px;padding:9px 11px;width:170px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(19,30,29,.12)}
+input[type=range]{width:100%;accent-color:var(--water);margin:10px 0 2px}
+select{font-family:var(--body);font-size:16px;padding:8px 10px;border:1px solid #93A5A2;border-radius:3px;background:#fff;color:var(--ink);max-width:100%}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:14px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:120px}
+.unit-tag{font-family:var(--mono);font-size:15px;color:var(--mute)}
+.x10{display:inline-flex;align-items:flex-start;font-family:var(--mono);font-size:19px;color:var(--ink2);gap:2px}
+.x10 .exp{width:3.6em;font-size:14px;padding:4px 6px;margin-top:-12px}
+.x10[hidden]{display:none}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1B4E36}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--water);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb .mono{font-size:15px}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab[aria-selected="true"]{background:var(--ink);color:#F6F8F7;border-color:var(--ink)}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft)}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45}
+.opt:hover{border-color:var(--water);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.94}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+
+.prob{font-size:17.5px;line-height:1.55;margin:4px 0 0}
+.prob b{font-weight:600}
+.scaf{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
+.scaf-lab{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--water-dk)}
+::placeholder{font-family:var(--body);font-style:italic;font-size:14px;color:#7F8D8B;opacity:1}
+.typing-tip{font-size:14px;color:var(--mute);margin:8px 0 0}
+.typing-tip kbd{font-family:var(--mono);font-size:13px;color:var(--ink2);background:#fff;border:1px solid var(--line);border-radius:3px;padding:1px 5px}
+
+/* ---------- shared: digital balance readout ---------- */
+.lcd{display:inline-block;background:var(--lcd);color:var(--lcd-ink);font-family:var(--mono);font-weight:500;font-size:clamp(22px,4vw,28px);font-variant-numeric:tabular-nums;letter-spacing:.04em;padding:5px 14px;border-radius:4px;min-width:7.2em;text-align:right;box-shadow:inset 0 2px 6px rgba(0,0,0,.45)}
+.fig svg{display:block;width:100%;height:auto}
+
+/* ---------- counting by weighing ---------- */
+.weigh{display:grid;grid-template-columns:290px minmax(0,1fr);gap:24px;align-items:center;margin-top:12px}
+.weigh .given{font-family:var(--mono);font-size:15px;color:var(--ink2);margin:0}
+.weigh .given b{color:var(--ink);font-weight:600}
+.readrows{display:grid;gap:2px;margin:10px 0 0}
+.readrows div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--line);padding:4px 0;font-size:15.5px}
+.readrows div span:last-child{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.readrows div.hl span:last-child{color:var(--water-dk);font-weight:600}
+
+/* ---------- decimal mover ---------- */
+.mv-top{font-family:var(--mono);font-size:clamp(26px,5vw,34px);font-weight:500;margin:14px 0 0}
+.mv-num{font-family:var(--mono);font-size:clamp(15px,2.8vw,21px);font-variant-numeric:tabular-nums;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:12px 14px;margin-top:10px;overflow-wrap:anywhere;line-height:1.5;min-height:3.3em}
+.mv-num .dp{color:var(--no);font-weight:600;font-size:1.25em;line-height:0}
+.mv-num .sd{color:var(--water-dk);font-weight:600}
+.mv-note{font-size:15.5px;color:var(--ink2);margin:10px 0 0}
+
+/* ---------- powers-of-ten ladder ---------- */
+.lad-tick{stroke:#9FB0AD}
+.lad-lbl{font-family:var(--mono);font-size:12px;fill:var(--ink2);text-anchor:middle}
+.lad-word{font-family:var(--mono);font-size:10px;fill:var(--mute);text-anchor:middle}
+.lad-dot{fill:#fff;stroke:var(--water);stroke-width:1.5}
+.lad-cur{fill:var(--water)}
+.lad-mole{fill:var(--brass)}
+.lad-read{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 18px;align-items:baseline;margin-top:10px}
+.lad-big{font-family:var(--mono);font-size:clamp(28px,5vw,36px);font-weight:500;color:var(--water-dk);white-space:nowrap}
+.lad-name{font-family:var(--mono);font-size:14px;color:var(--ink2);overflow-wrap:anywhere}
+.lad-land{grid-column:1 / -1;font-size:16px;margin:6px 0 0;min-height:3.2em}
+
+/* ---------- zoom: one atom to one mole ---------- */
+.zoom{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:26px;margin-top:16px}
+.zoom .lcd-wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}
+.zm-msg{font-size:15.5px;color:var(--ink2);min-height:4.8em;margin:12px 0 0}
+.zm-size{font-family:var(--mono);font-size:clamp(22px,4vw,28px);font-weight:500;color:var(--water-dk);margin:2px 0 8px}
+ol.sizes{list-style:none;padding:0;margin:0;display:grid;gap:3px}
+ol.sizes li{margin:0;display:flex;justify-content:space-between;gap:10px;font-size:14.5px;padding:4px 10px;border-radius:3px;color:var(--ink2);background:#fff;border:1px solid var(--line-soft)}
+ol.sizes li span:last-child{font-family:var(--mono);font-size:13px;color:var(--mute);white-space:nowrap}
+ol.sizes li.here{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:600}
+ol.sizes li.here span:last-child{color:var(--lcd-ink)}
+ol.sizes li.near{border-color:var(--water);box-shadow:inset 3px 0 0 var(--water)}
+
+/* ---------- a mole of each, to scale ---------- */
+.lineup{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:12px 10px;margin:18px 0 6px}
+.lineup figure{margin:0;text-align:center}
+.lineup svg{display:block;width:100%;height:auto}
+.lineup figcaption{font-size:13.5px;line-height:1.3;color:var(--ink2)}
+.lineup figcaption b{display:block;font-weight:600;color:var(--ink)}
+.lineup figcaption .m{font-family:var(--mono);font-size:13px;color:var(--water-dk)}
+
+/* ---------- two-pan balance ---------- */
+.tp-pick{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin:14px 0 4px}
+.tp-pick select{width:100%}
+.tp-pick label{display:block;font-size:13px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin-bottom:4px}
+.tp-fig{background:#fff;border:1px solid var(--line-soft);border-radius:3px;margin-top:10px}
+.tp-read{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.tp-side{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:12px 14px;min-width:0}
+.tp-side h4{margin:0 0 6px;font-size:15.5px}
+.tp-row{font-size:13.5px;color:var(--mute);margin-top:6px;display:flex;justify-content:space-between;gap:8px}
+.tp-row span:last-child{font-family:var(--mono);color:var(--ink);font-variant-numeric:tabular-nums;text-align:right}
+.tp-bar{height:10px;border-radius:2px;margin-top:3px;background:var(--line-soft);overflow:hidden}
+.tp-bar i{display:block;height:100%;border-radius:2px;transition:width .35s ease}
+.tp-bar.atoms i{background:var(--water)}
+.tp-bar.mass i{background:var(--brass)}
+.tp-msg{font-size:16px;margin:14px 0 0}
+
+/* ---------- periodic tile anatomy ---------- */
+.anat{display:grid;grid-template-columns:auto minmax(0,1fr);gap:26px;align-items:center;margin:22px 0}
+.tile{position:relative;width:150px;height:172px;background:#fff;border:2px solid var(--ink);border-radius:5px;font-family:var(--body);text-align:center}
+.tile .tz{position:absolute;top:8px;left:11px;font-family:var(--mono);font-size:20px;color:var(--no);border-bottom:2px solid var(--no);line-height:1.1}
+.tile .ts{display:block;font-size:58px;font-weight:600;line-height:1;padding-top:40px}
+.tile .tn{display:block;font-size:14px;color:var(--ink2);margin-top:4px}
+.tile .tm{display:inline-block;font-family:var(--mono);font-size:19px;color:var(--ok);background:var(--ok-bg);border-radius:3px;padding:0 6px;margin-top:4px}
+.callouts{display:grid;gap:12px}
+.callout{background:var(--card);border:1px solid var(--line);border-radius:0 4px 4px 0;padding:12px 16px;font-size:15.5px}
+.callout.zno{border-left:3px solid var(--no)}
+.callout.zok{border-left:3px solid var(--ok)}
+.callout b{font-weight:600}
+
+/* ---------- periodic table ---------- */
+.pt-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin-top:6px}
+.pt{display:grid;grid-template-columns:repeat(18,minmax(0,1fr));grid-template-rows:repeat(7,auto) 10px auto auto;gap:2px;min-width:640px}
+.pt .el{font-family:var(--mono);padding:3px 0 2px;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:2px;text-align:center;line-height:1.15;letter-spacing:0;min-width:0}
+.pt .el:hover{border-color:var(--water);background:#F2F8F8;color:var(--ink)}
+.pt .el .z{display:block;font-size:8.5px;color:var(--mute)}
+.pt .el .s{display:block;font-family:var(--body);font-weight:600;font-size:13.5px}
+.pt .el .m{display:block;font-size:8.5px;color:var(--ink2)}
+.pt .el.rad{background:#EEF2F1}
+.pt .el.rad .s{color:var(--ink2)}
+.pt .el.on,.pt .el.on:hover{background:var(--ink);border-color:var(--ink);color:#fff}
+.pt .el.on .z,.pt .el.on .m{color:var(--lcd-ink)}
+.pt .gap{font-family:var(--mono);font-size:9px;color:var(--mute);display:flex;align-items:center;justify-content:center;border:1px dashed var(--line);border-radius:2px;text-align:center;line-height:1.1}
+.pt-detail{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center;margin-top:16px;padding-top:16px;border-top:1px dashed var(--line)}
+.pt-detail .tile{width:118px;height:136px}
+.pt-detail .tile .ts{font-size:44px;padding-top:32px}
+.pt-detail .tile .tz{font-size:16px;color:var(--ink2);border-bottom:none}
+.pt-detail .tile .tm{font-size:16px}
+.pt-facts{font-size:15.5px;min-width:0}
+.pt-facts .mm{font-family:var(--mono);font-size:clamp(22px,4vw,28px);font-weight:500;color:var(--ok)}
+.pt-facts p{margin:6px 0}
+.pt-facts .aside{font-size:14.5px;color:var(--mute)}
+
+/* ---------- factor-label setups ---------- */
+.fl{display:flex;flex-wrap:wrap;align-items:center;gap:10px 10px;font-family:var(--mono);font-size:16.5px;font-variant-numeric:tabular-nums;padding:14px 16px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;min-height:88px;margin-top:12px}
+.fl .qty{white-space:nowrap}
+.fl .frac{display:inline-flex;flex-direction:column;align-items:stretch;text-align:center;border-radius:3px}
+.fl .frac>span{padding:3px 8px;white-space:nowrap}
+.fl .frac>span:first-child{border-bottom:2px solid var(--ink)}
+.fl .frac.new{background:var(--brass-lite)}
+.fl .u{color:var(--water-dk)}
+.fl .u.x{color:var(--mute);text-decoration:line-through;text-decoration-color:var(--no);text-decoration-thickness:2.5px}
+.fl .op{color:var(--mute)}
+.fl .ans{background:var(--ok-bg);border-radius:3px;padding:4px 9px;color:var(--ok);font-weight:500;white-space:nowrap}
+.fl .ans .u{color:var(--ok)}
+.fl .ph{color:#A8B4B2;font-family:var(--body);font-style:italic;font-size:14.5px}
+.fb .fl{font-size:15px;min-height:0;padding:10px 12px;margin:10px 0 2px}
+.wk-q{font-size:17px;margin:4px 0 0}
+.wk-text{min-height:4.4em}
+.wk-count{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto}
+.factor-opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.fopt{background:#fff;color:var(--ink);border:1px solid var(--line);padding:6px 6px;font-size:14px}
+.fopt:hover{background:#F2F8F8;color:var(--ink);border-color:var(--water)}
+.fopt .frac{display:inline-flex;flex-direction:column;text-align:center}
+.fopt .frac>span{padding:2px 8px;white-space:nowrap}
+.fopt .frac>span:first-child{border-bottom:1.5px solid var(--ink)}
+
+/* ---------- mole map ---------- */
+.map{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px;margin:22px 0 8px}
+.node{background:var(--card);border:2px solid var(--line);border-radius:10px;padding:16px 10px;text-align:center;transition:border-color .2s,background .2s}
+.node b{display:block;font-family:var(--display);font-weight:400;font-size:clamp(24px,3.6vw,30px);line-height:1.1}
+.node span{font-family:var(--mono);font-size:12px;color:var(--mute)}
+.node.hub{border-color:var(--water);background:var(--water-lite)}
+.node.on{border-color:var(--ink);box-shadow:0 0 0 2px var(--ink)}
+.arrows{display:flex;flex-direction:column;gap:8px}
+.arrows span{display:block;font-family:var(--mono);font-size:12.5px;text-align:center;border:1px solid var(--line);background:#fff;border-radius:3px;padding:5px 8px;white-space:nowrap;color:var(--ink2);transition:background .2s,color .2s}
+.arrows span.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.arrows i{font-style:normal;font-weight:600}
+.arrows .v{display:none}
+.route{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.route .lab{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-right:4px}
+.route-text{font-size:16px;margin:12px 0 0}
+
+@media (max-width:760px){
+  .weigh{grid-template-columns:1fr}
+  .weigh .fig{max-width:340px}
+  .zoom{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .map{grid-template-columns:1fr;gap:8px}
+  .arrows{flex-direction:row;justify-content:center;flex-wrap:wrap}
+  .arrows .h{display:none}
+  .arrows .v{display:inline}
+  .anat{grid-template-columns:1fr;justify-items:start}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:16px}
+  .sig-readout{padding:20px 18px}
+  .sig-grid{grid-template-columns:1fr}
+  .sig-fig{max-width:250px;margin:0 auto}
+  .field label{min-width:auto;flex:1 1 100%}
+  .tp-read{grid-template-columns:1fr}
+  .pt-detail{grid-template-columns:1fr}
+  .fl{font-size:15px;padding:12px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){
+  .tp-bar i,.node,.arrows span{transition:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">The Mole</span>
+    <span class="bar-sub">What a mole is · Avogadro’s number · molar mass</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 4 · The mole</div>
+  <h1>Counting atoms by <em>weighing</em> them.</h1>
+  <p class="lede">Atoms are far too small to count one at a time. So chemists count them the way a hardware store counts nails: they weigh a pile. The pile chemists use is called a <b>mole</b>, and it always holds the same number of atoms: 6.02 × 10<sup>23</sup>.</p>
+
+  <div class="sig-readout">
+    <div class="sig-grid">
+      <div>
+        <div class="sig-calc">Counting units</div>
+        <div class="sig-rows">
+          <div class="sig-r head"><span>Unit</span><span>How many</span></div>
+          <div class="sig-r"><span>1 pair</span><span>2<span class="tg">socks, shoes</span></span></div>
+          <div class="sig-r"><span>1 dozen</span><span>12<span class="tg">eggs, donuts</span></span></div>
+          <div class="sig-r"><span>1 ream</span><span>500<span class="tg">sheets of paper</span></span></div>
+          <div class="sig-r hl"><span>1 mole</span><span class="huge">602,<wbr>000,<wbr>000,<wbr>000,<wbr>000,<wbr>000,<wbr>000,<wbr>000</span></div>
+        </div>
+        <div class="sig-note">A mole is a number, just like a dozen. It’s just a very big one: <b>6.02 × 10<sup>23</sup></b>.</div>
+      </div>
+      <div class="sig-fig fig" id="hero-fig"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#what">What a mole is</a>
+  <a href="#big">How big is a mole?</a>
+  <a href="#mass">Same count, different mass</a>
+  <a href="#molar">Molar mass</a>
+  <a href="#convert">Converting</a>
+  <a href="#watch">Watch-outs</a>
+  <a href="#practice">Practice</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ WHAT ============ -->
+<section id="what">
+  <div class="sec-head"><span class="tasktag">The idea</span><h2>A mole is a number</h2></div>
+  <p>A <b>mole</b> is a counting unit, like a dozen. A dozen eggs is 12 eggs, and a dozen atoms is 12 atoms. In the same way, a mole of eggs is 6.02 × 10<sup>23</sup> eggs, and a mole of atoms is 6.02 × 10<sup>23</sup> atoms. That number is called <b>Avogadro’s number</b>, after the Italian scientist Amedeo Avogadro.</p>
+  <div class="rulebox">
+    <div class="rulecard"><div class="op">12</div><h4>1 dozen</h4><p>Twelve of anything: eggs, donuts, atoms.</p></div>
+    <div class="rulecard"><div class="op">6.02 × 10<sup>23</sup></div><h4>1 mole</h4><p>Avogadro’s number of anything: atoms, molecules, even pennies.</p></div>
+    <div class="rulecard"><div class="op">mol</div><h4>The unit</h4><p>The symbol for mole is <b>mol</b>. Two and a half moles of iron is written 2.5 mol Fe.</p></div>
+  </div>
+
+  <h3>Why chemists count by weighing</h3>
+  <p>One carbon atom has a mass of about 0.0000000000000000000000199 g. No one could count atoms that small one at a time. But if you know how much <i>one</i> of something weighs, you can count a whole pile just by weighing it. Try it with pennies first. Every U.S. penny made since 1983 has a mass of 2.50 g.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Count by weighing</span></div>
+    <div class="tabs" role="tablist" aria-label="What's on the scale" id="w-tabs">
+      <button type="button" class="tab" role="tab" data-m="penny" aria-selected="true">Pennies</button>
+      <button type="button" class="tab" role="tab" data-m="carbon" aria-selected="false">Carbon atoms</button>
+    </div>
+    <div class="weigh">
+      <div class="fig" id="w-fig"></div>
+      <div id="w-penny">
+        <p class="given">One penny: <b>2.50 g</b></p>
+        <p style="margin:10px 0 0">How many pennies are on the scale? Don’t count the drawing. Use the mass.</p>
+        <div class="field">
+          <input type="text" id="w-in" autocomplete="off" spellcheck="false" placeholder="Type a number" aria-label="Number of pennies">
+          <span class="unit-tag">pennies</span>
+        </div>
+        <div class="btn-row">
+          <button type="button" id="w-check">Check</button>
+          <button type="button" class="ghost" id="w-new">New pile</button>
+        </div>
+        <div class="fb" id="w-fb" aria-live="polite"></div>
+      </div>
+      <div id="w-carbon" hidden>
+        <p class="given">One carbon atom: <b>1.994 × 10<sup>−23</sup> g</b><br>One scoop: <b>12.01 g</b> of carbon</p>
+        <div class="readrows" aria-live="polite">
+          <div><span>Scoops on the scale</span><span id="w-sc">0</span></div>
+          <div><span>Mass</span><span id="w-mass">0.00 g</span></div>
+          <div class="hl"><span>Carbon atoms</span><span id="w-atoms">0</span></div>
+        </div>
+        <div class="btn-row">
+          <button type="button" id="w-add">Add a scoop</button>
+          <button type="button" class="ghost" id="w-empty">Empty the scale</button>
+        </div>
+        <div class="fb hint show" id="w-cfb"></div>
+      </div>
+    </div>
+  </div>
+  <p>That’s the whole idea of the mole. Chemists don’t want to divide by 1.994 × 10<sup>−23</sup> g every time, so they bundle atoms into moles. <b>12.01 g of carbon is always one mole of carbon atoms</b>, so 36.03 g is three moles. Each element has its own “scoop” mass, which you’ll find on the periodic table further down this page.</p>
+
+  <h3>Reading 6.02 × 10<sup>23</sup></h3>
+  <p>Numbers this big and this small are written in <b>scientific notation</b>. The exponent tells you how many places to move the decimal point: to the right when it’s positive, to the left when it’s negative. Slide the exponent and watch the decimal point move.</p>
+  <div class="card">
+    <div class="card-label"><span>Move the decimal point</span></div>
+    <div class="tabs" role="tablist" aria-label="Starting number" id="mv-tabs">
+      <button type="button" class="tab" role="tab" data-c="6.02" aria-selected="true">6.02 × 10ⁿ</button>
+      <button type="button" class="tab" role="tab" data-c="1.99" aria-selected="false">1.99 × 10ⁿ</button>
+    </div>
+    <div class="mv-top" id="mv-top"></div>
+    <input type="range" id="mv-range" min="-24" max="24" step="1" value="23" aria-label="Exponent">
+    <div class="mv-num" id="mv-num" aria-live="polite"></div>
+    <p class="mv-note" id="mv-note"></p>
+  </div>
+  <div class="note"><b>Avogadro’s number, exactly.</b> Since 2019, one mole has been defined as exactly 6.02214076 × 10<sup>23</sup> particles. This page rounds it to <b>6.02 × 10<sup>23</sup></b>, which is plenty for three significant figures. Chemists celebrate Mole Day every October 23 (10/23), from 6:02 a.m. to 6:02 p.m.</div>
+</section>
+
+<!-- ============ BIG ============ -->
+<section id="big">
+  <div class="sec-head"><span class="tasktag">Scale</span><h2>How big is a mole?</h2></div>
+  <p>Written out, 6.02 × 10<sup>23</sup> is 602 sextillion. It’s hard to picture a number that big. A billion feels huge, but it’s only 10<sup>9</sup>. To get from a billion to a mole, you have to multiply by 10 almost fifteen more times. Climb the ladder one step at a time.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Climb the powers of ten</span><span class="score" id="lad-step"></span></div>
+    <div class="fig" id="lad-fig"></div>
+    <input type="range" id="lad-range" min="0" max="24" step="1" value="9" aria-label="Power of ten">
+    <div class="btn-row" style="margin-top:6px">
+      <button type="button" class="ghost small" id="lad-down">÷ 10</button>
+      <button type="button" class="small" id="lad-up">× 10</button>
+    </div>
+    <div class="lad-read">
+      <div class="lad-big" id="lad-big"></div>
+      <div class="lad-name" id="lad-name"></div>
+      <p class="lad-land" id="lad-land" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <h3>A mole of everyday things</h3>
+  <div class="rulebox two">
+    <div class="rulecard"><div class="op">97,000 light-years</div><h4>A mole of pennies, stacked</h4><p>The stack would reach about 97,000 light-years, roughly the width of the whole Milky Way galaxy.</p></div>
+    <div class="rulecard"><div class="op">1.4 million universes</div><h4>A mole of seconds</h4><p>6.02 × 10<sup>23</sup> seconds is 1.9 × 10<sup>16</sup> years. That’s about 1.4 million times the age of the universe.</p></div>
+    <div class="rulecard"><div class="op">4 Earths</div><h4>A mole of basketballs</h4><p>Together they’d take up about four times the volume of planet Earth.</p></div>
+    <div class="rulecard"><div class="op">2.3 million years</div><h4>Counting to a mole</h4><p>If all 8.2 billion people on Earth counted one atom per second, nonstop, it would take about 2.3 million years.</p></div>
+  </div>
+
+  <h3>And yet a mole of atoms fits in your hand</h3>
+  <p>So how can a mole of carbon be a small pile on a balance? Because atoms are incredibly small. Start with one atom and keep multiplying by ten. Watch two things: the <b>size</b> of the sample, and what a classroom balance reads.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Zoom out: one atom to one mole</span></div>
+    <div class="tabs" role="tablist" aria-label="Element" id="zm-tabs">
+      <button type="button" class="tab" role="tab" data-s="C" aria-selected="true">Carbon</button>
+      <button type="button" class="tab" role="tab" data-s="Al" aria-selected="false">Aluminum</button>
+      <button type="button" class="tab" role="tab" data-s="Fe" aria-selected="false">Iron</button>
+      <button type="button" class="tab" role="tab" data-s="Au" aria-selected="false">Gold</button>
+    </div>
+    <input type="range" id="zm-range" min="0" max="24" step="0.02" value="0" aria-label="Number of atoms, as a power of ten">
+    <div class="btn-row" style="margin-top:6px">
+      <button type="button" class="ghost small" id="zm-down">÷ 10</button>
+      <button type="button" class="small" id="zm-up">× 10</button>
+      <button type="button" class="small" id="zm-mole">Jump to 1 mole</button>
+      <button type="button" class="ghost small" id="zm-one">Back to 1 atom</button>
+    </div>
+    <div class="zoom">
+      <div>
+        <div class="readrows" aria-live="polite">
+          <div class="hl"><span>Atoms</span><span id="zm-n"></span></div>
+          <div><span>Moles</span><span id="zm-mol"></span></div>
+          <div><span>Mass in amu</span><span id="zm-amu"></span></div>
+          <div><span>Mass in grams</span><span id="zm-g"></span></div>
+        </div>
+        <div class="lcd-wrap"><span class="lcd" id="zm-lcd">0.00 g</span><span class="smallprint">classroom balance<br>(reads to 0.01 g)</span></div>
+        <p class="zm-msg" id="zm-msg"></p>
+      </div>
+      <div>
+        <div class="scaf-lab">Packed into a cube, it’s about</div>
+        <div class="zm-size" id="zm-size"></div>
+        <ol class="sizes" id="zm-sizes" aria-label="Sizes for comparison"></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MASS ============ -->
+<section id="mass">
+  <div class="sec-head"><span class="tasktag">The key idea</span><h2>Same count, different mass</h2></div>
+  <p>A dozen eggs and a dozen bowling balls have the same count, but you’d never mix up their masses. Moles work the same way. A mole of <i>any</i> element has 6.02 × 10<sup>23</sup> atoms, but the mass of that mole depends on how heavy each atom is.</p>
+
+  <div class="card">
+    <div class="card-label"><span>One mole of each, drawn to scale</span></div>
+    <div class="lineup" id="lineup"></div>
+    <p class="smallprint" style="margin-bottom:0">Every sample holds 6.02 × 10<sup>23</sup> atoms. They’re all about the size of a sugar cube, but the lead cube has 17 times the mass of the carbon cube. And a mole of mercury, a liquid metal, fills about one tablespoon (14.8 mL).</p>
+  </div>
+
+  <h3>Put them on a balance</h3>
+  <p>Load a pan on each side. First compare one mole of each. Then switch to equal masses and see what happens to the number of atoms.</p>
+  <div class="card">
+    <div class="card-label"><span>Two-pan balance</span></div>
+    <div class="tabs" role="tablist" aria-label="Compare" id="tp-tabs">
+      <button type="button" class="tab" role="tab" data-mode="mol" aria-selected="true">Same number of atoms (1 mol each)</button>
+      <button type="button" class="tab" role="tab" data-mode="mass" aria-selected="false">Same mass (50.0 g each)</button>
+    </div>
+    <div class="tp-pick">
+      <div><label for="tp-l">Left pan</label><select id="tp-l"></select></div>
+      <div><label for="tp-r">Right pan</label><select id="tp-r"></select></div>
+    </div>
+    <div class="tp-fig fig" id="tp-fig"></div>
+    <div class="tp-read">
+      <div class="tp-side" id="tp-sl"></div>
+      <div class="tp-side" id="tp-sr"></div>
+    </div>
+    <p class="tp-msg" id="tp-msg" aria-live="polite"></p>
+  </div>
+  <div class="note"><b>Equal moles means equal atoms. Equal masses does not.</b> Lighter atoms means more of them fit into the same mass: 50.0 g of carbon holds about 16 times as many atoms as 50.0 g of gold.</div>
+</section>
+
+<!-- ============ MOLAR MASS ============ -->
+<section id="molar">
+  <div class="sec-head"><span class="tasktag">The bridge</span><h2>Molar mass</h2></div>
+  <p>The <b>molar mass</b> of an element is the mass of one mole of its atoms. Its unit is <b>grams per mole (g/mol)</b>. You don’t have to memorize any molar masses. Each one is printed on the periodic table as the element’s average atomic mass.</p>
+
+  <div class="anat">
+    <div class="tile" role="img" aria-label="Periodic table tile for iron: atomic number 26, symbol Fe, average atomic mass 55.85">
+      <span class="tz">26</span><span class="ts">Fe</span><span class="tn">Iron</span><span class="tm">55.85</span>
+    </div>
+    <div class="callouts">
+      <div class="callout zno"><b>26 is the atomic number.</b> It’s the number of protons in an iron atom. It is <i>not</i> the molar mass.</div>
+      <div class="callout zok"><b>55.85 is the average atomic mass.</b> One iron atom: 55.85 amu. One mole of iron atoms: 55.85 g. So the molar mass of iron is <b>55.85 g/mol</b>.</div>
+    </div>
+  </div>
+  <p class="smallprint">Some periodic tables print the atomic mass above the symbol and some below. The molar mass is always the number with decimals. The decimals are there because it’s an average over the element’s isotopes.</p>
+
+  <h3>Why the same number works twice</h3>
+  <p>Atomic masses are measured in <b>atomic mass units (amu)</b>, and 1 amu is tiny: 1.66 × 10<sup>−24</sup> g. It takes 6.02 × 10<sup>23</sup> amu to make one gram. That’s no coincidence. Avogadro’s number was picked so that it would work out this way. So whatever one atom weighs in amu, a mole of those atoms weighs the same number of grams.</p>
+  <table>
+    <thead><tr><th>Element</th><th>One atom</th><th>One mole (6.02 × 10<sup>23</sup> atoms)</th></tr></thead>
+    <tbody>
+      <tr><td>Carbon, C</td><td class="n">12.01 amu</td><td class="n">12.01 g</td></tr>
+      <tr><td>Aluminum, Al</td><td class="n">26.98 amu</td><td class="n">26.98 g</td></tr>
+      <tr><td>Iron, Fe</td><td class="n">55.85 amu</td><td class="n">55.85 g</td></tr>
+      <tr><td>Gold, Au</td><td class="n">196.97 amu</td><td class="n">196.97 g</td></tr>
+    </tbody>
+  </table>
+  <p>Same number, different unit: <b>amu for one atom, grams for one mole</b>. That’s what you saw in the zoom-out above. The balance read 12.01 g at exactly one mole of carbon.</p>
+
+  <h3>Find any element’s molar mass</h3>
+  <p>Click an element.</p>
+  <div class="card">
+    <div class="card-label"><span>Periodic table</span><span class="score">scrolls sideways on a phone</span></div>
+    <div id="pt-main"></div>
+  </div>
+
+  <h3>Molar mass is a conversion factor</h3>
+  <p>“The molar mass of iron is 55.85 g/mol” means <b>55.85 g Fe = 1 mol Fe</b>. You can write that as a fraction either way up, and both are equal to 1. Avogadro’s number works the same way: 6.02 × 10<sup>23</sup> atoms = 1 mol.</p>
+  <div class="rulebox one">
+    <div class="rulecard"><h4 style="margin-top:0">Molar mass: grams ↔ moles</h4><div class="fl" id="cf-mm"></div></div>
+    <div class="rulecard"><h4 style="margin-top:0">Avogadro’s number: moles ↔ atoms</h4><div class="fl" id="cf-na"></div></div>
+  </div>
+</section>
+
+<!-- ============ CONVERT ============ -->
+<section id="convert">
+  <div class="sec-head"><span class="tasktag">The method</span><h2>Converting: the mole map</h2></div>
+  <p>Grams, moles and atoms are three ways to describe the same sample. Moles sit in the middle. Molar mass connects grams to moles, and Avogadro’s number connects moles to atoms. There is no direct road from grams to atoms. You always go through moles.</p>
+
+  <div class="map" id="map" aria-label="Mole map: grams to moles uses molar mass, moles to atoms uses Avogadro's number">
+    <div class="node" id="n-g"><b>Grams</b><span>mass (g)</span></div>
+    <div class="arrows">
+      <span id="a-gm"><i class="h">→</i><i class="v">↓</i> ÷ molar mass</span>
+      <span id="a-mg"><i class="h">←</i><i class="v">↑</i> × molar mass</span>
+    </div>
+    <div class="node hub" id="n-m"><b>Moles</b><span>mol</span></div>
+    <div class="arrows">
+      <span id="a-ma"><i class="h">→</i><i class="v">↓</i> × 6.02 × 10<sup>23</sup></span>
+      <span id="a-am"><i class="h">←</i><i class="v">↑</i> ÷ 6.02 × 10<sup>23</sup></span>
+    </div>
+    <div class="node" id="n-a"><b>Atoms</b><span>count</span></div>
+  </div>
+  <div class="card">
+    <div class="card-label"><span>Plan a route</span></div>
+    <div class="route">
+      <div><span class="lab">From</span><span class="tabs" style="display:inline-flex" id="rt-from" role="tablist" aria-label="Start from"></span></div>
+      <div><span class="lab">To</span><span class="tabs" style="display:inline-flex" id="rt-to" role="tablist" aria-label="End at"></span></div>
+    </div>
+    <p class="route-text" id="rt-text" aria-live="polite"></p>
+    <div class="fl" id="rt-fl"></div>
+  </div>
+
+  <h3>The factor-label method</h3>
+  <ol>
+    <li><b>Write what you’re given</b>, with its unit and element: 25.0 g Fe, not just 25.0.</li>
+    <li><b>Multiply by a conversion factor</b> with the unit you have on the <i>bottom</i>.</li>
+    <li><b>Cancel units</b> that appear on the top and bottom. The unit left over should be the one you want.</li>
+    <li><b>Do the math:</b> multiply across the top, divide by the bottom, and round to the right number of significant figures.</li>
+    <li><b>Sense check.</b> More than one mole means more than 6.02 × 10<sup>23</sup> atoms, and more than one molar mass of grams.</li>
+  </ol>
+
+  <div class="card">
+    <div class="card-label"><span>Worked example</span><span class="wk-count" id="wk-count"></span></div>
+    <div class="tabs" role="tablist" aria-label="Choose a worked example" id="wk-tabs"></div>
+    <p class="wk-q" id="wk-q"></p>
+    <div id="wk-fl"></div>
+    <div class="fb hint show wk-text" id="wk-text" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="wk-next">Next step</button>
+      <button type="button" class="ghost" id="wk-prev">Back</button>
+      <button type="button" class="ghost" id="wk-restart">Start over</button>
+    </div>
+  </div>
+
+  <div class="note"><b>Typing 6.02 × 10<sup>23</sup> on a calculator.</b> Use the scientific-notation key: <b>EE</b> on a TI-84 (press 2nd, then the comma key), <b>×10ˣ</b> on a TI-30, or <b>EXP</b> on many others. It shows up as 6.02E23. If you type × 10 ^ 23 instead, put the whole number in parentheses when you divide by it: 3.01 × 10<sup>23</sup> ÷ (6.02 × 10<sup>23</sup>).</div>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="sec-head"><span class="tasktag">Common mistakes</span><h2>Watch-outs</h2></div>
+  <div class="rulebox">
+    <div class="rulecard miss">
+      <h4>“A mole of gold has more atoms”</h4>
+      <p>A mole is a count, so every mole has the same number of atoms. A mole of gold just has more <i>mass</i>, because each gold atom is heavier.</p>
+      <div class="wrong">1 mol Au has more atoms than 1 mol C</div>
+      <div class="right">1 mol Au = 1 mol C = 6.02 × 10<sup>23</sup> atoms</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>“Same mass, same atoms”</h4>
+      <p>Equal masses only have equal atoms if the atoms weigh the same. Lighter atoms means more of them.</p>
+      <div class="wrong">10 g C and 10 g Au: same number of atoms</div>
+      <div class="right">10 g C has about 16 times as many atoms</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Using the atomic number</h4>
+      <p>The whole number at the top of the tile counts protons. Molar mass is the number with decimals.</p>
+      <div class="wrong">Fe: 26 g/mol</div>
+      <div class="right">Fe: 55.85 g/mol</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Multiplying grams by molar mass</h4>
+      <p>Going from grams to moles, you divide. Check the units: g × g/mol leaves g²/mol, which isn’t moles.</p>
+      <div class="wrong">10.0 g × 40.08 g/mol = 401 g²/mol</div>
+      <div class="right">10.0 g ÷ 40.08 g/mol = 0.250 mol</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>The calculator trap</h4>
+      <p>Typing ÷ 6.02 × 10 ^ 23 without parentheses divides by 6.02, then <i>multiplies</i> by 10<sup>23</sup>.</p>
+      <div class="wrong">3.01 × 10<sup>23</sup> ÷ 6.02 × 10^23 = 5 × 10<sup>45</sup></div>
+      <div class="right">3.01 × 10<sup>23</sup> ÷ (6.02 × 10<sup>23</sup>) = 0.500 mol</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>One atom isn’t 12.01 g</h4>
+      <p>12.01 is a carbon atom’s mass in <i>amu</i>. In grams, one carbon atom is 1.99 × 10<sup>−23</sup> g. It takes a whole mole of carbon atoms to make 12.01 g.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRACTICE ============ -->
+<section id="practice">
+  <div class="sec-head"><span class="tasktag">Practice</span><h2>Mole practice</h2></div>
+  <p>Pick a kind of problem, or mix them up. Use the periodic table for molar masses. Below each problem you can <b>build the setup</b>: click conversion factors and watch the units cancel before you do any math.</p>
+  <p class="smallprint">Your score counts a problem as solved when your first check is right. Using “Show answer” counts as a miss. Answers within about 1% are accepted, so small differences in rounding are fine.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Generated problems</span><span class="score" id="p-score">0 of 0</span></div>
+    <div class="tabs" role="tablist" aria-label="Kind of problem" id="p-tabs">
+      <button type="button" class="tab" role="tab" data-k="mm" aria-selected="true">Molar mass</button>
+      <button type="button" class="tab" role="tab" data-k="atoms" aria-selected="false">Moles ↔ atoms</button>
+      <button type="button" class="tab" role="tab" data-k="grams" aria-selected="false">Grams ↔ moles</button>
+      <button type="button" class="tab" role="tab" data-k="two" aria-selected="false">Two steps</button>
+      <button type="button" class="tab" role="tab" data-k="mix" aria-selected="false">Mix it up</button>
+    </div>
+    <p class="prob" id="p-prob" style="margin-top:16px"></p>
+    <div class="field">
+      <label for="p-in" id="p-label">Your answer</label>
+      <input type="text" id="p-in" autocomplete="off" spellcheck="false" placeholder="Type a number">
+      <span class="x10" id="p-x10">× 10<input type="text" id="p-exp" class="exp" autocomplete="off" spellcheck="false" aria-label="Exponent (power of ten)"></span>
+      <span class="unit-tag" id="p-unit"></span>
+    </div>
+    <p class="typing-tip" id="p-tip"></p>
+    <div class="btn-row">
+      <button type="button" id="p-check">Check</button>
+      <button type="button" class="ghost" id="p-show">Show answer</button>
+      <button type="button" class="ghost" id="p-new">New problem</button>
+      <button type="button" class="ghost" id="p-ptbtn" aria-expanded="false">Periodic table</button>
+    </div>
+    <div class="fb" id="p-fb" aria-live="polite"></div>
+    <div id="p-pt" hidden style="margin-top:14px"></div>
+
+    <div class="scaf" id="s-wrap">
+      <div class="scaf-lab">Build the setup</div>
+      <p class="setup" style="margin-top:6px">Click a conversion factor to multiply by it. Units that cancel get crossed out. The setup doesn’t do the math for you.</p>
+      <div id="s-chain"></div>
+      <div class="factor-opts" id="s-opts"></div>
+      <div class="btn-row" style="margin-top:10px">
+        <button type="button" class="ghost small" id="s-undo">Undo</button>
+        <button type="button" class="ghost small" id="s-clear">Clear</button>
+      </div>
+      <div class="fb hint show" id="s-msg" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Ten questions on what a mole is, Avogadro’s number and molar mass.</p>
+  <div class="card" id="quiz"></div>
+</section>
+
+<footer>
+  <p>The mole as a counting unit, Avogadro’s number and the molar mass of elements. Element data are standard atomic weights rounded to two decimal places. The practice problems are generated fresh every time.</p>
+  <p><a href="/chemistry/moles/">← Unit 4 — Moles</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function each(list, fn){ Array.prototype.forEach.call(list, fn); }
+function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+function tabs(host, onPick){
+  each(host.querySelectorAll('.tab'), function(b){
+    b.addEventListener('click', function(){
+      each(host.querySelectorAll('.tab'), function(o){ o.setAttribute('aria-selected', String(o === b)); });
+      onPick(b);
+    });
+  });
+}
+var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/*CORE-START*/
+/* =========================================================
+   core: elements, numbers, problems, judging (no DOM)
+   ========================================================= */
+var NA = 6.02e23;               /* used for answers, as students do */
+var NA_EXACT = 6.02214076e23;   /* used for the physical pictures */
+var AMU_G = 1.66053907e-24;     /* grams in 1 amu */
+
+/* symbol, name, standard atomic weight to 2 decimals ; (n) = mass number of a long-lived isotope, no stable isotopes */
+var EL_DATA = 'H,Hydrogen,1.01;He,Helium,4.00;Li,Lithium,6.94;Be,Beryllium,9.01;B,Boron,10.81;C,Carbon,12.01;N,Nitrogen,14.01;O,Oxygen,16.00;F,Fluorine,19.00;Ne,Neon,20.18;Na,Sodium,22.99;Mg,Magnesium,24.31;Al,Aluminum,26.98;Si,Silicon,28.09;P,Phosphorus,30.97;S,Sulfur,32.06;Cl,Chlorine,35.45;Ar,Argon,39.95;K,Potassium,39.10;Ca,Calcium,40.08;Sc,Scandium,44.96;Ti,Titanium,47.87;V,Vanadium,50.94;Cr,Chromium,52.00;Mn,Manganese,54.94;Fe,Iron,55.85;Co,Cobalt,58.93;Ni,Nickel,58.69;Cu,Copper,63.55;Zn,Zinc,65.38;Ga,Gallium,69.72;Ge,Germanium,72.63;As,Arsenic,74.92;Se,Selenium,78.97;Br,Bromine,79.90;Kr,Krypton,83.80;Rb,Rubidium,85.47;Sr,Strontium,87.62;Y,Yttrium,88.91;Zr,Zirconium,91.22;Nb,Niobium,92.91;Mo,Molybdenum,95.95;Tc,Technetium,(98);Ru,Ruthenium,101.07;Rh,Rhodium,102.91;Pd,Palladium,106.42;Ag,Silver,107.87;Cd,Cadmium,112.41;In,Indium,114.82;Sn,Tin,118.71;Sb,Antimony,121.76;Te,Tellurium,127.60;I,Iodine,126.90;Xe,Xenon,131.29;Cs,Cesium,132.91;Ba,Barium,137.33;La,Lanthanum,138.91;Ce,Cerium,140.12;Pr,Praseodymium,140.91;Nd,Neodymium,144.24;Pm,Promethium,(145);Sm,Samarium,150.36;Eu,Europium,151.96;Gd,Gadolinium,157.25;Tb,Terbium,158.93;Dy,Dysprosium,162.50;Ho,Holmium,164.93;Er,Erbium,167.26;Tm,Thulium,168.93;Yb,Ytterbium,173.05;Lu,Lutetium,174.97;Hf,Hafnium,178.49;Ta,Tantalum,180.95;W,Tungsten,183.84;Re,Rhenium,186.21;Os,Osmium,190.23;Ir,Iridium,192.22;Pt,Platinum,195.08;Au,Gold,196.97;Hg,Mercury,200.59;Tl,Thallium,204.38;Pb,Lead,207.2;Bi,Bismuth,208.98;Po,Polonium,(209);At,Astatine,(210);Rn,Radon,(222);Fr,Francium,(223);Ra,Radium,(226);Ac,Actinium,(227);Th,Thorium,232.04;Pa,Protactinium,231.04;U,Uranium,238.03;Np,Neptunium,(237);Pu,Plutonium,(244);Am,Americium,(243);Cm,Curium,(247);Bk,Berkelium,(247);Cf,Californium,(251);Es,Einsteinium,(252);Fm,Fermium,(257);Md,Mendelevium,(258);No,Nobelium,(259);Lr,Lawrencium,(262);Rf,Rutherfordium,(267);Db,Dubnium,(268);Sg,Seaborgium,(269);Bh,Bohrium,(270);Hs,Hassium,(269);Mt,Meitnerium,(278);Ds,Darmstadtium,(281);Rg,Roentgenium,(282);Cn,Copernicium,(285);Nh,Nihonium,(286);Fl,Flerovium,(289);Mc,Moscovium,(290);Lv,Livermorium,(293);Ts,Tennessine,(294);Og,Oganesson,(294)';
+var ELEMENTS = EL_DATA.split(';').map(function(r, i){
+  var p = r.split(','), br = p[2].charAt(0) === '(';
+  return { sym:p[0], name:p[1], z:i + 1, ms:p[2], M:parseFloat(br ? p[2].slice(1) : p[2]), br:br };
+});
+var EL = {};
+ELEMENTS.forEach(function(e){ EL[e.sym] = e; });
+var DIATOMIC = { H:1, N:1, O:1, F:1, Cl:1, Br:1, I:1 };
+
+/* elements used in generated problems: stable, and not diatomic */
+var POOL = ['He','Li','Be','C','Ne','Na','Mg','Al','Si','P','S','Ar','K','Ca','Ti','Cr','Mn','Fe','Co','Ni','Cu','Zn','Ge','Kr','Sr','Ag','Cd','Sn','Xe','Ba','W','Pt','Au','Hg','Pb','U'];
+/* real-world objects: [description, min g, max g] */
+var CTX = {
+  Al:['a piece of aluminum foil', 0.5, 5], Cu:['a length of copper wire', 1, 50], Au:['a gold nugget', 1, 30],
+  Ag:['a silver coin', 10, 40], Fe:['an iron nail', 2, 10], C:['a diamond (pure carbon)', 0.1, 2],
+  Pb:['a lead fishing weight', 5, 60], Hg:['a drop of mercury', 0.1, 3], Mg:['a strip of magnesium ribbon', 0.1, 2],
+  He:['the helium in a party balloon', 0.2, 2], Zn:['a zinc strip', 1, 10], W:['a tungsten wire', 0.05, 0.5],
+  Ti:['a titanium screw', 1, 10], Pt:['a platinum ring', 2, 10], Si:['a silicon wafer', 5, 60], Sn:['a piece of tin', 5, 50]
+};
+
+function commas(s){
+  var parts = String(s).split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return parts.join('.');
+}
+var SUPS = { '0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻' };
+function supText(n){ return String(n).split('').map(function(c){ return SUPS[c] || c; }).join(''); }
+function supHTML(n){ return '<sup>' + String(n).replace('-', '−') + '</sup>'; }
+
+/* round to sf significant figures -> { m:'1.51', e:24 } (m is a string with sf digits) */
+function sigParts(x, sf){
+  if(x === 0) return { m:(0).toFixed(sf - 1), e:0 };
+  var e = Math.floor(Math.log10(Math.abs(x)));
+  var f = Math.pow(10, sf - 1);
+  var m = Math.round(Math.abs(x) / Math.pow(10, e) * f * (1 + 1e-12)) / f;
+  if(m >= 10){ m = m / 10; e++; }
+  return { m:(x < 0 ? '-' : '') + m.toFixed(sf - 1), e:e };
+}
+function sciHTML(x, sf){ var p = sigParts(x, sf || 3); return p.m + ' × 10' + supHTML(p.e); }
+function sciText(x, sf){ var p = sigParts(x, sf || 3); return p.m + ' × 10' + supText(p.e); }
+/* plain decimals between 0.001 and 999 ; scientific notation outside that, or when a trailing zero would be ambiguous */
+function sigHTML(x, sf){
+  sf = sf || 3;
+  var p = sigParts(x, sf);
+  if(p.e >= 3 || p.e < -3) return sciHTML(x, sf);
+  var dp = Math.max(0, sf - 1 - p.e);
+  var s = (Number(p.m) * Math.pow(10, p.e)).toFixed(dp);
+  if(dp === 0 && /0$/.test(s)) return sciHTML(x, sf);
+  return s;
+}
+/* the same rounding as sigHTML, as text you could type: 0.448 or 1.40e2 */
+function sigPlain(x, sf){
+  var h = sigHTML(x, sf || 3), m = /^(-?[\d.]+) × 10<sup>(.+)<\/sup>$/.exec(h);
+  return m ? m[1] + 'e' + m[2].replace('−', '-') : h;
+}
+/* any count: commas below a million, scientific notation above */
+function countHTML(n){ return n < 1e6 ? commas(Math.round(n)) : sciHTML(n, 3); }
+
+/* '1.51e24', '1.51 x 10^24', '1.51×10²⁴', '1,505,000', '0.250 mol' -> { v, sf } or null */
+function parseNum(str){
+  var s = String(str || '').trim();
+  if(!s) return null;
+  s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+/g, function(t){
+    return '^' + t.split('').map(function(c){ for(var k in SUPS) if(SUPS[k] === c) return k; return c; }).join('');
+  });
+  s = s.replace(/[−–]/g, '-').replace(/,/g, '');
+  s = s.replace(/\s*(atoms?|moles?|mol|grams?|g\/mol|g|amu|pennies)\.?\s*$/i, '');
+  s = s.replace(/\s+/g, '').replace(/[×xX*·]/g, 'x');
+  var m = /^([+-]?(\d+\.?\d*|\.\d+))(?:[eE]([+-]?\d+)|x10\^?([+-]?\d+))?$/.exec(s);
+  if(!m) return null;
+  var mant = m[1], ex = m[3] != null ? m[3] : m[4];
+  var v = parseFloat(mant) * (ex != null ? Math.pow(10, Number(ex)) : 1);
+  if(!isFinite(v)) return null;
+  return { v:v, sf:sigCount(mant, ex != null) };
+}
+/* significant figures in a typed mantissa ; trailing zeros without a decimal point are not counted unless it's scientific notation */
+function sigCount(mant, sci){
+  var s = mant.replace(/^[+-]/, ''), hasDot = s.indexOf('.') !== -1;
+  var d = s.replace('.', ''), i = d.search(/[1-9]/);
+  if(i === -1) return 1;
+  d = d.slice(i);
+  if(!hasDot && !sci) d = d.replace(/0+$/, '');
+  return d.length;
+}
+/* the practice box: a number, plus an optional exponent box */
+function readAnswer(main, expo){
+  var a = parseNum(main);
+  if(!a) return null;
+  var e = String(expo || '').replace(/[−–]/g, '-').trim();
+  if(e === '') return a;
+  if(!/^[+-]?\d+$/.test(e)) return null;
+  return { v:a.v * Math.pow(10, Number(e)), sf:sigCount(String(main).replace(/,/g,'').trim().split(/[eExX×*]/)[0], true) };
+}
+function near(x, y, tol){ return y !== 0 && Math.abs(x - y) <= Math.abs(y) * (tol || 0.01); }
+
+/* a random value with 3 significant figures, log-uniform between lo and hi ; no ambiguous trailing zeros */
+function rand3(lo, hi){
+  for(var t = 0; t < 60; t++){
+    var v = Math.exp(Math.log(lo) + Math.random() * (Math.log(hi) - Math.log(lo)));
+    var s = v.toPrecision(3);
+    if(/e/.test(s)) continue;
+    if(Number(s) >= 100 && /0$/.test(s)) continue;
+    return Number(s);
+  }
+  return Number(lo.toPrecision(3));
+}
+function randAtoms(){ var c = rand3(1, 9.99), e = pick([22, 23, 23, 24]); return Number((c * Math.pow(10, e)).toPrecision(3)); }
+
+/* types: mm molar mass | ma mol->atoms | am atoms->mol | gm g->mol | mg mol->g | ga g->atoms | ag atoms->g */
+var TYPE_INFO = {
+  mm:{ from:null, to:'g/mol' }, ma:{ from:'mol', to:'atoms' }, am:{ from:'atoms', to:'mol' },
+  gm:{ from:'g', to:'mol' }, mg:{ from:'mol', to:'g' }, ga:{ from:'g', to:'atoms' }, ag:{ from:'atoms', to:'g' }
+};
+function makeProblem(type, avoidSym){
+  var pool = POOL.filter(function(s){ return s !== avoidSym; });
+  var useCtx = (type === 'gm' || type === 'ga' || type === 'ag' || type === 'am') && Math.random() < 0.55;
+  if(useCtx){ pool = pool.filter(function(s){ return CTX[s]; }); }
+  var e = EL[pick(pool)], ctx = useCtx ? CTX[e.sym] : null;
+  var p = { type:type, el:e, ctx:ctx ? ctx[0] : null, M:e.M };
+  var from = TYPE_INFO[type].from;
+  if(from === 'mol') p.given = rand3(0.1, 9.99);
+  if(from === 'g') p.given = ctx ? rand3(ctx[1], ctx[2]) : rand3(1, 250);
+  if(from === 'atoms'){
+    if(ctx){ var g = ctx[1] * Math.pow(ctx[2] / ctx[1], Math.random()); p.given = Number((g / e.M * NA).toPrecision(3)); }
+    else p.given = randAtoms();
+  }
+  var G = p.given, M = e.M;
+  p.answer = { mm:M, ma:G * NA, am:G / NA, gm:G / M, mg:G * M, ga:G / M * NA, ag:G / NA * M }[type];
+  p.mid = { ga:G / M, ag:G / NA }[type];
+  return p;
+}
+function unitOf(kind, sym){ return kind === 'g/mol' ? 'g/mol' : kind + ' ' + sym; }
+function givenHTML(p){
+  var f = TYPE_INFO[p.type].from;
+  return f === 'atoms' ? sciHTML(p.given, 3) + ' atoms' : sigHTML(p.given, 3) + ' ' + f;
+}
+function problemText(p){
+  var nm = p.el.name.toLowerCase(), G = '<b>' + givenHTML(p) + '</b>', c = p.ctx ? cap(p.ctx) : null;
+  switch(p.type){
+    case 'mm': return 'What is the molar mass of <b>' + nm + '</b>?';
+    case 'ma': return 'How many atoms are in ' + G + ' of ' + nm + '?';
+    case 'am': return c ? c + ' contains ' + G + ' of ' + nm + '. How many moles of ' + nm + ' is that?'
+                        : 'A sample of ' + nm + ' contains ' + G + '. How many moles of ' + nm + ' is that?';
+    case 'gm': return c ? c + ' has a mass of ' + G + '. How many moles of ' + nm + ' is that?'
+                        : 'How many moles are in ' + G + ' of ' + nm + '?';
+    case 'mg': return 'What is the mass of ' + G + ' of ' + nm + '?';
+    case 'ga': return c ? c + ' has a mass of ' + G + '. How many ' + nm + ' atoms does it contain?'
+                        : 'How many atoms are in ' + G + ' of ' + nm + '?';
+    case 'ag': return c ? c + ' contains ' + G + ' of ' + nm + '. What is its mass?'
+                        : 'What is the mass of ' + G + ' of ' + nm + '?';
+  }
+}
+function answerHTML(p){
+  var to = TYPE_INFO[p.type].to;
+  if(p.type === 'mm') return p.el.ms + ' g/mol';
+  return (to === 'atoms' ? sciHTML(p.answer, 3) : sigHTML(p.answer, 3)) + ' ' + unitOf(to, p.el.sym);
+}
+
+/* judge a typed value -> { ok, code } */
+function judge(p, got){
+  if(!got) return { ok:false, code:'unreadable' };
+  var v = got.v, G = p.given, M = p.M, Z = p.el.z;
+  if(near(v, p.answer, p.type === 'mm' ? 0.005 : 0.01)) return { ok:true, code:'ok' };
+  var c = 'other', N = function(y){ return near(v, y, 0.01); };
+  switch(p.type){
+    case 'mm':
+      if(v === Z) c = 'zMM';
+      else if(N(M * NA) || N(M / NA)) c = 'mmNA';
+      break;
+    case 'ma':
+      if(N(G / NA)) c = 'divNA';
+      else if(N(NA / G)) c = 'flip';
+      else if(N(G * 6.02)) c = 'noExp';
+      else if(N(G * 6.02e-23)) c = 'negExp';
+      else if(N(G * M) || N(G / M)) c = 'usedMM';
+      break;
+    case 'am':
+      if(N(G * NA)) c = 'multNA';
+      else if(N(G / 6.02 * 1e23)) c = 'parens';
+      else if(N(NA / G)) c = 'flip';
+      else if(N(G / 6.02)) c = 'noExp';
+      else if(N(G / M) || N(G * M)) c = 'usedMM';
+      break;
+    case 'gm':
+      if(N(G * M)) c = 'multMM';
+      else if(N(M / G)) c = 'flip';
+      else if(N(G / Z) || N(G * Z)) c = 'z';
+      else if(N(G * NA) || N(G / NA)) c = 'usedNA';
+      else if(N(G / M * NA)) c = 'tooFar';
+      break;
+    case 'mg':
+      if(N(G / M)) c = 'divMM';
+      else if(N(M / G)) c = 'flip';
+      else if(N(G * Z) || N(G / Z)) c = 'z';
+      else if(N(G * NA) || N(G / NA)) c = 'usedNA';
+      break;
+    case 'ga':
+      if(N(G / M)) c = 'midMol';
+      else if(N(G * M * NA)) c = 'multMM';
+      else if(N(G * NA)) c = 'skipMM';
+      else if(N(G / Z * NA)) c = 'z';
+      else if(N(G / M / NA)) c = 'divNA';
+      else if(N(G / M * 6.02)) c = 'noExp';
+      break;
+    case 'ag':
+      if(N(G / NA)) c = 'midMol';
+      else if(N(G / NA / M)) c = 'divMM';
+      else if(N(G / 6.02 * 1e23 * M)) c = 'parens';
+      else if(N(G / NA * Z)) c = 'z';
+      else if(N(G * NA * M)) c = 'multNA';
+      else if(N(G * M)) c = 'skipNA';
+      break;
+  }
+  return { ok:false, code:c };
+}
+
+/* conversion factors for an element: [top value html, top unit, bottom value html, bottom unit] */
+function factorsFor(e){
+  var na = '6.02 × 10' + supHTML(23);
+  return [
+    { id:'mmUp',  t:[e.ms, 'g ' + e.sym],     b:['1', 'mol ' + e.sym] },
+    { id:'mmDn',  t:['1', 'mol ' + e.sym],    b:[e.ms, 'g ' + e.sym] },
+    { id:'naUp',  t:[na, 'atoms ' + e.sym],   b:['1', 'mol ' + e.sym] },
+    { id:'naDn',  t:['1', 'mol ' + e.sym],    b:[na, 'atoms ' + e.sym] }
+  ];
+}
+/* the correct chain of factor ids for a problem */
+function solutionIds(type){
+  return { ma:['naUp'], am:['naDn'], gm:['mmDn'], mg:['mmUp'], ga:['mmDn','naUp'], ag:['naDn','mmUp'] }[type] || [];
+}
+/* cancel units through a chain: start unit + factors -> { num:[{u,x}], den:[{u,x}] } */
+function cancelUnits(startUnit, chain){
+  var num = [{ u:startUnit, x:false }], den = [];
+  chain.forEach(function(f){ num.push({ u:f.t[1], x:false }); den.push({ u:f.b[1], x:false }); });
+  den.forEach(function(d){
+    for(var i = 0; i < num.length; i++){
+      if(!num[i].x && num[i].u === d.u){ num[i].x = true; d.x = true; break; }
+    }
+  });
+  return { num:num, den:den };
+}
+/*CORE-END*/
+
+/* =========================================================
+   drawing helpers
+   ========================================================= */
+function shade(hex, amt){
+  var n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+  var t = amt < 0 ? 0 : 255, a = Math.abs(amt);
+  r = Math.round(r + (t - r) * a); g = Math.round(g + (t - g) * a); b = Math.round(b + (t - b) * a);
+  return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+function pts(a){ var o = []; for(var i = 0; i < a.length; i += 2) o.push(a[i].toFixed(1) + ',' + a[i + 1].toFixed(1)); return o.join(' '); }
+/* oblique cube: x = left edge of front face, y = bottom, s = side */
+function cube(x, y, s, col, label){
+  var d = s * 0.42, top = shade(col, 0.28), side = shade(col, -0.25), edge = shade(col, -0.45);
+  var h = '<polygon points="' + pts([x, y - s, x + d, y - s - d, x + s + d, y - s - d, x + s, y - s]) + '" fill="' + top + '" stroke="' + edge + '" stroke-width=".8"/>';
+  h += '<polygon points="' + pts([x + s, y - s, x + s + d, y - s - d, x + s + d, y - d, x + s, y]) + '" fill="' + side + '" stroke="' + edge + '" stroke-width=".8"/>';
+  h += '<rect x="' + x.toFixed(1) + '" y="' + (y - s).toFixed(1) + '" width="' + s.toFixed(1) + '" height="' + s.toFixed(1) + '" fill="' + col + '" stroke="' + edge + '" stroke-width=".8"/>';
+  if(label){
+    var light = parseInt(col.slice(1, 3), 16) * 0.3 + parseInt(col.slice(3, 5), 16) * 0.59 + parseInt(col.slice(5, 7), 16) * 0.11 > 150;
+    h += '<text x="' + (x + s / 2).toFixed(1) + '" y="' + (y - s / 2 + 5).toFixed(1) + '" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="' + Math.max(11, Math.min(16, s * 0.34)).toFixed(0) + '" fill="' + (light ? '#131E1D' : '#FFFFFF') + '">' + label + '</text>';
+  }
+  return h;
+}
+/* a digital scale: pan top at y=136 ; contents drawn by caller */
+function scaleSVG(contents, reading, label){
+  return '<svg viewBox="0 0 300 200" role="img" aria-label="' + label + '">' +
+    contents +
+    '<rect x="138" y="140" width="24" height="10" fill="#B5C2C0"/>' +
+    '<rect x="36" y="136" width="228" height="7" rx="3" fill="#C3CDCB" stroke="#9FB0AD"/>' +
+    '<rect x="16" y="150" width="268" height="44" rx="9" fill="#DCE3E2" stroke="#9FB0AD"/>' +
+    '<circle cx="42" cy="172" r="7" fill="#C3CDCB" stroke="#9FB0AD"/><circle cx="64" cy="172" r="7" fill="#C3CDCB" stroke="#9FB0AD"/>' +
+    '<rect x="140" y="159" width="130" height="27" rx="3" fill="#1E2B29"/>' +
+    '<text x="262" y="178.5" text-anchor="end" font-family="IBM Plex Mono,monospace" font-weight="500" font-size="17" fill="#BFEFD0">' + reading + '</text>' +
+    '</svg>';
+}
+function seeded(seed){ var s = seed % 2147483647; if(s <= 0) s += 2147483646; return function(){ s = s * 16807 % 2147483647; return (s - 1) / 2147483646; }; }
+
+/* =========================================================
+   hero: one mole of carbon on a scale
+   ========================================================= */
+(function hero(){
+  var s = 1.761 * 34, x = 150 - (s + s * 0.42) / 2;
+  var c = cube(x, 136, s, '#3F4548', 'C');
+  c += '<text x="150" y="22" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" fill="#3B4A48">6.02 × 10²³ carbon atoms</text>';
+  c += '<line x1="150" y1="30" x2="150" y2="' + (136 - s - s * 0.42 - 6).toFixed(0) + '" stroke="#9FB0AD" stroke-dasharray="3 3"/>';
+  el('hero-fig').innerHTML = scaleSVG(c, '12.01 g', 'One mole of carbon, a small dark cube, on a digital scale reading 12.01 grams');
+})();
+
+/* =========================================================
+   1. count by weighing
+   ========================================================= */
+var W = { mode:'penny', n:0, sc:0, done:false };
+function pennyPile(n){
+  var rnd = seeded(n * 7919 + 13), h = '', placed = 0, row = 0, capRow = 18;
+  while(placed < n && row < 40){
+    var cnt = Math.min(capRow - row, n - placed);
+    if(cnt <= 0){ row = 0; capRow -= 2; continue; }
+    var x0 = 150 - (cnt - 1) * 6;
+    for(var i = 0; i < cnt; i++){
+      var x = x0 + i * 12 + (rnd() - 0.5) * 3, y = 131 - row * 4.6 + (rnd() - 0.5) * 1.5;
+      h += '<ellipse cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" rx="10.5" ry="3.7" fill="' + (rnd() < 0.5 ? '#B8723A' : '#C47F45') + '" stroke="#80501F" stroke-width=".7"/>';
+    }
+    placed += cnt; row++;
+  }
+  return h;
+}
+function carbonPile(k){
+  if(k === 0) return '';
+  var w = 70 + 34 * Math.sqrt(k), h = 14 + 16 * Math.sqrt(k), rnd = seeded(k * 31 + 5);
+  var out = '<path d="M' + (150 - w / 2).toFixed(1) + ',136 C' + (150 - w / 3).toFixed(1) + ',' + (136 - h * 1.25).toFixed(1) + ' ' + (150 + w / 3).toFixed(1) + ',' + (136 - h * 1.25).toFixed(1) + ' ' + (150 + w / 2).toFixed(1) + ',136 Z" fill="#3F4548" stroke="#25292B"/>';
+  for(var i = 0; i < 18 * k; i++){
+    var t = rnd() * 2 - 1, x = 150 + t * w * 0.42, ymax = 136 - h * 0.92 * (1 - t * t);
+    var y = 136 - rnd() * (136 - ymax) * 0.95;
+    out += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r=".9" fill="#6B7377"/>';
+  }
+  return out;
+}
+function wDraw(){
+  if(W.mode === 'penny'){
+    el('w-fig').innerHTML = scaleSVG(pennyPile(W.n), (W.n * 2.5).toFixed(2) + ' g', 'A pile of pennies on a digital scale reading ' + (W.n * 2.5).toFixed(2) + ' grams');
+  } else {
+    var g = (W.sc * 12.01).toFixed(2);
+    el('w-fig').innerHTML = scaleSVG(carbonPile(W.sc), g + ' g', 'A pile of carbon on a digital scale reading ' + g + ' grams');
+    el('w-sc').textContent = W.sc;
+    el('w-mass').textContent = g + ' g';
+    el('w-atoms').innerHTML = W.sc ? sciHTML(W.sc * 12.01 / 1.994e-23, 3) : '0';
+    el('w-cfb').innerHTML = W.sc === 0
+      ? 'Press <b>Add a scoop</b>. Each scoop is 12.01 g of carbon.'
+      : '<span class="mono">' + g + ' g ÷ (1.994 × 10' + supHTML(-23) + ' g per atom) = ' + sciHTML(W.sc * 12.01 / 1.994e-23, 3) + ' atoms</span><br>' +
+        (W.sc === 1 ? 'That’s <b>one mole</b> of carbon atoms: 6.02 × 10<sup>23</sup>.' : 'That’s <b>' + W.sc + ' moles</b>: ' + W.sc + ' × 6.02 × 10<sup>23</sup>. Every 12.01 g scoop adds one more mole.');
+    el('w-add').disabled = W.sc >= 6;
+  }
+}
+function wNewPile(){
+  var n; do { n = 24 + Math.floor(Math.random() * 137); } while(n === W.n);
+  W.n = n; W.done = false;
+  el('w-in').value = ''; hideFb(el('w-fb'));
+  wDraw();
+}
+function wCheck(){
+  var raw = el('w-in').value.trim(), fb = el('w-fb'), mass = W.n * 2.5;
+  if(!raw){ setFb(fb,'hint','Type a number first.'); return; }
+  var got = parseNum(raw);
+  if(!got){ setFb(fb,'hint','Type a whole number, like 40.'); return; }
+  var v = got.v, work = '<span class="mono">' + mass.toFixed(2) + ' g ÷ 2.50 g per penny = ' + W.n + ' pennies</span>';
+  if(v === W.n){ setFb(fb,'good','<b>Yes: ' + W.n + ' pennies.</b> ' + work + '. You counted them without counting a single one.'); return; }
+  if(near(v, mass * 2.5)) setFb(fb,'bad','<b>Divide, don’t multiply.</b> More pennies means more mass, so the number of pennies is the total mass split into 2.50 g pieces.');
+  else if(near(v, mass)) setFb(fb,'bad','<b>That’s the mass in grams.</b> How many 2.50 g pennies does it take to make that much?');
+  else if(near(v, 2.5 / mass)) setFb(fb,'bad','<b>Flip it.</b> Divide the total mass by the mass of one penny.');
+  else setFb(fb,'bad','<b>Not quite.</b> Divide the total mass on the scale by the mass of one penny.');
+}
+el('w-check').addEventListener('click', wCheck);
+el('w-new').addEventListener('click', wNewPile);
+el('w-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') wCheck(); });
+el('w-add').addEventListener('click', function(){ if(W.sc < 6){ W.sc++; wDraw(); } });
+el('w-empty').addEventListener('click', function(){ W.sc = 0; wDraw(); });
+tabs(el('w-tabs'), function(b){
+  W.mode = b.dataset.m;
+  el('w-penny').hidden = W.mode !== 'penny';
+  el('w-carbon').hidden = W.mode !== 'carbon';
+  wDraw();
+});
+
+/* =========================================================
+   2. decimal mover
+   ========================================================= */
+var MV = { c:'6.02', n:23 };
+function mvRender(){
+  var digits = MV.c.replace('.', ''), pos = 1 + MV.n, html;
+  var sig = function(s){ return '<span class="sd">' + s + '</span>'; };
+  if(pos >= digits.length){
+    var whole = digits + new Array(pos - digits.length + 1).join('0');
+    var withCommas = commas(whole);
+    /* color the significant digits: they are the first three digits of the written number */
+    var count = 0, out = '';
+    for(var i = 0; i < withCommas.length; i++){
+      var ch = withCommas.charAt(i);
+      if(ch !== ',' && count < digits.length){ out += sig(ch); count++; } else out += ch;
+    }
+    html = out + '<span class="dp">.</span>';
+  } else if(pos <= 0){
+    html = '0<span class="dp">.</span>' + new Array(-pos + 1).join('0') + sig(digits);
+  } else {
+    html = sig(digits.slice(0, pos)) + '<span class="dp">.</span>' + sig(digits.slice(pos));
+  }
+  el('mv-num').innerHTML = html;
+  el('mv-top').innerHTML = MV.c + ' × 10' + supHTML(MV.n);
+  var note;
+  if(MV.n === 0) note = 'An exponent of 0 means don’t move the decimal point at all: 10<sup>0</sup> = 1.';
+  else if(MV.n > 0) note = 'The exponent is ' + MV.n + ', so the decimal point moves <b>' + MV.n + ' place' + (MV.n === 1 ? '' : 's') + ' to the right</b>. Big number.';
+  else note = 'The exponent is −' + (-MV.n) + ', so the decimal point moves <b>' + (-MV.n) + ' place' + (MV.n === -1 ? '' : 's') + ' to the left</b>. Tiny number.';
+  if(MV.c === '6.02' && MV.n === 23) note += ' This is <b>Avogadro’s number</b>: 602 sextillion.';
+  if(MV.c === '1.99' && MV.n === -23) note += ' This is <b>the mass of one carbon atom</b>, in grams.';
+  el('mv-note').innerHTML = note;
+}
+el('mv-range').addEventListener('input', function(){ MV.n = Number(this.value); mvRender(); });
+tabs(el('mv-tabs'), function(b){
+  MV.c = b.dataset.c; MV.n = MV.c === '6.02' ? 23 : -23;
+  el('mv-range').value = MV.n; mvRender();
+});
+
+/* =========================================================
+   3. powers-of-ten ladder
+   ========================================================= */
+var NAMES = { 0:'one', 1:'ten', 2:'one hundred', 3:'one thousand', 6:'one million', 9:'one billion', 12:'one trillion', 15:'one quadrillion', 18:'one quintillion', 21:'one sextillion', 24:'one septillion' };
+function bigName(n){
+  if(NAMES[n]) return NAMES[n];
+  var base = Math.floor(n / 3) * 3, r = n - base;
+  return (r === 1 ? 'ten ' : 'one hundred ') + NAMES[base].replace('one ', '');
+}
+var LAND = {
+  0:'One atom.',
+  1:'The fingers on your hands.',
+  2:'The pennies in a dollar.',
+  3:'The number of seconds in about 17 minutes.',
+  4:'About how many steps you take on a long day of walking.',
+  5:'About how many hairs are on a human head.',
+  6:'The number of seconds in about 12 days.',
+  7:'The number of seconds in about 4 months.',
+  8:'The number of seconds in about 3 years.',
+  9:'The number of seconds in about 32 years.',
+  10:'A little more than the number of people on Earth (about 8.2 billion).',
+  11:'About how many stars are in the Milky Way (somewhere from 100 to 400 billion).',
+  12:'The number of seconds in about 32,000 years.',
+  13:'The number of cells in your body is about 3 × 10<sup>13</sup>.',
+  14:'About how many connections (synapses) link the nerve cells in your brain.',
+  15:'About how many seconds have passed since the dinosaurs died out (2 × 10<sup>15</sup>).',
+  16:'About how many ants live on Earth (2 × 10<sup>16</sup>, by one recent estimate).',
+  17:'About how many seconds have passed since the Big Bang (4 × 10<sup>17</sup>).',
+  18:'A rough estimate of the grains of sand on all of Earth’s beaches.',
+  19:'Roughly the number of atoms in one grain of sand.',
+  20:'This many carbon atoms is still too light for a classroom balance: it reads 0.00 g.',
+  21:'About how many water molecules are in a single drop of water (1.7 × 10<sup>21</sup>).',
+  22:'Estimates of the number of stars in the observable universe start around here.',
+  23:'Almost there. One mole, 6.02 × 10<sup>23</sup>, is about six of these.',
+  24:'Past it. One mole, 6.02 × 10<sup>23</sup>, is about 0.6 of this.'
+};
+var LAD = { n:9 };
+function ladX(k){ return 22 + k * 24.8; }
+function ladRender(){
+  var n = LAD.n, h = '<svg viewBox="0 0 640 118" role="img" aria-label="A number line of powers of ten from 10 to the 0 up to 10 to the 24, with the current step at 10 to the ' + n + ' and one mole near 10 to the 24">';
+  h += '<rect x="' + ladX(0) + '" y="56" width="' + (ladX(n) - ladX(0)) + '" height="6" rx="3" fill="#BFDEE2"/>';
+  h += '<line x1="' + ladX(0) + '" y1="59" x2="' + ladX(24) + '" y2="59" stroke="#9FB0AD" stroke-width="1.5"/>';
+  for(var k = 0; k <= 24; k++){
+    var x = ladX(k);
+    h += '<line class="lad-tick" x1="' + x + '" y1="' + (k % 3 === 0 ? 50 : 54) + '" x2="' + x + '" y2="' + (k % 3 === 0 ? 68 : 64) + '"/>';
+    if(k % 3 === 0){
+      h += '<text class="lad-lbl" x="' + x + '" y="84">10' + supText(k) + '</text>';
+      if(k >= 3 && k <= 21) h += '<text class="lad-word" x="' + x + '" y="99">' + NAMES[k].replace('one ', '') + '</text>';
+    }
+  }
+  var mx = ladX(Math.log10(NA_EXACT));
+  h += '<path class="lad-mole" d="M' + mx + ',22 l6,7 l-6,7 l-6,-7 z"/>';
+  h += '<line x1="' + mx + '" y1="36" x2="' + mx + '" y2="54" stroke="#9A6E22" stroke-width="1.5"/>';
+  h += '<text x="' + (mx - 10) + '" y="18" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="600" fill="#9A6E22">1 mole</text>';
+  var bx = ladX(9);
+  h += '<text x="' + bx + '" y="40" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#5F6D6B">a billion</text>';
+  h += '<circle class="lad-cur" cx="' + ladX(n) + '" cy="59" r="8"/>';
+  h += '</svg>';
+  el('lad-fig').innerHTML = h;
+  el('lad-big').innerHTML = '10' + supHTML(n);
+  var written = n <= 24 ? '1' + new Array(n + 1).join('0') : '';
+  el('lad-name').innerHTML = cap(bigName(n)) + '<br>' + commas(written);
+  el('lad-land').innerHTML = LAND[n];
+  el('lad-step').textContent = 'step ' + n + ' of 24';
+  el('lad-down').disabled = n <= 0;
+  el('lad-up').disabled = n >= 24;
+}
+el('lad-range').addEventListener('input', function(){ LAD.n = Number(this.value); ladRender(); });
+el('lad-down').addEventListener('click', function(){ if(LAD.n > 0){ LAD.n--; el('lad-range').value = LAD.n; ladRender(); } });
+el('lad-up').addEventListener('click', function(){ if(LAD.n < 24){ LAD.n++; el('lad-range').value = LAD.n; ladRender(); } });
+
+/* =========================================================
+   4. zoom: one atom to one mole
+   ========================================================= */
+var DENS = { C:2.2, Al:2.70, Fe:7.87, Au:19.3 };
+var SIZES = [
+  ['a golf ball', 4.3e-2], ['a sugar cube', 1.6e-2], ['a peppercorn', 5e-3], ['a grain of sand', 5e-4],
+  ['the width of a hair', 7e-5], ['a bacterium', 2e-6], ['a virus', 1e-7], ['one atom', 2.5e-10]
+];
+var ZM = { sym:'C', x:0 };
+var MOLE_X = Math.log10(NA_EXACT);
+function fmtLen(m){
+  var u = m >= 1e-2 ? [1e-2, 'cm'] : m >= 1e-4 ? [1e-3, 'mm'] : m >= 1e-6 ? [1e-6, 'µm'] : [1e-9, 'nm'];
+  var v = m / u[0];
+  return (v >= 100 ? Math.round(v) : Number(v.toPrecision(2))) + ' ' + u[1];
+}
+function zmRender(){
+  var e = EL[ZM.sym], isMole = Math.abs(ZM.x - MOLE_X) < 1e-9;
+  var N = isMole ? NA_EXACT : Math.pow(10, ZM.x);
+  if(N < 1e6) N = Math.max(1, Math.round(N));
+  var mol = N / NA_EXACT, amu = N * e.M, g = amu * AMU_G;
+  el('zm-n').innerHTML = isMole ? '6.02 × 10' + supHTML(23) : countHTML(N);
+  el('zm-mol').innerHTML = isMole ? '1.00 mol' : (mol >= 0.01 ? sigHTML(mol, 3) : sciHTML(mol, 3)) + ' mol';
+  el('zm-amu').innerHTML = (amu < 1e6 ? commas(Number(amu.toPrecision(4))) : sciHTML(amu, 3)) + ' amu';
+  el('zm-g').innerHTML = (g >= 0.01 ? (isMole ? e.ms : sigHTML(g, 3)) : sciHTML(g, 3)) + ' g';
+  el('zm-lcd').textContent = (g < 0.005 ? '0.00' : g.toFixed(2)) + ' g';
+  var msg;
+  if(isMole) msg = '<b>One mole of ' + e.name.toLowerCase() + '.</b> The balance reads ' + e.ms + ' g, the same number as ' + e.name.toLowerCase() + '’s atomic mass on the periodic table (' + e.ms + ' amu per atom). That’s what <b>molar mass</b> means.';
+  else if(g < 0.005) msg = 'Too light for a classroom balance. You’d need about <b>' + sciHTML(0.005 / (e.M * AMU_G), 2) + ' atoms</b> of ' + e.name.toLowerCase() + ' before it reads 0.01 g.';
+  else if(N < NA_EXACT){
+    var ratio = NA_EXACT / N;
+    msg = 'Now the balance can see it. Keep going: one mole is about <b>' + (ratio < 1e6 ? commas(Number(ratio.toPrecision(2))) : sciHTML(ratio, 2)) + ' times</b> this many atoms.';
+  }
+  else msg = 'More than a mole: ' + sigHTML(mol, 3) + ' mol of ' + e.name.toLowerCase() + '.';
+  el('zm-msg').innerHTML = msg;
+  /* size of the sample if packed into a cube */
+  var side = Math.cbrt(N * e.M / DENS[ZM.sym] / NA_EXACT) / 100;
+  el('zm-size').textContent = fmtLen(side) + ' across';
+  var html = '', placed = false, nearest = 0, best = 1e9;
+  SIZES.forEach(function(s, i){ var d = Math.abs(Math.log10(side / s[1])); if(d < best){ best = d; nearest = i; } });
+  SIZES.forEach(function(s, i){
+    if(!placed && side >= s[1]){ html += '<li class="here"><span>Your sample</span><span>' + fmtLen(side) + '</span></li>'; placed = true; }
+    html += '<li' + (i === nearest && best < 0.35 ? ' class="near"' : '') + '><span>' + cap(s[0]) + '</span><span>about ' + fmtLen(s[1]) + '</span></li>';
+  });
+  if(!placed) html += '<li class="here"><span>Your sample</span><span>' + fmtLen(side) + '</span></li>';
+  el('zm-sizes').innerHTML = html;
+  el('zm-down').disabled = ZM.x <= 0;
+  el('zm-up').disabled = ZM.x >= 24;
+}
+function zmSet(x){
+  x = Math.max(0, Math.min(24, x));
+  if(Math.abs(x - MOLE_X) < 0.07) x = MOLE_X;
+  ZM.x = x; el('zm-range').value = x; zmRender();
+}
+el('zm-range').addEventListener('input', function(){ zmSet(Number(this.value)); });
+el('zm-up').addEventListener('click', function(){ zmSet(Math.min(24, Math.floor(ZM.x + 1e-9) + 1)); });
+el('zm-down').addEventListener('click', function(){ var f = Math.floor(ZM.x + 1e-9); zmSet(ZM.x - f > 1e-9 ? f : f - 1); });
+el('zm-mole').addEventListener('click', function(){ zmSet(MOLE_X); });
+el('zm-one').addEventListener('click', function(){ zmSet(0); });
+tabs(el('zm-tabs'), function(b){ ZM.sym = b.dataset.s; zmRender(); });
+
+/* =========================================================
+   5. a mole of each, to scale
+   ========================================================= */
+var SAMPLES = [
+  ['C','Carbon',2.2,'#3F4548','graphite'], ['Al','Aluminum',2.70,'#C3CAD1'], ['S','Sulfur',2.07,'#E2C93C'], ['Fe','Iron',7.87,'#7F868C'],
+  ['Cu','Copper',8.96,'#C26A3A'], ['Ag','Silver',10.5,'#D5DADF'], ['Au','Gold',19.3,'#D6A62A'], ['Pb','Lead',11.3,'#69717D']
+];
+(function lineup(){
+  var PX = 32, html = '';
+  SAMPLES.forEach(function(s){
+    var e = EL[s[0]], side = Math.cbrt(e.M / s[2]), px = side * PX, d = px * 0.42, x = (120 - px - d) / 2;
+    html += '<figure><svg viewBox="0 0 120 124" role="img" aria-label="One mole of ' + s[1].toLowerCase() + ': a cube about ' + side.toFixed(1) + ' centimeters on a side, ' + e.ms + ' grams">' +
+      '<line x1="4" y1="121" x2="116" y2="121" stroke="#C9D3D1"/>' + cube(x, 120, px, s[3], s[0]) + '</svg>' +
+      '<figcaption><b>' + s[1] + (s[4] ? ' <span style="font-weight:400;color:var(--mute)">(' + s[4] + ')</span>' : '') + '</b><span class="m">' + e.ms + ' g</span></figcaption></figure>';
+  });
+  el('lineup').innerHTML = html;
+})();
+
+/* =========================================================
+   6. two-pan balance
+   ========================================================= */
+var TPE = [
+  ['C','Carbon',2.2,'#3F4548'], ['Mg','Magnesium',1.74,'#C9CDD2'], ['Al','Aluminum',2.70,'#C3CAD1'], ['S','Sulfur',2.07,'#E2C93C'],
+  ['Ca','Calcium',1.55,'#D9D6CB'], ['Fe','Iron',7.87,'#7F868C'], ['Ni','Nickel',8.91,'#B5B0A2'], ['Cu','Copper',8.96,'#C26A3A'],
+  ['Zn','Zinc',7.13,'#A7B1B9'], ['Ag','Silver',10.5,'#D5DADF'], ['Sn','Tin',7.29,'#BFC3C4'], ['W','Tungsten',19.3,'#8C9095'],
+  ['Pt','Platinum',21.45,'#CDD0D3'], ['Au','Gold',19.3,'#D6A62A'], ['Pb','Lead',11.3,'#69717D']
+];
+var TPmap = {}; TPE.forEach(function(t){ TPmap[t[0]] = t; });
+var TP = { mode:'mol', L:'C', R:'Au', ang:0, raf:0 };
+(function fillSelects(){
+  var opts = TPE.map(function(t){ return '<option value="' + t[0] + '">' + t[1] + ' (' + t[0] + ')</option>'; }).join('');
+  el('tp-l').innerHTML = opts; el('tp-r').innerHTML = opts;
+  el('tp-l').value = TP.L; el('tp-r').value = TP.R;
+})();
+function tpSide(sym){
+  var t = TPmap[sym], e = EL[sym];
+  var mass = TP.mode === 'mol' ? e.M : 50.0, mol = mass / e.M;
+  return { t:t, e:e, mass:mass, mol:mol, atoms:mol * NA, side:Math.cbrt(mass / t[2]) };
+}
+function tpDraw(ang){
+  var L = tpSide(TP.L), R = tpSide(TP.R), a = ang * Math.PI / 180, cx = 280, cy = 64, half = 196, PX = 21;
+  var lx = cx - half * Math.cos(a), ly = cy - half * Math.sin(a), rx = cx + half * Math.cos(a), ry = cy + half * Math.sin(a);
+  var h = '<svg viewBox="0 0 560 300" role="img" aria-label="Two-pan balance: ' + L.e.name + ' on the left, ' + R.e.name + ' on the right">';
+  h += '<rect x="214" y="276" width="132" height="14" rx="4" fill="#9FB0AD"/><rect x="274" y="64" width="12" height="214" fill="#C3CDCB" stroke="#9FB0AD"/>';
+  /* needle scale: ticks around the needle tip, centered on the pivot */
+  for(var k = -2; k <= 2; k++){
+    var ta = k * 6 * Math.PI / 180, r1 = k === 0 ? 70 : 72, r2 = 78;
+    h += '<line x1="' + (cx - r1 * Math.sin(ta)).toFixed(1) + '" y1="' + (cy + r1 * Math.cos(ta)).toFixed(1) + '" x2="' + (cx - r2 * Math.sin(ta)).toFixed(1) + '" y2="' + (cy + r2 * Math.cos(ta)).toFixed(1) + '" stroke="#5F6D6B" stroke-width="' + (k === 0 ? 2 : 1.2) + '"/>';
+  }
+  h += '<line x1="280" y1="' + cy + '" x2="' + (280 - 66 * Math.sin(a)).toFixed(1) + '" y2="' + (cy + 66 * Math.cos(a)).toFixed(1) + '" stroke="#A93A2A" stroke-width="2.5" stroke-linecap="round"/>';
+  /* beam */
+  h += '<line x1="' + lx.toFixed(1) + '" y1="' + ly.toFixed(1) + '" x2="' + rx.toFixed(1) + '" y2="' + ry.toFixed(1) + '" stroke="#3B4A48" stroke-width="8" stroke-linecap="round"/>';
+  h += '<circle cx="' + cx + '" cy="' + cy + '" r="8" fill="#131E1D"/>';
+  [[lx, ly, L], [rx, ry, R]].forEach(function(p){
+    var px = p[0], py = p[1], s = p[2], plateY = py + 128;
+    h += '<circle cx="' + px.toFixed(1) + '" cy="' + py.toFixed(1) + '" r="4" fill="#131E1D"/>';
+    h += '<line x1="' + px.toFixed(1) + '" y1="' + py.toFixed(1) + '" x2="' + (px - 66).toFixed(1) + '" y2="' + plateY.toFixed(1) + '" stroke="#9FB0AD" stroke-width="1.3"/>';
+    h += '<line x1="' + px.toFixed(1) + '" y1="' + py.toFixed(1) + '" x2="' + (px + 66).toFixed(1) + '" y2="' + plateY.toFixed(1) + '" stroke="#9FB0AD" stroke-width="1.3"/>';
+    var sp = s.side * PX, d = sp * 0.42;
+    h += cube(px - (sp + d) / 2, plateY, sp, s.t[3], s.t[0]);
+    h += '<path d="M' + (px - 74).toFixed(1) + ',' + plateY.toFixed(1) + ' h148 a74,9 0 0 1 -148,0 z" fill="#8A9896" stroke="#6F7D7B"/>';
+  });
+  h += '</svg>';
+  el('tp-fig').innerHTML = h;
+}
+function tpTarget(){
+  var L = tpSide(TP.L), R = tpSide(TP.R);
+  return 11 * Math.tanh(3 * (R.mass - L.mass) / (R.mass + L.mass));
+}
+function tpAnimate(){
+  var target = tpTarget();
+  cancelAnimationFrame(TP.raf);
+  if(REDUCED){ TP.ang = target; tpDraw(TP.ang); return; }
+  var start = TP.ang, t0 = null;
+  function step(ts){
+    if(t0 === null) t0 = ts;
+    var k = Math.min(1, (ts - t0) / 650), ease = 1 - Math.pow(1 - k, 3);
+    TP.ang = start + (target - start) * ease;
+    tpDraw(TP.ang);
+    if(k < 1) TP.raf = requestAnimationFrame(step);
+  }
+  TP.raf = requestAnimationFrame(step);
+}
+function tpRender(){
+  var L = tpSide(TP.L), R = tpSide(TP.R);
+  var maxA = Math.max(L.atoms, R.atoms), maxM = Math.max(L.mass, R.mass);
+  function side(s){
+    return '<h4>' + s.e.name + ' (' + s.e.sym + ')</h4>' +
+      '<div class="tp-row"><span>Moles</span><span>' + sigHTML(s.mol, 3) + ' mol</span></div>' +
+      '<div class="tp-row"><span>Atoms</span><span>' + sciHTML(s.atoms, 3) + '</span></div>' +
+      '<div class="tp-bar atoms" aria-hidden="true"><i style="width:' + (100 * s.atoms / maxA).toFixed(1) + '%"></i></div>' +
+      '<div class="tp-row"><span>Mass</span><span>' + (TP.mode === 'mol' ? s.e.ms : '50.0') + ' g</span></div>' +
+      '<div class="tp-bar mass" aria-hidden="true"><i style="width:' + (100 * s.mass / maxM).toFixed(1) + '%"></i></div>';
+  }
+  el('tp-sl').innerHTML = side(L);
+  el('tp-sr').innerHTML = side(R);
+  var msg;
+  if(TP.L === TP.R) msg = 'Same element on both pans: same atoms, same mass, so the balance is level.';
+  else if(TP.mode === 'mol'){
+    var hv = L.mass > R.mass ? L : R, lt = L.mass > R.mass ? R : L;
+    msg = 'Both pans hold exactly 6.02 × 10<sup>23</sup> atoms, yet the <b>' + hv.e.name.toLowerCase() + '</b> side sinks. Each ' + hv.e.name.toLowerCase() + ' atom (' + hv.e.ms + ' amu) is heavier than each ' + lt.e.name.toLowerCase() + ' atom (' + lt.e.ms + ' amu), so its mole has more mass: ' + hv.e.ms + ' g vs. ' + lt.e.ms + ' g.';
+  } else {
+    var mo = L.atoms > R.atoms ? L : R, fe = L.atoms > R.atoms ? R : L;
+    msg = 'Both pans hold 50.0 g, so the balance is level. But the <b>' + mo.e.name.toLowerCase() + '</b> pan holds <b>' + (mo.atoms / fe.atoms).toFixed(1) + ' times as many atoms</b>. Lighter atoms means more of them fit into the same mass.';
+  }
+  el('tp-msg').innerHTML = msg;
+  tpAnimate();
+}
+el('tp-l').addEventListener('change', function(){ TP.L = this.value; tpRender(); });
+el('tp-r').addEventListener('change', function(){ TP.R = this.value; tpRender(); });
+tabs(el('tp-tabs'), function(b){ TP.mode = b.dataset.mode; tpRender(); });
+
+/* =========================================================
+   7. periodic table
+   ========================================================= */
+function ptPos(z){
+  if(z === 1) return [1, 1];
+  if(z === 2) return [1, 18];
+  if(z <= 10) return [2, z <= 4 ? z - 2 : z + 8];
+  if(z <= 18) return [3, z <= 12 ? z - 10 : z];
+  if(z <= 36) return [4, z - 18];
+  if(z <= 54) return [5, z - 36];
+  if(z <= 56) return [6, z - 54];
+  if(z <= 71) return [9, z - 54];
+  if(z <= 86) return [6, z - 68];
+  if(z <= 88) return [7, z - 86];
+  if(z <= 103) return [10, z - 86];
+  return [7, z - 100];
+}
+function tileHTML(e){
+  return '<div class="tile" aria-hidden="true"><span class="tz">' + e.z + '</span><span class="ts">' + e.sym + '</span><span class="tn">' + e.name + '</span><span class="tm">' + e.ms + '</span></div>';
+}
+function ptFacts(e, compact){
+  if(e.br) return '<p><b>' + e.name + '</b> has no stable isotopes. The number in parentheses, ' + e.ms + ', is the mass number of a long-lived isotope, not an average, so it isn’t a true molar mass. You won’t need these.</p>';
+  var h = '<div class="mm">' + e.ms + ' g/mol</div>' +
+    '<p>1 mol ' + e.sym + ' = <b>' + e.ms + ' g</b> = 6.02 × 10<sup>23</sup> atoms of ' + e.name.toLowerCase() + '</p>';
+  if(!compact) h += '<p class="aside">One ' + e.name.toLowerCase() + ' atom: ' + e.ms + ' amu, or ' + sciHTML(e.M * AMU_G, 3) + ' g</p>';
+  if(DIATOMIC[e.sym]) h += '<p class="aside">This is per mole of ' + e.sym + ' <i>atoms</i>. ' + e.name + ' gas is made of ' + e.sym + '₂ molecules, which you’ll handle with molar masses of compounds.</p>';
+  return h;
+}
+function buildPT(host, opts){
+  opts = opts || {};
+  var cells = '';
+  ELEMENTS.forEach(function(e){
+    var p = ptPos(e.z);
+    cells += '<button type="button" class="el' + (e.br ? ' rad' : '') + '" data-s="' + e.sym + '" style="grid-row:' + p[0] + ';grid-column:' + p[1] + '" aria-label="' + e.name + ', ' + (e.br ? 'no stable isotopes' : e.ms + ' grams per mole') + '">' +
+      '<span class="z">' + e.z + '</span><span class="s">' + e.sym + '</span><span class="m">' + e.ms + '</span></button>';
+  });
+  cells += '<div class="gap" style="grid-row:6;grid-column:3">57–71</div><div class="gap" style="grid-row:7;grid-column:3">89–103</div>';
+  host.innerHTML = '<div class="pt-scroll"><div class="pt">' + cells + '</div></div><div class="pt-detail" aria-live="polite"></div>';
+  var detail = host.querySelector('.pt-detail');
+  function show(sym){
+    var e = EL[sym];
+    each(host.querySelectorAll('.el'), function(b){ b.classList.toggle('on', b.dataset.s === sym); });
+    detail.innerHTML = tileHTML(e) + '<div class="pt-facts">' + ptFacts(e, opts.compact) + '</div>';
+  }
+  each(host.querySelectorAll('.el'), function(b){ b.addEventListener('click', function(){ show(b.dataset.s); }); });
+  if(opts.start) show(opts.start);
+  else detail.innerHTML = '<p class="smallprint" style="margin:0">Click an element to see its molar mass.</p>';
+}
+buildPT(el('pt-main'), { start:'Fe' });
+
+/* =========================================================
+   8. factor-label pieces
+   ========================================================= */
+var NAH = '6.02 × 10' + supHTML(23);
+function U(u, x){ return '<span class="u' + (x ? ' x' : '') + '">' + u + '</span>'; }
+function Q(v, u, x){ return '<span class="qty">' + v + ' ' + U(u, x) + '</span>'; }
+function F(tv, tu, bv, bu, o){ o = o || {}; return '<span class="frac' + (o.nw ? ' new' : '') + '"><span>' + tv + ' ' + U(tu, o.xt) + '</span><span>' + bv + ' ' + U(bu, o.xb) + '</span></span>'; }
+var TIMES = '<span class="op">×</span>', EQ = '<span class="op">=</span>';
+function A(v, u){ return '<span class="ans">' + v + ' ' + U(u) + '</span>'; }
+function FL(parts){ return '<div class="fl">' + parts.join('') + '</div>'; }
+
+el('cf-mm').outerHTML = FL([F('55.85','g Fe','1','mol Fe'), '<span class="op">or</span>', F('1','mol Fe','55.85','g Fe')]);
+el('cf-na').outerHTML = FL([F(NAH,'atoms','1','mol'), '<span class="op">or</span>', F('1','mol',NAH,'atoms')]);
+
+/* =========================================================
+   9. mole map route planner
+   ========================================================= */
+var RT = { from:'g', to:'a' };
+var RT_NAMES = { g:'Grams', m:'Moles', a:'Atoms' };
+(function buildRoute(){
+  ['from','to'].forEach(function(which){
+    var host = el('rt-' + which);
+    host.innerHTML = ['g','m','a'].map(function(k){
+      return '<button type="button" class="tab" role="tab" data-k="' + k + '" aria-selected="' + (RT[which] === k) + '">' + RT_NAMES[k] + '</button>';
+    }).join('');
+    tabs(host, function(b){ RT[which] = b.dataset.k; rtRender(); });
+  });
+})();
+function rtRender(){
+  var f = RT.from, t = RT.to, arrows = [], fl = [], text;
+  var mmDn = F('1','mol','<i>molar mass</i>','g'), mmUp = F('<i>molar mass</i>','g','1','mol');
+  var naUp = F(NAH,'atoms','1','mol'), naDn = F('1','mol',NAH,'atoms');
+  var start = { g:Q('<i>mass</i>','g'), m:Q('<i>moles</i>','mol'), a:Q('<i>number of</i>','atoms') }[f];
+  if(f === t){ text = 'Pick a different end point. You’re already there.'; fl = [start]; }
+  else {
+    var path = { 'g>m':[['a-gm', mmDn]], 'm>g':[['a-mg', mmUp]], 'm>a':[['a-ma', naUp]], 'a>m':[['a-am', naDn]],
+                 'g>a':[['a-gm', mmDn], ['a-ma', naUp]], 'a>g':[['a-am', naDn], ['a-mg', mmUp]] }[f + '>' + t];
+    fl = [start];
+    path.forEach(function(s){ arrows.push(s[0]); fl.push(TIMES, s[1]); });
+    fl.push(EQ, Q('<i>answer</i>', { g:'g', m:'mol', a:'atoms' }[t]));
+    text = path.length === 1
+      ? '<b>One step.</b> ' + RT_NAMES[f] + ' → ' + RT_NAMES[t] + '.'
+      : '<b>Two steps, through moles.</b> ' + RT_NAMES[f] + ' → moles → ' + RT_NAMES[t].toLowerCase() + '. There is no shortcut.';
+  }
+  each(el('map').querySelectorAll('.arrows span'), function(s){ s.classList.toggle('on', arrows.indexOf(s.id) !== -1); });
+  ['g','m','a'].forEach(function(k){ el('n-' + k).classList.toggle('on', k === f || k === t); });
+  el('rt-text').innerHTML = text;
+  el('rt-fl').outerHTML = '<div class="fl" id="rt-fl">' + fl.join('') + '</div>';
+}
+
+/* =========================================================
+   10. worked examples
+   ========================================================= */
+var WORKED = [
+  { title:'Moles → atoms', q:'How many atoms are in 2.50 mol of copper?', steps:[
+    { fl:[Q('2.50','mol Cu')], t:'<b>Start with what you’re given</b>, number and unit: 2.50 mol Cu. You want atoms, and the factor that links moles to atoms is Avogadro’s number.' },
+    { fl:[Q('2.50','mol Cu'), TIMES, F(NAH,'atoms Cu','1','mol Cu',{nw:1})], t:'<b>Multiply by a factor with mol Cu on the bottom.</b> 1 mol Cu = 6.02 × 10<sup>23</sup> atoms Cu, written so the unit you have is on the bottom.' },
+    { fl:[Q('2.50','mol Cu',1), TIMES, F(NAH,'atoms Cu','1','mol Cu',{xb:1})], t:'<b>Cancel units.</b> mol Cu on the top and bottom cancel. The only unit left is atoms Cu, which is what the question asks for.' },
+    { fl:[Q('2.50','mol Cu',1), TIMES, F(NAH,'atoms Cu','1','mol Cu',{xb:1}), EQ, A('1.51 × 10' + supHTML(24),'atoms Cu')], t:'<b>Do the math.</b> 2.50 × 6.02 × 10<sup>23</sup> = 1.505 × 10<sup>24</sup>, or <b>1.51 × 10<sup>24</sup> atoms Cu</b> to 3 significant figures. Sense check: more than 1 mol, so more than 6.02 × 10<sup>23</sup> atoms. ✓' }
+  ]},
+  { title:'Atoms → moles', q:'A sample of silver contains 3.01 × 10²³ atoms. How many moles of silver is that?', steps:[
+    { fl:[Q('3.01 × 10' + supHTML(23),'atoms Ag')], t:'<b>Start with what you’re given:</b> 3.01 × 10<sup>23</sup> atoms Ag. You want moles.' },
+    { fl:[Q('3.01 × 10' + supHTML(23),'atoms Ag'), TIMES, F('1','mol Ag',NAH,'atoms Ag',{nw:1})], t:'<b>This time atoms go on the bottom</b>, because atoms are what you have.' },
+    { fl:[Q('3.01 × 10' + supHTML(23),'atoms Ag',1), TIMES, F('1','mol Ag',NAH,'atoms Ag',{xb:1})], t:'<b>Cancel units.</b> Atoms cancel, leaving mol Ag.' },
+    { fl:[Q('3.01 × 10' + supHTML(23),'atoms Ag',1), TIMES, F('1','mol Ag',NAH,'atoms Ag',{xb:1}), EQ, A('0.500','mol Ag')], t:'<b>Do the math.</b> 3.01 × 10<sup>23</sup> ÷ 6.02 × 10<sup>23</sup> = <b>0.500 mol Ag</b>. Use the EE key, or put (6.02 × 10^23) in parentheses. Sense check: fewer atoms than a mole, so less than 1 mol. ✓' }
+  ]},
+  { title:'Grams → moles', q:'How many moles are in 25.0 g of iron?', steps:[
+    { fl:[Q('25.0','g Fe')], t:'<b>Start with what you’re given:</b> 25.0 g Fe. Look up iron on the periodic table: 55.85. So 1 mol Fe = 55.85 g Fe.' },
+    { fl:[Q('25.0','g Fe'), TIMES, F('1','mol Fe','55.85','g Fe',{nw:1})], t:'<b>Grams go on the bottom</b>, so they cancel the grams you started with.' },
+    { fl:[Q('25.0','g Fe',1), TIMES, F('1','mol Fe','55.85','g Fe',{xb:1})], t:'<b>Cancel units.</b> g Fe cancels, leaving mol Fe.' },
+    { fl:[Q('25.0','g Fe',1), TIMES, F('1','mol Fe','55.85','g Fe',{xb:1}), EQ, A('0.448','mol Fe')], t:'<b>Do the math.</b> 25.0 ÷ 55.85 = 0.4476…, or <b>0.448 mol Fe</b>. Sense check: 25.0 g is less than the mass of one mole (55.85 g), so it’s less than 1 mol. ✓' }
+  ]},
+  { title:'Moles → grams', q:'What is the mass of 0.350 mol of gold?', steps:[
+    { fl:[Q('0.350','mol Au')], t:'<b>Start with what you’re given:</b> 0.350 mol Au. Gold’s molar mass from the periodic table is 196.97 g/mol.' },
+    { fl:[Q('0.350','mol Au'), TIMES, F('196.97','g Au','1','mol Au',{nw:1})], t:'<b>Moles go on the bottom</b> this time, with grams on top.' },
+    { fl:[Q('0.350','mol Au',1), TIMES, F('196.97','g Au','1','mol Au',{xb:1})], t:'<b>Cancel units.</b> mol Au cancels, leaving g Au.' },
+    { fl:[Q('0.350','mol Au',1), TIMES, F('196.97','g Au','1','mol Au',{xb:1}), EQ, A('68.9','g Au')], t:'<b>Do the math.</b> 0.350 × 196.97 = 68.94, or <b>68.9 g Au</b>. Sense check: about a third of a mole, so about a third of 197 g. ✓' }
+  ]},
+  { title:'Grams → atoms (2 steps)', q:'How many atoms are in a 5.00 g piece of aluminum foil?', steps:[
+    { fl:[Q('5.00','g Al')], t:'<b>Start with what you’re given:</b> 5.00 g Al. No single factor goes from grams to atoms. Go through moles: grams → moles → atoms.' },
+    { fl:[Q('5.00','g Al'), TIMES, F('1','mol Al','26.98','g Al',{nw:1})], t:'<b>Step 1: grams to moles.</b> Aluminum’s molar mass is 26.98 g/mol. Grams go on the bottom.' },
+    { fl:[Q('5.00','g Al',1), TIMES, F('1','mol Al','26.98','g Al',{xb:1})], t:'<b>Grams cancel.</b> You’re at mol Al, halfway there.' },
+    { fl:[Q('5.00','g Al',1), TIMES, F('1','mol Al','26.98','g Al',{xb:1}), TIMES, F(NAH,'atoms Al','1','mol Al',{nw:1})], t:'<b>Step 2: moles to atoms.</b> Multiply by Avogadro’s number with mol Al on the bottom.' },
+    { fl:[Q('5.00','g Al',1), TIMES, F('1','mol Al','26.98','g Al',{xt:1,xb:1}), TIMES, F(NAH,'atoms Al','1','mol Al',{xb:1})], t:'<b>Moles cancel.</b> The only unit left is atoms Al.' },
+    { fl:[Q('5.00','g Al',1), TIMES, F('1','mol Al','26.98','g Al',{xt:1,xb:1}), TIMES, F(NAH,'atoms Al','1','mol Al',{xb:1}), EQ, A('1.12 × 10' + supHTML(23),'atoms Al')], t:'<b>Do the math.</b> 5.00 ÷ 26.98 × 6.02 × 10<sup>23</sup> = 1.116 × 10<sup>23</sup>, or <b>1.12 × 10<sup>23</sup> atoms Al</b>. Even a small piece of foil holds an enormous number of atoms.' }
+  ]}
+];
+var wkIdx = 0, wkStep = 0;
+(function buildWkTabs(){
+  el('wk-tabs').innerHTML = WORKED.map(function(w, i){
+    return '<button type="button" class="tab" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '">' + w.title + '</button>';
+  }).join('');
+  tabs(el('wk-tabs'), function(b){ wkIdx = Number(b.dataset.i); wkStep = 0; wkRender(); });
+})();
+function wkRender(){
+  var w = WORKED[wkIdx], s = w.steps[wkStep];
+  el('wk-q').textContent = w.q;
+  el('wk-fl').innerHTML = FL(s.fl);
+  el('wk-text').innerHTML = s.t;
+  el('wk-count').textContent = 'Step ' + (wkStep + 1) + ' of ' + w.steps.length;
+  el('wk-next').disabled = wkStep === w.steps.length - 1;
+  el('wk-prev').disabled = wkStep === 0;
+}
+el('wk-next').addEventListener('click', function(){ if(wkStep < WORKED[wkIdx].steps.length - 1){ wkStep++; wkRender(); } });
+el('wk-prev').addEventListener('click', function(){ if(wkStep > 0){ wkStep--; wkRender(); } });
+el('wk-restart').addEventListener('click', function(){ wkStep = 0; wkRender(); });
+
+/* =========================================================
+   11. practice
+   ========================================================= */
+var pScore = Score(el('p-score'));
+var pKind = 'mm', P = null;
+var KIND_TYPES = { mm:['mm'], atoms:['ma','am'], grams:['gm','mg'], two:['ga','ag'], mix:['mm','ma','am','gm','mg','gm','mg','ga','ag'] };
+
+function pNew(){
+  var type = pick(KIND_TYPES[pKind]);
+  P = makeProblem(type, P ? P.el.sym : null);
+  P.scored = false; P.done = false; P.chain = [];
+  var to = TYPE_INFO[type].to, sci = to === 'atoms';
+  el('p-prob').innerHTML = problemText(P);
+  el('p-in').value = ''; el('p-exp').value = '';
+  el('p-x10').hidden = !sci;
+  el('p-unit').textContent = unitOf(to, P.el.sym);
+  el('p-label').textContent = { 'g/mol':'Molar mass', atoms:'Number of atoms', mol:'Moles', g:'Mass' }[to];
+  el('p-tip').innerHTML = type === 'mm'
+    ? 'Find the element on your periodic table, or press <b>Periodic table</b> below.'
+    : sci ? 'Type the number in the first box and the power of ten in the small box: <kbd>1.51</kbd> and <kbd>24</kbd> for 1.51 × 10²⁴. Typing <kbd>1.51e24</kbd> in the first box works too.'
+          : 'Type just the number. The unit is already there.';
+  hideFb(el('p-fb'));
+  el('s-wrap').hidden = type === 'mm';
+  sRender();
+}
+function hint(p, code){
+  var e = p.el, nm = e.name.toLowerCase(), mm = e.ms + ' g/mol';
+  switch(code){
+    case 'unreadable': return 'Type a number, like <kbd>0.250</kbd> or <kbd>1.51e24</kbd>. If you use the small box, type a whole number there.';
+    case 'zMM':   return '<b>That’s the atomic number,</b> the number of protons. Molar mass is the other number on the tile, the one with decimals.';
+    case 'mmNA':  return '<b>No Avogadro’s number needed.</b> Molar mass is read straight off the periodic table: the average atomic mass, in g/mol.';
+    case 'z':     return '<b>That used the atomic number (' + e.z + ').</b> Use the molar mass instead: ' + nm + ' is ' + mm + '.';
+    case 'divNA': return p.type === 'ga'
+      ? '<b>Multiply by Avogadro’s number in the second step.</b> Moles to atoms makes the number much bigger: the factor is (6.02 × 10<sup>23</sup> atoms / 1 mol).'
+      : '<b>Multiply, don’t divide.</b> Every mole holds 6.02 × 10<sup>23</sup> atoms, so the number of atoms is ' + givenHTML(p) + ' × (6.02 × 10<sup>23</sup> atoms / 1 mol). Dividing gave you less than one atom.';
+    case 'multNA': return p.type === 'ag'
+      ? '<b>Divide by Avogadro’s number in the first step.</b> Atoms to moles makes the number much smaller: the factor is (1 mol / 6.02 × 10<sup>23</sup> atoms).'
+      : '<b>Divide by Avogadro’s number.</b> You have atoms and want moles, so atoms go on the bottom: (1 mol / 6.02 × 10<sup>23</sup> atoms).';
+    case 'flip':  return '<b>Upside down.</b> Start with the number you’re given, then multiply by a factor with that unit on the bottom.';
+    case 'noExp': return '<b>Check the exponent.</b> Avogadro’s number is 6.02 × 10<sup>23</sup>, not 6.02. Enter it with the EE or EXP key.';
+    case 'negExp':return '<b>The exponent is positive:</b> 6.02 × 10<sup>23</sup>, not 6.02 × 10<sup>−23</sup>. Atoms come in huge numbers.';
+    case 'parens':return '<b>Calculator trap.</b> Your calculator divided by 6.02 and then multiplied by 10<sup>23</sup>. Use the EE key, or put (6.02 × 10^23) in parentheses.';
+    case 'usedMM':return '<b>Wrong conversion factor.</b> Moles ↔ atoms uses Avogadro’s number, 6.02 × 10<sup>23</sup>. Molar mass is for grams ↔ moles.';
+    case 'usedNA':return '<b>Wrong conversion factor.</b> Grams ↔ moles uses the molar mass (' + mm + '). Avogadro’s number is for moles ↔ atoms.';
+    case 'multMM':return p.type === 'ga'
+      ? '<b>Divide by the molar mass in the first step.</b> Grams to moles: (1 mol / ' + e.ms + ' g), so grams cancel.'
+      : '<b>Divide by the molar mass.</b> g × g/mol leaves g²/mol, which isn’t moles. Use (1 mol / ' + e.ms + ' g ' + e.sym + ') so grams cancel.';
+    case 'divMM': return p.type === 'ag'
+      ? '<b>Multiply by the molar mass in the second step.</b> Each mole has a mass of ' + e.ms + ' g, so use (' + e.ms + ' g / 1 mol).'
+      : '<b>Multiply by the molar mass.</b> Each mole of ' + nm + ' has a mass of ' + e.ms + ' g, so ' + givenHTML(p) + ' × (' + e.ms + ' g / 1 mol).';
+    case 'tooFar':return '<b>Stop at moles.</b> The question asks for moles, not atoms. You only need the molar mass.';
+    case 'midMol':return '<b>That’s the number of moles, halfway there.</b> ' + (p.type === 'ga' ? 'Now multiply by 6.02 × 10<sup>23</sup> to get atoms.' : 'Now multiply by the molar mass (' + mm + ') to get grams.');
+    case 'skipMM':return '<b>You skipped a step.</b> Grams can’t go straight to atoms. Go through moles: divide by the molar mass first, then multiply by 6.02 × 10<sup>23</sup>.';
+    case 'skipNA':return '<b>You skipped a step.</b> Atoms can’t go straight to grams. Go through moles: divide by 6.02 × 10<sup>23</sup> first, then multiply by the molar mass.';
+  }
+  switch(p.type){
+    case 'mm': return '<b>Not quite.</b> Find ' + nm + ' (' + e.sym + ') on the periodic table and read the average atomic mass.';
+    case 'ma': case 'am': return '<b>Not quite.</b> Moles ↔ atoms uses 6.02 × 10<sup>23</sup>. Set it up so the unit you have cancels.';
+    case 'gm': case 'mg': return '<b>Not quite.</b> Look up the molar mass of ' + nm + ' (' + mm + ') and set it up so the unit you have cancels.';
+    default: return '<b>Not quite.</b> Go through moles: two factors, molar mass (' + mm + ') and 6.02 × 10<sup>23</sup>. Try building the setup below.';
+  }
+}
+function solutionFL(p){
+  if(p.type === 'mm') return '';
+  var fs = factorsFor(p.el), byId = {};
+  fs.forEach(function(f){ byId[f.id] = f; });
+  var chain = solutionIds(p.type).map(function(id){ return byId[id]; });
+  var from = TYPE_INFO[p.type].from, to = TYPE_INFO[p.type].to;
+  var cu = cancelUnits(unitOf(from, p.el.sym), chain), parts = [];
+  var gv = from === 'atoms' ? sciHTML(p.given, 3) : sigHTML(p.given, 3);
+  parts.push(Q(gv, cu.num[0].u, cu.num[0].x));
+  chain.forEach(function(f, i){ parts.push(TIMES, F(f.t[0], f.t[1], f.b[0], f.b[1], { xt:cu.num[i + 1].x, xb:cu.den[i].x })); });
+  parts.push(EQ, A(to === 'atoms' ? sciHTML(p.answer, 3) : sigHTML(p.answer, 3), unitOf(to, p.el.sym)));
+  return FL(parts);
+}
+function pCheck(){
+  if(!P || P.done) return;
+  var raw = el('p-in').value, ex = el('p-x10').hidden ? '' : el('p-exp').value, fb = el('p-fb');
+  if(!raw.trim()){ setFb(fb,'hint','Type your answer first.'); return; }
+  var got = readAnswer(raw, ex), res = judge(P, got);
+  if(res.code === 'unreadable'){ setFb(fb,'hint', hint(P, 'unreadable')); return; }
+  if(!P.scored){ P.scored = true; pScore.add(res.ok); }
+  if(res.ok){
+    P.done = true;
+    var sfNote = '';
+    if(P.type !== 'mm' && got.sf !== 3) sfNote = '<br>Your value is right. The given number has 3 significant figures, so round your answer to 3: <b>' + answerHTML(P) + '</b>.';
+    setFb(fb,'good','<b>Correct: ' + answerHTML(P) + '.</b>' + solutionFL(P) + sfNote);
+    return;
+  }
+  setFb(fb,'bad', hint(P, res.code));
+}
+function pShow(){
+  if(!P) return;
+  if(!P.scored){ P.scored = true; pScore.add(false); }
+  P.done = true;
+  if(TYPE_INFO[P.type].to === 'atoms'){ var sp = sigParts(P.answer, 3); el('p-in').value = sp.m; el('p-exp').value = sp.e; }
+  else el('p-in').value = P.type === 'mm' ? P.el.ms : sigPlain(P.answer, 3);
+  setFb(el('p-fb'),'hint','<b>Answer: ' + answerHTML(P) + '.</b>' + (P.type === 'mm' ? ' Read it from the periodic table: ' + P.el.name.toLowerCase() + ', ' + P.el.sym + '.' : solutionFL(P)));
+}
+el('p-check').addEventListener('click', pCheck);
+el('p-show').addEventListener('click', pShow);
+el('p-new').addEventListener('click', pNew);
+el('p-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') pCheck(); });
+el('p-exp').addEventListener('keydown', function(e){ if(e.key === 'Enter') pCheck(); });
+tabs(el('p-tabs'), function(b){ pKind = b.dataset.k; P = null; pNew(); });
+el('p-ptbtn').addEventListener('click', function(){
+  var host = el('p-pt'), open = host.hidden;
+  if(open && !host.dataset.built){ buildPT(host, { compact:true }); host.dataset.built = '1'; }
+  host.hidden = !open;
+  this.setAttribute('aria-expanded', String(open));
+  this.textContent = open ? 'Hide periodic table' : 'Periodic table';
+});
+
+/* ---- build the setup ---- */
+function sRender(){
+  if(!P || P.type === 'mm') return;
+  var fs = factorsFor(P.el), from = TYPE_INFO[P.type].from, to = TYPE_INFO[P.type].to;
+  var startU = unitOf(from, P.el.sym), target = unitOf(to, P.el.sym);
+  var chain = P.chain.map(function(i){ return fs[i]; });
+  var cu = cancelUnits(startU, chain), parts = [];
+  var gv = from === 'atoms' ? sciHTML(P.given, 3) : sigHTML(P.given, 3);
+  parts.push(Q(gv, startU, cu.num[0].x));
+  chain.forEach(function(f, i){ parts.push(TIMES, F(f.t[0], f.t[1], f.b[0], f.b[1], { xt:cu.num[i + 1].x, xb:cu.den[i].x })); });
+  var leftN = cu.num.filter(function(u){ return !u.x; }).map(function(u){ return u.u; });
+  var leftD = cu.den.filter(function(u){ return !u.x; }).map(function(u){ return u.u; });
+  var msg, kind = 'hint';
+  if(!chain.length){
+    msg = 'You have <b>' + startU + '</b> and want <b>' + target + '</b>. Pick a factor with <b>' + startU + '</b> on the bottom.';
+  } else if(leftN.length === 1 && !leftD.length && leftN[0] === target){
+    parts.push(EQ, '<span class="ph">? ' + U(target) + '</span>');
+    msg = '<b>The units work.</b> Everything cancels except <b>' + target + '</b>, the unit you want. Now multiply across the top and divide by the bottom.';
+    kind = 'good';
+  } else if(leftN.length === 1 && !leftD.length){
+    msg = 'You’re at <b>' + leftN[0] + '</b>. ' + (chain.length >= 3 ? 'That’s a lot of factors. Undo and try a shorter route.' : 'Add another factor to get to <b>' + target + '</b>.');
+  } else {
+    msg = '<b>These units don’t cancel.</b> You’d end up with ' + leftN.join(' × ') + (leftD.length ? ' ÷ ' + leftD.join(' ÷ ') : '') + ', which isn’t a real answer. Undo and flip that factor.';
+    kind = 'bad';
+  }
+  el('s-chain').innerHTML = FL(parts);
+  el('s-opts').innerHTML = fs.map(function(f, i){
+    return '<button type="button" class="fopt" data-i="' + i + '" aria-label="Multiply by ' + f.t[0].replace(/<[^>]+>/g, '') + ' ' + f.t[1] + ' per ' + f.b[0].replace(/<[^>]+>/g, '') + ' ' + f.b[1] + '"' + (chain.length >= 3 ? ' disabled' : '') + '><span class="frac"><span>' + f.t[0] + ' ' + f.t[1] + '</span><span>' + f.b[0] + ' ' + f.b[1] + '</span></span></button>';
+  }).join('');
+  each(el('s-opts').querySelectorAll('.fopt'), function(b){
+    b.addEventListener('click', function(){ if(P.chain.length < 3){ P.chain.push(Number(b.dataset.i)); sRender(); } });
+  });
+  setFb(el('s-msg'), kind, msg);
+  el('s-undo').disabled = !chain.length;
+  el('s-clear').disabled = !chain.length;
+}
+el('s-undo').addEventListener('click', function(){ P.chain.pop(); sRender(); });
+el('s-clear').addEventListener('click', function(){ P.chain = []; sRender(); });
+
+/* =========================================================
+   12. quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'What is a mole?',
+    opts:['The mass of one atom','A counting unit equal to 6.02 × 10<sup>23</sup> particles','The number of protons in an atom','A unit of volume for gases'],
+    ans:1,
+    why:'A mole is a number, like a dozen. One mole of anything is 6.02 × 10<sup>23</sup> of that thing.' },
+  { stem:'Which has more atoms: 1.00 mol of carbon or 1.00 mol of lead?',
+    opts:['1.00 mol of lead, because lead atoms are bigger','1.00 mol of carbon, because carbon atoms are smaller','They have the same number of atoms','You can’t tell without knowing the masses'],
+    ans:2,
+    why:'A mole is a count, so 1.00 mol of anything is 6.02 × 10<sup>23</sup> atoms. The mole of lead just has more mass: 207.2 g vs. 12.01 g.' },
+  { stem:'Which has more atoms: 10.0 g of carbon or 10.0 g of lead?',
+    opts:['10.0 g of carbon','10.0 g of lead','They have the same number of atoms','It depends on the temperature'],
+    ans:0,
+    why:'Carbon atoms are much lighter (12.01 amu vs. 207.2 amu), so far more of them fit in 10.0 g. 10.0 g of carbon is 0.833 mol; 10.0 g of lead is only 0.0483 mol.' },
+  { stem:'Magnesium’s periodic table tile shows 12 and 24.31. What is the molar mass of magnesium?',
+    opts:['12 g/mol','24.31 g/mol','24.31 amu','6.02 × 10<sup>23</sup> g/mol'],
+    ans:1,
+    why:'Molar mass is the average atomic mass in grams per mole. 12 is the atomic number (protons). 24.31 amu is the mass of one atom, not a mole.' },
+  { stem:'A single silver atom has a mass of 107.87 ____.',
+    opts:['g','amu','g/mol','mol'],
+    ans:1,
+    why:'One atom is 107.87 amu. A whole mole of silver atoms is 107.87 g. The number is the same; the unit changes.' },
+  { stem:'How many atoms are in 2.00 mol of iron?',
+    opts:['3.32 × 10<sup>−24</sup> atoms','3.01 × 10<sup>23</sup> atoms','1.20 × 10<sup>24</sup> atoms','112 atoms'],
+    ans:2,
+    why:'2.00 mol × 6.02 × 10<sup>23</sup> atoms/mol = 1.20 × 10<sup>24</sup> atoms. 3.32 × 10<sup>−24</sup> divides by Avogadro’s number instead of multiplying. 3.01 × 10<sup>23</sup> divides Avogadro’s number by 2. 112 multiplies by iron’s molar mass, which is for grams.' },
+  { stem:'How many moles are in 54.0 g of aluminum?',
+    opts:['0.500 mol','2.00 mol','4.15 mol','1.46 × 10<sup>3</sup> mol'],
+    ans:1,
+    why:'54.0 g ÷ 26.98 g/mol = 2.00 mol. 0.500 divides the wrong way. 4.15 uses aluminum’s atomic number, 13. 1.46 × 10<sup>3</sup> multiplies by the molar mass instead of dividing.' },
+  { stem:'What is the mass of 0.500 mol of sulfur?',
+    opts:['8.00 g','16.0 g','64.1 g','3.01 × 10<sup>23</sup> g'],
+    ans:1,
+    why:'0.500 mol × 32.06 g/mol = 16.0 g. 8.00 g uses sulfur’s atomic number, 16. 64.1 g divides by 0.500 instead of multiplying.' },
+  { stem:'A student divides 3.01 × 10<sup>23</sup> by 6.02 × 10<sup>23</sup> on a calculator and gets 5 × 10<sup>45</sup>. What went wrong?',
+    opts:['Nothing; that’s the right answer','They should have multiplied','They typed ÷ 6.02 × 10^23 without parentheses, so the calculator multiplied by 10<sup>23</sup> after dividing','Avogadro’s number should be 6.02 × 10<sup>−23</sup>'],
+    ans:2,
+    why:'The calculator did (3.01 × 10<sup>23</sup> ÷ 6.02) × 10<sup>23</sup>. Use the EE key, or parentheses, and you get 0.500.' },
+  { stem:'Why is the molar mass of carbon 12.01 g/mol and not exactly 12?',
+    opts:['It’s an average over carbon’s isotopes: mostly carbon-12, with a little carbon-13','Scales can only measure to two decimal places','Carbon atoms gain a little mass when they form a mole','Avogadro’s number was rounded'],
+    ans:0,
+    why:'The atomic mass on the periodic table is a weighted average of the element’s isotopes. A small fraction of carbon atoms are carbon-13, which pulls the average a little above 12.' }
+];
+(function buildQuiz(){
+  var host = el('quiz'), html = '';
+  QUIZ.forEach(function(q, qi){
+    html += '<div class="q"><p class="stem">' + (qi + 1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o, oi){ html += '<button type="button" class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  host.innerHTML = html;
+  each(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      each(el('q' + qi).querySelectorAll('.opt'), function(other, i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      setFb(el('qfb' + qi), oi === q.ans ? 'good' : 'bad', '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+    });
+  });
+})();
+
+/* boot */
+wNewPile();
+mvRender();
+ladRender();
+zmRender();
+tpRender();
+rtRender();
+wkRender();
+pNew();
+</script>
+</body>
+</html>
