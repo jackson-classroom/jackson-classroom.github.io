@@ -257,7 +257,7 @@ var SETS = {
     "<p>A student mixes 50.0 mL of 0.150 M [[Pb(NO3)2(aq)]] with 50.0 mL of 0.150 M [[KI(aq)]]. A yellow precipitate of lead(II) iodide forms.</p>" +
     "<div class='eqline'>[[Pb(NO3)2(aq) + 2KI(aq) -> PbI2(s) + 2KNO3(aq)]]</div>"},
   11:{to:14, html:
-    "<p>A student places a 0.540 g piece of aluminum foil in 50.0 mL of 0.500 M [[CuCl2(aq)]], which is blue. The reaction is represented by the equation below. As the reaction proceeds, the blue color fades and a reddish-brown solid forms on the foil. Solutions of {AlCl3} are colorless.</p>" +
+    "<p>A student places a 0.540 g piece of aluminum foil in 50.0 mL of 0.500 M [[CuCl2(aq)]], which is blue-green. The reaction is represented by the equation below. As the reaction proceeds, the blue-green color fades and a reddish-brown solid forms on the foil. Solutions of {AlCl3} are colorless. Assume that the aluminum reacts only with the {Cu^2+} ions.</p>" +
     "<div class='eqline'>[[2Al(s) + 3CuCl2(aq) -> 2AlCl3(aq) + 3Cu(s)]]</div>"},
   15:{to:16, html:
     "<p>A student finds the amount of NaCl in a 1.000 g mixture of NaCl(s) and {KNO3}(s). The mixture is dissolved in water, and excess [[AgNO3(aq)]] is added. The AgCl(s) that precipitates is filtered, washed, and dried. Its mass is 1.435 g.</p>"},
@@ -373,7 +373,7 @@ var QS = [
   c:["0.0231 L","0.252 L","0.275 L","0.550 L"],
   a:2,
   w:["This uses 25 for the temperature. The ideal gas law needs kelvins: 25 °C is 298 K.",
-     "This uses 273 K, the temperature at STP. The gas here is at 25 °C, which is 298 K.",
+     "This uses STP conditions: 273 K, or 22.4 L per mole. The gas here is at 25 °C, which is 298 K.",
      "0.0250 L × 0.900 M = 0.0225 mol {H2O2}, and 0.0225 mol ÷ 2 = 0.01125 mol {O2}. V = nRT/P = (0.01125 mol)(0.08206 L·atm/(mol·K))(298 K) ÷ 1.00 atm = 0.275 L.",
      "This skips the mole ratio. Two moles of {H2O2} produce only one mole of {O2}."]},
 
@@ -424,13 +424,13 @@ var QS = [
 
 /* 14 */ {t:"4.1",
   q:"Which of the following would the student most likely observe after the reaction stops?",
-  c:["The solution is still blue, and no aluminum foil remains.",
+  c:["The solution is still blue-green, and no aluminum foil remains.",
      "The solution is colorless, and some aluminum foil remains.",
      "The solution is colorless, and no aluminum foil remains.",
-     "The solution is still blue, and some aluminum foil remains."],
+     "The solution is still blue-green, and some aluminum foil remains."],
   a:1,
-  w:["That’s what you’d see if Al were limiting: leftover {Cu^2+} would keep the solution blue. But {CuCl2} runs out first.",
-     "{CuCl2} is limiting, so all of the blue {Cu^2+} is used up and the {AlCl3} solution left behind is colorless. Al is in excess, so about 0.09 g of foil, coated with copper, is left.",
+  w:["That’s what you’d see if Al were limiting: leftover {Cu^2+} would keep the solution blue-green. But {CuCl2} runs out first.",
+     "{CuCl2} is limiting, so all of the {Cu^2+} that colored the solution is used up and the {AlCl3} solution left behind is colorless. Al is in excess, so about 0.09 g of foil, coated with copper, is left.",
      "Both would be used up only if the amounts were in exactly a 2 : 3 ratio. Here Al is in excess, so some of it is left over.",
      "If both {Cu^2+} and Al were still present, the reaction would keep going. It stops only when one reactant runs out."]},
 
@@ -489,13 +489,13 @@ var QS = [
      "Water accepts a proton from {HNO2} and becomes {H3O^+}. Accepting a proton is what a Brønsted–Lowry base does."]},
 
 /* 20 */ {t:"4.9",
-  q:"Chlorate ions oxidize sulfur dioxide in acidic solution. The balanced half-reactions are shown below." +
-    "<div class='eqline'>[[ClO3^-(aq) + 6H^+(aq) + 6e^- -> Cl^-(aq) + 3H2O(l)]]</div><div class='eqline'>[[SO2(aq) + 2H2O(l) -> SO4^2-(aq) + 4H^+(aq) + 2e^-]]</div>" +
+  q:"In acidic solution, excess sulfur dioxide reduces iodate ions to iodide ions. The balanced half-reactions are shown below." +
+    "<div class='eqline'>[[IO3^-(aq) + 6H^+(aq) + 6e^- -> I^-(aq) + 3H2O(l)]]</div><div class='eqline'>[[SO2(aq) + 2H2O(l) -> SO4^2-(aq) + 4H^+(aq) + 2e^-]]</div>" +
     "Which of the following is the balanced equation for the overall reaction?",
-  c:["[[ClO3^-(aq) + SO2(aq) + 2H^+(aq) -> Cl^-(aq) + SO4^2-(aq) + H2O(l)]]",
-     "[[3ClO3^-(aq) + SO2(aq) + 14H^+(aq) -> 3Cl^-(aq) + SO4^2-(aq) + 7H2O(l)]]",
-     "[[ClO3^-(aq) + 3SO2(aq) + 3H2O(l) -> Cl^-(aq) + 3SO4^2-(aq) + 6H^+(aq)]]",
-     "[[ClO3^-(aq) + 3SO2(aq) + 6H^+(aq) -> Cl^-(aq) + 3SO4^2-(aq) + 3H2O(l)]]"],
+  c:["[[IO3^-(aq) + SO2(aq) + 2H^+(aq) -> I^-(aq) + SO4^2-(aq) + H2O(l)]]",
+     "[[3IO3^-(aq) + SO2(aq) + 14H^+(aq) -> 3I^-(aq) + SO4^2-(aq) + 7H2O(l)]]",
+     "[[IO3^-(aq) + 3SO2(aq) + 3H2O(l) -> I^-(aq) + 3SO4^2-(aq) + 6H^+(aq)]]",
+     "[[IO3^-(aq) + 3SO2(aq) + 6H^+(aq) -> I^-(aq) + 3SO4^2-(aq) + 3H2O(l)]]"],
   a:2,
   w:["This adds the half-reactions without matching the electrons first. The atoms balance, but the charge doesn’t: +1 on the left and −3 on the right.",
      "This multiplies the wrong half-reaction by 3. The atoms balance, but the charge doesn’t: +11 on the left and −5 on the right.",
@@ -537,12 +537,12 @@ var QS = [
   c:["The purple color of each drop disappears as soon as the flask is swirled.",
      "The solution in the flask changes from purple to colorless.",
      "A brown solid appears in the flask.",
-     "A faint purple color remains in the flask after swirling."],
+     "A faint pink color remains in the flask after swirling."],
   a:3,
   w:["This is what happens before the endpoint. As long as oxalic acid is left, each drop of {MnO4^-} reacts and its color disappears.",
      "The flask starts out colorless and stays that way until the endpoint, because each drop of purple {MnO4^-} is used up as it’s added.",
      "A brown solid isn’t part of this reaction. If one appeared, it would signal a problem, such as too little acid in the flask.",
-     "Once all the {H2C2O4} is used up, the next drop of {MnO4^-} has nothing to react with, so its purple color stays. {MnO4^-} acts as its own indicator."]},
+     "Once all the {H2C2O4} is used up, the next drop of {MnO4^-} has nothing to react with, so its color stays, a faint pink once it’s spread through the flask. {MnO4^-} acts as its own indicator."]},
 
 /* 25 */ {t:"4.6",
   q:"What is the mass percent of {H2C2O4} (molar mass 90.04 g/mol) in the sample?",
@@ -766,16 +766,16 @@ var FRQ = {
      pts:["The equation [[Cu^2+(aq) + 2OH^-(aq) -> Cu(OH)2(s)]], with no {Na^+} or {NO3^-} (they are spectators)."],
      m:"<p>{Na^+} and {NO3^-} stay dissolved on both sides, so they cancel. {Cu(OH)2} is the precipitate, so it keeps its formula.</p><div class='eqline'>[[Cu^2+(aq) + 2OH^-(aq) -> Cu(OH)2(s)]]</div>"},
     {id:"b", p:2,
-     q:"Classify the reaction in step 1 and the reaction in step 4 as acid–base, oxidation–reduction, or precipitation. Justify each answer.",
-     pts:["Step 1 is oxidation–reduction, justified with oxidation numbers: Cu goes from 0 to +2, and N goes from +5 in {HNO3} to +4 in {NO2}.",
-          "Step 4 is acid–base, justified by proton transfer: {H^+} from {H2SO4} is transferred to the oxide ion in CuO, forming {H2O}, and no oxidation numbers change."],
-     m:"<p><b>Step 1, oxidation–reduction.</b> Copper is oxidized from 0 in Cu(s) to +2 in {Cu(NO3)2}, and nitrogen is reduced from +5 in {HNO3} to +4 in {NO2}. Electrons move from Cu to N.</p><p><b>Step 4, acid–base.</b> Protons from the acid are transferred to the oxide ions of CuO, and they combine to form water. Every oxidation number stays the same (Cu +2, O −2, S +6, H +1), and no precipitate forms.</p>"},
+     q:"(i) Classify the reaction in step 1 as acid–base, oxidation–reduction, or precipitation. Justify your answer.<br>(ii) Write the balanced half-reaction for the reduction that occurs in step 5.",
+     pts:["(i) Oxidation–reduction, justified with oxidation numbers: Cu goes from 0 to +2, and N goes from +5 in {HNO3} to +4 in {NO2}.",
+          "(ii) [[Cu^2+(aq) + 2e^- -> Cu(s)]]"],
+     m:"<p>(i) <b>Oxidation–reduction.</b> Copper is oxidized from 0 in Cu(s) to +2 in {Cu(NO3)2}, and nitrogen is reduced from +5 in {HNO3} to +4 in {NO2}. Electrons move from Cu to N.</p><p>(ii) Copper goes from +2 in {CuSO4} to 0 in Cu(s), so {Cu^2+} gains two electrons. {SO4^2-} is a spectator and isn’t part of the half-reaction.</p><div class='eqline'>[[Cu^2+(aq) + 2e^- -> Cu(s)]]</div>"},
     {id:"c", p:1,
      q:"In step 3, blue {Cu(OH)2}(s) turns into a black solid. A classmate claims that this is a physical change because the solid is just “drying out.” Explain why the claim is incorrect.",
      pts:["Explains that a new substance (CuO) forms, with a different composition and different properties, because bonds in {Cu(OH)2} are broken and rearranged. The water was part of the compound, not just mixed with it."],
      m:"<p>The black solid is CuO, a different compound from {Cu(OH)2}: its formula and its properties are different. The water that forms comes from breaking and rearranging bonds in the hydroxide ions of the solid. Drying would only remove water that was mixed with the solid, and it would leave {Cu(OH)2} unchanged.</p>"},
     {id:"d", p:3,
-     q:"Use the 0.635 g of copper to answer the following.<br>(i) Calculate the minimum volume, in mL, of 16.0 M {HNO3} needed to react with all of the copper in step 1.<br>(ii) Calculate the volume, in liters, of {NO2}(g) produced in step 1 at 25 °C and 1.00 atm.<br>(iii) Calculate the theoretical mass of {Cu(OH)2} produced in step 2.",
+     q:"Use the 0.635 g of copper to answer the following.<br>(i) Calculate the minimum volume, in mL, of 16.0 M {HNO3} needed to react with all of the copper in step 1.<br>(ii) Calculate the volume, in liters, of {NO2}(g) produced in step 1 at 25 °C and 1.00 atm. Assume the {NO2} behaves as an ideal gas.<br>(iii) Calculate the theoretical mass of {Cu(OH)2} produced in step 2.",
      pts:["(i) 2.50 mL: 0.635 g ÷ 63.55 g/mol = 0.00999 mol Cu; × 4 = 0.0400 mol {HNO3}; ÷ 16.0 M = 0.00250 L.",
           "(ii) 0.489 L: 0.00999 mol Cu × 2 = 0.0200 mol {NO2}; V = nRT/P = (0.0200)(0.08206)(298) ÷ 1.00.",
           "(iii) 0.975 g: one Cu gives one {Cu(OH)2}, so 0.00999 mol × 97.57 g/mol."],
@@ -788,9 +788,9 @@ var FRQ = {
      q:"In step 5, the student adds excess zinc, and then adds HCl(aq) to dissolve the leftover zinc. Suppose some of the zinc doesn’t dissolve and is weighed along with the copper. Would the calculated percent recovery be too high, too low, or unaffected? Justify your answer.",
      pts:["Too high, with a justification: the leftover Zn adds mass, so the mass recorded as copper is larger than the mass of copper actually recovered."],
      m:"<p><b>Too high.</b> The balance can’t tell zinc from copper, so the leftover zinc makes the recorded mass of “copper” larger than the copper actually recovered, and the percent recovery comes out too high.</p>"},
-    {id:"g", p:1, fig:function(){ return box([["Cu2+",2],["NO3-",4]], "frq-g0", {label:"Before step 2"}) + PART.legend(["Cu","N","O"]); },
+    {id:"g", p:1, fig:function(){ return box([["Cu2+",2],["NO3-",4]], "frq-g0", {label:"Before step 2"}) + PART.legend(["Cu","N","O","Na"]); },
      q:"The box represents a small part of the {Cu(NO3)2} solution at the start of step 2. Water molecules aren’t shown, and no {HNO3} is left over. On paper, draw a box that shows the dissolved ions present after exactly enough NaOH has been added to precipitate all of the {Cu^2+}. Show the same number of {NO3^-} ions as in this box, and don’t draw water molecules or the precipitate.",
-     pts:["The box shows 4 {Na^+} and 4 {NO3^-} as separate ions, with no {Cu^2+} and no {OH^-}."],
+     pts:["The box shows 4 {Na^+} and 4 {NO3^-} as separate ions, with no {Cu^2+} and no {OH^-}. Any clearly labeled symbol for {Na^+} is fine."],
      m:"<p>Each {Cu^2+} needs two {OH^-}, so 2 {Cu^2+} take 4 NaOH. That brings in 4 {Na^+}. The {Cu^2+} and {OH^-} leave the solution as {Cu(OH)2}(s), and the spectators, 4 {Na^+} and 4 {NO3^-}, stay dissolved.</p><div class='qfig'>" + "@@FRQG@@" + "</div>"}
   ]
 };
