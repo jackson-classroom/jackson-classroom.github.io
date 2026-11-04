@@ -29,6 +29,7 @@ var PART = (function(){
     K:{r:11, f:"#C277C9", n:"potassium"},
     Ag:{r:11, f:"#A8B0BB", n:"silver"},
     Pb:{r:13, f:"#5E6A7A", n:"lead"},
+    Cu:{r:11, f:"#C26A3A", n:"copper"},
     X:{r:11, f:"#E07B39", n:"element X"},
     Y:{r:11, f:"#2A8C9C", n:"element Y"}
   };
@@ -54,15 +55,16 @@ var PART = (function(){
     "Y2":[["Y",-8,0],["Y",8,0]],
     "XY":[["X",-8,0],["Y",8,0]],
     "XY3":[["Y",-10,6],["Y",10,6],["Y",0,-11],["X",0,0]],
-    "Na+":[["Na",0,0]], "K+":[["K",0,0]], "Ag+":[["Ag",0,0]], "Pb2+":[["Pb",0,0]],
+    "Na+":[["Na",0,0]], "K+":[["K",0,0]], "Ag+":[["Ag",0,0]], "Pb2+":[["Pb",0,0]], "Cu2+":[["Cu",0,0]],
     "Cl-":[["Cl",0,0]], "I-":[["I",0,0]],
     "NO3-":[["O",-11,6],["O",11,6],["O",0,-12],["N",0,0]],
     "NaCl":[["Na",-9,0],["Cl",10,0]],                     // for wrong answers: ions drawn as a pair
     "PbI2":[["I",-21,0],["I",21,0],["Pb",0,0]],
-    "Na":[["Na",0,0]], "Cl":[["Cl",0,0]], "H":[["H",0,0]], "O":[["O",0,0]], "N":[["N",0,0]]
+    "Na":[["Na",0,0]], "Cl":[["Cl",0,0]], "H":[["H",0,0]], "O":[["O",0,0]], "N":[["N",0,0]], "I":[["I",0,0]]
   };
-  var CHARGE = {"Na+":"+", "K+":"+", "Ag+":"+", "Pb2+":"2+", "Cl-":"−", "I-":"−", "NO3-":"−"};
-  var NAME = {"Na+":"Na⁺ ion", "K+":"K⁺ ion", "Ag+":"Ag⁺ ion", "Pb2+":"Pb²⁺ ion", "Cl-":"Cl⁻ ion", "I-":"I⁻ ion", "NO3-":"NO₃⁻ ion"};
+  var CHARGE = {"Na+":"+", "K+":"+", "Ag+":"+", "Pb2+":"2+", "Cu2+":"2+", "Cl-":"−", "I-":"−", "NO3-":"−"};
+  var NAME = {"Na+":"Na⁺ ion", "K+":"K⁺ ion", "Ag+":"Ag⁺ ion", "Pb2+":"Pb²⁺ ion", "Cu2+":"Cu²⁺ ion", "Cl-":"Cl⁻ ion", "I-":"I⁻ ion", "NO3-":"NO₃⁻ ion",
+              "Na":"Na atom", "Cl":"Cl atom", "H":"H atom", "O":"O atom", "N":"N atom", "I":"I atom"};
 
   function reach(sp){ return MOL[sp].reduce(function(m, a){ return Math.max(m, Math.hypot(a[1], a[2]) + EL[a[0]].r); }, 0); }
 

@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 4 Practice Set | AP Chemistry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/ap-chemistry/topic.css">
+<style>
+/* ---------- how it works ---------- */
+.ctrl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px 24px;align-items:start}
+.ctrl h3{margin:0 0 6px;font-size:15px;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.modes{display:flex;gap:8px;flex-wrap:wrap}
+.mode{background:#fff;color:var(--ink);border:1px solid var(--line);font-family:var(--body);font-size:15px;letter-spacing:0;text-align:left;padding:10px 14px;line-height:1.35}
+.mode:hover{background:#fff;color:var(--ink);border-color:var(--acc)}
+.mode b{display:block;font-weight:600}
+.mode span{font-size:13.5px;color:var(--mute)}
+.mode[aria-pressed="true"]{border-color:var(--acc);background:var(--acc-lite);box-shadow:inset 0 0 0 1px var(--acc)}
+.mode[disabled]{opacity:.55}
+.timer{font-family:var(--mono);font-size:30px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1}
+.timer.low{color:var(--no)}
+.tnote{font-size:13.5px;color:var(--mute);margin:6px 0 0;max-width:22ch}
+.progress{font-family:var(--mono);font-size:13px;color:var(--ink2);margin:14px 0 0}
+.float-timer{position:fixed;right:14px;bottom:14px;z-index:60;background:var(--ink);color:#fff;font-family:var(--mono);font-size:15px;font-variant-numeric:tabular-nums;border-radius:20px;padding:7px 14px;box-shadow:0 4px 14px rgba(21,29,46,.25);display:none}
+.float-timer.on{display:block}
+.float-timer.low{background:var(--no)}
+
+/* ---------- questions ---------- */
+.stim{background:#fff;border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:0 4px 4px 0;padding:16px 18px;margin:30px 0 6px}
+.stim-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc-dk);margin:0 0 6px}
+.stim p{margin:8px 0 0}
+.stim .eqline{margin:10px 0 0}
+.qfig{margin:12px 0 0}
+.qfig .pbox{margin:0}
+.qtopic{float:right;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;padding:1px 7px;text-transform:none}
+.choice.sel{border-color:var(--acc);background:var(--acc-lite);box-shadow:inset 0 0 0 1px var(--acc)}
+.choice.sel .ltr{color:var(--acc-dk);font-weight:600}
+.choice.right,.choice.sel.right{background:var(--ok-bg);border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.choice.sel.wrong{background:var(--no-bg);border-color:var(--no);box-shadow:inset 0 0 0 1px var(--no)}
+.choice.sel.wrong .ltr{color:var(--no)}
+.choice.sel.right .ltr{color:var(--ok)}
+.choice[disabled]{cursor:default}
+.expl .verdict{font-weight:600;color:var(--ink)}
+ol.why{list-style:none;padding:0;margin:8px 0 0}
+ol.why li{margin:7px 0;padding-left:30px;position:relative}
+ol.why li .wl{position:absolute;left:0;top:0;font-family:var(--mono);font-size:13px;font-weight:600}
+ol.why li.ok .wl{color:var(--ok)}
+ol.why li.no .wl{color:var(--no)}
+ol.why li.ok{color:var(--ink)}
+.graph svg{display:block;width:100%;max-width:560px;height:auto}
+.submit-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.warn{font-size:15px;color:var(--no);margin:0}
+
+/* ---------- results ---------- */
+.bigscore{font-family:var(--display);font-weight:700;font-size:44px;line-height:1;letter-spacing:-.02em}
+.bigscore span{font-family:var(--mono);font-weight:500;font-size:18px;color:var(--mute);margin-left:10px;letter-spacing:0}
+table.bytopic{border-collapse:collapse;width:100%;font-size:15px;margin:16px 0 4px;background:#fff}
+table.bytopic th,table.bytopic td{border-bottom:1px solid var(--line-soft);padding:8px 10px;text-align:left}
+table.bytopic th{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+table.bytopic td.n{font-family:var(--mono);white-space:nowrap}
+table.bytopic tr.weak td{background:var(--no-bg)}
+.qlinks a{font-family:var(--mono);font-size:14px;margin-right:8px}
+.keygrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:4px 10px;font-family:var(--mono);font-size:14px;margin-top:8px}
+
+/* ---------- free response ---------- */
+.fpart{padding:20px 0 4px;border-top:1px solid var(--line-soft)}
+.fpart:first-of-type{border-top:none}
+.fq{font-size:17px}
+.fq .pl{font-family:var(--mono);font-weight:600;color:var(--acc-dk);margin-right:6px}
+.pts{display:inline-block;font-family:var(--mono);font-size:11.5px;color:var(--mute);background:var(--line-soft);border-radius:2px;padding:1px 7px;margin-left:6px;white-space:nowrap}
+.rub{margin:4px 0 0;padding:0;list-style:none}
+.rub li{margin:8px 0}
+.rub label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.rub input{margin-top:5px;width:17px;height:17px;flex:none;accent-color:var(--ok)}
+.model-ans{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.selfscore{font-family:var(--mono);font-size:15px;margin-top:20px;padding:12px 15px;background:var(--acc-lite);border-radius:3px;color:var(--acc-dk)}
+.steps{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;align-items:center;margin:12px 0 0}
+.steps .sn{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);white-space:nowrap}
+.steps .eqline{margin:0}
+.steps .sx{grid-column:2;font-size:14px;color:var(--mute);margin:-2px 0 4px}
+.restart{margin-top:30px;font-size:14.5px;color:var(--mute)}
+
+@media (max-width:640px){
+  .ctrl{grid-template-columns:minmax(0,1fr)}
+  .steps{grid-template-columns:minmax(0,1fr)}
+  .steps .sx{grid-column:1}
+  .qtopic{float:none;display:inline-block;margin-left:8px}
+}
+@media print{
+  .float-timer,.ctrl,.submit-row,.restart{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title"><a href="/ap-chemistry/unit-4/">Unit 4 Practice Set</a></span>
+    <span class="bar-sub">26 multiple choice · 1 free response · AP Exam style</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">AP Chemistry · Unit 4 Chemical Reactions · Practice set</div>
+  <h1>Unit 4 <em>Practice Set</em></h1>
+  <p class="lede">Twenty-six multiple-choice questions and one free-response question covering Topics 4.1–4.9, written in the style of the AP Chemistry Exam. The set never changes, so question 14 is question 14 for everyone in class.</p>
+
+  <div class="board" aria-label="What's in this practice set">
+    <a class="idea" href="#section-1"><span class="code">Section I</span><span class="lq">26 multiple choice</span><span class="d">About 40 minutes at exam pace, 90 seconds a question. Some questions share a diagram, a graph, or a lab setup.</span></a>
+    <a class="idea" href="#section-2"><span class="code">Section II</span><span class="lq">1 free response</span><span class="d">A 10-point lab question, about 20 minutes. Score yourself with the scoring guide.</span></a>
+    <a class="idea" href="#results"><span class="code">Review</span><span class="lq">Every answer explained</span><span class="d">Why the right answer is right and why each wrong answer is wrong, plus your score by topic.</span></a>
+    <div class="board-foot"><span><b>Unit 4</b> Chemical Reactions · 7–9% of the AP Exam</span><span><b>Have ready</b> a calculator and the AP periodic table and equation sheet</span></div>
+  </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#how">How it works</a>
+    <a href="#section-1">Section I: multiple choice</a>
+    <a href="#section-2">Section II: free response</a>
+  </nav>
+</header>
+
+<!-- =========================================================
+     HOW IT WORKS
+     ========================================================= -->
+<section id="how">
+  <div class="sec-head"><span class="tag plain">Before you start</span><h2>How it works</h2></div>
+  <p>Pick a mode, and start the timer if you want exam pacing. Your answers are saved in this browser, so you can stop and come back. Nothing is sent anywhere.</p>
+  <div class="card">
+    <div class="ctrl">
+      <div>
+        <h3>Mode</h3>
+        <div class="modes" role="group" aria-label="Mode">
+          <button type="button" class="mode" data-mode="exam" aria-pressed="true"><b>Exam mode</b><span>Answers and explanations appear when you submit</span></button>
+          <button type="button" class="mode" data-mode="check" aria-pressed="false"><b>Check as you go</b><span>See the answer after each question</span></button>
+        </div>
+        <p class="progress" id="progress" aria-live="polite"></p>
+      </div>
+      <div>
+        <h3>Timer</h3>
+        <div class="timer" id="timer" aria-live="off">39:00</div>
+        <div class="btn-row" style="margin-top:10px">
+          <button type="button" id="t-go">Start</button>
+          <button type="button" class="ghost" id="t-reset">Reset</button>
+        </div>
+        <p class="tnote">39 minutes is the exam pace for 26 questions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SECTION I
+     ========================================================= -->
+<section id="section-1">
+  <div class="sec-head"><span class="tag">Section I</span><h2>Multiple choice</h2></div>
+  <p>Choose the best answer for each question. Water molecules are not shown in particle diagrams of solutions.</p>
+  <div class="card" id="mc"></div>
+  <div class="submit-row">
+    <button type="button" id="submit">Submit Section I</button>
+    <p class="warn" id="submit-warn" hidden></p>
+  </div>
+  <div class="card" id="results" hidden></div>
+</section>
+
+<!-- =========================================================
+     SECTION II
+     ========================================================= -->
+<section id="section-2">
+  <div class="sec-head"><span class="tag">Section II</span><h2>Free response</h2></div>
+  <p>Work on paper or type in the boxes. When you’re done with a part, open its scoring guide and check off the points you earned. On the AP Exam, a long free-response question like this one is worth 10 points.</p>
+  <div class="card" id="frq"></div>
+
+  <div class="next">
+    <div><p class="nt">Up next: 5.1 Reaction Rates</p><p>Measuring reaction rate · factors that affect rate · relating rates with coefficients</p></div>
+    <a href="/ap-chemistry/unit-5/5-1-reaction-rates/">Go to 5.1 →</a>
+  </div>
+
+  <p class="restart">Want a clean slate? <button type="button" class="ghost" id="clear">Clear my answers</button> <span id="clear-note"></span></p>
+</section>
+
+<footer>
+  <p>A practice set for AP Chemistry Unit 4, Chemical Reactions (Topics 4.1–4.9). Every question is original, written for this site in the style of the AP Exam; none are taken from College Board materials. Molar masses use the AP periodic table, and R = 0.08206 L·atm/(mol·K). As on the topic pages, net ionic equations involve precipitation, metals with metal ions, and H<sup>+</sup> with OH<sup>−</sup>; acid strength and pH are in Unit 8.</p>
+  <p><a href="/ap-chemistry/unit-4/">← Unit 4 — Chemical Reactions</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<div class="float-timer" id="float-timer" aria-hidden="true"></div>
+
+<script src="/ap-chemistry/topic.js"></script>
+<script src="/ap-chemistry/particles.js"></script>
+<script>
+/* =========================================================
+   Text helpers
+   [[...]]  an equation or species with states (APC.rich)
+   {...}    a formula in running text: digits after a letter or ")" become subscripts, ^2- becomes a charge
+   ========================================================= */
+function fx(s){
+  s = String(s).replace(/\{([^{}]+)\}/g, function(_, f){
+    var z = "", m = /\^(\d*[+-])$/.exec(f);
+    if(m){ z = "<sup>" + m[1].replace("-", "−") + "</sup>"; f = f.slice(0, m.index); }
+    return f.replace(/([A-Za-z)])(\d+)/g, "$1<sub>$2</sub>") + z;
+  });
+  return APC.rich(s);
+}
+function el(id){ return document.getElementById(id); }
+function each(list, fn){ Array.prototype.forEach.call(list, fn); }
+/* six I2 molecules stacked in an orderly block, for the solid in question 4 */
+function solidI2(label){
+  var parts = [];
+  [160, 134].forEach(function(y){ [82, 130, 178].forEach(function(x){ parts.push({sp:"I2", x:x, y:y}); }); });
+  return PART.figure(260, 180, parts, label || "", (label ? label + ": " : "") + "6 I2 molecules, packed in an orderly arrangement at the bottom of the box");
+}
+function box(items, seed, o){
+  o = o || {};
+  var svg = PART.box({ label:o.label || "", items:items, seed:"u4ps-" + seed, dense:o.dense, w:o.w, h:o.h });
+  /* o.note adds what the picture shows beyond the counts, e.g. how the particles are arranged */
+  return o.note ? svg.replace(/aria-label="([^"]*)"/, function(_, a){ return 'aria-label="' + a + ", " + o.note + '"'; }) : svg;
+}
+
+/* =========================================================
+   Conductivity graph for questions 21–22
+   ========================================================= */
+function condGraph(){
+  var X0 = 62, X1 = 508, Y0 = 222, Y1 = 26, vmax = 30, cmax = 90;
+  function px(v){ return X0 + (X1 - X0) * v / vmax; }
+  function py(c){ return Y0 - (Y0 - Y1) * c / cmax; }
+  function cond(v){ return v <= 18 ? 2 + 78 * (1 - v / 18) : 2 + 4.4 * (v - 18); }
+  var g = '<svg viewBox="0 0 540 292" role="img" aria-label="Graph of conductivity against volume of 0.100 molar sulfuric acid added, from 0 to 30 milliliters. Conductivity starts high, falls in a straight line to nearly zero at 18.0 milliliters, then rises steadily as more acid is added.">';
+  for(var v = 0; v <= vmax; v++){
+    g += '<line x1="' + px(v) + '" y1="' + Y1 + '" x2="' + px(v) + '" y2="' + Y0 + '" stroke="' + (v % 5 ? "#EEF1F5" : "#D7DDE5") + '"/>';
+  }
+  for(var c = 0; c <= cmax; c += 10) g += '<line x1="' + X0 + '" y1="' + py(c) + '" x2="' + X1 + '" y2="' + py(c) + '" stroke="#EEF1F5"/>';
+  g += '<line x1="' + X0 + '" y1="' + Y0 + '" x2="' + X1 + '" y2="' + Y0 + '" stroke="#5B6577" stroke-width="1.5"/>';
+  g += '<line x1="' + X0 + '" y1="' + Y0 + '" x2="' + X0 + '" y2="' + Y1 + '" stroke="#5B6577" stroke-width="1.5"/>';
+  for(v = 0; v <= vmax; v += 5) g += '<text x="' + px(v) + '" y="' + (Y0 + 18) + '" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" fill="#3A4558">' + v + '</text>';
+  g += '<text x="' + ((X0 + X1) / 2) + '" y="' + (Y0 + 42) + '" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="13" fill="#3A4558">Volume of 0.100 M H₂SO₄ added (mL)</text>';
+  g += '<text transform="translate(22 ' + ((Y0 + Y1) / 2) + ') rotate(-90)" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="13" fill="#3A4558">Conductivity</text>';
+  var pts = [];
+  for(v = 0; v <= vmax; v++) pts.push(px(v).toFixed(1) + "," + py(cond(v)).toFixed(1));
+  g += '<polyline points="' + pts.join(" ") + '" fill="none" stroke="#1D5FA8" stroke-width="1.6"/>';
+  for(v = 0; v <= vmax; v++) g += '<circle cx="' + px(v).toFixed(1) + '" cy="' + py(cond(v)).toFixed(1) + '" r="3.2" fill="#1D5FA8"/>';
+  return g + "</svg>";
+}
+
+/* =========================================================
+   Section I: the questions
+   t: topic · q: question · c: four choices · a: index of the answer (0 = A)
+   w: why each choice is right or wrong, in order A–D
+   ========================================================= */
+var SETS = {
+  7:{to:8, html:
+    "<p>A student mixes 50.0 mL of 0.150 M [[Pb(NO3)2(aq)]] with 50.0 mL of 0.150 M [[KI(aq)]]. A yellow precipitate of lead(II) iodide forms.</p>" +
+    "<div class='eqline'>[[Pb(NO3)2(aq) + 2KI(aq) -> PbI2(s) + 2KNO3(aq)]]</div>"},
+  11:{to:14, html:
+    "<p>A student places a 0.540 g piece of aluminum foil in 50.0 mL of 0.500 M [[CuCl2(aq)]], which is blue-green. The reaction is represented by the equation below. As the reaction proceeds, the blue-green color fades and a reddish-brown solid forms on the foil. Solutions of {AlCl3} are colorless. Assume that the aluminum reacts only with the {Cu^2+} ions.</p>" +
+    "<div class='eqline'>[[2Al(s) + 3CuCl2(aq) -> 2AlCl3(aq) + 3Cu(s)]]</div>"},
+  15:{to:16, html:
+    "<p>A student finds the amount of NaCl in a 1.000 g mixture of NaCl(s) and {KNO3}(s). The mixture is dissolved in water, and excess [[AgNO3(aq)]] is added. The AgCl(s) that precipitates is filtered, washed, and dried. Its mass is 1.150 g.</p>"},
+  21:{to:22, html:
+    "<p>A conductivity probe is placed in 50.0 mL of [[Ba(OH)2(aq)]] of unknown concentration, and 0.100 M [[H2SO4(aq)]] is added from a buret. The equation for the reaction is shown below. The graph shows the electrical conductivity of the mixture as the acid is added. The conductivity is lowest, close to zero, when 18.0 mL of acid has been added.</p>" +
+    "<div class='eqline'>[[Ba(OH)2(aq) + H2SO4(aq) -> BaSO4(s) + 2H2O(l)]]</div>" +
+    "<div class='qfig graph'>" + condGraph() + "</div>"},
+  23:{to:26, html:
+    "<p>The oxalic acid, {H2C2O4}, in a 0.250 g sample of an impure solid is measured by titration. The sample is dissolved in dilute sulfuric acid, the solution is warmed, and it is titrated with 0.0200 M [[KMnO4(aq)]]. The net ionic equation for the reaction is shown below.</p>" +
+    "<div class='eqline'>[[2MnO4^-(aq) + 5H2C2O4(aq) + 6H^+(aq) -> 2Mn^2+(aq) + 10CO2(g) + 8H2O(l)]]</div>" +
+    "<p>Solutions containing {MnO4^-} are deep purple, and {Mn^2+} is nearly colorless. No other indicator is used. The endpoint is reached after 35.00 mL of [[KMnO4(aq)]] has been added.</p>"}
+};
+
+var QS = [
+/* 1 */ {t:"4.1",
+  q:"Which of the following observations provides the best evidence that a chemical change has occurred?",
+  c:["A solid melts at 80 °C, and when the liquid cools, it freezes into a solid that again melts at 80 °C.",
+     "A white solid dissolves completely in water, and the same white solid is left behind when the water evaporates.",
+     "When a white solid is heated, a gas is given off, and the solid that remains has a much higher melting point than the original solid.",
+     "A blue solution becomes paler when more water is added to it."],
+  a:2,
+  w:["Melting and freezing are phase changes. The particles stay the same and only their arrangement changes, which is why the solid still melts at 80 °C.",
+     "Dissolving forms a mixture: the particles of the solid spread out among water molecules, but no new substance forms. The solid left after evaporation has the same properties as the original.",
+     "This is the strongest evidence that new substances formed. A gas appears that wasn’t there before, and the solid left behind has different properties from the solid you started with.",
+     "Adding water only spreads the colored ions farther apart. No new substance forms when a solution is diluted."]},
+
+/* 2 */ {t:"4.1",
+  q:"Blue copper(II) sulfate pentahydrate, {CuSO4·5H2O}(s), turns into a white powder, {CuSO4}(s), when it is heated, and water vapor is driven off. Adding water to the white powder turns it blue again. Which of the following correctly classifies the heating step and gives a valid reason?",
+  c:["It is a physical change, because the process can be reversed by adding water.",
+     "It is a chemical change, because the composition of the solid changes and a substance with different properties forms.",
+     "It is a physical change, because the only thing released is water, which was already present in the solid.",
+     "It is a chemical change, because a change in color always means that a new substance has formed."],
+  a:1,
+  w:["Whether a change can be reversed isn’t the test. Many chemical changes can be reversed, and this one is: adding water re-forms the hydrate, which is itself a chemical change.",
+     "{CuSO4·5H2O} and {CuSO4} are different compounds, with different formulas and different properties. The water was part of the crystal’s composition, so driving it off changes what the solid is.",
+     "The water wasn’t a separate substance mixed into the solid. It was part of the compound, written into its formula, so removing it leaves a different compound.",
+     "The classification is right, but the reason isn’t. A color change can come from a physical change too: solid iodine is gray-black, but iodine vapor is violet."]},
+
+/* 3 */ {t:"4.4",
+  q:"Bromine, {Br2}, is a liquid that boils at 59 °C. Boiling one mole of {Br2}(l) requires about 30 kJ, while breaking one mole of Br–Br bonds requires about 193 kJ. Which of the following best explains why boiling bromine is classified as a physical change?",
+  c:["Boiling breaks the Br–Br bonds, but the Br atoms recombine into {Br2} molecules once they are in the gas phase.",
+     "Boiling weakens the Br–Br bonds without breaking them, which is why it requires less energy than breaking the bonds.",
+     "Boiling converts {Br2} molecules into {Br^-} ions, which are held together by weaker attractions in the gas phase.",
+     "Boiling overcomes the London dispersion forces between {Br2} molecules, and the covalent bond within each molecule stays intact."],
+  a:3,
+  w:["Breaking Br–Br bonds takes 193 kJ per mole, far more than the 30 kJ that boiling uses, and at 59 °C the molecules don’t have nearly enough energy to break them. The bonds never break: bromine vapor is made of the same {Br2} molecules.",
+     "Bonds don’t partly weaken when a liquid boils. The energy goes into separating whole molecules from one another.",
+     "No ions form. {Br2} is a nonpolar molecule, and bromine vapor is still made of {Br2} molecules.",
+     "The 30 kJ overcomes the weak attractions between molecules. Each {Br2} molecule is unchanged, so no new substance forms."]},
+
+/* 4 */ {t:"4.4",
+  fig:function(){ return solidI2("Solid iodine"); },
+  q:"The box below represents a sample of solid iodine, {I2}(s). Which of the following best represents the same sample after it has completely sublimed?",
+  c:[function(){ return box([["I2",6]], "q4-a", {note:"spread throughout the box"}); },
+     function(){ return box([["I",12]], "q4-b", {note:"spread throughout the box"}); },
+     function(){ return solidI2(); },
+     function(){ return box([["I2",4]], "q4-d", {note:"spread throughout the box"}); }],
+  a:0,
+  w:["Subliming overcomes the attractions between {I2} molecules, so they spread apart as a gas. All six molecules are still intact {I2}.",
+     "This shows the I–I bonds broken, leaving separate atoms. Sublimation is a physical change: only the attractions between molecules are overcome.",
+     "This is the same orderly, tightly packed arrangement as before: it still shows a solid. A gas spreads out to fill its container.",
+     "Six {I2} molecules can’t turn into four. This box has 8 iodine atoms instead of 12, so atoms aren’t conserved."]},
+
+/* 5 */ {t:"4.2",
+  q:"Aqueous solutions of barium hydroxide, {Ba(OH)2}, and iron(III) nitrate, {Fe(NO3)3}, are mixed, and a reddish-brown precipitate forms. Which of the following is the net ionic equation for the reaction?",
+  c:["[[H^+(aq) + OH^-(aq) -> H2O(l)]]",
+     "[[Ba^2+(aq) + 2NO3^-(aq) -> Ba(NO3)2(s)]]",
+     "[[Fe^3+(aq) + 3OH^-(aq) -> Fe(OH)3(s)]]",
+     "[[2Fe^3+(aq) + 3Ba(OH)2(s) -> 2Fe(OH)3(s) + 3Ba^2+(aq)]]"],
+  a:2,
+  w:["No acid is a reactant here, and what you observe is a precipitate. Having {OH^-} in a reaction doesn’t make it acid–base: here the {OH^-} ends up in solid {Fe(OH)3}.",
+     "All nitrate salts are soluble, so {Ba(NO3)2} can’t be the precipitate. {Ba^2+} and {NO3^-} are spectator ions.",
+     "Swapping partners gives {Fe(OH)3} and {Ba(NO3)2}. The nitrate salt is soluble, so the precipitate is {Fe(OH)3}, and {Ba^2+} and {NO3^-} are spectators.",
+     "This equation is balanced, but the barium hydroxide was dissolved, so it’s written as separate {Ba^2+} and {OH^-} ions. Once it is, {Ba^2+} appears on both sides and cancels as a spectator."]},
+
+/* 6 */ {t:"4.3",
+  fig:function(){ return box([["NO",6],["O2",4]], "q6-0", {label:"Before"}) + PART.legend(["N","O"]); },
+  q:"Nitrogen monoxide reacts with oxygen according to the equation [[2NO(g) + O2(g) -> 2NO2(g)]]. The box below represents a mixture of NO and {O2} before the reaction. Which of the following best represents the contents of the container after the reaction has gone to completion?",
+  c:[function(){ return box([["NO2",6]], "q6-a"); },
+     function(){ return box([["NO2",4],["NO",2],["O2",2]], "q6-b"); },
+     function(){ return box([["NO2",6],["O",2]], "q6-c"); },
+     function(){ return box([["NO2",6],["O2",1]], "q6-d"); }],
+  a:3,
+  w:["Count the oxygen atoms: 14 before the reaction, but only 12 here. Two oxygen atoms have disappeared.",
+     "Atoms are conserved, but NO and {O2} are both still present, so they could keep reacting. The reaction hasn’t gone to completion.",
+     "Atoms are conserved, but the leftover oxygen is drawn as separate O atoms. The {O2} that didn’t react is still an {O2} molecule.",
+     "Six NO react with three {O2} to make six {NO2}. NO runs out, and one {O2} is left over. Check: 6 N and 14 O atoms in both boxes."]},
+
+/* 7 */ {t:"4.5",
+  q:"What is the maximum mass of {PbI2}(s) that can form?",
+  c:["1.24 g","1.73 g","3.46 g","6.92 g"],
+  a:1,
+  w:["This uses the right number of moles, 0.00375 mol, but the molar mass of {Pb(NO3)2} (331.2 g/mol) instead of {PbI2} (461.0 g/mol).",
+     "Each solution contains 0.0500 L × 0.150 M = 0.00750 mol. It takes 2 {I^-} for every {Pb^2+}, so {I^-} runs out first: 0.00750 mol {I^-} ÷ 2 = 0.00375 mol {PbI2}, and 0.00375 mol × 461.0 g/mol = 1.73 g.",
+     "This treats {Pb^2+} as the limiting reactant and makes 0.00750 mol {PbI2}. Using up all the {Pb^2+} would take 0.0150 mol {I^-}, and only 0.00750 mol is there.",
+     "This adds the moles of both reactants (0.0150 mol). The amount of product is set by the limiting reactant alone."]},
+
+/* 8 */ {t:"4.3",
+  fig:function(){ return PART.legend(["K","N","O","Pb","I"]); },
+  q:"Which of the following best represents the ions that remain dissolved in the solution after the precipitate has formed? (Water molecules and the precipitate are not shown.)",
+  c:[function(){ return box([["K+",2],["NO3-",2]], "q8-a"); },
+     function(){ return box([["K+",2],["NO3-",4],["Pb2+",2],["I-",2]], "q8-b"); },
+     function(){ return box([["K+",2],["NO3-",4],["Pb2+",1]], "q8-c"); },
+     function(){ return box([["K+",2],["NO3-",4]], "q8-d"); }],
+  a:2,
+  w:["{K^+} and {NO3^-} are spectators, so their amounts don’t change. Each {Pb(NO3)2} supplies two nitrate ions, so there are twice as many {NO3^-} as {K^+}.",
+     "This is the mixture before anything precipitates. All of the {I^-} and half of the {Pb^2+} leave the solution as {PbI2}(s).",
+     "{Pb^2+} is in excess, so half of it is still dissolved after all the {I^-} precipitates. The spectators {K^+} and {NO3^-} stay in a 1 : 2 ratio, and the charges add to zero: 2(+1) + 1(+2) + 4(−1) = 0.",
+     "The charges don’t balance: two positive charges and four negative ones. The leftover {Pb^2+} is still in the solution."]},
+
+/* 9 */ {t:"4.5",
+  q:"Hydrogen peroxide decomposes according to the equation [[2H2O2(aq) -> 2H2O(l) + O2(g)]]. A 25.0 mL sample of 0.900 M [[H2O2(aq)]] decomposes completely. What volume of {O2}(g) is produced at 25 °C and 1.00 atm?",
+  c:["0.0231 L","0.252 L","0.275 L","0.550 L"],
+  a:2,
+  w:["This uses 25 for the temperature. The ideal gas law needs kelvins: 25 °C is 298 K.",
+     "This uses STP conditions: 273 K, or 22.4 L per mole. The gas here is at 25 °C, which is 298 K.",
+     "0.0250 L × 0.900 M = 0.0225 mol {H2O2}, and 0.0225 mol ÷ 2 = 0.01125 mol {O2}. V = nRT/P = (0.01125 mol)(0.08206 L·atm/(mol·K))(298 K) ÷ 1.00 atm = 0.275 L.",
+     "This skips the mole ratio. Two moles of {H2O2} produce only one mole of {O2}."]},
+
+/* 10 */ {t:"4.5",
+  q:"Calcium phosphate precipitates when solutions of calcium chloride and sodium phosphate are mixed: [[3Ca^2+(aq) + 2PO4^3-(aq) -> Ca3(PO4)2(s)]]. What volume of 0.150 M [[Na3PO4(aq)]] is needed to precipitate all of the {Ca^2+} ions in 60.0 mL of 0.200 M [[CaCl2(aq)]]?",
+  c:["26.7 mL","53.3 mL","80.0 mL","120. mL"],
+  a:1,
+  w:["This divides the moles of {Ca^2+} by 3 but doesn’t multiply by 2. The ratio is 2 {PO4^3-} for every 3 {Ca^2+}.",
+     "0.0600 L × 0.200 M = 0.0120 mol {Ca^2+}, and 0.0120 mol × (2/3) = 0.00800 mol {PO4^3-}. Each {Na3PO4} supplies one {PO4^3-}, so 0.00800 mol ÷ 0.150 M = 0.0533 L = 53.3 mL.",
+     "This treats the ratio as 1 : 1. It takes only 2 {PO4^3-} for every 3 {Ca^2+}.",
+     "The mole ratio is upside down. Multiply the moles of {Ca^2+} by 2/3, not 3/2."]},
+
+/* 11 */ {t:"4.7",
+  q:"Which of the following best classifies the reaction?",
+  c:["Oxidation–reduction, because electrons are transferred from Al atoms to {Cu^2+} ions",
+     "Oxidation–reduction, because electrons are transferred from {Cu^2+} ions to Al atoms",
+     "Precipitation, because a solid forms when the reactants are mixed",
+     "Precipitation, because {AlCl3} is insoluble in water"],
+  a:0,
+  w:["Al goes from 0 to +3, so it loses electrons and is oxidized. Cu goes from +2 to 0, so it gains those electrons and is reduced.",
+     "Right type, wrong direction. {Cu^2+} becomes Cu metal, so it gains electrons, and they come from the Al atoms.",
+     "A solid forms, but it’s copper metal made by electron transfer. In a precipitation reaction, two dissolved ions pair up to form an insoluble ionic compound.",
+     "The equation shows {AlCl3}(aq), so it stays dissolved. The only solid is copper, a free element."]},
+
+/* 12 */ {t:"4.2",
+  q:"Which of the following is the net ionic equation for the reaction?",
+  c:["[[Al(s) + Cu^2+(aq) -> Al^3+(aq) + Cu(s)]]",
+     "[[2Al(s) + 3Cu^2+(aq) -> 2Al^3+(aq) + 3Cu(s)]]",
+     "[[2Al(s) + 3CuCl2(aq) -> 2AlCl3(aq) + 3Cu(s)]]",
+     "[[2Al^3+(aq) + 3Cu(s) -> 2Al(s) + 3Cu^2+(aq)]]"],
+  a:1,
+  w:["The atoms balance, but the charge doesn’t: +2 on the left and +3 on the right. Each Al gives up 3 electrons and each {Cu^2+} takes 2, so it takes 2 Al for every 3 {Cu^2+}.",
+     "{Cl^-} is a spectator and cancels. The atoms balance, and the total charge is +6 on both sides.",
+     "This is the molecular equation. {CuCl2} and {AlCl3} are dissolved, so they’re written as ions, and the {Cl^-} cancels.",
+     "This is the reaction written backward. Al metal and {Cu^2+} are the reactants; {Al^3+} and Cu metal are the products."]},
+
+/* 13 */ {t:"4.5",
+  q:"Which reactant is limiting, and what is the maximum mass of copper that can form?",
+  c:["Al is limiting; 1.27 g of Cu forms.",
+     "Al is limiting; 1.91 g of Cu forms.",
+     "{CuCl2} is limiting; 1.06 g of Cu forms.",
+     "{CuCl2} is limiting; 1.59 g of Cu forms."],
+  a:3,
+  w:["This treats the ratio of Al to Cu as 1 : 1, and Al isn’t the limiting reactant.",
+     "1.91 g is the copper that all of the Al could make, but there isn’t enough {CuCl2} for that. The 0.0200 mol of Al would need 0.0300 mol of {CuCl2}, and only 0.0250 mol is there.",
+     "{CuCl2} is limiting, but this uses the 2 : 3 ratio of Al to {CuCl2}. The ratio of {CuCl2} to Cu is 3 : 3, which is 1 : 1.",
+     "Al: 0.540 g ÷ 26.98 g/mol = 0.0200 mol. {CuCl2}: 0.0500 L × 0.500 M = 0.0250 mol. Dividing each by its coefficient gives 0.0100 for Al and 0.00833 for {CuCl2}, so {CuCl2} runs out first. 0.0250 mol Cu × 63.55 g/mol = 1.59 g."]},
+
+/* 14 */ {t:"4.1",
+  q:"Which of the following would the student most likely observe after the reaction stops?",
+  c:["The solution is still blue-green, and no aluminum foil remains.",
+     "The solution is colorless, and some aluminum foil remains.",
+     "The solution is colorless, and no aluminum foil remains.",
+     "The solution is still blue-green, and some aluminum foil remains."],
+  a:1,
+  w:["That’s what you’d see if Al were limiting: leftover {Cu^2+} would keep the solution blue-green. But {CuCl2} runs out first.",
+     "{CuCl2} is limiting, so all of the {Cu^2+} that colored the solution is used up and the {AlCl3} solution left behind is colorless. Al is in excess, so about 0.09 g of foil, coated with copper, is left.",
+     "Both would be used up only if the amounts were in exactly a 2 : 3 ratio. Here Al is in excess, so some of it is left over.",
+     "If both {Cu^2+} and Al were still present, the reaction would keep going. It stops only when one reactant runs out."]},
+
+/* 15 */ {t:"4.5",
+  q:"What is the mass percent of NaCl in the mixture?",
+  c:["28.4%","39.6%","46.9%","53.1%"],
+  a:2,
+  w:["This is the mass percent of chlorine, not of NaCl. Use the moles of AgCl to get moles of NaCl, then multiply by the molar mass of NaCl, 58.44 g/mol.",
+     "This divides by the molar mass of {AgNO3} (169.88 g/mol) instead of AgCl. The 1.150 g is the mass of the precipitate, AgCl.",
+     "1.150 g ÷ 143.32 g/mol = 0.008024 mol AgCl. Every {Cl^-} came from NaCl ({KNO3} has none), so there was 0.008024 mol NaCl × 58.44 g/mol = 0.469 g, and 0.469 g ÷ 1.000 g = 46.9%.",
+     "53.1% is the {KNO3}, the part of the mixture that isn’t NaCl."]},
+
+/* 16 */ {t:"4.5",
+  q:"Suppose the AgCl(s) was not completely dry when it was weighed. How would the calculated mass percent of NaCl be affected?",
+  c:["It would be too high, because the recorded mass would include water, so the moles of AgCl would be overestimated.",
+     "It would be too low, because some of the AgCl would dissolve in the water left in the solid.",
+     "It would be too low, because a larger mass of AgCl corresponds to fewer moles of AgCl.",
+     "It would be unaffected, because water does not react with AgCl or with NaCl."],
+  a:0,
+  w:["The balance can’t tell water from AgCl. A larger mass of “AgCl” means more moles of {Cl^-}, and so more NaCl than was really in the mixture.",
+     "Any AgCl dissolved in that water is still on the filter paper, so it still gets weighed. The problem is the extra mass of the water itself.",
+     "A larger mass means more moles, not fewer: moles = mass ÷ molar mass.",
+     "Water doesn’t react, but it does add mass. The calculation assumes every gram on the balance is AgCl."]},
+
+/* 17 */ {t:"4.7",
+  q:"Which of the following is an oxidation–reduction reaction?",
+  c:["[[2KClO3(s) -> 2KCl(s) + 3O2(g)]]",
+     "[[CaO(s) + H2O(l) -> Ca(OH)2(s)]]",
+     "[[BaCl2(aq) + Na2SO4(aq) -> BaSO4(s) + 2NaCl(aq)]]",
+     "[[HNO3(aq) + KOH(aq) -> KNO3(aq) + H2O(l)]]"],
+  a:0,
+  w:["Cl goes from +5 in {KClO3} to −1 in KCl, so it’s reduced, and O goes from −2 to 0 in {O2}, so it’s oxidized. A free element as a product is a strong clue.",
+     "Two compounds combine, but no oxidation number changes: Ca stays +2, O stays −2, and H stays +1. Combining isn’t enough to make a reaction redox.",
+     "This is a precipitation reaction. {Ba^2+} and {SO4^2-} form the solid, and every oxidation number stays the same.",
+     "This is an acid–base reaction. A proton moves from {HNO3} to {OH^-}, and no oxidation numbers change."]},
+
+/* 18 */ {t:"4.8",
+  q:"[[HSO4^-(aq) + CO3^2-(aq) <=> SO4^2-(aq) + HCO3^-(aq)]]<br>Which of the following identifies the two species that act as Brønsted–Lowry acids, one in the forward reaction and one in the reverse reaction?",
+  c:["{HSO4^-} and {CO3^2-}","{CO3^2-} and {SO4^2-}","{HSO4^-} and {HCO3^-}","{SO4^2-} and {HCO3^-}"],
+  a:2,
+  w:["{HSO4^-} is an acid, but {CO3^2-} accepts a proton and becomes {HCO3^-}, so it’s a base.",
+     "These are the two bases. {CO3^2-} accepts a proton in the forward reaction, and {SO4^2-} accepts one in the reverse reaction.",
+     "In the forward reaction, {HSO4^-} gives its proton to {CO3^2-}. In the reverse reaction, {HCO3^-} gives the proton back to {SO4^2-}.",
+     "{HCO3^-} is an acid in the reverse reaction, but {SO4^2-} is a base: it has no proton to give, and it accepts one to become {HSO4^-}."]},
+
+/* 19 */ {t:"4.8",
+  q:"In which of the following reactions does {H2O} act as a Brønsted–Lowry base?",
+  c:["[[NH3(aq) + H2O(l) <=> NH4^+(aq) + OH^-(aq)]]",
+     "[[CO3^2-(aq) + H2O(l) <=> HCO3^-(aq) + OH^-(aq)]]",
+     "[[H2O(s) -> H2O(l)]]",
+     "[[HNO2(aq) + H2O(l) <=> NO2^-(aq) + H3O^+(aq)]]"],
+  a:3,
+  w:["Water gives a proton to {NH3} and becomes {OH^-}, so here water is an acid.",
+     "Water gives a proton to {CO3^2-} and becomes {OH^-}, so here water is an acid.",
+     "Ice melting is a phase change. No proton moves, so it isn’t an acid–base reaction at all.",
+     "Water accepts a proton from {HNO2} and becomes {H3O^+}. Accepting a proton is what a Brønsted–Lowry base does."]},
+
+/* 20 */ {t:"4.9",
+  q:"In acidic solution, excess sulfur dioxide reduces iodate ions to iodide ions. The balanced half-reactions are shown below." +
+    "<div class='eqline'>[[IO3^-(aq) + 6H^+(aq) + 6e^- -> I^-(aq) + 3H2O(l)]]</div><div class='eqline'>[[SO2(aq) + 2H2O(l) -> SO4^2-(aq) + 4H^+(aq) + 2e^-]]</div>" +
+    "Which of the following is the balanced equation for the overall reaction?",
+  c:["[[IO3^-(aq) + SO2(aq) + 2H^+(aq) -> I^-(aq) + SO4^2-(aq) + H2O(l)]]",
+     "[[3IO3^-(aq) + SO2(aq) + 14H^+(aq) -> 3I^-(aq) + SO4^2-(aq) + 7H2O(l)]]",
+     "[[IO3^-(aq) + 3SO2(aq) + 3H2O(l) -> I^-(aq) + 3SO4^2-(aq) + 6H^+(aq)]]",
+     "[[IO3^-(aq) + 3SO2(aq) + 6H^+(aq) -> I^-(aq) + 3SO4^2-(aq) + 3H2O(l)]]"],
+  a:2,
+  w:["This adds the half-reactions without matching the electrons first. The atoms balance, but the charge doesn’t: +1 on the left and −3 on the right.",
+     "This multiplies the wrong half-reaction by 3. The atoms balance, but the charge doesn’t: +11 on the left and −5 on the right.",
+     "Multiply the {SO2} half-reaction by 3 so that both half-reactions involve 6 electrons, then add them. Cancel the 6 e<sup>−</sup>, 6 {H^+}, and 3 {H2O} that appear on both sides. Check: the charge is −1 on both sides.",
+     "{H^+} and {H2O} are on the wrong sides, so oxygen doesn’t balance: 9 O atoms on the left and 15 on the right."]},
+
+/* 21 */ {t:"4.6",
+  q:"What is the concentration of the {Ba(OH)2} solution?",
+  c:["0.0180 M","0.0360 M","0.0720 M","0.278 M"],
+  a:1,
+  w:["This halves the moles, as if two {H2SO4} reacted with each {Ba(OH)2}. The equation shows a 1 : 1 ratio.",
+     "The lowest conductivity marks the equivalence point. 0.0180 L × 0.100 M = 0.00180 mol {H2SO4}, which reacts 1 : 1 with 0.00180 mol {Ba(OH)2}, and 0.00180 mol ÷ 0.0500 L = 0.0360 M.",
+     "This doubles the moles, perhaps because {Ba(OH)2} has two {OH^-}. The balanced equation already accounts for that: one {Ba(OH)2} reacts with one {H2SO4}.",
+     "This puts the volumes upside down: 0.100 M × 50.0 mL ÷ 18.0 mL. The acid’s volume goes with the acid’s molarity."]},
+
+/* 22 */ {t:"4.6",
+  q:"Which of the following best explains why the conductivity is close to zero when 18.0 mL of {H2SO4} has been added?",
+  c:["Almost no ions are left in solution: {Ba^2+} and {SO4^2-} form solid {BaSO4}, and {H^+} and {OH^-} form {H2O}.",
+     "Only spectator ions remain in solution at the equivalence point, and spectator ions do not conduct electricity.",
+     "The {BaSO4} precipitate coats the probe and blocks the flow of current.",
+     "The water formed in the reaction dilutes the ions until the solution can no longer conduct."],
+  a:0,
+  w:["Conductivity depends on dissolved ions. At the equivalence point every ion has ended up in {BaSO4}(s) or {H2O}(l), so almost nothing is left to carry a current.",
+     "This reaction has no spectator ions: all four ions react. And spectator ions do conduct; a solution of NaCl conducts well.",
+     "The solid is still there after 18.0 mL, yet the conductivity rises again as more acid is added. The low point comes from the ions, not the solid.",
+     "The reaction forms only 0.0036 mol of water, less than 0.1 mL. Dilution spreads ions out but never removes them, so it can’t bring conductivity to nearly zero."]},
+
+/* 23 */ {t:"4.9",
+  q:"Which of the following identifies the element that is oxidized and the change in its oxidation number?",
+  c:["Mn, from +7 to +2","C, from +3 to +4","C, from +4 to +3","O, from −2 to 0"],
+  a:1,
+  w:["Mn’s oxidation number goes down, so Mn gains electrons. It’s reduced, not oxidized.",
+     "In {H2C2O4}, 2(+1) + 2(C) + 4(−2) = 0, so each C is +3. In {CO2}, C is +4. The number goes up, so carbon loses electrons and is oxidized.",
+     "The direction is reversed. Carbon starts at +3 in {H2C2O4} and ends at +4 in {CO2}.",
+     "Oxygen is −2 in every species here: {MnO4^-}, {H2C2O4}, {CO2}, and {H2O}. Its oxidation number doesn’t change."]},
+
+/* 24 */ {t:"4.6",
+  q:"How does the student know that the endpoint has been reached?",
+  c:["The purple color of each drop disappears as soon as the flask is swirled.",
+     "The solution in the flask changes from purple to colorless.",
+     "A brown solid appears in the flask.",
+     "A faint pink color remains in the flask after swirling."],
+  a:3,
+  w:["This is what happens before the endpoint. As long as oxalic acid is left, each drop of {MnO4^-} reacts and its color disappears.",
+     "The flask starts out colorless and stays that way until the endpoint, because each drop of purple {MnO4^-} is used up as it’s added.",
+     "A brown solid isn’t part of this reaction. If one appeared, it would signal a problem, such as too little acid in the flask.",
+     "Once all the {H2C2O4} is used up, the next drop of {MnO4^-} has nothing to react with, so its color stays, a faint pink once it’s spread through the flask. {MnO4^-} acts as its own indicator."]},
+
+/* 25 */ {t:"4.6",
+  q:"What is the mass percent of {H2C2O4} (molar mass 90.04 g/mol) in the sample?",
+  c:["10.1%","25.2%","63.0%","126%"],
+  a:2,
+  w:["The ratio is upside down. There are 5 {H2C2O4} for every 2 {MnO4^-}, so multiply by 5/2, not 2/5.",
+     "This uses a 1 : 1 ratio. At the equivalence point, moles of titrant equal moles of analyte only when their coefficients are equal.",
+     "0.03500 L × 0.0200 M = 7.00 × 10<sup>−4</sup> mol {MnO4^-}. Multiply by 5/2: 1.75 × 10<sup>−3</sup> mol {H2C2O4} × 90.04 g/mol = 0.158 g, and 0.158 g ÷ 0.250 g = 63.0%.",
+     "This uses a 5 : 1 ratio instead of 5 : 2. A mass percent above 100% is impossible, which is a sign to recheck the setup."]},
+
+/* 26 */ {t:"4.6",
+  q:"Before filling the buret, the student rinsed it with distilled water but not with the {KMnO4} solution. How does this affect the calculated mass percent of {H2C2O4}?",
+  c:["It is too high, because the diluted titrant makes the student add a larger volume to reach the endpoint.",
+     "It is too low, because the diluted titrant delivers fewer moles of {MnO4^-} to the flask.",
+     "It is too low, because some of the {MnO4^-} reacts with the water left in the buret.",
+     "It is unaffected, because water does not take part in the reaction."],
+  a:0,
+  w:["Water left in the buret dilutes the {KMnO4}, so it takes more milliliters to deliver the moles needed. The calculation still uses 0.0200 M, so the moles of {MnO4^-}, and the percent of {H2C2O4}, come out too high.",
+     "The flask still needs the same number of moles of {MnO4^-} to reach the endpoint. What changes is the recorded volume, which is too large, so the calculated result is too high.",
+     "{MnO4^-} doesn’t react with the water. The water only dilutes the titrant.",
+     "That reasoning fits extra water in the flask, which doesn’t change the moles of oxalic acid. Water in the buret changes the concentration of the titrant."]}
+];
+
+var TOPICS = {
+  "4.1":["Introduction for Reactions","4-1-introduction-for-reactions"],
+  "4.2":["Net Ionic Equations","4-2-net-ionic-equations"],
+  "4.3":["Representations of Reactions","4-3-representations-of-reactions"],
+  "4.4":["Physical and Chemical Changes","4-4-physical-and-chemical-changes"],
+  "4.5":["Stoichiometry","4-5-stoichiometry"],
+  "4.6":["Introduction to Titration","4-6-introduction-to-titration"],
+  "4.7":["Types of Chemical Reactions","4-7-types-of-chemical-reactions"],
+  "4.8":["Introduction to Acid-Base Reactions","4-8-introduction-to-acid-base-reactions"],
+  "4.9":["Oxidation-Reduction (Redox) Reactions","4-9-oxidation-reduction-redox-reactions"]
+};
+var L = "ABCD";
+
+/* =========================================================
+   Saved state (this browser only)
+   ========================================================= */
+var KEY = "apchem-u4-practice-set-v1";
+var S = { mode:"exam", ans:{}, shown:{}, submitted:false, frq:{}, pts:{} };
+try { var raw = localStorage.getItem(KEY); if(raw){ var got = JSON.parse(raw); for(var k in S) if(got[k] !== undefined) S[k] = got[k]; } } catch(e){}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+
+/* =========================================================
+   Render Section I
+   ========================================================= */
+function val(x){ return typeof x === "function" ? x() : x; }
+(function renderMC(){
+  var html = "";
+  QS.forEach(function(q, i){
+    var n = i + 1;
+    if(SETS[n]) html += '<div class="stim" id="set-' + n + '"><p class="stim-h">Questions ' + n + "–" + SETS[n].to + " refer to the following information.</p>" + fx(SETS[n].html) + "</div>";
+    html += '<div class="q" id="q' + n + '" data-i="' + i + '">' +
+      '<div class="qnum">Question ' + n + '<span class="qtopic" hidden>Topic ' + q.t + "</span></div>" +
+      '<div class="qtext">' + fx(q.q) + "</div>" +
+      (q.fig ? '<div class="qfig">' + q.fig() + "</div>" : "") +
+      '<div class="choices">' + q.c.map(function(c, j){
+        return '<button type="button" class="choice" data-j="' + j + '" aria-pressed="false"><span class="ltr">' + L[j] + "</span><span>" + fx(val(c)) + "</span></button>";
+      }).join("") + "</div>" +
+      '<div class="expl" hidden></div></div>';
+  });
+  el("mc").innerHTML = html;
+})();
+
+function qBox(n){ return el("q" + n); }
+function paint(n){
+  var i = n - 1, q = QS[i], box = qBox(n), picked = S.ans[n], open = S.submitted || S.shown[n];
+  each(box.querySelectorAll(".choice"), function(b, j){
+    b.classList.toggle("sel", picked === j);
+    b.setAttribute("aria-pressed", String(picked === j));
+    b.classList.toggle("right", !!open && j === q.a);
+    b.classList.toggle("wrong", !!open && picked === j && j !== q.a);
+    b.disabled = !!open;
+  });
+  box.querySelector(".qtopic").hidden = !open;
+  var ex = box.querySelector(".expl");
+  ex.hidden = !open;
+  if(open){
+    var head = picked === undefined ? '<span class="verdict">Not answered.</span> The answer is ' + L[q.a] + "."
+      : picked === q.a ? '<span class="verdict">Correct: ' + L[q.a] + ".</span>"
+      : '<span class="verdict">You chose ' + L[picked] + ". The answer is " + L[q.a] + ".</span>";
+    ex.innerHTML = head + '<ol class="why">' + q.w.map(function(w, j){
+      return '<li class="' + (j === q.a ? "ok" : "no") + '"><span class="wl">' + L[j] + (j === q.a ? " ✓" : " ✗") + "</span>" + fx(w) + "</li>";
+    }).join("") + "</ol>";
+  }
+}
+function paintAll(){ for(var n = 1; n <= QS.length; n++) paint(n); progress(); }
+
+function progress(){
+  var answered = 0, right = 0, shown = 0;
+  for(var n = 1; n <= QS.length; n++){
+    if(S.ans[n] !== undefined) answered++;
+    if((S.submitted || S.shown[n]) && S.ans[n] === QS[n - 1].a) right++;
+    if(S.shown[n]) shown++;
+  }
+  var t = "Answered " + answered + " of " + QS.length;
+  if(S.submitted) t += " · Submitted · Correct " + right;
+  else if(S.mode === "check" && shown) t += " · Correct " + right + " of " + shown + " checked";
+  el("progress").textContent = t;
+  each(document.querySelectorAll(".mode"), function(b){
+    b.setAttribute("aria-pressed", String(b.dataset.mode === S.mode));
+    b.disabled = S.submitted;
+  });
+  el("submit").textContent = S.submitted ? "Submitted" : "Submit Section I";
+  el("submit").disabled = S.submitted;
+}
+
+el("mc").addEventListener("click", function(e){
+  var b = e.target.closest(".choice");
+  if(!b || b.disabled) return;
+  var n = Number(b.closest(".q").id.slice(1));
+  if(S.submitted || S.shown[n]) return;
+  S.ans[n] = Number(b.dataset.j);
+  if(S.mode === "check") S.shown[n] = 1;
+  el("submit-warn").hidden = true; armed = false;
+  save(); paint(n); progress();
+});
+
+each(document.querySelectorAll(".mode"), function(b){
+  b.addEventListener("click", function(){
+    if(S.submitted) return;
+    S.mode = b.dataset.mode;
+    if(S.mode === "check") for(var n in S.ans) S.shown[n] = 1;
+    save(); paintAll();
+  });
+});
+
+/* ---- submit and results ---- */
+var armed = false;
+el("submit").addEventListener("click", function(){
+  if(S.submitted) return;
+  var blank = [];
+  for(var n = 1; n <= QS.length; n++) if(S.ans[n] === undefined) blank.push(n);
+  if(blank.length && !armed){
+    armed = true;
+    var w = el("submit-warn");
+    w.hidden = false;
+    w.textContent = blank.length + " question" + (blank.length > 1 ? "s are" : " is") + " unanswered" + (blank.length <= 8 ? " (" + blank.join(", ") + ")" : "") + ". Press Submit again to finish anyway.";
+    return;
+  }
+  S.submitted = true;
+  el("submit-warn").hidden = true;
+  timerStop();
+  save(); paintAll(); results();
+  el("results").scrollIntoView({ behavior:"smooth", block:"start" });
+});
+
+function results(){
+  var R = el("results");
+  if(!S.submitted){ R.hidden = true; return; }
+  var by = {}, right = 0, missed = [];
+  Object.keys(TOPICS).forEach(function(t){ by[t] = { n:0, r:0, qs:[] }; });
+  QS.forEach(function(q, i){
+    var n = i + 1, ok = S.ans[n] === q.a;
+    by[q.t].n++; by[q.t].qs.push(n);
+    if(ok){ by[q.t].r++; right++; } else missed.push(n);
+  });
+  var pct = Math.round(100 * right / QS.length);
+  var rows = Object.keys(TOPICS).map(function(t){
+    var b = by[t], weak = b.r < b.n && b.r / b.n < 0.67;
+    return '<tr' + (weak ? ' class="weak"' : "") + "><td><b>" + t + "</b> " + TOPICS[t][0] + '</td><td class="n">' + b.qs.join(", ") +
+      '</td><td class="n">' + b.r + " of " + b.n + '</td><td><a href="/ap-chemistry/unit-4/' + TOPICS[t][1] + '/">Review ' + t + " →</a></td></tr>";
+  }).join("");
+  R.hidden = false;
+  R.innerHTML = '<div class="card-label">Your results</div>' +
+    '<div class="bigscore">' + right + " / " + QS.length + "<span>" + pct + "%</span></div>" +
+    '<table class="bytopic"><thead><tr><th>Topic</th><th>Questions</th><th>Correct</th><th></th></tr></thead><tbody>' + rows + "</tbody></table>" +
+    '<p class="smallprint" style="margin:6px 0 0;font-size:14px;color:var(--mute)">Shaded rows are topics where you missed more than a third of the questions.</p>' +
+    (missed.length ? '<p class="qlinks" style="margin:14px 0 0"><b>Go back to:</b> ' + missed.map(function(n){ return '<a href="#q' + n + '">' + n + "</a>"; }).join("") + "</p>" : "<p style='margin:14px 0 0'><b>A perfect score.</b> Every answer is explained below if you want to review anyway.</p>") +
+    '<details class="model"><summary>Answer key</summary><div class="keygrid">' +
+    QS.map(function(q, i){ return "<span>" + (i + 1) + " " + L[q.a] + "</span>"; }).join("") + "</div></details>";
+}
+
+/* =========================================================
+   Timer (not saved: a reload starts it over)
+   ========================================================= */
+var T = { left:39 * 60, run:false, id:0 };
+function fmtT(s){ var m = Math.floor(s / 60), r = s % 60; return m + ":" + (r < 10 ? "0" : "") + r; }
+function timerShow(){
+  var t = fmtT(T.left), low = T.left <= 300;
+  el("timer").textContent = t;
+  el("timer").classList.toggle("low", low);
+  var f = el("float-timer");
+  f.textContent = T.left === 0 ? "Time’s up" : (T.run ? "" : "Paused · ") + t;
+  f.classList.toggle("on", T.run || (T.left < 39 * 60 && !S.submitted));
+  f.classList.toggle("low", low);
+  el("t-go").textContent = T.run ? "Pause" : (T.left < 39 * 60 && T.left > 0 ? "Resume" : "Start");
+  el("t-go").disabled = T.left === 0 || S.submitted;
+}
+function timerStop(){ T.run = false; clearInterval(T.id); timerShow(); }
+el("t-go").addEventListener("click", function(){
+  if(T.run){ timerStop(); return; }
+  if(T.left === 0) return;
+  T.run = true;
+  T.id = setInterval(function(){
+    T.left = Math.max(0, T.left - 1);
+    if(T.left === 0){ timerStop(); el("progress").textContent += " · Time’s up. On the exam you’d stop here; finish if you like."; }
+    timerShow();
+  }, 1000);
+  timerShow();
+});
+el("t-reset").addEventListener("click", function(){ timerStop(); T.left = 39 * 60; timerShow(); });
+
+/* =========================================================
+   Section II: free response
+   ========================================================= */
+var FRQ = {
+  intro:
+    "<p>A student carries out a sequence of reactions that starts and ends with copper metal. The student begins with 0.635 g of copper wire.</p>" +
+    "<div class='steps'>" +
+      "<span class='sn'>Step 1</span><div class='eqline'>[[Cu(s) + 4HNO3(aq) -> Cu(NO3)2(aq) + 2NO2(g) + 2H2O(l)]]</div><p class='sx'>Concentrated nitric acid, in a fume hood. {NO2} is a toxic brown gas.</p>" +
+      "<span class='sn'>Step 2</span><div class='eqline'>[[Cu(NO3)2(aq) + 2NaOH(aq) -> Cu(OH)2(s) + 2NaNO3(aq)]]</div>" +
+      "<span class='sn'>Step 3</span><div class='eqline'>[[Cu(OH)2(s) -> CuO(s) + H2O(l)]]</div><p class='sx'>The mixture is heated. The blue solid turns black.</p>" +
+      "<span class='sn'>Step 4</span><div class='eqline'>[[CuO(s) + H2SO4(aq) -> CuSO4(aq) + H2O(l)]]</div>" +
+      "<span class='sn'>Step 5</span><div class='eqline'>[[Zn(s) + CuSO4(aq) -> ZnSO4(aq) + Cu(s)]]</div>" +
+    "</div>",
+  parts:[
+    {id:"a", p:1,
+     q:"Write the balanced net ionic equation for the reaction in step 2.",
+     pts:["The equation [[Cu^2+(aq) + 2OH^-(aq) -> Cu(OH)2(s)]], with no {Na^+} or {NO3^-} (they are spectators). State symbols aren’t required."],
+     m:"<p>{Na^+} and {NO3^-} stay dissolved on both sides, so they cancel. {Cu(OH)2} is the precipitate, so it keeps its formula.</p><div class='eqline'>[[Cu^2+(aq) + 2OH^-(aq) -> Cu(OH)2(s)]]</div>"},
+    {id:"b", p:2,
+     q:"(i) Classify the reaction in step 1 as acid–base, oxidation–reduction, or precipitation. Justify your answer.<br>(ii) Write the balanced half-reaction for the reduction that occurs in step 5.",
+     pts:["(i) Oxidation–reduction, with a valid justification: either oxidation-number change (Cu from 0 to +2, or N from +5 in {HNO3} to +4 in {NO2}), or a description of electrons moving from Cu to the nitrogen in {HNO3}. The classification alone doesn’t earn the point.",
+          "(ii) [[Cu^2+(aq) + 2e^- -> Cu(s)]], with the electrons on the reactant side. State symbols aren’t required."],
+     m:"<p>(i) <b>Oxidation–reduction.</b> Copper is oxidized from 0 in Cu(s) to +2 in {Cu(NO3)2}, and nitrogen is reduced from +5 in {HNO3} to +4 in {NO2}. Electrons move from Cu to N.</p><p>(ii) Copper goes from +2 in {CuSO4} to 0 in Cu(s), so {Cu^2+} gains two electrons. {SO4^2-} is a spectator and isn’t part of the half-reaction.</p><div class='eqline'>[[Cu^2+(aq) + 2e^- -> Cu(s)]]</div>"},
+    {id:"c", p:1,
+     q:"In step 3, blue {Cu(OH)2}(s) turns into a black solid. A classmate claims that this is a physical change because the solid is just “drying out.” Explain why the claim is incorrect.",
+     pts:["Either of these, as the reason the claim is wrong: a new substance, CuO, with a different composition forms; or bonds in the hydroxide ions break and new bonds form, making CuO and {H2O}. Saying only that the color changed doesn’t earn the point."],
+     m:"<p>The black solid is CuO, a different compound from {Cu(OH)2}: its formula and its properties are different. {Cu(OH)2} doesn’t contain water molecules. The water forms when bonds in the hydroxide ions break and rearrange (two {OH^-} become {O^2-} and {H2O}). Drying would only remove water sitting on the surface of the solid, and it would leave {Cu(OH)2} unchanged.</p>"},
+    {id:"d", p:3,
+     q:"Use the 0.635 g of copper to answer the following.<br>(i) Calculate the minimum volume, in mL, of 16.0 M {HNO3} needed to react with all of the copper in step 1.<br>(ii) Calculate the volume, in liters, of {NO2}(g) produced in step 1 at 25 °C and 1.00 atm. Assume the {NO2} behaves as an ideal gas.<br>(iii) Calculate the theoretical mass of {Cu(OH)2} produced in step 2.",
+     pts:["(i) 2.50 mL: 0.635 g ÷ 63.55 g/mol = 0.00999 mol Cu; × 4 = 0.0400 mol {HNO3}; ÷ 16.0 M = 0.00250 L.",
+          "(ii) 0.489 L: 0.00999 mol Cu × 2 = 0.0200 mol {NO2}; V = nRT/P = (0.0200)(0.08206)(298) ÷ 1.00.",
+          "(iii) 0.975 g: one Cu gives one {Cu(OH)2}, so 0.00999 mol × 97.57 g/mol.<br><i>For (ii) and (iii), an answer that follows correctly from a wrong number of moles of Cu still earns the point. Each answer needs a unit; significant figures aren’t scored.</i>"],
+     m:"<p>(i) 0.635 g Cu × (1 mol / 63.55 g) = 0.00999 mol Cu. × (4 mol {HNO3} / 1 mol Cu) = 0.0400 mol {HNO3}. ÷ 16.0 mol/L = 0.00250 L = <b>2.50 mL</b>.</p><p>(ii) 0.00999 mol Cu × (2 mol {NO2} / 1 mol Cu) = 0.0200 mol {NO2}. V = nRT/P = (0.0200 mol)(0.08206 L·atm/(mol·K))(298 K) ÷ 1.00 atm = <b>0.489 L</b>.</p><p>(iii) Steps 1 and 2 each turn one copper into one copper compound, so 0.00999 mol {Cu(OH)2} × 97.57 g/mol = <b>0.975 g</b>.</p>"},
+    {id:"e", p:1,
+     q:"After step 5, the student recovers 0.597 g of copper. Calculate the percent of the original copper that was recovered.",
+     pts:["94.0%: 0.597 g ÷ 0.635 g × 100."],
+     m:"<p>0.597 g ÷ 0.635 g × 100 = <b>94.0%</b>.</p>"},
+    {id:"f", p:1,
+     q:"In step 5, the student adds excess zinc, and then adds HCl(aq) to dissolve the leftover zinc. Suppose some of the zinc doesn’t dissolve and is weighed along with the copper. Would the calculated percent recovery be too high, too low, or unaffected? Justify your answer.",
+     pts:["Too high, with a justification: the leftover Zn adds mass, so the mass recorded as copper is larger than the mass of copper actually recovered."],
+     m:"<p><b>Too high.</b> The balance can’t tell zinc from copper, so the leftover zinc makes the recorded mass of “copper” larger than the copper actually recovered, and the percent recovery comes out too high.</p>"},
+    {id:"g", p:1, fig:function(){ return box([["Cu2+",2],["NO3-",4]], "frq-g0", {label:"Before step 2"}) + PART.legend(["Cu","N","O","Na"]); },
+     q:"The box represents a small part of the {Cu(NO3)2} solution at the start of step 2. Water molecules aren’t shown, and no {HNO3} is left over. On paper, draw a box that shows the dissolved ions present after exactly enough NaOH has been added to precipitate all of the {Cu^2+}. Show the same number of {NO3^-} ions as in this box, and don’t draw water molecules or the precipitate.",
+     pts:["The box shows 4 {Na^+} and 4 {NO3^-} as separate ions, with no {Cu^2+} and no {OH^-}. Any clearly labeled symbol for {Na^+} is fine."],
+     m:"<p>Each {Cu^2+} needs two {OH^-}, so 2 {Cu^2+} take 4 NaOH. That brings in 4 {Na^+}. The {Cu^2+} and {OH^-} leave the solution as {Cu(OH)2}(s), and the spectators, 4 {Na^+} and 4 {NO3^-}, stay dissolved.</p><div class='qfig'>" + "@@FRQG@@" + "</div>"}
+  ]
+};
+(function renderFRQ(){
+  var html = '<div class="stim" style="margin-top:0"><p class="stim-h">Question 1 · 10 points</p>' + fx(FRQ.intro) + "</div>";
+  FRQ.parts.forEach(function(p){
+    html += '<div class="fpart" id="frq-' + p.id + '"><div class="fq"><span class="pl">(' + p.id + ")</span>" + fx(p.q) + '<span class="pts">' + p.p + " point" + (p.p > 1 ? "s" : "") + "</span></div>" +
+      (p.fig ? '<div class="qfig">' + p.fig() + "</div>" : "") +
+      '<textarea data-f="' + p.id + '" aria-label="Your answer to part (' + p.id + ')" placeholder="Your answer (optional: you can work on paper instead)"></textarea>' +
+      '<details class="model"><summary>Show the scoring guide for (' + p.id + ")</summary><div class='body'>" +
+      '<ul class="rub">' + p.pts.map(function(t, k){
+        var key = p.id + k;
+        return '<li><label><input type="checkbox" data-pt="' + key + '"><span><b>1 point.</b> ' + fx(t) + "</span></label></li>";
+      }).join("") + "</ul>" +
+      '<div class="model-ans"><b>Model answer</b>' + fx(p.m).replace("@@FRQG@@", box([["Na+",4],["NO3-",4]], "frq-g1", {label:"After step 2"})) + "</div></div></details></div>";
+  });
+  html += '<div class="selfscore" id="frq-score" aria-live="polite"></div>';
+  el("frq").innerHTML = html;
+  each(el("frq").querySelectorAll("textarea"), function(t){
+    t.value = S.frq[t.dataset.f] || "";
+    t.addEventListener("input", function(){ S.frq[t.dataset.f] = t.value; save(); });
+  });
+  each(el("frq").querySelectorAll("input[data-pt]"), function(c){
+    c.checked = !!S.pts[c.dataset.pt];
+    c.addEventListener("change", function(){ if(c.checked) S.pts[c.dataset.pt] = 1; else delete S.pts[c.dataset.pt]; save(); frqScore(); });
+  });
+  frqScore();
+})();
+function frqScore(){
+  var got = Object.keys(S.pts).length;
+  el("frq-score").textContent = "Your score on the free-response question: " + got + " of 10 points (check the points you earned in each scoring guide).";
+}
+
+/* ---- clear everything ---- */
+var clearArmed = false;
+el("clear").addEventListener("click", function(){
+  if(!clearArmed){ clearArmed = true; el("clear-note").textContent = "This erases your answers, your score, and your free-response work. Press again to confirm."; return; }
+  try { localStorage.removeItem(KEY); } catch(e){}
+  location.reload();
+});
+
+/* boot */
+paintAll();
+results();
+timerShow();
+</script>
+</body>
+</html>
