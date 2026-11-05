@@ -12,13 +12,7 @@
 /* ---------- how it works ---------- */
 .ctrl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px 24px;align-items:start}
 .ctrl h3{margin:0 0 6px;font-size:15px;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:500}
-.modes{display:flex;gap:8px;flex-wrap:wrap}
-.mode{background:#fff;color:var(--ink);border:1px solid var(--line);font-family:var(--body);font-size:15px;letter-spacing:0;text-align:left;padding:10px 14px;line-height:1.35}
-.mode:hover{background:#fff;color:var(--ink);border-color:var(--acc)}
-.mode b{display:block;font-weight:600}
-.mode span{font-size:13.5px;color:var(--mute)}
-.mode[aria-pressed="true"]{border-color:var(--acc);background:var(--acc-lite);box-shadow:inset 0 0 0 1px var(--acc)}
-.mode[disabled]{opacity:.55}
+.ctrl p.how{margin:0;font-size:15.5px;color:var(--ink2)}
 .timer{font-family:var(--mono);font-size:30px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1}
 .timer.low{color:var(--no)}
 .tnote{font-size:13.5px;color:var(--mute);margin:6px 0 0;max-width:22ch}
@@ -50,8 +44,7 @@ ol.why li.ok .wl{color:var(--ok)}
 ol.why li.no .wl{color:var(--no)}
 ol.why li.ok{color:var(--ink)}
 .graph svg{display:block;width:100%;max-width:560px;height:auto}
-.submit-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
-.warn{font-size:15px;color:var(--no);margin:0}
+.pending{font-size:15.5px;color:var(--ink2);margin:0}
 
 /* ---------- results ---------- */
 .bigscore{font-family:var(--display);font-weight:700;font-size:44px;line-height:1;letter-spacing:-.02em}
@@ -89,7 +82,7 @@ table.bytopic tr.weak td{background:var(--no-bg)}
   .qtopic{float:none;display:inline-block;margin-left:8px}
 }
 @media print{
-  .float-timer,.ctrl,.submit-row,.restart{display:none}
+  .float-timer,.ctrl,.restart{display:none}
 }
 </style>
 </head>
@@ -112,7 +105,7 @@ table.bytopic tr.weak td{background:var(--no-bg)}
   <div class="board" aria-label="What's in this practice set">
     <a class="idea" href="#section-1"><span class="code">Section I</span><span class="lq">26 multiple choice</span><span class="d">About 40 minutes at exam pace, 90 seconds a question. Some questions share a diagram, a graph, or a lab setup.</span></a>
     <a class="idea" href="#section-2"><span class="code">Section II</span><span class="lq">1 free response</span><span class="d">A 10-point lab question, about 20 minutes. Score yourself with the scoring guide.</span></a>
-    <a class="idea" href="#results"><span class="code">Review</span><span class="lq">Every answer explained</span><span class="d">Why the right answer is right and why each wrong answer is wrong, plus your score by topic.</span></a>
+    <a class="idea" href="#results"><span class="code">Feedback</span><span class="lq">Right away, every answer</span><span class="d">Pick an answer and see at once why it’s right or wrong, then get your score by topic at the end.</span></a>
     <div class="board-foot"><span><b>Unit 4</b> Chemical Reactions · 7–9% of the AP Exam</span><span><b>Have ready</b> a calculator and the AP periodic table and equation sheet</span></div>
   </div>
 
@@ -128,15 +121,12 @@ table.bytopic tr.weak td{background:var(--no-bg)}
      ========================================================= -->
 <section id="how">
   <div class="sec-head"><span class="tag plain">Before you start</span><h2>How it works</h2></div>
-  <p>Pick a mode, and start the timer if you want exam pacing. Your answers are saved in this browser, so you can stop and come back. Nothing is sent anywhere.</p>
+  <p>As soon as you pick an answer, you’ll see whether it’s right, along with an explanation of every choice. Start the timer if you want exam pacing. Your answers are saved in this browser, so you can stop and come back. Nothing is sent anywhere.</p>
   <div class="card">
     <div class="ctrl">
       <div>
-        <h3>Mode</h3>
-        <div class="modes" role="group" aria-label="Mode">
-          <button type="button" class="mode" data-mode="exam" aria-pressed="true"><b>Exam mode</b><span>Answers and explanations appear when you submit</span></button>
-          <button type="button" class="mode" data-mode="check" aria-pressed="false"><b>Check as you go</b><span>See the answer after each question</span></button>
-        </div>
+        <h3>Your progress</h3>
+        <p class="how">Each answer locks in once you pick it, so think it through before you click. Your score by topic and the answer key appear after question 26 once you’ve answered them all.</p>
         <p class="progress" id="progress" aria-live="polite"></p>
       </div>
       <div>
@@ -157,13 +147,9 @@ table.bytopic tr.weak td{background:var(--no-bg)}
      ========================================================= -->
 <section id="section-1">
   <div class="sec-head"><span class="tag">Section I</span><h2>Multiple choice</h2></div>
-  <p>Choose the best answer for each question. Water molecules are not shown in particle diagrams of solutions.</p>
+  <p>Choose the best answer for each question. You’ll see right away whether you’re right, and why each choice is right or wrong. Water molecules are not shown in particle diagrams of solutions.</p>
   <div class="card" id="mc"></div>
-  <div class="submit-row">
-    <button type="button" id="submit">Submit Section I</button>
-    <p class="warn" id="submit-warn" hidden></p>
-  </div>
-  <div class="card" id="results" hidden></div>
+  <div class="card" id="results"></div>
 </section>
 
 <!-- =========================================================
@@ -583,7 +569,7 @@ var L = "ABCD";
    Saved state (this browser only)
    ========================================================= */
 var KEY = "apchem-u4-practice-set-v1";
-var S = { mode:"exam", ans:{}, shown:{}, submitted:false, frq:{}, pts:{} };
+var S = { ans:{}, frq:{}, pts:{} };   /* older saves also had a mode and a submit flag; they're ignored now */
 try { var raw = localStorage.getItem(KEY); if(raw){ var got = JSON.parse(raw); for(var k in S) if(got[k] !== undefined) S[k] = got[k]; } } catch(e){}
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
 
@@ -610,7 +596,7 @@ function val(x){ return typeof x === "function" ? x() : x; }
 
 function qBox(n){ return el("q" + n); }
 function paint(n){
-  var i = n - 1, q = QS[i], box = qBox(n), picked = S.ans[n], open = S.submitted || S.shown[n];
+  var i = n - 1, q = QS[i], box = qBox(n), picked = S.ans[n], open = picked !== undefined;
   each(box.querySelectorAll(".choice"), function(b, j){
     b.classList.toggle("sel", picked === j);
     b.setAttribute("aria-pressed", String(picked === j));
@@ -622,8 +608,7 @@ function paint(n){
   var ex = box.querySelector(".expl");
   ex.hidden = !open;
   if(open){
-    var head = picked === undefined ? '<span class="verdict">Not answered.</span> The answer is ' + L[q.a] + "."
-      : picked === q.a ? '<span class="verdict">Correct: ' + L[q.a] + ".</span>"
+    var head = picked === q.a ? '<span class="verdict">Correct: ' + L[q.a] + ".</span>"
       : '<span class="verdict">You chose ' + L[picked] + ". The answer is " + L[q.a] + ".</span>";
     ex.innerHTML = head + '<ol class="why">' + q.w.map(function(w, j){
       return '<li class="' + (j === q.a ? "ok" : "no") + '"><span class="wl">' + L[j] + (j === q.a ? " ✓" : " ✗") + "</span>" + fx(w) + "</li>";
@@ -632,68 +617,38 @@ function paint(n){
 }
 function paintAll(){ for(var n = 1; n <= QS.length; n++) paint(n); progress(); }
 
-function progress(){
-  var answered = 0, right = 0, shown = 0;
+function tally(){
+  var answered = 0, right = 0;
   for(var n = 1; n <= QS.length; n++){
-    if(S.ans[n] !== undefined) answered++;
-    if((S.submitted || S.shown[n]) && S.ans[n] === QS[n - 1].a) right++;
-    if(S.shown[n]) shown++;
+    if(S.ans[n] !== undefined){ answered++; if(S.ans[n] === QS[n - 1].a) right++; }
   }
-  var t = "Answered " + answered + " of " + QS.length;
-  if(S.submitted) t += " · Submitted · Correct " + right;
-  else if(S.mode === "check" && shown) t += " · Correct " + right + " of " + shown + " checked";
+  return { answered:answered, right:right, done:answered === QS.length };
+}
+function progress(){
+  var c = tally(), t = "Answered " + c.answered + " of " + QS.length;
+  if(c.answered) t += " · Correct " + c.right;
+  if(c.done) t += " · All done: your score by topic is after question 26.";
   el("progress").textContent = t;
-  each(document.querySelectorAll(".mode"), function(b){
-    b.setAttribute("aria-pressed", String(b.dataset.mode === S.mode));
-    b.disabled = S.submitted;
-  });
-  el("submit").textContent = S.submitted ? "Submitted" : "Submit Section I";
-  el("submit").disabled = S.submitted;
 }
 
 el("mc").addEventListener("click", function(e){
   var b = e.target.closest(".choice");
   if(!b || b.disabled) return;
   var n = Number(b.closest(".q").id.slice(1));
-  if(S.submitted || S.shown[n]) return;
+  if(S.ans[n] !== undefined) return;
   S.ans[n] = Number(b.dataset.j);
-  if(S.mode === "check") S.shown[n] = 1;
-  el("submit-warn").hidden = true; armed = false;
   save(); paint(n); progress();
-});
-
-each(document.querySelectorAll(".mode"), function(b){
-  b.addEventListener("click", function(){
-    if(S.submitted) return;
-    S.mode = b.dataset.mode;
-    if(S.mode === "check") for(var n in S.ans) S.shown[n] = 1;
-    save(); paintAll();
-  });
-});
-
-/* ---- submit and results ---- */
-var armed = false;
-el("submit").addEventListener("click", function(){
-  if(S.submitted) return;
-  var blank = [];
-  for(var n = 1; n <= QS.length; n++) if(S.ans[n] === undefined) blank.push(n);
-  if(blank.length && !armed){
-    armed = true;
-    var w = el("submit-warn");
-    w.hidden = false;
-    w.textContent = blank.length + " question" + (blank.length > 1 ? "s are" : " is") + " unanswered" + (blank.length <= 8 ? " (" + blank.join(", ") + ")" : "") + ". Press Submit again to finish anyway.";
-    return;
-  }
-  S.submitted = true;
-  el("submit-warn").hidden = true;
-  timerStop();
-  save(); paintAll(); results();
-  el("results").scrollIntoView({ behavior:"smooth", block:"start" });
+  var c = tally();
+  if(c.done){ timerStop(); results(); } else results();
 });
 
 function results(){
-  var R = el("results");
-  if(!S.submitted){ R.hidden = true; return; }
+  var R = el("results"), c = tally();
+  if(!c.done){
+    R.innerHTML = '<div class="card-label">Your results</div><p class="pending">Your score by topic and the answer key show up here once you’ve answered all ' + QS.length + " questions. So far: " +
+      c.answered + " answered, " + c.right + " correct.</p>";
+    return;
+  }
   var by = {}, right = 0, missed = [];
   Object.keys(TOPICS).forEach(function(t){ by[t] = { n:0, r:0, qs:[] }; });
   QS.forEach(function(q, i){
@@ -707,12 +662,11 @@ function results(){
     return '<tr' + (weak ? ' class="weak"' : "") + "><td><b>" + t + "</b> " + TOPICS[t][0] + '</td><td class="n">' + b.qs.join(", ") +
       '</td><td class="n">' + b.r + " of " + b.n + '</td><td><a href="/ap-chemistry/unit-4/' + TOPICS[t][1] + '/">Review ' + t + " →</a></td></tr>";
   }).join("");
-  R.hidden = false;
   R.innerHTML = '<div class="card-label">Your results</div>' +
     '<div class="bigscore">' + right + " / " + QS.length + "<span>" + pct + "%</span></div>" +
     '<table class="bytopic"><thead><tr><th>Topic</th><th>Questions</th><th>Correct</th><th></th></tr></thead><tbody>' + rows + "</tbody></table>" +
     '<p class="smallprint" style="margin:6px 0 0;font-size:14px;color:var(--mute)">Shaded rows are topics where you missed more than a third of the questions.</p>' +
-    (missed.length ? '<p class="qlinks" style="margin:14px 0 0"><b>Go back to:</b> ' + missed.map(function(n){ return '<a href="#q' + n + '">' + n + "</a>"; }).join("") + "</p>" : "<p style='margin:14px 0 0'><b>A perfect score.</b> Every answer is explained below if you want to review anyway.</p>") +
+    (missed.length ? '<p class="qlinks" style="margin:14px 0 0"><b>Go back to:</b> ' + missed.map(function(n){ return '<a href="#q' + n + '">' + n + "</a>"; }).join("") + "</p>" : "<p style='margin:14px 0 0'><b>A perfect score.</b> Every answer’s explanation is still there above if you want to review.</p>") +
     '<details class="model"><summary>Answer key</summary><div class="keygrid">' +
     QS.map(function(q, i){ return "<span>" + (i + 1) + " " + L[q.a] + "</span>"; }).join("") + "</div></details>";
 }
@@ -728,10 +682,10 @@ function timerShow(){
   el("timer").classList.toggle("low", low);
   var f = el("float-timer");
   f.textContent = T.left === 0 ? "Time’s up" : (T.run ? "" : "Paused · ") + t;
-  f.classList.toggle("on", T.run || (T.left < 39 * 60 && !S.submitted));
+  f.classList.toggle("on", T.run || (T.left < 39 * 60 && !tally().done));
   f.classList.toggle("low", low);
-  el("t-go").textContent = T.run ? "Pause" : (T.left < 39 * 60 && T.left > 0 ? "Resume" : "Start");
-  el("t-go").disabled = T.left === 0 || S.submitted;
+  el("t-go").textContent = tally().done ? "Done" : T.run ? "Pause" : (T.left < 39 * 60 && T.left > 0 ? "Resume" : "Start");
+  el("t-go").disabled = T.left === 0 || tally().done;
 }
 function timerStop(){ T.run = false; clearInterval(T.id); timerShow(); }
 el("t-go").addEventListener("click", function(){
