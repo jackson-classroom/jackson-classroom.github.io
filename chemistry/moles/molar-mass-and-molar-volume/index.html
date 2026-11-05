@@ -448,7 +448,7 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
   </div>
 
   <h3>Molecules and formula units</h3>
-  <p>Water and sugar are made of separate <b>molecules</b>. Ionic compounds like table salt, NaCl, aren’t. They’re a huge lattice of Na<sup>+</sup> and Cl<sup>−</sup> ions, so the smallest repeating unit is called a <b>formula unit</b>: one Na<sup>+</sup> and one Cl<sup>−</sup>. Molar mass works exactly the same way for both.</p>
+  <p>Water and sugar are made of separate <b>molecules</b>. Ionic compounds like table salt, NaCl, aren’t. They’re a huge lattice of Na<sup>+</sup> and Cl<sup>−</sup> ions, so chemists count <b>formula units</b> instead: the simplest ratio of ions, one Na<sup>+</sup> for every Cl<sup>−</sup>. Molar mass works exactly the same way for both.</p>
   <table>
     <thead><tr><th>Substance</th><th>One particle</th><th>One mole (6.02 × 10<sup>23</sup> particles)</th></tr></thead>
     <tbody>
@@ -476,9 +476,9 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
   <h3>Why one number works for every gas</h3>
   <p>In a solid or a liquid, the particles touch, so a mole of big particles takes up more room than a mole of small ones. A gas is different. Its particles are far apart, and at STP the particles themselves fill less than 0.1% of the space. Whether each particle is a tiny helium atom or a bigger CO<sub>2</sub> molecule hardly matters. What sets the volume is <b>how many</b> particles there are.</p>
   <div class="card">
-    <div class="card-label"><span>How far apart, to scale</span></div>
+    <div class="card-label"><span>How much room each particle gets, to scale</span></div>
     <div class="fig" id="sp-fig"></div>
-    <p class="smallprint" style="margin-bottom:0">The average distance between neighboring particles, drawn to scale. In every direction, gas particles at STP are about 11 times farther apart than the molecules in liquid water. That makes the volume about 11 × 11 × 11 times bigger, more than a thousand times.</p>
+    <p class="smallprint" style="margin-bottom:0">Drawn to scale. Share the space out evenly and each particle gets a little cube of its own: about 0.31 nm on a side in liquid water, and about 3.3 nm on a side in a gas at STP. That’s about 11 times wider in every direction, so about 11 × 11 × 11 times the volume, more than a thousand times.</p>
   </div>
 
   <h3>Same moles, same volume</h3>
@@ -511,12 +511,12 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
 <!-- ============ BALLOONS ============ -->
 <section id="balloons">
   <div class="sec-head"><span class="tasktag">Compare</span><h2>Same volume, different mass</h2></div>
-  <p>A mole of any gas at STP takes up 22.4 L, but the mass of that mole depends on the gas. It’s the idea from the last page again: same count, different mass. Below are 22.4 L of nine gases, one mole each, compared with 22.4 L of air. Air is a mixture, mostly N<sub>2</sub> and O<sub>2</sub>, and 22.4 L of it at STP has a mass of about 29.0 g. A balloon of any gas lighter than that floats.</p>
+  <p>A mole of any gas at STP takes up 22.4 L, but the mass of that mole depends on the gas. It’s the idea from the last page again: same count, different mass. Below are 22.4 L of nine gases, one mole each, compared with 22.4 L of air. Air is a mixture, mostly N<sub>2</sub> and O<sub>2</sub>, and 22.4 L of it at STP has a mass of about 29.0 g. A balloon floats only if the gas plus the balloon itself is lighter than the air it pushes aside. Gases well under 29.0 g float. Nitrogen, at 28.02 g, is too close to air to lift even the balloon.</p>
   <div class="card">
     <div class="card-label"><span>22.4 L of each gas at STP</span></div>
     <p class="legend">Each balloon: 22.4 L = 1.00 mol. The same 22.4 L of air: about 29.0 g.</p>
     <div class="balloons" id="bal"></div>
-    <p class="smallprint" style="margin-bottom:0">The masses are the gas only, not the balloon. Nitrogen is most of the air, so a nitrogen balloon is about as heavy as the air it pushes aside.</p>
+    <p class="smallprint" style="margin-bottom:0">The masses are the gas only, not the balloon. Nitrogen is most of the air, so 22.4 L of it weighs almost the same as 22.4 L of air.</p>
   </div>
   <div class="note"><b>Real-world chemistry.</b> Natural gas is mostly methane, CH<sub>4</sub> (16.05 g/mol), which is lighter than air and rises. Propane, C<sub>3</sub>H<sub>8</sub> (44.11 g/mol), is heavier than air and sinks. That’s why natural-gas detectors are mounted high on a wall, and propane detectors go down low.</div>
 </section>
@@ -599,7 +599,7 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
       <div class="right">Ca(NO<sub>3</sub>)<sub>2</sub>: 40.08 + 2(14.01) + 6(16.00) = 164.10</div>
     </div>
     <div class="rulecard miss">
-      <h4>Forgetting a gas is diatomic</h4>
+      <h4>Forgetting an element is diatomic</h4>
       <p>Oxygen gas is O<sub>2</sub> molecules, not single O atoms. The same goes for H<sub>2</sub>, N<sub>2</sub>, F<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub> and I<sub>2</sub>.</p>
       <div class="wrong">Oxygen gas: 16.00 g/mol</div>
       <div class="right">Oxygen gas, O<sub>2</sub>: 32.00 g/mol</div>
@@ -762,6 +762,7 @@ function parseFormula(str){
     i += m[0].length;
     var n = parseInt(m[0], 10);
     if(n === 0) throw 'a subscript of 0';
+    if(m[0].charAt(0) === '0') throw 'a subscript that starts with 0. If you meant the letter O, type a capital O';
     return n;
   }
   function group(depth){
@@ -769,9 +770,9 @@ function parseFormula(str){
     while(i < s.length){
       var ch = s.charAt(i);
       if(ch === '(' || ch === '['){
-        var start = ++i;
+        var start = ++i, close = ch === '(' ? ')' : ']';
         var inner = group(depth + 1);
-        if(s.charAt(i) !== ')' && s.charAt(i) !== ']') throw 'a parenthesis that never closes';
+        if(s.charAt(i) !== close) throw (s.charAt(i) ? 'brackets that don’t match' : 'a parenthesis that never closes');
         var end = i++;
         var k = num();
         if(!inner.length) throw 'empty parentheses';
@@ -1076,24 +1077,26 @@ function isDiatomic(pf){ return pf.order.length === 1 && pf.counts[pf.order[0]] 
 /* judge a molar mass ; exact sums use 2-decimal atomic masses, and 0.5 g/mol covers students who round
    each atomic mass, while still catching one atom too many or too few (at least 1.01 g/mol) */
 function judgeMM(p, v){
-  var M = p.M, T = 0.5, pf = p.pf;
+  var M = p.M, T = 0.5, pf = p.pf, ord = pf.order, cands = [];
   if(Math.abs(v - M) <= T) return { ok:true, code:'ok' };
-  var alts = mmAlts(pf);
-  for(var i = 0; i < alts.length; i++) if(Math.abs(v - alts[i].v) <= T) return { ok:false, code:alts[i].code };
   if(Math.abs(v - MV) < 0.05) return { ok:false, code:'mvMM' };
   if(near(v, M * NA) || near(v, M / NA)) return { ok:false, code:'mmNA' };
-  var ord = pf.order;
-  for(var j = 0; j < ord.length; j++){
-    if(ord.length > 1 && Math.abs(v - (M - pf.counts[ord[j]] * EL[ord[j]].M)) <= T) return { ok:false, code:'missing', x:{ s:ord[j] } };
-  }
-  var deltas = [1, -1, 2, -2, 3, -3];
-  for(var d = 0; d < deltas.length; d++){
-    for(var k = 0; k < ord.length; k++){
-      var s = ord[k];
-      if(pf.counts[s] + deltas[d] >= 1 && Math.abs(v - (M + deltas[d] * EL[s].M)) <= 0.25) return { ok:false, code:'countOff', x:{ s:s } };
-    }
-  }
-  return { ok:false, code:'other' };
+  /* earlier entries win a tie: parentheses mistakes before noSub, as in Ca(OH)2 ; atomic numbers last, and only for an exact sum */
+  var alts = mmAlts(pf), pri = { noParen:0, lastOnly:1, noSub:2 };
+  alts.forEach(function(a){ if(a.code !== 'zMM') cands.push({ code:a.code, v:a.v, tol:T, x:{}, pri:pri[a.code] }); });
+  cands.sort(function(a, b){ return a.pri - b.pri; });
+  if(ord.length > 1) ord.forEach(function(s){ cands.push({ code:'missing', v:M - pf.counts[s] * EL[s].M, tol:T, x:{ s:s } }); });
+  [1, -1, 2, -2, 3, -3].forEach(function(d){
+    ord.forEach(function(s){ if(pf.counts[s] + d >= 1) cands.push({ code:'countOff', v:M + d * EL[s].M, tol:0.25, x:{ s:s } }); });
+  });
+  alts.forEach(function(a){ if(a.code === 'zMM') cands.push({ code:'zMM', v:a.v, tol:0.01, x:{} }); });
+  /* the closest explanation wins ; S (32.06) and two O (32.00) are only told apart this way */
+  var best = null;
+  cands.forEach(function(c){
+    var dist = Math.abs(v - c.v);
+    if(dist <= c.tol && (!best || dist < best.dist - 1e-9)) best = { code:c.code, x:c.x, dist:dist };
+  });
+  return best ? { ok:false, code:best.code, x:best.x } : { ok:false, code:'other' };
 }
 /* wrong answers a conversion can produce, most specific first */
 function convCandidates(p){
@@ -1132,7 +1135,13 @@ function judge(p, got){
   if(p.type === 'mm') return judgeMM(p, got.v);
   if(near(got.v, p.answer, 0.01)) return { ok:true, code:'ok', x:{} };
   var cs = convCandidates(p);
-  for(var i = 0; i < cs.length; i++) if(near(got.v, cs[i].v, 0.01)) return { ok:false, code:cs[i].code, x:cs[i].x };
+  /* the closest wrong method wins: 4.95 for 5.00 g H2 is H = 1.01 used for H2 (exactly 4.95), not "the number you started with" */
+  var best = null;
+  cs.forEach(function(c){
+    var rel = Math.abs(got.v - c.v) / Math.abs(c.v);
+    if(rel <= 0.01 && (!best || rel < best.rel - 1e-9)) best = { rel:rel, c:c };
+  });
+  if(best) return { ok:false, code:best.c.code, x:best.c.x };
   return { ok:false, code:'other', x:{} };
 }
 
@@ -1342,7 +1351,10 @@ function cntRender(f){
   if(!String(f).trim()){ out.innerHTML = ''; setFb(fb, 'hint', 'Type a formula first, like <b>Mg3(PO4)2</b>. Numbers become subscripts on their own.'); return; }
   var pf = parseFormula(f);
   if(!pf.ok){ out.innerHTML = ''; setFb(fb, 'bad', 'That formula can’t be read: it has ' + pf.err + '.'); return; }
-  hideFb(fb);
+  /* "H20" is a legal formula, but it was almost certainly meant to be H2O */
+  var z = /([A-Z][a-z]?|\))([2-9])0(?!\d)/.exec(pf.f), alt = z ? pf.f.slice(0, z.index) + z[1] + z[2] + 'O' + pf.f.slice(z.index + z[0].length) : null;
+  if(alt && parseFormula(alt).ok) setFb(fb, 'hint', 'Is that a zero? This counts it as ' + fHTML(pf.f) + '. If you meant ' + fHTML(alt) + ', type a capital letter O.');
+  else hideFb(fb);
   var total = 0, rows = '';
   pf.order.forEach(function(s){
     var c = pf.counts[s], show = Math.min(c, 40), balls = '';
@@ -1489,7 +1501,7 @@ function mwRender(){
    ========================================================= */
 (function spacing(){
   var K = 40, liq = 0.310 * K, gas = 3.339 * K;
-  var h = '<svg viewBox="0 0 600 186" role="img" aria-label="Drawn to scale: in liquid water, molecules are about 0.31 nanometers apart and touching. In a gas at STP, molecules are about 3.3 nanometers apart, roughly eleven times farther.">';
+  var h = '<svg viewBox="0 0 600 186" role="img" aria-label="Drawn to scale: in liquid water, each molecule gets a space about 0.31 nanometers wide, so the molecules touch. In a gas at STP, each molecule gets a space about 3.3 nanometers wide, roughly eleven times wider.">';
   h += '<text x="0" y="16" font-family="IBM Plex Mono,monospace" font-size="12" fill="#3B4A48">Liquid water</text>';
   for(var i = 0; i < 44; i++){
     var x = 12 + i * liq, y = 52;
@@ -1498,7 +1510,7 @@ function mwRender(){
          '<circle cx="' + x.toFixed(1) + '" cy="' + y + '" r="5.4" fill="#D9473B" stroke="#8A2A22" stroke-width=".7"/>';
   }
   h += '<line x1="12" y1="66" x2="' + (12 + liq).toFixed(1) + '" y2="66" stroke="#5F6D6B"/><line x1="12" y1="62" x2="12" y2="70" stroke="#5F6D6B"/><line x1="' + (12 + liq).toFixed(1) + '" y1="62" x2="' + (12 + liq).toFixed(1) + '" y2="70" stroke="#5F6D6B"/>';
-  h += '<text x="32" y="81" font-family="IBM Plex Mono,monospace" font-size="11" fill="#5F6D6B">0.31 nm apart</text>';
+  h += '<text x="32" y="81" font-family="IBM Plex Mono,monospace" font-size="11" fill="#5F6D6B">0.31 nm per molecule</text>';
   h += '<text x="0" y="112" font-family="IBM Plex Mono,monospace" font-size="12" fill="#3B4A48">Gas at STP (N₂)</text>';
   for(var j = 0; j < 5; j++){
     var gx = 18 + j * gas, gy = 142;
@@ -1506,7 +1518,7 @@ function mwRender(){
          '<circle cx="' + (gx + 3.6).toFixed(1) + '" cy="' + gy + '" r="4.2" fill="#3B6FD0" stroke="#24467F" stroke-width=".7"/>';
   }
   h += '<line x1="18" y1="158" x2="' + (18 + gas).toFixed(1) + '" y2="158" stroke="#5F6D6B"/><line x1="18" y1="154" x2="18" y2="162" stroke="#5F6D6B"/><line x1="' + (18 + gas).toFixed(1) + '" y1="154" x2="' + (18 + gas).toFixed(1) + '" y2="162" stroke="#5F6D6B"/>';
-  h += '<text x="' + (18 + gas / 2).toFixed(1) + '" y="176" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#5F6D6B">3.3 nm apart</text>';
+  h += '<text x="' + (18 + gas / 2).toFixed(1) + '" y="176" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#5F6D6B">3.3 nm per molecule</text>';
   h += '</svg>';
   el('sp-fig').innerHTML = h;
 })();
@@ -1793,7 +1805,7 @@ function tileHTML(e){
 function ptFacts(e){
   if(e.br) return '<p><b>' + e.name + '</b> has no stable isotopes. The number in parentheses, ' + e.ms + ', is the mass number of a long-lived isotope, not an average. You won’t need these.</p>';
   var h = '<div class="mm">' + e.ms + ' g/mol</div><p>1 mol ' + e.sym + ' atoms = <b>' + e.ms + ' g</b></p>';
-  if(DIATOMIC[e.sym]) h += '<p class="aside">' + e.name + ' gas is ' + e.sym + '₂, two atoms per molecule, so its molar mass is 2 × ' + e.ms + ' = ' + fix2(2 * e.M) + ' g/mol.</p>';
+  if(DIATOMIC[e.sym]) h += '<p class="aside">' + e.name + ' exists as ' + e.sym + '₂ molecules' + (e.sym === 'Br' ? ' (a liquid)' : e.sym === 'I' ? ' (a solid)' : '') + ', two atoms each, so the molar mass of ' + e.sym + '₂ is 2 × ' + e.ms + ' = ' + fix2(2 * e.M) + ' g/mol.</p>';
   return h;
 }
 function buildPT(host){
@@ -1863,6 +1875,10 @@ function pCheck(){
   if(!P || P.done) return;
   var raw = el('p-in').value, ex = el('p-x10').hidden ? '' : el('p-exp').value, fb = el('p-fb');
   if(!raw.trim()){ setFb(fb,'hint','Type your answer first.'); return; }
+  if(!el('p-x10').hidden && !ex.trim() && !/[eE]|[x×X*]\s*10/.test(raw)){
+    var g0 = parseNum(raw);
+    if(g0 && Math.abs(g0.v) < 1000){ setFb(fb,'hint','<b>Don’t forget the power of ten.</b> Type it in the small box after × 10. For example, <kbd>3.01</kbd> and <kbd>23</kbd> means 3.01 × 10²³.'); return; }
+  }
   var got = readAnswer(raw, ex), res = judge(P, got);
   if(res.code === 'unreadable'){ setFb(fb,'hint', hintFor(P, res)); return; }
   if(!P.scored){ P.scored = true; pScore.add(res.ok); }
@@ -1968,7 +1984,12 @@ function sRender(){
   } else if(leftN.length === 1 && !leftD.length){
     msg = 'You’re at <b>' + leftN[0] + '</b>. ' + (chain.length >= 3 ? 'That’s a lot of factors. Undo and try a shorter route.' : 'Add another factor to get to <b>' + target + '</b>.');
   } else {
-    msg = '<b>These units don’t cancel.</b> You’d end up with ' + leftN.join(' × ') + (leftD.length ? ' ÷ ' + leftD.join(' ÷ ') : '') + ', which isn’t a real answer. Undo and flip that factor.';
+    var prev = cancelUnits(startU, chain.slice(0, -1)), pN = prev.num.filter(function(u){ return !u.x; }), pD = prev.den.filter(function(u){ return !u.x; });
+    var at = pN.length === 1 && !pD.length ? pN[0].u : null, last = chain[chain.length - 1];
+    var fix = !at ? 'Undo back to where the units still worked.'
+      : last.t[1] === at ? 'Undo and flip that factor, so ' + at + ' is on the bottom.'
+      : 'Undo it. You’re at ' + at + ', so the next factor needs <b>' + at + '</b> on the bottom.';
+    msg = '<b>These units don’t cancel.</b> You’d end up with ' + leftN.join(' × ') + (leftD.length ? ' ÷ ' + leftD.join(' ÷ ') : '') + ', which isn’t a real answer. ' + fix;
     kind = 'bad';
   }
   el('s-chain').innerHTML = FL(parts);
@@ -1997,7 +2018,7 @@ var QUIZ = [
   { stem:'How many oxygen atoms are in one formula unit of aluminum sulfate, Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>?',
     opts:['3','4','7','12'],
     ans:3,
-    why:'There are 4 O in each SO<sub>4</sub>, and the 3 after the parentheses means three SO<sub>4</sub> groups: 4 × 3 = 12.' },
+    why:'There are 4 O in each SO<sub>4</sub>, and the 3 after the parentheses means three SO<sub>4</sub> groups: 4 × 3 = 12. 3 is just the subscript after the parentheses, 4 is only one SO<sub>4</sub> group, and 7 adds 4 + 3 instead of multiplying.' },
   { stem:'What is the molar mass of calcium hydroxide, Ca(OH)<sub>2</sub>?',
     opts:['57.09 g/mol','58.10 g/mol','74.10 g/mol','114.18 g/mol'],
     ans:2,
@@ -2013,7 +2034,7 @@ var QUIZ = [
   { stem:'At STP, which takes up more space: 1.00 mol of helium or 1.00 mol of carbon dioxide?',
     opts:['Carbon dioxide, because its molecules are bigger','Helium, because its atoms move faster','They take up the same volume, 22.4 L','Carbon dioxide, because it has more mass'],
     ans:2,
-    why:'In a gas the particles are far apart, so their size barely matters. One mole of any gas at STP takes up 22.4 L.' },
+    why:'In a gas the particles are far apart, so their size barely matters. One mole of any gas at STP takes up 22.4 L. Helium atoms do move faster, but at the same temperature and pressure that doesn’t change the volume a mole takes up, and mass doesn’t either.' },
   { stem:'At STP, 22.4 L of which gas has the greatest mass?',
     opts:['H<sub>2</sub>','He','N<sub>2</sub>','CO<sub>2</sub>'],
     ans:3,
@@ -2023,13 +2044,13 @@ var QUIZ = [
     ans:2,
     why:'44.8 L ÷ 22.4 L/mol = 2.00 mol. 0.500 divides the wrong way. 1.60 divides by the molar mass of N<sub>2</sub>, which is for grams. 1.00 × 10<sup>3</sup> multiplies by 22.4.' },
   { stem:'Why can’t you use 22.4 L/mol for a mole of liquid water?',
-    opts:['22.4 L/mol is only for gases at STP. In a liquid the molecules touch, so a mole of water fills only about 18 mL.','Water’s molar mass is too small','22.4 L/mol only works for elements, not compounds','Water is diatomic'],
+    opts:['It only works for gases, and liquid molecules touch','Water’s molar mass is too small','It only works for elements, not compounds','Water is diatomic'],
     ans:0,
-    why:'Molar volume works for gases because gas particles are far apart. In liquids and solids the particles touch, so every substance has its own volume per mole.' },
-  { stem:'A chunk of dry ice is 88.0 g of solid CO<sub>2</sub>. What volume does it take up as a gas at STP?',
-    opts:['2.00 L','44.8 L','0.0893 L','1.97 × 10<sup>3</sup> L'],
+    why:'22.4 L/mol works for gases because gas particles are far apart. In liquids and solids the particles touch, so every substance has its own volume per mole. A mole of liquid water fills only about 18 mL.' },
+  { stem:'What volume does 50.0 g of oxygen gas, O<sub>2</sub>, take up at STP?',
+    opts:['1.56 L','35.0 L','70.0 L','1.12 × 10<sup>3</sup> L'],
     ans:1,
-    why:'Grams → moles → liters: 88.0 g ÷ 44.01 g/mol = 2.00 mol, then 2.00 mol × 22.4 L/mol = 44.8 L. 2.00 stops at moles. 0.0893 divides by 22.4 instead of multiplying. 1.97 × 10<sup>3</sup> skips the molar mass.' }
+    why:'Grams → moles → liters: 50.0 g ÷ 32.00 g/mol = 1.5625 mol, then 1.5625 mol × 22.4 L/mol = 35.0 L. 1.56 stops at moles. 70.0 uses 16.00 g/mol, forgetting that oxygen gas is O<sub>2</sub>. 1.12 × 10<sup>3</sup> skips the molar mass.' }
 ];
 (function buildQuiz(){
   var host = el('quiz'), html = '';
