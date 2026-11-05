@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Molar Mass and Molar Volume — Compounds and Gases at STP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#131E1D; --ink2:#3B4A48; --mute:#5F6D6B;
+  --wash:#E3E9E8; --card:#FBFCFB; --line:#C9D3D1; --line-soft:#E0E7E6;
+  --water:#12727F; --water-dk:#0B4E58; --water-lite:#BFDEE2;
+  --brass:#9A6E22; --brass-lite:#F5E9CF;
+  --ok:#26694A; --ok-bg:#E4F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  --lcd:#1E2B29; --lcd-ink:#BFEFD0;
+  --display:"Instrument Serif",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+sup,sub{line-height:0;font-size:.72em}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(227,233,232,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:64px 0 44px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--water-dk)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,7.4vw,74px);line-height:1;margin:16px 0 0;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--water-dk)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:49ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: one mole of each, and the 22.4 L box */
+.sig-readout{margin:38px 0 0;padding:24px 26px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.sig-calc{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.sig-grid{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:26px;align-items:center}
+.sig-rows{margin-top:12px;display:grid;gap:4px}
+.sig-r{display:grid;grid-template-columns:6.2em minmax(0,1fr);align-items:baseline;gap:10px;font-family:var(--mono);font-size:clamp(17px,3.4vw,22px);font-weight:500;font-variant-numeric:tabular-nums;border-bottom:1px dashed var(--line);padding-bottom:3px}
+.sig-r .fx{font-family:var(--body);font-weight:600}
+.sig-r .v{white-space:nowrap}
+.sig-r .tg{display:inline-block;font-size:12px;font-weight:400;letter-spacing:.04em;color:var(--mute);white-space:nowrap;margin-left:8px}
+.sig-r.head{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:400;border-bottom:none}
+.sig-r.hl{color:var(--water-dk)}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px}
+.sig-note b{color:var(--water-dk);font-weight:600}
+.sig-fig svg{display:block;width:100%;height:auto}
+.sig-cap{font-size:13.5px;line-height:1.45;color:var(--mute);margin:8px 0 0}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--water);color:var(--water-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--water-dk);background:var(--water-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.4vw,40px);line-height:1.08;margin:0;letter-spacing:-.01em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--water-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.note{border-left:3px solid var(--brass);background:var(--brass-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.note .smallprint{margin:8px 0 0;font-size:14px}
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:24px 0}
+.rulebox.one{grid-template-columns:minmax(0,1fr)}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--water);border-radius:0 4px 4px 0;padding:18px 20px;min-width:0}
+.rulecard .op{font-family:var(--display);font-size:30px;line-height:1.05;color:var(--water-dk)}
+.rulecard .op.fx{font-family:var(--body);font-weight:600;font-size:26px}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard .ex{font-family:var(--mono);font-size:13.5px;color:var(--water-dk);margin-top:8px}
+.rulecard.miss{border-left-color:var(--no)}
+.rulecard.miss h4{margin-top:0}
+.rulecard .wrong{font-family:var(--mono);font-size:14.5px;color:var(--mute);text-decoration:line-through;text-decoration-color:var(--no);text-decoration-thickness:2px;margin:6px 0}
+.rulecard .right{font-family:var(--mono);font-size:14.5px;color:var(--ok);margin:6px 0}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.setup{font-size:15px;color:var(--ink2);margin:0 0 14px}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F6F8F7;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--water-dk);border-color:var(--water-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--water)}
+button[disabled]{opacity:.45;cursor:default}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--water);outline-offset:2px}
+button.small{font-size:12px;padding:6px 11px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid #93A5A2;border-radius:3px;padding:9px 11px;width:170px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(19,30,29,.12)}
+input[type=range]{width:100%;accent-color:var(--water);margin:10px 0 2px}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:14px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:120px}
+.unit-tag{font-family:var(--mono);font-size:15px;color:var(--mute)}
+.x10{display:inline-flex;align-items:flex-start;font-family:var(--mono);font-size:19px;color:var(--ink2);gap:2px}
+.x10 .exp{width:3.6em;font-size:14px;padding:4px 6px;margin-top:-12px}
+.x10[hidden]{display:none}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1B4E36}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--water);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb .mono{font-size:15px}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab[aria-selected="true"]{background:var(--ink);color:#F6F8F7;border-color:var(--ink)}
+.tab.fx{font-family:var(--body);font-size:14px;font-weight:600;padding:5px 11px}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft)}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45}
+.opt:hover{border-color:var(--water);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.94}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+
+.prob{font-size:17.5px;line-height:1.55;margin:4px 0 0}
+.prob b{font-weight:600}
+.scaf{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
+.scaf-lab{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--water-dk)}
+::placeholder{font-family:var(--body);font-style:italic;font-size:14px;color:#7F8D8B;opacity:1}
+.typing-tip{font-size:14px;color:var(--mute);margin:8px 0 0}
+.typing-tip kbd{font-family:var(--mono);font-size:13px;color:var(--ink2);background:#fff;border:1px solid var(--line);border-radius:3px;padding:1px 5px}
+.fig svg{display:block;width:100%;height:auto}
+.readrows{display:grid;gap:2px;margin:10px 0 0}
+.readrows div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--line);padding:4px 0;font-size:15.5px}
+.readrows div span:last-child{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.readrows div.hl span:last-child{color:var(--water-dk);font-weight:600}
+.readrows div.hl{font-weight:600}
+
+/* ---------- count the atoms ---------- */
+.cnt-in{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:14px 0 0}
+.cnt-in input[type=text]{font-family:var(--body);width:210px}
+.cnt-formula{font-family:var(--body);font-weight:600;font-size:clamp(34px,6vw,46px);line-height:1.1;margin:18px 0 4px}
+.cnt-note{font-size:15.5px;color:var(--ink2);margin:6px 0 12px}
+.cnt-rows{display:grid;gap:6px;margin-top:10px}
+.cnt-row{display:grid;grid-template-columns:8.2em minmax(0,1fr) 2.6em minmax(0,10em);align-items:center;gap:12px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:8px 12px}
+.cnt-row.tot{background:transparent;border-color:transparent;padding-top:2px}
+.cnt-el{font-size:15px;color:var(--ink2)}
+.cnt-el b{font-size:17px;color:var(--ink);margin-right:3px}
+.balls{display:flex;flex-wrap:wrap;gap:3px;align-items:center}
+.balls i{display:block;width:14px;height:14px;border-radius:50%;border:1px solid rgba(19,30,29,.4)}
+.balls .more{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:4px}
+.cnt-n{font-family:var(--mono);font-size:21px;font-weight:500;text-align:right;color:var(--water-dk)}
+.cnt-how{font-family:var(--mono);font-size:13px;color:var(--mute)}
+
+/* ---------- build a mole on the scale ---------- */
+.bb{display:grid;grid-template-columns:300px minmax(0,1fr);gap:24px;align-items:start;margin-top:12px}
+.bb-target{font-size:16px;margin:0}
+.bb-target b{font-weight:600}
+.el-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.elb{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--ink);border:1px solid var(--line);padding:7px 11px}
+.elb:hover{background:#F2F8F8;color:var(--ink);border-color:var(--water)}
+.elb i{display:block;width:13px;height:13px;border-radius:50%;border:1px solid rgba(19,30,29,.4)}
+.elb span{font-size:11.5px;color:var(--mute)}
+
+/* ---------- molar mass table ---------- */
+.mmt td,.mmt th{padding:8px 10px}
+.mmt td.n{white-space:nowrap}
+.mmt td.new{background:var(--brass-lite)}
+.mmt tfoot td{border-bottom:none;border-top:2px solid var(--ink);font-weight:600}
+.mmt tfoot td.n{color:var(--ok);font-size:17px}
+.wk-q{font-size:17px;margin:4px 0 0}
+.wk-text{min-height:4.4em}
+.wk-count{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto}
+
+/* ---------- gas piston ---------- */
+.gas{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:26px;align-items:start;margin-top:14px}
+.gas-fig{background:#fff;border:1px solid var(--line-soft);border-radius:3px}
+.gas-n{font-family:var(--mono);font-size:clamp(22px,4vw,28px);font-weight:500;color:var(--water-dk);margin:2px 0 0}
+.gas-msg{font-size:15.5px;color:var(--ink2);margin:12px 0 0}
+
+/* ---------- balloons ---------- */
+.balloons{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:14px 8px;margin:16px 0 6px}
+.balloons figure{margin:0;text-align:center}
+.balloons svg{display:block;width:100%;height:auto}
+.balloons figcaption{font-size:13.5px;line-height:1.3;color:var(--ink2)}
+.balloons figcaption b{display:block;font-weight:600;color:var(--ink)}
+.balloons figcaption .m{display:block;font-family:var(--mono);font-size:13px;color:var(--water-dk)}
+.balloons figcaption .st{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;margin-top:2px}
+.st.up{color:var(--ok)} .st.down{color:var(--no)} .st.even{color:var(--mute)}
+.legend{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin:0}
+
+/* ---------- periodic table ---------- */
+.tile{position:relative;width:150px;height:172px;background:#fff;border:2px solid var(--ink);border-radius:5px;font-family:var(--body);text-align:center}
+.tile .tz{position:absolute;top:8px;left:11px;font-family:var(--mono);font-size:20px;color:var(--no);border-bottom:2px solid var(--no);line-height:1.1}
+.tile .ts{display:block;font-size:58px;font-weight:600;line-height:1;padding-top:40px}
+.tile .tn{display:block;font-size:14px;color:var(--ink2);margin-top:4px}
+.tile .tm{display:inline-block;font-family:var(--mono);font-size:19px;color:var(--ok);background:var(--ok-bg);border-radius:3px;padding:0 6px;margin-top:4px}
+.pt-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin-top:6px}
+.pt{display:grid;grid-template-columns:repeat(18,minmax(0,1fr));grid-template-rows:repeat(7,auto) 10px auto auto;gap:2px;min-width:640px}
+.pt .el{font-family:var(--mono);padding:3px 0 2px;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:2px;text-align:center;line-height:1.15;letter-spacing:0;min-width:0}
+.pt .el:hover{border-color:var(--water);background:#F2F8F8;color:var(--ink)}
+.pt .el .z{display:block;font-size:8.5px;color:var(--mute)}
+.pt .el .s{display:block;font-family:var(--body);font-weight:600;font-size:13.5px}
+.pt .el .m{display:block;font-size:8.5px;color:var(--ink2)}
+.pt .el.rad{background:#EEF2F1}
+.pt .el.rad .s{color:var(--ink2)}
+.pt .el.on,.pt .el.on:hover{background:var(--ink);border-color:var(--ink);color:#fff}
+.pt .el.on .z,.pt .el.on .m{color:var(--lcd-ink)}
+.pt .gap{font-family:var(--mono);font-size:9px;color:var(--mute);display:flex;align-items:center;justify-content:center;border:1px dashed var(--line);border-radius:2px;text-align:center;line-height:1.1}
+.pt-detail{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center;margin-top:16px;padding-top:16px;border-top:1px dashed var(--line)}
+.pt-detail .tile{width:118px;height:136px}
+.pt-detail .tile .ts{font-size:44px;padding-top:32px}
+.pt-detail .tile .tz{font-size:16px;color:var(--ink2);border-bottom:none}
+.pt-detail .tile .tm{font-size:16px}
+.pt-facts{font-size:15.5px;min-width:0}
+.pt-facts .mm{font-family:var(--mono);font-size:clamp(22px,4vw,28px);font-weight:500;color:var(--ok)}
+.pt-facts p{margin:6px 0}
+.pt-facts .aside{font-size:14.5px;color:var(--mute)}
+
+/* ---------- factor-label setups ---------- */
+.fl{display:flex;flex-wrap:wrap;align-items:center;gap:10px 10px;font-family:var(--mono);font-size:16.5px;font-variant-numeric:tabular-nums;padding:14px 16px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;min-height:88px;margin-top:12px}
+.fl .qty{white-space:nowrap}
+.fl .frac{display:inline-flex;flex-direction:column;align-items:stretch;text-align:center;border-radius:3px}
+.fl .frac>span{padding:3px 8px;white-space:nowrap}
+.fl .frac>span:first-child{border-bottom:2px solid var(--ink)}
+.fl .frac.new{background:var(--brass-lite)}
+.fl .u{color:var(--water-dk)}
+.fl .u.x{color:var(--mute);text-decoration:line-through;text-decoration-color:var(--no);text-decoration-thickness:2.5px}
+.fl .op{color:var(--mute)}
+.fl .ans{background:var(--ok-bg);border-radius:3px;padding:4px 9px;color:var(--ok);font-weight:500;white-space:nowrap}
+.fl .ans .u{color:var(--ok)}
+.fl .ph{color:#A8B4B2;font-family:var(--body);font-style:italic;font-size:14.5px}
+.fb .fl{font-size:15px;min-height:0;padding:10px 12px;margin:10px 0 2px}
+.factor-opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.fopt{background:#fff;color:var(--ink);border:1px solid var(--line);padding:6px 6px;font-size:14px}
+.fopt:hover{background:#F2F8F8;color:var(--ink);border-color:var(--water)}
+.fopt .frac{display:inline-flex;flex-direction:column;text-align:center}
+.fopt .frac>span{padding:2px 8px;white-space:nowrap}
+.fopt .frac>span:first-child{border-bottom:1.5px solid var(--ink)}
+
+/* ---------- build the table (practice) ---------- */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tt{margin:10px 0 0;font-size:15px}
+.tt td{padding:6px 7px;white-space:nowrap}
+.tt td.op{color:var(--mute);font-family:var(--mono);padding:6px 2px}
+.tt input[type=text]{font-size:16px;padding:5px 7px;width:3.4em}
+.tt input.wide{width:5.4em}
+.tt input.ok-in{border-color:var(--ok);background:var(--ok-bg)}
+.tt input.no-in{border-color:var(--no);background:var(--no-bg)}
+
+/* ---------- mole map ---------- */
+.map{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);grid-template-areas:". . L . ." ". . v . ." "G a M b P";align-items:center;gap:10px;margin:22px 0 8px}
+#n-l{grid-area:L} #ar-v{grid-area:v} #n-g{grid-area:G} #ar-a{grid-area:a} #n-m{grid-area:M} #ar-b{grid-area:b} #n-p{grid-area:P}
+.node{background:var(--card);border:2px solid var(--line);border-radius:10px;padding:14px 10px;text-align:center;transition:border-color .2s,background .2s}
+.node b{display:block;font-family:var(--display);font-weight:400;font-size:clamp(24px,3.6vw,30px);line-height:1.1}
+.node span{font-family:var(--mono);font-size:12px;color:var(--mute)}
+.node.hub{border-color:var(--water);background:var(--water-lite)}
+.node.on{border-color:var(--ink);box-shadow:0 0 0 2px var(--ink)}
+.arrows{display:flex;flex-direction:column;gap:8px}
+.arrows.vert{flex-direction:row;justify-content:center}
+.arrows>span{display:block;font-family:var(--mono);font-size:12.5px;text-align:center;border:1px solid var(--line);background:#fff;border-radius:3px;padding:5px 8px;white-space:nowrap;color:var(--ink2);transition:background .2s,color .2s}
+.arrows>span.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.arrows i{font-style:normal;font-weight:600}
+.arrows .m{display:none}
+.route{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.route .lab{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-right:4px}
+.route-text{font-size:16px;margin:12px 0 0}
+
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#EDF2F1;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#C3D0CE}
+.next .nt{font-family:var(--display);font-size:26px;color:#fff;margin:0 0 4px}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F6F8F7;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--water-lite)}
+
+@media (max-width:760px){
+  .bb{grid-template-columns:1fr}
+  .bb .fig{max-width:340px}
+  .gas{grid-template-columns:1fr}
+  .gas-fig{max-width:320px}
+}
+@media (max-width:640px){
+  .map{grid-template-columns:minmax(0,1.3fr) auto minmax(0,1fr);grid-template-areas:"G . ." "a . ." "M v L" "b . ." "P . .";gap:8px}
+  .node{padding:12px 6px}
+  .arrows{flex-direction:row;justify-content:center;flex-wrap:wrap}
+  .arrows.vert{flex-direction:column}
+  .arrows .d{display:none}
+  .arrows .m{display:inline}
+  .arrows .lg{display:none}
+  .cnt-row{grid-template-columns:minmax(0,1fr) auto;gap:4px 10px}
+  .cnt-row .balls{grid-column:1 / -1;grid-row:2}
+  .cnt-row .cnt-how{grid-column:1 / -1;grid-row:3}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:16px}
+  .sig-readout{padding:20px 18px}
+  .sig-grid{grid-template-columns:1fr}
+  .sig-fig{max-width:300px;margin:0 auto}
+  .field label{min-width:auto;flex:1 1 100%}
+  .pt-detail{grid-template-columns:1fr}
+  .fl{font-size:15px;padding:12px}
+  .mmt td,.mmt th{padding:7px 6px}
+  .tt td,.tt th{padding:6px 3px}
+  .tt td.op{padding:6px 1px}
+  .tt input[type=text]{width:2.9em;padding:5px 5px}
+  .tt input.wide{width:4.5em}
+  .mmt{font-size:14px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){
+  .node,.arrows>span{transition:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Molar Mass &amp; Molar Volume</span>
+    <span class="bar-sub">Molar mass of compounds · molar volume at STP · the mole map</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 4 · Molar mass and molar volume</div>
+  <h1>Compounds by the <em>gram</em>, gases by the <em>liter</em>.</h1>
+  <p class="lede">On the last page, you read an element’s molar mass straight off the periodic table. Compounds aren’t on the table, so you build their molar mass by adding up the atoms in the formula. Gases come with a shortcut of their own: at STP, one mole of <i>any</i> gas takes up 22.4 liters.</p>
+
+  <div class="sig-readout">
+    <div class="sig-grid">
+      <div>
+        <div class="sig-calc">One mole of each</div>
+        <div class="sig-rows">
+          <div class="sig-r head"><span>Substance</span><span>One mole</span></div>
+          <div class="sig-r"><span class="fx">H<sub>2</sub>O</span><span><span class="v">18.02 g</span><span class="tg">water</span></span></div>
+          <div class="sig-r"><span class="fx">CO<sub>2</sub></span><span><span class="v">44.01 g</span><span class="tg">carbon dioxide</span></span></div>
+          <div class="sig-r"><span class="fx">NaCl</span><span><span class="v">58.44 g</span><span class="tg">table salt</span></span></div>
+          <div class="sig-r"><span class="fx">C<sub>12</sub>H<sub>22</sub>O<sub>11</sub></span><span><span class="v">342.34 g</span><span class="tg">table sugar</span></span></div>
+          <div class="sig-r hl"><span class="fx">Any gas</span><span><span class="v">22.4 L</span><span class="tg">at STP</span></span></div>
+        </div>
+        <div class="sig-note">Add up the atoms in the formula to get the grams. For a gas at STP, it’s always <b>22.4 L per mole</b>, whatever the gas.</div>
+      </div>
+      <div class="sig-fig">
+        <div class="fig" id="hero-fig"></div>
+        <p class="sig-cap">Drawn to scale. One mole of any gas at STP fills a 22.4 L box, 28.2 cm on a side: about three basketballs’ worth. The tiny blue cube is one mole of liquid water, 18.0 mL.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#count">Counting atoms</a>
+  <a href="#compound">Molar mass of compounds</a>
+  <a href="#volume">Molar volume at STP</a>
+  <a href="#balloons">Same volume, different mass</a>
+  <a href="#convert">The mole map</a>
+  <a href="#watch">Watch-outs</a>
+  <a href="#practice">Practice</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ COUNT ============ -->
+<section id="count">
+  <div class="sec-head"><span class="tasktag">Step one</span><h2>Counting atoms in a formula</h2></div>
+  <p>A chemical formula is a recipe for one molecule, or one formula unit, of a compound. The symbols tell you which elements are in it, and the subscripts tell you how many atoms of each. Before you can find a molar mass, you have to count the atoms correctly.</p>
+  <div class="rulebox">
+    <div class="rulecard"><div class="op fx">H<sub>2</sub>O</div><h4>A subscript counts the atom right before it</h4><p>The 2 belongs to H only. No subscript means 1.</p><div class="ex">2 H + 1 O = 3 atoms</div></div>
+    <div class="rulecard"><div class="op fx">Ca(NO<sub>3</sub>)<sub>2</sub></div><h4>A subscript after parentheses multiplies everything inside</h4><p>Two whole NO<sub>3</sub> groups, so 2 N and 6 O.</p><div class="ex">1 Ca + 2 N + 6 O = 9 atoms</div></div>
+    <div class="rulecard"><div class="op fx">2 H<sub>2</sub>O</div><h4>A coefficient counts whole formulas</h4><p>The big 2 in front means two water molecules, or two moles of water. It isn’t part of the formula, so leave it out of the molar mass.</p><div class="ex">Molar mass is for one H<sub>2</sub>O</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-label"><span>Count the atoms</span></div>
+    <div class="tabs" role="tablist" aria-label="Example formulas" id="cnt-tabs"></div>
+    <div class="cnt-in">
+      <input type="text" id="cnt-in" autocomplete="off" spellcheck="false" placeholder="Or type a formula, like Mg3(PO4)2" aria-label="Type a formula">
+      <button type="button" id="cnt-go">Count</button>
+    </div>
+    <div class="fb" id="cnt-fb" aria-live="polite"></div>
+    <div id="cnt-out" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ============ COMPOUND ============ -->
+<section id="compound">
+  <div class="sec-head"><span class="tasktag">The method</span><h2>Molar mass of a compound</h2></div>
+  <p>One mole of water is 6.02 × 10<sup>23</sup> water molecules. Every one of them has 2 hydrogen atoms and 1 oxygen atom, so a mole of water contains <b>2 mol of H atoms and 1 mol of O atoms</b>. Its mass is the mass of all those atoms added together. Build a mole of each compound on the scale.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Build one mole on the scale</span></div>
+    <div class="tabs" role="tablist" aria-label="Compound to build" id="bb-tabs"></div>
+    <div class="bb">
+      <div class="fig" id="bb-fig"></div>
+      <div>
+        <p class="bb-target" id="bb-target"></p>
+        <div class="el-btns" id="bb-btns"></div>
+        <div class="readrows" id="bb-rows" aria-live="polite"></div>
+        <div class="btn-row">
+          <button type="button" class="ghost small" id="bb-undo">Undo</button>
+          <button type="button" class="ghost small" id="bb-empty">Empty the scale</button>
+        </div>
+      </div>
+    </div>
+    <div class="fb" id="bb-fb" aria-live="polite"></div>
+    <p class="smallprint" style="margin-bottom:0">Each ball on the scale is one mole of atoms of that element: 6.02 × 10<sup>23</sup> atoms.</p>
+  </div>
+
+  <p>That’s the whole method. The <b>molar mass</b> of a compound is the sum of the molar masses of all the atoms in its formula. Its unit is g/mol, the same as for an element.</p>
+  <h3>Four steps</h3>
+  <ol>
+    <li><b>Count</b> the atoms of each element in the formula.</li>
+    <li><b>Look up</b> each element’s molar mass on the periodic table.</li>
+    <li><b>Multiply</b> each molar mass by its number of atoms.</li>
+    <li><b>Add.</b> Keep two decimal places, the same as the periodic table.</li>
+  </ol>
+
+  <div class="card">
+    <div class="card-label"><span>Worked example</span><span class="wk-count" id="mw-count"></span></div>
+    <div class="tabs" role="tablist" aria-label="Choose a compound" id="mw-tabs"></div>
+    <p class="wk-q" id="mw-q"></p>
+    <div class="tbl-scroll"><table class="mmt" id="mw-table"></table></div>
+    <div class="fb hint show wk-text" id="mw-text" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="mw-next">Next step</button>
+      <button type="button" class="ghost" id="mw-prev">Back</button>
+      <button type="button" class="ghost" id="mw-restart">Start over</button>
+    </div>
+  </div>
+
+  <h3>Molecules and formula units</h3>
+  <p>Water and sugar are made of separate <b>molecules</b>. Ionic compounds like table salt, NaCl, aren’t. They’re a huge lattice of Na<sup>+</sup> and Cl<sup>−</sup> ions, so the smallest repeating unit is called a <b>formula unit</b>: one Na<sup>+</sup> and one Cl<sup>−</sup>. Molar mass works exactly the same way for both.</p>
+  <table>
+    <thead><tr><th>Substance</th><th>One particle</th><th>One mole (6.02 × 10<sup>23</sup> particles)</th></tr></thead>
+    <tbody>
+      <tr><td>Water, H<sub>2</sub>O</td><td class="n">1 molecule: 18.02 amu</td><td class="n">18.02 g</td></tr>
+      <tr><td>Carbon dioxide, CO<sub>2</sub></td><td class="n">1 molecule: 44.01 amu</td><td class="n">44.01 g</td></tr>
+      <tr><td>Sodium chloride, NaCl</td><td class="n">1 formula unit: 58.44 amu</td><td class="n">58.44 g</td></tr>
+      <tr><td>Oxygen gas, O<sub>2</sub></td><td class="n">1 molecule: 32.00 amu</td><td class="n">32.00 g</td></tr>
+    </tbody>
+  </table>
+  <p>Same number, different unit, just like the elements on the last page: <b>amu for one particle, grams for one mole</b>.</p>
+  <div class="note"><b>Diatomic elements are molecules too.</b> Seven elements exist as two-atom molecules: H<sub>2</sub>, N<sub>2</sub>, O<sub>2</sub>, F<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub> and I<sub>2</sub>. “Oxygen gas” means O<sub>2</sub>, so its molar mass is 2 × 16.00 = <b>32.00 g/mol</b>, not 16.00.</div>
+</section>
+
+<!-- ============ VOLUME ============ -->
+<section id="volume">
+  <div class="sec-head"><span class="tasktag">Gases</span><h2>Molar volume at STP</h2></div>
+  <p>Gases are hard to weigh but easy to measure by volume. And gases have a surprising property: at the same temperature and pressure, <b>one mole of any gas takes up the same volume</b>. Hydrogen, helium, carbon dioxide: it doesn’t matter which gas it is.</p>
+  <p>To compare gases fairly, chemists use one standard set of conditions called <b>STP</b>, short for standard temperature and pressure.</p>
+  <div class="rulebox">
+    <div class="rulecard"><div class="op">0 °C</div><h4>Standard temperature</h4><p>The freezing point of water, which is 273 K.</p></div>
+    <div class="rulecard"><div class="op">1 atm</div><h4>Standard pressure</h4><p>Normal air pressure at sea level: 101.3 kPa, or 760 mmHg.</p></div>
+    <div class="rulecard"><div class="op">22.4 L/mol</div><h4>Molar volume at STP</h4><p>One mole of any gas at STP takes up 22.4 L. That number is the gas’s <b>molar volume</b>.</p></div>
+  </div>
+
+  <h3>Why one number works for every gas</h3>
+  <p>In a solid or a liquid, the particles touch, so a mole of big particles takes up more room than a mole of small ones. A gas is different. Its particles are far apart, and at STP the particles themselves fill less than 0.1% of the space. Whether each particle is a tiny helium atom or a bigger CO<sub>2</sub> molecule hardly matters. What sets the volume is <b>how many</b> particles there are.</p>
+  <div class="card">
+    <div class="card-label"><span>How far apart, to scale</span></div>
+    <div class="fig" id="sp-fig"></div>
+    <p class="smallprint" style="margin-bottom:0">The average distance between neighboring particles, drawn to scale. In every direction, gas particles at STP are about 11 times farther apart than the molecules in liquid water. That makes the volume about 11 × 11 × 11 times bigger, more than a thousand times.</p>
+  </div>
+
+  <h3>Same moles, same volume</h3>
+  <p>Pick a gas and set the number of moles. The piston keeps the pressure at 1 atm, and the temperature stays at 0 °C.</p>
+  <div class="card">
+    <div class="card-label"><span>A gas at STP</span></div>
+    <div class="tabs" role="tablist" aria-label="Gas in the cylinder" id="gs-tabs"></div>
+    <div class="gas">
+      <div class="gas-fig fig" id="gs-fig"></div>
+      <div>
+        <div class="scaf-lab">Moles of gas</div>
+        <div class="gas-n" id="gs-n"></div>
+        <input type="range" id="gs-range" min="0.25" max="3" step="0.25" value="1" aria-label="Moles of gas">
+        <div class="btn-row" style="margin-top:6px">
+          <button type="button" class="ghost small" id="gs-down">− 0.25 mol</button>
+          <button type="button" class="small" id="gs-up">+ 0.25 mol</button>
+          <button type="button" class="ghost small" id="gs-one">Back to 1 mol</button>
+        </div>
+        <div class="readrows" id="gs-rows" aria-live="polite"></div>
+        <p class="gas-msg" id="gs-msg"></p>
+      </div>
+    </div>
+    <p class="smallprint" style="margin-bottom:0">Each drawn particle stands for an enormous number of real ones, and they’re drawn far bigger than scale. Lighter particles move faster, but at the same temperature and pressure a mole of any gas still takes up the same volume.</p>
+  </div>
+  <div class="note"><b>Only gases, and only at STP.</b> 22.4 L/mol doesn’t work for solids or liquids: a mole of liquid water fills just 18.0 mL. And a gas at a different temperature or pressure has a different molar volume. Every gas problem on this page is at STP.
+    <p class="smallprint">Some newer textbooks define STP with a pressure of 1 bar instead of 1 atm, which gives 22.7 L/mol. This page uses 0 °C, 1 atm and 22.4 L/mol.</p>
+  </div>
+</section>
+
+<!-- ============ BALLOONS ============ -->
+<section id="balloons">
+  <div class="sec-head"><span class="tasktag">Compare</span><h2>Same volume, different mass</h2></div>
+  <p>A mole of any gas at STP takes up 22.4 L, but the mass of that mole depends on the gas. It’s the idea from the last page again: same count, different mass. Below are 22.4 L of nine gases, one mole each, compared with 22.4 L of air. Air is a mixture, mostly N<sub>2</sub> and O<sub>2</sub>, and 22.4 L of it at STP has a mass of about 29.0 g. A balloon of any gas lighter than that floats.</p>
+  <div class="card">
+    <div class="card-label"><span>22.4 L of each gas at STP</span></div>
+    <p class="legend">Each balloon: 22.4 L = 1.00 mol. The same 22.4 L of air: about 29.0 g.</p>
+    <div class="balloons" id="bal"></div>
+    <p class="smallprint" style="margin-bottom:0">The masses are the gas only, not the balloon. Nitrogen is most of the air, so a nitrogen balloon is about as heavy as the air it pushes aside.</p>
+  </div>
+  <div class="note"><b>Real-world chemistry.</b> Natural gas is mostly methane, CH<sub>4</sub> (16.05 g/mol), which is lighter than air and rises. Propane, C<sub>3</sub>H<sub>8</sub> (44.11 g/mol), is heavier than air and sinks. That’s why natural-gas detectors are mounted high on a wall, and propane detectors go down low.</div>
+</section>
+
+<!-- ============ CONVERT ============ -->
+<section id="convert">
+  <div class="sec-head"><span class="tasktag">Converting</span><h2>The mole map</h2></div>
+  <p>On the last page, the mole map had three stops. Now it has four: grams, moles, particles, and liters of gas at STP. Moles are still the hub. Every conversion goes to moles or comes from moles, and each arrow uses one conversion factor.</p>
+  <div class="rulebox one">
+    <div class="rulecard"><h4 style="margin-top:0">Molar mass: grams ↔ moles</h4><div class="fl" id="cf-mm"></div></div>
+    <div class="rulecard"><h4 style="margin-top:0">Avogadro’s number: moles ↔ particles</h4><div class="fl" id="cf-na"></div></div>
+    <div class="rulecard"><h4 style="margin-top:0">Molar volume: moles ↔ liters, for a gas at STP only</h4><div class="fl" id="cf-mv"></div></div>
+  </div>
+
+  <div class="map" id="map" aria-label="Mole map: moles in the middle. Grams to moles uses molar mass, moles to particles uses Avogadro's number, and moles to liters of gas at STP uses 22.4 liters per mole.">
+    <div class="node" id="n-l"><b>Liters</b><span>gas at STP</span></div>
+    <div class="arrows vert" id="ar-v">
+      <span id="a-ml"><i class="d">↑</i><i class="m">→</i> × 22.4<span class="lg"> L/mol</span></span>
+      <span id="a-lm"><i class="d">↓</i><i class="m">←</i> ÷ 22.4<span class="lg"> L/mol</span></span>
+    </div>
+    <div class="node" id="n-g"><b>Grams</b><span>mass (g)</span></div>
+    <div class="arrows" id="ar-a">
+      <span id="a-gm"><i class="d">→</i><i class="m">↓</i> ÷ molar mass</span>
+      <span id="a-mg"><i class="d">←</i><i class="m">↑</i> × molar mass</span>
+    </div>
+    <div class="node hub" id="n-m"><b>Moles</b><span>mol</span></div>
+    <div class="arrows" id="ar-b">
+      <span id="a-mp"><i class="d">→</i><i class="m">↓</i> × 6.02 × 10<sup>23</sup></span>
+      <span id="a-pm"><i class="d">←</i><i class="m">↑</i> ÷ 6.02 × 10<sup>23</sup></span>
+    </div>
+    <div class="node" id="n-p"><b>Particles</b><span>molecules, atoms, formula units</span></div>
+  </div>
+  <div class="card">
+    <div class="card-label"><span>Plan a route</span></div>
+    <div class="route">
+      <div><span class="lab">From</span><span class="tabs" style="display:inline-flex" id="rt-from" role="tablist" aria-label="Start from"></span></div>
+      <div><span class="lab">To</span><span class="tabs" style="display:inline-flex" id="rt-to" role="tablist" aria-label="End at"></span></div>
+    </div>
+    <p class="route-text" id="rt-text" aria-live="polite"></p>
+    <div class="fl" id="rt-fl"></div>
+  </div>
+
+  <h3>The factor-label method</h3>
+  <ol>
+    <li><b>Write what you’re given</b>, with its unit and formula: 88.0 g CO<sub>2</sub>, not just 88.0.</li>
+    <li><b>Find the molar mass first</b> if the problem has grams in it.</li>
+    <li><b>Multiply by a conversion factor</b> with the unit you have on the <i>bottom</i>.</li>
+    <li><b>Cancel units.</b> The unit left over should be the one you want.</li>
+    <li><b>Do the math</b>, round to the right number of significant figures, and sense-check the size of the answer.</li>
+  </ol>
+
+  <div class="card">
+    <div class="card-label"><span>Worked example</span><span class="wk-count" id="wk-count"></span></div>
+    <div class="tabs" role="tablist" aria-label="Choose a worked example" id="wk-tabs"></div>
+    <p class="wk-q" id="wk-q"></p>
+    <div id="wk-fl"></div>
+    <div class="fb hint show wk-text" id="wk-text" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="wk-next">Next step</button>
+      <button type="button" class="ghost" id="wk-prev">Back</button>
+      <button type="button" class="ghost" id="wk-restart">Start over</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="sec-head"><span class="tasktag">Common mistakes</span><h2>Watch-outs</h2></div>
+  <div class="rulebox">
+    <div class="rulecard miss">
+      <h4>Skipping the subscripts</h4>
+      <p>Every subscript multiplies that element’s molar mass.</p>
+      <div class="wrong">H<sub>2</sub>O: 1.01 + 16.00 = 17.01 g/mol</div>
+      <div class="right">H<sub>2</sub>O: 2(1.01) + 16.00 = 18.02 g/mol</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Stopping at the parentheses</h4>
+      <p>A subscript after parentheses multiplies every atom inside them.</p>
+      <div class="wrong">Ca(NO<sub>3</sub>)<sub>2</sub>: 40.08 + 14.01 + 3(16.00) = 102.09</div>
+      <div class="right">Ca(NO<sub>3</sub>)<sub>2</sub>: 40.08 + 2(14.01) + 6(16.00) = 164.10</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Forgetting a gas is diatomic</h4>
+      <p>Oxygen gas is O<sub>2</sub> molecules, not single O atoms. The same goes for H<sub>2</sub>, N<sub>2</sub>, F<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub> and I<sub>2</sub>.</p>
+      <div class="wrong">Oxygen gas: 16.00 g/mol</div>
+      <div class="right">Oxygen gas, O<sub>2</sub>: 32.00 g/mol</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Using 22.4 L for a liquid or solid</h4>
+      <p>22.4 L/mol is only for gases, and only at STP. Particles in liquids and solids touch.</p>
+      <div class="wrong">1 mol H<sub>2</sub>O(l) = 22.4 L</div>
+      <div class="right">1 mol H<sub>2</sub>O(l) = 18.0 mL</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Multiplying liters by 22.4</h4>
+      <p>Going from liters to moles, you divide. Check the units: L × L/mol leaves L²/mol, which isn’t moles.</p>
+      <div class="wrong">11.2 L × 22.4 L/mol = 251 L²/mol</div>
+      <div class="right">11.2 L ÷ 22.4 L/mol = 0.500 mol</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Mixing up liters and grams</h4>
+      <p>22.4 is liters per mole, and it’s the same for every gas. Molar mass is grams per mole, and it depends on the formula.</p>
+      <div class="wrong">44.8 L CO<sub>2</sub> = 44.8 g CO<sub>2</sub></div>
+      <div class="right">44.8 L CO<sub>2</sub> = 2.00 mol = 88.0 g CO<sub>2</sub></div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Putting the coefficient in the molar mass</h4>
+      <p>A coefficient tells you how many moles, not what one mole weighs.</p>
+      <div class="wrong">2 H<sub>2</sub>O: molar mass 36.04 g/mol</div>
+      <div class="right">H<sub>2</sub>O: 18.02 g/mol, so 2 mol H<sub>2</sub>O = 36.04 g</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRACTICE ============ -->
+<section id="practice">
+  <div class="sec-head"><span class="tasktag">Practice</span><h2>Practice</h2></div>
+  <p>Pick a kind of problem, or mix them up. Use the periodic table for molar masses and 22.4 L/mol for gases at STP. Below each molar mass problem you can <b>build the table</b>, and below each conversion you can <b>build the setup</b> and watch the units cancel.</p>
+  <p class="smallprint">Your score counts a problem as solved when your first check is right. Using “Show answer” counts as a miss. Molar masses within 0.5 g/mol are accepted, and other answers within about 1%, so small differences in rounding are fine.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Generated problems</span><span class="score" id="p-score">0 of 0</span></div>
+    <div class="tabs" role="tablist" aria-label="Kind of problem" id="p-tabs">
+      <button type="button" class="tab" role="tab" data-k="mm" aria-selected="true">Molar mass</button>
+      <button type="button" class="tab" role="tab" data-k="grams" aria-selected="false">Grams ↔ moles</button>
+      <button type="button" class="tab" role="tab" data-k="gas" aria-selected="false">Liters at STP</button>
+      <button type="button" class="tab" role="tab" data-k="parts" aria-selected="false">Particles</button>
+      <button type="button" class="tab" role="tab" data-k="two" aria-selected="false">Two steps</button>
+      <button type="button" class="tab" role="tab" data-k="mix" aria-selected="false">Mix it up</button>
+    </div>
+    <p class="prob" id="p-prob" style="margin-top:16px"></p>
+    <div class="field">
+      <label for="p-in" id="p-label">Your answer</label>
+      <input type="text" id="p-in" autocomplete="off" spellcheck="false" placeholder="Type a number">
+      <span class="x10" id="p-x10">× 10<input type="text" id="p-exp" class="exp" autocomplete="off" spellcheck="false" aria-label="Exponent (power of ten)"></span>
+      <span class="unit-tag" id="p-unit"></span>
+    </div>
+    <p class="typing-tip" id="p-tip"></p>
+    <div class="btn-row">
+      <button type="button" id="p-check">Check</button>
+      <button type="button" class="ghost" id="p-show">Show answer</button>
+      <button type="button" class="ghost" id="p-new">New problem</button>
+      <button type="button" class="ghost" id="p-ptbtn" aria-expanded="false">Periodic table</button>
+    </div>
+    <div class="fb" id="p-fb" aria-live="polite"></div>
+    <div id="p-pt" hidden style="margin-top:14px"></div>
+
+    <div class="scaf" id="t-wrap" hidden>
+      <div class="scaf-lab">Build the table</div>
+      <p class="setup" style="margin-top:6px">Count the atoms of each element, then multiply by its molar mass. The table checks each row. Adding up the subtotals is up to you.</p>
+      <div class="tbl-scroll"><table class="tt" id="t-table"></table></div>
+      <div class="btn-row" style="margin-top:10px">
+        <button type="button" class="ghost small" id="t-check">Check rows</button>
+        <button type="button" class="ghost small" id="t-clear">Clear</button>
+      </div>
+      <div class="fb hint show" id="t-msg" aria-live="polite"></div>
+    </div>
+
+    <div class="scaf" id="s-wrap" hidden>
+      <div class="scaf-lab">Build the setup</div>
+      <p class="setup" style="margin-top:6px">Click a conversion factor to multiply by it. Units that cancel get crossed out. The setup doesn’t do the math for you.</p>
+      <div id="s-chain"></div>
+      <div class="factor-opts" id="s-opts"></div>
+      <div class="btn-row" style="margin-top:10px">
+        <button type="button" class="ghost small" id="s-undo">Undo</button>
+        <button type="button" class="ghost small" id="s-clear">Clear</button>
+      </div>
+      <div class="fb hint show" id="s-msg" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Ten questions on molar mass of compounds, molar volume at STP and converting.</p>
+  <div class="card" id="quiz"></div>
+</section>
+
+<footer>
+  <p>Molar mass of compounds, molar volume of gases at STP (0 °C and 1 atm), and conversions between grams, moles, particles and liters. Element data are standard atomic weights rounded to two decimal places. The practice problems are generated fresh every time.</p>
+  <p><a href="/chemistry/moles/">← Unit 4 — Moles</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function each(list, fn){ Array.prototype.forEach.call(list, fn); }
+function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+function tabs(host, onPick){
+  each(host.querySelectorAll('.tab'), function(b){
+    b.addEventListener('click', function(){
+      each(host.querySelectorAll('.tab'), function(o){ o.setAttribute('aria-selected', String(o === b)); });
+      onPick(b);
+    });
+  });
+}
+var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/*CORE-START*/
+/* =========================================================
+   core: elements, formulas, numbers, problems, judging (no DOM)
+   ========================================================= */
+var NA = 6.02e23;   /* Avogadro's number, as students use it */
+var MV = 22.4;      /* L/mol for any gas at STP (0 °C, 1 atm) */
+
+/* symbol, name, standard atomic weight to 2 decimals ; (n) = mass number of a long-lived isotope, no stable isotopes */
+var EL_DATA = 'H,Hydrogen,1.01;He,Helium,4.00;Li,Lithium,6.94;Be,Beryllium,9.01;B,Boron,10.81;C,Carbon,12.01;N,Nitrogen,14.01;O,Oxygen,16.00;F,Fluorine,19.00;Ne,Neon,20.18;Na,Sodium,22.99;Mg,Magnesium,24.31;Al,Aluminum,26.98;Si,Silicon,28.09;P,Phosphorus,30.97;S,Sulfur,32.06;Cl,Chlorine,35.45;Ar,Argon,39.95;K,Potassium,39.10;Ca,Calcium,40.08;Sc,Scandium,44.96;Ti,Titanium,47.87;V,Vanadium,50.94;Cr,Chromium,52.00;Mn,Manganese,54.94;Fe,Iron,55.85;Co,Cobalt,58.93;Ni,Nickel,58.69;Cu,Copper,63.55;Zn,Zinc,65.38;Ga,Gallium,69.72;Ge,Germanium,72.63;As,Arsenic,74.92;Se,Selenium,78.97;Br,Bromine,79.90;Kr,Krypton,83.80;Rb,Rubidium,85.47;Sr,Strontium,87.62;Y,Yttrium,88.91;Zr,Zirconium,91.22;Nb,Niobium,92.91;Mo,Molybdenum,95.95;Tc,Technetium,(98);Ru,Ruthenium,101.07;Rh,Rhodium,102.91;Pd,Palladium,106.42;Ag,Silver,107.87;Cd,Cadmium,112.41;In,Indium,114.82;Sn,Tin,118.71;Sb,Antimony,121.76;Te,Tellurium,127.60;I,Iodine,126.90;Xe,Xenon,131.29;Cs,Cesium,132.91;Ba,Barium,137.33;La,Lanthanum,138.91;Ce,Cerium,140.12;Pr,Praseodymium,140.91;Nd,Neodymium,144.24;Pm,Promethium,(145);Sm,Samarium,150.36;Eu,Europium,151.96;Gd,Gadolinium,157.25;Tb,Terbium,158.93;Dy,Dysprosium,162.50;Ho,Holmium,164.93;Er,Erbium,167.26;Tm,Thulium,168.93;Yb,Ytterbium,173.05;Lu,Lutetium,174.97;Hf,Hafnium,178.49;Ta,Tantalum,180.95;W,Tungsten,183.84;Re,Rhenium,186.21;Os,Osmium,190.23;Ir,Iridium,192.22;Pt,Platinum,195.08;Au,Gold,196.97;Hg,Mercury,200.59;Tl,Thallium,204.38;Pb,Lead,207.2;Bi,Bismuth,208.98;Po,Polonium,(209);At,Astatine,(210);Rn,Radon,(222);Fr,Francium,(223);Ra,Radium,(226);Ac,Actinium,(227);Th,Thorium,232.04;Pa,Protactinium,231.04;U,Uranium,238.03;Np,Neptunium,(237);Pu,Plutonium,(244);Am,Americium,(243);Cm,Curium,(247);Bk,Berkelium,(247);Cf,Californium,(251);Es,Einsteinium,(252);Fm,Fermium,(257);Md,Mendelevium,(258);No,Nobelium,(259);Lr,Lawrencium,(262);Rf,Rutherfordium,(267);Db,Dubnium,(268);Sg,Seaborgium,(269);Bh,Bohrium,(270);Hs,Hassium,(269);Mt,Meitnerium,(278);Ds,Darmstadtium,(281);Rg,Roentgenium,(282);Cn,Copernicium,(285);Nh,Nihonium,(286);Fl,Flerovium,(289);Mc,Moscovium,(290);Lv,Livermorium,(293);Ts,Tennessine,(294);Og,Oganesson,(294)';
+var ELEMENTS = EL_DATA.split(';').map(function(r, i){
+  var p = r.split(','), br = p[2].charAt(0) === '(';
+  return { sym:p[0], name:p[1], z:i + 1, ms:p[2], M:parseFloat(br ? p[2].slice(1) : p[2]), br:br };
+});
+var EL = {};
+ELEMENTS.forEach(function(e){ EL[e.sym] = e; });
+var DIATOMIC = { H:1, N:1, O:1, F:1, Cl:1, Br:1, I:1 };
+
+/* ---- formulas ---- */
+var SUBS = '₀₁₂₃₄₅₆₇₈₉';
+function plainDigits(s){ return String(s).replace(/[₀-₉]/g, function(ch){ return String(ch.charCodeAt(0) - 0x2080); }); }
+function fHTML(f){ return String(f).replace(/\d+/g, function(d){ return '<sub>' + d + '</sub>'; }); }
+function fText(f){ return String(f).replace(/\d/g, function(d){ return SUBS.charAt(Number(d)); }); }
+
+/* parseFormula('Ca(NO3)2') -> { ok, f, occ:[{el,n,mult,lmult}], counts:{Ca:1,N:2,O:6}, order:['Ca','N','O'], groups:[{inner:'NO3',k:2}] }
+   n = subscript on the symbol ; mult = product of the subscripts on every enclosing pair of parentheses ;
+   lmult = the same, but as if a parentheses subscript only reached the last atom inside (a common mistake) */
+function parseFormula(str){
+  var s = plainDigits(str).replace(/\s+/g, ''), i = 0, groups = [];
+  if(!s) return { ok:false, err:'nothing in it' };
+  function num(){
+    var m = /^\d+/.exec(s.slice(i));
+    if(!m) return 1;
+    i += m[0].length;
+    var n = parseInt(m[0], 10);
+    if(n === 0) throw 'a subscript of 0';
+    return n;
+  }
+  function group(depth){
+    var items = [];
+    while(i < s.length){
+      var ch = s.charAt(i);
+      if(ch === '(' || ch === '['){
+        var start = ++i;
+        var inner = group(depth + 1);
+        if(s.charAt(i) !== ')' && s.charAt(i) !== ']') throw 'a parenthesis that never closes';
+        var end = i++;
+        var k = num();
+        if(!inner.length) throw 'empty parentheses';
+        inner.forEach(function(o){ o.mult *= k; });
+        inner[inner.length - 1].lmult *= k;
+        if(k > 1) groups.push({ inner:s.slice(start, end), k:k });
+        items = items.concat(inner);
+      } else if(ch === ')' || ch === ']'){
+        if(depth === 0) throw 'an extra closing parenthesis';
+        return items;
+      } else if(/[A-Z]/.test(ch)){
+        var sym = ch; i++;
+        if(/[a-z]/.test(s.charAt(i))){ sym += s.charAt(i); i++; }
+        if(!EL[sym]) throw '“' + sym + '”, which isn’t an element symbol';
+        items.push({ el:sym, n:num(), mult:1, lmult:1 });
+      } else if(/[a-z]/.test(ch)){
+        throw 'a lowercase “' + ch + '”. Element symbols start with a capital letter';
+      } else if(/\d/.test(ch)){
+        throw 'a number in front. Leave out coefficients: molar mass is for one formula';
+      } else {
+        throw 'the character “' + ch + '”';
+      }
+    }
+    if(depth > 0) throw 'a parenthesis that never closes';
+    return items;
+  }
+  try {
+    var occ = group(0), counts = {}, order = [];
+    occ.forEach(function(o){
+      if(!(o.el in counts)){ counts[o.el] = 0; order.push(o.el); }
+      counts[o.el] += o.n * o.mult;
+    });
+    return { ok:true, f:s, occ:occ, counts:counts, order:order, groups:groups };
+  } catch(e){
+    return { ok:false, err:String(e) };
+  }
+}
+/* add in hundredths so 2.02 + 16.00 is exactly 18.02 */
+function hund(sym){ return Math.round(EL[sym].M * 100); }
+function massOf(counts){ var h = 0; for(var s in counts) h += counts[s] * hund(s); return h / 100; }
+function fix2(x){ return (Math.round(x * 100) / 100).toFixed(2); }
+function mmOf(f){ return massOf(parseFormula(f).counts); }
+
+/* ---- numbers ---- */
+function commas(s){
+  var parts = String(s).split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return parts.join('.');
+}
+var SUPS = { '0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻' };
+function supText(n){ return String(n).split('').map(function(c){ return SUPS[c] || c; }).join(''); }
+function supHTML(n){ return '<sup>' + String(n).replace('-', '−') + '</sup>'; }
+/* round to sf significant figures -> { m:'1.51', e:24 } */
+function sigParts(x, sf){
+  if(x === 0) return { m:(0).toFixed(sf - 1), e:0 };
+  var e = Math.floor(Math.log10(Math.abs(x)));
+  var f = Math.pow(10, sf - 1);
+  var m = Math.round(Math.abs(x) / Math.pow(10, e) * f * (1 + 1e-12)) / f;
+  if(m >= 10){ m = m / 10; e++; }
+  return { m:(x < 0 ? '-' : '') + m.toFixed(sf - 1), e:e };
+}
+function sciHTML(x, sf){ var p = sigParts(x, sf || 3); return p.m + ' × 10' + supHTML(p.e); }
+/* plain decimals between 0.001 and 999 ; scientific notation outside that, or when a trailing zero would be ambiguous */
+function sigHTML(x, sf){
+  sf = sf || 3;
+  var p = sigParts(x, sf);
+  if(p.e >= 3 || p.e < -3) return sciHTML(x, sf);
+  var dp = Math.max(0, sf - 1 - p.e);
+  var s = (Number(p.m) * Math.pow(10, p.e)).toFixed(dp);
+  if(dp === 0 && /0$/.test(s)) return sciHTML(x, sf);
+  return s;
+}
+/* the same rounding as sigHTML, as text you could type: 0.448 or 1.40e2 */
+function sigPlain(x, sf){
+  var h = sigHTML(x, sf || 3), m = /^(-?[\d.]+) × 10<sup>(.+)<\/sup>$/.exec(h);
+  return m ? m[1] + 'e' + m[2].replace('−', '-') : h;
+}
+
+/* '1.51e24', '1.51 x 10^24', '1.51×10²⁴', '1,505,000', '0.250 mol H2O' -> { v, sf } or null */
+function parseNum(str){
+  var s = String(str || '').trim();
+  if(!s) return null;
+  s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+/g, function(t){
+    return '^' + t.split('').map(function(c){ for(var k in SUPS) if(SUPS[k] === c) return k; return c; }).join('');
+  });
+  s = s.replace(/[−–]/g, '-').replace(/,/g, '');
+  s = s.replace(/\s*(atoms?|molecules?|formula\s*units?|moles?|mol|grams?|g\/mol|g|liters?|litres?|L|mL|amu)\.?(\s+[A-Za-z0-9()₀-₉]+)?\s*$/i, '');
+  s = s.replace(/\s+/g, '').replace(/[×xX*·]/g, 'x');
+  var m = /^([+-]?(\d+\.?\d*|\.\d+))(?:[eE]([+-]?\d+)|x10\^?([+-]?\d+))?$/.exec(s);
+  if(!m) return null;
+  var mant = m[1], ex = m[3] != null ? m[3] : m[4];
+  var v = parseFloat(mant) * (ex != null ? Math.pow(10, Number(ex)) : 1);
+  if(!isFinite(v)) return null;
+  return { v:v, sf:sigCount(mant, ex != null) };
+}
+/* significant figures in a typed mantissa ; trailing zeros without a decimal point are not counted unless it's scientific notation */
+function sigCount(mant, sci){
+  var s = mant.replace(/^[+-]/, ''), hasDot = s.indexOf('.') !== -1;
+  var d = s.replace('.', ''), i = d.search(/[1-9]/);
+  if(i === -1) return 1;
+  d = d.slice(i);
+  if(!hasDot && !sci) d = d.replace(/0+$/, '');
+  return d.length;
+}
+/* the practice box: a number, plus an optional exponent box */
+function readAnswer(main, expo){
+  var a = parseNum(main);
+  if(!a) return null;
+  var e = String(expo || '').replace(/[−–]/g, '-').trim();
+  if(e === '') return a;
+  if(!/^[+-]?\d+$/.test(e)) return null;
+  return { v:a.v * Math.pow(10, Number(e)), sf:sigCount(String(main).replace(/,/g,'').trim().split(/[eExX×*]/)[0], true) };
+}
+function near(x, y, tol){ return y !== 0 && Math.abs(x - y) <= Math.abs(y) * (tol || 0.01); }
+
+/* a random value with 3 significant figures, log-uniform between lo and hi ; no ambiguous trailing zeros */
+function rand3(lo, hi){
+  for(var t = 0; t < 60; t++){
+    var v = Math.exp(Math.log(lo) + Math.random() * (Math.log(hi) - Math.log(lo)));
+    var s = v.toPrecision(3);
+    if(/e/.test(s)) continue;
+    if(Number(s) >= 100 && /0$/.test(s)) continue;
+    return Number(s);
+  }
+  return Number(lo.toPrecision(3));
+}
+function randCount(){ var c = rand3(1, 9.99), e = pick([22, 23, 23, 24]); return Number((c * Math.pow(10, e)).toPrecision(3)); }
+
+/* ---- substances used in generated problems ----
+   k: m = molecules, i = ionic (formula units), a = single atoms ; gas: a gas at STP ;
+   ctx: real-world framings, keyed by the unit of the given quantity: [description, low, high] */
+var COMPOUNDS = [
+  { f:'H2O', name:'water', k:'m', ctx:{ g:['a glass of water', 150, 350] } },
+  { f:'H2O2', name:'hydrogen peroxide', k:'m' },
+  { f:'C6H12O6', name:'glucose', k:'m', ctx:{ g:['a glucose tablet', 3, 5] } },
+  { f:'C12H22O11', name:'sucrose', k:'m', ctx:{ g:['a sugar cube', 2.5, 4.5] } },
+  { f:'C2H5OH', name:'ethanol', k:'m' },
+  { f:'CH3COOH', name:'acetic acid', k:'m' },
+  { f:'H2SO4', name:'sulfuric acid', k:'m' },
+  { f:'HNO3', name:'nitric acid', k:'m' },
+  { f:'C8H18', name:'octane', k:'m' },
+  { f:'C9H8O4', name:'aspirin', k:'m', ctx:{ g:['the aspirin in a tablet', 0.08, 0.5] } },
+  { f:'C8H10N4O2', name:'caffeine', k:'m', ctx:{ g:['the caffeine in a cup of coffee', 0.06, 0.2] } },
+  { f:'NaCl', name:'sodium chloride', k:'i', ctx:{ g:['a teaspoon of table salt', 4.5, 7] } },
+  { f:'KCl', name:'potassium chloride', k:'i' },
+  { f:'CaCl2', name:'calcium chloride', k:'i' },
+  { f:'MgCl2', name:'magnesium chloride', k:'i' },
+  { f:'MgO', name:'magnesium oxide', k:'i' },
+  { f:'CaCO3', name:'calcium carbonate', k:'i', ctx:{ g:['the calcium carbonate in an antacid tablet', 0.5, 1.25] } },
+  { f:'NaOH', name:'sodium hydroxide', k:'i' },
+  { f:'KNO3', name:'potassium nitrate', k:'i' },
+  { f:'NaHCO3', name:'sodium hydrogen carbonate', k:'i', ctx:{ g:['a teaspoon of baking soda', 3.5, 6] } },
+  { f:'Na2CO3', name:'sodium carbonate', k:'i' },
+  { f:'Na2SO4', name:'sodium sulfate', k:'i' },
+  { f:'CuSO4', name:'copper(II) sulfate', k:'i' },
+  { f:'AgNO3', name:'silver nitrate', k:'i' },
+  { f:'Fe2O3', name:'iron(III) oxide', k:'i', ctx:{ g:['a flake of rust', 0.05, 2] } },
+  { f:'Al2O3', name:'aluminum oxide', k:'i' },
+  { f:'Ca(OH)2', name:'calcium hydroxide', k:'i' },
+  { f:'Mg(OH)2', name:'magnesium hydroxide', k:'i' },
+  { f:'Al(OH)3', name:'aluminum hydroxide', k:'i' },
+  { f:'Ba(OH)2', name:'barium hydroxide', k:'i' },
+  { f:'Ca(NO3)2', name:'calcium nitrate', k:'i' },
+  { f:'Mg(NO3)2', name:'magnesium nitrate', k:'i' },
+  { f:'Cu(NO3)2', name:'copper(II) nitrate', k:'i' },
+  { f:'Fe(NO3)3', name:'iron(III) nitrate', k:'i' },
+  { f:'Al2(SO4)3', name:'aluminum sulfate', k:'i' },
+  { f:'(NH4)2SO4', name:'ammonium sulfate', k:'i' },
+  { f:'(NH4)3PO4', name:'ammonium phosphate', k:'i' },
+  { f:'NH4Cl', name:'ammonium chloride', k:'i' },
+  { f:'Ca3(PO4)2', name:'calcium phosphate', k:'i' },
+  { f:'Na3PO4', name:'sodium phosphate', k:'i' },
+  { f:'K2Cr2O7', name:'potassium dichromate', k:'i' },
+  { f:'KMnO4', name:'potassium permanganate', k:'i' },
+  { f:'H2', name:'hydrogen gas', k:'m', gas:1 },
+  { f:'N2', name:'nitrogen gas', k:'m', gas:1 },
+  { f:'O2', name:'oxygen gas', k:'m', gas:1 },
+  { f:'Cl2', name:'chlorine gas', k:'m', gas:1 },
+  { f:'He', name:'helium', k:'a', gas:1, ctx:{ L:['a helium party balloon', 8, 15] } },
+  { f:'Ne', name:'neon', k:'a', gas:1 },
+  { f:'Ar', name:'argon', k:'a', gas:1 },
+  { f:'CO', name:'carbon monoxide', k:'m', gas:1 },
+  { f:'CO2', name:'carbon dioxide', k:'m', gas:1, ctx:{ g:['a chunk of dry ice (solid carbon dioxide)', 20, 200] } },
+  { f:'CH4', name:'methane', k:'m', gas:1 },
+  { f:'C2H6', name:'ethane', k:'m', gas:1 },
+  { f:'C3H8', name:'propane', k:'m', gas:1, ctx:{ g:['the propane in a camp-stove canister', 400, 470] } },
+  { f:'C2H2', name:'acetylene', k:'m', gas:1 },
+  { f:'NH3', name:'ammonia', k:'m', gas:1 },
+  { f:'SO2', name:'sulfur dioxide', k:'m', gas:1 },
+  { f:'H2S', name:'hydrogen sulfide', k:'m', gas:1 },
+  { f:'HCl', name:'hydrogen chloride', k:'m', gas:1 },
+  { f:'N2O', name:'dinitrogen monoxide', k:'m', gas:1 }
+];
+COMPOUNDS.forEach(function(c){ c.pf = parseFormula(c.f); c.M = massOf(c.pf.counts); c.Ms = fix2(c.M); });
+function pWord(c){ return c.k === 'i' ? 'formula units' : c.k === 'a' ? 'atoms' : 'molecules'; }
+
+/* ---- problem types ----
+   units: g, mol, L (gas at STP), p (particles) ; mm = find the molar mass */
+var TYPES = {
+  mm:{ from:null, to:'g/mol' },
+  gm:{ from:'g', to:'mol' }, mg:{ from:'mol', to:'g' },
+  lm:{ from:'L', to:'mol' }, ml:{ from:'mol', to:'L' },
+  pm:{ from:'p', to:'mol' }, mp:{ from:'mol', to:'p' },
+  gl:{ from:'g', to:'L' },   lg:{ from:'L', to:'g' },
+  gp:{ from:'g', to:'p' },   pg:{ from:'p', to:'g' },
+  lp:{ from:'L', to:'p' },   pl:{ from:'p', to:'L' }
+};
+/* each step: which factor (mm molar mass, na Avogadro, mv molar volume) and multiply or divide */
+var STEP = { 'g>mol':['mm','/'], 'mol>g':['mm','*'], 'L>mol':['mv','/'], 'mol>L':['mv','*'], 'p>mol':['na','/'], 'mol>p':['na','*'] };
+function stepsOf(type){
+  var t = TYPES[type];
+  if(!t.from) return [];
+  if(t.from === 'mol' || t.to === 'mol') return [t.from + '>' + t.to];
+  return [t.from + '>mol', 'mol>' + t.to];
+}
+function stepObjs(type){ return stepsOf(type).map(function(key){ return { key:key, k:STEP[key][0], op:STEP[key][1] }; }); }
+function kVal(s, M){ return s.val != null ? s.val : s.k === 'mm' ? M : s.k === 'na' ? NA : MV; }
+function run(G, steps, M){ return steps.reduce(function(x, s){ var k = kVal(s, M); return s.op === '*' ? x * k : x / k; }, G); }
+function flipOp(op){ return op === '*' ? '/' : '*'; }
+function withStep(S, i, ch){ return S.map(function(s, j){ if(j !== i) return s; var o = {}; for(var key in s) o[key] = s[key]; for(var c in ch) o[c] = ch[c]; return o; }); }
+var GAS_TYPES = { lm:1, ml:1, gl:1, lg:1, lp:1, pl:1 };
+
+function poolFor(type){
+  return COMPOUNDS.filter(function(c){
+    if(GAS_TYPES[type]) return c.gas;
+    if(type === 'mp' || type === 'pm') return true;
+    return c.k !== 'a';
+  });
+}
+/* re-roll the rare problem where a wrong method lands on the right answer (like 44.0 g CO2, where flipping the factor still gives 1.00 mol) */
+function makeProblem(type, avoid){
+  var p;
+  for(var t = 0; t < 20; t++){
+    p = makeProblemOnce(type, avoid);
+    if(type === 'mm' || !convCandidates(p).some(function(c){ return near(c.v, p.answer, 0.02); })) break;
+  }
+  return p;
+}
+function makeProblemOnce(type, avoid){
+  var from = TYPES[type].from;
+  var pool = poolFor(type).filter(function(c){ return c.f !== avoid; });
+  var withCtx = from ? pool.filter(function(c){ return c.ctx && c.ctx[from]; }) : [];
+  var useCtx = withCtx.length > 0 && Math.random() < 0.4;
+  var c = pick(useCtx ? withCtx : pool), ctx = useCtx ? c.ctx[from] : null;
+  var p = { type:type, c:c, pf:c.pf, M:c.M, Ms:c.Ms, F:fHTML(c.f), pw:pWord(c), ctx:ctx ? ctx[0] : null };
+  if(from === 'mol') p.given = c.gas ? rand3(0.1, 5) : rand3(0.1, 9.99);
+  if(from === 'g') p.given = ctx ? rand3(ctx[1], ctx[2]) : rand3(Math.max(0.5, c.M * 0.05), Math.min(999, c.M * 5));
+  if(from === 'L') p.given = ctx ? rand3(ctx[1], ctx[2]) : rand3(1, 99.9);
+  if(from === 'p') p.given = randCount();
+  p.answer = type === 'mm' ? c.M : run(p.given, stepObjs(type), c.M);
+  return p;
+}
+function unitOf(kind, p){ return kind === 'g/mol' ? 'g/mol' : (kind === 'p' ? p.pw : kind) + ' ' + p.F; }
+function givenHTML(p){
+  var f = TYPES[p.type].from;
+  return f === 'p' ? sciHTML(p.given, 3) + ' ' + p.pw : sigHTML(p.given, 3) + ' ' + f;
+}
+function problemText(p){
+  var NF = p.c.name + ', ' + p.F, NFc = NF + ',', G = '<b>' + givenHTML(p) + '</b>', c = p.ctx ? cap(p.ctx) : null, pw = p.pw;
+  switch(p.type){
+    case 'mm': return 'What is the molar mass of <b>' + NF + '</b>?';
+    case 'gm': return c ? c + ' has a mass of ' + G + '. How many moles of ' + NFc + ' is that?'
+                        : 'How many moles are in ' + G + ' of ' + NF + '?';
+    case 'mg': return 'What is the mass of ' + G + ' of ' + NF + '?';
+    case 'lm': return c ? c + ' holds ' + G + ' of ' + NFc + ' at STP. How many moles is that?'
+                        : 'How many moles are in ' + G + ' of ' + NFc + ' at STP?';
+    case 'ml': return 'What volume does ' + G + ' of ' + NFc + ' take up at STP?';
+    case 'mp': return 'How many ' + pw + ' are in ' + G + ' of ' + NF + '?';
+    case 'pm': return 'A sample of ' + NFc + ' contains ' + G + '. How many moles is that?';
+    case 'gl': return c ? c + ' has a mass of ' + G + '. What volume would the ' + NFc + ' fill as a gas at STP?'
+                        : 'What volume does ' + G + ' of ' + NFc + ' take up at STP?';
+    case 'lg': return c ? c + ' holds ' + G + ' of ' + NFc + ' at STP. What is the mass of the ' + p.c.name + '?'
+                        : 'What is the mass of ' + G + ' of ' + NFc + ' at STP?';
+    case 'gp': return c ? c + ' has a mass of ' + G + '. How many ' + pw + ' of ' + NFc + ' does it contain?'
+                        : 'How many ' + pw + ' are in ' + G + ' of ' + NF + '?';
+    case 'pg': return 'What is the mass of ' + G + ' of ' + NF + '?';
+    case 'lp': return c ? c + ' holds ' + G + ' of ' + NFc + ' at STP. How many ' + pw + ' is that?'
+                        : 'How many ' + pw + ' are in ' + G + ' of ' + NFc + ' at STP?';
+    case 'pl': return 'What volume do ' + G + ' of ' + NFc + ' take up at STP?';
+  }
+}
+function answerHTML(p){
+  var to = TYPES[p.type].to;
+  if(p.type === 'mm') return p.Ms + ' g/mol';
+  return (to === 'p' ? sciHTML(p.answer, 3) : sigHTML(p.answer, 3)) + ' ' + unitOf(to, p);
+}
+
+/* molar masses a student gets from common counting mistakes */
+function mmAlts(pf){
+  var M = massOf(pf.counts), out = [];
+  function add(code, v){ if(Math.abs(v - M) > 0.5) out.push({ code:code, v:v }); }
+  var once = {}, noP = {}, last = {}, z = 0;
+  pf.order.forEach(function(s){ once[s] = 1; noP[s] = 0; last[s] = 0; z += pf.counts[s] * EL[s].z; });
+  pf.occ.forEach(function(o){ noP[o.el] += o.n; last[o.el] += o.n * o.lmult; });
+  add('noSub', massOf(once));
+  if(pf.groups.length){ add('noParen', massOf(noP)); add('lastOnly', massOf(last)); }
+  add('zMM', z);
+  return out;
+}
+function isDiatomic(pf){ return pf.order.length === 1 && pf.counts[pf.order[0]] === 2 && !!DIATOMIC[pf.order[0]]; }
+
+/* judge a molar mass ; exact sums use 2-decimal atomic masses, and 0.5 g/mol covers students who round
+   each atomic mass, while still catching one atom too many or too few (at least 1.01 g/mol) */
+function judgeMM(p, v){
+  var M = p.M, T = 0.5, pf = p.pf;
+  if(Math.abs(v - M) <= T) return { ok:true, code:'ok' };
+  var alts = mmAlts(pf);
+  for(var i = 0; i < alts.length; i++) if(Math.abs(v - alts[i].v) <= T) return { ok:false, code:alts[i].code };
+  if(Math.abs(v - MV) < 0.05) return { ok:false, code:'mvMM' };
+  if(near(v, M * NA) || near(v, M / NA)) return { ok:false, code:'mmNA' };
+  var ord = pf.order;
+  for(var j = 0; j < ord.length; j++){
+    if(ord.length > 1 && Math.abs(v - (M - pf.counts[ord[j]] * EL[ord[j]].M)) <= T) return { ok:false, code:'missing', x:{ s:ord[j] } };
+  }
+  var deltas = [1, -1, 2, -2, 3, -3];
+  for(var d = 0; d < deltas.length; d++){
+    for(var k = 0; k < ord.length; k++){
+      var s = ord[k];
+      if(pf.counts[s] + deltas[d] >= 1 && Math.abs(v - (M + deltas[d] * EL[s].M)) <= 0.25) return { ok:false, code:'countOff', x:{ s:s } };
+    }
+  }
+  return { ok:false, code:'other' };
+}
+/* wrong answers a conversion can produce, most specific first */
+function convCandidates(p){
+  var G = p.given, M = p.M, S = stepObjs(p.type), two = S.length === 2, out = [];
+  function c(code, steps, x){ out.push({ code:code, v:run(G, steps, M), x:x || {} }); }
+  out.push({ code:'same', v:G, x:{} });
+  if(two) c('mid', [S[0]]);
+  S.forEach(function(s, i){ c('inv', withStep(S, i, { op:flipOp(s.op) }), { i:i }); });
+  if(two){
+    c('skip', [S[1]]);
+    c('bothInv', withStep(withStep(S, 0, { op:flipOp(S[0].op) }), 1, { op:flipOp(S[1].op) }));
+  }
+  if(!two && S[0].op === '/') out.push({ code:'flip', v:kVal(S[0], M) / G, x:{} });
+  if(S.some(function(s){ return s.k === 'mm'; })){
+    mmAlts(p.pf).forEach(function(a){
+      c('badMM', S.map(function(s){ if(s.k !== 'mm') return s; return { key:s.key, k:s.k, op:s.op, val:a.v }; }), { alt:a.code });
+    });
+  }
+  S.forEach(function(s, i){
+    if(s.k !== 'na') return;
+    c('noExp', withStep(S, i, { val:6.02 }), { i:i });
+    c(s.op === '/' ? 'parens' : 'negExp', withStep(S, i, { val:6.02e-23 }), { i:i });
+  });
+  S.forEach(function(s, i){
+    ['mm','na','mv'].forEach(function(k2){
+      if(k2 === s.k) return;
+      c('wrongF', withStep(S, i, { k:k2 }), { i:i, k2:k2 });
+      c('wrongF', withStep(S, i, { k:k2, op:flipOp(s.op) }), { i:i, k2:k2 });
+    });
+  });
+  return out;
+}
+/* judge a typed value -> { ok, code, x } */
+function judge(p, got){
+  if(!got) return { ok:false, code:'unreadable', x:{} };
+  if(p.type === 'mm') return judgeMM(p, got.v);
+  if(near(got.v, p.answer, 0.01)) return { ok:true, code:'ok', x:{} };
+  var cs = convCandidates(p);
+  for(var i = 0; i < cs.length; i++) if(near(got.v, cs[i].v, 0.01)) return { ok:false, code:cs[i].code, x:cs[i].x };
+  return { ok:false, code:'other', x:{} };
+}
+
+/* ---- words for hints ---- */
+function unitWord(u, p){ return { g:'grams', mol:'moles', L:'liters', p:p.pw }[u]; }
+function stepWords(key, p){ var a = key.split('>'); return unitWord(a[0], p) + ' to ' + unitWord(a[1], p); }
+function doWords(key, p){
+  return { 'g>mol':'divide by the molar mass, ' + p.Ms + ' g/mol', 'mol>g':'multiply by the molar mass, ' + p.Ms + ' g/mol',
+           'L>mol':'divide by 22.4 L/mol', 'mol>L':'multiply by 22.4 L/mol',
+           'p>mol':'divide by 6.02 × 10<sup>23</sup>', 'mol>p':'multiply by 6.02 × 10<sup>23</sup>' }[key];
+}
+function factorWords(key, p){
+  var na = '6.02 × 10<sup>23</sup> ' + p.pw;
+  return { 'g>mol':'(1 mol / ' + p.Ms + ' g)', 'mol>g':'(' + p.Ms + ' g / 1 mol)', 'L>mol':'(1 mol / 22.4 L)',
+           'mol>L':'(22.4 L / 1 mol)', 'p>mol':'(1 mol / ' + na + ')', 'mol>p':'(' + na + ' / 1 mol)' }[key];
+}
+function kindName(k, p){ return { mm:'the molar mass (' + p.Ms + ' g/mol)', na:'Avogadro’s number (6.02 × 10<sup>23</sup>)', mv:'the molar volume (22.4 L/mol)' }[k]; }
+function kindFor(k, p){ return { mm:'grams ↔ moles', na:'moles ↔ ' + p.pw, mv:'liters of a gas at STP ↔ moles' }[k]; }
+function groupWords(pf){
+  var g = pf.groups[0];
+  return 'The ' + g.k + ' after (' + fHTML(g.inner) + ') means ' + g.k + ' whole ' + fHTML(g.inner) + ' groups, so multiply every subscript inside the parentheses by ' + g.k + '.';
+}
+function diatomicWords(p){
+  var s = p.pf.order[0];
+  return cap(p.c.name) + ' is made of ' + p.F + ' molecules, two atoms each, so its molar mass is 2 × ' + EL[s].ms + ' = ' + p.Ms + ' g/mol.';
+}
+function altWords(code, p){
+  switch(code){
+    case 'noSub':    return isDiatomic(p.pf) ? diatomicWords(p) : 'It looks like each element was counted once. Multiply each molar mass by its subscript.';
+    case 'noParen':  return groupWords(p.pf);
+    case 'lastOnly': return 'The subscript after the parentheses multiplies every atom inside them, not just the last one. ' + groupWords(p.pf);
+    case 'zMM':      return 'That used atomic numbers instead of molar masses.';
+  }
+  return '';
+}
+function hintFor(p, res){
+  var code = res.code, x = res.x || {}, S = stepObjs(p.type), two = S.length === 2;
+  var t = TYPES[p.type], fromW = t.from ? unitWord(t.from, p) : '', toW = t.to !== 'g/mol' ? unitWord(t.to, p) : '';
+  if(code === 'unreadable') return 'Type a number, like <kbd>0.250</kbd> or <kbd>1.51e24</kbd>. If you use the small box, type a whole number there.';
+  if(p.type === 'mm'){
+    switch(code){
+      case 'noSub':    return isDiatomic(p.pf) ? '<b>' + cap(p.c.name) + ' is diatomic.</b> ' + diatomicWords(p)
+                                               : '<b>Don’t forget the subscripts.</b> Each subscript tells you how many atoms of that element there are. Multiply each molar mass by its number of atoms.';
+      case 'noParen':  return '<b>Use the subscript after the parentheses.</b> ' + groupWords(p.pf);
+      case 'lastOnly': return '<b>Multiply everything inside the parentheses.</b> ' + groupWords(p.pf);
+      case 'zMM':      return '<b>That used atomic numbers.</b> Molar mass uses each element’s average atomic mass, the number with decimals on the periodic table.';
+      case 'mvMM':     return '<b>22.4 is liters per mole of a gas at STP.</b> Molar mass is grams per mole, and you get it by adding up the atoms in the formula.';
+      case 'mmNA':     return '<b>No Avogadro’s number needed.</b> Molar mass is just the sum of the atoms’ molar masses, in g/mol.';
+      case 'missing':  return '<b>Did you leave out the ' + EL[x.s].name.toLowerCase() + '?</b> Every element in the formula adds to the molar mass.';
+      case 'countOff': return '<b>Recount the ' + EL[x.s].name.toLowerCase() + ' atoms.</b> ' + (p.pf.groups.length ? 'A subscript after parentheses multiplies everything inside them.' : 'Each subscript counts the atom right before it.');
+    }
+    return '<b>Not quite.</b> Count the atoms of each element, multiply each count by that element’s molar mass, and add. Try building the table below.';
+  }
+  var ord = ['first', 'second'];
+  switch(code){
+    case 'same': return '<b>That’s the number you started with.</b> Multiply by a conversion factor so the unit you have cancels and the unit you want is left.';
+    case 'mid':  return '<b>That’s the number of moles, halfway there.</b> Now ' + doWords(S[1].key, p) + ' to get ' + toW + '.';
+    case 'inv': {
+      var s = S[x.i];
+      if(!two){
+        var extra = s.key === 'g>mol' ? ' Check the units: g × g/mol leaves g²/mol, which isn’t moles.'
+                  : s.key === 'L>mol' ? ' Check the units: L × L/mol leaves L²/mol, which isn’t moles.' : '';
+        return '<b>' + (s.op === '/' ? 'Divide, don’t multiply.' : 'Multiply, don’t divide.') + '</b> You have ' + fromW + ' and want ' + toW + ', so use ' + factorWords(s.key, p) + ' and the ' + fromW + ' cancel.' + extra;
+      }
+      return '<b>Check the ' + ord[x.i] + ' step.</b> ' + cap(stepWords(s.key, p)) + ': ' + doWords(s.key, p) + ', so use ' + factorWords(s.key, p) + '.';
+    }
+    case 'skip':    return '<b>You skipped a step.</b> ' + cap(fromW) + ' can’t go straight to ' + toW + '. Go through moles: first ' + doWords(S[0].key, p) + ', then ' + doWords(S[1].key, p) + '.';
+    case 'bothInv': return '<b>Both factors are upside down.</b> In each factor, put the unit you already have on the bottom so it cancels.';
+    case 'flip':    return '<b>Upside down.</b> Start with the number you’re given, ' + givenHTML(p) + ', then multiply by a factor with that unit on the bottom.';
+    case 'badMM':   return '<b>Your setup is right, but check the molar mass.</b> ' + altWords(x.alt, p) + (x.alt === 'noSub' && isDiatomic(p.pf) ? '' : ' ' + p.F + ' is ' + p.Ms + ' g/mol.');
+    case 'noExp':   return '<b>Check the exponent.</b> Avogadro’s number is 6.02 × 10<sup>23</sup>, not 6.02. Enter it with the EE or EXP key.';
+    case 'negExp':  return '<b>The exponent is positive:</b> 6.02 × 10<sup>23</sup>, not 6.02 × 10<sup>−23</sup>. Particles come in huge numbers.';
+    case 'parens':  return '<b>Calculator trap.</b> Your calculator divided by 6.02 and then multiplied by 10<sup>23</sup>. Use the EE key, or put (6.02 × 10^23) in parentheses.';
+    case 'wrongF': {
+      var w = S[x.i];
+      var head = '<b>Wrong conversion factor' + (two ? ' in the ' + ord[x.i] + ' step' : '') + '.</b> ' + cap(stepWords(w.key, p)) + ' uses ' + kindName(w.k, p) + '. ';
+      if(x.k2 === 'mv' && !p.c.gas) return head + cap(p.c.name) + ' isn’t a gas at STP, so 22.4 L/mol doesn’t apply to it at all.';
+      return head + cap(kindName(x.k2, p)) + ' is for ' + kindFor(x.k2, p) + '.';
+    }
+  }
+  if(two) return '<b>Not quite.</b> Go through moles: first ' + doWords(S[0].key, p) + ', then ' + doWords(S[1].key, p) + '. Try building the setup below.';
+  return '<b>Not quite.</b> ' + cap(stepWords(S[0].key, p)) + ': ' + doWords(S[0].key, p) + '. Set it up so the unit you have cancels.';
+}
+
+/* ---- the setup builder ---- */
+function factorsFor(p){
+  var F = p.F, na = '6.02 × 10' + supHTML(23), pw = p.pw;
+  var fs = [
+    { id:'mmUp', t:[p.Ms, 'g ' + F],      b:['1', 'mol ' + F] },
+    { id:'mmDn', t:['1', 'mol ' + F],     b:[p.Ms, 'g ' + F] },
+    { id:'naUp', t:[na, pw + ' ' + F],    b:['1', 'mol ' + F] },
+    { id:'naDn', t:['1', 'mol ' + F],     b:[na, pw + ' ' + F] }
+  ];
+  if(p.c.gas) fs.push({ id:'mvUp', t:['22.4', 'L ' + F], b:['1', 'mol ' + F] }, { id:'mvDn', t:['1', 'mol ' + F], b:['22.4', 'L ' + F] });
+  return fs;
+}
+var SOL_IDS = { 'g>mol':'mmDn', 'mol>g':'mmUp', 'L>mol':'mvDn', 'mol>L':'mvUp', 'p>mol':'naDn', 'mol>p':'naUp' };
+function solutionIds(type){ return stepsOf(type).map(function(k){ return SOL_IDS[k]; }); }
+/* cancel units through a chain: start unit + factors -> { num:[{u,x}], den:[{u,x}] } */
+function cancelUnits(startUnit, chain){
+  var num = [{ u:startUnit, x:false }], den = [];
+  chain.forEach(function(f){ num.push({ u:f.t[1], x:false }); den.push({ u:f.b[1], x:false }); });
+  den.forEach(function(d){
+    for(var i = 0; i < num.length; i++){
+      if(!num[i].x && num[i].u === d.u){ num[i].x = true; d.x = true; break; }
+    }
+  });
+  return { num:num, den:den };
+}
+/*CORE-END*/
+
+/* =========================================================
+   drawing helpers
+   ========================================================= */
+function shade(hex, amt){
+  var n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+  var t = amt < 0 ? 0 : 255, a = Math.abs(amt);
+  r = Math.round(r + (t - r) * a); g = Math.round(g + (t - g) * a); b = Math.round(b + (t - b) * a);
+  return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+function isLight(col){ return parseInt(col.slice(1, 3), 16) * 0.3 + parseInt(col.slice(3, 5), 16) * 0.59 + parseInt(col.slice(5, 7), 16) * 0.11 > 150; }
+function pts(a){ var o = []; for(var i = 0; i < a.length; i += 2) o.push(a[i].toFixed(1) + ',' + a[i + 1].toFixed(1)); return o.join(' '); }
+/* oblique cube: x = left edge of front face, y = bottom, s = side */
+function cube(x, y, s, col){
+  var d = s * 0.42, top = shade(col, 0.28), side = shade(col, -0.25), edge = shade(col, -0.45);
+  return '<polygon points="' + pts([x, y - s, x + d, y - s - d, x + s + d, y - s - d, x + s, y - s]) + '" fill="' + top + '" stroke="' + edge + '" stroke-width=".8"/>' +
+    '<polygon points="' + pts([x + s, y - s, x + s + d, y - s - d, x + s + d, y - d, x + s, y]) + '" fill="' + side + '" stroke="' + edge + '" stroke-width=".8"/>' +
+    '<rect x="' + x.toFixed(1) + '" y="' + (y - s).toFixed(1) + '" width="' + s.toFixed(1) + '" height="' + s.toFixed(1) + '" fill="' + col + '" stroke="' + edge + '" stroke-width=".8"/>';
+}
+/* a digital scale: pan top at y=136 ; contents drawn by caller */
+function scaleSVG(contents, reading, label){
+  return '<svg viewBox="0 0 300 200" role="img" aria-label="' + label + '">' +
+    contents +
+    '<rect x="138" y="140" width="24" height="10" fill="#B5C2C0"/>' +
+    '<rect x="36" y="136" width="228" height="7" rx="3" fill="#C3CDCB" stroke="#9FB0AD"/>' +
+    '<rect x="16" y="150" width="268" height="44" rx="9" fill="#DCE3E2" stroke="#9FB0AD"/>' +
+    '<circle cx="42" cy="172" r="7" fill="#C3CDCB" stroke="#9FB0AD"/><circle cx="64" cy="172" r="7" fill="#C3CDCB" stroke="#9FB0AD"/>' +
+    '<rect x="140" y="159" width="130" height="27" rx="3" fill="#1E2B29"/>' +
+    '<text x="262" y="178.5" text-anchor="end" font-family="IBM Plex Mono,monospace" font-weight="500" font-size="17" fill="#BFEFD0">' + reading + '</text>' +
+    '</svg>';
+}
+var COLORS = { H:'#F4F6F6', C:'#3F4548', N:'#3B6FD0', O:'#D9473B', S:'#E2C93C', P:'#E08A2C', Cl:'#3FA34D', F:'#8FD16A', Br:'#8B2A1E', I:'#6B2C91',
+  Na:'#8E5CC4', K:'#7A4FB0', Li:'#B48AD8', Ca:'#4E8A3A', Mg:'#6FAF5A', Ba:'#2F7D5C', Al:'#A7AFB8', Fe:'#C0662B', Cu:'#C26A3A', Zn:'#7D80B0',
+  Ag:'#C9CED3', Cr:'#8A99C7', Mn:'#9C7AC7', He:'#CFEFF5', Ne:'#F3B6C2', Ar:'#9BD3E0', Si:'#D9B98C', B:'#F2B5A0', Pb:'#69717D', Au:'#D6A62A' };
+function colorOf(s){ return COLORS[s] || '#9AA6A4'; }
+
+/* =========================================================
+   hero: a 22.4 L box, a basketball and a mole of water, to scale (4 px per cm)
+   ========================================================= */
+(function hero(){
+  var K = 4, s = Math.cbrt(22400) * K, d = s * 0.42, x = 12, y = 214;
+  var h = '<svg viewBox="0 0 320 236" role="img" aria-label="Drawn to scale: a 22.4 liter box, 28.2 centimeters on a side, holds one mole of any gas at STP. Beside it is a basketball. Inside the box is a tiny cube, one mole of liquid water, 18.0 milliliters.">';
+  /* back edges of the box, dashed */
+  h += '<g stroke="#12727F" stroke-width="1" stroke-dasharray="3 3" fill="none">' +
+       '<line x1="' + (x + d) + '" y1="' + (y - d) + '" x2="' + (x + d) + '" y2="' + (y - s - d) + '"/>' +
+       '<line x1="' + (x + d) + '" y1="' + (y - d) + '" x2="' + (x + s + d) + '" y2="' + (y - d) + '"/>' +
+       '<line x1="' + x + '" y1="' + y + '" x2="' + (x + d) + '" y2="' + (y - d) + '"/></g>';
+  /* faces */
+  h += '<polygon points="' + pts([x, y - s, x + d, y - s - d, x + s + d, y - s - d, x + s, y - s]) + '" fill="#BFDEE2" fill-opacity=".55" stroke="#0B4E58" stroke-width="1.2"/>';
+  h += '<polygon points="' + pts([x + s, y - s, x + s + d, y - s - d, x + s + d, y - d, x + s, y]) + '" fill="#BFDEE2" fill-opacity=".38" stroke="#0B4E58" stroke-width="1.2"/>';
+  h += '<rect x="' + x + '" y="' + (y - s).toFixed(1) + '" width="' + s.toFixed(1) + '" height="' + s.toFixed(1) + '" fill="#BFDEE2" fill-opacity=".22" stroke="#0B4E58" stroke-width="1.2"/>';
+  /* gas particles, sparse */
+  var dots = [[30,120],[62,104],[96,128],[44,160],[84,170],[108,150],[70,140],[118,112],[140,96],[150,138],[52,184]];
+  dots.forEach(function(p){ h += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="1.6" fill="#12727F" fill-opacity=".7"/>'; });
+  /* one mole of liquid water: 18.0 mL */
+  var w = Math.cbrt(18.0) * K, halo = ' stroke="#EEF6F7" stroke-width="4" stroke-linejoin="round" paint-order="stroke"';
+  h += cube(x + 8, y - 3, w, '#3D8FD1');
+  h += '<text x="' + (x + 8 + w * 1.42 + 4).toFixed(1) + '" y="' + (y - 5) + '" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#1F5C8C"' + halo + '>18.0 mL water</text>';
+  /* label */
+  h += '<text x="' + (x + s / 2).toFixed(1) + '" y="' + (y - s / 2 - 8).toFixed(1) + '" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-weight="600" font-size="21" fill="#0B4E58"' + halo + '>22.4 L</text>';
+  h += '<text x="' + (x + s / 2).toFixed(1) + '" y="' + (y - s / 2 + 9).toFixed(1) + '" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#3B4A48"' + halo + '>1 mol of any gas</text>';
+  /* dimension */
+  h += '<line x1="' + x + '" y1="' + (y + 10) + '" x2="' + (x + s) + '" y2="' + (y + 10) + '" stroke="#5F6D6B"/>' +
+       '<line x1="' + x + '" y1="' + (y + 6) + '" x2="' + x + '" y2="' + (y + 14) + '" stroke="#5F6D6B"/>' +
+       '<line x1="' + (x + s) + '" y1="' + (y + 6) + '" x2="' + (x + s) + '" y2="' + (y + 14) + '" stroke="#5F6D6B"/>' +
+       '<text x="' + (x + s / 2).toFixed(1) + '" y="' + (y + 21) + '" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#5F6D6B">28.2 cm</text>';
+  /* basketball, 24 cm across */
+  var r = 12 * K, cx = 262, cy = y - r;
+  h += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="#D9792B" stroke="#7A3E10" stroke-width="1.5"/>' +
+       '<g stroke="#4A2509" stroke-width="1.6" fill="none">' +
+       '<line x1="' + (cx - r) + '" y1="' + cy + '" x2="' + (cx + r) + '" y2="' + cy + '"/>' +
+       '<line x1="' + cx + '" y1="' + (cy - r) + '" x2="' + cx + '" y2="' + (cy + r) + '"/>' +
+       '<path d="M' + (cx - r * 0.72) + ',' + (cy - r * 0.69) + ' Q' + (cx - r * 0.25) + ',' + cy + ' ' + (cx - r * 0.72) + ',' + (cy + r * 0.69) + '"/>' +
+       '<path d="M' + (cx + r * 0.72) + ',' + (cy - r * 0.69) + ' Q' + (cx + r * 0.25) + ',' + cy + ' ' + (cx + r * 0.72) + ',' + (cy + r * 0.69) + '"/></g>';
+  h += '<text x="' + cx + '" y="' + (y + 21) + '" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#5F6D6B">basketball</text>';
+  h += '<line x1="4" y1="' + y + '" x2="316" y2="' + y + '" stroke="#C9D3D1"/>';
+  h += '</svg>';
+  el('hero-fig').innerHTML = h;
+})();
+
+/* =========================================================
+   1. count the atoms
+   ========================================================= */
+var CNT_EX = ['H2O','CO2','C6H12O6','Ca(NO3)2','Al2(SO4)3','(NH4)3PO4','CH3COOH'];
+function howText(pf, s){
+  var occ = pf.occ.filter(function(o){ return o.el === s; });
+  if(occ.length === 1 && occ[0].mult === 1) return occ[0].n === 1 ? 'no subscript, so 1' : 'subscript ' + occ[0].n;
+  return occ.map(function(o){ return o.mult > 1 ? o.n + ' × ' + o.mult : String(o.n); }).join(' + ') + ' = ' + pf.counts[s];
+}
+function groupNote(pf){
+  return pf.groups.map(function(g){
+    return 'The ' + g.k + ' after (' + fHTML(g.inner) + ') means ' + g.k + ' whole ' + fHTML(g.inner) + ' groups.';
+  }).join(' ');
+}
+function cntRender(f){
+  var out = el('cnt-out'), fb = el('cnt-fb');
+  if(!String(f).trim()){ out.innerHTML = ''; setFb(fb, 'hint', 'Type a formula first, like <b>Mg3(PO4)2</b>. Numbers become subscripts on their own.'); return; }
+  var pf = parseFormula(f);
+  if(!pf.ok){ out.innerHTML = ''; setFb(fb, 'bad', 'That formula can’t be read: it has ' + pf.err + '.'); return; }
+  hideFb(fb);
+  var total = 0, rows = '';
+  pf.order.forEach(function(s){
+    var c = pf.counts[s], show = Math.min(c, 40), balls = '';
+    total += c;
+    for(var i = 0; i < show; i++) balls += '<i style="background:' + colorOf(s) + '"></i>';
+    if(c > show) balls += '<span class="more">+' + commas(c - show) + ' more</span>';
+    rows += '<div class="cnt-row"><div class="cnt-el"><b>' + s + '</b>' + EL[s].name.toLowerCase() + '</div><div class="balls" aria-hidden="true">' + balls + '</div>' +
+      '<div class="cnt-n">' + commas(c) + '</div><div class="cnt-how">' + howText(pf, s) + '</div></div>';
+  });
+  rows += '<div class="cnt-row tot"><div class="cnt-el"><b>Total</b></div><div class="balls"></div><div class="cnt-n">' + commas(total) + '</div><div class="cnt-how">atoms in one ' + fHTML(pf.f) + '</div></div>';
+  out.innerHTML = '<div class="cnt-formula">' + fHTML(pf.f) + '</div>' + (pf.groups.length ? '<p class="cnt-note">' + groupNote(pf) + '</p>' : '') + '<div class="cnt-rows">' + rows + '</div>';
+}
+(function buildCnt(){
+  el('cnt-tabs').innerHTML = CNT_EX.map(function(f, i){
+    return '<button type="button" class="tab fx" role="tab" data-f="' + f + '" aria-selected="' + (i === 3) + '">' + fHTML(f) + '</button>';
+  }).join('');
+  tabs(el('cnt-tabs'), function(b){ el('cnt-in').value = ''; cntRender(b.dataset.f); });
+  function go(){
+    each(el('cnt-tabs').querySelectorAll('.tab'), function(o){ o.setAttribute('aria-selected', 'false'); });
+    cntRender(el('cnt-in').value);
+  }
+  el('cnt-go').addEventListener('click', go);
+  el('cnt-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') go(); });
+})();
+
+/* =========================================================
+   2. build one mole on the scale
+   ========================================================= */
+var BB_T = [['H2O','water'],['CO2','carbon dioxide'],['NH3','ammonia'],['CH4','methane'],['NaCl','sodium chloride'],['C2H5OH','ethanol']];
+var BB_E = ['H','C','N','O','Na','Cl'];
+var BB = { f:'H2O', name:'water', pile:[] };
+var BB_MAX = 12;
+function bbCounts(){ var c = {}; BB.pile.forEach(function(s){ c[s] = (c[s] || 0) + 1; }); return c; }
+function formulaFrom(counts, order){
+  var keys = order.filter(function(s){ return counts[s]; });
+  Object.keys(counts).forEach(function(s){ if(keys.indexOf(s) === -1) keys.push(s); });
+  return keys.map(function(s){ return s + (counts[s] > 1 ? counts[s] : ''); }).join('');
+}
+function bbRender(){
+  var pf = parseFormula(BB.f), need = pf.counts, have = bbCounts(), total = massOf(have), F = fHTML(BB.f);
+  /* the pile: one ball per mole of atoms */
+  var balls = '', n = BB.pile.length, idx = 0, row = 0;
+  while(idx < n){
+    var cnt = Math.min(7 - row, n - idx), x0 = 150 - (cnt - 1) * 11;
+    for(var i = 0; i < cnt; i++){
+      var s = BB.pile[idx + i], col = colorOf(s), x = x0 + i * 22, y = 136 - 10.5 - row * 19;
+      balls += '<circle cx="' + x + '" cy="' + y + '" r="10.5" fill="' + col + '" stroke="' + shade(col, -0.45) + '"/>' +
+        '<text x="' + x + '" y="' + (y + 3.5) + '" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="' + (s.length > 1 ? 9 : 10.5) + '" fill="' + (isLight(col) ? '#131E1D' : '#FFFFFF') + '">' + s + '</text>';
+    }
+    idx += cnt; row++;
+  }
+  var onScale = n ? formulaFrom(have, pf.order) : '';
+  el('bb-fig').innerHTML = scaleSVG(balls, fix2(total) + ' g', n ? 'A digital scale holding ' + BB.pile.length + ' moles of atoms, ' + fText(onScale) + ', reading ' + fix2(total) + ' grams' : 'An empty digital scale reading 0.00 grams');
+  el('bb-target').innerHTML = 'Build one mole of <b>' + BB.name + ', ' + F + '</b>.';
+  /* readout */
+  var rows = '';
+  Object.keys(have).sort(function(a, b){ return BB_E.indexOf(a) - BB_E.indexOf(b); }).forEach(function(s){
+    rows += '<div><span>' + have[s] + ' mol ' + s + ' atoms</span><span>' + fix2(have[s] * EL[s].M) + ' g</span></div>';
+  });
+  rows += '<div class="hl"><span>On the scale' + (n ? ': ' + fHTML(onScale) : '') + '</span><span>' + fix2(total) + ' g</span></div>';
+  el('bb-rows').innerHTML = rows;
+  /* feedback */
+  var fb = el('bb-fb'), extra = null, over = null, done = true;
+  Object.keys(have).forEach(function(s){
+    if(!need[s]){ if(!extra) extra = s; }
+    else if(have[s] > need[s]){ if(!over) over = s; }
+  });
+  pf.order.forEach(function(s){ if((have[s] || 0) !== need[s]) done = false; });
+  if(extra) done = false;
+  if(!n) setFb(fb, 'hint', 'One mole of ' + F + ' is made of moles of atoms. Read the subscripts in ' + F + ', then put the right number of moles of each kind of atom on the scale.');
+  else if(extra) setFb(fb, 'bad', '<b>' + F + ' has no ' + EL[extra].name.toLowerCase() + ' in it.</b> Undo that one.');
+  else if(over) setFb(fb, 'bad', '<b>Too much ' + EL[over].name.toLowerCase() + '.</b> Each ' + F + ' has only ' + need[over] + ' ' + over + ' atom' + (need[over] > 1 ? 's' : '') + ', so one mole of ' + F + ' has only ' + need[over] + ' mol of ' + over + ' atoms.');
+  else if(done){
+    var parts = pf.order.map(function(s){ return need[s] + ' mol ' + s + (need[s] > 1 ? ' (' + need[s] + ' × ' + EL[s].ms + ' g)' : ' (' + EL[s].ms + ' g)'); });
+    setFb(fb, 'good', '<b>That’s one mole of ' + BB.name + ': ' + fix2(total) + ' g.</b> ' + parts.join(' + ') + ' = ' + fix2(total) + ' g. So the molar mass of ' + F + ' is <b>' + fix2(total) + ' g/mol</b>.' +
+      (onScale !== BB.f ? ' (' + fHTML(onScale) + ' has the same atoms as ' + F + '.)' : ''));
+  }
+  else setFb(fb, 'hint', 'So far, ' + fix2(total) + ' g. Not one mole of ' + F + ' yet: is every atom in the formula on the scale?');
+  each(el('bb-btns').querySelectorAll('.elb'), function(b){ b.disabled = n >= BB_MAX; });
+  el('bb-undo').disabled = !n;
+  el('bb-empty').disabled = !n;
+}
+(function buildBB(){
+  el('bb-tabs').innerHTML = BB_T.map(function(t, i){
+    return '<button type="button" class="tab fx" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '">' + fHTML(t[0]) + '</button>';
+  }).join('');
+  tabs(el('bb-tabs'), function(b){ var t = BB_T[Number(b.dataset.i)]; BB.f = t[0]; BB.name = t[1]; BB.pile = []; bbRender(); });
+  el('bb-btns').innerHTML = BB_E.map(function(s){
+    return '<button type="button" class="elb" data-s="' + s + '" aria-label="Add one mole of ' + EL[s].name.toLowerCase() + ' atoms, ' + EL[s].ms + ' grams"><i style="background:' + colorOf(s) + '"></i>+1 mol ' + s + ' <span>' + EL[s].ms + ' g</span></button>';
+  }).join('');
+  each(el('bb-btns').querySelectorAll('.elb'), function(b){
+    b.addEventListener('click', function(){ if(BB.pile.length < BB_MAX){ BB.pile.push(b.dataset.s); bbRender(); } });
+  });
+  el('bb-undo').addEventListener('click', function(){ BB.pile.pop(); bbRender(); });
+  el('bb-empty').addEventListener('click', function(){ BB.pile = []; bbRender(); });
+})();
+
+/* =========================================================
+   3. molar mass worked table
+   ========================================================= */
+var MMW = [['H2O','water'],['CO2','carbon dioxide'],['Ca(NO3)2','calcium nitrate'],['Al2(SO4)3','aluminum sulfate'],['C6H12O6','glucose']];
+var MW = { i:0, step:0 };
+function countPhrase(pf, s){
+  var occ = pf.occ.filter(function(o){ return o.el === s; }), c = pf.counts[s];
+  if(occ.length === 1 && occ[0].mult === 1) return c + ' ' + s + (c === 1 ? ' (no subscript means 1)' : '');
+  return c + ' ' + s + ' (' + howText(pf, s).replace(/ = \d+$/, '') + ')';
+}
+function mwRender(){
+  var item = MMW[MW.i], pf = parseFormula(item[0]), st = MW.step, F = fHTML(item[0]), M = massOf(pf.counts);
+  var rows = '';
+  pf.order.forEach(function(s){
+    var c = pf.counts[s];
+    rows += '<tr><td>' + EL[s].name + ' (' + s + ')</td>' +
+      '<td class="n' + (st === 0 ? ' new' : '') + '">' + c + '</td>' +
+      '<td class="n' + (st === 1 ? ' new' : '') + '">' + (st >= 1 ? '× ' + EL[s].ms + ' g/mol' : '') + '</td>' +
+      '<td class="n' + (st === 2 ? ' new' : '') + '">' + (st >= 2 ? '= ' + fix2(c * EL[s].M) + ' g' : '') + '</td></tr>';
+  });
+  el('mw-table').innerHTML = '<thead><tr><th>Element</th><th>Atoms</th><th>× Molar mass</th><th>= Mass in 1 mol</th></tr></thead><tbody>' + rows + '</tbody>' +
+    '<tfoot><tr><td>Molar mass</td><td></td><td></td><td class="n' + (st === 3 ? ' new' : '') + '">' + (st >= 3 ? fix2(M) + ' g/mol' : '') + '</td></tr></tfoot>';
+  el('mw-q').innerHTML = 'Find the molar mass of ' + item[1] + ', <b>' + F + '</b>.';
+  var t;
+  if(st === 0) t = '<b>Count the atoms:</b> ' + pf.order.map(function(s){ return countPhrase(pf, s); }).join(', ') + '.' + (pf.groups.length ? ' ' + groupNote(pf) : '');
+  else if(st === 1) t = '<b>Look up each molar mass</b> on the periodic table: ' + pf.order.map(function(s){ return s + ' ' + EL[s].ms; }).join(', ') + ' g/mol.';
+  else if(st === 2) t = '<b>Multiply</b> each count by its molar mass: ' + pf.order.map(function(s){ return pf.counts[s] + ' × ' + EL[s].ms + ' = ' + fix2(pf.counts[s] * EL[s].M); }).join(', ') + '. Each product is the mass of that element in one mole of ' + F + '.';
+  else t = '<b>Add:</b> ' + pf.order.map(function(s){ return fix2(pf.counts[s] * EL[s].M); }).join(' + ') + ' = <b>' + fix2(M) + ' g/mol</b>. One mole of ' + item[1] + ' has a mass of ' + fix2(M) + ' g. Keep two decimal places, like the periodic table.';
+  el('mw-text').innerHTML = t;
+  el('mw-count').textContent = 'Step ' + (st + 1) + ' of 4';
+  el('mw-next').disabled = st === 3;
+  el('mw-prev').disabled = st === 0;
+}
+(function buildMW(){
+  el('mw-tabs').innerHTML = MMW.map(function(t, i){
+    return '<button type="button" class="tab fx" role="tab" data-i="' + i + '" aria-selected="' + (i === 2) + '">' + fHTML(t[0]) + '</button>';
+  }).join('');
+  MW.i = 2;
+  tabs(el('mw-tabs'), function(b){ MW.i = Number(b.dataset.i); MW.step = 0; mwRender(); });
+  el('mw-next').addEventListener('click', function(){ if(MW.step < 3){ MW.step++; mwRender(); } });
+  el('mw-prev').addEventListener('click', function(){ if(MW.step > 0){ MW.step--; mwRender(); } });
+  el('mw-restart').addEventListener('click', function(){ MW.step = 0; mwRender(); });
+})();
+
+/* =========================================================
+   4. particle spacing, to scale (40 px per nm)
+   ========================================================= */
+(function spacing(){
+  var K = 40, liq = 0.310 * K, gas = 3.339 * K;
+  var h = '<svg viewBox="0 0 600 186" role="img" aria-label="Drawn to scale: in liquid water, molecules are about 0.31 nanometers apart and touching. In a gas at STP, molecules are about 3.3 nanometers apart, roughly eleven times farther.">';
+  h += '<text x="0" y="16" font-family="IBM Plex Mono,monospace" font-size="12" fill="#3B4A48">Liquid water</text>';
+  for(var i = 0; i < 44; i++){
+    var x = 12 + i * liq, y = 52;
+    h += '<circle cx="' + (x - 3.6).toFixed(1) + '" cy="' + (y - 3.4) + '" r="2.7" fill="#F4F6F6" stroke="#8A9896" stroke-width=".7"/>' +
+         '<circle cx="' + (x + 3.6).toFixed(1) + '" cy="' + (y - 3.4) + '" r="2.7" fill="#F4F6F6" stroke="#8A9896" stroke-width=".7"/>' +
+         '<circle cx="' + x.toFixed(1) + '" cy="' + y + '" r="5.4" fill="#D9473B" stroke="#8A2A22" stroke-width=".7"/>';
+  }
+  h += '<line x1="12" y1="66" x2="' + (12 + liq).toFixed(1) + '" y2="66" stroke="#5F6D6B"/><line x1="12" y1="62" x2="12" y2="70" stroke="#5F6D6B"/><line x1="' + (12 + liq).toFixed(1) + '" y1="62" x2="' + (12 + liq).toFixed(1) + '" y2="70" stroke="#5F6D6B"/>';
+  h += '<text x="32" y="81" font-family="IBM Plex Mono,monospace" font-size="11" fill="#5F6D6B">0.31 nm apart</text>';
+  h += '<text x="0" y="112" font-family="IBM Plex Mono,monospace" font-size="12" fill="#3B4A48">Gas at STP (N₂)</text>';
+  for(var j = 0; j < 5; j++){
+    var gx = 18 + j * gas, gy = 142;
+    h += '<circle cx="' + (gx - 3.6).toFixed(1) + '" cy="' + gy + '" r="4.2" fill="#3B6FD0" stroke="#24467F" stroke-width=".7"/>' +
+         '<circle cx="' + (gx + 3.6).toFixed(1) + '" cy="' + gy + '" r="4.2" fill="#3B6FD0" stroke="#24467F" stroke-width=".7"/>';
+  }
+  h += '<line x1="18" y1="158" x2="' + (18 + gas).toFixed(1) + '" y2="158" stroke="#5F6D6B"/><line x1="18" y1="154" x2="18" y2="162" stroke="#5F6D6B"/><line x1="' + (18 + gas).toFixed(1) + '" y1="154" x2="' + (18 + gas).toFixed(1) + '" y2="162" stroke="#5F6D6B"/>';
+  h += '<text x="' + (18 + gas / 2).toFixed(1) + '" y="176" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#5F6D6B">3.3 nm apart</text>';
+  h += '</svg>';
+  el('sp-fig').innerHTML = h;
+})();
+
+/* =========================================================
+   5. gas in a cylinder at STP
+   ========================================================= */
+var GS_LIST = [['He','helium'],['N2','nitrogen'],['O2','oxygen'],['CO2','carbon dioxide'],['CH4','methane']];
+var GS_R = { He:5, N2:8, O2:8, CO2:11, CH4:8 };
+var CYL = { x0:70, x1:230, floor:300, ppm:88, per:12 };
+var GS = { f:'He', name:'helium', n:1, parts:[], raf:0, t0:0, run:false, vis:false };
+function gsShape(f){
+  var red = 'fill="#D9473B" stroke="#8A2A22"', blue = 'fill="#3B6FD0" stroke="#24467F"', dark = 'fill="#3F4548" stroke="#1E2224"', wh = 'fill="#F4F6F6" stroke="#8A9896"';
+  switch(f){
+    case 'He':  return '<circle r="4.6" fill="#CFEFF5" stroke="#5E8F99"/>';
+    case 'N2':  return '<circle cx="-3.4" r="4.4" ' + blue + '/><circle cx="3.4" r="4.4" ' + blue + '/>';
+    case 'O2':  return '<circle cx="-3.4" r="4.4" ' + red + '/><circle cx="3.4" r="4.4" ' + red + '/>';
+    case 'CO2': return '<circle cx="-6.4" r="4.1" ' + red + '/><circle cx="6.4" r="4.1" ' + red + '/><circle r="4.3" ' + dark + '/>';
+    case 'CH4': return '<circle cx="4" cy="-4" r="2.6" ' + wh + '/><circle cx="-4" cy="4" r="2.6" ' + wh + '/><circle r="4.6" ' + dark + '/><circle cx="-4" cy="-4" r="2.6" ' + wh + '/><circle cx="4" cy="4" r="2.6" ' + wh + '/>';
+  }
+}
+function gsSpeed(f){ return 55 * Math.sqrt(28.02 / mmOf(f)); }
+function gsH(){ return GS.n * CYL.ppm; }
+function gsBuild(){
+  var c = CYL, h = '<svg viewBox="0 0 320 316" role="img" id="gs-svg">';
+  h += '<rect x="' + c.x0 + '" y="20" width="' + (c.x1 - c.x0) + '" height="' + (c.floor - 20) + '" fill="#F4F9F9"/>';
+  for(var q = 1; q <= 12; q++){
+    var y = c.floor - q * c.ppm / 4, big = q % 4 === 0;
+    h += '<line x1="' + (c.x1 + 6) + '" y1="' + y + '" x2="' + (c.x1 + (big ? 18 : 11)) + '" y2="' + y + '" stroke="#9FB0AD" stroke-width="' + (big ? 1.5 : 1) + '"/>';
+    if(big) h += '<text x="' + (c.x1 + 22) + '" y="' + (y + 4) + '" font-family="IBM Plex Mono,monospace" font-size="11" fill="#3B4A48">' + (q / 4 * 22.4).toFixed(1) + ' L</text>';
+  }
+  h += '<text x="' + (c.x1 + 22) + '" y="' + (c.floor + 4) + '" font-family="IBM Plex Mono,monospace" font-size="11" fill="#9FB0AD">0</text>';
+  h += '<g id="gs-parts"></g>';
+  h += '<g id="gs-piston"><rect x="' + ((c.x0 + c.x1) / 2 - 5) + '" y="-320" width="10" height="308" fill="#B5C2C0" stroke="#8A9896"/>' +
+       '<rect x="' + (c.x0 - 1) + '" y="-12" width="' + (c.x1 - c.x0 + 2) + '" height="12" fill="#6F7D7B" stroke="#4E5958"/>' +
+       '<text x="' + ((c.x0 + c.x1) / 2) + '" y="-3" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#FFFFFF">1 atm</text></g>';
+  h += '<path d="M' + (c.x0 - 3) + ',20 V' + (c.floor + 3) + ' H' + (c.x1 + 3) + ' V20" fill="none" stroke="#3B4A48" stroke-width="4"/>';
+  h += '<text x="' + (c.x0 - 10) + '" y="' + (c.floor - 4) + '" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="11" fill="#5F6D6B">0 °C</text>';
+  h += '</svg>';
+  el('gs-fig').innerHTML = h;
+}
+function gsNewPart(){
+  var R = GS_R[GS.f], H = gsH(), a = Math.random() * Math.PI * 2, v = gsSpeed(GS.f);
+  var g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  g.innerHTML = gsShape(GS.f);
+  el('gs-parts').appendChild(g);
+  return { x:CYL.x0 + R + Math.random() * (CYL.x1 - CYL.x0 - 2 * R), h:R + Math.random() * Math.max(0, H - 2 * R), vx:v * Math.cos(a), vy:v * Math.sin(a), rot:Math.random() * 360, vr:(Math.random() - 0.5) * 90, node:g };
+}
+function gsPlace(q){ q.node.setAttribute('transform', 'translate(' + q.x.toFixed(1) + ',' + (CYL.floor - q.h).toFixed(1) + ') rotate(' + q.rot.toFixed(0) + ')'); }
+function gsSync(oldH){
+  var want = Math.round(GS.n * CYL.per), H = gsH(), R = GS_R[GS.f];
+  if(oldH) GS.parts.forEach(function(q){ q.h = q.h * H / oldH; });
+  while(GS.parts.length > want){ var q = GS.parts.pop(); q.node.remove(); }
+  while(GS.parts.length < want) GS.parts.push(gsNewPart());
+  GS.parts.forEach(function(q){ q.h = Math.max(R, Math.min(H - R, q.h)); gsPlace(q); });
+  el('gs-piston').setAttribute('transform', 'translate(0,' + (CYL.floor - H) + ')');
+}
+function gsStep(ts){
+  if(!GS.run) return;
+  var dt = GS.t0 ? Math.min(0.05, (ts - GS.t0) / 1000) : 0, H = gsH(), R = GS_R[GS.f], c = CYL;
+  GS.t0 = ts;
+  GS.parts.forEach(function(q){
+    q.x += q.vx * dt; q.h += q.vy * dt; q.rot += q.vr * dt;
+    if(q.x < c.x0 + R){ q.x = c.x0 + R; q.vx = Math.abs(q.vx); }
+    if(q.x > c.x1 - R){ q.x = c.x1 - R; q.vx = -Math.abs(q.vx); }
+    if(q.h < R){ q.h = R; q.vy = Math.abs(q.vy); }
+    if(q.h > H - R){ q.h = Math.max(R, H - R); q.vy = -Math.abs(q.vy); }
+    gsPlace(q);
+  });
+  GS.raf = requestAnimationFrame(gsStep);
+}
+function gsAnimate(){
+  var want = !REDUCED && GS.vis && !document.hidden;
+  if(want && !GS.run){ GS.run = true; GS.t0 = 0; GS.raf = requestAnimationFrame(gsStep); }
+  if(!want && GS.run){ GS.run = false; cancelAnimationFrame(GS.raf); }
+}
+function gsRender(){
+  var M = mmOf(GS.f), F = fHTML(GS.f), V = GS.n * MV, c = COMPOUNDS.filter(function(k){ return k.f === GS.f; })[0];
+  el('gs-n').textContent = GS.n.toFixed(2) + ' mol';
+  el('gs-rows').innerHTML =
+    '<div class="hl"><span>Volume at STP</span><span>' + sigHTML(V, 3) + ' L</span></div>' +
+    '<div><span>Molar mass of ' + F + '</span><span>' + fix2(M) + ' g/mol</span></div>' +
+    '<div><span>Mass</span><span>' + sigHTML(GS.n * M, 3) + ' g</span></div>' +
+    '<div><span>' + cap(pWord(c)) + '</span><span>' + sciHTML(GS.n * NA, 3) + '</span></div>';
+  el('gs-msg').innerHTML = '<b>' + GS.n.toFixed(2) + ' mol of any gas at STP takes up ' + sigHTML(V, 3) + ' L.</b> Switch gases and the piston doesn’t move, because the volume depends only on the number of moles. What changes is the mass: ' + sigHTML(GS.n * M, 3) + ' g of ' + GS.name + '.';
+  el('gs-svg').setAttribute('aria-label', 'A cylinder with a piston at 0 degrees Celsius and 1 atmosphere, holding ' + GS.n.toFixed(2) + ' moles of ' + GS.name + '. The piston sits at ' + sigHTML(V, 3) + ' liters.');
+  el('gs-down').disabled = GS.n <= 0.25;
+  el('gs-up').disabled = GS.n >= 3;
+}
+function gsSetN(n){
+  var oldH = gsH();
+  GS.n = Math.max(0.25, Math.min(3, Math.round(n * 4) / 4));
+  el('gs-range').value = GS.n;
+  gsSync(oldH); gsRender();
+}
+(function buildGas(){
+  el('gs-tabs').innerHTML = GS_LIST.map(function(g, i){
+    return '<button type="button" class="tab fx" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '">' + fHTML(g[0]) + ' <span style="font-weight:400">' + g[1] + '</span></button>';
+  }).join('');
+  gsBuild();
+  tabs(el('gs-tabs'), function(b){
+    var g = GS_LIST[Number(b.dataset.i)], k = gsSpeed(g[0]) / gsSpeed(GS.f);
+    GS.f = g[0]; GS.name = g[1];
+    GS.parts.forEach(function(q){ q.node.innerHTML = gsShape(GS.f); q.vx *= k; q.vy *= k; });
+    gsSync(0); gsRender();
+  });
+  el('gs-range').addEventListener('input', function(){ gsSetN(Number(this.value)); });
+  el('gs-down').addEventListener('click', function(){ gsSetN(GS.n - 0.25); });
+  el('gs-up').addEventListener('click', function(){ gsSetN(GS.n + 0.25); });
+  el('gs-one').addEventListener('click', function(){ gsSetN(1); });
+  gsSync(0);
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ GS.vis = es[0].isIntersecting; gsAnimate(); }).observe(el('gs-fig'));
+  } else { GS.vis = true; }
+  document.addEventListener('visibilitychange', gsAnimate);
+  gsAnimate();
+})();
+
+/* =========================================================
+   6. balloons: 22.4 L of each gas vs. 22.4 L of air
+   ========================================================= */
+var AIR = 28.97;
+var BAL = [['H2','hydrogen','#A9D3E0'],['He','helium','#F2C14E'],['CH4','methane','#8FC38A'],['Ne','neon','#F08A7E'],['N2','nitrogen','#7FA7E0'],
+           ['O2','oxygen','#E36A5C'],['Ar','argon','#B39DDB'],['CO2','carbon dioxide','#A3ADB0'],['C3H8','propane','#D9A066']];
+(function balloons(){
+  var html = '';
+  BAL.forEach(function(b){
+    var M = mmOf(b[0]), st = M < AIR - 3 ? 'up' : M > AIR + 2 ? 'down' : 'even';
+    var cy = st === 'up' ? 36 : st === 'even' ? 72 : 114, col = b[2], edge = shade(col, -0.4);
+    var body = 'M50,' + (cy - 27) + ' C66,' + (cy - 27) + ' 73,' + (cy - 13) + ' 73,' + (cy - 2) + ' C73,' + (cy + 13) + ' 60,' + (cy + 24) + ' 50,' + (cy + 27) +
+               ' C40,' + (cy + 24) + ' 27,' + (cy + 13) + ' 27,' + (cy - 2) + ' C27,' + (cy - 13) + ' 34,' + (cy - 27) + ' 50,' + (cy - 27) + ' Z';
+    var string = st === 'down'
+      ? 'M50,' + (cy + 30) + ' C56,' + (cy + 34) + ' 70,' + (cy + 31) + ' 92,' + (cy + 31)
+      : 'M50,' + (cy + 30) + ' C44,' + (cy + 44) + ' 56,' + (cy + 56) + ' 48,' + Math.min(145, cy + 74);
+    var svg = '<svg viewBox="0 0 100 150" role="img" aria-label="22.4 liters of ' + b[1] + ' at STP, ' + fix2(M) + ' grams: it ' + (st === 'up' ? 'floats' : st === 'down' ? 'sinks' : 'about matches air') + '">' +
+      '<line x1="4" y1="146" x2="96" y2="146" stroke="#C9D3D1" stroke-width="1.5"/>' +
+      '<path d="' + string + '" fill="none" stroke="#8A9896" stroke-width="1.1"/>' +
+      '<path d="M46,' + (cy + 31) + ' L54,' + (cy + 31) + ' L50,' + (cy + 26) + ' Z" fill="' + edge + '"/>' +
+      '<path d="' + body + '" fill="' + col + '" stroke="' + edge + '" stroke-width="1.2"/>' +
+      '<ellipse cx="41" cy="' + (cy - 12) + '" rx="5" ry="8" fill="#FFFFFF" fill-opacity=".35" transform="rotate(25 41 ' + (cy - 12) + ')"/>' +
+      '<text x="50" y="' + (cy + 4) + '" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="' + (b[0].length > 3 ? 11.5 : 13) + '" fill="' + (isLight(col) ? '#131E1D' : '#FFFFFF') + '">' + fText(b[0]) + '</text></svg>';
+    html += '<figure>' + svg + '<figcaption><b>' + cap(b[1]) + '</b><span class="m">' + fix2(M) + ' g</span><span class="st ' + st + '">' + (st === 'up' ? '▲ floats' : st === 'down' ? '▼ sinks' : '≈ about even') + '</span></figcaption></figure>';
+  });
+  el('bal').innerHTML = html;
+})();
+
+/* =========================================================
+   7. factor-label pieces and the mole map
+   ========================================================= */
+var NAH = '6.02 × 10' + supHTML(23);
+function U(u, x){ return '<span class="u' + (x ? ' x' : '') + '">' + u + '</span>'; }
+function Q(v, u, x){ return '<span class="qty">' + v + ' ' + U(u, x) + '</span>'; }
+function F(tv, tu, bv, bu, o){ o = o || {}; return '<span class="frac' + (o.nw ? ' new' : '') + '"><span>' + tv + ' ' + U(tu, o.xt) + '</span><span>' + bv + ' ' + U(bu, o.xb) + '</span></span>'; }
+var TIMES = '<span class="op">×</span>', EQ = '<span class="op">=</span>';
+function A(v, u){ return '<span class="ans">' + v + ' ' + U(u) + '</span>'; }
+function FL(parts){ return '<div class="fl">' + parts.join('') + '</div>'; }
+var CO2 = fHTML('CO2');
+el('cf-mm').outerHTML = FL([F('44.01','g ' + CO2,'1','mol ' + CO2), '<span class="op">or</span>', F('1','mol ' + CO2,'44.01','g ' + CO2)]);
+el('cf-na').outerHTML = FL([F(NAH,'molecules','1','mol'), '<span class="op">or</span>', F('1','mol',NAH,'molecules')]);
+el('cf-mv').outerHTML = FL([F('22.4','L','1','mol'), '<span class="op">or</span>', F('1','mol','22.4','L')]);
+
+var RT = { from:'g', to:'l' };
+var RT_NAMES = { g:'Grams', m:'Moles', p:'Particles', l:'Liters' };
+(function buildRoute(){
+  ['from','to'].forEach(function(which){
+    var host = el('rt-' + which);
+    host.innerHTML = ['g','m','p','l'].map(function(k){
+      return '<button type="button" class="tab" role="tab" data-k="' + k + '" aria-selected="' + (RT[which] === k) + '">' + RT_NAMES[k] + '</button>';
+    }).join('');
+    tabs(host, function(b){ RT[which] = b.dataset.k; rtRender(); });
+  });
+})();
+function rtRender(){
+  var f = RT.from, t = RT.to, arrows = [], fl, text;
+  var LEG = {
+    'g>m':['a-gm', F('1','mol','<i>molar mass</i>','g')], 'm>g':['a-mg', F('<i>molar mass</i>','g','1','mol')],
+    'm>p':['a-mp', F(NAH,'particles','1','mol')],         'p>m':['a-pm', F('1','mol',NAH,'particles')],
+    'm>l':['a-ml', F('22.4','L','1','mol')],              'l>m':['a-lm', F('1','mol','22.4','L')]
+  };
+  var start = { g:Q('<i>mass</i>','g'), m:Q('<i>moles</i>','mol'), p:Q('<i>number of</i>','particles'), l:Q('<i>volume</i>','L') }[f];
+  if(f === t){ text = 'Pick a different end point. You’re already there.'; fl = [start]; }
+  else {
+    var path = (f === 'm' || t === 'm') ? [f + '>' + t] : [f + '>m', 'm>' + t];
+    fl = [start];
+    path.forEach(function(k){ arrows.push(LEG[k][0]); fl.push(TIMES, LEG[k][1]); });
+    fl.push(EQ, Q('<i>answer</i>', { g:'g', m:'mol', p:'particles', l:'L' }[t]));
+    text = path.length === 1
+      ? '<b>One step.</b> ' + RT_NAMES[f] + ' → ' + RT_NAMES[t].toLowerCase() + '.'
+      : '<b>Two steps, through moles.</b> ' + RT_NAMES[f] + ' → moles → ' + RT_NAMES[t].toLowerCase() + '. There’s no shortcut.';
+    if(f === 'l' || t === 'l') text += ' Liters only work for a gas at STP.';
+  }
+  each(el('map').querySelectorAll('.arrows > span'), function(s){ s.classList.toggle('on', arrows.indexOf(s.id) !== -1); });
+  ['g','m','p','l'].forEach(function(k){ el('n-' + k).classList.toggle('on', k === f || k === t); });
+  el('rt-text').innerHTML = text;
+  el('rt-fl').outerHTML = '<div class="fl" id="rt-fl">' + fl.join('') + '</div>';
+}
+
+/* =========================================================
+   8. worked examples
+   ========================================================= */
+var uH2O = fHTML('H2O'), uCN = fHTML('Ca(NO3)2'), uO2 = fHTML('O2'), uN2 = fHTML('N2'), uCH4 = fHTML('CH4');
+var WORKED = [
+  { title:'Grams → moles', q:'How many moles are in 36.0 g of water, ' + uH2O + '?', steps:[
+    { fl:[Q('36.0','g ' + uH2O)], t:'<b>Start with what you’re given:</b> 36.0 g ' + uH2O + '. You need water’s molar mass first: 2(1.01) + 16.00 = 18.02 g/mol. So 1 mol ' + uH2O + ' = 18.02 g ' + uH2O + '.' },
+    { fl:[Q('36.0','g ' + uH2O), TIMES, F('1','mol ' + uH2O,'18.02','g ' + uH2O,{nw:1})], t:'<b>Grams go on the bottom</b>, so they cancel the grams you started with.' },
+    { fl:[Q('36.0','g ' + uH2O,1), TIMES, F('1','mol ' + uH2O,'18.02','g ' + uH2O,{xb:1})], t:'<b>Cancel units.</b> g ' + uH2O + ' cancels, leaving mol ' + uH2O + '.' },
+    { fl:[Q('36.0','g ' + uH2O,1), TIMES, F('1','mol ' + uH2O,'18.02','g ' + uH2O,{xb:1}), EQ, A('2.00','mol ' + uH2O)], t:'<b>Do the math.</b> 36.0 ÷ 18.02 = 1.998, or <b>2.00 mol ' + uH2O + '</b>. Sense check: 36.0 g is about twice the mass of one mole, so it’s about 2 mol. ✓' }
+  ]},
+  { title:'Moles → grams', q:'What is the mass of 0.250 mol of calcium nitrate, ' + uCN + '?', steps:[
+    { fl:[Q('0.250','mol ' + uCN)], t:'<b>Start with what you’re given:</b> 0.250 mol ' + uCN + '. Its molar mass: 1 Ca, 2 N and 6 O, so 40.08 + 2(14.01) + 6(16.00) = 164.10 g/mol.' },
+    { fl:[Q('0.250','mol ' + uCN), TIMES, F('164.10','g ' + uCN,'1','mol ' + uCN,{nw:1})], t:'<b>Moles go on the bottom</b> this time, with grams on top.' },
+    { fl:[Q('0.250','mol ' + uCN,1), TIMES, F('164.10','g ' + uCN,'1','mol ' + uCN,{xb:1})], t:'<b>Cancel units.</b> mol ' + uCN + ' cancels, leaving grams.' },
+    { fl:[Q('0.250','mol ' + uCN,1), TIMES, F('164.10','g ' + uCN,'1','mol ' + uCN,{xb:1}), EQ, A('41.0','g ' + uCN)], t:'<b>Do the math.</b> 0.250 × 164.10 = 41.025, or <b>41.0 g ' + uCN + '</b> to 3 significant figures. Sense check: a quarter of a mole is about a quarter of 164 g. ✓' }
+  ]},
+  { title:'Liters → moles', q:'How many moles of oxygen gas, ' + uO2 + ', are in 5.60 L at STP?', steps:[
+    { fl:[Q('5.60','L ' + uO2)], t:'<b>Start with what you’re given:</b> 5.60 L ' + uO2 + '. It’s a gas at STP, so 1 mol ' + uO2 + ' = 22.4 L ' + uO2 + '.' },
+    { fl:[Q('5.60','L ' + uO2), TIMES, F('1','mol ' + uO2,'22.4','L ' + uO2,{nw:1})], t:'<b>Liters go on the bottom</b>, so they cancel.' },
+    { fl:[Q('5.60','L ' + uO2,1), TIMES, F('1','mol ' + uO2,'22.4','L ' + uO2,{xb:1})], t:'<b>Cancel units.</b> L ' + uO2 + ' cancels, leaving mol ' + uO2 + '.' },
+    { fl:[Q('5.60','L ' + uO2,1), TIMES, F('1','mol ' + uO2,'22.4','L ' + uO2,{xb:1}), EQ, A('0.250','mol ' + uO2)], t:'<b>Do the math.</b> 5.60 ÷ 22.4 = <b>0.250 mol ' + uO2 + '</b>. Sense check: 5.60 L is a quarter of 22.4 L, so it’s a quarter of a mole. ✓ You never needed oxygen’s molar mass.' }
+  ]},
+  { title:'Moles → liters', q:'What volume does 3.00 mol of nitrogen gas, ' + uN2 + ', take up at STP?', steps:[
+    { fl:[Q('3.00','mol ' + uN2)], t:'<b>Start with what you’re given:</b> 3.00 mol ' + uN2 + '. You want liters, and ' + uN2 + ' is a gas at STP.' },
+    { fl:[Q('3.00','mol ' + uN2), TIMES, F('22.4','L ' + uN2,'1','mol ' + uN2,{nw:1})], t:'<b>Moles go on the bottom</b>, with 22.4 L on top.' },
+    { fl:[Q('3.00','mol ' + uN2,1), TIMES, F('22.4','L ' + uN2,'1','mol ' + uN2,{xb:1})], t:'<b>Cancel units.</b> mol ' + uN2 + ' cancels, leaving L ' + uN2 + '.' },
+    { fl:[Q('3.00','mol ' + uN2,1), TIMES, F('22.4','L ' + uN2,'1','mol ' + uN2,{xb:1}), EQ, A('67.2','L ' + uN2)], t:'<b>Do the math.</b> 3.00 × 22.4 = <b>67.2 L ' + uN2 + '</b>. Three moles take up three times 22.4 L. ✓' }
+  ]},
+  { title:'Grams → liters (2 steps)', q:'A chunk of dry ice (solid ' + CO2 + ') has a mass of 88.0 g. What volume will the ' + CO2 + ' gas take up at STP?', steps:[
+    { fl:[Q('88.0','g ' + CO2)], t:'<b>Start with what you’re given:</b> 88.0 g ' + CO2 + '. No single factor goes from grams to liters. Go through moles: grams → moles → liters.' },
+    { fl:[Q('88.0','g ' + CO2), TIMES, F('1','mol ' + CO2,'44.01','g ' + CO2,{nw:1})], t:'<b>Step 1: grams to moles.</b> ' + CO2 + ' is 12.01 + 2(16.00) = 44.01 g/mol. Grams go on the bottom.' },
+    { fl:[Q('88.0','g ' + CO2,1), TIMES, F('1','mol ' + CO2,'44.01','g ' + CO2,{xb:1})], t:'<b>Grams cancel.</b> You’re at mol ' + CO2 + ', halfway there.' },
+    { fl:[Q('88.0','g ' + CO2,1), TIMES, F('1','mol ' + CO2,'44.01','g ' + CO2,{xb:1}), TIMES, F('22.4','L ' + CO2,'1','mol ' + CO2,{nw:1})], t:'<b>Step 2: moles to liters.</b> At STP, 1 mol ' + CO2 + ' = 22.4 L ' + CO2 + '. Moles go on the bottom.' },
+    { fl:[Q('88.0','g ' + CO2,1), TIMES, F('1','mol ' + CO2,'44.01','g ' + CO2,{xt:1,xb:1}), TIMES, F('22.4','L ' + CO2,'1','mol ' + CO2,{xb:1})], t:'<b>Moles cancel.</b> The only unit left is L ' + CO2 + '.' },
+    { fl:[Q('88.0','g ' + CO2,1), TIMES, F('1','mol ' + CO2,'44.01','g ' + CO2,{xt:1,xb:1}), TIMES, F('22.4','L ' + CO2,'1','mol ' + CO2,{xb:1}), EQ, A('44.8','L ' + CO2)], t:'<b>Do the math.</b> 88.0 ÷ 44.01 × 22.4 = 44.79, or <b>44.8 L ' + CO2 + '</b>. A chunk of dry ice that fits in your hand turns into enough gas to fill two 22.4 L boxes.' }
+  ]},
+  { title:'Liters → molecules (2 steps)', q:'How many molecules are in 11.2 L of methane, ' + uCH4 + ', at STP?', steps:[
+    { fl:[Q('11.2','L ' + uCH4)], t:'<b>Start with what you’re given:</b> 11.2 L ' + uCH4 + '. Go through moles: liters → moles → molecules.' },
+    { fl:[Q('11.2','L ' + uCH4), TIMES, F('1','mol ' + uCH4,'22.4','L ' + uCH4,{nw:1})], t:'<b>Step 1: liters to moles.</b> Liters go on the bottom.' },
+    { fl:[Q('11.2','L ' + uCH4,1), TIMES, F('1','mol ' + uCH4,'22.4','L ' + uCH4,{xb:1})], t:'<b>Liters cancel.</b> You’re at mol ' + uCH4 + '.' },
+    { fl:[Q('11.2','L ' + uCH4,1), TIMES, F('1','mol ' + uCH4,'22.4','L ' + uCH4,{xb:1}), TIMES, F(NAH,'molecules ' + uCH4,'1','mol ' + uCH4,{nw:1})], t:'<b>Step 2: moles to molecules.</b> Multiply by Avogadro’s number with mol ' + uCH4 + ' on the bottom.' },
+    { fl:[Q('11.2','L ' + uCH4,1), TIMES, F('1','mol ' + uCH4,'22.4','L ' + uCH4,{xt:1,xb:1}), TIMES, F(NAH,'molecules ' + uCH4,'1','mol ' + uCH4,{xb:1})], t:'<b>Moles cancel</b>, leaving molecules ' + uCH4 + '.' },
+    { fl:[Q('11.2','L ' + uCH4,1), TIMES, F('1','mol ' + uCH4,'22.4','L ' + uCH4,{xt:1,xb:1}), TIMES, F(NAH,'molecules ' + uCH4,'1','mol ' + uCH4,{xb:1}), EQ, A('3.01 × 10' + supHTML(23),'molecules ' + uCH4)], t:'<b>Do the math.</b> 11.2 ÷ 22.4 × 6.02 × 10<sup>23</sup> = <b>3.01 × 10<sup>23</sup> molecules ' + uCH4 + '</b>. Half of 22.4 L is half a mole, so it’s half of Avogadro’s number. ✓' }
+  ]}
+];
+var wkIdx = 0, wkStep = 0;
+(function buildWkTabs(){
+  el('wk-tabs').innerHTML = WORKED.map(function(w, i){
+    return '<button type="button" class="tab" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '">' + w.title + '</button>';
+  }).join('');
+  tabs(el('wk-tabs'), function(b){ wkIdx = Number(b.dataset.i); wkStep = 0; wkRender(); });
+})();
+function wkRender(){
+  var w = WORKED[wkIdx], s = w.steps[wkStep];
+  el('wk-q').innerHTML = w.q;
+  el('wk-fl').innerHTML = FL(s.fl);
+  el('wk-text').innerHTML = s.t;
+  el('wk-count').textContent = 'Step ' + (wkStep + 1) + ' of ' + w.steps.length;
+  el('wk-next').disabled = wkStep === w.steps.length - 1;
+  el('wk-prev').disabled = wkStep === 0;
+}
+el('wk-next').addEventListener('click', function(){ if(wkStep < WORKED[wkIdx].steps.length - 1){ wkStep++; wkRender(); } });
+el('wk-prev').addEventListener('click', function(){ if(wkStep > 0){ wkStep--; wkRender(); } });
+el('wk-restart').addEventListener('click', function(){ wkStep = 0; wkRender(); });
+
+/* =========================================================
+   9. periodic table (for the practice section)
+   ========================================================= */
+function ptPos(z){
+  if(z === 1) return [1, 1];
+  if(z === 2) return [1, 18];
+  if(z <= 10) return [2, z <= 4 ? z - 2 : z + 8];
+  if(z <= 18) return [3, z <= 12 ? z - 10 : z];
+  if(z <= 36) return [4, z - 18];
+  if(z <= 54) return [5, z - 36];
+  if(z <= 56) return [6, z - 54];
+  if(z <= 71) return [9, z - 54];
+  if(z <= 86) return [6, z - 68];
+  if(z <= 88) return [7, z - 86];
+  if(z <= 103) return [10, z - 86];
+  return [7, z - 100];
+}
+function tileHTML(e){
+  return '<div class="tile" aria-hidden="true"><span class="tz">' + e.z + '</span><span class="ts">' + e.sym + '</span><span class="tn">' + e.name + '</span><span class="tm">' + e.ms + '</span></div>';
+}
+function ptFacts(e){
+  if(e.br) return '<p><b>' + e.name + '</b> has no stable isotopes. The number in parentheses, ' + e.ms + ', is the mass number of a long-lived isotope, not an average. You won’t need these.</p>';
+  var h = '<div class="mm">' + e.ms + ' g/mol</div><p>1 mol ' + e.sym + ' atoms = <b>' + e.ms + ' g</b></p>';
+  if(DIATOMIC[e.sym]) h += '<p class="aside">' + e.name + ' gas is ' + e.sym + '₂, two atoms per molecule, so its molar mass is 2 × ' + e.ms + ' = ' + fix2(2 * e.M) + ' g/mol.</p>';
+  return h;
+}
+function buildPT(host){
+  var cells = '';
+  ELEMENTS.forEach(function(e){
+    var p = ptPos(e.z);
+    cells += '<button type="button" class="el' + (e.br ? ' rad' : '') + '" data-s="' + e.sym + '" style="grid-row:' + p[0] + ';grid-column:' + p[1] + '" aria-label="' + e.name + ', ' + (e.br ? 'no stable isotopes' : e.ms + ' grams per mole') + '">' +
+      '<span class="z">' + e.z + '</span><span class="s">' + e.sym + '</span><span class="m">' + e.ms + '</span></button>';
+  });
+  cells += '<div class="gap" style="grid-row:6;grid-column:3">57–71</div><div class="gap" style="grid-row:7;grid-column:3">89–103</div>';
+  host.innerHTML = '<div class="pt-scroll"><div class="pt">' + cells + '</div></div><div class="pt-detail" aria-live="polite"><p class="smallprint" style="margin:0">Click an element to see its molar mass.</p></div>';
+  var detail = host.querySelector('.pt-detail');
+  each(host.querySelectorAll('.el'), function(b){
+    b.addEventListener('click', function(){
+      each(host.querySelectorAll('.el'), function(o){ o.classList.toggle('on', o === b); });
+      detail.innerHTML = tileHTML(EL[b.dataset.s]) + '<div class="pt-facts">' + ptFacts(EL[b.dataset.s]) + '</div>';
+    });
+  });
+}
+
+/* =========================================================
+   10. practice
+   ========================================================= */
+var pScore = Score(el('p-score'));
+var pKind = 'mm', P = null;
+var KIND_TYPES = { mm:['mm'], grams:['gm','mg'], gas:['lm','ml'], parts:['mp','pm'], two:['gl','lg','gp','pg','lp','pl'],
+                   mix:['mm','mm','gm','mg','lm','ml','mp','pm','gl','lg','gp','pg','lp','pl'] };
+var TO_LABEL = { 'g/mol':'Molar mass', mol:'Moles', g:'Mass', L:'Volume' };
+
+function pNew(){
+  var type = pick(KIND_TYPES[pKind]);
+  P = makeProblem(type, P ? P.c.f : null);
+  P.scored = false; P.done = false; P.chain = [];
+  var to = TYPES[type].to, sci = to === 'p';
+  el('p-prob').innerHTML = problemText(P);
+  el('p-in').value = ''; el('p-exp').value = '';
+  el('p-x10').hidden = !sci;
+  el('p-unit').innerHTML = unitOf(to, P);
+  el('p-label').textContent = sci ? 'Number of ' + P.pw : TO_LABEL[to];
+  el('p-tip').innerHTML = type === 'mm'
+    ? 'Look up each element on your periodic table, or press <b>Periodic table</b> below.'
+    : sci ? 'Type the number in the first box and the power of ten in the small box: <kbd>1.51</kbd> and <kbd>24</kbd> for 1.51 × 10²⁴. Typing <kbd>1.51e24</kbd> in the first box works too.'
+          : 'Type just the number. The unit is already there.';
+  hideFb(el('p-fb'));
+  el('s-wrap').hidden = type === 'mm';
+  el('t-wrap').hidden = type !== 'mm';
+  if(type === 'mm') tBuild(); else sRender();
+}
+function solutionFL(p){
+  if(p.type === 'mm') return '';
+  var fs = factorsFor(p), byId = {};
+  fs.forEach(function(f){ byId[f.id] = f; });
+  var chain = solutionIds(p.type).map(function(id){ return byId[id]; });
+  var from = TYPES[p.type].from, to = TYPES[p.type].to;
+  var cu = cancelUnits(unitOf(from, p), chain), parts = [];
+  var gv = from === 'p' ? sciHTML(p.given, 3) : sigHTML(p.given, 3);
+  parts.push(Q(gv, cu.num[0].u, cu.num[0].x));
+  chain.forEach(function(f, i){ parts.push(TIMES, F(f.t[0], f.t[1], f.b[0], f.b[1], { xt:cu.num[i + 1].x, xb:cu.den[i].x })); });
+  parts.push(EQ, A(to === 'p' ? sciHTML(p.answer, 3) : sigHTML(p.answer, 3), unitOf(to, p)));
+  return FL(parts);
+}
+function mmWork(p){
+  var pf = p.pf;
+  return '<span class="mono">' + pf.order.map(function(s){ return (pf.counts[s] > 1 ? pf.counts[s] + '(' + EL[s].ms + ')' : EL[s].ms); }).join(' + ') + ' = ' + p.Ms + ' g/mol</span>';
+}
+function pCheck(){
+  if(!P || P.done) return;
+  var raw = el('p-in').value, ex = el('p-x10').hidden ? '' : el('p-exp').value, fb = el('p-fb');
+  if(!raw.trim()){ setFb(fb,'hint','Type your answer first.'); return; }
+  var got = readAnswer(raw, ex), res = judge(P, got);
+  if(res.code === 'unreadable'){ setFb(fb,'hint', hintFor(P, res)); return; }
+  if(!P.scored){ P.scored = true; pScore.add(res.ok); }
+  if(res.ok){
+    P.done = true;
+    if(P.type === 'mm'){ setFb(fb,'good','<b>Correct: ' + answerHTML(P) + '.</b><br>' + mmWork(P)); return; }
+    var sfNote = got.sf !== 3 ? '<br>Your value is right. The given number has 3 significant figures, so round your answer to 3: <b>' + answerHTML(P) + '</b>.' : '';
+    setFb(fb,'good','<b>Correct: ' + answerHTML(P) + '.</b>' + solutionFL(P) + sfNote);
+    return;
+  }
+  setFb(fb,'bad', hintFor(P, res));
+}
+function pShow(){
+  if(!P) return;
+  if(!P.scored){ P.scored = true; pScore.add(false); }
+  P.done = true;
+  if(TYPES[P.type].to === 'p'){ var sp = sigParts(P.answer, 3); el('p-in').value = sp.m; el('p-exp').value = sp.e; }
+  else el('p-in').value = P.type === 'mm' ? P.Ms : sigPlain(P.answer, 3);
+  setFb(el('p-fb'),'hint','<b>Answer: ' + answerHTML(P) + '.</b>' + (P.type === 'mm' ? '<br>' + mmWork(P) : solutionFL(P)));
+}
+el('p-check').addEventListener('click', pCheck);
+el('p-show').addEventListener('click', pShow);
+el('p-new').addEventListener('click', pNew);
+el('p-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') pCheck(); });
+el('p-exp').addEventListener('keydown', function(e){ if(e.key === 'Enter') pCheck(); });
+tabs(el('p-tabs'), function(b){ pKind = b.dataset.k; P = null; pNew(); });
+el('p-ptbtn').addEventListener('click', function(){
+  var host = el('p-pt'), open = host.hidden;
+  if(open && !host.dataset.built){ buildPT(host); host.dataset.built = '1'; }
+  host.hidden = !open;
+  this.setAttribute('aria-expanded', String(open));
+  this.textContent = open ? 'Hide periodic table' : 'Periodic table';
+});
+
+/* ---- build the table (molar mass problems) ---- */
+function tBuild(){
+  var pf = P.pf, rows = '<tbody>';
+  pf.order.forEach(function(s, i){
+    var nm = EL[s].name.toLowerCase();
+    rows += '<tr><td><b>' + s + '</b></td>' +
+      '<td><input type="text" id="t-n' + i + '" inputmode="numeric" autocomplete="off" aria-label="Number of ' + nm + ' atoms"></td>' +
+      '<td class="op">×</td><td class="n">' + EL[s].ms + '</td><td class="op">=</td>' +
+      '<td><input type="text" class="wide" id="t-s' + i + '" inputmode="decimal" autocomplete="off" aria-label="Grams of ' + nm + ' per mole"> g</td></tr>';
+  });
+  el('t-table').innerHTML = '<thead><tr><th>El.</th><th>Atoms</th><th></th><th>g/mol</th><th></th><th>Subtotal</th></tr></thead>' + rows + '</tbody>';
+  setFb(el('t-msg'), 'hint', 'Count the atoms of each element in ' + P.F + ', then multiply by its molar mass. Press <b>Check rows</b> to see which rows are right.');
+  each(el('t-table').querySelectorAll('input'), function(inp){ inp.addEventListener('keydown', function(e){ if(e.key === 'Enter') tCheck(); }); });
+}
+function countHint(pf, s, n){
+  var nm = EL[s].name.toLowerCase(), noP = 0;
+  pf.occ.forEach(function(o){ if(o.el === s) noP += o.n; });
+  if(pf.groups.length && n === noP) return '<b>Recount the ' + nm + '.</b> The subscript after the parentheses multiplies every atom inside them.';
+  if(n === 1 && pf.counts[s] > 1) return '<b>Recount the ' + nm + '.</b> Don’t forget its subscript.';
+  return '<b>Recount the ' + nm + '.</b> Count every ' + s + ' in the formula, including any inside parentheses.';
+}
+function tCheck(){
+  if(!P || P.type !== 'mm') return;
+  var pf = P.pf, filled = 0, wrong = 0, msg = '';
+  pf.order.forEach(function(s, i){
+    var nIn = el('t-n' + i), sIn = el('t-s' + i), need = pf.counts[s], sub = need * EL[s].M;
+    [nIn, sIn].forEach(function(x){ x.classList.remove('ok-in', 'no-in'); });
+    var nRaw = nIn.value.trim(), sRaw = sIn.value.trim();
+    if(nRaw){
+      filled++;
+      if(Number(nRaw) === need) nIn.classList.add('ok-in');
+      else { nIn.classList.add('no-in'); wrong++; if(!msg) msg = countHint(pf, s, Number(nRaw)); }
+    }
+    if(sRaw){
+      filled++;
+      var sv = parseNum(sRaw);
+      if(sv && Math.abs(sv.v - sub) <= sub * 0.005 + 0.011) sIn.classList.add('ok-in');
+      else { sIn.classList.add('no-in'); wrong++; if(!msg) msg = '<b>Check the ' + EL[s].name.toLowerCase() + ' subtotal.</b> Multiply the number of ' + s + ' atoms by ' + EL[s].ms + '.'; }
+    }
+  });
+  var tm = el('t-msg');
+  if(!filled) setFb(tm, 'hint', 'Fill in a row first.');
+  else if(wrong) setFb(tm, 'bad', msg);
+  else if(filled === pf.order.length * 2) setFb(tm, 'good', '<b>Every row is right.</b> Add the subtotals and type the total in the answer box above.');
+  else setFb(tm, 'hint', 'So far, so good. Fill in the rest of the table.');
+}
+el('t-check').addEventListener('click', tCheck);
+el('t-clear').addEventListener('click', function(){ if(P && P.type === 'mm') tBuild(); });
+
+/* ---- build the setup (conversions) ---- */
+function sRender(){
+  if(!P || P.type === 'mm') return;
+  var fs = factorsFor(P), from = TYPES[P.type].from, to = TYPES[P.type].to;
+  var startU = unitOf(from, P), target = unitOf(to, P);
+  var chain = P.chain.map(function(i){ return fs[i]; });
+  var cu = cancelUnits(startU, chain), parts = [];
+  var gv = from === 'p' ? sciHTML(P.given, 3) : sigHTML(P.given, 3);
+  parts.push(Q(gv, startU, cu.num[0].x));
+  chain.forEach(function(f, i){ parts.push(TIMES, F(f.t[0], f.t[1], f.b[0], f.b[1], { xt:cu.num[i + 1].x, xb:cu.den[i].x })); });
+  var leftN = cu.num.filter(function(u){ return !u.x; }).map(function(u){ return u.u; });
+  var leftD = cu.den.filter(function(u){ return !u.x; }).map(function(u){ return u.u; });
+  var msg, kind = 'hint';
+  if(!chain.length){
+    msg = 'You have <b>' + startU + '</b> and want <b>' + target + '</b>. Pick a factor with <b>' + startU + '</b> on the bottom.';
+  } else if(leftN.length === 1 && !leftD.length && leftN[0] === target){
+    parts.push(EQ, '<span class="ph">? ' + U(target) + '</span>');
+    msg = '<b>The units work.</b> Everything cancels except <b>' + target + '</b>, the unit you want. Now multiply across the top and divide by the bottom.';
+    kind = 'good';
+  } else if(leftN.length === 1 && !leftD.length){
+    msg = 'You’re at <b>' + leftN[0] + '</b>. ' + (chain.length >= 3 ? 'That’s a lot of factors. Undo and try a shorter route.' : 'Add another factor to get to <b>' + target + '</b>.');
+  } else {
+    msg = '<b>These units don’t cancel.</b> You’d end up with ' + leftN.join(' × ') + (leftD.length ? ' ÷ ' + leftD.join(' ÷ ') : '') + ', which isn’t a real answer. Undo and flip that factor.';
+    kind = 'bad';
+  }
+  el('s-chain').innerHTML = FL(parts);
+  el('s-opts').innerHTML = fs.map(function(f, i){
+    var lab = (f.t[0] + ' ' + f.t[1] + ' per ' + f.b[0] + ' ' + f.b[1]).replace(/<sup>(.*?)<\/sup>/g, '^$1').replace(/<[^>]+>/g, '');
+    return '<button type="button" class="fopt" data-i="' + i + '" aria-label="Multiply by ' + lab + '"' + (chain.length >= 3 ? ' disabled' : '') + '><span class="frac"><span>' + f.t[0] + ' ' + f.t[1] + '</span><span>' + f.b[0] + ' ' + f.b[1] + '</span></span></button>';
+  }).join('');
+  each(el('s-opts').querySelectorAll('.fopt'), function(b){
+    b.addEventListener('click', function(){ if(P.chain.length < 3){ P.chain.push(Number(b.dataset.i)); sRender(); } });
+  });
+  setFb(el('s-msg'), kind, msg);
+  el('s-undo').disabled = !chain.length;
+  el('s-clear').disabled = !chain.length;
+}
+el('s-undo').addEventListener('click', function(){ P.chain.pop(); sRender(); });
+el('s-clear').addEventListener('click', function(){ P.chain = []; sRender(); });
+
+/* =========================================================
+   11. quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'What is the molar mass of carbon dioxide, CO<sub>2</sub>?',
+    opts:['28.01 g/mol','44.01 g/mol','56.02 g/mol','22.4 g/mol'],
+    ans:1,
+    why:'12.01 + 2(16.00) = 44.01 g/mol. 28.01 forgets the subscript on O. 56.02 doubles the whole formula, but the 2 belongs to O only. 22.4 is liters per mole of a gas at STP, not a molar mass.' },
+  { stem:'How many oxygen atoms are in one formula unit of aluminum sulfate, Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>?',
+    opts:['3','4','7','12'],
+    ans:3,
+    why:'There are 4 O in each SO<sub>4</sub>, and the 3 after the parentheses means three SO<sub>4</sub> groups: 4 × 3 = 12.' },
+  { stem:'What is the molar mass of calcium hydroxide, Ca(OH)<sub>2</sub>?',
+    opts:['57.09 g/mol','58.10 g/mol','74.10 g/mol','114.18 g/mol'],
+    ans:2,
+    why:'Ca(OH)<sub>2</sub> has 1 Ca, 2 O and 2 H: 40.08 + 2(16.00) + 2(1.01) = 74.10 g/mol. 57.09 ignores the 2. 58.10 applies it to H only. 114.18 doubles the calcium too.' },
+  { stem:'How many moles are in 9.01 g of water, H<sub>2</sub>O?',
+    opts:['0.500 mol','2.00 mol','162 mol','0.402 mol'],
+    ans:0,
+    why:'9.01 g ÷ 18.02 g/mol = 0.500 mol. 2.00 divides the wrong way. 162 multiplies by the molar mass. 0.402 divides by 22.4, but water isn’t a gas at STP, and grams need the molar mass anyway.' },
+  { stem:'What are the conditions called STP?',
+    opts:['0 °C and 1 atm','25 °C and 1 atm','0 K and 0 atm','100 °C and 1 atm'],
+    ans:0,
+    why:'Standard temperature is 0 °C (273 K) and standard pressure is 1 atm (101.3 kPa). 25 °C is room temperature, which is not STP.' },
+  { stem:'At STP, which takes up more space: 1.00 mol of helium or 1.00 mol of carbon dioxide?',
+    opts:['Carbon dioxide, because its molecules are bigger','Helium, because its atoms move faster','They take up the same volume, 22.4 L','Carbon dioxide, because it has more mass'],
+    ans:2,
+    why:'In a gas the particles are far apart, so their size barely matters. One mole of any gas at STP takes up 22.4 L.' },
+  { stem:'At STP, 22.4 L of which gas has the greatest mass?',
+    opts:['H<sub>2</sub>','He','N<sub>2</sub>','CO<sub>2</sub>'],
+    ans:3,
+    why:'Each one is 1.00 mol, so its mass equals its molar mass: H<sub>2</sub> 2.02 g, He 4.00 g, N<sub>2</sub> 28.02 g, CO<sub>2</sub> 44.01 g.' },
+  { stem:'How many moles of nitrogen gas, N<sub>2</sub>, are in 44.8 L at STP?',
+    opts:['0.500 mol','1.60 mol','2.00 mol','1.00 × 10<sup>3</sup> mol'],
+    ans:2,
+    why:'44.8 L ÷ 22.4 L/mol = 2.00 mol. 0.500 divides the wrong way. 1.60 divides by the molar mass of N<sub>2</sub>, which is for grams. 1.00 × 10<sup>3</sup> multiplies by 22.4.' },
+  { stem:'Why can’t you use 22.4 L/mol for a mole of liquid water?',
+    opts:['22.4 L/mol is only for gases at STP. In a liquid the molecules touch, so a mole of water fills only about 18 mL.','Water’s molar mass is too small','22.4 L/mol only works for elements, not compounds','Water is diatomic'],
+    ans:0,
+    why:'Molar volume works for gases because gas particles are far apart. In liquids and solids the particles touch, so every substance has its own volume per mole.' },
+  { stem:'A chunk of dry ice is 88.0 g of solid CO<sub>2</sub>. What volume does it take up as a gas at STP?',
+    opts:['2.00 L','44.8 L','0.0893 L','1.97 × 10<sup>3</sup> L'],
+    ans:1,
+    why:'Grams → moles → liters: 88.0 g ÷ 44.01 g/mol = 2.00 mol, then 2.00 mol × 22.4 L/mol = 44.8 L. 2.00 stops at moles. 0.0893 divides by 22.4 instead of multiplying. 1.97 × 10<sup>3</sup> skips the molar mass.' }
+];
+(function buildQuiz(){
+  var host = el('quiz'), html = '';
+  QUIZ.forEach(function(q, qi){
+    html += '<div class="q"><p class="stem">' + (qi + 1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o, oi){ html += '<button type="button" class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  host.innerHTML = html;
+  each(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      each(el('q' + qi).querySelectorAll('.opt'), function(other, i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      setFb(el('qfb' + qi), oi === q.ans ? 'good' : 'bad', '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+    });
+  });
+})();
+
+/* boot */
+cntRender('Ca(NO3)2');
+bbRender();
+mwRender();
+gsRender();
+rtRender();
+wkRender();
+pNew();
+</script>
+</body>
+</html>
