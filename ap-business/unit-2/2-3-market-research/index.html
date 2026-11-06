@@ -254,6 +254,47 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
 .axis i{font-style:normal}
 button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
 
+/* secondary research + PESTEL */
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:20px 0}
+.pestel{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin:18px 0}
+.pe{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:12px 14px;display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;align-items:start}
+.pe .pl{font-family:var(--display);font-weight:700;font-size:30px;line-height:1;color:var(--indigo)}
+.pe .pn{font-weight:600;font-size:16px}
+.pe p{margin:2px 0 0;font-size:14.5px;color:var(--ink2)}
+.pe .px{font-size:13.5px;color:var(--mute);margin-top:4px}
+.pe .px::before{content:"e.g. ";font-family:var(--mono);font-size:11px}
+
+/* choosing a method */
+.needs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin:20px 0}
+.need{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 18px}
+.need .ek2{float:right;font-family:var(--mono);font-size:11px;color:var(--mute);margin-left:10px}
+.need .nh{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.need .nq{margin:2px 0 10px;font-size:16px;line-height:1.45;color:var(--ink)}
+.need .nm{font-size:15px;color:var(--mute);border-top:1px solid var(--line-soft);padding-top:8px}
+.need .nm b{font-family:var(--display);font-weight:700;font-size:20px;color:var(--indigo-dk);letter-spacing:-.01em}
+.need p{margin:4px 0 0;font-size:15px;color:var(--ink2)}
+.need .gv span{font-family:var(--mono);font-size:11.5px;border-radius:2px;padding:1px 7px;margin-left:4px;white-space:nowrap}
+
+/* data visualizations */
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin:20px 0}
+.cc{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 16px}
+.cc .ct{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:6px}
+.cv{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--line-soft);border-radius:3px}
+.cv text{font-family:var(--mono);font-size:10.5px;fill:var(--ink2)}
+.cv .val{fill:var(--ink);font-weight:600}
+.cv .base{stroke:#CDC6BA;stroke-width:1}
+.cv .grid{stroke:var(--line-soft);stroke-width:1}
+.cleg{display:flex;gap:4px 14px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:var(--ink2);margin-top:8px}
+.cleg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.cc .ch{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:-.01em;margin:12px 0 0}
+.cc .ch span{font-family:var(--mono);font-weight:400;font-size:11px;color:var(--mute);letter-spacing:0}
+.cc p{margin:2px 0 0;font-size:15.5px;color:var(--ink2)}
+.cc .cx{font-size:14px;color:var(--mute);margin-top:4px}
+.pk.c4{grid-template-columns:repeat(4,1fr)}
+.q .fig{margin:12px 0 4px;max-width:440px}
+.q .fig .ct{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-bottom:6px}
+.q .fig .cv text{font-size:12px}
+
 @media (max-width:760px){
   .board{grid-template-columns:1fr 1fr}
   .lo:nth-child(3){border-left:none}
@@ -269,7 +310,7 @@ button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
   .lo{padding:14px}
   .lo .lq{font-size:17px}
   .pk.c2,.pk.c3{grid-template-columns:1fr}
-  .pk.c6{grid-template-columns:1fr 1fr}
+  .pk.c6,.pk.c4{grid-template-columns:1fr 1fr}
   .srow{grid-template-columns:86px minmax(0,1fr)}
   .srow .sn{font-size:10.5px;padding-right:6px}
   .axis span:not(:first-child):not(:last-child) i{display:none}
@@ -291,7 +332,7 @@ button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
 <nav class="bar">
   <div class="bar-in">
     <span class="bar-title"><a href="/ap-business/unit-2/">2.3 Market Research</a></span>
-    <span class="bar-sub">Quantitative vs. qualitative · desirable, feasible, viable · primary vs. secondary · research methods · reading results</span>
+    <span class="bar-sub">Quantitative vs. qualitative · desirable, feasible, viable · secondary research · primary research · samples · data visualizations</span>
   </div>
 </nav>
 
@@ -302,11 +343,11 @@ button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
   <h1>Market <em>Research</em></h1>
   <p class="lede">Every new product starts as a guess: people will want this, we can make it, and it will make money. Market research is how a business checks those guesses before it bets real money on them.</p>
 
-  <div class="board" aria-label="The four big questions in this topic">
+  <div class="board" aria-label="The four learning objectives in this topic">
     <a class="lo" href="#why"><span class="code">2.3.A</span><span class="lq">Why research first?</span><span class="d">Quantitative vs. qualitative data; desirable, feasible, viable</span></a>
-    <a class="lo" href="#sources"><span class="code">2.3.B</span><span class="lq">Ask people, or look it up?</span><span class="d">Primary vs. secondary research</span></a>
-    <a class="lo" href="#methods"><span class="code">2.3.C</span><span class="lq">How do you test a hunch?</span><span class="d">Hypotheses and six primary research methods</span></a>
-    <a class="lo" href="#lab"><span class="code">2.3.C</span><span class="lq">Can you trust the answer?</span><span class="d">Who you ask, how many, and reading the results</span></a>
+    <a class="lo" href="#sources"><span class="code">2.3.B</span><span class="lq">What’s already out there?</span><span class="d">Secondary research, market size, rivals, PESTEL</span></a>
+    <a class="lo" href="#methods"><span class="code">2.3.C</span><span class="lq">Is our hypothesis right?</span><span class="d">Primary research methods, samples, neutral questions</span></a>
+    <a class="lo" href="#viz"><span class="code">2.3.D</span><span class="lq">How do we show it?</span><span class="d">Bar, stacked bar, line, and pie charts</span></a>
   </div>
 
   <nav class="jump" aria-label="Jump to a section">
@@ -314,10 +355,13 @@ button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
     <a href="#qq">Numbers or words</a>
     <a href="#dfv">Desirable, feasible, viable</a>
     <a href="#sources">Primary vs. secondary</a>
-    <a href="#methods">Six methods</a>
-    <a href="#name">Name the method</a>
+    <a href="#market-size">Market size</a>
+    <a href="#pestel">PESTEL</a>
+    <a href="#methods">Choosing a method</a>
     <a href="#survey">Survey lab</a>
+    <a href="#neutral">Neutral questions</a>
     <a href="#read">Supported or not?</a>
+    <a href="#viz">Charts</a>
     <a href="#check">Check yourself</a>
   </nav>
 </header>
@@ -326,30 +370,32 @@ button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
      2.3.A  WHY RESEARCH
      ========================================================= -->
 <section id="why">
-  <div class="sec-head"><span class="tag">2.3.A</span><h2>Why research before you build</h2></div>
+  <div class="sec-head"><span class="tag">2.3.A</span><h2>Why businesses research first</h2></div>
 
   <div class="def">
     <span class="ek">2.3.A.1</span>
     <div class="term">Market research</div>
-    <p>Gathering and analyzing information about customers, competitors, and the market so a business can make better decisions.</p>
+    <p>The process of collecting detailed information about <b>markets, products, and customer behavior</b> to guide marketing decisions.</p>
   </div>
 
-  <p>Making a product, stocking it, and advertising it all cost money. Research costs much less than a flop. It answers questions like: <i>Is there a real problem here? Who has it? What would they pay? Who else is already solving it?</i></p>
+  <p>Making a product, stocking it, and advertising it all cost money. Research costs far less than a flop. It answers questions like: <i>Is there a real problem here? Who has it? What would they pay? Who else is already solving it?</i></p>
 
   <h3 id="qq">Two kinds of research data</h3>
-  <p>Research produces two kinds of data <span class="smallprint">(2.3.A.2)</span>. The quickest test: <b>is it a number, or is it words?</b></p>
+  <p>Market researchers collect both kinds <span class="smallprint">(2.3.A.2)</span>. The quickest test: <b>is it a number, or is it words and images?</b></p>
   <div class="grid2">
     <div class="kind">
+      <span class="ek2">2.3.A.2.i</span>
       <div class="kh">Quantitative</div>
-      <div class="ks">Numbers: anything you can count, measure, or put on a chart.</div>
+      <div class="ks">Numerical data that can be measured and analyzed.</div>
       <div class="chips"><span class="chip">percentages</span><span class="chip">1–5 ratings</span><span class="chip">sales counts</span><span class="chip">prices</span><span class="chip">click rates</span></div>
-      <p class="tip">Answers <b>how many, how much, how often</b>: “62% of students skip breakfast at least twice a week.”</p>
+      <p class="tip">Answers <b>how many, how much, and how often</b>: “62% of students skip breakfast at least twice a week.”</p>
     </div>
     <div class="kind alt">
+      <span class="ek2">2.3.A.2.ii</span>
       <div class="kh">Qualitative</div>
-      <div class="ks">Words, descriptions, and observations: what people say and do, in their own terms.</div>
-      <div class="chips"><span class="chip">interview quotes</span><span class="chip">open-ended answers</span><span class="chip">written reviews</span><span class="chip">observer notes</span></div>
-      <p class="tip">Answers <b>why</b> and <b>how it feels</b>: “I skip breakfast because my bus comes at 6:50.”</p>
+      <div class="ks">Descriptive, non-numerical data, collected in words and images.</div>
+      <div class="chips"><span class="chip">interview quotes</span><span class="chip">open-ended answers</span><span class="chip">written reviews</span><span class="chip">observer notes</span><span class="chip">photos and video</span></div>
+      <p class="tip">Answers <b>why</b> and <b>how</b>: “I skip breakfast because my bus comes at 6:50.”</p>
     </div>
   </div>
   <p>Businesses usually want both. The numbers show <b>how big</b> a pattern is; the words explain <b>why</b> it happens.</p>
@@ -364,8 +410,8 @@ button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
     <div class="btn-row"><button id="qq-next">Next finding →</button></div>
   </div>
 
-  <h3 id="dfv">Three questions before launch</h3>
-  <p>Before a business brings a new product to market, research helps it answer three questions <span class="smallprint">(2.3.A.3)</span>. A product needs a yes on <b>all three</b>.</p>
+  <h3 id="dfv">Desirable, feasible, viable</h3>
+  <p>Businesses developing new products use market research to evaluate three things <b>before committing significant resources</b> to bring the product to market <span class="smallprint">(2.3.A.3)</span>. A product needs a yes on all three.</p>
   <div class="dfv">
     <svg class="venn" viewBox="0 0 300 282" role="img" aria-label="Three overlapping circles labeled desirable, feasible, and viable. Only the center, where all three overlap, is ready to launch.">
       <circle cx="113" cy="112" r="78" fill="rgba(58,85,160,.12)" stroke="#3A55A0" stroke-width="1.5"/>
@@ -377,9 +423,9 @@ button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
       <text x="150" y="140" class="vc">Launch</text>
     </svg>
     <div class="q3s">
-      <div class="q3" style="--c:var(--indigo)"><div class="qh">Desirable <span>· Do customers want it?</span></div><p>Is there a real need or want, and would people choose this over what they use now?</p></div>
-      <div class="q3" style="--c:var(--amber)"><div class="qh">Feasible <span>· Can we make and deliver it?</span></div><p>Can the business get the materials, skills, technology, and permits it needs?</p></div>
-      <div class="q3" style="--c:var(--ok)"><div class="qh">Viable <span>· Can it make money?</span></div><p>Will customers pay more than it costs to make, sell, and deliver, often enough to keep the business going?</p></div>
+      <div class="q3" style="--c:var(--indigo)"><div class="qh">Desirable <span>· Does it create value for customers?</span></div><p>It achieves <b>problem-solution fit</b>: it solves a problem customers really have, in a way they value. <span class="smallprint">(2.3.A.3.i)</span></p></div>
+      <div class="q3" style="--c:var(--amber)"><div class="qh">Feasible <span>· Can we produce and provide it?</span></div><p>The business has the capacity to make it within the limits of its <b>resources, technology, expertise, and time</b>. <span class="smallprint">(2.3.A.3.ii)</span></p></div>
+      <div class="q3" style="--c:var(--ok)"><div class="qh">Viable <span>· Can it be profitable?</span></div><p>It has the potential to be <b>profitable</b> in a market. <span class="smallprint">(2.3.A.3.iii)</span></p></div>
     </div>
   </div>
 
@@ -390,17 +436,25 @@ button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
     <div class="fb" id="dfv-fb"></div>
     <div class="btn-row"><button id="dfv-next">Next finding →</button></div>
   </div>
+
+  <h3>Research doesn’t stop after launch</h3>
+  <p>Businesses with existing products keep researching <span class="smallprint">(2.3.A.4)</span>. They use it to:</p>
+  <div class="grid3">
+    <div class="mini"><span class="n">Changing needs and wants</span><h4>Keep up with customers</h4><p>A cereal brand learns that more families want less sugar.</p></div>
+    <div class="mini"><span class="n">Product innovation</span><h4>Find the next product</h4><p>Reviews keep asking for a bigger size, so the brand makes one.</p></div>
+    <div class="mini"><span class="n">Market share</span><h4>Keep or win customers</h4><p>A rival is winning younger buyers, so the brand rethinks its ads.</p></div>
+  </div>
 </section>
 
 <!-- =========================================================
-     2.3.B  PRIMARY VS SECONDARY
+     2.3.B  SECONDARY RESEARCH
      ========================================================= -->
 <section id="sources">
-  <div class="sec-head"><span class="tag">2.3.B</span><h2>Ask people, or look it up?</h2></div>
-  <p>Every piece of research has a source. The question is <b>who collected it, and for what</b>.</p>
+  <div class="sec-head"><span class="tag">2.3.B</span><h2>What’s already out there? Secondary research</h2></div>
+  <p>Businesses use two kinds of research to learn about <b>customers, competitors, and the market landscape</b> <span class="smallprint">(2.3.B.1)</span>. The difference is <b>who collected it, and for what</b>.</p>
   <div class="grid2">
     <div class="kind">
-      <span class="ek2">2.3.B.1</span>
+      <span class="ek2">2.3.C.1</span>
       <div class="kh">Primary research</div>
       <div class="ks">New data the business collects <b>itself</b>, for its own question.</div>
       <div class="chips"><span class="chip">surveys</span><span class="chip">interviews</span><span class="chip">focus groups</span><span class="chip">observations</span><span class="chip">experiments</span><span class="chip">A/B tests</span></div>
@@ -409,12 +463,12 @@ button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
     <div class="kind alt">
       <span class="ek2">2.3.B.2</span>
       <div class="kh">Secondary research</div>
-      <div class="ks">Data <b>someone else</b> already collected, for some other purpose.</div>
-      <div class="chips"><span class="chip">government data (Census, labor statistics)</span><span class="chip">industry reports</span><span class="chip">competitors’ websites and prices</span><span class="chip">news articles</span><span class="chip">published studies</span></div>
-      <ul class="pc"><li class="plus">Cheaper and faster: it already exists.</li><li class="minus">Wasn’t built for your question, and it may be out of date.</li></ul>
+      <div class="ks">Information <b>someone else</b> already gathered, from external sources.</div>
+      <div class="chips"><span class="chip">government publications and databases</span><span class="chip">commercial reports</span><span class="chip">academic studies</span><span class="chip">rivals’ websites and prices</span><span class="chip">news articles</span></div>
+      <ul class="pc"><li class="plus">More cost-effective: it already exists.</li><li class="minus">Wasn’t built for your question, and it may be out of date.</li></ul>
     </div>
   </div>
-  <div class="note"><b>Start with secondary.</b> It’s usually the cheaper way to size up the market and your rivals <span class="smallprint">(2.3.B.3)</span>: how many potential customers live nearby, what competitors charge, whether the industry is growing. Then spend money on primary research for what only your own customers can tell you.</div>
+  <div class="note"><b>Start with secondary.</b> Businesses typically study secondary research, including detailed information about rival businesses, to size up the market landscape for a product idea, because it’s more cost-effective than running extensive primary research <span class="smallprint">(2.3.B.3)</span>. Then they spend money on primary research for what only their own customers can tell them.</div>
   <p class="smallprint"><b>Quick test:</b> did the business collect it for this question? Primary. Did the business find it already collected? Secondary, even if the business paid for it.</p>
 
   <div class="card" id="ps-card">
@@ -424,43 +478,100 @@ button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
     <div class="fb" id="ps-fb"></div>
     <div class="btn-row"><button id="ps-next">Next scenario →</button></div>
   </div>
+
+  <h3 id="market-size">What secondary research can tell you</h3>
+  <p>Secondary sources often cover four things that help a business judge whether its product could be <b>viable</b> <span class="smallprint">(2.3.B.2)</span>:</p>
+  <div class="grid4">
+    <div class="mini"><span class="n">Market size</span><h4>How big is it?</h4><p>Measured in <b>dollars</b> and in <b>total customers</b>.</p></div>
+    <div class="mini"><span class="n">Market trends</span><h4>Which way is it moving?</h4><p>Growing, shrinking, or shifting toward something new.</p></div>
+    <div class="mini"><span class="n">Market segments</span><h4>Who buys?</h4><p>The groups that make up the market, and how big each one is.</p></div>
+    <div class="mini"><span class="n">Customer decisions</span><h4>What drives the choice?</h4><p>The factors that influence what customers buy.</p></div>
+  </div>
+  <div class="def">
+    <div class="term">Worked example · sizing a market</div>
+    <p>Census data shows about <b>52,000</b> teens ages 13–17 in the county. An industry report says teens spend about <b>$180</b> a year on sneakers. So the market is roughly <b>52,000 customers</b>, and 52,000 × $180 ≈ <b>$9.4 million a year</b>. A new sneaker shop can use that to judge whether there’s room for one more seller.</p>
+  </div>
+
+  <h3 id="pestel">PESTEL: the forces outside the business</h3>
+  <p>Research also covers the <b>PESTEL factors</b> that shape a market opportunity <span class="smallprint">(2.3.B.1)</span>: six big forces a business can’t control but has to plan around.</p>
+  <div class="pestel">
+    <div class="pe"><span class="pl">P</span><div><div class="pn">Political</div><p>What the government is doing: policies, spending, elections, stability.</p><div class="px">A city funds new bike lanes.</div></div></div>
+    <div class="pe"><span class="pl">E</span><div><div class="pn">Economic</div><p>The health of the economy: incomes, jobs, prices, interest rates.</p><div class="px">Interest rates rise, so car loans cost more.</div></div></div>
+    <div class="pe"><span class="pl">S</span><div><div class="pn">Social</div><p>Population, culture, lifestyles, and what people value.</p><div class="px">More teens choose plant-based diets.</div></div></div>
+    <div class="pe"><span class="pl">T</span><div><div class="pn">Technological</div><p>New tools and inventions that change products or how people buy.</p><div class="px">Tap-to-pay spreads everywhere.</div></div></div>
+    <div class="pe"><span class="pl">E</span><div><div class="pn">Environmental</div><p>Weather, climate, and natural resources.</p><div class="px">Hotter summers shorten ski season.</div></div></div>
+    <div class="pe"><span class="pl">L</span><div><div class="pn">Legal</div><p>Specific laws and regulations the business must follow.</p><div class="px">A law bans energy-drink sales to minors.</div></div></div>
+  </div>
+  <p class="smallprint"><b>Political vs. legal</b> trips people up. Political is what the government is doing or planning. Legal is the specific rules already on the books that a business has to obey.</p>
+
+  <div class="card" id="pe-card">
+    <div class="card-label">Which PESTEL factor? <span class="score" id="pe-score">0 of 0</span></div>
+    <p class="prompt" id="pe-item" aria-live="polite"></p>
+    <div class="pk c3 c6" id="pe-opts"></div>
+    <div class="fb" id="pe-fb"></div>
+    <div class="btn-row"><button id="pe-next">Next change →</button></div>
+  </div>
 </section>
 
 <!-- =========================================================
      2.3.C  HYPOTHESES AND METHODS
      ========================================================= -->
 <section id="methods">
-  <div class="sec-head"><span class="tag">2.3.C</span><h2>Testing a hypothesis about customers</h2></div>
+  <div class="sec-head"><span class="tag">2.3.C</span><h2>Is our hypothesis right? Primary research</h2></div>
   <div class="def">
+    <span class="ek">2.3.C.2</span>
     <div class="term">Business hypothesis</div>
-    <p>A specific, testable guess about customers: “We think <b>[these customers]</b> will <b>[do this]</b> because <b>[reason]</b>.”</p>
+    <p>A statement of an <b>assumption</b> about a customer, product, or market. Businesses typically test whether their hypotheses hold up <b>before committing to a course of action</b>.</p>
   </div>
-  <p>Primary research turns a guess into evidence. The best hypotheses include something you can check. “At least 40% of students would buy one every week” can be proven wrong. “Students will like it” can’t.</p>
+  <p>A handy template: “We think <b>[these customers]</b> will <b>[do this]</b> because <b>[reason]</b>.” The best hypotheses include something you can check. “At least 40% of students would buy one every week” can be proven wrong. “Students will like it” can’t.</p>
 
-  <h3>Six ways to collect primary research</h3>
-  <p>The course framework names six methods <span class="smallprint">(2.3.C.1)</span>. Each is good at something different.</p>
-  <div class="meths">
-    <div class="meth"><div class="mh">Survey</div><p>The same questions to many people, on paper, online, or in person.</p><div class="gv"><b>Gives you</b><span class="num">mostly numbers</span></div><div class="wo">Watch out: people don’t always do what they say they’ll do.</div></div>
-    <div class="meth"><div class="mh">Interview</div><p>A one-on-one conversation with follow-up questions.</p><div class="gv"><b>Gives you</b><span class="wrd">mostly words</span></div><div class="wo">Watch out: it takes time, so you only reach a few people.</div></div>
-    <div class="meth"><div class="mh">Focus group</div><p>A small group discusses a product together, guided by a moderator.</p><div class="gv"><b>Gives you</b><span class="wrd">mostly words</span></div><div class="wo">Watch out: one loud voice can sway the whole group.</div></div>
-    <div class="meth"><div class="mh">Observation</div><p>Watch what people actually do, in a store, online, or wherever they use the product.</p><div class="gv"><b>Gives you</b><span class="both">both</span></div><div class="wo">Watch out: it shows what people do, but not why.</div></div>
-    <div class="meth"><div class="mh">Experiment</div><p>Change one thing, like a price, a display, or an offer, and measure what happens.</p><div class="gv"><b>Gives you</b><span class="num">numbers</span></div><div class="wo">Watch out: change more than one thing and you can’t tell which one caused the result.</div></div>
-    <div class="meth"><div class="mh">A/B test</div><p>Show version A to one group and version B to a similar group at the same time, then compare.</p><div class="gv"><b>Gives you</b><span class="num">numbers</span></div><div class="wo">Watch out: it needs enough people for the difference to mean something.</div></div>
+  <h3>Choosing a method</h3>
+  <p>Businesses test hypotheses with six primary research methods <span class="smallprint">(2.3.C.1)</span>. They pick the method, or a mix of methods, based on <b>the type of data they need</b> <span class="smallprint">(2.3.C.3)</span>:</p>
+  <div class="needs">
+    <div class="need">
+      <span class="ek2">2.3.C.4</span>
+      <div class="nh">When you need</div>
+      <p class="nq">a large amount of <b>quantitative</b> data that reflects the views of a <b>population</b></p>
+      <div class="nm"><b>Survey</b></div>
+      <p>The same questions to many people. <span class="gv"><span class="num">numbers</span></span></p>
+    </div>
+    <div class="need">
+      <span class="ek2">2.3.C.5</span>
+      <div class="nh">When you need</div>
+      <p class="nq">in-depth <b>qualitative</b> data from a <b>small number</b> of people, like highly engaged or potential customers</p>
+      <div class="nm"><b>Focus group</b> or <b>one-on-one interview</b></div>
+      <p>A focus group is a small group discussing together, guided by a moderator. An interview is one conversation. Both allow <b>follow-up questions</b> that draw out detailed explanations. <span class="gv"><span class="wrd">words</span></span></p>
+    </div>
+    <div class="need">
+      <span class="ek2">2.3.C.6</span>
+      <div class="nh">When you need</div>
+      <p class="nq">data on customer <b>behavior</b>, not opinions</p>
+      <div class="nm"><b>Experiment</b> or <b>observation</b></div>
+      <p>An experiment watches how customers behave in a <b>controlled</b> environment the researcher sets up. An observation watches them in a <b>natural</b> environment, without changing anything.</p>
+    </div>
+    <div class="need">
+      <span class="ek2">2.3.C.7</span>
+      <div class="nh">When you need</div>
+      <p class="nq">authentic customer responses to <b>two viable alternatives</b></p>
+      <div class="nm"><b>A/B test</b> <span class="smallprint">(a type of experiment)</span></div>
+      <p>Real customers get version A or version B in a <b>real-world</b> environment, and the business compares what they do. <span class="gv"><span class="num">numbers</span></span></p>
+    </div>
   </div>
 
   <h3>The pairs that get mixed up</h3>
   <div class="tbl"><table>
     <thead><tr><th>Pair</th><th>The difference</th><th>Quick tell</th></tr></thead>
     <tbody>
-      <tr><td><b>Survey vs. interview</b></td><td>A survey asks many people the same fixed questions. An interview is one conversation that can follow up on answers.</td><td>Many people, same questions: survey.</td></tr>
+      <tr><td><b>Survey vs. interview</b></td><td>A survey gets numbers from many people with the same fixed questions. An interview gets depth from one person, with follow-ups.</td><td>Many people, numbers: survey.</td></tr>
       <tr><td><b>Interview vs. focus group</b></td><td>Both are conversations. An interview is one person; a focus group is a small group reacting to each other.</td><td>Count the people in the room.</td></tr>
-      <tr><td><b>Experiment vs. A/B test</b></td><td>An A/B test is one kind of experiment: two versions, two similar groups, at the same time.</td><td>Exactly two versions, split audience: A/B test.</td></tr>
-      <tr><td><b>Observation vs. the rest</b></td><td>Observation doesn’t ask anyone anything. It watches what people do.</td><td>No questions asked: observation.</td></tr>
+      <tr><td><b>Experiment vs. observation</b></td><td>Both measure behavior. An experiment sets up a controlled environment; an observation watches people in their natural one.</td><td>Did the researcher set the scene? Experiment.</td></tr>
+      <tr><td><b>Experiment vs. A/B test</b></td><td>An A/B test is a type of experiment: two viable versions, real customers, a real-world setting.</td><td>Exactly two real options, live customers: A/B test.</td></tr>
     </tbody>
   </table></div>
 
   <div class="card" id="name">
-    <div class="card-label">Name the method <span class="score" id="nm-score">0 of 0</span></div>
+    <div class="card-label">Which method? <span class="score" id="nm-score">0 of 0</span></div>
+    <p class="smallprint" style="margin:0 0 10px">Some of these describe research a business ran. Others describe what a business needs to find out.</p>
     <p class="prompt" id="nm-item" aria-live="polite"></p>
     <div class="pk c3 c6" id="nm-opts"></div>
     <div class="fb" id="nm-fb"></div>
@@ -469,14 +580,14 @@ button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
 </section>
 
 <!-- =========================================================
-     2.3.C  SURVEY LAB + READING RESULTS
+     2.3.C  SURVEY LAB, NEUTRAL QUESTIONS, READING RESULTS
      ========================================================= -->
 <section id="lab">
-  <div class="sec-head"><span class="tag">2.3.C</span><h2>Survey lab: can you trust the answer?</h2></div>
-  <p>A business almost never asks every customer. It asks a <b>sample</b>: a smaller group that’s supposed to stand in for everyone. Whether a sample tells the truth depends on two things:</p>
+  <div class="sec-head"><span class="tag">2.3.C</span><h2>Can you trust the answer?</h2></div>
+  <p>A business almost never asks every customer. It asks a <b>sample</b>: a smaller group that’s supposed to stand in for everyone. To reduce the risk of <b>skewed data</b>, the sample has to be <span class="smallprint">(2.3.C.8)</span>:</p>
   <div class="grid2">
-    <div class="mini"><span class="n">Who you ask</span><h4>Biased vs. random</h4><p>A <b>biased sample</b> leans toward one kind of person, like your friends or a brand’s fans. In a <b>random sample</b>, everyone has the same chance of being picked.</p></div>
-    <div class="mini"><span class="n">How many you ask</span><h4>Small samples bounce</h4><p>Ask 10 people and each answer moves the result by 10 points. Ask more people and the result settles down.</p></div>
+    <div class="mini"><span class="n">Who you ask</span><h4>Appropriately populated</h4><p>It should look like the population being studied. A <b>biased sample</b> leans toward one kind of person, like your friends or a brand’s fans. In a <b>random sample</b>, everyone has the same chance of being picked.</p></div>
+    <div class="mini"><span class="n">How many you ask</span><h4>Sufficiently large</h4><p>Ask 10 people and each answer moves the result by 10 points. Ask more people and the result settles down.</p></div>
   </div>
 
   <div class="card" id="survey">
@@ -522,6 +633,25 @@ button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
 
   <div class="note"><b>The takeaway: ask the right people, and enough of them.</b> A bigger sample fixes the bouncing, but it doesn’t fix bias. Asking all 30 of your friends just gives you the same wrong answer every time.</div>
 
+  <h3 id="neutral">Ask neutral questions</h3>
+  <p>The other half of avoiding skewed data is <b>how you ask</b> <span class="smallprint">(2.3.C.8)</span>. A <b>leading question</b> pushes people toward an answer, so the results tell you about your wording, not your customers. Neutral phrasing makes every answer, including “no,” easy to give.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Leading</th><th>Neutral</th></tr></thead>
+    <tbody>
+      <tr><td>“Don’t you love our new smoothie?”</td><td>“How would you rate our new smoothie from 1 to 5?”</td></tr>
+      <tr><td>“Most students say lunch costs too much. Do you agree?”</td><td>“Is the price of lunch too low, about right, or too high?”</td></tr>
+      <tr><td>“How much did you enjoy our friendly staff?”</td><td>“How would you describe your experience with our staff?”</td></tr>
+    </tbody>
+  </table></div>
+  <div class="card" id="nq-card">
+    <div class="card-label">Neutral or leading? <span class="score" id="nq-score">0 of 0</span></div>
+    <p class="smallprint" style="margin:0 0 10px">A business is writing a survey. Would this question give it unbiased data?</p>
+    <p class="prompt" id="nq-item" aria-live="polite"></p>
+    <div class="pk c2" id="nq-opts"></div>
+    <div class="fb" id="nq-fb"></div>
+    <div class="btn-row"><button id="nq-next">Next question →</button></div>
+  </div>
+
   <h3 id="read">Supported, not supported, or can’t tell?</h3>
   <p>The last step is reading the results honestly. Sometimes the honest answer is that the research <b>can’t tell you yet</b>: too few people, the wrong people, more than one change at a time, or a measure that doesn’t match the hypothesis.</p>
   <div class="card" id="rd-card">
@@ -532,14 +662,106 @@ button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
     <div class="btn-row"><button id="rd-next">Next test →</button></div>
   </div>
 
+  <div class="note"><b>Research can still miss.</b> Even good research can’t always predict how customers and markets will respond, so businesses often have to act on limited, unclear, or contradictory data <span class="smallprint">(2.3.C.9)</span>. New Coke is the classic case: in 1985, Coca-Cola replaced its original formula with a sweeter one after taste tests showed many people preferred it. Customers protested losing the original, and within three months the company brought it back as Coca-Cola Classic. The taste tests answered “which tastes better?” but not “how will you feel if we take the original away?”</div>
+
   <div class="pf">
     <div class="pf-h">As a shopper</div>
     <p style="margin:0 0 8px">Ads quote research too: “9 out of 10 users love it,” “rated #1 by customers.” Run the same checks you used in the lab:</p>
     <ul style="margin:0">
       <li><b>Who was asked?</b> Customers who already bought it, the company’s own employees, or a random sample?</li>
       <li><b>How many?</b> 10 people or 10,000?</li>
+      <li><b>How was it asked?</b> “Don’t you love it?” isn’t a fair question.</li>
       <li><b>Who paid for it?</b> A study paid for by the company selling the product deserves a second look.</li>
     </ul>
+  </div>
+</section>
+
+<!-- =========================================================
+     2.3.D  DATA VISUALIZATIONS
+     ========================================================= -->
+<section id="viz">
+  <div class="sec-head"><span class="tag">2.3.D</span><h2>Showing what you found: data visualizations</h2></div>
+  <p>Research only helps if people can understand it. Charts make it easier for stakeholders to see <b>patterns, trends, and insights</b> and make evidence-based decisions <span class="smallprint">(2.3.D.1)</span>. The skill is choosing the chart that best shows the point you want to make <span class="smallprint">(2.3.D.2)</span>.</p>
+  <div class="charts">
+    <div class="cc">
+      <div class="ct">Revenue by business ($&nbsp;millions)</div>
+      <svg class="cv" viewBox="0 0 240 136" role="img" aria-label="Bar chart of revenue for four businesses: Rio 8.2 million dollars, Nova 6.0, Bolt 4.4, Kite 2.6.">
+        <line x1="36" y1="112.5" x2="232" y2="112.5" class="base"/>
+        <path d="M50 112 V34 Q50 30 54 30 H70 Q74 30 74 34 V112 Z" fill="#2a78d6"><title>Rio: $8.2 million</title></path>
+        <path d="M98 112 V56 Q98 52 102 52 H118 Q122 52 122 56 V112 Z" fill="#2a78d6"><title>Nova: $6.0 million</title></path>
+        <path d="M146 112 V72 Q146 68 150 68 H166 Q170 68 170 72 V112 Z" fill="#2a78d6"><title>Bolt: $4.4 million</title></path>
+        <path d="M194 112 V90 Q194 86 198 86 H214 Q218 86 218 90 V112 Z" fill="#2a78d6"><title>Kite: $2.6 million</title></path>
+        <text x="62" y="25" text-anchor="middle" class="val">8.2</text>
+        <text x="62" y="126" text-anchor="middle">Rio</text><text x="110" y="126" text-anchor="middle">Nova</text><text x="158" y="126" text-anchor="middle">Bolt</text><text x="206" y="126" text-anchor="middle">Kite</text>
+      </svg>
+      <div class="ch">Bar chart <span>2.3.D.3</span></div>
+      <p>Compares <b>individual data points</b>.</p>
+      <div class="cx">Annual revenue for different businesses in a market, or several years of sales for one business.</div>
+    </div>
+    <div class="cc">
+      <div class="ct">Sales by year and product line ($&nbsp;thousands)</div>
+      <svg class="cv" viewBox="0 0 240 136" role="img" aria-label="Stacked bar chart of sales by year, split into drinks, snacks, and merch. Totals: 75 thousand dollars in 2023, 94 in 2024, 114 in 2025.">
+        <line x1="36" y1="112.5" x2="232" y2="112.5" class="base"/>
+        <path d="M58 112 V82 H82 V112 Z" fill="#2a78d6"><title>2023 Drinks: $40K</title></path>
+        <path d="M58 80 V63.2 H82 V80 Z" fill="#eb6834"><title>2023 Snacks: $25K</title></path>
+        <path d="M58 61.2 V59.8 Q58 55.8 62 55.8 H78 Q82 55.8 82 59.8 V61.2 Z" fill="#1baf7a"><title>2023 Merch: $10K</title></path>
+        <path d="M118 112 V76 H142 V112 Z" fill="#2a78d6"><title>2024 Drinks: $48K</title></path>
+        <path d="M118 74 V53.5 H142 V74 Z" fill="#eb6834"><title>2024 Snacks: $30K</title></path>
+        <path d="M118 51.5 V45.5 Q118 41.5 122 41.5 H138 Q142 41.5 142 45.5 V51.5 Z" fill="#1baf7a"><title>2024 Merch: $16K</title></path>
+        <path d="M178 112 V73 H202 V112 Z" fill="#2a78d6"><title>2025 Drinks: $52K</title></path>
+        <path d="M178 71 V44.5 H202 V71 Z" fill="#eb6834"><title>2025 Snacks: $38K</title></path>
+        <path d="M178 42.5 V30.5 Q178 26.5 182 26.5 H198 Q202 26.5 202 30.5 V42.5 Z" fill="#1baf7a"><title>2025 Merch: $24K</title></path>
+        <text x="190" y="22" text-anchor="middle" class="val">114</text>
+        <text x="70" y="126" text-anchor="middle">2023</text><text x="130" y="126" text-anchor="middle">2024</text><text x="190" y="126" text-anchor="middle">2025</text>
+      </svg>
+      <div class="cleg"><span><i style="background:#2a78d6"></i>Drinks</span><span><i style="background:#eb6834"></i>Snacks</span><span><i style="background:#1baf7a"></i>Merch</span></div>
+      <div class="ch">Stacked bar chart <span>2.3.D.4</span></div>
+      <p>Compares data <b>and its subcategories</b>.</p>
+      <div class="cx">How total sales per year changed, and how sales for each product line changed over the same years.</div>
+    </div>
+    <div class="cc">
+      <div class="ct">Customers by year</div>
+      <svg class="cv" viewBox="0 0 240 136" role="img" aria-label="Line graph of customers by year, rising from 400 in 2019 to 1,240 in 2025.">
+        <line x1="30" y1="112.5" x2="232" y2="112.5" class="base"/>
+        <polyline points="40,84.3 70,76 100,69.8 130,59.4 160,49.7 190,37.2 220,26.2" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle cx="40" cy="84.3" r="4" fill="#2a78d6" stroke="#fff" stroke-width="2"><title>2019: 400 customers</title></circle>
+        <circle cx="220" cy="26.2" r="4" fill="#2a78d6" stroke="#fff" stroke-width="2"><title>2025: 1,240 customers</title></circle>
+        <text x="40" y="99" text-anchor="middle" class="val">400</text>
+        <text x="224" y="15" text-anchor="end" class="val">1,240</text>
+        <text x="40" y="126" text-anchor="middle">2019</text><text x="130" y="126" text-anchor="middle">2022</text><text x="220" y="126" text-anchor="middle">2025</text>
+      </svg>
+      <div class="ch">Line graph <span>2.3.D.5</span></div>
+      <p>Shows <b>trends over time</b>.</p>
+      <div class="cx">Number of customers by year.</div>
+    </div>
+    <div class="cc">
+      <div class="ct">Market share, local scooter rentals</div>
+      <svg class="cv" viewBox="0 0 240 136" role="img" aria-label="Pie chart of market share: Lumi 45 percent, Arc 25, Vela 18, others 12.">
+        <g stroke="#fff" stroke-width="2" stroke-linejoin="round">
+          <path d="M74 76 L74 26 A50 50 0 0 1 89.5 123.6 Z" fill="#2a78d6"><title>Lumi: 45%</title></path>
+          <path d="M74 76 L89.5 123.6 A50 50 0 0 1 26.4 91.5 Z" fill="#eb6834"><title>Arc: 25%</title></path>
+          <path d="M74 76 L26.4 91.5 A50 50 0 0 1 39.8 39.6 Z" fill="#1baf7a"><title>Vela: 18%</title></path>
+          <path d="M74 76 L39.8 39.6 A50 50 0 0 1 74 26 Z" fill="#eda100"><title>Others: 12%</title></path>
+        </g>
+        <rect x="146" y="40" width="10" height="10" rx="2" fill="#2a78d6"/><text x="162" y="49">Lumi 45%</text>
+        <rect x="146" y="60" width="10" height="10" rx="2" fill="#eb6834"/><text x="162" y="69">Arc 25%</text>
+        <rect x="146" y="80" width="10" height="10" rx="2" fill="#1baf7a"/><text x="162" y="89">Vela 18%</text>
+        <rect x="146" y="100" width="10" height="10" rx="2" fill="#eda100"/><text x="162" y="109">Others 12%</text>
+      </svg>
+      <div class="ch">Pie chart <span>2.3.D.6</span></div>
+      <p>Shows <b>part-to-whole</b> relationships.</p>
+      <div class="cx">The percentage of market share held by each business in a market.</div>
+    </div>
+  </div>
+  <p class="smallprint"><b>Quick tell:</b> comparing separate things? Bar. Comparing totals and their parts? Stacked bar. Change over time? Line. Pieces of one whole? Pie.</p>
+
+  <div class="card" id="ch-card">
+    <div class="card-label">Pick the chart <span class="score" id="ch-score">0 of 0</span></div>
+    <p class="smallprint" style="margin:0 0 10px">A business wants to show this. Which visualization fits best?</p>
+    <p class="prompt" id="ch-item" aria-live="polite"></p>
+    <div class="pk c4" id="ch-opts"></div>
+    <div class="fb" id="ch-fb"></div>
+    <div class="btn-row"><button id="ch-next">Next chart →</button></div>
   </div>
 </section>
 
@@ -548,7 +770,7 @@ button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
      ========================================================= -->
 <section id="check">
   <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
-  <p>Twelve multiple-choice questions in the style of the AP Exam, covering all three learning objectives. The first three share one set of research results, like a set-based question on the exam.</p>
+  <p>Sixteen multiple-choice questions in the style of the AP Exam, covering all four learning objectives. The first three share one set of research results, like a set-based question on the exam.</p>
   <div class="card" id="quiz"></div>
   <div class="btn-row"><button class="ghost" id="quiz-reset">Start over</button></div>
 
@@ -562,7 +784,7 @@ button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
 </section>
 
 <footer>
-  <p>Topic 2.3 Market Research, following the AP Business with Personal Finance course framework (Learning Objectives 2.3.A–2.3.C). Businesses, schools, people, and numbers on this page are fictional. Practice items reshuffle every time you load the page.</p>
+  <p>Topic 2.3 Market Research, following the AP Business with Personal Finance course framework (Learning Objectives 2.3.A–2.3.D). Except for the New Coke example, businesses, schools, people, and numbers on this page are fictional. Practice items reshuffle every time you load the page.</p>
   <p><a href="/ap-business/unit-2/">← Unit 2 — Marketing</a></p>
 </footer>
 
@@ -621,8 +843,8 @@ function Drill(cfg){
    ========================================================= */
 Drill({
   id:'qq', cls:'pbtn',
-  keys:[['quant','Quantitative<small>numbers you can count or measure</small>','var(--indigo)','quantitative'],
-        ['qual','Qualitative<small>words, descriptions, observations</small>','var(--amber)','qualitative']],
+  keys:[['quant','Quantitative<small>numbers you can measure and analyze</small>','var(--indigo)','quantitative'],
+        ['qual','Qualitative<small>descriptions in words and images</small>','var(--amber)','qualitative']],
   bank:[
     ['62% of surveyed students said they eat breakfast fewer than three days a week.', 'quant', 'A percentage is a number you can compare and chart.'],
     ['Customers rated the new app 3.8 out of 5 stars on average.', 'quant', 'An average rating is a number, even though it measures an opinion.'],
@@ -644,16 +866,16 @@ Drill({
    ========================================================= */
 Drill({
   id:'dfv', cls:'pbtn',
-  keys:[['d','Desirable<small>Do customers want it?</small>','var(--indigo)','desirable'],
-        ['f','Feasible<small>Can we make and deliver it?</small>','var(--amber)','feasible'],
-        ['v','Viable<small>Can it make money?</small>','var(--ok)','viable']],
+  keys:[['d','Desirable<small>Does it create value for customers?</small>','var(--indigo)','desirable'],
+        ['f','Feasible<small>Can we produce and provide it?</small>','var(--amber)','feasible'],
+        ['v','Viable<small>Can it be profitable?</small>','var(--ok)','viable']],
   bank:[
-    ['In 12 interviews, 10 students said they’d switch water bottles if one kept ice frozen for two full days.', 'd', 'It tells you whether customers <i>want</i> the product.'],
-    ['A survey finds that most dog owners in the area already walk their own dogs and wouldn’t pay for a dog walker.', 'd', 'This is a “no” on desirable: there isn’t enough want for the service.'],
-    ['In a store test, shoppers pick up the new snack, read the label, and put it in their carts.', 'd', 'Customers choosing the product shows they want it.'],
-    ['A manufacturer confirms it can produce 2,000 units a month with the materials the design calls for.', 'f', 'It tells you the business <i>can make</i> the product.'],
-    ['The team learns that the food delivery idea would need a city permit it probably can’t get.', 'f', 'A permit problem is about whether the business can deliver the product at all.'],
-    ['Engineers find the battery would have to be twice as big to last the promised 12 hours.', 'f', 'This is a “no” on feasible: the product can’t be built as described.'],
+    ['In 12 interviews, 10 students said they’d switch water bottles if one kept ice frozen for two full days.', 'd', 'It tells you whether the product solves a problem customers care about: problem-solution fit.'],
+    ['A survey finds that most dog owners in the area already walk their own dogs and wouldn’t pay for a dog walker.', 'd', 'This is a “no” on desirable: the service doesn’t solve a problem these customers have.'],
+    ['In a store test, shoppers pick up the new snack, read the label, and put it in their carts.', 'd', 'Customers choosing the product shows it creates value for them.'],
+    ['A manufacturer confirms it can produce 2,000 units a month with the materials the design calls for.', 'f', 'It tells you the business has the capacity to <i>produce</i> the product.'],
+    ['A bakery’s only oven can bake 200 cookies a day, but a catering order needs 2,000 by Friday.', 'f', 'This is a “no” on feasible: the order doesn’t fit the bakery’s resources and time.'],
+    ['Engineers find the battery would have to be twice as big to last the promised 12 hours.', 'f', 'This is a “no” on feasible: the technology can’t deliver the product as described.'],
     ['Each unit would cost $14 to make and ship, and customers say they’d pay about $12.', 'v', 'This is a “no” on viable: every sale would lose money.'],
     ['The subscription needs 1,500 members to cover its costs, but research shows only about 900 likely buyers in the area.', 'v', 'Even if people want it, there aren’t enough buyers to make money.'],
     ['Customers would pay $40, it costs $18 to make, and the business would start making a profit after 600 sales.', 'v', 'Price compared with cost is a profit question: viable.']
@@ -683,6 +905,29 @@ Drill({
 });
 
 /* =========================================================
+   2.3.B.1  Which PESTEL factor?
+   ========================================================= */
+Drill({
+  id:'pe', cls:'pbtn',
+  keys:[['p','Political',null,'political'],['e','Economic',null,'economic'],['s','Social',null,'social'],
+        ['t','Technological',null,'technological'],['n','Environmental',null,'environmental'],['l','Legal',null,'legal']],
+  bank:[
+    ['The city council votes to spend $2 million on new bike lanes downtown, and a bike shop expects more riders.', 'p', 'A government spending decision is a political factor.'],
+    ['An upcoming election could change how much the state spends on public schools, a tutoring company’s biggest customer.', 'p', 'Elections and government policy are political factors.'],
+    ['Interest rates rise, making car loans more expensive, so a used-car dealer expects fewer buyers.', 'e', 'Interest rates are part of the economy.'],
+    ['Jobs are plentiful and wages are rising in the region, so a restaurant expects more people to eat out.', 'e', 'Incomes and jobs are economic factors.'],
+    ['More teens are choosing plant-based diets, so a snack company considers a vegan line.', 's', 'A shift in lifestyles and values is a social factor.'],
+    ['The town’s population is getting older, so a gym considers adding low-impact classes.', 's', 'Changes in the population are a social factor.'],
+    ['Most customers now pay with their phones, so a food truck buys a tap-to-pay reader.', 't', 'A new way to pay is a technological factor.'],
+    ['A new AI tool lets anyone design a custom T-shirt in seconds, and a print shop worries about competition.', 't', 'New tools that change products are technological factors.'],
+    ['Hotter, shorter winters are cutting the season for a ski-rental shop.', 'n', 'Weather and climate are environmental factors.'],
+    ['A drought threatens the water supply a car wash depends on.', 'n', 'Natural resources are environmental factors.'],
+    ['A new state law bans selling energy drinks to customers under 18.', 'l', 'A specific law a business must follow is a legal factor.'],
+    ['New regulations require restaurants to post calorie counts on their menus.', 'l', 'Regulations a business must obey are legal factors. (If the city were only <i>debating</i> the idea, that would be political.)']
+  ]
+});
+
+/* =========================================================
    2.3.C.1  Name the method
    ========================================================= */
 Drill({
@@ -690,18 +935,18 @@ Drill({
   keys:[['sv','Survey',null,'a survey'],['iv','Interview',null,'an interview'],['fg','Focus group',null,'a focus group'],
         ['ob','Observation',null,'observation'],['ex','Experiment',null,'an experiment'],['ab','A/B test',null,'an A/B test']],
   bank:[
-    ['A gym emails all 900 members the same five multiple-choice questions about which class times they prefer.', 'sv', 'Many people, the same fixed questions.'],
-    ['A pizza shop prints a QR code on every box that links to three quick rating questions.', 'sv', 'Every customer gets the same short set of questions.'],
+    ['A gym emails all 900 members the same five multiple-choice questions about which class times they prefer.', 'sv', 'Many people, the same fixed questions, numbers you can count.'],
+    ['A city needs numbers showing how thousands of residents feel about a new recycling program.', 'sv', 'A large amount of quantitative data that reflects the views of a population calls for a survey (2.3.C.4).'],
     ['A startup founder spends 30 minutes one-on-one with each of eight nurses, asking follow-up questions about their night shifts.', 'iv', 'One person at a time, with follow-up questions.'],
-    ['A game studio calls five players who quit its game, one at a time, to ask what made them stop.', 'iv', 'Individual conversations that dig into <i>why</i>.'],
-    ['A snack company brings eight teens into a room to taste three new flavors and talk them over together while a moderator guides the discussion.', 'fg', 'A small group reacting to each other, with a moderator.'],
-    ['A city bus service gathers ten riders around a table to react to a proposed route map and discuss it.', 'fg', 'A group discussion, not one-on-one.'],
-    ['A bookstore manager watches which tables shoppers stop at first and how long they browse, without asking them anything.', 'ob', 'Nobody is asked anything. The manager watches what people do.'],
-    ['A café owner sits in a corner during the morning rush and notes how long customers wait and what they do while waiting.', 'ob', 'Watching and recording behavior is observation.'],
-    ['A farm stand charges three different prices for strawberries on three Saturdays and records how many baskets sell at each price.', 'ex', 'It changes one thing, the price, and measures what happens. Three prices, not two versions side by side, so it isn’t an A/B test.'],
-    ['A restaurant adds a kids’ menu for one month and compares the number of family visits with the month before.', 'ex', 'It changes one thing and measures the result before and after.'],
-    ['A clothing website randomly shows half its visitors a red “Add to cart” button and the other half a blue one, then compares how many buy.', 'ab', 'Two versions, shown at the same time to two similar groups.'],
-    ['A newsletter goes out with two subject lines, each sent to a random half of the email list, to see which gets opened more.', 'ab', 'Version A and version B, split audience, compared directly.']
+    ['A startup needs detailed explanations from five of its most engaged customers, one at a time, with room to ask follow-up questions.', 'iv', 'In-depth qualitative data from a few highly engaged customers, one-on-one: an interview (2.3.C.5).'],
+    ['A snack company brings eight teens into a room to taste three new flavors and talk them over together while a moderator guides the discussion.', 'fg', 'A small group discussing together, with a moderator.'],
+    ['A toy company wants to hear a small group of parents discuss a new board game and build on each other’s reactions.', 'fg', 'In-depth qualitative data from a small group reacting to each other: a focus group (2.3.C.5).'],
+    ['A bookstore manager watches which tables shoppers stop at first and how long they browse, without asking them anything.', 'ob', 'Behavior, not opinions, in a natural environment: observation (2.3.C.6).'],
+    ['A museum wants to see how visitors actually move through a new exhibit on a normal day, without changing anything.', 'ob', 'It needs behavior in a natural environment, so observation fits (2.3.C.6).'],
+    ['A cereal company invites 40 shoppers into a mock store aisle in its research center, moves its box to a different shelf for half of them, and records which boxes they pick.', 'ex', 'Behavior in a controlled environment the researcher set up: an experiment (2.3.C.6).'],
+    ['A drink company runs a blind taste test of three new recipes in its research kitchen and records which one each person picks.', 'ex', 'A controlled setting the company built. Three recipes in a lab, not two options in the real world, so it isn’t an A/B test.'],
+    ['A clothing website randomly shows half its visitors a red “Add to cart” button and the other half a blue one, then compares how many buy.', 'ab', 'Two viable versions, real customers, a real-world setting (2.3.C.7).'],
+    ['An online store wants to know which of two product photos gets more real shoppers to buy, while they shop as usual.', 'ab', 'Authentic responses to two viable alternatives in a real-world environment: an A/B test (2.3.C.7).']
   ]
 });
 
@@ -906,6 +1151,49 @@ Drill({
 });
 
 /* =========================================================
+   2.3.C.8  Neutral or leading?
+   ========================================================= */
+Drill({
+  id:'nq', cls:'pbtn',
+  keys:[['neu','Neutral<small>doesn’t push toward an answer</small>','var(--indigo)','neutral'],
+        ['lead','Leading<small>pushes toward an answer</small>','var(--amber)','leading']],
+  bank:[
+    ['“How would you rate our new smoothie on a scale of 1 to 5?”', 'neu', 'Every rating is equally easy to give.'],
+    ['“How often, if at all, do you use our app in a typical week?”', 'neu', '“If at all” makes “never” an easy, normal answer.'],
+    ['“Which of these, if any, would you pay for a monthly pass: $5, $10, $15, or none?”', 'neu', 'It lists the options and includes “none.”'],
+    ['“What, if anything, would you change about our store’s hours?”', 'neu', 'It doesn’t assume the hours are good or bad.'],
+    ['“Which do you prefer: Plan A, Plan B, or neither?”', 'neu', 'Both plans are presented the same way, and “neither” is allowed.'],
+    ['“Don’t you agree that our new smoothie is delicious?”', 'lead', '“Don’t you agree” pushes people toward yes.'],
+    ['“How much did you love our new app?”', 'lead', 'It assumes you loved it. There’s no easy way to say you didn’t.'],
+    ['“Most students think cafeteria food costs too much. Do you agree?”', 'lead', 'Telling people what “most students” think pressures them to go along.'],
+    ['“How great was your visit with our friendly, helpful staff today?”', 'lead', 'Words like “great,” “friendly,” and “helpful” tilt the answer before anyone responds.'],
+    ['“Wouldn’t you rather pay less for a phone plan?”', 'lead', 'Of course people want to pay less. The question gets a yes without telling the business anything useful.']
+  ]
+});
+
+/* =========================================================
+   2.3.D  Pick the chart
+   ========================================================= */
+Drill({
+  id:'ch', cls:'pbtn',
+  keys:[['bar','Bar chart',null,'a bar chart'],['stk','Stacked bar chart',null,'a stacked bar chart'],['line','Line graph',null,'a line graph'],['pie','Pie chart',null,'a pie chart']],
+  bank:[
+    ['Annual revenue for the five largest pizza chains in a city, side by side.', 'bar', 'Comparing individual data points (2.3.D.3).'],
+    ['How many customers each of a gym’s four locations had last month.', 'bar', 'Four separate locations compared to each other (2.3.D.3).'],
+    ['The average rating customers gave each of six smoothie flavors.', 'bar', 'Separate flavors compared side by side (2.3.D.3).'],
+    ['Total sales each year for five years, and how much of each year’s sales came from each of three product lines.', 'stk', 'Totals and their subcategories, compared across years (2.3.D.4).'],
+    ['The number of app downloads each quarter, split into phone downloads and tablet downloads.', 'stk', 'Each quarter’s total, broken into two subcategories (2.3.D.4).'],
+    ['Survey responses from each of four schools, with each school’s total split into yes, no, and not sure.', 'stk', 'Comparing groups and the parts inside each group (2.3.D.4).'],
+    ['How a business’s number of customers changed each year from 2018 to 2025.', 'line', 'A trend over time, like the framework’s “number of customers by year” (2.3.D.5).'],
+    ['A coffee shop’s daily sales over the past 30 days, to see whether they’re rising.', 'line', 'Change over time calls for a line graph (2.3.D.5).'],
+    ['How the average price of a concert ticket has changed over the last ten years.', 'line', 'A trend over time (2.3.D.5).'],
+    ['The percentage of market share held by each business in the local grocery market.', 'pie', 'Part-to-whole: the shares add up to the whole market (2.3.D.6).'],
+    ['What share of a bakery’s total revenue comes from bread, pastries, cakes, and coffee.', 'pie', 'Pieces of one whole (2.3.D.6).'],
+    ['The percent of all survey respondents who chose each of four favorite payment methods.', 'pie', 'Each choice is part of the whole group of respondents (2.3.D.6).']
+  ]
+});
+
+/* =========================================================
    Check yourself (AP-style)
    ========================================================= */
 (function(){
@@ -916,19 +1204,32 @@ Drill({
     '<tr><td>3</td><td>U.S. Census Bureau data</td><td>About 61,000 children ages 5 to 14 live in the region.</td></tr>' +
     '<tr><td>4</td><td>Price quote PackRight requested from a manufacturer</td><td>It can produce 5,000 units a month at $12 each.</td></tr>' +
     '</tbody></table></div></div>';
+  var LINE = '<div class="ct">Lumen Lamps: number of customers, 2020–2025</div>' +
+    '<svg class="cv" viewBox="0 0 360 190" role="img" aria-label="Line graph. Customers: 2020, 1,200; 2021, 1,900; 2022, 2,600; 2023, 3,100; 2024, 2,800; 2025, 2,400.">' +
+    '<line x1="56" y1="40.5" x2="350" y2="40.5" class="grid"/><line x1="56" y1="80.5" x2="350" y2="80.5" class="grid"/><line x1="56" y1="120.5" x2="350" y2="120.5" class="grid"/><line x1="56" y1="160.5" x2="350" y2="160.5" class="base"/>' +
+    '<text x="50" y="44" text-anchor="end">3,000</text><text x="50" y="84" text-anchor="end">2,000</text><text x="50" y="124" text-anchor="end">1,000</text><text x="50" y="164" text-anchor="end">0</text>' +
+    '<polyline points="70,112 122,84 174,56 226,36 278,48 330,64" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>' +
+    [[70,112,2020,'1,200'],[122,84,2021,'1,900'],[174,56,2022,'2,600'],[226,36,2023,'3,100'],[278,48,2024,'2,800'],[330,64,2025,'2,400']].map(function(p){
+      return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="4" fill="#2a78d6" stroke="#fff" stroke-width="2"><title>' + p[2] + ': ' + p[3] + ' customers</title></circle><text x="' + p[0] + '" y="179" text-anchor="middle">' + p[2] + '</text>';
+    }).join('') +
+    '<text x="70" y="137" text-anchor="middle" class="val">1,200</text><text x="226" y="27" text-anchor="middle" class="val">3,100</text><text x="330" y="83" text-anchor="middle" class="val">2,400</text></svg>';
   var Q = [
-    {set:true, stem:'Which row is an example of secondary research?', a:'Row 3, because the Census Bureau collected the data for its own purposes', d:['Row 1, because the survey was conducted online','Row 2, because the focus groups were small','None of the rows, because PackRight gathered all four'], why:'Secondary research uses data someone else already collected. PackRight found the Census data; it didn’t collect it. The survey and focus groups are primary research no matter how they were run.'},
-    {set:true, stem:'Which row provides qualitative data?', a:'Row 2', d:['Row 1','Row 3','Row 4'], why:'The focus group results are quotes: words that explain how parents feel. Rows 1, 3, and 4 are all numbers.'},
-    {set:true, stem:'Rows 1 and 4 together are most useful for judging whether the lunch box is', a:'viable, because they compare what parents would pay with what each unit would cost to make', d:['desirable, because they show how many children live in the region','feasible, because they show that parents worry about leaks','qualitative, because both describe parents’ opinions'], why:'Viability is about making money. Parents would pay about $19, and each unit costs $12 to make. Each wrong answer pairs a term with evidence that doesn’t support it.'},
-    {stem:'Which of the following best explains why a business conducts market research before launching a new product?', a:'To reduce the risk of spending money on a product customers don’t want, the business can’t make, or that won’t be profitable', d:['To guarantee that the product will succeed','To avoid the need to advertise the product','To learn exactly how many units customers will buy in the first year'], why:'Research checks whether a product is desirable, feasible, and viable before money is committed. It lowers risk but can’t guarantee success or predict exact sales.'},
-    {stem:'Which of the following is an example of quantitative data?', a:'On average, customers rated the checkout process 4.2 out of 5.', d:['A customer wrote that checkout “took forever.”','Observers noted that shoppers looked confused at the self-checkout screen.','Interviewees described the store as “cozy but cramped.”'], why:'An average rating is a number. The others are words or descriptions, which makes them qualitative.'},
-    {stem:'A bike shop wants to learn how many bike shops already operate in its city and what they charge for a tune-up, while spending as little as possible. Which approach is most appropriate?', a:'Secondary research, such as reviewing competitors’ websites and a local business directory', d:['A focus group of the shop’s current customers','An A/B test of two tune-up prices','One-on-one interviews with 20 cyclists'], why:'Secondary research is usually the cheaper way to assess rivals and the market, and this information already exists.'},
-    {stem:'Compared with secondary research, a main disadvantage of primary research is that it', a:'usually costs more time and money to collect', d:['is always out of date','cannot be used to test a hypothesis','was collected for a different purpose'], why:'Primary research is tailored to the business’s question, but collecting new data takes time and money. Being collected for a different purpose is a drawback of secondary research.'},
-    {stem:'An online clothing store wants to know whether a “Free returns” banner increases purchases. For two weeks, it randomly shows the banner to half of its visitors and not to the other half, then compares the percentage of each group that buys. Which research method is the store using?', a:'An A/B test', d:['A focus group','An observation','A survey'], why:'Two versions of the page are shown at the same time to two randomly split groups, and the results are compared: an A/B test.'},
-    {stem:'A software company wants to understand in depth why customers cancel their subscriptions, including reasons it may not have thought of. Which method is most appropriate?', a:'One-on-one interviews with customers who recently canceled', d:['A survey asking current customers to rate the app from 1 to 5','An A/B test of two subscription prices','An industry report on subscription trends'], why:'Interviews allow follow-up questions and uncover reasons the company didn’t expect. A rating survey gives numbers but not the “why,” and it asks the wrong people (current customers).'},
-    {stem:'A grocery store studies how shoppers move through its aisles by watching them instead of asking them. Compared with a survey, an advantage of this observation is that it', a:'shows what shoppers actually do rather than what they say they do', d:['explains exactly why each shopper made every choice','counts as secondary research, so it costs less','produces only qualitative data'], why:'Observation captures real behavior. It shows what people do, but not why, and it is primary research because the store collects it itself.'},
-    {stem:'A gaming café wants to know whether adults in its town would pay for a monthly membership. It posts a poll on its own social media page, and 85% of the people who respond say yes. What is the biggest problem with relying on this result?', a:'People who follow the café and choose to respond are likely more interested than adults in the town overall.', d:['Social media polls produce only qualitative data.','A result of 85% is too high to be accurate.','The café should have used secondary research instead.'], why:'The sample is biased: only the café’s followers saw the poll, and the most interested ones answered. It doesn’t represent adults in the town.'},
-    {stem:'A juice company hypothesizes that at least half of its customers will prefer a new low-sugar recipe. In a taste test with 8 of its employees, 6 prefer the new recipe. What is the most appropriate conclusion?', a:'The company can’t tell yet, because the sample is small and may not represent its customers.', d:['The hypothesis is supported, because 75% preferred the new recipe.','The hypothesis is not supported, because a taste test can’t measure preference.','The company should launch the recipe, because employees know the product best.'], why:'Eight employees are a small sample and aren’t the customers the hypothesis is about. The company needs a larger, random sample of real customers.'}
+    {set:true, stem:'Which row is an example of secondary research?', a:'Row 3, because the Census Bureau collected the data for its own purposes', d:['Row 1, because the survey was conducted online','Row 2, because the focus groups were small','None of the rows, because PackRight gathered all four'], why:'Secondary research gathers information from external sources such as government databases (2.3.B.2). PackRight found the Census data; it didn’t collect it. The survey and focus groups are primary research no matter how they were run.'},
+    {set:true, stem:'Which row provides qualitative data?', a:'Row 2', d:['Row 1','Row 3','Row 4'], why:'Qualitative data is descriptive and non-numerical, collected in words and images (2.3.A.2.ii). The focus group quotes explain how parents feel. Rows 1, 3, and 4 are all numbers.'},
+    {set:true, stem:'Rows 1 and 4 together are most useful for judging whether the lunch box is', a:'viable, because they compare what parents would pay with what each unit would cost to make', d:['desirable, because they show how many children live in the region','feasible, because they show that parents worry about leaks','qualitative, because both describe parents’ opinions'], why:'A product is viable when it has the potential to be profitable (2.3.A.3.iii). Parents would pay about $19, and each unit costs $12 to make. Each wrong answer pairs a term with evidence that doesn’t support it.'},
+    {stem:'Businesses developing new products conduct market research mainly in order to', a:'evaluate whether the product is desirable, feasible, and viable before committing significant resources to it', d:['guarantee that the product will be profitable once it launches','avoid the need to advertise the product','learn exactly how many units customers will buy in the first year'], why:'Research tests all three conditions before a business commits significant resources (2.3.A.3). It lowers risk, but it can’t guarantee success or predict exact sales (2.3.C.9).'},
+    {stem:'A sports drink brand has sold the same three flavors for 20 years. Which is the most likely reason it keeps conducting market research?', a:'To understand customers’ changing needs and wants and identify opportunities for product innovation', d:['To find out whether it has the technology to produce sports drinks','To avoid having to compete with rival brands','To replace the need to track its own sales'], why:'Businesses with existing products research to follow changing needs and wants, find opportunities to innovate, and retain or grow market share (2.3.A.4). Feasibility was settled long ago.'},
+    {stem:'A business wants to estimate the size of the market for its product in dollars. Which information from secondary research would be most useful?', a:'The number of potential customers in the area and how much they typically spend on this kind of product each year', d:['Quotes from a focus group about the product’s design','The results of an A/B test of two product photos','An observation of how shoppers move through the business’s store'], why:'Market size is measured in dollars and in total customers (2.3.B.2). Customers times typical yearly spending estimates the dollar size. The other options are primary research about the product, not the market.'},
+    {stem:'A bike shop wants to learn how many bike shops already operate in its city and what they charge for a tune-up, while spending as little as possible. Which approach is most appropriate?', a:'Secondary research, such as reviewing rivals’ websites and a local business directory', d:['A focus group of the shop’s current customers','An A/B test of two tune-up prices','One-on-one interviews with 20 cyclists'], why:'Businesses typically use secondary research, including information about rival businesses, to assess the market landscape because it is more cost-effective than extensive primary research (2.3.B.3).'},
+    {stem:'A snack company reads a report that more teens are choosing plant-based diets and considers launching a vegan line. Which PESTEL factor is the company responding to?', a:'Social', d:['Political','Technological','Legal'], why:'A shift in lifestyles and values is a social factor (2.3.B.1). Political would be government action, technological a new tool, and legal a specific law.'},
+    {stem:'A software company wants to understand in depth why customers cancel their subscriptions, including reasons it may not have thought of. Which method is most appropriate?', a:'One-on-one interviews with customers who recently canceled', d:['A survey asking current customers to rate the app from 1 to 5','An A/B test of two subscription prices','An industry report on subscription trends'], why:'Interviews give in-depth qualitative data from a small number of people and allow follow-up questions that draw out detailed explanations (2.3.C.5). A rating survey gives numbers, not the “why,” and it asks current customers instead of those who left.'},
+    {stem:'A cereal company sets up a mock grocery aisle in its research center and records which of three box designs 50 invited shoppers pick up first. Which method is the company using?', a:'An experiment, because it measures customer behavior in a controlled environment', d:['An observation, because it watches customers in their natural environment','A focus group, because the shoppers discuss the designs together','A survey, because it collects the views of a large population'], why:'The company built the setting, so it’s a controlled environment: an experiment. An observation would watch shoppers in a real store without changing anything (2.3.C.6).'},
+    {stem:'An online clothing store wants to know whether a “Free returns” banner increases purchases. For two weeks, it randomly shows the banner to half of its visitors and not to the other half, then compares the percentage of each group that buys. Which research method is the store using?', a:'An A/B test', d:['A focus group','An observation','A survey'], why:'Real customers see one of two viable versions in a real-world setting, and the results are compared: an A/B test, a type of experiment (2.3.C.7).'},
+    {stem:'A gaming café wants to know whether adults in its town would pay for a monthly membership. It posts a poll on its own social media page, and 85% of the people who respond say yes. What is the biggest problem with relying on this result?', a:'People who follow the café and choose to respond are likely more interested than adults in the town overall.', d:['Social media polls produce only qualitative data.','A result of 85% is too high to be accurate.','The café should have used secondary research instead.'], why:'The sample isn’t appropriately populated: only the café’s followers saw the poll, and the most interested answered. That risks skewed data that doesn’t reflect the population (2.3.C.8).'},
+    {stem:'A restaurant wants unbiased survey data about its new menu. Which question is phrased most neutrally?', a:'How would you rate the new menu on a scale of 1 to 5?', d:['Don’t you agree the new menu is a big improvement?','How much did you enjoy our delicious new dishes?','Most customers love the new menu. Do you?'], why:'Neutral phrasing avoids influencing the way respondents answer (2.3.C.8). Each of the others pushes people toward a positive answer.'},
+    {stem:'A soda company ran large taste tests showing that most people preferred its new recipe, but sales fell sharply after it replaced the original. This outcome best illustrates that', a:'market research can’t always accurately predict how customers and markets will respond', d:['taste tests produce only qualitative data','secondary research should always replace primary research','businesses should never change an existing product'], why:'Even with research, businesses aren’t always able to predict customer and market responses, and often must act on limited, unclear, or contradictory data (2.3.C.9).'},
+    {stem:'A business wants to show how the whole local coffee market is divided among five competing shops, as a percentage of the total. Which data visualization is most appropriate?', a:'Pie chart', d:['Line graph','Stacked bar chart','Bar chart'], why:'Pie charts illustrate part-to-whole relationships, such as the percentage of market share held by each business in a market (2.3.D.6). A bar chart could compare the shops, but it doesn’t show the pieces of one whole as clearly.'},
+    {fig:LINE, stem:'The line graph shows the number of customers for Lumen Lamps, a home lighting company. Which statement is best supported by the graph?', a:'The number of customers grew each year from 2020 to 2023, then fell in 2024 and 2025.', d:['The number of customers grew every year from 2020 to 2025.','Lumen Lamps had the most customers in 2025.','The number of customers fell by more than half from 2023 to 2025.'], why:'Customers rose from 1,200 to a peak of 3,100 in 2023, then fell to 2,400 by 2025, a drop of about a quarter, not half. Line graphs are built to show trends over time like this one (2.3.D.5).'}
   ];
   var quiz = el('quiz'), right = 0, answered = 0;
   function build(){
@@ -936,7 +1237,7 @@ Drill({
     quiz.innerHTML = '<div class="q" style="padding-top:4px"><span class="qn">QUESTIONS 1–3 REFER TO THE FOLLOWING INFORMATION</span>' + STIM + '</div>';
     Q.forEach(function(q, i){
       var d = document.createElement('div'); d.className = 'q';
-      d.innerHTML = '<span class="qn">QUESTION ' + (i + 1) + '</span><p class="stem">' + esc(q.stem) + '</p>';
+      d.innerHTML = '<span class="qn">QUESTION ' + (i + 1) + '</span>' + (q.fig ? '<div class="fig">' + q.fig + '</div>' : '') + '<p class="stem">' + esc(q.stem) + '</p>';
       var opts = document.createElement('div'); opts.className = 'opts';
       var fb = document.createElement('div'); fb.className = 'fb';
       shuffle([q.a].concat(q.d)).forEach(function(o, j){
