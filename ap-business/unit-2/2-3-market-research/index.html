@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.3 Market Research | AP Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1D2433; --ink2:#3F4859; --mute:#626B7C;
+  --wash:#F1EEE8; --card:#FCFBF9; --line:#D5CFC4; --line-soft:#E6E1D8;
+  --indigo:#3A55A0; --indigo-dk:#273C78; --indigo-lite:#DCE3F4;
+  --amber:#A8670F; --amber-dk:#7A4A08; --amber-lite:#F6E7CB;
+  --ok:#2E6B47; --ok-bg:#E3F0E7;
+  --no:#A63D2F; --no-bg:#F7E5E1;
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:64px}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(241,238,232,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:900px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+.bar a{color:inherit;text-decoration:none}
+
+header.hero{padding:60px 0 36px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--indigo-dk)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(40px,7vw,68px);line-height:1;margin:16px 0 0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--indigo)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:50ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: the learning objectives as a path */
+.board{margin:34px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--card);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.lo{padding:18px 18px 20px;border-left:1px solid var(--line-soft);text-decoration:none;color:var(--ink);display:block;position:relative}
+.lo:first-child{border-left:none}
+.lo:hover{background:#fff}
+.lo .code{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--indigo-dk);background:var(--indigo-lite);border-radius:2px;padding:2px 7px;white-space:nowrap}
+.lo .lq{display:block;font-family:var(--display);font-weight:600;font-size:19px;line-height:1.2;margin:12px 0 6px;letter-spacing:-.01em}
+.lo .d{display:block;font-size:14px;color:var(--mute);line-height:1.45}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:22px 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--indigo);color:var(--indigo-dk)}
+
+section{padding:46px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo-dk);background:var(--indigo-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+.tag.plain{color:var(--ink2);background:var(--line-soft)}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(27px,4.2vw,38px);line-height:1.08;margin:0;letter-spacing:-.02em}
+h3{font-family:var(--display);font-weight:600;font-size:20px;letter-spacing:-.01em;margin:34px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--indigo-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.def{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:0 4px 4px 0;padding:16px 20px;margin:22px 0}
+.def .term{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.def p{margin:6px 0 0;font-size:17px}
+.def .ek{font-family:var(--mono);font-size:11px;color:var(--mute);float:right;margin-left:12px}
+
+.note{border-left:3px solid var(--amber);background:var(--amber-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.pf{border:1px solid var(--line);background:var(--card);border-radius:4px;padding:18px 20px;margin:24px 0}
+.pf .pf-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ok);margin-bottom:4px}
+
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:22px 0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:22px 0}
+.mini{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px 18px}
+.mini .n{font-family:var(--mono);font-size:12px;color:var(--indigo-dk)}
+.mini h4{font-family:var(--body);font-size:16px;font-weight:600;margin:6px 0 4px}
+.mini p{margin:0;font-size:15.5px;color:var(--ink2)}
+
+.kind{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--indigo);border-radius:4px;padding:18px 20px}
+.kind.alt{border-top-color:var(--amber)}
+.kind .kh{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.01em;color:var(--indigo-dk)}
+.kind.alt .kh{color:var(--amber-dk)}
+.kind .ks{font-size:15px;color:var(--ink2);margin:4px 0 12px}
+.kind .ek2{float:right;font-family:var(--mono);font-size:11px;color:var(--mute);margin-left:10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--mono);font-size:12.5px;border-radius:2px;padding:3px 8px;background:var(--indigo-lite);color:var(--indigo-dk)}
+.kind.alt .chip{background:var(--amber-lite);color:var(--amber-dk)}
+.kind .tip{font-size:14.5px;color:var(--mute);margin:12px 0 0}
+.pc{list-style:none;padding:0;margin:12px 0 0;font-size:15px;color:var(--ink2)}
+.pc li{margin:4px 0;padding-left:22px;position:relative}
+.pc li::before{position:absolute;left:0;top:0;font-family:var(--mono);font-weight:600}
+.pc li.plus::before{content:"+";color:var(--ok)}
+.pc li.minus::before{content:"−";color:var(--no)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.prompt{font-size:clamp(18px,2.6vw,21px);font-weight:500;line-height:1.45;margin:4px 0 0}
+.prompt .lbl{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:400;margin:10px 0 2px}
+.prompt .lbl:first-child{margin-top:0}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F7F6F3;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--indigo-dk);border-color:var(--indigo-dk)}
+button[disabled]{cursor:default}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--indigo)}
+button:focus-visible,a:focus-visible{outline:2.5px solid var(--indigo);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+/* answer buttons for the drills */
+.pk{display:grid;gap:10px;margin-top:16px}
+.pk.c2{grid-template-columns:1fr 1fr}
+.pk.c3{grid-template-columns:repeat(3,1fr)}
+.pbtn{background:#fff;color:var(--ink);border:1px solid var(--line);border-top:3px solid var(--c,var(--line));font-size:14px;padding:13px 10px;text-align:center;line-height:1.35}
+.pbtn:hover{background:#fff;color:var(--ink);border-color:var(--indigo);border-top-color:var(--c,var(--indigo))}
+.pbtn small{display:block;font-family:var(--body);font-size:13px;color:var(--mute);letter-spacing:0;margin-top:2px}
+.pbtn.yes{background:var(--ok-bg);border-color:var(--ok);color:#1C4A30}
+.pbtn.no{background:var(--no-bg);border-color:var(--no);color:#7A2B20}
+.pbtn.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1C4A30}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7A2B20}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--indigo);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb p{margin:6px 0 0}
+.fb p:first-child{margin-top:0}
+
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45;letter-spacing:0}
+.opt:hover{border-color:var(--indigo);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.96}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.tbl{overflow-x:auto;margin:18px 0;-webkit-overflow-scrolling:touch}
+.tbl table{margin:0}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 14px;letter-spacing:.02em}
+.tab:hover{background:var(--line-soft);color:var(--ink);border-color:var(--indigo)}
+.tab[aria-pressed="true"]{background:var(--ink);color:#F7F6F3;border-color:var(--ink)}
+.stepl{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin:22px 0 6px;display:flex;align-items:center;gap:12px}
+
+.q{border-top:1px solid var(--line-soft);padding:22px 0 6px}
+.q:first-child{border-top:none;padding-top:4px}
+.q .qn{font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.06em}
+.q .stem{font-weight:500;margin:4px 0 0}
+.stim{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:14px 16px;margin:0 0 6px}
+.stim p{margin:0 0 8px;font-size:15.5px}
+.stim table{margin:6px 0 0;font-size:14.5px}
+.qsum{font-family:var(--display);font-weight:700;font-size:22px;margin:18px 0 0}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#ECEDEF;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#BFC5CF}
+.next .nt{font-family:var(--display);font-weight:700;font-size:24px;color:#fff;margin:0 0 4px}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F7F6F3;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--indigo-lite)}
+
+/* ---------- 2.3 page ---------- */
+/* desirable, feasible, viable */
+.dfv{display:grid;grid-template-columns:250px minmax(0,1fr);gap:22px;align-items:center;margin:22px 0}
+.venn{width:100%;max-width:250px;height:auto;display:block;margin:0 auto}
+.venn text{font-family:var(--display);font-weight:700;font-size:15px;text-anchor:middle}
+.venn .vc{font-size:13px;fill:var(--ink)}
+.q3s{display:flex;flex-direction:column;gap:10px}
+.q3{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:0 4px 4px 0;padding:12px 16px}
+.q3 .qh{font-family:var(--display);font-weight:700;font-size:19px;color:var(--c);letter-spacing:-.01em}
+.q3 .qh span{font-family:var(--body);font-weight:500;font-size:16px;color:var(--ink)}
+.q3 p{margin:2px 0 0;font-size:15px;color:var(--ink2)}
+
+/* six methods */
+.meths{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin:20px 0}
+.meth{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 16px;display:flex;flex-direction:column}
+.meth .mh{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:-.01em}
+.meth p{margin:4px 0 0;font-size:15px;color:var(--ink2)}
+.meth .gv{margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--ink2)}
+.meth .gv b{font-weight:500;color:var(--mute);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px;margin-right:6px}
+.meth .gv span{border-radius:2px;padding:2px 7px}
+.gv .num{background:var(--indigo-lite);color:var(--indigo-dk)}
+.gv .wrd{background:var(--amber-lite);color:var(--amber-dk)}
+.gv .both{background:var(--line-soft);color:var(--ink)}
+.meth .wo{margin-top:8px;font-size:14px;color:var(--mute)}
+
+/* survey lab */
+.hyp{background:#fff;border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:0 3px 3px 0;padding:12px 16px;font-size:17px;line-height:1.45}
+.hyp .hyp-l{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-dk);margin-bottom:2px}
+.lab{display:grid;grid-template-columns:minmax(0,1fr) 290px;grid-template-areas:"viz ctl" "viz coach";gap:16px 22px;align-items:start;margin-top:18px}
+.lab-ctl{grid-area:ctl}
+.lab-viz{grid-area:viz}
+.lab-coach{grid-area:coach}
+.lab-coach .fb{margin-top:0}
+.step-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin:0 0 6px}
+.presets{display:flex;flex-direction:column;gap:6px}
+.preset{display:flex;gap:10px;align-items:flex-start;text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);font-family:var(--body);font-size:15px;letter-spacing:0;padding:9px 12px;line-height:1.35}
+.preset:hover{background:#fff;color:var(--ink);border-color:var(--indigo)}
+.preset .dot{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--line);flex:none;margin-top:3px}
+.preset small{display:block;color:var(--mute);font-size:13px;margin-top:1px}
+.preset[aria-pressed="true"]{border-color:var(--indigo);background:var(--indigo-lite)}
+.preset[aria-pressed="true"] .dot{border:4px solid var(--indigo);background:#fff}
+.lab .btn-row{margin-top:14px}
+#run{min-width:150px}
+
+.school{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--line-soft);border-radius:3px}
+.school circle{fill:#fff;stroke:#CDC6BA;stroke-width:1.2}
+.school circle.pool{fill:var(--indigo-lite);stroke:#8193C6;stroke-width:1.5}
+.school circle.y{fill:var(--indigo);stroke:var(--indigo-dk)}
+.school circle.n{fill:var(--amber-lite);stroke:var(--amber);stroke-width:1.7}
+.school circle.ry{fill:#B7C2E2;stroke:#B7C2E2}
+.school circle.rn{fill:#fff;stroke:#E2CBA2}
+.legend{display:flex;gap:6px 16px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:var(--ink2);margin:10px 0 0}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;border:1.5px solid}
+.legend .k0{background:#fff;border-color:#CDC6BA}
+.legend .kp{background:var(--indigo-lite);border-color:#8193C6}
+.legend .ky{background:var(--indigo);border-color:var(--indigo-dk)}
+.legend .kn{background:var(--amber-lite);border-color:var(--amber)}
+.legend .kry{background:#B7C2E2;border-color:#B7C2E2}
+.legend .kh{width:0;height:13px;border-radius:0;border:none;border-left:2px dashed var(--amber)}
+.legend .kt{width:0;height:13px;border-radius:0;border:none;border-left:2.5px solid var(--ok)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 0}
+.stat{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:9px 11px}
+.stat .sl{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);line-height:1.3}
+.stat .sv{display:block;font-family:var(--display);font-weight:700;font-size:24px;line-height:1.25;font-variant-numeric:tabular-nums}
+.stat .sv.v{font-size:17px;line-height:1.2;padding:4px 0 2px}
+.stat .sv.sup{color:var(--indigo-dk)}
+.stat .sv.uns{color:var(--amber-dk)}
+.stat .ss{display:block;font-family:var(--mono);font-size:11.5px;color:var(--mute)}
+
+.strip{margin:4px 0 0}
+.srow{display:grid;grid-template-columns:122px minmax(0,1fr);align-items:stretch}
+.srow .sn{font-family:var(--mono);font-size:11.5px;color:var(--ink2);align-self:center;padding-right:10px;line-height:1.25}
+.trk{position:relative;height:32px;background:#fff;border:1px solid var(--line-soft);border-bottom:none}
+.srow:nth-last-child(2) .trk{border-bottom:1px solid var(--line-soft)}
+.srow.gap .trk{border-top:2px solid var(--line)}
+.trk .hl{position:absolute;top:0;bottom:0;left:40%;border-left:2px dashed var(--amber)}
+.trk .tl{position:absolute;top:0;bottom:0;left:30%;border-left:2.5px solid var(--ok)}
+.trk .pt{position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--c);opacity:.7}
+.trk .pt.new{width:14px;height:14px;margin:-7px 0 0 -7px;opacity:1;box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--c)}
+.axis{position:relative;height:22px;font-family:var(--mono);font-size:11px;color:var(--mute)}
+.axis span{position:absolute;top:3px;transform:translateX(-50%)}
+.axis span:first-child{transform:none}
+.axis span:last-child{transform:translateX(-100%)}
+.axis i{font-style:normal}
+button.tiny{font-size:11px;padding:3px 9px;letter-spacing:.05em}
+
+@media (max-width:760px){
+  .board{grid-template-columns:1fr 1fr}
+  .lo:nth-child(3){border-left:none}
+  .lo:nth-child(n+3){border-top:1px solid var(--line-soft)}
+  .dfv{grid-template-columns:1fr}
+  .lab{grid-template-columns:1fr;grid-template-areas:"ctl" "viz" "coach"}
+  .stats{grid-template-columns:1fr 1fr}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .bar-sub{display:none}
+  .card{padding:16px}
+  .lo{padding:14px}
+  .lo .lq{font-size:17px}
+  .pk.c2,.pk.c3{grid-template-columns:1fr}
+  .pk.c6{grid-template-columns:1fr 1fr}
+  .srow{grid-template-columns:86px minmax(0,1fr)}
+  .srow .sn{font-size:10.5px;padding-right:6px}
+  .axis span:not(:first-child):not(:last-child) i{display:none}
+}
+@media (max-width:380px){
+  .board{grid-template-columns:1fr}
+  .lo{border-left:none;border-top:1px solid var(--line-soft)}
+  .lo:first-child{border-top:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+@media print{ body{background:#fff} .bar,.jump,.btn-row,.next{display:none} }
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title"><a href="/ap-business/unit-2/">2.3 Market Research</a></span>
+    <span class="bar-sub">Quantitative vs. qualitative · desirable, feasible, viable · primary vs. secondary · research methods · reading results</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">AP Business · Unit 2 Marketing · Topic 2.3</div>
+  <h1>Market <em>Research</em></h1>
+  <p class="lede">Every new product starts as a guess: people will want this, we can make it, and it will make money. Market research is how a business checks those guesses before it bets real money on them.</p>
+
+  <div class="board" aria-label="The four big questions in this topic">
+    <a class="lo" href="#why"><span class="code">2.3.A</span><span class="lq">Why research first?</span><span class="d">Quantitative vs. qualitative data; desirable, feasible, viable</span></a>
+    <a class="lo" href="#sources"><span class="code">2.3.B</span><span class="lq">Ask people, or look it up?</span><span class="d">Primary vs. secondary research</span></a>
+    <a class="lo" href="#methods"><span class="code">2.3.C</span><span class="lq">How do you test a hunch?</span><span class="d">Hypotheses and six primary research methods</span></a>
+    <a class="lo" href="#lab"><span class="code">2.3.C</span><span class="lq">Can you trust the answer?</span><span class="d">Who you ask, how many, and reading the results</span></a>
+  </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#why">Why research</a>
+    <a href="#qq">Numbers or words</a>
+    <a href="#dfv">Desirable, feasible, viable</a>
+    <a href="#sources">Primary vs. secondary</a>
+    <a href="#methods">Six methods</a>
+    <a href="#name">Name the method</a>
+    <a href="#survey">Survey lab</a>
+    <a href="#read">Supported or not?</a>
+    <a href="#check">Check yourself</a>
+  </nav>
+</header>
+
+<!-- =========================================================
+     2.3.A  WHY RESEARCH
+     ========================================================= -->
+<section id="why">
+  <div class="sec-head"><span class="tag">2.3.A</span><h2>Why research before you build</h2></div>
+
+  <div class="def">
+    <span class="ek">2.3.A.1</span>
+    <div class="term">Market research</div>
+    <p>Gathering and analyzing information about customers, competitors, and the market so a business can make better decisions.</p>
+  </div>
+
+  <p>Making a product, stocking it, and advertising it all cost money. Research costs much less than a flop. It answers questions like: <i>Is there a real problem here? Who has it? What would they pay? Who else is already solving it?</i></p>
+
+  <h3 id="qq">Two kinds of research data</h3>
+  <p>Research produces two kinds of data <span class="smallprint">(2.3.A.2)</span>. The quickest test: <b>is it a number, or is it words?</b></p>
+  <div class="grid2">
+    <div class="kind">
+      <div class="kh">Quantitative</div>
+      <div class="ks">Numbers: anything you can count, measure, or put on a chart.</div>
+      <div class="chips"><span class="chip">percentages</span><span class="chip">1–5 ratings</span><span class="chip">sales counts</span><span class="chip">prices</span><span class="chip">click rates</span></div>
+      <p class="tip">Answers <b>how many, how much, how often</b>: “62% of students skip breakfast at least twice a week.”</p>
+    </div>
+    <div class="kind alt">
+      <div class="kh">Qualitative</div>
+      <div class="ks">Words, descriptions, and observations: what people say and do, in their own terms.</div>
+      <div class="chips"><span class="chip">interview quotes</span><span class="chip">open-ended answers</span><span class="chip">written reviews</span><span class="chip">observer notes</span></div>
+      <p class="tip">Answers <b>why</b> and <b>how it feels</b>: “I skip breakfast because my bus comes at 6:50.”</p>
+    </div>
+  </div>
+  <p>Businesses usually want both. The numbers show <b>how big</b> a pattern is; the words explain <b>why</b> it happens.</p>
+  <div class="note"><b>Watch-out:</b> the method doesn’t decide the type of data. One survey can collect both: a 1–5 rating is quantitative, and the comment box under it is qualitative. Look at the data itself.</div>
+
+  <div class="card" id="qq-card">
+    <div class="card-label">Numbers or words? <span class="score" id="qq-score">0 of 0</span></div>
+    <p class="smallprint" style="margin:0 0 10px">A business collected this piece of research. What kind of data is it?</p>
+    <p class="prompt" id="qq-item" aria-live="polite"></p>
+    <div class="pk c2" id="qq-opts"></div>
+    <div class="fb" id="qq-fb"></div>
+    <div class="btn-row"><button id="qq-next">Next finding →</button></div>
+  </div>
+
+  <h3 id="dfv">Three questions before launch</h3>
+  <p>Before a business brings a new product to market, research helps it answer three questions <span class="smallprint">(2.3.A.3)</span>. A product needs a yes on <b>all three</b>.</p>
+  <div class="dfv">
+    <svg class="venn" viewBox="0 0 300 282" role="img" aria-label="Three overlapping circles labeled desirable, feasible, and viable. Only the center, where all three overlap, is ready to launch.">
+      <circle cx="113" cy="112" r="78" fill="rgba(58,85,160,.12)" stroke="#3A55A0" stroke-width="1.5"/>
+      <circle cx="187" cy="112" r="78" fill="rgba(168,103,15,.12)" stroke="#A8670F" stroke-width="1.5"/>
+      <circle cx="150" cy="172" r="78" fill="rgba(46,107,71,.12)" stroke="#2E6B47" stroke-width="1.5"/>
+      <text x="62" y="22" fill="#273C78">Desirable</text>
+      <text x="238" y="22" fill="#7A4A08">Feasible</text>
+      <text x="150" y="274" fill="#2E6B47">Viable</text>
+      <text x="150" y="140" class="vc">Launch</text>
+    </svg>
+    <div class="q3s">
+      <div class="q3" style="--c:var(--indigo)"><div class="qh">Desirable <span>· Do customers want it?</span></div><p>Is there a real need or want, and would people choose this over what they use now?</p></div>
+      <div class="q3" style="--c:var(--amber)"><div class="qh">Feasible <span>· Can we make and deliver it?</span></div><p>Can the business get the materials, skills, technology, and permits it needs?</p></div>
+      <div class="q3" style="--c:var(--ok)"><div class="qh">Viable <span>· Can it make money?</span></div><p>Will customers pay more than it costs to make, sell, and deliver, often enough to keep the business going?</p></div>
+    </div>
+  </div>
+
+  <div class="card" id="dfv-card">
+    <div class="card-label">Which question does it answer? <span class="score" id="dfv-score">0 of 0</span></div>
+    <p class="prompt" id="dfv-item" aria-live="polite"></p>
+    <div class="pk c3" id="dfv-opts"></div>
+    <div class="fb" id="dfv-fb"></div>
+    <div class="btn-row"><button id="dfv-next">Next finding →</button></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     2.3.B  PRIMARY VS SECONDARY
+     ========================================================= -->
+<section id="sources">
+  <div class="sec-head"><span class="tag">2.3.B</span><h2>Ask people, or look it up?</h2></div>
+  <p>Every piece of research has a source. The question is <b>who collected it, and for what</b>.</p>
+  <div class="grid2">
+    <div class="kind">
+      <span class="ek2">2.3.B.1</span>
+      <div class="kh">Primary research</div>
+      <div class="ks">New data the business collects <b>itself</b>, for its own question.</div>
+      <div class="chips"><span class="chip">surveys</span><span class="chip">interviews</span><span class="chip">focus groups</span><span class="chip">observations</span><span class="chip">experiments</span><span class="chip">A/B tests</span></div>
+      <ul class="pc"><li class="plus">Answers exactly your question, about your customers, right now.</li><li class="minus">Costs more time and money to collect.</li></ul>
+    </div>
+    <div class="kind alt">
+      <span class="ek2">2.3.B.2</span>
+      <div class="kh">Secondary research</div>
+      <div class="ks">Data <b>someone else</b> already collected, for some other purpose.</div>
+      <div class="chips"><span class="chip">government data (Census, labor statistics)</span><span class="chip">industry reports</span><span class="chip">competitors’ websites and prices</span><span class="chip">news articles</span><span class="chip">published studies</span></div>
+      <ul class="pc"><li class="plus">Cheaper and faster: it already exists.</li><li class="minus">Wasn’t built for your question, and it may be out of date.</li></ul>
+    </div>
+  </div>
+  <div class="note"><b>Start with secondary.</b> It’s usually the cheaper way to size up the market and your rivals <span class="smallprint">(2.3.B.3)</span>: how many potential customers live nearby, what competitors charge, whether the industry is growing. Then spend money on primary research for what only your own customers can tell you.</div>
+  <p class="smallprint"><b>Quick test:</b> did the business collect it for this question? Primary. Did the business find it already collected? Secondary, even if the business paid for it.</p>
+
+  <div class="card" id="ps-card">
+    <div class="card-label">Primary or secondary? <span class="score" id="ps-score">0 of 0</span></div>
+    <p class="prompt" id="ps-item" aria-live="polite"></p>
+    <div class="pk c2" id="ps-opts"></div>
+    <div class="fb" id="ps-fb"></div>
+    <div class="btn-row"><button id="ps-next">Next scenario →</button></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     2.3.C  HYPOTHESES AND METHODS
+     ========================================================= -->
+<section id="methods">
+  <div class="sec-head"><span class="tag">2.3.C</span><h2>Testing a hypothesis about customers</h2></div>
+  <div class="def">
+    <div class="term">Business hypothesis</div>
+    <p>A specific, testable guess about customers: “We think <b>[these customers]</b> will <b>[do this]</b> because <b>[reason]</b>.”</p>
+  </div>
+  <p>Primary research turns a guess into evidence. The best hypotheses include something you can check. “At least 40% of students would buy one every week” can be proven wrong. “Students will like it” can’t.</p>
+
+  <h3>Six ways to collect primary research</h3>
+  <p>The course framework names six methods <span class="smallprint">(2.3.C.1)</span>. Each is good at something different.</p>
+  <div class="meths">
+    <div class="meth"><div class="mh">Survey</div><p>The same questions to many people, on paper, online, or in person.</p><div class="gv"><b>Gives you</b><span class="num">mostly numbers</span></div><div class="wo">Watch out: people don’t always do what they say they’ll do.</div></div>
+    <div class="meth"><div class="mh">Interview</div><p>A one-on-one conversation with follow-up questions.</p><div class="gv"><b>Gives you</b><span class="wrd">mostly words</span></div><div class="wo">Watch out: it takes time, so you only reach a few people.</div></div>
+    <div class="meth"><div class="mh">Focus group</div><p>A small group discusses a product together, guided by a moderator.</p><div class="gv"><b>Gives you</b><span class="wrd">mostly words</span></div><div class="wo">Watch out: one loud voice can sway the whole group.</div></div>
+    <div class="meth"><div class="mh">Observation</div><p>Watch what people actually do, in a store, online, or wherever they use the product.</p><div class="gv"><b>Gives you</b><span class="both">both</span></div><div class="wo">Watch out: it shows what people do, but not why.</div></div>
+    <div class="meth"><div class="mh">Experiment</div><p>Change one thing, like a price, a display, or an offer, and measure what happens.</p><div class="gv"><b>Gives you</b><span class="num">numbers</span></div><div class="wo">Watch out: change more than one thing and you can’t tell which one caused the result.</div></div>
+    <div class="meth"><div class="mh">A/B test</div><p>Show version A to one group and version B to a similar group at the same time, then compare.</p><div class="gv"><b>Gives you</b><span class="num">numbers</span></div><div class="wo">Watch out: it needs enough people for the difference to mean something.</div></div>
+  </div>
+
+  <h3>The pairs that get mixed up</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Pair</th><th>The difference</th><th>Quick tell</th></tr></thead>
+    <tbody>
+      <tr><td><b>Survey vs. interview</b></td><td>A survey asks many people the same fixed questions. An interview is one conversation that can follow up on answers.</td><td>Many people, same questions: survey.</td></tr>
+      <tr><td><b>Interview vs. focus group</b></td><td>Both are conversations. An interview is one person; a focus group is a small group reacting to each other.</td><td>Count the people in the room.</td></tr>
+      <tr><td><b>Experiment vs. A/B test</b></td><td>An A/B test is one kind of experiment: two versions, two similar groups, at the same time.</td><td>Exactly two versions, split audience: A/B test.</td></tr>
+      <tr><td><b>Observation vs. the rest</b></td><td>Observation doesn’t ask anyone anything. It watches what people do.</td><td>No questions asked: observation.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="card" id="name">
+    <div class="card-label">Name the method <span class="score" id="nm-score">0 of 0</span></div>
+    <p class="prompt" id="nm-item" aria-live="polite"></p>
+    <div class="pk c3 c6" id="nm-opts"></div>
+    <div class="fb" id="nm-fb"></div>
+    <div class="btn-row"><button id="nm-next">Next scenario →</button></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     2.3.C  SURVEY LAB + READING RESULTS
+     ========================================================= -->
+<section id="lab">
+  <div class="sec-head"><span class="tag">2.3.C</span><h2>Survey lab: can you trust the answer?</h2></div>
+  <p>A business almost never asks every customer. It asks a <b>sample</b>: a smaller group that’s supposed to stand in for everyone. Whether a sample tells the truth depends on two things:</p>
+  <div class="grid2">
+    <div class="mini"><span class="n">Who you ask</span><h4>Biased vs. random</h4><p>A <b>biased sample</b> leans toward one kind of person, like your friends or a brand’s fans. In a <b>random sample</b>, everyone has the same chance of being picked.</p></div>
+    <div class="mini"><span class="n">How many you ask</span><h4>Small samples bounce</h4><p>Ask 10 people and each answer moves the result by 10 points. Ask more people and the result settles down.</p></div>
+  </div>
+
+  <div class="card" id="survey">
+    <div class="card-label">Survey lab · Ridgeview High, 400 students</div>
+    <div class="hyp"><span class="hyp-l">Blend Bus’s hypothesis</span>At least <b>40%</b> of Ridgeview students would buy a $5 smoothie before school at least once a week.</div>
+    <p class="smallprint" style="margin:10px 0 0">Blend Bus, a made-up smoothie truck, will only park outside Ridgeview High before first bell if the hypothesis holds. You can’t ask all 400 students, so choose who to ask and how many, then run the survey.</p>
+
+    <div class="lab">
+      <div class="lab-ctl">
+        <div class="step-h">Who do you ask?</div>
+        <div class="presets" id="who"></div>
+        <div class="step-h" style="margin-top:16px">How many?</div>
+        <div class="tabs" id="size" role="group" aria-label="How many students to ask"></div>
+        <div class="btn-row"><button id="run">Run the survey</button><button class="ghost" id="reveal" aria-pressed="false">Reveal the whole school</button></div>
+      </div>
+      <div class="lab-viz">
+        <svg class="school" id="school" viewBox="0 0 500 320" role="img" aria-label="400 dots, one per Ridgeview student"></svg>
+        <div class="legend">
+          <span><i class="k0"></i>not asked</span>
+          <span id="lg-pool"><i class="kp"></i>who you can reach</span>
+          <span><i class="ky"></i>asked: would buy</span>
+          <span><i class="kn"></i>asked: wouldn’t buy</span>
+          <span id="lg-rev" hidden><i class="kry"></i>not asked, would buy</span>
+        </div>
+        <div class="stats">
+          <div class="stat"><span class="sl">Asked</span><span class="sv" id="s-n">–</span><span class="ss">students</span></div>
+          <div class="stat"><span class="sl">Said yes</span><span class="sv" id="s-y">–</span><span class="ss" id="s-y2">would buy weekly</span></div>
+          <div class="stat"><span class="sl">Survey says</span><span class="sv" id="s-p">–</span><span class="ss">of the sample</span></div>
+          <div class="stat"><span class="sl">Hypothesis</span><span class="sv v" id="s-v">–</span><span class="ss">needs 40% or more</span></div>
+        </div>
+      </div>
+      <div class="lab-coach"><div class="fb show hint" id="coach" aria-live="polite"></div></div>
+    </div>
+
+    <div class="stepl">Every survey you’ve run <button class="ghost tiny" id="clear">Clear</button></div>
+    <div class="strip" id="strip" role="img"></div>
+    <div class="legend">
+      <span><i class="kh"></i>hypothesis: 40%</span>
+      <span id="lg-truth" hidden><i class="kt"></i>whole school: <b id="truth-v"></b></span>
+      <span>larger dot = your latest survey</span>
+    </div>
+  </div>
+
+  <div class="note"><b>The takeaway: ask the right people, and enough of them.</b> A bigger sample fixes the bouncing, but it doesn’t fix bias. Asking all 30 of your friends just gives you the same wrong answer every time.</div>
+
+  <h3 id="read">Supported, not supported, or can’t tell?</h3>
+  <p>The last step is reading the results honestly. Sometimes the honest answer is that the research <b>can’t tell you yet</b>: too few people, the wrong people, more than one change at a time, or a measure that doesn’t match the hypothesis.</p>
+  <div class="card" id="rd-card">
+    <div class="card-label">What does the research say? <span class="score" id="rd-score">0 of 0</span></div>
+    <p class="prompt" id="rd-item" aria-live="polite"></p>
+    <div class="opts" id="rd-opts"></div>
+    <div class="fb" id="rd-fb"></div>
+    <div class="btn-row"><button id="rd-next">Next test →</button></div>
+  </div>
+
+  <div class="pf">
+    <div class="pf-h">As a shopper</div>
+    <p style="margin:0 0 8px">Ads quote research too: “9 out of 10 users love it,” “rated #1 by customers.” Run the same checks you used in the lab:</p>
+    <ul style="margin:0">
+      <li><b>Who was asked?</b> Customers who already bought it, the company’s own employees, or a random sample?</li>
+      <li><b>How many?</b> 10 people or 10,000?</li>
+      <li><b>Who paid for it?</b> A study paid for by the company selling the product deserves a second look.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- =========================================================
+     CHECK YOURSELF
+     ========================================================= -->
+<section id="check">
+  <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
+  <p>Twelve multiple-choice questions in the style of the AP Exam, covering all three learning objectives. The first three share one set of research results, like a set-based question on the exam.</p>
+  <div class="card" id="quiz"></div>
+  <div class="btn-row"><button class="ghost" id="quiz-reset">Start over</button></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">Next: 2.4 Product</div>
+      <p>You know how to find out what customers want. Next: designing the product they’ll buy.</p>
+    </div>
+    <a href="/ap-business/unit-2/">Back to Unit 2 →</a>
+  </div>
+</section>
+
+<footer>
+  <p>Topic 2.3 Market Research, following the AP Business with Personal Finance course framework (Learning Objectives 2.3.A–2.3.C). Businesses, schools, people, and numbers on this page are fictional. Practice items reshuffle every time you load the page.</p>
+  <p><a href="/ap-business/unit-2/">← Unit 2 — Marketing</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function shuffle(a){ a = a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; node.innerHTML = ''; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+/* Cycles through a bank in random order without repeats until it runs out. */
+function Deck(bank){
+  var order = [], i = 0;
+  return { next:function(){ if(i >= order.length){ order = shuffle(bank); i = 0; } return order[i++]; } };
+}
+/* A one-question-at-a-time drill with a fixed set of answer buttons.
+   cfg: {id, bank:[[html, key, why]], keys:[[key, button html, color, name used in feedback]], cls:'pbtn'|'opt'} */
+function Drill(cfg){
+  var id = cfg.id, deck = Deck(cfg.bank), cur, done, sc = Score(el(id + '-score')), fb = el(id + '-fb'), box = el(id + '-opts');
+  var name = {}; cfg.keys.forEach(function(k){ name[k[0]] = k[3]; });
+  function show(){
+    cur = deck.next(); done = false; hideFb(fb);
+    el(id + '-item').innerHTML = cur[0];
+    box.innerHTML = '';
+    cfg.keys.forEach(function(k){
+      var b = document.createElement('button');
+      b.className = cfg.cls; b.innerHTML = k[1]; b.setAttribute('data-k', k[0]);
+      if(k[2]) b.style.setProperty('--c', k[2]);
+      b.onclick = function(){ answer(b, k[0]); };
+      box.appendChild(b);
+    });
+  }
+  function answer(b, k){
+    if(done) return; done = true;
+    var ok = k === cur[1]; sc.add(ok);
+    var yes = cfg.cls === 'opt' ? ' picked-yes' : ' yes', no = cfg.cls === 'opt' ? ' picked-no' : ' no';
+    Array.prototype.forEach.call(box.children, function(x){ x.disabled = true; if(!ok && x.getAttribute('data-k') === cur[1]) x.className += ' reveal'; });
+    b.className += ok ? yes : no;
+    setFb(fb, ok ? 'good' : 'bad', '<b>' + (ok ? 'Right: ' : 'Not quite. The answer is ') + name[cur[1]] + '.</b> ' + cur[2]);
+    el(id + '-next').focus();
+  }
+  el(id + '-next').onclick = show;
+  show();
+}
+
+/* =========================================================
+   2.3.A.2  Numbers or words?
+   ========================================================= */
+Drill({
+  id:'qq', cls:'pbtn',
+  keys:[['quant','Quantitative<small>numbers you can count or measure</small>','var(--indigo)','quantitative'],
+        ['qual','Qualitative<small>words, descriptions, observations</small>','var(--amber)','qualitative']],
+  bank:[
+    ['62% of surveyed students said they eat breakfast fewer than three days a week.', 'quant', 'A percentage is a number you can compare and chart.'],
+    ['Customers rated the new app 3.8 out of 5 stars on average.', 'quant', 'An average rating is a number, even though it measures an opinion.'],
+    ['A coffee cart sold 214 drinks on Monday and 131 on Tuesday.', 'quant', 'Sales counts are numbers.'],
+    ['In an A/B test, 8.2% of visitors clicked the green “Buy” button and 5.9% clicked the gray one.', 'quant', 'Click rates are numbers you can compare directly.'],
+    ['Of 50 shoppers observed, 41 walked past the new display without stopping.', 'quant', 'The method is observation, but the data is a count. The method doesn’t decide the type.'],
+    ['Focus group members ranked four package designs from 1st to 4th.', 'quant', 'A focus group usually produces words, but rankings are numbers. Look at the data, not the method.'],
+    ['In an interview, a parent said the lunch box “feels flimsy when the latch clicks.”', 'qual', 'A quote in the customer’s own words is qualitative. It explains <i>how it feels</i>.'],
+    ['Focus group members described the new logo as “kind of childish.”', 'qual', 'A description in words is qualitative.'],
+    ['A review says, “Great taste, but the bottle leaks in my backpack.”', 'qual', 'Written reviews are qualitative: words that explain why.'],
+    ['An observer notes that shoppers frown and put the jar back after reading the label.', 'qual', 'A written description of behavior is qualitative.'],
+    ['On a survey, the answer to “What would make you buy this?” was “If it came in more colors.”', 'qual', 'It came from a survey, but an open-ended answer is words. The method doesn’t decide the type.'],
+    ['A video shows several customers struggling to tear open the package.', 'qual', 'Video of what people do is an observation in pictures and actions, not numbers.']
+  ]
+});
+
+/* =========================================================
+   2.3.A.3  Desirable, feasible, or viable?
+   ========================================================= */
+Drill({
+  id:'dfv', cls:'pbtn',
+  keys:[['d','Desirable<small>Do customers want it?</small>','var(--indigo)','desirable'],
+        ['f','Feasible<small>Can we make and deliver it?</small>','var(--amber)','feasible'],
+        ['v','Viable<small>Can it make money?</small>','var(--ok)','viable']],
+  bank:[
+    ['In 12 interviews, 10 students said they’d switch water bottles if one kept ice frozen for two full days.', 'd', 'It tells you whether customers <i>want</i> the product.'],
+    ['A survey finds that most dog owners in the area already walk their own dogs and wouldn’t pay for a dog walker.', 'd', 'This is a “no” on desirable: there isn’t enough want for the service.'],
+    ['In a store test, shoppers pick up the new snack, read the label, and put it in their carts.', 'd', 'Customers choosing the product shows they want it.'],
+    ['A manufacturer confirms it can produce 2,000 units a month with the materials the design calls for.', 'f', 'It tells you the business <i>can make</i> the product.'],
+    ['The team learns that the food delivery idea would need a city permit it probably can’t get.', 'f', 'A permit problem is about whether the business can deliver the product at all.'],
+    ['Engineers find the battery would have to be twice as big to last the promised 12 hours.', 'f', 'This is a “no” on feasible: the product can’t be built as described.'],
+    ['Each unit would cost $14 to make and ship, and customers say they’d pay about $12.', 'v', 'This is a “no” on viable: every sale would lose money.'],
+    ['The subscription needs 1,500 members to cover its costs, but research shows only about 900 likely buyers in the area.', 'v', 'Even if people want it, there aren’t enough buyers to make money.'],
+    ['Customers would pay $40, it costs $18 to make, and the business would start making a profit after 600 sales.', 'v', 'Price compared with cost is a profit question: viable.']
+  ]
+});
+
+/* =========================================================
+   2.3.B  Primary or secondary?
+   ========================================================= */
+Drill({
+  id:'ps', cls:'pbtn',
+  keys:[['p','Primary<small>the business collected it itself</small>','var(--indigo)','primary research'],
+        ['s','Secondary<small>someone else already collected it</small>','var(--amber)','secondary research']],
+  bank:[
+    ['A bakery hands out a two-question survey with every receipt for a week.', 'p', 'The bakery collected new data for its own question.'],
+    ['A sneaker startup interviews ten runners at a local track.', 'p', 'The startup is gathering new data directly from potential customers.'],
+    ['A café tests two versions of its loyalty card and counts which one gets more sign-ups.', 'p', 'Running its own test makes this primary research.'],
+    ['A toy company watches kids play with a prototype through a one-way mirror.', 'p', 'Observation by the business itself is primary research.'],
+    ['A food truck owner stands at three possible locations and counts how many people walk by at lunchtime.', 'p', 'The owner collected the counts personally, for this decision.'],
+    ['A food truck owner looks up Census data on how many people live within a mile of the park.', 's', 'The Census Bureau collected the data for its own purposes.'],
+    ['A gym owner reads an industry report on how much people spend on fitness memberships each year.', 's', 'Someone else already collected and published this data.'],
+    ['A phone-case startup checks rivals’ websites to compare their prices and designs.', 's', 'The information already exists. This is the cheap way to size up competitors.'],
+    ['A tutoring business reads a news article about rising demand for test prep.', 's', 'A news article is information someone else gathered.'],
+    ['A clothing store looks up government data on how much the average household spends on clothes.', 's', 'Government statistics are a classic secondary source.'],
+    ['A skate shop buys a published report on skateboard sales from a market research firm.', 's', 'Paying for it doesn’t make it primary. Someone else collected it, for many buyers, not for this shop’s question.']
+  ]
+});
+
+/* =========================================================
+   2.3.C.1  Name the method
+   ========================================================= */
+Drill({
+  id:'nm', cls:'pbtn',
+  keys:[['sv','Survey',null,'a survey'],['iv','Interview',null,'an interview'],['fg','Focus group',null,'a focus group'],
+        ['ob','Observation',null,'observation'],['ex','Experiment',null,'an experiment'],['ab','A/B test',null,'an A/B test']],
+  bank:[
+    ['A gym emails all 900 members the same five multiple-choice questions about which class times they prefer.', 'sv', 'Many people, the same fixed questions.'],
+    ['A pizza shop prints a QR code on every box that links to three quick rating questions.', 'sv', 'Every customer gets the same short set of questions.'],
+    ['A startup founder spends 30 minutes one-on-one with each of eight nurses, asking follow-up questions about their night shifts.', 'iv', 'One person at a time, with follow-up questions.'],
+    ['A game studio calls five players who quit its game, one at a time, to ask what made them stop.', 'iv', 'Individual conversations that dig into <i>why</i>.'],
+    ['A snack company brings eight teens into a room to taste three new flavors and talk them over together while a moderator guides the discussion.', 'fg', 'A small group reacting to each other, with a moderator.'],
+    ['A city bus service gathers ten riders around a table to react to a proposed route map and discuss it.', 'fg', 'A group discussion, not one-on-one.'],
+    ['A bookstore manager watches which tables shoppers stop at first and how long they browse, without asking them anything.', 'ob', 'Nobody is asked anything. The manager watches what people do.'],
+    ['A café owner sits in a corner during the morning rush and notes how long customers wait and what they do while waiting.', 'ob', 'Watching and recording behavior is observation.'],
+    ['A farm stand charges three different prices for strawberries on three Saturdays and records how many baskets sell at each price.', 'ex', 'It changes one thing, the price, and measures what happens. Three prices, not two versions side by side, so it isn’t an A/B test.'],
+    ['A restaurant adds a kids’ menu for one month and compares the number of family visits with the month before.', 'ex', 'It changes one thing and measures the result before and after.'],
+    ['A clothing website randomly shows half its visitors a red “Add to cart” button and the other half a blue one, then compares how many buy.', 'ab', 'Two versions, shown at the same time to two similar groups.'],
+    ['A newsletter goes out with two subject lines, each sent to a random half of the email list, to see which gets opened more.', 'ab', 'Version A and version B, split audience, compared directly.']
+  ]
+});
+
+/* =========================================================
+   2.3.C  Survey lab
+   ========================================================= */
+(function(){
+  var COLS = 25, HYP = 0.4;
+  /* seeded random so the school is the same every visit */
+  function seeded(s){ return function(){ s = (s * 1664525 + 1013904223) % 4294967296; return s / 4294967296; }; }
+  var R = seeded(2303), kids = [];
+  function add(g, yes, no){ var i; for(i = 0; i < yes; i++) kids.push({g:g, y:true}); for(i = 0; i < no; i++) kids.push({g:g, y:false}); }
+  add('f', 17, 13);   /* your 30 friends: mostly teammates with early practice */
+  add('i', 48, 12);   /* 60 students who follow the truck on Instagram */
+  add('o', 55, 255);  /* everyone else */
+  for(var i = kids.length - 1; i > 0; i--){ var j = Math.floor(R() * (i + 1)), t = kids[i]; kids[i] = kids[j]; kids[j] = t; }
+  var N = kids.length, TRUE_YES = kids.filter(function(k){ return k.y; }).length, TRUTH = TRUE_YES / N;
+
+  var POOL = {f:[], i:[], r:[]};
+  kids.forEach(function(k, n){ POOL.r.push(n); if(k.g === 'f') POOL.f.push(n); if(k.g === 'i') POOL.i.push(n); });
+
+  var WHO = [
+    {k:'f', n:'Your friends', d:'30 students. You run cross-country, and most of your friends have early practice.', row:'Your friends', c:'#A63D2F'},
+    {k:'i', n:'Blend Bus’s Instagram poll', d:'60 Ridgeview students follow the truck. Whoever answers counts.', row:'Instagram poll', c:'#7A4FA0'},
+    {k:'r', n:'A random sample', d:'Names picked at random from all 400 students on the roster.', row:'Random', c:'#3A55A0'}
+  ];
+  var SIZES = [10, 30, 100];
+  var ROWS = [['f','Your friends','#A63D2F'],['i','Instagram poll','#7A4FA0'],['r10','Random · 10','#3A55A0'],['r30','Random · 30','#3A55A0'],['r100','Random · 100','#3A55A0']];
+
+  var who = 'f', size = 10, asked = {}, runs = [], revealed = false, busy = false, lastRun = null;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* the school */
+  var svg = el('school'), NS = 'http://www.w3.org/2000/svg', dots = [];
+  kids.forEach(function(k, n){
+    var c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', 10 + (n % COLS) * 20); c.setAttribute('cy', 10 + Math.floor(n / COLS) * 20); c.setAttribute('r', 6.5);
+    svg.appendChild(c); dots.push(c);
+  });
+  function dotClass(n){
+    var k = kids[n];
+    if(asked[n]) return k.y ? 'y' : 'n';
+    if(revealed) return k.y ? 'ry' : 'rn';
+    if(who !== 'r' && k.g === who) return 'pool';
+    return '';
+  }
+  function paint(){ dots.forEach(function(c, n){ c.setAttribute('class', dotClass(n)); }); }
+
+  /* controls */
+  el('who').innerHTML = WHO.map(function(w){ return '<button class="preset" data-k="' + w.k + '" aria-pressed="false"><span class="dot"></span><span>' + w.n + '<small>' + w.d + '</small></span></button>'; }).join('');
+  el('size').innerHTML = SIZES.map(function(s){ return '<button class="tab" data-s="' + s + '" aria-pressed="false">' + s + '</button>'; }).join('');
+  function syncControls(){
+    Array.prototype.forEach.call(el('who').children, function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-k') === who ? 'true' : 'false'); });
+    Array.prototype.forEach.call(el('size').children, function(b){ b.setAttribute('aria-pressed', +b.getAttribute('data-s') === size ? 'true' : 'false'); });
+    el('lg-pool').hidden = who === 'r';
+  }
+  Array.prototype.forEach.call(el('who').children, function(b){
+    b.onclick = function(){ if(busy) return; who = b.getAttribute('data-k'); asked = {}; lastRun = null; syncControls(); paint(); stats(); };
+  });
+  Array.prototype.forEach.call(el('size').children, function(b){
+    b.onclick = function(){ if(busy) return; size = +b.getAttribute('data-s'); syncControls(); };
+  });
+
+  function pct(x){ return Math.round(x * 100) + '%'; }
+  function stats(){
+    var r = lastRun;
+    el('s-n').textContent = r ? r.take : '–';
+    el('s-y').textContent = r ? r.yes : '–';
+    el('s-y2').textContent = r ? 'of ' + r.take + ' would buy' : 'would buy weekly';
+    el('s-p').textContent = r ? pct(r.p) : '–';
+    var v = el('s-v');
+    v.textContent = r ? (r.p >= HYP ? 'Supported' : 'Not supported') : '–';
+    v.className = 'sv v' + (r ? (r.p >= HYP ? ' sup' : ' uns') : '');
+    svg.setAttribute('aria-label', '400 dots, one per Ridgeview student.' + (r ? ' Your latest survey asked ' + r.take + ' students and ' + r.yes + ' said they would buy.' : ''));
+  }
+
+  function rowKey(r){ return r.who === 'r' ? 'r' + r.size : r.who; }
+  function strip(){
+    var html = ROWS.map(function(row, ri){
+      var pts = runs.filter(function(r){ return r.key === row[0]; }).map(function(r){
+        return '<i class="pt' + (r === runs[runs.length - 1] ? ' new' : '') + '" style="left:' + (r.p * 100) + '%;top:' + r.jit + '%" title="' + esc(row[1]) + ': ' + r.yes + ' of ' + r.take + ' said yes (' + pct(r.p) + ')"></i>';
+      }).join('');
+      return '<div class="srow' + (ri === 2 ? ' gap' : '') + '"><span class="sn">' + row[1] + '</span><div class="trk" style="--c:' + row[2] + '"><i class="hl"></i>' + (revealed ? '<i class="tl" style="left:' + (TRUTH * 100) + '%"></i>' : '') + pts + '</div></div>';
+    }).join('');
+    html += '<div class="srow"><span></span><div class="axis">' + [0, 20, 40, 60, 80, 100].map(function(v){ return '<span style="left:' + v + '%">' + v + '<i>%</i></span>'; }).join('') + '</div></div>';
+    el('strip').innerHTML = html;
+    el('strip').setAttribute('aria-label', runs.length ? 'Results of ' + runs.length + ' surveys: ' + ROWS.map(function(row){
+      var rs = runs.filter(function(r){ return r.key === row[0]; });
+      return rs.length ? row[1] + ' ' + rs.map(function(r){ return pct(r.p); }).join(', ') : '';
+    }).filter(Boolean).join('; ') : 'No surveys run yet.');
+    el('lg-truth').hidden = !revealed;
+  }
+
+  function range(key){
+    var ps = runs.filter(function(r){ return r.key === key; }).map(function(r){ return r.p; });
+    return {n:ps.length, lo:Math.min.apply(null, ps), hi:Math.max.apply(null, ps)};
+  }
+  function said(r){ return '<b>' + r.yes + ' of ' + r.take + ' said yes (' + pct(r.p) + ').</b> '; }
+  function coach(){
+    var c = el('coach'), r = lastRun;
+    if(!runs.length){
+      setFb(c, 'hint', '<p><b>Start where most people would: ask your friends.</b></p><p><b>Your friends</b> and <b>10</b> are already picked. Press <b>Run the survey</b>.</p>');
+      return;
+    }
+    if(revealed){
+      var biased = runs.filter(function(x){ return x.who !== 'r'; }), big = range('r100');
+      var msg = '<p><b>The whole school: ' + TRUE_YES + ' of ' + N + ' students (' + pct(TRUTH) + ') would buy weekly. The hypothesis is not supported.</b></p>';
+      if(biased.length){
+        var names = WHO.filter(function(w){ return biased.some(function(x){ return x.who === w.k; }); }).map(function(w){ return w.k === 'f' ? 'Your friends' : 'the Instagram poll'; });
+        names[0] = names[0].charAt(0).toUpperCase() + names[0].slice(1);
+        var lo = Math.min.apply(null, biased.map(function(x){ return x.p; })), hi = Math.max.apply(null, biased.map(function(x){ return x.p; }));
+        msg += '<p>' + names.join(' and ') + ' said ' + (lo === hi ? pct(lo) : pct(lo) + ' to ' + pct(hi)) + ', far above the real ' + pct(TRUTH) + '. The problem was <b>who</b> was asked: people who already like smoothies.</p>';
+      }
+      if(big.n) msg += '<p>Your random samples of 100 landed between ' + pct(big.lo) + ' and ' + pct(big.hi) + ', close to the real ' + pct(TRUTH) + '.</p>';
+      else msg += '<p>Try a few random samples of 100 and see how close they land to the green line.</p>';
+      if(r){ var off = Math.round(Math.abs(r.p - TRUTH) * 100); msg += '<p class="smallprint" style="margin-top:8px">Latest survey: ' + pct(r.p) + (off ? ', off by ' + off + (off === 1 ? ' point.' : ' points.') : ', right on.') + '</p>'; }
+      setFb(c, 'hint', msg);
+      return;
+    }
+    if(!r){ setFb(c, 'hint', 'Press <b>Run the survey</b> to ask this group.'); return; }
+    var k = r.key, h = '';
+    if(k === 'f'){
+      if(r.take < r.size) h = '<p>' + said(r) + 'You only have 30 friends, so you asked all of them. Run it again and you’ll get the same answer every time. Steady, but it’s still only your friends.</p><p>Next, try <b>Blend Bus’s Instagram poll</b>.</p>';
+      else h = '<p>' + said(r) + 'The survey says the hypothesis is ' + (r.p >= HYP ? 'supported' : 'not supported') + '.</p><p>But are your friends like the rest of Ridgeview? Most of them have early practice and want breakfast on the go. Next, try <b>Blend Bus’s Instagram poll</b>.</p>';
+    } else if(k === 'i'){
+      h = '<p>' + said(r) + (r.take < r.size ? 'Only 60 students follow the truck, so that’s everyone who could answer. ' : '') + 'People who follow a smoothie truck already like smoothies, and the ones who bother to answer a poll care the most. That’s a biased sample too.</p><p>Next, try <b>a random sample</b> of <b>10</b>.</p>';
+    } else if(k === 'r10'){
+      var a = range('r10');
+      h = a.n < 4 ? '<p>' + said(r) + 'Run it again a few more times (' + a.n + ' so far) and watch where the dots land in the Random · 10 row.</p>'
+                  : '<p>' + said(r) + 'Your random samples of 10 have ranged from <b>' + pct(a.lo) + ' to ' + pct(a.hi) + '</b>. With only 10 people, each answer is worth 10 points, so the result bounces around.</p><p>Now try <b>30</b>, then <b>100</b>.</p>';
+    } else if(k === 'r30'){
+      var b = range('r30');
+      h = b.n < 3 ? '<p>' + said(r) + 'Run it a few more times (' + b.n + ' so far) and compare the Random · 30 row with Random · 10.</p>'
+                  : '<p>' + said(r) + 'Samples of 30 have ranged from <b>' + pct(b.lo) + ' to ' + pct(b.hi) + '</b>: steadier than 10, but still wide. Try <b>100</b>.</p>';
+    } else {
+      var d = range('r100');
+      h = d.n < 3 ? '<p>' + said(r) + 'Run it a couple more times (' + d.n + ' so far). Notice how close together these dots land.</p>'
+                  : '<p>' + said(r) + 'Your random samples of 100 have all landed between <b>' + pct(d.lo) + ' and ' + pct(d.hi) + '</b>. They agree with each other, and none come close to your friends or the poll.</p><p>When you’re ready, <b>reveal the whole school</b>.</p>';
+    }
+    setFb(c, 'hint', h);
+  }
+
+  function finish(run){
+    runs.push(run); lastRun = run; busy = false; el('run').disabled = false;
+    stats(); strip(); coach();
+  }
+  el('run').onclick = function(){
+    if(busy) return;
+    var pool = POOL[who], take = Math.min(size, pool.length), pick = shuffle(pool).slice(0, take);
+    var yes = pick.filter(function(n){ return kids[n].y; }).length;
+    var run = {who:who, size:size, take:take, yes:yes, p:yes / take, jit:20 + Math.random() * 60};
+    run.key = rowKey(run);
+    asked = {}; paint();
+    if(reduce){ pick.forEach(function(n){ asked[n] = 1; }); paint(); finish(run); return; }
+    busy = true; el('run').disabled = true;
+    var frames = Math.min(take, 30), per = Math.ceil(take / frames), delay = 600 / frames, at = 0;
+    (function step(){
+      for(var s = 0; s < per && at < take; s++){ var n = pick[at++]; asked[n] = 1; dots[n].setAttribute('class', dotClass(n)); }
+      if(at < take) setTimeout(step, delay); else finish(run);
+    })();
+  };
+  el('reveal').onclick = function(){
+    if(busy) return;
+    revealed = !revealed;
+    el('reveal').setAttribute('aria-pressed', revealed ? 'true' : 'false');
+    el('reveal').textContent = revealed ? 'Hide the whole school' : 'Reveal the whole school';
+    el('lg-rev').hidden = !revealed;
+    paint(); strip(); coach();
+  };
+  el('clear').onclick = function(){
+    if(busy) return;
+    runs = []; lastRun = null; asked = {}; revealed = false;
+    el('reveal').setAttribute('aria-pressed', 'false'); el('reveal').textContent = 'Reveal the whole school'; el('lg-rev').hidden = true;
+    paint(); stats(); strip(); coach();
+  };
+  el('truth-v').textContent = pct(TRUTH);
+
+  syncControls(); paint(); stats(); strip(); coach();
+})();
+
+/* =========================================================
+   2.3.C  Supported, not supported, or can't tell?
+   ========================================================= */
+function HR(h, r){ return '<span class="lbl">Hypothesis</span>' + h + '<span class="lbl">Research</span>' + r; }
+Drill({
+  id:'rd', cls:'opt',
+  keys:[['y','Supported: the evidence backs the hypothesis',null,'supported'],
+        ['n','Not supported: the evidence goes against it',null,'not supported'],
+        ['c','Can’t tell yet: this research can’t answer the question',null,'can’t tell yet']],
+  bank:[
+    [HR('At least 30% of shoppers will use a self-checkout lane if the store adds one.', 'For two weeks the store adds a lane and counts: 38% of 4,200 shoppers used it.'), 'y', 'A large group of real shoppers, measuring exactly what the hypothesis predicts. 38% clears 30%.'],
+    [HR('A free-shipping banner will increase online orders.', 'An A/B test splits 5,000 visitors at random. 6.1% of visitors who saw the banner ordered, compared with 4.0% of those who didn’t.'), 'y', 'One change, two similar groups, plenty of people, and a clear difference.'],
+    [HR('Most students at the school would buy a $3 study guide before finals.', 'A survey of 150 randomly selected students: 72% say they would buy one.'), 'y', 'A random sample of a good size, and 72% is well above “most.”'],
+    [HR('Customers will pay $2 more for organic fries.', 'For a month, half of the chain’s locations offer organic fries for $2 more. Only 4% of fry orders choose them.'), 'n', 'A real test with real orders, and very few customers chose to pay more.'],
+    [HR('Teens will prefer the new mango flavor over the original.', 'A taste test with 200 randomly selected teens: 38% prefer mango, 62% prefer the original.'), 'n', 'A large random sample clearly preferred the original.'],
+    [HR('Adding a kids’ menu will bring in more families.', 'The restaurant adds a kids’ menu for three months. Family visits stay flat at about 120 a week, the same as before.'), 'n', 'The change was made and the number didn’t move.'],
+    [HR('Most adults in town would join a new climbing gym.', 'The owner asks the 10 members of her climbing club. 9 say yes.'), 'c', 'Only 10 people, and all of them already climb. That’s a small, biased sample, so it says nothing about most adults in town.'],
+    [HR('A new logo will get more people to click the ad.', 'Version B of the ad had a new logo, a lower price, and a new photo. It got more clicks than version A.'), 'c', 'Three things changed at once, so you can’t tell whether the logo caused the difference.'],
+    [HR('Customers will come back at least once a month.', 'A survey right after each customer’s first visit: 85% say they “loved it.”'), 'c', 'Loving one visit isn’t the same as coming back every month. The research measured the wrong thing.'],
+    [HR('Shoppers will buy more of the larger size.', 'An A/B test ran for one hour. 12 visitors saw each version; 2 bought the regular size and 3 bought the larger one.'), 'c', 'With only 12 people per version, a difference of one sale could easily be chance.']
+  ]
+});
+
+/* =========================================================
+   Check yourself (AP-style)
+   ========================================================= */
+(function(){
+  var STIM = '<div class="stim"><p><b>PackRight</b>, a startup, plans to sell a collapsible lunch box. Before launch, it gathers the following research.</p>' +
+    '<div class="tbl" style="margin:0"><table><thead><tr><th>Row</th><th>Research</th><th>Result</th></tr></thead><tbody>' +
+    '<tr><td>1</td><td>Online survey of 300 randomly selected parents in the region</td><td>58% would consider buying it. Average price they would pay: $19.</td></tr>' +
+    '<tr><td>2</td><td>Two focus groups of 8 parents each</td><td>“I’d worry it leaks in a backpack.” “I love that it folds flat.”</td></tr>' +
+    '<tr><td>3</td><td>U.S. Census Bureau data</td><td>About 61,000 children ages 5 to 14 live in the region.</td></tr>' +
+    '<tr><td>4</td><td>Price quote PackRight requested from a manufacturer</td><td>It can produce 5,000 units a month at $12 each.</td></tr>' +
+    '</tbody></table></div></div>';
+  var Q = [
+    {set:true, stem:'Which row is an example of secondary research?', a:'Row 3, because the Census Bureau collected the data for its own purposes', d:['Row 1, because the survey was conducted online','Row 2, because the focus groups were small','None of the rows, because PackRight gathered all four'], why:'Secondary research uses data someone else already collected. PackRight found the Census data; it didn’t collect it. The survey and focus groups are primary research no matter how they were run.'},
+    {set:true, stem:'Which row provides qualitative data?', a:'Row 2', d:['Row 1','Row 3','Row 4'], why:'The focus group results are quotes: words that explain how parents feel. Rows 1, 3, and 4 are all numbers.'},
+    {set:true, stem:'Rows 1 and 4 together are most useful for judging whether the lunch box is', a:'viable, because they compare what parents would pay with what each unit would cost to make', d:['desirable, because they show how many children live in the region','feasible, because they show that parents worry about leaks','qualitative, because both describe parents’ opinions'], why:'Viability is about making money. Parents would pay about $19, and each unit costs $12 to make. Each wrong answer pairs a term with evidence that doesn’t support it.'},
+    {stem:'Which of the following best explains why a business conducts market research before launching a new product?', a:'To reduce the risk of spending money on a product customers don’t want, the business can’t make, or that won’t be profitable', d:['To guarantee that the product will succeed','To avoid the need to advertise the product','To learn exactly how many units customers will buy in the first year'], why:'Research checks whether a product is desirable, feasible, and viable before money is committed. It lowers risk but can’t guarantee success or predict exact sales.'},
+    {stem:'Which of the following is an example of quantitative data?', a:'On average, customers rated the checkout process 4.2 out of 5.', d:['A customer wrote that checkout “took forever.”','Observers noted that shoppers looked confused at the self-checkout screen.','Interviewees described the store as “cozy but cramped.”'], why:'An average rating is a number. The others are words or descriptions, which makes them qualitative.'},
+    {stem:'A bike shop wants to learn how many bike shops already operate in its city and what they charge for a tune-up, while spending as little as possible. Which approach is most appropriate?', a:'Secondary research, such as reviewing competitors’ websites and a local business directory', d:['A focus group of the shop’s current customers','An A/B test of two tune-up prices','One-on-one interviews with 20 cyclists'], why:'Secondary research is usually the cheaper way to assess rivals and the market, and this information already exists.'},
+    {stem:'Compared with secondary research, a main disadvantage of primary research is that it', a:'usually costs more time and money to collect', d:['is always out of date','cannot be used to test a hypothesis','was collected for a different purpose'], why:'Primary research is tailored to the business’s question, but collecting new data takes time and money. Being collected for a different purpose is a drawback of secondary research.'},
+    {stem:'An online clothing store wants to know whether a “Free returns” banner increases purchases. For two weeks, it randomly shows the banner to half of its visitors and not to the other half, then compares the percentage of each group that buys. Which research method is the store using?', a:'An A/B test', d:['A focus group','An observation','A survey'], why:'Two versions of the page are shown at the same time to two randomly split groups, and the results are compared: an A/B test.'},
+    {stem:'A software company wants to understand in depth why customers cancel their subscriptions, including reasons it may not have thought of. Which method is most appropriate?', a:'One-on-one interviews with customers who recently canceled', d:['A survey asking current customers to rate the app from 1 to 5','An A/B test of two subscription prices','An industry report on subscription trends'], why:'Interviews allow follow-up questions and uncover reasons the company didn’t expect. A rating survey gives numbers but not the “why,” and it asks the wrong people (current customers).'},
+    {stem:'A grocery store studies how shoppers move through its aisles by watching them instead of asking them. Compared with a survey, an advantage of this observation is that it', a:'shows what shoppers actually do rather than what they say they do', d:['explains exactly why each shopper made every choice','counts as secondary research, so it costs less','produces only qualitative data'], why:'Observation captures real behavior. It shows what people do, but not why, and it is primary research because the store collects it itself.'},
+    {stem:'A gaming café wants to know whether adults in its town would pay for a monthly membership. It posts a poll on its own social media page, and 85% of the people who respond say yes. What is the biggest problem with relying on this result?', a:'People who follow the café and choose to respond are likely more interested than adults in the town overall.', d:['Social media polls produce only qualitative data.','A result of 85% is too high to be accurate.','The café should have used secondary research instead.'], why:'The sample is biased: only the café’s followers saw the poll, and the most interested ones answered. It doesn’t represent adults in the town.'},
+    {stem:'A juice company hypothesizes that at least half of its customers will prefer a new low-sugar recipe. In a taste test with 8 of its employees, 6 prefer the new recipe. What is the most appropriate conclusion?', a:'The company can’t tell yet, because the sample is small and may not represent its customers.', d:['The hypothesis is supported, because 75% preferred the new recipe.','The hypothesis is not supported, because a taste test can’t measure preference.','The company should launch the recipe, because employees know the product best.'], why:'Eight employees are a small sample and aren’t the customers the hypothesis is about. The company needs a larger, random sample of real customers.'}
+  ];
+  var quiz = el('quiz'), right = 0, answered = 0;
+  function build(){
+    right = 0; answered = 0;
+    quiz.innerHTML = '<div class="q" style="padding-top:4px"><span class="qn">QUESTIONS 1–3 REFER TO THE FOLLOWING INFORMATION</span>' + STIM + '</div>';
+    Q.forEach(function(q, i){
+      var d = document.createElement('div'); d.className = 'q';
+      d.innerHTML = '<span class="qn">QUESTION ' + (i + 1) + '</span><p class="stem">' + esc(q.stem) + '</p>';
+      var opts = document.createElement('div'); opts.className = 'opts';
+      var fb = document.createElement('div'); fb.className = 'fb';
+      shuffle([q.a].concat(q.d)).forEach(function(o, j){
+        var b = document.createElement('button'); b.className = 'opt';
+        b.innerHTML = '<span class="mono" style="color:var(--mute);margin-right:8px">(' + 'ABCD'[j] + ')</span>' + esc(o);
+        if(o === q.a) b.setAttribute('data-a', '1');
+        b.onclick = function(){
+          if(opts.getAttribute('data-done')) return; opts.setAttribute('data-done', '1');
+          var ok = o === q.a; answered++; if(ok) right++;
+          Array.prototype.forEach.call(opts.children, function(x){ x.disabled = true; if(!ok && x.getAttribute('data-a')) x.className += ' reveal'; });
+          b.className += ok ? ' picked-yes' : ' picked-no';
+          setFb(fb, ok ? 'good' : 'bad', '<b>' + (ok ? 'Correct.' : 'Not quite.') + '</b> ' + esc(q.why));
+          sum();
+        };
+        opts.appendChild(b);
+      });
+      d.appendChild(opts); d.appendChild(fb); quiz.appendChild(d);
+    });
+    var s = document.createElement('div'); s.className = 'q'; s.innerHTML = '<p class="qsum" id="qsum" aria-live="polite"></p>'; quiz.appendChild(s);
+    sum();
+  }
+  function sum(){
+    var n = Q.length, t = el('qsum');
+    if(answered < n) t.textContent = right + ' correct out of ' + answered + ' answered · ' + (n - answered) + ' to go';
+    else t.textContent = 'Final: ' + right + ' of ' + n + (right === n ? '. Perfect.' : right >= n - 2 ? '. Strong work.' : '. Review the sections above for the ones you missed.');
+  }
+  el('quiz-reset').onclick = build;
+  build();
+})();
+</script>
+</body>
+</html>
