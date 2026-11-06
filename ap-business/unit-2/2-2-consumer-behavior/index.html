@@ -347,21 +347,10 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
 .ad.checkout .note2{font-size:14px;color:var(--ink2);margin-top:8px;background:var(--wash);border-radius:4px;padding:7px 9px}
 .ad.checkout .go{background:var(--ok);color:#fff;text-align:center;border-radius:6px;padding:9px;margin-top:10px;font-weight:600;font-size:15px}
 
-/* nudge builder */
-.nb{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
-.fld{display:block;margin:0 0 10px}
-.fld span{display:block;font-size:13.5px;color:var(--ink2);margin-bottom:2px}
-.fld input,.fld select,.fld textarea{width:100%;font-family:var(--body);font-size:15.5px;border:1px solid #9AA2AE;border-radius:3px;padding:7px 9px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 2px rgba(29,36,51,.10)}
-.fld textarea{min-height:64px;resize:vertical;line-height:1.45}
-::placeholder{font-style:italic;font-size:14px;color:#80889A;opacity:1}
-.honest{list-style:none;padding:0;margin:8px 0 0}
-.honest li{margin:6px 0}
-.honest label{display:flex;gap:8px;align-items:flex-start;font-size:15px;cursor:pointer}
-.honest input{width:17px;height:17px;margin-top:3px;accent-color:var(--ok);flex:none}
 
 @media (max-width:760px){
   .bps{grid-template-columns:1fr}
-  .nb,.store{grid-template-columns:1fr}
+  .store{grid-template-columns:1fr}
 }
 @media (max-width:600px){
   .pick7,.pick4{grid-template-columns:1fr 1fr}
@@ -406,7 +395,6 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
     <a href="#patterns">Laws and technology</a>
     <a href="#influence">Principles of influence</a>
     <a href="#tactic">Name that tactic</a>
-    <a href="#develop">Develop a sales tactic</a>
     <a href="#check">Check yourself</a>
   </nav>
 </header>
@@ -645,33 +633,6 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
 
   <div class="note"><b>Using them honestly.</b> Every principle can be used honestly or deceptively. A real limited edition is scarcity; a countdown timer that resets every time you reload the page is a lie. Real reviews are consensus; fake reviews are deception, and the Federal Trade Commission can penalize businesses that use them.</div>
 
-  <!-- DESIGN A NUDGE -->
-  <h3 id="develop">Develop a sales tactic</h3>
-  <p>This is the <b>project link</b> for this topic: <i>Customer, Task 2: develop a sales tactic drawing on principles of persuasion.</i> Pick a principle, name your target customer, and write the line they’d see. The ad builds itself as you type.</p>
-  <div class="card">
-    <div class="nb">
-      <div>
-        <label class="fld"><span>Principle</span><select id="n-prin"></select></label>
-        <label class="fld"><span>Product or business</span><input id="n-prod" placeholder="What are you selling?"></label>
-        <label class="fld"><span>Target customer</span><input id="n-who" placeholder="Who is this for? (from your 2.1 customer profile)"></label>
-        <label class="fld"><span>Format</span><select id="n-fmt"><option value="prod">Product page badge</option><option value="push">Phone notification</option><option value="mail">Email subject line</option><option value="sign">Store sign</option><option value="social">Social media post</option></select></label>
-        <label class="fld"><span>Your line</span><textarea id="n-line" placeholder="Write the message a customer would see"></textarea></label>
-        <label class="fld"><span>Why this principle should work on them</span><textarea id="n-fit" placeholder="Evaluate it: what about your target customer makes this principle effective?"></textarea></label>
-        <p class="smallprint" id="n-hint" style="margin:0"></p>
-      </div>
-      <div>
-        <div class="stage" id="n-ad"></div>
-        <div class="stepl">Honesty check</div>
-        <ul class="honest">
-          <li><label><input type="checkbox" class="hc"> It’s true. The scarcity, reviews, expert, or gift is real.</label></li>
-          <li><label><input type="checkbox" class="hc"> A customer would still be glad they bought it a month later.</label></li>
-          <li><label><input type="checkbox" class="hc"> It doesn’t hide the price or the terms.</label></li>
-        </ul>
-        <div class="fb show hint" id="n-out">Fill in the tactic and check the three boxes.</div>
-      </div>
-    </div>
-  </div>
-
   <div class="pf">
     <div class="pf-h">Personal finance link · Spending</div>
     <p style="margin:0 0 8px">When you feel pressure to buy, name the principle, then ask:</p>
@@ -726,10 +687,6 @@ function Score(node){
   var r = 0, t = 0;
   return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
 }
-var store = {
-  get:function(k){ try{ var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; }catch(e){ return null; } },
-  set:function(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
-};
 /* Cycles through a bank in random order without repeats until it runs out. */
 function Deck(bank){
   var order = [], i = 0;
@@ -1045,7 +1002,7 @@ Drill({
 });
 
 /* =========================================================
-   2.2.C  Principles, Name that tactic, Develop a sales tactic
+   2.2.C  Principles and Name that tactic
    ========================================================= */
 var PRIN = [
   {k:'scarcity', n:'Scarcity', c:'#A63D2F', tell:'“It might run out.”', idea:'The rarer an item seems, the more people tend to want it.', move:'Phrases like “limited-time offer” or “only one left at this price” that create a sense of urgency.', check:'Would I still want it if there were plenty left?'},
@@ -1135,37 +1092,6 @@ function adHTML(d){
   show();
 })();
 
-/* Develop a sales tactic: live preview, honesty check, saved in this browser */
-(function(){
-  var KEY = 'apb-2-2-tactic', sel = el('n-prin');
-  sel.innerHTML = '<option value="">Choose a principle</option>' + PRIN.map(function(p){ return '<option value="' + p.k + '">' + p.n + '</option>'; }).join('');
-  var F = ['n-prin', 'n-prod', 'n-who', 'n-fmt', 'n-line', 'n-fit'], boxes = document.querySelectorAll('.hc');
-  var saved = store.get(KEY);
-  if(saved){ F.forEach(function(id){ if(saved[id] !== undefined) el(id).value = saved[id]; }); (saved.hc || []).forEach(function(v, i){ if(boxes[i]) boxes[i].checked = v; }); }
-  function update(){
-    var v = {}; F.forEach(function(id){ v[id] = el(id).value; });
-    v.hc = Array.prototype.map.call(boxes, function(b){ return b.checked; });
-    store.set(KEY, v);
-    var p = PBY[v['n-prin']], prod = v['n-prod'].trim() || 'Your product', line = v['n-line'].trim() || 'Your line goes here', first = prod.charAt(0).toUpperCase();
-    el('n-hint').innerHTML = p ? '<b>' + p.n + ' ' + p.tell + '</b> ' + p.move : '';
-    var d = {prod:{f:'prod', name:prod, badge:line}, push:{f:'push', app:prod, ic:first, title:line}, mail:{f:'mail', from:prod, subj:line},
-             sign:{f:'sign', big:line, small:prod}, social:{f:'social', av:first, h:'@' + prod.toLowerCase().replace(/[^a-z0-9]+/g, ''), meta:'Sponsored', txt:line}}[v['n-fmt']];
-    el('n-ad').innerHTML = adHTML(d);
-    var miss = [];
-    if(!p) miss.push('choose a principle');
-    if(!v['n-who'].trim()) miss.push('name your target customer');
-    if(v['n-line'].trim().length < 8) miss.push('write the line customers would see');
-    if(v['n-fit'].trim().length < 15) miss.push('explain why the principle should work on that customer');
-    var honest = v.hc.every(Boolean);
-    var out = el('n-out');
-    if(miss.length){ setFb(out, 'hint', 'Still to do: ' + miss.join('; ') + '.'); return; }
-    if(!honest){ setFb(out, 'hint', '<b>Last step: the honesty check.</b> Check each box that’s true. If one isn’t, rework the tactic: one that only works by misleading people costs the business its reputation when customers find out.'); return; }
-    setFb(out, 'good', '<p><b>Your sales tactic</b></p><p>Using <b>' + p.n.toLowerCase() + '</b> for <b>' + esc(v['n-who'].trim()) + '</b>: “' + esc(line) + '”</p><p><b>Why it should work:</b> ' + esc(v['n-fit'].trim()) + '</p>');
-  }
-  F.forEach(function(id){ el(id).addEventListener('input', update); el(id).addEventListener('change', update); });
-  Array.prototype.forEach.call(boxes, function(b){ b.addEventListener('change', update); });
-  update();
-})();
 
 /* =========================================================
    Check yourself (AP-style)
