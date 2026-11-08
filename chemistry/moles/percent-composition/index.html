@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Percent Composition — The Mass of Each Element in a Compound</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#131E1D; --ink2:#3B4A48; --mute:#5F6D6B;
+  --wash:#E3E9E8; --card:#FBFCFB; --line:#C9D3D1; --line-soft:#E0E7E6;
+  --water:#12727F; --water-dk:#0B4E58; --water-lite:#BFDEE2;
+  --brass:#9A6E22; --brass-lite:#F5E9CF;
+  --ok:#26694A; --ok-bg:#E4F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  --lcd:#1E2B29; --lcd-ink:#BFEFD0;
+  --display:"Instrument Serif",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+sup,sub{line-height:0;font-size:.72em}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(227,233,232,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:64px 0 44px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--water-dk)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,7.4vw,74px);line-height:1;margin:16px 0 0;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--water-dk)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:49ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: percent by mass, and water by atoms vs. by mass */
+.sig-readout{margin:38px 0 0;padding:24px 26px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.sig-calc{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.sig-grid{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:26px;align-items:center}
+.sig-rows{margin-top:12px;display:grid;gap:8px}
+.sig-r{display:grid;grid-template-columns:80px minmax(0,1fr);align-items:center;gap:12px;font-family:var(--mono);font-variant-numeric:tabular-nums;border-bottom:1px dashed var(--line);padding-bottom:8px}
+.sig-r .fx{font-family:var(--body);font-weight:600;font-size:clamp(17px,3.2vw,21px)}
+.sig-r .pc{display:block;font-size:12.5px;color:var(--ink2);margin-top:5px;letter-spacing:.01em}
+.sig-r.head{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);border-bottom:none;padding-bottom:0}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px}
+.sig-note b{color:var(--water-dk);font-weight:600}
+.sig-fig svg{display:block;width:100%;height:auto}
+.sig-cap{font-size:13.5px;line-height:1.45;color:var(--mute);margin:8px 0 0}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--water);color:var(--water-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--water-dk);background:var(--water-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.4vw,40px);line-height:1.08;margin:0;letter-spacing:-.01em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--water-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.note{border-left:3px solid var(--brass);background:var(--brass-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin:24px 0}
+.rulebox.one{grid-template-columns:minmax(0,1fr)}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--water);border-radius:0 4px 4px 0;padding:18px 20px;min-width:0}
+.rulecard .op{font-family:var(--display);font-size:30px;line-height:1.05;color:var(--water-dk)}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard.miss{border-left-color:var(--no)}
+.rulecard.miss h4{margin-top:0}
+.rulecard .wrong{font-family:var(--mono);font-size:14.5px;color:var(--mute);text-decoration:line-through;text-decoration-color:var(--no);text-decoration-thickness:2px;margin:6px 0}
+.rulecard .right{font-family:var(--mono);font-size:14.5px;color:var(--ok);margin:6px 0}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.setup{font-size:15px;color:var(--ink2);margin:0 0 14px}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F6F8F7;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--water-dk);border-color:var(--water-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--water)}
+button[disabled]{opacity:.45;cursor:default}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--water);outline-offset:2px}
+button.small{font-size:12px;padding:6px 11px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid #93A5A2;border-radius:3px;padding:9px 11px;width:170px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(19,30,29,.12)}
+input[type=range]{width:100%;accent-color:var(--water);margin:10px 0 2px}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:14px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:120px}
+.unit-tag{font-family:var(--mono);font-size:15px;color:var(--mute)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1B4E36}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--water);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb .mono{font-size:15px}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab[aria-selected="true"]{background:var(--ink);color:#F6F8F7;border-color:var(--ink)}
+.tab.fx{font-family:var(--body);font-size:14px;font-weight:600;padding:5px 11px}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft)}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+td.dim,th.dim{color:var(--mute)}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45}
+.opt:hover{border-color:var(--water);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.94}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+
+.prob{font-size:17.5px;line-height:1.55;margin:4px 0 0}
+.prob b{font-weight:600}
+.scaf{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
+.scaf-lab{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--water-dk)}
+::placeholder{font-family:var(--body);font-style:italic;font-size:14px;color:#7F8D8B;opacity:1}
+.typing-tip{font-size:14px;color:var(--mute);margin:8px 0 0}
+.typing-tip kbd,.fb kbd{font-family:var(--mono);font-size:13px;color:var(--ink2);background:#fff;border:1px solid var(--line);border-radius:3px;padding:1px 5px}
+.fig svg{display:block;width:100%;height:auto}
+.readrows{display:grid;gap:2px;margin:10px 0 0}
+.readrows div{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px dashed var(--line);padding:4px 0;font-size:15.5px}
+.readrows div span:last-child{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.readrows div.hl span:last-child{color:var(--water-dk);font-weight:600}
+.readrows div.hl{font-weight:600}
+.readrows div.wait span:last-child{color:#A8B4B2}
+
+/* ---------- stacked bars ---------- */
+.sbar{display:flex;height:30px;border:1px solid rgba(19,30,29,.4);border-radius:3px;overflow:hidden;background:#fff}
+.sbar>span{display:flex;align-items:center;justify-content:center;flex:none;min-width:0;overflow:hidden;white-space:nowrap;font-family:var(--mono);font-size:12px;font-weight:500;border-right:1px solid rgba(19,30,29,.4)}
+.sbar>span:last-child{border-right:none}
+.sbar.thin{height:12px;border-radius:2px}
+.sbar.mute{opacity:.62}
+.sb-lab{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);margin:16px 0 6px}
+.sb-key{display:flex;flex-wrap:wrap;gap:4px 16px;margin:8px 0 0;font-size:14px;color:var(--ink2)}
+.sb-key i{display:inline-block;width:12px;height:12px;border-radius:2px;border:1px solid rgba(19,30,29,.4);margin-right:6px;vertical-align:-1px}
+
+/* ---------- any size sample ---------- */
+.ss-top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-top:16px}
+.ss-mass{font-family:var(--mono);font-size:clamp(22px,4vw,28px);font-weight:500;color:var(--water-dk);margin:2px 0 0}
+.ss-track{position:relative;border:1px dashed var(--line);border-radius:3px;padding:3px;background:repeating-linear-gradient(90deg,transparent 0,transparent calc(10% - 1px),var(--line-soft) calc(10% - 1px),var(--line-soft) 10%)}
+.ss-track>div{transition:width .15s}
+
+/* ---------- break down a compound ---------- */
+.ex-in{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:14px 0 0}
+.ex-in input[type=text]{font-family:var(--body);width:260px;max-width:100%}
+.ex-formula{font-family:var(--body);font-weight:600;font-size:clamp(34px,6vw,46px);line-height:1.1;margin:18px 0 0}
+.ex-t td,.ex-t th{padding:7px 9px;white-space:nowrap}
+.ex-t td.n{text-align:right}
+.ex-t th.n{text-align:right}
+.ex-t tfoot td{border-bottom:none;border-top:2px solid var(--ink);font-weight:600}
+.ex-t td.pc{color:var(--ok);font-weight:600}
+
+/* ---------- worked tables ---------- */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mmt td,.mmt th{padding:8px 10px}
+.mmt td.n{white-space:nowrap}
+.mmt td.new{background:var(--brass-lite)}
+.mmt tfoot td{border-bottom:none;border-top:2px solid var(--ink);font-weight:600}
+.mmt tfoot td.n{color:var(--ok)}
+.mmt td.pc{color:var(--ok);font-weight:600}
+.wk-q{font-size:17px;margin:4px 0 0}
+.wk-text{min-height:4.4em}
+.wk-count{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto}
+
+/* ---------- lab: burning magnesium ---------- */
+.lab{display:grid;grid-template-columns:300px minmax(0,1fr);gap:24px;align-items:start;margin-top:4px}
+.lab-step{font-size:15.5px;color:var(--ink2);margin:0}
+.lab-step b{color:var(--ink)}
+.lab-ask[hidden]{display:none}
+.lab-fig{background:#fff;border:1px solid var(--line-soft);border-radius:3px}
+@media (prefers-reduced-motion:no-preference){
+  .glow{animation:glow .5s ease-in-out infinite alternate}
+  @keyframes glow{from{opacity:.55}to{opacity:1}}
+  .flick{animation:flick .18s ease-in-out infinite alternate;transform-origin:150px 150px}
+  @keyframes flick{from{transform:scaleY(.94)}to{transform:scaleY(1.04)}}
+}
+
+/* ---------- factor-label setups ---------- */
+.fl{display:flex;flex-wrap:wrap;align-items:center;gap:10px 10px;font-family:var(--mono);font-size:16.5px;font-variant-numeric:tabular-nums;padding:14px 16px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;min-height:88px;margin-top:12px}
+.fl+.fl{margin-top:8px}
+.fl .qty{white-space:nowrap}
+.fl .frac{display:inline-flex;flex-direction:column;align-items:stretch;text-align:center;border-radius:3px}
+.fl .frac>span{padding:3px 8px;white-space:nowrap}
+.fl .frac>span:first-child{border-bottom:2px solid var(--ink)}
+.fl .frac.new{background:var(--brass-lite)}
+.fl .frac.w>span{font-family:var(--body);font-size:15.5px}
+.fl .u{color:var(--water-dk)}
+.fl .u.x{color:var(--mute);text-decoration:line-through;text-decoration-color:var(--no);text-decoration-thickness:2.5px}
+.fl .op{color:var(--mute)}
+.fl .ans{background:var(--ok-bg);border-radius:3px;padding:4px 9px;color:var(--ok);font-weight:500;white-space:nowrap}
+.fl .ans .u{color:var(--ok)}
+.fl .ph{color:#A8B4B2;font-family:var(--body);font-style:italic;font-size:14.5px}
+.fl .lhs{font-family:var(--body);font-weight:600;white-space:nowrap}
+.fb .fl{font-size:15px;min-height:0;padding:10px 12px;margin:10px 0 2px}
+.factor-opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.fopt{background:#fff;color:var(--ink);border:1px solid var(--line);padding:6px 6px;font-size:14px}
+.fopt:hover{background:#F2F8F8;color:var(--ink);border-color:var(--water)}
+.fopt .frac{display:inline-flex;flex-direction:column;text-align:center}
+.fopt .frac>span{padding:2px 8px;white-space:nowrap}
+.fopt .frac>span:first-child{border-bottom:1.5px solid var(--ink)}
+
+/* ---------- practice scaffolds ---------- */
+.tt{margin:10px 0 0;font-size:15px}
+.tt td{padding:6px 7px;white-space:nowrap}
+.tt td.op{color:var(--mute);font-family:var(--mono);padding:6px 2px}
+.tt tfoot td{border-bottom:none;border-top:2px solid var(--ink)}
+.tt input[type=text],.dm input[type=text]{font-size:16px;padding:5px 7px;width:3.4em}
+.tt input.wide,.dm input[type=text]{width:5.4em}
+.tt input.ok-in,.dm input.ok-in{border-color:var(--ok);background:var(--ok-bg)}
+.tt input.no-in,.dm input.no-in{border-color:var(--no);background:var(--no-bg)}
+.dm{max-width:480px}
+
+/* ---------- compare ---------- */
+.cmp{display:grid;gap:8px;margin-top:16px}
+.cmp-row{display:grid;grid-template-columns:minmax(0,12.5em) minmax(0,1fr) 7.5em;gap:14px;align-items:center;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px 12px}
+.cmp-name{font-size:15px;line-height:1.35}
+.cmp-name b{display:block;font-weight:600}
+.cmp-name span{font-size:14px;color:var(--ink2)}
+.cmp-track{height:16px;background:var(--line-soft);border-radius:2px;overflow:hidden}
+.cmp-track i{display:block;height:100%;background:var(--water)}
+.cmp-pct{font-family:var(--mono);font-size:13px;color:var(--ink2);margin-top:4px}
+.cmp-need{text-align:right;font-family:var(--mono);font-size:18px;font-weight:500;color:var(--water-dk);line-height:1.2}
+.cmp-need span{display:block;font-size:11px;font-weight:400;color:var(--mute);letter-spacing:.02em}
+
+/* ---------- periodic table ---------- */
+.tile{position:relative;width:150px;height:172px;background:#fff;border:2px solid var(--ink);border-radius:5px;font-family:var(--body);text-align:center}
+.tile .tz{position:absolute;top:8px;left:11px;font-family:var(--mono);font-size:20px;color:var(--no);border-bottom:2px solid var(--no);line-height:1.1}
+.tile .ts{display:block;font-size:58px;font-weight:600;line-height:1;padding-top:40px}
+.tile .tn{display:block;font-size:14px;color:var(--ink2);margin-top:4px}
+.tile .tm{display:inline-block;font-family:var(--mono);font-size:19px;color:var(--ok);background:var(--ok-bg);border-radius:3px;padding:0 6px;margin-top:4px}
+.pt-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin-top:6px}
+.pt{display:grid;grid-template-columns:repeat(18,minmax(0,1fr));grid-template-rows:repeat(7,auto) 10px auto auto;gap:2px;min-width:640px}
+.pt .el{font-family:var(--mono);padding:3px 0 2px;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:2px;text-align:center;line-height:1.15;letter-spacing:0;min-width:0}
+.pt .el:hover{border-color:var(--water);background:#F2F8F8;color:var(--ink)}
+.pt .el .z{display:block;font-size:8.5px;color:var(--mute)}
+.pt .el .s{display:block;font-family:var(--body);font-weight:600;font-size:13.5px}
+.pt .el .m{display:block;font-size:8.5px;color:var(--ink2)}
+.pt .el.rad{background:#EEF2F1}
+.pt .el.rad .s{color:var(--ink2)}
+.pt .el.on,.pt .el.on:hover{background:var(--ink);border-color:var(--ink);color:#fff}
+.pt .el.on .z,.pt .el.on .m{color:var(--lcd-ink)}
+.pt .gap{font-family:var(--mono);font-size:9px;color:var(--mute);display:flex;align-items:center;justify-content:center;border:1px dashed var(--line);border-radius:2px;text-align:center;line-height:1.1}
+.pt-detail{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center;margin-top:16px;padding-top:16px;border-top:1px dashed var(--line)}
+.pt-detail .tile{width:118px;height:136px}
+.pt-detail .tile .ts{font-size:44px;padding-top:32px}
+.pt-detail .tile .tz{font-size:16px;color:var(--ink2);border-bottom:none}
+.pt-detail .tile .tm{font-size:16px}
+.pt-facts{font-size:15.5px;min-width:0}
+.pt-facts .mm{font-family:var(--mono);font-size:clamp(22px,4vw,28px);font-weight:500;color:var(--ok)}
+.pt-facts p{margin:6px 0}
+.pt-facts .aside{font-size:14.5px;color:var(--mute)}
+
+@media (max-width:760px){
+  .lab{grid-template-columns:1fr}
+  .lab .lab-fig{max-width:340px}
+}
+@media (max-width:640px){
+  .cmp-row{grid-template-columns:minmax(0,1fr) auto;gap:6px 12px}
+  .cmp-row .cmp-mid{grid-column:1 / -1;grid-row:2}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:16px}
+  .sig-readout{padding:20px 18px}
+  .sig-grid{grid-template-columns:1fr}
+  .sig-fig{max-width:300px;margin:0 auto}
+  .field label{min-width:auto;flex:1 1 100%}
+  .pt-detail{grid-template-columns:1fr}
+  .fl{font-size:15px;padding:12px}
+  .mmt td,.mmt th{padding:7px 6px}
+  .mmt{font-size:14px}
+  .ex-t td,.ex-t th{padding:6px 5px}
+  .ex-t{font-size:14px}
+  .ex-t .dim{display:none}
+  .ex-t th{white-space:normal}
+  .tt td,.tt th{padding:6px 3px}
+  .tt td.op{padding:6px 1px}
+  .tt input[type=text]{width:2.9em;padding:5px 5px}
+  .tt input.wide{width:4.5em}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){
+  .ss-track>div{transition:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Percent Composition</span>
+    <span class="bar-sub">Percent by mass · from a formula · from lab data · as a conversion factor</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 4 · Percent composition</div>
+  <h1>Two-thirds of the atoms, one-ninth of the <em>mass</em>.</h1>
+  <p class="lede">Two of the three atoms in a water molecule are hydrogen. But hydrogen atoms are so light that they make up only about 11% of water’s mass. <b>Percent composition</b> tells you how a compound’s mass is split among its elements. You already have the tools to find it: molar mass from the last page, and the percents you use every day.</p>
+
+  <div class="sig-readout">
+    <div class="sig-grid">
+      <div>
+        <div class="sig-calc">Percent by mass</div>
+        <div class="sig-rows" id="hero-rows"></div>
+        <div class="sig-note">Each percent is one element’s share of the mass. Together they always add up to <b>100%</b>.</div>
+      </div>
+      <div class="sig-fig">
+        <div class="fig" id="hero-fig"></div>
+        <p class="sig-cap">Water, H<sub>2</sub>O. A hydrogen atom has about 1/16 the mass of an oxygen atom, so the two hydrogens make up only 11.21% of the mass.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#idea">Percent by mass</a>
+  <a href="#formula">From a formula</a>
+  <a href="#data">From lab data</a>
+  <a href="#use">As a conversion factor</a>
+  <a href="#compare">Which has the most?</a>
+  <a href="#watch">Watch-outs</a>
+  <a href="#practice">Practice</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ IDEA ============ -->
+<section id="idea">
+  <div class="sec-head"><span class="tasktag">The idea</span><h2>Percent by mass</h2></div>
+  <p>You already know how a percent works. Score 45 points out of 50 on a quiz, and your grade is 45 ÷ 50 × 100 = 90%. It’s the part divided by the whole, times 100.</p>
+  <p>The <b>percent composition</b> of a compound is the same idea with mass. It gives the percent by mass of each element in the compound: the mass of that element divided by the mass of the whole compound, times 100.</p>
+  <div class="rulebox one">
+    <div class="rulecard"><h4 style="margin-top:0">Percent by mass of an element</h4><div class="fl" id="eq-def"></div></div>
+  </div>
+  <div class="rulebox">
+    <div class="rulecard"><div class="op">part ÷ whole</div><h4>The whole is the compound</h4><p>The part is the mass of one element. The whole is always the mass of the entire compound.</p></div>
+    <div class="rulecard"><div class="op">100%</div><h4>The percents add up to 100%</h4><p>Every element in the compound gets a percent, and together they account for all of the mass.</p></div>
+    <div class="rulecard"><div class="op">any size</div><h4>Same for every sample</h4><p>A drop of water and a swimming pool of water are both 11.21% hydrogen by mass.</p></div>
+  </div>
+
+  <h3>Big sample or small, the percents don’t change</h3>
+  <p>Every molecule of water is the same H<sub>2</sub>O, so every sample of water has the same makeup. That’s true of every compound, and chemists call it the <b>law of definite proportions</b>. Change the size of the sample and watch what changes and what doesn’t.</p>
+  <div class="card">
+    <div class="card-label"><span>Any size sample</span></div>
+    <div class="tabs" role="tablist" aria-label="Compound in the sample" id="ss-tabs"></div>
+    <div class="ss-top">
+      <div><div class="scaf-lab">Sample mass</div><div class="ss-mass" id="ss-g"></div></div>
+      <button type="button" class="ghost small" id="ss-mole">Make it one mole</button>
+    </div>
+    <input type="range" id="ss-range" min="1" max="200" step="1" value="50" aria-label="Sample mass in grams">
+    <div class="sb-lab"><span>Mass of each element</span><span>0 to 200 g</span></div>
+    <div class="ss-track" id="ss-track"></div>
+    <div class="sb-lab"><span>Percent by mass</span><span>0 to 100%</span></div>
+    <div id="ss-pct"></div>
+    <div class="readrows" id="ss-rows" aria-live="polite"></div>
+    <div class="fb hint show" id="ss-msg"></div>
+  </div>
+
+  <h3>By mass, not by atoms</h3>
+  <p>Percent composition is always <b>by mass</b>. Look back at the water figure at the top of the page. Two-thirds of the atoms in water are hydrogen, but an oxygen atom has about 16 times the mass of a hydrogen atom. So by mass, water is mostly oxygen: 88.79%. Counting atoms gives you a different, wrong answer.</p>
+</section>
+
+<!-- ============ FORMULA ============ -->
+<section id="formula">
+  <div class="sec-head"><span class="tasktag">The method</span><h2>Percent composition from a formula</h2></div>
+  <p>If you know a compound’s formula, you don’t need a sample at all. Picture one mole of it. Its mass is the molar mass, and you already know how much of that mass comes from each element: it’s each row of the molar mass table from the last page.</p>
+  <h3>Four steps</h3>
+  <ol>
+    <li><b>Find the mass of each element in one mole:</b> count its atoms and multiply by its molar mass.</li>
+    <li><b>Add them up</b> to get the molar mass of the compound. That’s the whole.</li>
+    <li><b>Divide</b> each element’s mass by the molar mass, then <b>multiply by 100</b>. Keep two decimal places.</li>
+    <li><b>Check</b> that the percents add up to 100%.</li>
+  </ol>
+
+  <div class="card">
+    <div class="card-label"><span>Worked example</span><span class="wk-count" id="fw-count"></span></div>
+    <div class="tabs" role="tablist" aria-label="Choose a compound" id="fw-tabs"></div>
+    <p class="wk-q" id="fw-q"></p>
+    <div class="tbl-scroll"><table class="mmt" id="fw-table"></table></div>
+    <div class="fb hint show wk-text" id="fw-text" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="fw-next">Next step</button>
+      <button type="button" class="ghost" id="fw-prev">Back</button>
+      <button type="button" class="ghost" id="fw-restart">Start over</button>
+    </div>
+  </div>
+  <div class="note"><b>Rounding.</b> Rounded percents sometimes add up to 99.99% or 100.01%. That’s just rounding. A total like 80% or 115% means something went wrong, so go back and check.</div>
+
+  <h3>Break down any compound</h3>
+  <p>Pick a compound or type a formula. Try H<sub>2</sub>O and then H<sub>2</sub>O<sub>2</sub>, or CO and then CO<sub>2</sub>: the same elements, combined differently, give different percents. The bar underneath shows the split by atoms, so you can see how different it is from the split by mass.</p>
+  <div class="card">
+    <div class="card-label"><span>Break down a compound</span></div>
+    <div class="tabs" role="tablist" aria-label="Example formulas" id="ex-tabs"></div>
+    <div class="ex-in">
+      <input type="text" id="ex-in" autocomplete="off" spellcheck="false" placeholder="Or type a formula, like CO(NH2)2" aria-label="Type a formula">
+      <button type="button" id="ex-go">Break it down</button>
+    </div>
+    <div class="fb" id="ex-fb" aria-live="polite"></div>
+    <div id="ex-out" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ============ DATA ============ -->
+<section id="data">
+  <div class="sec-head"><span class="tasktag">From data</span><h2>Percent composition from lab data</h2></div>
+  <p>Sometimes you start with a sample and a balance instead of a formula. You find the mass of each element in the sample, and the math is the same as before: part ÷ whole × 100. The whole is always the mass of the compound.</p>
+
+  <h3>Lab: burning magnesium</h3>
+  <p>Magnesium ribbon burns in air to form magnesium oxide: 2Mg + O<sub>2</sub> → 2MgO. The magnesium picks up oxygen from the air, so the white powder left at the end weighs more than the ribbon did. The extra mass is the oxygen. Run the lab, then find the percent of magnesium in the product.</p>
+  <div class="card">
+    <div class="card-label"><span>Lab: burn a magnesium ribbon</span></div>
+    <div class="lab">
+      <div class="lab-fig fig" id="ls-fig"></div>
+      <div>
+        <p class="lab-step" id="ls-step" aria-live="polite"></p>
+        <div class="readrows" id="ls-rows"></div>
+        <div class="btn-row">
+          <button type="button" id="ls-go"></button>
+          <button type="button" class="ghost small" id="ls-new">New ribbon</button>
+        </div>
+      </div>
+    </div>
+    <div class="lab-ask" id="ls-ask" hidden>
+      <div class="field">
+        <label for="ls-in">Percent magnesium</label>
+        <input type="text" id="ls-in" autocomplete="off" spellcheck="false" placeholder="Type a number">
+        <span class="unit-tag">% Mg</span>
+      </div>
+      <div class="btn-row">
+        <button type="button" id="ls-check">Check</button>
+        <button type="button" class="ghost" id="ls-show">Show answer</button>
+      </div>
+    </div>
+    <div class="fb" id="ls-fb" aria-live="polite"></div>
+    <p class="smallprint" style="margin-bottom:0">In a real lab, some of the magnesium reacts with nitrogen in the air instead, and a little white smoke escapes. Both make the product lighter, so real results for percent magnesium usually come out a little high.</p>
+  </div>
+
+  <h3>Three kinds of data problems</h3>
+  <p>Data problems give you the masses in different ways. Whatever you’re given, find the mass of each element and the mass of the whole compound first. Then divide.</p>
+  <div class="card">
+    <div class="card-label"><span>Worked example</span><span class="wk-count" id="dw-count"></span></div>
+    <div class="tabs" role="tablist" aria-label="Choose a worked example" id="dw-tabs"></div>
+    <p class="wk-q" id="dw-q"></p>
+    <div id="dw-fl"></div>
+    <div class="fb hint show wk-text" id="dw-text" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="dw-next">Next step</button>
+      <button type="button" class="ghost" id="dw-prev">Back</button>
+      <button type="button" class="ghost" id="dw-restart">Start over</button>
+    </div>
+  </div>
+  <div class="note"><b>Data and formulas agree.</b> In every example above, the percents from the lab match the percents you’d calculate from the compound’s formula. Chemists use that both ways. Lab data can confirm a formula, and percents measured in a lab can be used to work out a formula nobody knows yet. That’s coming up next.</div>
+</section>
+
+<!-- ============ USE ============ -->
+<section id="use">
+  <div class="sec-head"><span class="tasktag">Using it</span><h2>Percent as a conversion factor</h2></div>
+  <p>Iron(III) oxide, Fe<sub>2</sub>O<sub>3</sub>, is 69.94% iron by mass. That means every 100 g of Fe<sub>2</sub>O<sub>3</sub> contains 69.94 g of iron. Written as a fraction, that’s a conversion factor, and it works either way up:</p>
+  <div class="rulebox one">
+    <div class="rulecard"><h4 style="margin-top:0">69.94% iron in Fe<sub>2</sub>O<sub>3</sub></h4><div class="fl" id="cf-pct"></div></div>
+  </div>
+  <p>Use it like any other conversion factor: start with what you’re given, and put the unit you have on the bottom so it cancels.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Worked example</span><span class="wk-count" id="uw-count"></span></div>
+    <div class="tabs" role="tablist" aria-label="Choose a worked example" id="uw-tabs"></div>
+    <p class="wk-q" id="uw-q"></p>
+    <div id="uw-fl"></div>
+    <div class="fb hint show wk-text" id="uw-text" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="uw-next">Next step</button>
+      <button type="button" class="ghost" id="uw-prev">Back</button>
+      <button type="button" class="ghost" id="uw-restart">Start over</button>
+    </div>
+  </div>
+  <div class="note"><b>Another way to write the same factor.</b> One mole of Fe<sub>2</sub>O<sub>3</sub> has 111.70 g of iron in 159.70 g of compound. The factor (111.70 g Fe / 159.70 g Fe<sub>2</sub>O<sub>3</sub>) is the same ratio as (69.94 g Fe / 100 g Fe<sub>2</sub>O<sub>3</sub>), so either one gives the same answer.</div>
+</section>
+
+<!-- ============ COMPARE ============ -->
+<section id="compare">
+  <div class="sec-head"><span class="tasktag">Compare</span><h2>Which one has the most?</h2></div>
+  <p>Plants need nitrogen to grow, and farmers can buy it in several different compounds. The three numbers on a bag of fertilizer are percents by mass, and the first one is nitrogen. So a bag of urea is labeled 46-0-0. The higher the percent, the less fertilizer a farmer has to buy, haul and spread to get the same amount of nitrogen. Iron ores work the same way.</p>
+  <div class="card">
+    <div class="card-label"><span>Same element, different compounds</span></div>
+    <div class="tabs" role="tablist" aria-label="What to compare" id="cm-tabs">
+      <button type="button" class="tab" role="tab" data-k="N" aria-selected="true">Nitrogen fertilizers</button>
+      <button type="button" class="tab" role="tab" data-k="Fe" aria-selected="false">Iron ores</button>
+    </div>
+    <div class="ss-top">
+      <div><div class="scaf-lab" id="cm-lab"></div><div class="ss-mass" id="cm-t"></div></div>
+    </div>
+    <input type="range" id="cm-range" aria-label="Mass of the element needed">
+    <div class="cmp" id="cm-rows"></div>
+    <div class="fb hint show" id="cm-msg" aria-live="polite"></div>
+    <p class="smallprint" id="cm-note" style="margin-bottom:0"></p>
+  </div>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="sec-head"><span class="tasktag">Common mistakes</span><h2>Watch-outs</h2></div>
+  <div class="rulebox">
+    <div class="rulecard miss">
+      <h4>Counting atoms instead of mass</h4>
+      <p>Percent composition is by mass. Atoms of different elements have different masses.</p>
+      <div class="wrong">H<sub>2</sub>O: 2 of 3 atoms, so 66.7% H</div>
+      <div class="right">H<sub>2</sub>O: 2.02 ÷ 18.02 × 100 = 11.21% H</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Skipping the subscript</h4>
+      <p>The mass of an element in one mole is its number of atoms times its molar mass.</p>
+      <div class="wrong">H in H<sub>2</sub>O: 1.01 ÷ 18.02 × 100 = 5.60%</div>
+      <div class="right">H in H<sub>2</sub>O: 2(1.01) ÷ 18.02 × 100 = 11.21%</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Dividing by the other element</h4>
+      <p>A compound with 8.20 g Mg and 5.40 g O. Divide by the whole compound, not by the other element.</p>
+      <div class="wrong">8.20 ÷ 5.40 × 100 = 152% Mg</div>
+      <div class="right">8.20 ÷ 13.60 × 100 = 60.3% Mg</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Adding the product to what made it</h4>
+      <p>Reacting 1.20 g of Al with oxygen forms 2.27 g of aluminum oxide. The aluminum is already part of the 2.27 g.</p>
+      <div class="wrong">1.20 ÷ (1.20 + 2.27) × 100 = 34.6% Al</div>
+      <div class="right">1.20 ÷ 2.27 × 100 = 52.9% Al</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Dividing upside down</h4>
+      <p>A part can’t be bigger than the whole. Any percent over 100% is a red flag.</p>
+      <div class="wrong">18.02 ÷ 2.02 × 100 = 892% H</div>
+      <div class="right">2.02 ÷ 18.02 × 100 = 11.21% H</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Using the percent as a plain number</h4>
+      <p>69.94% means 69.94 g per 100 g. Divide by 100, or write it as a factor.</p>
+      <div class="wrong">75.0 g Fe<sub>2</sub>O<sub>3</sub> × 69.94 = 5.25 × 10<sup>3</sup> g Fe</div>
+      <div class="right">75.0 g × 69.94 ÷ 100 = 52.5 g Fe</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Not checking the total</h4>
+      <p>The percents must add up to 100%. If they don’t, one of them is wrong.</p>
+      <div class="wrong">Fe<sub>2</sub>O<sub>3</sub>: 69.94% Fe + 10.02% O = 79.96%</div>
+      <div class="right">Fe<sub>2</sub>O<sub>3</sub>: 69.94% Fe + 30.06% O = 100.00%</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRACTICE ============ -->
+<section id="practice">
+  <div class="sec-head"><span class="tasktag">Practice</span><h2>Practice</h2></div>
+  <p>Pick a kind of problem, or mix them up. Use the periodic table for molar masses. Under each problem there’s a scaffold if you want it: <b>build the table</b> for formulas, <b>fill in the masses</b> for lab data, and <b>build the setup</b> for masses.</p>
+  <p class="smallprint">Your score counts a problem as solved when your first check is right. Using “Show answer” counts as a miss. Percents within 0.1 are accepted, and masses within about 1%, so small differences in rounding are fine.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Generated problems</span><span class="score" id="p-score">0 of 0</span></div>
+    <div class="tabs" role="tablist" aria-label="Kind of problem" id="p-tabs">
+      <button type="button" class="tab" role="tab" data-k="pf" aria-selected="true">From a formula</button>
+      <button type="button" class="tab" role="tab" data-k="lab" aria-selected="false">From lab data</button>
+      <button type="button" class="tab" role="tab" data-k="mass" aria-selected="false">Mass of an element</button>
+      <button type="button" class="tab" role="tab" data-k="mix" aria-selected="false">Mix it up</button>
+    </div>
+    <p class="prob" id="p-prob" style="margin-top:16px"></p>
+    <div class="field">
+      <label for="p-in" id="p-label">Your answer</label>
+      <input type="text" id="p-in" autocomplete="off" spellcheck="false" placeholder="Type a number">
+      <span class="unit-tag" id="p-unit"></span>
+    </div>
+    <p class="typing-tip" id="p-tip"></p>
+    <div class="btn-row">
+      <button type="button" id="p-check">Check</button>
+      <button type="button" class="ghost" id="p-show">Show answer</button>
+      <button type="button" class="ghost" id="p-new">New problem</button>
+      <button type="button" class="ghost" id="p-ptbtn" aria-expanded="false">Periodic table</button>
+    </div>
+    <div class="fb" id="p-fb" aria-live="polite"></div>
+    <div id="p-pt" hidden style="margin-top:14px"></div>
+
+    <div class="scaf" id="t-wrap" hidden>
+      <div class="scaf-lab">Build the table</div>
+      <p class="setup" style="margin-top:6px">Count the atoms of each element and multiply by its molar mass. Then add the subtotals to get the molar mass. The table checks each box. Dividing is up to you.</p>
+      <div class="tbl-scroll"><table class="tt" id="t-table"></table></div>
+      <div class="btn-row" style="margin-top:10px">
+        <button type="button" class="ghost small" id="t-check">Check the table</button>
+        <button type="button" class="ghost small" id="t-clear">Clear</button>
+      </div>
+      <div class="fb hint show" id="t-msg" aria-live="polite"></div>
+    </div>
+
+    <div class="scaf" id="d-wrap" hidden>
+      <div class="scaf-lab">Fill in the masses</div>
+      <p class="setup" style="margin-top:6px">Every data problem needs the same three masses: each element, and the whole compound. Find the one that’s missing.</p>
+      <div class="readrows dm" id="d-rows"></div>
+      <div class="btn-row" style="margin-top:10px">
+        <button type="button" class="ghost small" id="d-check">Check the masses</button>
+      </div>
+      <div class="fb hint show" id="d-msg" aria-live="polite"></div>
+    </div>
+
+    <div class="scaf" id="s-wrap" hidden>
+      <div class="scaf-lab">Build the setup</div>
+      <p class="setup" style="margin-top:6px">Click a conversion factor to multiply by it. Units that cancel get crossed out. The setup doesn’t do the math for you.</p>
+      <div id="s-chain"></div>
+      <div class="factor-opts" id="s-opts"></div>
+      <div class="btn-row" style="margin-top:10px">
+        <button type="button" class="ghost small" id="s-undo">Undo</button>
+        <button type="button" class="ghost small" id="s-clear">Clear</button>
+      </div>
+      <div class="fb hint show" id="s-msg" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Ten questions on percent composition from formulas and from lab data, and on using a percent to find a mass.</p>
+  <div class="card" id="quiz"></div>
+</section>
+
+<footer>
+  <p>Percent composition by mass, from a formula and from lab data, and percent as a conversion factor. Element data are standard atomic weights rounded to two decimal places. The practice problems are generated fresh every time.</p>
+  <p><a href="/chemistry/moles/">← Unit 4 — Moles</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function each(list, fn){ Array.prototype.forEach.call(list, fn); }
+function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+function tabs(host, onPick){
+  each(host.querySelectorAll('.tab'), function(b){
+    b.addEventListener('click', function(){
+      each(host.querySelectorAll('.tab'), function(o){ o.setAttribute('aria-selected', String(o === b)); });
+      onPick(b);
+    });
+  });
+}
+
+/*CORE-START*/
+/* =========================================================
+   core: elements, formulas, percents, problems, judging (no DOM)
+   ========================================================= */
+/* symbol, name, standard atomic weight to 2 decimals ; (n) = mass number of a long-lived isotope, no stable isotopes */
+var EL_DATA = 'H,Hydrogen,1.01;He,Helium,4.00;Li,Lithium,6.94;Be,Beryllium,9.01;B,Boron,10.81;C,Carbon,12.01;N,Nitrogen,14.01;O,Oxygen,16.00;F,Fluorine,19.00;Ne,Neon,20.18;Na,Sodium,22.99;Mg,Magnesium,24.31;Al,Aluminum,26.98;Si,Silicon,28.09;P,Phosphorus,30.97;S,Sulfur,32.06;Cl,Chlorine,35.45;Ar,Argon,39.95;K,Potassium,39.10;Ca,Calcium,40.08;Sc,Scandium,44.96;Ti,Titanium,47.87;V,Vanadium,50.94;Cr,Chromium,52.00;Mn,Manganese,54.94;Fe,Iron,55.85;Co,Cobalt,58.93;Ni,Nickel,58.69;Cu,Copper,63.55;Zn,Zinc,65.38;Ga,Gallium,69.72;Ge,Germanium,72.63;As,Arsenic,74.92;Se,Selenium,78.97;Br,Bromine,79.90;Kr,Krypton,83.80;Rb,Rubidium,85.47;Sr,Strontium,87.62;Y,Yttrium,88.91;Zr,Zirconium,91.22;Nb,Niobium,92.91;Mo,Molybdenum,95.95;Tc,Technetium,(98);Ru,Ruthenium,101.07;Rh,Rhodium,102.91;Pd,Palladium,106.42;Ag,Silver,107.87;Cd,Cadmium,112.41;In,Indium,114.82;Sn,Tin,118.71;Sb,Antimony,121.76;Te,Tellurium,127.60;I,Iodine,126.90;Xe,Xenon,131.29;Cs,Cesium,132.91;Ba,Barium,137.33;La,Lanthanum,138.91;Ce,Cerium,140.12;Pr,Praseodymium,140.91;Nd,Neodymium,144.24;Pm,Promethium,(145);Sm,Samarium,150.36;Eu,Europium,151.96;Gd,Gadolinium,157.25;Tb,Terbium,158.93;Dy,Dysprosium,162.50;Ho,Holmium,164.93;Er,Erbium,167.26;Tm,Thulium,168.93;Yb,Ytterbium,173.05;Lu,Lutetium,174.97;Hf,Hafnium,178.49;Ta,Tantalum,180.95;W,Tungsten,183.84;Re,Rhenium,186.21;Os,Osmium,190.23;Ir,Iridium,192.22;Pt,Platinum,195.08;Au,Gold,196.97;Hg,Mercury,200.59;Tl,Thallium,204.38;Pb,Lead,207.2;Bi,Bismuth,208.98;Po,Polonium,(209);At,Astatine,(210);Rn,Radon,(222);Fr,Francium,(223);Ra,Radium,(226);Ac,Actinium,(227);Th,Thorium,232.04;Pa,Protactinium,231.04;U,Uranium,238.03;Np,Neptunium,(237);Pu,Plutonium,(244);Am,Americium,(243);Cm,Curium,(247);Bk,Berkelium,(247);Cf,Californium,(251);Es,Einsteinium,(252);Fm,Fermium,(257);Md,Mendelevium,(258);No,Nobelium,(259);Lr,Lawrencium,(262);Rf,Rutherfordium,(267);Db,Dubnium,(268);Sg,Seaborgium,(269);Bh,Bohrium,(270);Hs,Hassium,(269);Mt,Meitnerium,(278);Ds,Darmstadtium,(281);Rg,Roentgenium,(282);Cn,Copernicium,(285);Nh,Nihonium,(286);Fl,Flerovium,(289);Mc,Moscovium,(290);Lv,Livermorium,(293);Ts,Tennessine,(294);Og,Oganesson,(294)';
+var ELEMENTS = EL_DATA.split(';').map(function(r, i){
+  var p = r.split(','), br = p[2].charAt(0) === '(';
+  return { sym:p[0], name:p[1], z:i + 1, ms:p[2], M:parseFloat(br ? p[2].slice(1) : p[2]), br:br };
+});
+var EL = {};
+ELEMENTS.forEach(function(e){ EL[e.sym] = e; });
+var DIATOMIC = { H:1, N:1, O:1, F:1, Cl:1, Br:1, I:1 };
+function lc(s){ return EL[s].name.toLowerCase(); }
+
+/* ---- formulas ---- */
+var SUBS = '₀₁₂₃₄₅₆₇₈₉';
+function plainDigits(s){ return String(s).replace(/[₀-₉]/g, function(ch){ return String(ch.charCodeAt(0) - 0x2080); }); }
+function fHTML(f){ return String(f).replace(/\d+/g, function(d){ return '<sub>' + d + '</sub>'; }); }
+function fText(f){ return String(f).replace(/\d/g, function(d){ return SUBS.charAt(Number(d)); }); }
+
+/* parseFormula('Ca(NO3)2') -> { ok, f, occ:[{el,n,mult,lmult}], counts:{Ca:1,N:2,O:6}, order:['Ca','N','O'], groups:[{inner:'NO3',k:2}] }
+   n = subscript on the symbol ; mult = product of the subscripts on every enclosing pair of parentheses ;
+   lmult = the same, but as if a parentheses subscript only reached the last atom inside (a common mistake) */
+function parseFormula(str){
+  var s = plainDigits(str).replace(/\s+/g, ''), i = 0, groups = [];
+  if(!s) return { ok:false, err:'nothing in it' };
+  function num(){
+    var m = /^\d+/.exec(s.slice(i));
+    if(!m) return 1;
+    i += m[0].length;
+    var n = parseInt(m[0], 10);
+    if(n === 0) throw 'a subscript of 0';
+    if(m[0].charAt(0) === '0') throw 'a subscript that starts with 0. If you meant the letter O, type a capital O';
+    return n;
+  }
+  function group(depth){
+    var items = [];
+    while(i < s.length){
+      var ch = s.charAt(i);
+      if(ch === '(' || ch === '['){
+        var start = ++i, close = ch === '(' ? ')' : ']';
+        var inner = group(depth + 1);
+        if(s.charAt(i) !== close) throw (s.charAt(i) ? 'brackets that don’t match' : 'a parenthesis that never closes');
+        var end = i++;
+        var k = num();
+        if(!inner.length) throw 'empty parentheses';
+        inner.forEach(function(o){ o.mult *= k; });
+        inner[inner.length - 1].lmult *= k;
+        if(k > 1) groups.push({ inner:s.slice(start, end), k:k });
+        items = items.concat(inner);
+      } else if(ch === ')' || ch === ']'){
+        if(depth === 0) throw 'an extra closing parenthesis';
+        return items;
+      } else if(/[A-Z]/.test(ch)){
+        var sym = ch; i++;
+        if(/[a-z]/.test(s.charAt(i))){ sym += s.charAt(i); i++; }
+        if(!EL[sym]) throw '“' + sym + '”, which isn’t an element symbol';
+        items.push({ el:sym, n:num(), mult:1, lmult:1 });
+      } else if(/[a-z]/.test(ch)){
+        throw 'a lowercase “' + ch + '”. Element symbols start with a capital letter';
+      } else if(/\d/.test(ch)){
+        throw 'a number in front. Leave out coefficients: percent composition is for one formula';
+      } else {
+        throw 'the character “' + ch + '”';
+      }
+    }
+    if(depth > 0) throw 'a parenthesis that never closes';
+    return items;
+  }
+  try {
+    var occ = group(0), counts = {}, order = [];
+    occ.forEach(function(o){
+      if(!(o.el in counts)){ counts[o.el] = 0; order.push(o.el); }
+      counts[o.el] += o.n * o.mult;
+    });
+    return { ok:true, f:s, occ:occ, counts:counts, order:order, groups:groups };
+  } catch(e){
+    return { ok:false, err:String(e) };
+  }
+}
+/* add in hundredths so 2.02 + 16.00 is exactly 18.02 */
+function hund(sym){ return Math.round(EL[sym].M * 100); }
+function massOf(counts){ var h = 0; for(var s in counts) h += counts[s] * hund(s); return h / 100; }
+function fix2(x){ return (Math.round(x * 100) / 100).toFixed(2); }
+function fix1(x){ return (Math.round(x * 10) / 10).toFixed(1); }
+
+/* percent composition: one row per element, in formula order */
+function compOf(f){
+  var pf = typeof f === 'string' ? parseFormula(f) : f;
+  var M = massOf(pf.counts), atoms = 0, rows = [];
+  pf.order.forEach(function(s){
+    var n = pf.counts[s], m = n * hund(s) / 100;
+    atoms += n;
+    rows.push({ s:s, n:n, m:m, pct:m / M * 100 });
+  });
+  rows.forEach(function(r){ r.apct = r.n / atoms * 100; });
+  return { pf:pf, M:M, atoms:atoms, rows:rows, by:function(s){ for(var i = 0; i < rows.length; i++) if(rows[i].s === s) return rows[i]; return null; } };
+}
+/* the rounded percents, added up exactly: '100.00', or '99.99' when rounding drifts */
+function roundedSum(cp){ var h = 0; cp.rows.forEach(function(r){ h += Math.round(r.pct * 100); }); return (h / 100).toFixed(2); }
+
+/* ---- numbers ---- */
+var SUPS = { '0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻' };
+function supHTML(n){ return '<sup>' + String(n).replace('-', '−') + '</sup>'; }
+/* round to sf significant figures -> { m:'1.51', e:24 } */
+function sigParts(x, sf){
+  if(x === 0) return { m:(0).toFixed(sf - 1), e:0 };
+  var e = Math.floor(Math.log10(Math.abs(x)));
+  var f = Math.pow(10, sf - 1);
+  var m = Math.round(Math.abs(x) / Math.pow(10, e) * f * (1 + 1e-12)) / f;
+  if(m >= 10){ m = m / 10; e++; }
+  return { m:(x < 0 ? '-' : '') + m.toFixed(sf - 1), e:e };
+}
+function sciHTML(x, sf){ var p = sigParts(x, sf || 3); return p.m + ' × 10' + supHTML(p.e); }
+/* plain decimals between 0.001 and 999 ; scientific notation outside that, or when a trailing zero would be ambiguous */
+function sigHTML(x, sf){
+  sf = sf || 3;
+  var p = sigParts(x, sf);
+  if(p.e >= 3 || p.e < -3) return sciHTML(x, sf);
+  var dp = Math.max(0, sf - 1 - p.e);
+  var s = (Number(p.m) * Math.pow(10, p.e)).toFixed(dp);
+  if(dp === 0 && /0$/.test(s)) return sciHTML(x, sf);
+  return s;
+}
+/* the same rounding as sigHTML, as text you could type: 0.448 or 1.40e3 */
+function sigPlain(x, sf){
+  var h = sigHTML(x, sf || 3), m = /^(-?[\d.]+) × 10<sup>(.+)<\/sup>$/.exec(h);
+  return m ? m[1] + 'e' + m[2].replace('−', '-') : h;
+}
+
+/* '11.21', '11.21%', '11.21 % H', '52.5 g Fe', '1.40e3', '1.40 x 10^3', '1,400' -> { v, sf } or null */
+function parseNum(str){
+  var s = String(str || '').trim();
+  if(!s) return null;
+  s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+/g, function(t){
+    return '^' + t.split('').map(function(c){ for(var k in SUPS) if(SUPS[k] === c) return k; return c; }).join('');
+  });
+  s = s.replace(/[−–]/g, '-').replace(/,/g, '');
+  s = s.replace(/\s*(%|percent|grams?|g|kg|mg)\.?(\s*[A-Za-z0-9()₀-₉]+)?\s*$/i, '');
+  s = s.replace(/\s+/g, '').replace(/[×xX*·]/g, 'x');
+  var m = /^([+-]?(\d+\.?\d*|\.\d+))(?:[eE]([+-]?\d+)|x10\^?([+-]?\d+))?$/.exec(s);
+  if(!m) return null;
+  var mant = m[1], ex = m[3] != null ? m[3] : m[4];
+  var v = parseFloat(mant) * (ex != null ? Math.pow(10, Number(ex)) : 1);
+  if(!isFinite(v)) return null;
+  return { v:v, sf:sigCount(mant, ex != null) };
+}
+/* significant figures in a typed mantissa ; trailing zeros without a decimal point are not counted unless it's scientific notation */
+function sigCount(mant, sci){
+  var s = mant.replace(/^[+-]/, ''), hasDot = s.indexOf('.') !== -1;
+  var d = s.replace('.', ''), i = d.search(/[1-9]/);
+  if(i === -1) return 1;
+  d = d.slice(i);
+  if(!hasDot && !sci) d = d.replace(/0+$/, '');
+  return d.length;
+}
+function near(x, y, tol){ return y !== 0 && Math.abs(x - y) <= Math.abs(y) * (tol || 0.01); }
+
+/* a random value with 3 significant figures, log-uniform between lo and hi ; no ambiguous trailing zeros */
+function rand3(lo, hi){
+  for(var t = 0; t < 60; t++){
+    var v = Math.exp(Math.log(lo) + Math.random() * (Math.log(hi) - Math.log(lo)));
+    var s = v.toPrecision(3);
+    if(/e/.test(s)) continue;
+    if(Number(s) >= 100 && /0$/.test(s)) continue;
+    return Number(s);
+  }
+  return Number(lo.toPrecision(3));
+}
+
+/* ---- compounds used in generated problems ----
+   ctx: real-world framings for "how many grams of the element are in this much compound": [element, description, low g, high g] ; {F} = the formula */
+var COMPOUNDS = [
+  { f:'H2O', name:'water', ctx:[['H','a glass of water, {F},',150,350],['O','a glass of water, {F},',150,350]] },
+  { f:'H2O2', name:'hydrogen peroxide' },
+  { f:'CO2', name:'carbon dioxide', ctx:[['C','a chunk of dry ice, solid {F},',20,200]] },
+  { f:'CO', name:'carbon monoxide' },
+  { f:'NH3', name:'ammonia' },
+  { f:'CH4', name:'methane' },
+  { f:'C3H8', name:'propane', ctx:[['C','the propane, {F}, in a camp-stove canister',400,470]] },
+  { f:'C8H18', name:'octane' },
+  { f:'C2H5OH', name:'ethanol' },
+  { f:'CH3COOH', name:'acetic acid' },
+  { f:'C6H12O6', name:'glucose', ctx:[['C','the glucose, {F}, in a glucose tablet',3,5]] },
+  { f:'C12H22O11', name:'sucrose', ctx:[['C','a sugar cube, {F},',2.5,4.5]] },
+  { f:'C9H8O4', name:'aspirin' },
+  { f:'C8H10N4O2', name:'caffeine', ctx:[['N','the caffeine, {F}, in a cup of coffee',0.06,0.2]] },
+  { f:'CO(NH2)2', name:'urea', ctx:[['N','a scoop of urea fertilizer, {F},',20,80]] },
+  { f:'H2SO4', name:'sulfuric acid' },
+  { f:'HNO3', name:'nitric acid' },
+  { f:'NaCl', name:'sodium chloride', ctx:[['Na','a teaspoon of table salt, {F},',4.5,7]] },
+  { f:'KCl', name:'potassium chloride' },
+  { f:'CaCl2', name:'calcium chloride' },
+  { f:'MgCl2', name:'magnesium chloride' },
+  { f:'MgO', name:'magnesium oxide' },
+  { f:'CaO', name:'calcium oxide' },
+  { f:'Al2O3', name:'aluminum oxide' },
+  { f:'Fe2O3', name:'iron(III) oxide', ctx:[['Fe','a chunk of pure hematite ore, {F},',50,500]] },
+  { f:'CuO', name:'copper(II) oxide' },
+  { f:'ZnO', name:'zinc oxide' },
+  { f:'TiO2', name:'titanium(IV) oxide' },
+  { f:'NaOH', name:'sodium hydroxide' },
+  { f:'NaHCO3', name:'sodium hydrogen carbonate', ctx:[['Na','a teaspoon of baking soda, {F},',3.5,6]] },
+  { f:'Na2CO3', name:'sodium carbonate' },
+  { f:'CaCO3', name:'calcium carbonate', ctx:[['Ca','the calcium carbonate, {F}, in an antacid tablet',0.5,1.25]] },
+  { f:'KNO3', name:'potassium nitrate' },
+  { f:'NH4NO3', name:'ammonium nitrate', ctx:[['N','a scoop of ammonium nitrate fertilizer, {F},',20,80]] },
+  { f:'(NH4)2SO4', name:'ammonium sulfate', ctx:[['N','a scoop of ammonium sulfate fertilizer, {F},',20,80]] },
+  { f:'(NH4)3PO4', name:'ammonium phosphate' },
+  { f:'NH4Cl', name:'ammonium chloride' },
+  { f:'Ca(OH)2', name:'calcium hydroxide' },
+  { f:'Mg(OH)2', name:'magnesium hydroxide' },
+  { f:'Al(OH)3', name:'aluminum hydroxide' },
+  { f:'Ca(NO3)2', name:'calcium nitrate' },
+  { f:'Cu(NO3)2', name:'copper(II) nitrate' },
+  { f:'Al2(SO4)3', name:'aluminum sulfate' },
+  { f:'Ca3(PO4)2', name:'calcium phosphate' },
+  { f:'Na3PO4', name:'sodium phosphate' },
+  { f:'CuSO4', name:'copper(II) sulfate' },
+  { f:'AgNO3', name:'silver nitrate' },
+  { f:'KMnO4', name:'potassium permanganate' },
+  { f:'K2Cr2O7', name:'potassium dichromate' }
+];
+COMPOUNDS.forEach(function(c){ c.pf = parseFormula(c.f); c.cp = compOf(c.pf); c.M = c.cp.M; c.Ms = fix2(c.M); });
+
+/* two-element compounds for lab-data problems: a = the metal, b = the nonmetal */
+var LAB = ['MgO','CaO','ZnO','CuO','Cu2O','Al2O3','Fe2O3','HgO','Ag2O','Li2O','NaCl','KCl','MgCl2','CaCl2','FeCl3','AlCl3','FeS','ZnS','PbS','Cu2S','Ag2S'].map(function(f){
+  var pf = parseFormula(f);
+  return { f:f, pf:pf, cp:compOf(pf), a:pf.order[0], b:pf.order[1] };
+});
+
+/* ---- problem types ----
+   pf  = percent of one element, from a formula
+   lab = percent of one element, from masses measured in a lab
+   me  = grams of an element in a given mass of compound
+   mc  = grams of compound that contain a given mass of an element */
+function makeProblem(type, avoid){
+  var p;
+  /* re-roll the rare problem where a wrong method lands on the right answer (like SO2, which is about 50% S and 50% O) */
+  for(var t = 0; t < 40; t++){
+    p = type === 'lab' ? makeLab(avoid) : makeFormulaProblem(type, avoid);
+    if(!candidatesFor(p).some(function(c){ return clash(p, c); })) break;
+  }
+  return p;
+}
+function clash(p, c){
+  if(p.type === 'me' || p.type === 'mc') return near(c.v, p.answer, 0.025);
+  return Math.abs(c.v - p.answer) <= 0.3;
+}
+function makeFormulaProblem(type, avoid){
+  var pool = COMPOUNDS.filter(function(c){ return c.f !== avoid; });
+  var withCtx = pool.filter(function(c){ return c.ctx; });
+  var useCtx = type === 'me' && Math.random() < 0.45;
+  var c = pick(useCtx ? withCtx : pool), ctx = useCtx ? pick(c.ctx) : null;
+  var els = c.pf.order;
+  if(type === 'mc') els = els.filter(function(s){ return c.cp.by(s).pct >= 15; });
+  var s = ctx ? ctx[0] : pick(els), r = c.cp.by(s);
+  var p = { type:type, c:c, pf:c.pf, cp:c.cp, M:c.M, Ms:c.Ms, F:fHTML(c.f), s:s, n:r.n, m:r.m, frac:r.m / c.M, pct:r.pct,
+            ctx:ctx ? ctx[1].replace('{F}', fHTML(c.f)) : null, form:Math.random() < 0.5 ? 0 : 1 };
+  if(type === 'pf') p.answer = r.pct;
+  if(type === 'me'){ p.given = ctx ? rand3(ctx[2], ctx[3]) : rand3(1, 250); p.answer = p.given * p.frac; }
+  if(type === 'mc'){ p.given = rand3(0.5, 50); p.answer = p.given / p.frac; }
+  return p;
+}
+/* lab masses are kept in hundredths of a gram, every mass at least 1.00 g so each has 3 significant figures */
+function makeLab(avoid){
+  var L = pick(LAB.filter(function(x){ return x.f !== avoid; }));
+  var fa = L.cp.by(L.a).m / L.cp.M, fmin = Math.min(fa, 1 - fa);
+  var lo = Math.max(2, 1.1 / fmin), hi = Math.max(25, 1.6 / fmin);
+  var C = Math.round((lo + Math.random() * (hi - lo)) * 100), A = Math.round(C * fa), B = C - A;
+  var v = pick(['syn','dec','comp']), given;
+  if(v === 'syn') given = { a:1, C:1 };
+  else if(v === 'comp') given = { a:1, b:1 };
+  else given = Math.random() < 0.5 ? { a:1, C:1 } : { b:1, C:1 };
+  var ask = pick(['a','b']), h = { a:A, b:B, C:C };
+  return { type:'lab', v:v, L:L, c:{ f:L.f }, h:h, given:given, ask:ask, oth:ask === 'a' ? 'b' : 'a', s:L[ask], so:L[ask === 'a' ? 'b' : 'a'],
+           gEl:given.a ? 'a' : given.b ? 'b' : null, answer:h[ask] / C * 100 };
+}
+function gtxt(hu){ return (hu / 100).toFixed(2) + ' g'; }
+
+/* element counts a student gets from common counting mistakes */
+function countAlts(pf){
+  var once = {}, noP = {}, last = {};
+  pf.order.forEach(function(s){ once[s] = 1; noP[s] = 0; last[s] = 0; });
+  pf.occ.forEach(function(o){ noP[o.el] += o.n; last[o.el] += o.n * o.lmult; });
+  var out = [{ code:'noSub', counts:once }];
+  if(pf.groups.length) out.push({ code:'noParen', counts:noP }, { code:'lastOnly', counts:last });
+  return out;
+}
+
+/* wrong answers each kind of problem can produce ; rel: compare by ratio instead of by percentage points */
+function candidatesFor(p){
+  var out = [];
+  function add(code, v, x, rel){ if(isFinite(v) && v > 0) out.push({ code:code, v:v, x:x || {}, rel:!!rel }); }
+  if(p.type === 'lab'){
+    var a = p.h[p.ask], o = p.h[p.oth], C = p.h.C;
+    add('other', o / C * 100);
+    add('ratio', a / o * 100);
+    add('ratio', o / a * 100);
+    add('flip', C / a * 100);
+    add('frac', a / C, {}, true);
+    if(p.gEl && p.v !== 'comp') add('addWhole', a / (C + p.h[p.gEl]) * 100);
+    if(!p.given[p.ask]) add('massOnly', a / 100, {}, true);
+    return out;
+  }
+  var pf = p.pf, cp = p.cp, s = p.s, M = p.M, m = p.m, f = p.frac, G = p.given;
+  var others = pf.order.filter(function(t){ return t !== s; });
+  var alts = countAlts(pf);
+  if(p.type === 'pf'){
+    add('frac', f, {}, true);
+    add('flip', M / m * 100);
+    add('atoms', p.n / cp.atoms * 100);
+    add('subtotal', m, {}, true);
+    add('mm', M, {}, true);
+    add('ratio', m / (M - m) * 100);
+    others.forEach(function(t){ add('other', cp.by(t).pct, { t:t }); });
+    if(others.length > 1) add('rest', 100 - p.pct);
+    alts.forEach(function(al){
+      var mA = al.counts[s] * EL[s].M, MA = massOf(al.counts);
+      if(al.counts[s] !== p.n){ add(al.code, mA / M * 100); add(al.code, mA / MA * 100); }
+      if(Math.abs(MA - M) > 0.5) add('badMM', m / MA * 100, { alt:al.code });
+    });
+    others.forEach(function(t){ add('missing', m / (M - cp.by(t).m) * 100, { t:t }); });
+    return out;
+  }
+  var me = p.type === 'me';
+  function amt(fr){ return me ? G * fr : G / fr; }   /* the answer this fraction would give */
+  add('inv', me ? G / f : G * f, {}, true);
+  add('no100', amt(f * 100), {}, true);
+  add('no100inv', me ? G / (f * 100) : G * f * 100, {}, true);
+  add('pct', p.pct, {}, true);
+  add('same', G, {}, true);
+  if(me){ add('moles', G / M, {}, true); add('molesEl', G / M * p.n, {}, true); }
+  else add('molesEl', G / EL[s].M, {}, true);
+  add('atoms', amt(p.n / cp.atoms), {}, true);
+  others.forEach(function(t){ add('other', amt(cp.by(t).m / M), { t:t }, true); });
+  if(others.length > 1) add('rest', amt(1 - f), {}, true);
+  alts.forEach(function(al){
+    var mA = al.counts[s] * EL[s].M, MA = massOf(al.counts);
+    if(al.counts[s] !== p.n){ add(al.code, amt(mA / M), {}, true); add(al.code, amt(mA / MA), {}, true); }
+    if(Math.abs(MA - M) > 0.5) add('badMM', amt(m / MA), { alt:al.code }, true);
+  });
+  return out;
+}
+/* judge a typed value -> { ok, code, x } ; the closest wrong method wins */
+function judge(p, got){
+  if(!got) return { ok:false, code:'unreadable', x:{} };
+  var v = got.v;
+  if(p.type === 'me' || p.type === 'mc'){ if(near(v, p.answer, 0.01)) return { ok:true, code:'ok', x:{} }; }
+  else if(Math.abs(v - p.answer) <= 0.1) return { ok:true, code:'ok', x:{} };
+  var best = null;
+  candidatesFor(p).forEach(function(c){
+    var d = c.rel ? Math.abs(v - c.v) / c.v : Math.abs(v - c.v);
+    var tol = c.rel ? 0.012 : 0.12 + 0.003 * c.v;
+    if(d <= tol && (!best || d / tol < best.d - 1e-9)) best = { c:c, d:d / tol };
+  });
+  return best ? { ok:false, code:best.c.code, x:best.c.x } : { ok:false, code:'none', x:{} };
+}
+
+/* ---- the setup builder (mass problems) ---- */
+function factorsFor(p){
+  var F = p.F, s = p.s, P = fix2(p.pct);
+  var o = p.pf.order.filter(function(t){ return t !== s; }).sort(function(x, y){ return p.cp.by(y).pct - p.cp.by(x).pct; })[0];
+  var Po = fix2(p.cp.by(o).pct);
+  return [
+    { id:'eUp', t:[P, 'g ' + s],   b:['100', 'g ' + F] },
+    { id:'eDn', t:['100', 'g ' + F], b:[P, 'g ' + s] },
+    { id:'oUp', t:[Po, 'g ' + o],  b:['100', 'g ' + F] },
+    { id:'oDn', t:['100', 'g ' + F], b:[Po, 'g ' + o] }
+  ];
+}
+/* cancel units through a chain: start unit + factors -> { num:[{u,x}], den:[{u,x}] } */
+function cancelUnits(startUnit, chain){
+  var num = [{ u:startUnit, x:false }], den = [];
+  chain.forEach(function(f){ num.push({ u:f.t[1], x:false }); den.push({ u:f.b[1], x:false }); });
+  den.forEach(function(d){
+    for(var i = 0; i < num.length; i++){
+      if(!num[i].x && num[i].u === d.u){ num[i].x = true; d.x = true; break; }
+    }
+  });
+  return { num:num, den:den };
+}
+/*CORE-END*/
+
+/* =========================================================
+   drawing helpers
+   ========================================================= */
+function shade(hex, amt){
+  var n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+  var t = amt < 0 ? 0 : 255, a = Math.abs(amt);
+  r = Math.round(r + (t - r) * a); g = Math.round(g + (t - g) * a); b = Math.round(b + (t - b) * a);
+  return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+function isLight(col){ return parseInt(col.slice(1, 3), 16) * 0.3 + parseInt(col.slice(3, 5), 16) * 0.59 + parseInt(col.slice(5, 7), 16) * 0.11 > 150; }
+var COLORS = { H:'#F4F6F6', C:'#3F4548', N:'#3B6FD0', O:'#D9473B', S:'#E2C93C', P:'#E08A2C', Cl:'#3FA34D', F:'#8FD16A', Br:'#8B2A1E', I:'#6B2C91',
+  Na:'#8E5CC4', K:'#7A4FB0', Li:'#B48AD8', Ca:'#4E8A3A', Mg:'#6FAF5A', Ba:'#2F7D5C', Al:'#A7AFB8', Fe:'#C0662B', Cu:'#C26A3A', Zn:'#7D80B0',
+  Ag:'#C9CED3', Cr:'#8A99C7', Mn:'#9C7AC7', Si:'#D9B98C', B:'#F2B5A0', Pb:'#69717D', Au:'#D6A62A', Hg:'#B7BEC4', Ti:'#9AA5AE' };
+function colorOf(s){ return COLORS[s] || '#9AA6A4'; }
+/* a stacked bar. parts: [{ s, w: percent of this bar, lab: text }] ; room: this bar's width as a percent of the space it sits in ;
+   px: that space in pixels, when known, so a label only shows if it fits */
+function sbar(parts, cls, label, room, px){
+  room = room == null ? 100 : room;
+  var h = '<div class="sbar' + (cls ? ' ' + cls : '') + '" role="img" aria-label="' + label + '">';
+  parts.forEach(function(p){
+    var col = colorOf(p.s), w = p.w * room / 100, txt = '';
+    if(p.lab && px){ var sp = w / 100 * px; txt = sp >= p.lab.length * 7.4 + 12 ? p.lab : sp >= p.s.length * 8 + 8 ? p.s : ''; }
+    else if(p.lab) txt = w >= 19 ? p.lab : w >= 4.5 ? p.s : '';
+    h += '<span style="width:' + p.w.toFixed(3) + '%;background:' + col + ';color:' + (isLight(col) ? '#131E1D' : '#FFFFFF') + '">' + txt + '</span>';
+  });
+  return h + '</div>';
+}
+function keyHTML(syms){
+  return '<div class="sb-key">' + syms.map(function(s){ return '<span><i style="background:' + colorOf(s) + '"></i>' + EL[s].name + '</span>'; }).join('') + '</div>';
+}
+function pctList(cp, words){
+  return cp.rows.map(function(r){ return fix2(r.pct) + '% ' + (words ? lc(r.s) : r.s); });
+}
+function andList(a){ return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
+
+/* =========================================================
+   hero
+   ========================================================= */
+var HERO = ['H2O','CO2','NaCl','Fe2O3'];
+(function heroRows(){
+  var h = '<div class="sig-r head"><span>Compound</span><span>How the mass splits</span></div>';
+  HERO.forEach(function(f){
+    var cp = compOf(f), parts = cp.rows.map(function(r){ return { s:r.s, w:r.pct }; });
+    h += '<div class="sig-r"><span class="fx">' + fHTML(f) + '</span><span>' + sbar(parts, 'thin', fText(f) + ': ' + pctList(cp, true).join(', ')) +
+      '<span class="pc">' + pctList(cp).join(' · ') + '</span></span></div>';
+  });
+  el('hero-rows').innerHTML = h;
+})();
+(function heroFig(){
+  var cp = compOf('H2O'), pH = cp.by('H').pct, x0 = 20, bw = 260, Hc = '#F4F6F6', Hs = '#8A9896', Oc = '#D9473B', Os = '#8A2A22';
+  var mono = 'font-family="IBM Plex Mono,monospace"', sans = 'font-family="IBM Plex Sans,sans-serif" font-weight="600"';
+  var h = '<svg viewBox="0 0 300 236" role="img" aria-label="Water, H2O. By atoms, two of its three atoms are hydrogen, 66.7 percent. By mass, hydrogen is only ' + fix2(pH) + ' percent and oxygen is ' + fix2(100 - pH) + ' percent.">';
+  /* the molecule */
+  h += '<line x1="150" y1="44" x2="112" y2="70" stroke="#8A9896" stroke-width="3"/><line x1="150" y1="44" x2="188" y2="70" stroke="#8A9896" stroke-width="3"/>';
+  h += '<circle cx="112" cy="70" r="14" fill="' + Hc + '" stroke="' + Hs + '" stroke-width="1.2"/><circle cx="188" cy="70" r="14" fill="' + Hc + '" stroke="' + Hs + '" stroke-width="1.2"/>';
+  h += '<circle cx="150" cy="42" r="26" fill="' + Oc + '" stroke="' + Os + '" stroke-width="1.2"/>';
+  h += '<text x="150" y="49" text-anchor="middle" ' + sans + ' font-size="19" fill="#fff">O</text>';
+  h += '<text x="112" y="75" text-anchor="middle" ' + sans + ' font-size="13" fill="#131E1D">H</text><text x="188" y="75" text-anchor="middle" ' + sans + ' font-size="13" fill="#131E1D">H</text>';
+  /* by atoms */
+  h += '<text x="' + x0 + '" y="110" ' + mono + ' font-size="10.5" letter-spacing="1" fill="#5F6D6B">BY ATOMS</text>';
+  var third = bw / 3;
+  [[Hc, Hs, 'H'], [Hc, Hs, 'H'], [Oc, Os, 'O']].forEach(function(c, i){
+    h += '<rect x="' + (x0 + i * third).toFixed(1) + '" y="117" width="' + third.toFixed(1) + '" height="26" fill="' + c[0] + '" stroke="' + c[1] + '"/>';
+    h += '<text x="' + (x0 + i * third + third / 2).toFixed(1) + '" y="135" text-anchor="middle" ' + sans + ' font-size="13" fill="' + (c[2] === 'O' ? '#fff' : '#131E1D') + '">' + c[2] + '</text>';
+  });
+  h += '<text x="' + x0 + '" y="160" ' + mono + ' font-size="11" fill="#3B4A48">2 of 3 atoms are H: 66.7%</text>';
+  /* by mass */
+  var wH = bw * pH / 100;
+  h += '<text x="' + x0 + '" y="186" ' + mono + ' font-size="10.5" letter-spacing="1" fill="#5F6D6B">BY MASS</text>';
+  h += '<rect x="' + x0 + '" y="193" width="' + wH.toFixed(1) + '" height="26" fill="' + Hc + '" stroke="' + Hs + '"/>';
+  h += '<rect x="' + (x0 + wH).toFixed(1) + '" y="193" width="' + (bw - wH).toFixed(1) + '" height="26" fill="' + Oc + '" stroke="' + Os + '"/>';
+  h += '<text x="' + (x0 + wH / 2).toFixed(1) + '" y="211" text-anchor="middle" ' + sans + ' font-size="13" fill="#131E1D">H</text>';
+  h += '<text x="' + (x0 + wH + (bw - wH) / 2).toFixed(1) + '" y="211" text-anchor="middle" ' + mono + ' font-weight="500" font-size="13" fill="#fff">O ' + fix2(100 - pH) + '%</text>';
+  h += '<text x="' + x0 + '" y="234" ' + mono + ' font-size="11" fill="#3B4A48">H: 2.02 g of 18.02 g = ' + fix2(pH) + '%</text>';
+  h += '</svg>';
+  el('hero-fig').innerHTML = h;
+})();
+
+/* =========================================================
+   factor-label pieces
+   ========================================================= */
+function U(u, x){ return '<span class="u' + (x ? ' x' : '') + '">' + u + '</span>'; }
+function Q(v, u, x){ return '<span class="qty">' + v + (u ? ' ' + U(u, x) : '') + '</span>'; }
+function F(tv, tu, bv, bu, o){ o = o || {}; return '<span class="frac' + (o.nw ? ' new' : '') + (o.w ? ' w' : '') + '"><span>' + tv + (tu ? ' ' + U(tu, o.xt) : '') + '</span><span>' + bv + (bu ? ' ' + U(bu, o.xb) : '') + '</span></span>'; }
+var TIMES = '<span class="op">×</span>', EQ = '<span class="op">=</span>', PLUS = '<span class="op">+</span>', MINUS = '<span class="op">−</span>';
+function A(v, u){ return '<span class="ans">' + v + (u ? ' ' + U(u) : '') + '</span>'; }
+function L(t){ return '<span class="lhs">' + t + '</span>'; }
+var HUND = Q('100%');
+function FL(parts){ return '<div class="fl">' + parts.join('') + '</div>'; }
+el('eq-def').outerHTML = FL([L('% element'), EQ, F('mass of element', '', 'mass of whole compound', '', { w:1 }), TIMES, HUND]);
+var uFe2O3 = fHTML('Fe2O3');
+el('cf-pct').outerHTML = FL([F('69.94', 'g Fe', '100', 'g ' + uFe2O3), '<span class="op">or</span>', F('100', 'g ' + uFe2O3, '69.94', 'g Fe')]);
+
+/* =========================================================
+   1. any size sample
+   ========================================================= */
+var SS_LIST = [['H2O','water'],['CO2','carbon dioxide'],['NaCl','sodium chloride'],['Fe2O3','iron(III) oxide'],['C6H12O6','glucose']];
+var SS = { i:0, g:50, mole:false };
+var SS_MAX = 200;
+function ssRender(){
+  var t = SS_LIST[SS.i], cp = compOf(t[0]), g = SS.g, FH = fHTML(t[0]);
+  el('ss-g').textContent = (SS.mole ? fix2(g) : String(g)) + ' g';
+  var room = g / SS_MAX * 100;
+  var mparts = cp.rows.map(function(r){ return { s:r.s, w:r.pct, lab:r.s + ' ' + fix2(g * r.pct / 100) + ' g' }; });
+  var pparts = cp.rows.map(function(r){ return { s:r.s, w:r.pct, lab:r.s + ' ' + fix1(r.pct) + '%' }; });
+  var masses = cp.rows.map(function(r){ return fix2(g * r.pct / 100) + ' g ' + r.s; });
+  el('ss-track').innerHTML = '<div style="width:' + Math.max(room, 0.8).toFixed(2) + '%">' + sbar(mparts, '', 'In ' + g + ' grams of ' + t[1] + ': ' + masses.join(', '), room, el('ss-track').clientWidth - 8) + '</div>';
+  el('ss-pct').innerHTML = sbar(pparts, '', 'Percent by mass: ' + pctList(cp, true).join(', '), 100, el('ss-pct').clientWidth) + keyHTML(cp.pf.order);
+  var rows = cp.rows.map(function(r){ return '<div><span>' + EL[r.s].name + ' (' + r.s + ')</span><span>' + fix2(g * r.pct / 100) + ' g · ' + fix2(r.pct) + '%</span></div>'; }).join('');
+  el('ss-rows').innerHTML = rows + '<div class="hl"><span>Whole sample</span><span>' + (SS.mole ? fix2(g) : g + '.00') + ' g · 100.00%</span></div>';
+  var msg;
+  if(SS.mole){
+    msg = '<b>One mole of ' + t[1] + ' is ' + fix2(cp.M) + ' g.</b> In one mole, the mass of each element is its row in the molar mass table: ' +
+      andList(cp.rows.map(function(r){ return (r.n > 1 ? r.n + ' × ' + EL[r.s].ms + ' = ' : '') + fix2(r.m) + ' g ' + r.s; })) + '. That’s why the next section uses one mole.';
+  } else {
+    msg = '<b>' + g + ' g of ' + t[1] + ' contains ' + andList(masses) + '.</b> Make the sample bigger or smaller. The masses change, but ' + FH + ' stays ' + andList(pctList(cp)) + '.';
+  }
+  el('ss-msg').innerHTML = msg;
+}
+(function buildSS(){
+  el('ss-tabs').innerHTML = SS_LIST.map(function(t, i){
+    return '<button type="button" class="tab fx" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '">' + fHTML(t[0]) + '</button>';
+  }).join('');
+  tabs(el('ss-tabs'), function(b){ SS.i = Number(b.dataset.i); if(SS.mole) SS.g = compOf(SS_LIST[SS.i][0]).M; ssSync(); });
+  el('ss-range').addEventListener('input', function(){ SS.mole = false; SS.g = Number(this.value); ssRender(); });
+  el('ss-mole').addEventListener('click', function(){ SS.mole = true; SS.g = compOf(SS_LIST[SS.i][0]).M; ssSync(); });
+  function ssSync(){ el('ss-range').value = Math.round(SS.g); ssRender(); }
+})();
+
+/* =========================================================
+   2. percent composition from a formula: worked table
+   ========================================================= */
+var FW_LIST = [['H2O','water'],['CO2','carbon dioxide'],['NaCl','sodium chloride'],['C6H12O6','glucose'],['Ca(NO3)2','calcium nitrate'],['(NH4)2SO4','ammonium sulfate']];
+var FW = { i:3, step:0 };
+function howText(pf, s){
+  var occ = pf.occ.filter(function(o){ return o.el === s; });
+  if(occ.length === 1 && occ[0].mult === 1) return occ[0].n === 1 ? 'no subscript, so 1' : 'subscript ' + occ[0].n;
+  return occ.map(function(o){ return o.mult > 1 ? o.n + ' × ' + o.mult : String(o.n); }).join(' + ') + ' = ' + pf.counts[s];
+}
+function groupNote(pf){
+  return pf.groups.map(function(g){
+    return 'The ' + g.k + ' after (' + fHTML(g.inner) + ') means ' + g.k + ' whole ' + fHTML(g.inner) + ' groups.';
+  }).join(' ');
+}
+function countPhrase(pf, s){
+  var occ = pf.occ.filter(function(o){ return o.el === s; }), c = pf.counts[s];
+  if(occ.length === 1 && occ[0].mult === 1) return c + ' ' + s + (c === 1 ? ' (no subscript means 1)' : '');
+  return c + ' ' + s + ' (' + howText(pf, s).replace(/ = \d+$/, '') + ')';
+}
+function fwRender(){
+  var item = FW_LIST[FW.i], cp = compOf(item[0]), pf = cp.pf, st = FW.step, FH = fHTML(item[0]);
+  var rows = '';
+  cp.rows.forEach(function(r){
+    rows += '<tr><td>' + EL[r.s].name + ' (' + r.s + ')</td>' +
+      '<td class="n' + (st === 0 ? ' new' : '') + '">' + r.n + '</td>' +
+      '<td class="n' + (st === 1 ? ' new' : '') + '">' + (st >= 1 ? '× ' + EL[r.s].ms : '') + '</td>' +
+      '<td class="n' + (st === 1 ? ' new' : '') + '">' + (st >= 1 ? '= ' + fix2(r.m) + ' g' : '') + '</td>' +
+      '<td class="n pc' + (st === 3 ? ' new' : '') + '">' + (st >= 3 ? fix2(r.pct) + '%' : '') + '</td></tr>';
+  });
+  el('fw-table').innerHTML = '<thead><tr><th>Element</th><th>Atoms</th><th>× g/mol</th><th>= Mass in 1 mol</th><th>% by mass</th></tr></thead><tbody>' + rows + '</tbody>' +
+    '<tfoot><tr><td>Total</td><td></td><td></td><td class="n' + (st === 2 ? ' new' : '') + '">' + (st >= 2 ? fix2(cp.M) + ' g' : '') + '</td>' +
+    '<td class="n' + (st === 4 ? ' new' : '') + '">' + (st >= 4 ? roundedSum(cp) + '%' : '') + '</td></tr></tfoot>';
+  el('fw-q').innerHTML = 'Find the percent composition of ' + item[1] + ', <b>' + FH + '</b>.';
+  var t, sum = roundedSum(cp);
+  if(st === 0) t = '<b>Count the atoms:</b> ' + pf.order.map(function(s){ return countPhrase(pf, s); }).join(', ') + '.' + (pf.groups.length ? ' ' + groupNote(pf) : '');
+  else if(st === 1) t = '<b>Find the mass of each element in one mole:</b> ' + cp.rows.map(function(r){ return r.n + ' × ' + EL[r.s].ms + ' = ' + fix2(r.m) + ' g ' + r.s; }).join(', ') + '.';
+  else if(st === 2) t = '<b>Add them up</b> to get the molar mass: ' + cp.rows.map(function(r){ return fix2(r.m); }).join(' + ') + ' = <b>' + fix2(cp.M) + ' g/mol</b>. One mole has a mass of ' + fix2(cp.M) + ' g. That’s the whole.';
+  else if(st === 3) t = '<b>Divide each element’s mass by the molar mass, then multiply by 100:</b> ' + cp.rows.map(function(r){ return r.s + ': ' + fix2(r.m) + ' ÷ ' + fix2(cp.M) + ' × 100 = ' + fix2(r.pct) + '%'; }).join(', ') + '.';
+  else t = '<b>Check:</b> ' + cp.rows.map(function(r){ return fix2(r.pct); }).join(' + ') + ' = ' + sum + '%. ✓' +
+    (sum !== '100.00' ? ' Rounding each percent nudged the total off by 0.01%, which is fine.' : '') +
+    ' So ' + item[1] + ' is ' + andList(pctList(cp, true)) + ' by mass.';
+  el('fw-text').innerHTML = t;
+  el('fw-count').textContent = 'Step ' + (st + 1) + ' of 5';
+  el('fw-next').disabled = st === 4;
+  el('fw-prev').disabled = st === 0;
+}
+(function buildFW(){
+  el('fw-tabs').innerHTML = FW_LIST.map(function(t, i){
+    return '<button type="button" class="tab fx" role="tab" data-i="' + i + '" aria-selected="' + (i === FW.i) + '">' + fHTML(t[0]) + '</button>';
+  }).join('');
+  tabs(el('fw-tabs'), function(b){ FW.i = Number(b.dataset.i); FW.step = 0; fwRender(); });
+  el('fw-next').addEventListener('click', function(){ if(FW.step < 4){ FW.step++; fwRender(); } });
+  el('fw-prev').addEventListener('click', function(){ if(FW.step > 0){ FW.step--; fwRender(); } });
+  el('fw-restart').addEventListener('click', function(){ FW.step = 0; fwRender(); });
+})();
+
+/* =========================================================
+   3. break down any compound
+   ========================================================= */
+var EX_T = ['H2O','H2O2','CO','CO2','C8H10N4O2','Ca3(PO4)2'], EX_CUR = 'C8H10N4O2';
+function exRender(f){
+  var out = el('ex-out'), fb = el('ex-fb'), px = out.clientWidth;
+  EX_CUR = f;
+  if(!String(f).trim()){ out.innerHTML = ''; setFb(fb, 'hint', 'Type a formula first, like <b>CO(NH2)2</b>. Numbers become subscripts on their own.'); return; }
+  var pf = parseFormula(f);
+  if(!pf.ok){ out.innerHTML = ''; setFb(fb, 'bad', 'That formula can’t be read: it has ' + pf.err + '.'); return; }
+  /* "H20" is a legal formula, but it was almost certainly meant to be H2O */
+  var z = /([A-Z][a-z]?|\))([2-9])0(?!\d)/.exec(pf.f), alt = z ? pf.f.slice(0, z.index) + z[1] + z[2] + 'O' + pf.f.slice(z.index + z[0].length) : null;
+  if(alt && parseFormula(alt).ok) setFb(fb, 'hint', 'Is that a zero? This reads it as ' + fHTML(pf.f) + '. If you meant ' + fHTML(alt) + ', type a capital letter O.');
+  else if(pf.order.length === 1) setFb(fb, 'hint', 'That’s a single element, so it’s 100% ' + lc(pf.order[0]) + '. Percent composition is interesting for compounds.');
+  else hideFb(fb);
+  var cp = compOf(pf), FH = fHTML(pf.f);
+  var mparts = cp.rows.map(function(r){ return { s:r.s, w:r.pct, lab:r.s + ' ' + fix1(r.pct) + '%' }; });
+  var aparts = cp.rows.map(function(r){ return { s:r.s, w:r.apct, lab:r.s + ' ' + fix1(r.apct) + '%' }; });
+  var rows = cp.rows.map(function(r){
+    return '<tr><td>' + EL[r.s].name + ' (' + r.s + ')</td><td class="n">' + r.n + '</td><td class="n">' + fix2(r.m) + ' g</td><td class="n pc">' + fix2(r.pct) + '%</td><td class="n dim">' + fix1(r.apct) + '%</td></tr>';
+  }).join('');
+  out.innerHTML = '<div class="ex-formula">' + FH + '</div>' +
+    '<div class="sb-lab"><span>By mass: percent composition</span></div>' + sbar(mparts, '', 'By mass: ' + pctList(cp, true).join(', '), 100, px) +
+    '<div class="sb-lab"><span>By atoms, for comparison</span></div>' + sbar(aparts, 'mute', 'By atoms: ' + cp.rows.map(function(r){ return fix1(r.apct) + '% ' + lc(r.s); }).join(', '), 100, px) +
+    keyHTML(cp.pf.order) +
+    '<div class="tbl-scroll"><table class="ex-t"><thead><tr><th>Element</th><th class="n">Atoms</th><th class="n">Mass in 1 mol</th><th class="n">% by mass</th><th class="n dim">% of atoms</th></tr></thead><tbody>' + rows + '</tbody>' +
+    '<tfoot><tr><td>Total</td><td class="n">' + cp.atoms + '</td><td class="n">' + fix2(cp.M) + ' g</td><td class="n">' + roundedSum(cp) + '%</td><td class="n dim">100%</td></tr></tfoot></table></div>';
+}
+(function buildEx(){
+  el('ex-tabs').innerHTML = EX_T.map(function(f, i){
+    return '<button type="button" class="tab fx" role="tab" data-f="' + f + '" aria-selected="' + (i === 4) + '">' + fHTML(f) + '</button>';
+  }).join('');
+  tabs(el('ex-tabs'), function(b){ el('ex-in').value = ''; exRender(b.dataset.f); });
+  function go(){
+    each(el('ex-tabs').querySelectorAll('.tab'), function(o){ o.setAttribute('aria-selected', 'false'); });
+    exRender(el('ex-in').value);
+  }
+  el('ex-go').addEventListener('click', go);
+  el('ex-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') go(); });
+})();
+
+/* =========================================================
+   4. lab: burning magnesium (masses in milligrams)
+   ========================================================= */
+var MGO = compOf('MgO'), MG_F = MGO.by('Mg').m / MGO.M;
+var LS = null;
+function mg3(x){ return (x / 1000).toFixed(3); }
+function lsNew(){
+  var r0 = 24000 + Math.floor(Math.random() * 5000), mg = 250 + Math.floor(Math.random() * 201), prod = Math.round(mg / MG_F);
+  LS = { r0:r0, r1:r0 + mg, r2:r0 + prod, step:0, done:false, scored:false };
+  el('ls-in').value = '';
+  hideFb(el('ls-fb'));
+  lsRender();
+}
+/* a digital scale: pan top at y=136 ; contents drawn by caller */
+function scaleSVG(contents, reading, label){
+  return '<svg viewBox="0 0 300 200" role="img" aria-label="' + label + '">' +
+    contents +
+    '<rect x="138" y="140" width="24" height="10" fill="#B5C2C0"/>' +
+    '<rect x="36" y="136" width="228" height="7" rx="3" fill="#C3CDCB" stroke="#9FB0AD"/>' +
+    '<rect x="16" y="150" width="268" height="44" rx="9" fill="#DCE3E2" stroke="#9FB0AD"/>' +
+    '<circle cx="42" cy="172" r="7" fill="#C3CDCB" stroke="#9FB0AD"/><circle cx="64" cy="172" r="7" fill="#C3CDCB" stroke="#9FB0AD"/>' +
+    '<rect x="140" y="159" width="130" height="27" rx="3" fill="#1E2B29"/>' +
+    '<text x="262" y="178.5" text-anchor="end" font-family="IBM Plex Mono,monospace" font-weight="500" font-size="17" fill="#BFEFD0">' + reading + '</text>' +
+    '</svg>';
+}
+var POR = 'fill="#F3F1EA" stroke="#9A958A" stroke-width="1.4"';
+/* crucible on the pan, with its lid beside it ; what: empty, ribbon, powder */
+function crucibleOnPan(what){
+  var h = '<ellipse cx="222" cy="131" rx="30" ry="4.5" ' + POR + '/><rect x="217" y="121.5" width="10" height="6" rx="2" ' + POR + '/>';
+  h += '<path d="M116,92 L184,92 L173,135 L127,135 Z" ' + POR + '/>';
+  h += '<ellipse cx="150" cy="92" rx="34" ry="5.5" fill="#D9D4C7" stroke="#9A958A" stroke-width="1.2"/>';
+  if(what === 'ribbon') h += '<path d="M128,92 C130,70 140,70 141,86 C142,66 153,66 154,86 C155,66 166,66 167,86 C168,72 174,74 173,92" fill="none" stroke="#8C949A" stroke-width="3" stroke-linecap="round"/>';
+  if(what === 'powder') h += '<path d="M120,92 Q150,74 180,92 Z" fill="#FFFFFF" stroke="#C9C4B8"/>';
+  h += '<path d="M116,92 A34,5.5 0 0,0 184,92" fill="none" stroke="#9A958A" stroke-width="1.4"/>';
+  return h;
+}
+function burnerSVG(){
+  var h = '<svg viewBox="0 0 300 200" role="img" aria-label="The crucible sits on a clay triangle over a Bunsen burner, with its lid slightly open. Inside, the magnesium burns with a bright white light.">';
+  h += '<defs><radialGradient id="ls-glow"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#FFFBEA" stop-opacity=".9"/><stop offset="1" stop-color="#FFF3C4" stop-opacity="0"/></radialGradient></defs>';
+  /* ring stand */
+  h += '<rect x="34" y="186" width="130" height="8" rx="2" fill="#8A9896"/><rect x="50" y="18" width="6" height="170" fill="#9FB0AD"/>';
+  h += '<rect x="54" y="104" width="66" height="4" fill="#9FB0AD"/><ellipse cx="150" cy="106" rx="34" ry="6" fill="none" stroke="#6F7D7B" stroke-width="3"/>';
+  /* burner and flame */
+  h += '<rect x="143" y="148" width="14" height="38" fill="#6F7D7B"/><ellipse cx="150" cy="188" rx="22" ry="5" fill="#5F6D6B"/>';
+  h += '<g class="flick"><path d="M150,110 C138,124 139,140 143,148 L157,148 C161,140 162,124 150,110 Z" fill="#9CC3F0" fill-opacity=".8"/>' +
+       '<path d="M150,124 C145,132 145,142 147,148 L153,148 C155,142 155,132 150,124 Z" fill="#3B6FD0"/></g>';
+  /* crucible, glowing hot */
+  h += '<path d="M118,70 L182,70 L172,106 L128,106 Z" fill="#F2B36B" stroke="#9A6E22" stroke-width="1.4"/>';
+  h += '<ellipse cx="150" cy="70" rx="32" ry="5" fill="#E8A25A" stroke="#9A6E22" stroke-width="1.2"/>';
+  /* lid ajar, and the white light */
+  h += '<circle class="glow" cx="146" cy="62" r="34" fill="url(#ls-glow)"/>';
+  h += '<g transform="rotate(-14 182 64)"><ellipse cx="160" cy="60" rx="30" ry="4.5" ' + POR + '/><rect x="155" y="50" width="10" height="6" rx="2" ' + POR + '/></g>';
+  h += '</svg>';
+  return h;
+}
+var LS_STEPS = [
+  '<b>Step 1.</b> The empty crucible and its lid are on the balance. Record the mass.',
+  '<b>Step 2.</b> A coil of magnesium ribbon goes in the crucible. The balance now reads the crucible, lid and magnesium together.',
+  '<b>Step 3.</b> Heat it. The magnesium burns with a blinding white light, so don’t look straight at it. The lid stays slightly open to let air in and keep the product from escaping.',
+  '<b>Step 4.</b> The crucible has cooled, and it holds white magnesium oxide powder. Use the three masses to find the <b>percent magnesium</b> in the product.'
+];
+function lsRender(){
+  var st = LS.step, reading = st === 0 ? LS.r0 : st === 1 ? LS.r1 : LS.r2;
+  if(st === 2) el('ls-fig').innerHTML = burnerSVG();
+  else {
+    var what = st === 0 ? 'empty' : st === 1 ? 'ribbon' : 'powder';
+    var lab = 'A balance holding the crucible and lid' + (st === 1 ? ' and a coil of magnesium ribbon' : st === 3 ? ' and white magnesium oxide powder' : '') + ', reading ' + mg3(reading) + ' grams';
+    el('ls-fig').innerHTML = scaleSVG(crucibleOnPan(what), mg3(reading) + ' g', lab);
+  }
+  el('ls-step').innerHTML = LS_STEPS[st];
+  function row(name, v, on){ return '<div' + (on ? '' : ' class="wait"') + '><span>' + name + '</span><span>' + (on ? mg3(v) + ' g' : '—') + '</span></div>'; }
+  el('ls-rows').innerHTML = row('Crucible and lid', LS.r0, true) + row('Crucible, lid and magnesium', LS.r1, st >= 1) + row('Crucible, lid and product, after heating', LS.r2, st >= 3);
+  var go = el('ls-go');
+  go.textContent = ['Add the magnesium ribbon', 'Heat the crucible', 'Let it cool, then weigh it', 'Done'][st];
+  go.disabled = st === 3;
+  el('ls-ask').hidden = st < 3;
+}
+function lsWork(){
+  var mg = LS.r1 - LS.r0, pr = LS.r2 - LS.r0, ans = mg / pr * 100, a3 = Number(sigHTML(ans, 3)), pe = Math.abs(a3 - MGO.by('Mg').pct) / MGO.by('Mg').pct * 100;
+  return 'Mass of magnesium: ' + mg3(LS.r1) + ' − ' + mg3(LS.r0) + ' = ' + mg3(mg) + ' g. Mass of magnesium oxide: ' + mg3(LS.r2) + ' − ' + mg3(LS.r0) + ' = ' + mg3(pr) + ' g.' +
+    '<br>% Mg = ' + mg3(mg) + ' ÷ ' + mg3(pr) + ' × 100 = <b>' + sigHTML(ans, 3) + '%</b>, which leaves 100 − ' + sigHTML(ans, 3) + ' = ' + sigHTML(100 - a3, 3) + '% oxygen.' +
+    '<br>The formula MgO predicts 24.31 ÷ 40.31 × 100 = ' + fix2(MGO.by('Mg').pct) + '% Mg, so this result has a percent error of ' + (pe < 0.1 ? 'less than 0.1%' : sigHTML(pe, 2) + '%') + '.';
+}
+function lsCheck(){
+  if(LS.done) return;
+  var fb = el('ls-fb'), got = parseNum(el('ls-in').value);
+  if(!el('ls-in').value.trim()){ setFb(fb, 'hint', 'Type your answer first.'); return; }
+  if(!got){ setFb(fb, 'hint', 'Type a number, like <kbd>60.3</kbd>.'); return; }
+  var v = got.v, mg = LS.r1 - LS.r0, pr = LS.r2 - LS.r0, o = LS.r2 - LS.r1, ans = mg / pr * 100;
+  if(Math.abs(v - ans) <= 0.1){ LS.done = true; setFb(fb, 'good', '<b>Correct: ' + sigHTML(ans, 3) + '% Mg.</b><br>' + lsWork()); return; }
+  var cands = [
+    ['crucible', LS.r1 / LS.r2 * 100, 0.05], ['other', o / pr * 100], ['ratio', mg / o * 100], ['add', mg / (mg + pr) * 100], ['flip', pr / mg * 100], ['frac', ans / 100, 0.002]
+  ], code = 'none';
+  cands.forEach(function(c){ if(code === 'none' && Math.abs(v - c[1]) <= (c[2] || 0.15)) code = c[0]; });
+  var H = {
+    crucible:'<b>Subtract the crucible first.</b> Those masses include the crucible and lid. Find the mass of the magnesium and the mass of the product on their own.',
+    other:'<b>That’s the percent of oxygen.</b> The question asks for magnesium. Use the mass of the magnesium as the part.',
+    ratio:'<b>Divide by the whole product.</b> You divided by the mass of the oxygen. The whole is the magnesium oxide: crucible and product minus the crucible.',
+    add:'<b>Don’t add the magnesium to the product.</b> The magnesium is already part of the magnesium oxide, so the whole is just the mass of the product.',
+    flip:'<b>Upside down.</b> A percent over 100% is a red flag. Divide the mass of the magnesium by the mass of the product.',
+    frac:'<b>Almost there.</b> That’s the fraction. Multiply by 100 to make it a percent.',
+    none:'<b>Not quite.</b> Find the mass of the magnesium (subtract the empty crucible) and the mass of the product (subtract the empty crucible again). Then % Mg = mass of magnesium ÷ mass of product × 100.'
+  };
+  setFb(fb, 'bad', H[code]);
+}
+(function buildLS(){
+  el('ls-go').addEventListener('click', function(){ if(LS.step < 3){ LS.step++; lsRender(); } });
+  el('ls-new').addEventListener('click', lsNew);
+  el('ls-check').addEventListener('click', lsCheck);
+  el('ls-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') lsCheck(); });
+  el('ls-show').addEventListener('click', function(){
+    LS.done = true;
+    var ans = (LS.r1 - LS.r0) / (LS.r2 - LS.r0) * 100;
+    el('ls-in').value = sigHTML(ans, 3);
+    setFb(el('ls-fb'), 'hint', '<b>Answer: ' + sigHTML(ans, 3) + '% Mg.</b><br>' + lsWork());
+  });
+})();
+
+/* =========================================================
+   5. worked examples: lab data, and percent as a factor
+   ========================================================= */
+function worked(prefix, list){
+  var st = { i:0, step:0 };
+  el(prefix + '-tabs').innerHTML = list.map(function(w, i){
+    return '<button type="button" class="tab" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '">' + w.title + '</button>';
+  }).join('');
+  function draw(){
+    var w = list[st.i], s = w.steps[st.step];
+    el(prefix + '-q').innerHTML = w.q;
+    el(prefix + '-fl').innerHTML = s.lines.map(FL).join('');
+    el(prefix + '-text').innerHTML = s.t;
+    el(prefix + '-count').textContent = 'Step ' + (st.step + 1) + ' of ' + w.steps.length;
+    el(prefix + '-next').disabled = st.step === w.steps.length - 1;
+    el(prefix + '-prev').disabled = st.step === 0;
+  }
+  tabs(el(prefix + '-tabs'), function(b){ st.i = Number(b.dataset.i); st.step = 0; draw(); });
+  el(prefix + '-next').addEventListener('click', function(){ if(st.step < list[st.i].steps.length - 1){ st.step++; draw(); } });
+  el(prefix + '-prev').addEventListener('click', function(){ if(st.step > 0){ st.step--; draw(); } });
+  el(prefix + '-restart').addEventListener('click', function(){ st.step = 0; draw(); });
+  draw();
+}
+/* a percent line: % X = part / whole × 100% = answer */
+function pctLine(sym, pv, pu, wv, wu, ans, nw){ return [L('% ' + sym), EQ, F(pv, pu, wv, wu, { nw:nw }), TIMES, HUND, EQ, A(ans + '%', sym)]; }
+(function dataWorked(){
+  var fe1 = [Q('3.53', 'g Fe'), PLUS, Q('1.52', 'g O'), EQ, A('5.05', 'g compound')];
+  var fe2 = pctLine('Fe', '3.53', 'g Fe', '5.05', 'g compound', '69.9');
+  var fe3 = pctLine('O', '1.52', 'g O', '5.05', 'g compound', '30.1');
+  var cu1 = [Q('5.00', 'g compound'), MINUS, Q('3.99', 'g Cu'), EQ, A('1.01', 'g O')];
+  var cu2 = pctLine('Cu', '3.99', 'g Cu', '5.00', 'g compound', '79.8');
+  var cu3 = pctLine('O', '1.01', 'g O', '5.00', 'g compound', '20.2');
+  var al1 = [Q('2.27', 'g compound'), MINUS, Q('1.20', 'g Al'), EQ, A('1.07', 'g O')];
+  var al2 = pctLine('Al', '1.20', 'g Al', '2.27', 'g compound', '52.9');
+  var al3 = pctLine('O', '1.07', 'g O', '2.27', 'g compound', '47.1');
+  function nw(line){ return line.map(function(x){ return x.indexOf('class="frac"') !== -1 ? x.replace('class="frac"', 'class="frac new"') : x; }); }
+  worked('dw', [
+    { title:'Each element given', q:'A sample of a compound contains 3.53 g of iron and 1.52 g of oxygen. What is its percent composition?', steps:[
+      { lines:[fe1], t:'<b>Find the whole.</b> The compound is made of just iron and oxygen, so its mass is the two masses added together: 5.05 g.' },
+      { lines:[fe1, nw(fe2)], t:'<b>Part ÷ whole × 100.</b> The part is the iron. 3.53 ÷ 5.05 × 100 = 69.90, or <b>69.9% Fe</b> to 3 significant figures.' },
+      { lines:[fe1, fe2, nw(fe3)], t:'<b>Same for oxygen.</b> 1.52 ÷ 5.05 × 100 = <b>30.1% O</b>.' },
+      { lines:[fe1, fe2, fe3], t:'<b>Check:</b> 69.9% + 30.1% = 100.0%. ✓ These data match iron(III) oxide, Fe<sub>2</sub>O<sub>3</sub>, which is 69.94% Fe by formula.' }
+    ]},
+    { title:'Breaking it down', q:'A 5.00 g sample of a compound of copper and oxygen is heated with hydrogen gas, which removes all the oxygen. The copper left behind has a mass of 3.99 g. What is the percent composition of the compound?', steps:[
+      { lines:[cu1], t:'<b>Find each mass.</b> The whole is the sample, 5.00 g. The copper left behind is 3.99 g, so the oxygen that was removed is the difference: 1.01 g.' },
+      { lines:[cu1, nw(cu2)], t:'<b>Part ÷ whole × 100.</b> 3.99 ÷ 5.00 × 100 = <b>79.8% Cu</b>.' },
+      { lines:[cu1, cu2, nw(cu3)], t:'<b>Same for oxygen.</b> 1.01 ÷ 5.00 × 100 = <b>20.2% O</b>. You could also get it as 100 − 79.8.' },
+      { lines:[cu1, cu2, cu3], t:'<b>Check:</b> 79.8% + 20.2% = 100.0%. ✓ These data match copper(II) oxide, CuO, which is 79.89% Cu by formula.' }
+    ]},
+    { title:'Building it up', q:'When 1.20 g of aluminum reacts completely with oxygen, it forms 2.27 g of aluminum oxide. What is the percent composition of aluminum oxide?', steps:[
+      { lines:[al1], t:'<b>Find each mass.</b> The whole is the product, 2.27 g. Don’t add the 1.20 g to it: the aluminum is already part of the 2.27 g. The oxygen is the mass the aluminum gained: 1.07 g.' },
+      { lines:[al1, nw(al2)], t:'<b>Part ÷ whole × 100.</b> 1.20 ÷ 2.27 × 100 = <b>52.9% Al</b>.' },
+      { lines:[al1, al2, nw(al3)], t:'<b>Same for oxygen.</b> 1.07 ÷ 2.27 × 100 = <b>47.1% O</b>.' },
+      { lines:[al1, al2, al3], t:'<b>Check:</b> 52.9% + 47.1% = 100.0%. ✓ These data match aluminum oxide, Al<sub>2</sub>O<sub>3</sub>, which is 52.92% Al by formula.' }
+    ]}
+  ]);
+})();
+(function useWorked(){
+  var u1 = fHTML('Fe2O3'), u2 = 'NaCl', u3 = fHTML('NH4NO3');
+  worked('uw', [
+    { title:'Grams of an element', q:'How many grams of iron are in 75.0 g of iron(III) oxide, ' + u1 + '?', steps:[
+      { lines:[[Q('75.0', 'g ' + u1)]], t:'<b>Start with what you’re given:</b> 75.0 g ' + u1 + '. Then find the percent of iron: 2(55.85) = 111.70 g of Fe in 159.70 g of ' + u1 + ', and 111.70 ÷ 159.70 × 100 = 69.94% Fe.' },
+      { lines:[[Q('75.0', 'g ' + u1), TIMES, F('69.94', 'g Fe', '100', 'g ' + u1, { nw:1 })]], t:'<b>Grams of ' + u1 + ' go on the bottom</b>, so they cancel the grams you started with. 69.94% Fe means 69.94 g of Fe in every 100 g of ' + u1 + '.' },
+      { lines:[[Q('75.0', 'g ' + u1, 1), TIMES, F('69.94', 'g Fe', '100', 'g ' + u1, { xb:1 })]], t:'<b>Cancel units.</b> g ' + u1 + ' cancels, leaving g Fe.' },
+      { lines:[[Q('75.0', 'g ' + u1, 1), TIMES, F('69.94', 'g Fe', '100', 'g ' + u1, { xb:1 }), EQ, A('52.5', 'g Fe')]], t:'<b>Do the math.</b> 75.0 × 69.94 ÷ 100 = 52.455, or <b>52.5 g Fe</b>. Sense check: about 70% of 75 g is about 52 g. ✓' }
+    ]},
+    { title:'Grams of a compound', q:'Health guidelines say to keep sodium under 2.30 g a day. How many grams of table salt, NaCl, contain 2.30 g of sodium?', steps:[
+      { lines:[[Q('2.30', 'g Na')]], t:'<b>Start with what you’re given:</b> 2.30 g Na. NaCl is 22.99 ÷ 58.44 × 100 = 39.34% Na.' },
+      { lines:[[Q('2.30', 'g Na'), TIMES, F('100', 'g ' + u2, '39.34', 'g Na', { nw:1 })]], t:'<b>You have grams of sodium this time</b>, so g Na goes on the bottom. The same percent, flipped.' },
+      { lines:[[Q('2.30', 'g Na', 1), TIMES, F('100', 'g ' + u2, '39.34', 'g Na', { xb:1 })]], t:'<b>Cancel units.</b> g Na cancels, leaving g NaCl.' },
+      { lines:[[Q('2.30', 'g Na', 1), TIMES, F('100', 'g ' + u2, '39.34', 'g Na', { xb:1 }), EQ, A('5.85', 'g ' + u2)]], t:'<b>Do the math.</b> 2.30 × 100 ÷ 39.34 = 5.846, or <b>5.85 g NaCl</b>: about a teaspoon of salt. Sense check: the salt has to weigh more than the sodium in it. ✓' }
+    ]},
+    { title:'Any mass unit', q:'A bag of ammonium nitrate fertilizer, ' + u3 + ', holds 20.0 kg. How many kilograms of nitrogen does it supply?', steps:[
+      { lines:[[Q('20.0', 'kg ' + u3)]], t:'<b>Start with what you’re given:</b> 20.0 kg ' + u3 + '. Count both nitrogen atoms, one in NH<sub>4</sub> and one in NO<sub>3</sub>: 2(14.01) ÷ 80.06 × 100 = 35.00% N.' },
+      { lines:[[Q('20.0', 'kg ' + u3), TIMES, F('35.00', 'kg N', '100', 'kg ' + u3, { nw:1 })]], t:'<b>A percent works in any mass unit.</b> 35.00% N means 35.00 kg of N in every 100 kg of ' + u3 + ', just as it means 35.00 g in every 100 g.' },
+      { lines:[[Q('20.0', 'kg ' + u3, 1), TIMES, F('35.00', 'kg N', '100', 'kg ' + u3, { xb:1 })]], t:'<b>Cancel units.</b> kg ' + u3 + ' cancels, leaving kg N.' },
+      { lines:[[Q('20.0', 'kg ' + u3, 1), TIMES, F('35.00', 'kg N', '100', 'kg ' + u3, { xb:1 }), EQ, A('7.00', 'kg N')]], t:'<b>Do the math.</b> 20.0 × 35.00 ÷ 100 = <b>7.00 kg N</b>. A little over a third of the bag is nitrogen. ✓' }
+    ]}
+  ]);
+})();
+
+/* =========================================================
+   6. compare: fertilizers and iron ores
+   ========================================================= */
+var CMP = {
+  N:{ s:'N', what:'nitrogen', min:10, max:200, step:10, def:100,
+      list:[['NH3','anhydrous ammonia','82-0-0'],['CO(NH2)2','urea','46-0-0'],['NH4NO3','ammonium nitrate','34-0-0'],['(NH4)2SO4','ammonium sulfate','21-0-0']],
+      note:'Bag labels are for real products, which aren’t perfectly pure, so they can be a little lower than the pure compound. Pure ammonium nitrate is 35.00% N, but its bags usually say 34-0-0. Anhydrous ammonia is a gas, so it’s stored as a liquid under pressure and injected into the soil.' },
+  Fe:{ s:'Fe', what:'iron', min:100, max:2000, step:100, def:1000,
+      list:[['Fe3O4','magnetite'],['Fe2O3','hematite'],['FeO(OH)','goethite'],['FeCO3','siderite']],
+      note:'These are the pure minerals. Real ore is mixed with rock, so a mine has to dig up even more than this.' }
+};
+var CM = { k:'N', t:100 };
+/* 3 significant figures, with commas instead of scientific notation: 2,070 */
+function kgText(x){ var v = Number(x.toPrecision(3)); return v >= 1000 ? String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : sigHTML(x, 3); }
+function cmRender(){
+  var set = CMP[CM.k], s = set.s, T = CM.t;
+  var items = set.list.map(function(x){ var cp = compOf(x[0]); return { f:x[0], name:x[1], label:x[2], pct:cp.by(s).pct }; });
+  items.sort(function(a, b){ return b.pct - a.pct; });
+  el('cm-lab').textContent = cap(set.what) + ' needed';
+  el('cm-t').textContent = kgText(T) + ' kg';
+  el('cm-rows').innerHTML = items.map(function(it){
+    return '<div class="cmp-row"><div class="cmp-name"><b>' + cap(it.name) + '</b><span>' + fHTML(it.f) + '</span></div>' +
+      '<div class="cmp-mid"><div class="cmp-track" role="img" aria-label="' + fix2(it.pct) + ' percent ' + set.what + '"><i style="width:' + it.pct.toFixed(2) + '%"></i></div>' +
+      '<div class="cmp-pct">' + fix2(it.pct) + '% ' + s + (it.label ? ' · bag label ' + it.label : '') + '</div></div>' +
+      '<div class="cmp-need">' + kgText(T / (it.pct / 100)) + ' kg<span>of ' + it.name + '</span></div></div>';
+  }).join('');
+  var hi = items[0], lo = items[items.length - 1];
+  el('cm-msg').innerHTML = '<b>To get ' + kgText(T) + ' kg of ' + set.what + ', you need ' + kgText(T / (hi.pct / 100)) + ' kg of ' + hi.name + ', but ' + kgText(T / (lo.pct / 100)) + ' kg of ' + lo.name + '.</b> ' +
+    'Each mass is ' + kgText(T) + ' kg ÷ (percent ÷ 100). The lower the percent, the more of the compound it takes.';
+  el('cm-note').textContent = set.note;
+}
+function cmSet(k){
+  var set = CMP[k], r = el('cm-range');
+  CM.k = k; CM.t = set.def;
+  r.min = set.min; r.max = set.max; r.step = set.step; r.value = set.def;
+  cmRender();
+}
+tabs(el('cm-tabs'), function(b){ cmSet(b.dataset.k); });
+el('cm-range').addEventListener('input', function(){ CM.t = Number(this.value); cmRender(); });
+
+/* =========================================================
+   7. periodic table (for the practice section)
+   ========================================================= */
+function ptPos(z){
+  if(z === 1) return [1, 1];
+  if(z === 2) return [1, 18];
+  if(z <= 10) return [2, z <= 4 ? z - 2 : z + 8];
+  if(z <= 18) return [3, z <= 12 ? z - 10 : z];
+  if(z <= 36) return [4, z - 18];
+  if(z <= 54) return [5, z - 36];
+  if(z <= 56) return [6, z - 54];
+  if(z <= 71) return [9, z - 54];
+  if(z <= 86) return [6, z - 68];
+  if(z <= 88) return [7, z - 86];
+  if(z <= 103) return [10, z - 86];
+  return [7, z - 100];
+}
+function tileHTML(e){
+  return '<div class="tile" aria-hidden="true"><span class="tz">' + e.z + '</span><span class="ts">' + e.sym + '</span><span class="tn">' + e.name + '</span><span class="tm">' + e.ms + '</span></div>';
+}
+function ptFacts(e){
+  if(e.br) return '<p><b>' + e.name + '</b> has no stable isotopes. The number in parentheses, ' + e.ms + ', is the mass number of a long-lived isotope, not an average. You won’t need these.</p>';
+  var h = '<div class="mm">' + e.ms + ' g/mol</div><p>1 mol ' + e.sym + ' atoms = <b>' + e.ms + ' g</b></p>';
+  if(DIATOMIC[e.sym]) h += '<p class="aside">' + e.name + ' exists as ' + e.sym + '₂ molecules' + (e.sym === 'Br' ? ' (a liquid)' : e.sym === 'I' ? ' (a solid)' : '') + ', two atoms each, so the molar mass of ' + e.sym + '₂ is 2 × ' + e.ms + ' = ' + fix2(2 * e.M) + ' g/mol.</p>';
+  return h;
+}
+function buildPT(host){
+  var cells = '';
+  ELEMENTS.forEach(function(e){
+    var p = ptPos(e.z);
+    cells += '<button type="button" class="el' + (e.br ? ' rad' : '') + '" data-s="' + e.sym + '" style="grid-row:' + p[0] + ';grid-column:' + p[1] + '" aria-label="' + e.name + ', ' + (e.br ? 'no stable isotopes' : e.ms + ' grams per mole') + '">' +
+      '<span class="z">' + e.z + '</span><span class="s">' + e.sym + '</span><span class="m">' + e.ms + '</span></button>';
+  });
+  cells += '<div class="gap" style="grid-row:6;grid-column:3">57–71</div><div class="gap" style="grid-row:7;grid-column:3">89–103</div>';
+  host.innerHTML = '<div class="pt-scroll"><div class="pt">' + cells + '</div></div><div class="pt-detail" aria-live="polite"><p class="smallprint" style="margin:0">Click an element to see its molar mass.</p></div>';
+  var detail = host.querySelector('.pt-detail');
+  each(host.querySelectorAll('.el'), function(b){
+    b.addEventListener('click', function(){
+      each(host.querySelectorAll('.el'), function(o){ o.classList.toggle('on', o === b); });
+      detail.innerHTML = tileHTML(EL[b.dataset.s]) + '<div class="pt-facts">' + ptFacts(EL[b.dataset.s]) + '</div>';
+    });
+  });
+}
+
+/* =========================================================
+   8. practice
+   ========================================================= */
+var pScore = Score(el('p-score'));
+var pKind = 'pf', P = null;
+var KIND_TYPES = { pf:['pf'], lab:['lab'], mass:['me','me','mc'], mix:['pf','pf','lab','lab','me','mc'] };
+
+function problemText(p){
+  if(p.type === 'lab'){
+    var nA = lc(p.L.a), nB = lc(p.L.b), nAsk = lc(p.s), b = function(hu){ return '<b>' + gtxt(hu) + '</b>'; };
+    var q = ' What is the percent by mass of ' + nAsk + ' in the compound?';
+    if(p.v === 'syn') return 'When ' + b(p.h.a) + ' of ' + nA + ' reacts completely with ' + nB + ', it forms ' + b(p.h.C) + ' of a compound of ' + nA + ' and ' + nB + '.' + q;
+    if(p.v === 'comp') return 'A sample of a compound contains ' + b(p.h.a) + ' of ' + nA + ' and ' + b(p.h.b) + ' of ' + nB + '.' + q;
+    return 'A ' + b(p.h.C) + ' sample of a compound of ' + nA + ' and ' + nB + ' is broken down into its elements. It produces ' + b(p.h[p.gEl]) + ' of ' + lc(p.L[p.gEl]) + '.' + q;
+  }
+  var nm = lc(p.s), NF = p.c.name + ', ' + p.F, G = '<b>' + sigHTML(p.given, 3) + ' g</b>';
+  if(p.type === 'pf') return p.form ? 'What percent of the mass of ' + NF + ', is ' + nm + '?' : 'What is the percent by mass of ' + nm + ' in ' + NF + '?';
+  if(p.type === 'me') return p.ctx ? cap(p.ctx) + ' has a mass of ' + G + '. How many grams of ' + nm + ' does it contain?'
+                                   : 'How many grams of ' + nm + ' are in ' + G + ' of ' + NF + '?';
+  return 'How many grams of ' + NF + ', contain ' + G + ' of ' + nm + '?';
+}
+function unitHTML(p){
+  if(p.type === 'pf' || p.type === 'lab') return '% ' + p.s;
+  return p.type === 'me' ? 'g ' + p.s : 'g ' + p.F;
+}
+function answerHTML(p){
+  if(p.type === 'pf') return fix2(p.answer) + '% ' + p.s;
+  if(p.type === 'lab') return sigHTML(p.answer, 3) + '% ' + p.s;
+  return sigHTML(p.answer, 3) + ' ' + unitHTML(p);
+}
+function answerPlain(p){ return p.type === 'pf' ? fix2(p.answer) : sigPlain(p.answer, 3); }
+
+/* ---- words for hints ---- */
+function groupWords(pf){
+  var g = pf.groups[0];
+  return 'The ' + g.k + ' after (' + fHTML(g.inner) + ') means ' + g.k + ' whole ' + fHTML(g.inner) + ' groups, so multiply every subscript inside the parentheses by ' + g.k + '.';
+}
+function altWords(code, p){
+  if(code === 'noSub') return 'It looks like an element was counted once. Multiply each molar mass by its number of atoms.';
+  if(code === 'lastOnly') return 'The subscript after the parentheses multiplies every atom inside them, not just the last one. ' + groupWords(p.pf);
+  return groupWords(p.pf);
+}
+function countWords(code, p){
+  if(code === 'noSub') return '<b>Don’t forget the subscript.</b> ' + p.F + ' has ' + p.n + ' ' + p.s + ' atoms, so multiply ' + EL[p.s].ms + ' by ' + p.n + '.';
+  return '<b>Use the subscript after the parentheses.</b> ' + groupWords(p.pf);
+}
+function hintFor(p, res){
+  var code = res.code, x = res.x || {};
+  if(code === 'unreadable') return 'Type a number, like <kbd>11.21</kbd> or <kbd>52.5</kbd>.';
+  var fracH = '<b>Almost there.</b> That’s the fraction. Multiply by 100 to make it a percent.';
+  var flipH = '<b>Upside down.</b> A part can’t be bigger than the whole, so a percent over 100% is a red flag. ';
+  if(p.type === 'lab'){
+    var nA = lc(p.s), nO = lc(p.so), C = gtxt(p.h.C);
+    switch(code){
+      case 'other':    return '<b>That’s the percent of ' + nO + '.</b> The question asks about ' + nA + '. The two add up to 100%.';
+      case 'ratio':    return '<b>Divide by the whole compound.</b> You divided one element by the other. The whole is the compound: ' + C + '.';
+      case 'addWhole': var gn = lc(p.L[p.gEl]); return '<b>Don’t add the ' + gn + ' to the compound.</b> The ' + gtxt(p.h[p.gEl]) + ' of ' + gn + ' is already part of the ' + C + ' of compound, so the whole is just ' + C + '.';
+      case 'flip':     return flipH + 'Divide the mass of the ' + nA + ' by the mass of the compound.';
+      case 'frac':     return fracH;
+      case 'massOnly': return '<b>That’s the mass of the ' + nA + ', ' + gtxt(p.h[p.ask]) + '.</b> Now divide it by the mass of the compound, ' + C + ', and multiply by 100.';
+    }
+    return '<b>Not quite.</b> Find the mass of the ' + nA + ' and the mass of the whole compound. Then % ' + p.s + ' = mass of ' + nA + ' ÷ mass of compound × 100. Try filling in the masses below.';
+  }
+  var nm = lc(p.s), FH = p.F, P = fix2(p.pct);
+  if(p.type === 'pf'){
+    switch(code){
+      case 'frac':     return fracH;
+      case 'flip':     return flipH + 'Divide the mass of ' + nm + ' by the molar mass, not the other way around.';
+      case 'atoms':    return '<b>That’s the percent of the atoms, not the mass.</b> ' + p.n + ' of the ' + p.cp.atoms + ' atoms in ' + FH + ' are ' + p.s + ', but atoms of different elements have different masses. Use the mass of ' + nm + ' in one mole.';
+      case 'subtotal': return '<b>That’s the mass of ' + nm + ' in one mole.</b> Now divide it by the molar mass of ' + FH + ' and multiply by 100.';
+      case 'mm':       return '<b>That’s the molar mass of ' + FH + '.</b> It’s the whole. Divide the mass of ' + nm + ' in one mole by it, then multiply by 100.';
+      case 'ratio':    return '<b>Divide by the whole compound.</b> You divided by the mass of the rest of the compound. The whole is the molar mass of ' + FH + '.';
+      case 'other':    return '<b>That’s the percent of ' + lc(x.t) + '.</b> The question asks about ' + nm + '.';
+      case 'rest':     return '<b>That’s everything except the ' + nm + '.</b> Find the percent of ' + nm + ' itself: its mass in one mole ÷ the molar mass × 100.';
+      case 'noSub': case 'noParen': case 'lastOnly': return countWords(code, p);
+      case 'badMM':    return '<b>The mass of ' + nm + ' is right, but check the molar mass.</b> ' + altWords(x.alt, p);
+      case 'missing':  return '<b>Check the molar mass.</b> Every element adds to it, including the ' + lc(x.t) + '.';
+    }
+    return '<b>Not quite.</b> Find the mass of ' + nm + ' in one mole (atoms × molar mass), divide by the molar mass of ' + FH + ', and multiply by 100. Try building the table below.';
+  }
+  var me = p.type === 'me', G = sigHTML(p.given, 3) + ' g', fUp = '(' + P + ' g ' + p.s + ' / 100 g ' + FH + ')', fDn = '(100 g ' + FH + ' / ' + P + ' g ' + p.s + ')';
+  switch(code){
+    case 'inv':      return me ? '<b>Multiply, don’t divide.</b> The ' + nm + ' is only part of the ' + FH + ', so your answer has to be smaller than ' + G + '. Use ' + fUp + '.'
+                               : '<b>Divide, don’t multiply.</b> The ' + FH + ' has to weigh more than the ' + nm + ' in it. Use ' + fDn + '.';
+    case 'no100':    return '<b>A percent is out of 100.</b> ' + P + '% means ' + P + ' g of ' + p.s + ' in every 100 g of ' + FH + '. Your answer is 100 times too ' + (me ? 'big' : 'small') + '.';
+    case 'no100inv': return '<b>Check how you used the percent.</b> Write it as a factor, ' + (me ? fUp : fDn) + ', and make sure the units cancel.';
+    case 'pct':      return '<b>That’s the percent of ' + nm + ', not a mass.</b> Now use it as a factor: ' + (me ? 'multiply ' + G + ' by ' + fUp : 'multiply ' + G + ' by ' + fDn) + '.';
+    case 'same':     return '<b>That’s the mass you started with.</b> ' + (me ? 'Only part of the ' + FH + ' is ' + nm + '.' : 'The ' + FH + ' weighs more than the ' + nm + ' in it.');
+    case 'moles':    return '<b>That’s moles of ' + FH + ', not grams of ' + nm + '.</b> The quickest route: multiply ' + G + ' by the percent of ' + nm + ', written as a fraction.';
+    case 'molesEl':  return '<b>That’s moles of ' + p.s + ' atoms.</b> You don’t need moles here. Use the percent of ' + nm + ' as a conversion factor.';
+    case 'atoms':    return '<b>That used the percent of atoms, not mass.</b> ' + FH + ' is ' + P + '% ' + p.s + ' by mass.';
+    case 'other':    return '<b>That used the percent of ' + lc(x.t) + '.</b> Use the percent of ' + nm + ' instead.';
+    case 'rest':     return '<b>That used everything except the ' + nm + '.</b> Use the percent of ' + nm + ' itself.';
+    case 'noSub': case 'noParen': case 'lastOnly': return '<b>Check the percent of ' + nm + '.</b> ' + countWords(code, p).replace(/<\/?b>/g, '') + ' ' + FH + ' is ' + P + '% ' + p.s + '.';
+    case 'badMM':    return '<b>Check the molar mass.</b> ' + altWords(x.alt, p) + ' ' + FH + ' is ' + p.Ms + ' g/mol.';
+  }
+  return me ? '<b>Not quite.</b> Find the percent of ' + nm + ' in ' + FH + ', then multiply: ' + G + ' × (percent ÷ 100). Try building the setup below.'
+            : '<b>Not quite.</b> Find the percent of ' + nm + ' in ' + FH + ', then divide: ' + G + ' ÷ (percent ÷ 100). Try building the setup below.';
+}
+
+/* ---- the full working, for a right answer or "show answer" ---- */
+function pfWork(p){
+  var cp = p.cp;
+  return '<span class="mono">Molar mass: ' + cp.rows.map(function(r){ return r.n > 1 ? r.n + '(' + EL[r.s].ms + ')' : EL[r.s].ms; }).join(' + ') + ' = ' + p.Ms + ' g/mol</span><br>' +
+    '<span class="mono">% ' + p.s + ' = ' + (p.n > 1 ? p.n + '(' + EL[p.s].ms + ')' : EL[p.s].ms) + ' ÷ ' + p.Ms + ' × 100 = ' + fix2(p.pct) + '%</span>';
+}
+function labWork(p){
+  var h = p.h, w = '';
+  if(p.v === 'comp') w = 'Mass of the compound: ' + gtxt(h.a) + ' + ' + gtxt(h.b) + ' = ' + gtxt(h.C) + '.<br>';
+  else if(!p.given[p.ask]) w = 'Mass of ' + lc(p.s) + ': ' + gtxt(h.C) + ' − ' + gtxt(h[p.oth]) + ' = ' + gtxt(h[p.ask]) + '.<br>';
+  return w + '<span class="mono">% ' + p.s + ' = ' + gtxt(h[p.ask]) + ' ÷ ' + gtxt(h.C) + ' × 100 = ' + sigHTML(p.answer, 3) + '%</span>';
+}
+function massWork(p){
+  var fs = factorsFor(p), f = fs[p.type === 'me' ? 0 : 1];
+  var start = p.type === 'me' ? 'g ' + p.F : 'g ' + p.s, cu = cancelUnits(start, [f]);
+  return '<br>' + p.F + ' is ' + fix2(p.pct) + '% ' + p.s + ' by mass.' +
+    FL([Q(sigHTML(p.given, 3), start, cu.num[0].x), TIMES, F(f.t[0], f.t[1], f.b[0], f.b[1], { xt:cu.num[1].x, xb:cu.den[0].x }), EQ, A(sigHTML(p.answer, 3), unitHTML(p))]);
+}
+function workFor(p){ return p.type === 'pf' ? '<br>' + pfWork(p) : p.type === 'lab' ? '<br>' + labWork(p) : massWork(p); }
+
+function pNew(){
+  var type = pick(KIND_TYPES[pKind]);
+  P = makeProblem(type, P ? P.c.f : null);
+  P.scored = false; P.done = false; P.chain = [];
+  el('p-prob').innerHTML = problemText(P);
+  el('p-in').value = '';
+  el('p-unit').innerHTML = unitHTML(P);
+  el('p-label').innerHTML = type === 'pf' || type === 'lab' ? 'Percent ' + lc(P.s) : 'Mass of ' + (type === 'me' ? lc(P.s) : P.c.name);
+  el('p-tip').innerHTML = type === 'pf' ? 'Look up each element on your periodic table, or press <b>Periodic table</b> below. Keep two decimal places.'
+    : type === 'lab' ? 'Use only the masses in the problem. Round to 3 significant figures.'
+    : 'Type just the number. The unit is already there.';
+  hideFb(el('p-fb'));
+  el('p-ptbtn').hidden = type === 'lab';
+  if(type === 'lab' && !el('p-pt').hidden) el('p-ptbtn').click();
+  el('t-wrap').hidden = type !== 'pf';
+  el('d-wrap').hidden = type !== 'lab';
+  el('s-wrap').hidden = type !== 'me' && type !== 'mc';
+  if(type === 'pf') tBuild(); else if(type === 'lab') dBuild(); else sRender();
+}
+function pCheck(){
+  if(!P || P.done) return;
+  var raw = el('p-in').value, fb = el('p-fb');
+  if(!raw.trim()){ setFb(fb, 'hint', 'Type your answer first.'); return; }
+  var got = parseNum(raw), res = judge(P, got);
+  if(res.code === 'unreadable'){ setFb(fb, 'hint', hintFor(P, res)); return; }
+  if(!P.scored){ P.scored = true; pScore.add(res.ok); }
+  if(res.ok){
+    P.done = true;
+    var sfNote = (P.type === 'me' || P.type === 'mc') && got.sf !== 3 ? '<br>Your value is right. The given mass has 3 significant figures, so round your answer to 3: <b>' + answerHTML(P) + '</b>.' : '';
+    setFb(fb, 'good', '<b>Correct: ' + answerHTML(P) + '.</b>' + workFor(P) + sfNote);
+    return;
+  }
+  setFb(fb, 'bad', hintFor(P, res));
+}
+function pShow(){
+  if(!P) return;
+  if(!P.scored){ P.scored = true; pScore.add(false); }
+  P.done = true;
+  el('p-in').value = answerPlain(P);
+  setFb(el('p-fb'), 'hint', '<b>Answer: ' + answerHTML(P) + '.</b>' + workFor(P));
+}
+el('p-check').addEventListener('click', pCheck);
+el('p-show').addEventListener('click', pShow);
+el('p-new').addEventListener('click', pNew);
+el('p-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') pCheck(); });
+tabs(el('p-tabs'), function(b){ pKind = b.dataset.k; P = null; pNew(); });
+el('p-ptbtn').addEventListener('click', function(){
+  var host = el('p-pt'), open = host.hidden;
+  if(open && !host.dataset.built){ buildPT(host); host.dataset.built = '1'; }
+  host.hidden = !open;
+  this.setAttribute('aria-expanded', String(open));
+  this.textContent = open ? 'Hide periodic table' : 'Periodic table';
+});
+
+/* ---- build the table (percent from a formula) ---- */
+function tBuild(){
+  var pf = P.pf, rows = '<tbody>';
+  pf.order.forEach(function(s, i){
+    var nm = lc(s);
+    rows += '<tr><td><b>' + s + '</b></td>' +
+      '<td><input type="text" id="t-n' + i + '" inputmode="numeric" autocomplete="off" aria-label="Number of ' + nm + ' atoms"></td>' +
+      '<td class="op">×</td><td class="n">' + EL[s].ms + '</td><td class="op">=</td>' +
+      '<td><input type="text" class="wide" id="t-s' + i + '" inputmode="decimal" autocomplete="off" aria-label="Grams of ' + nm + ' in one mole"> g</td></tr>';
+  });
+  rows += '</tbody><tfoot><tr><td colspan="5">Molar mass</td><td><input type="text" class="wide" id="t-M" inputmode="decimal" autocomplete="off" aria-label="Molar mass"> g</td></tr></tfoot>';
+  el('t-table').innerHTML = '<thead><tr><th>El.</th><th>Atoms</th><th></th><th>g/mol</th><th></th><th>Mass in 1 mol</th></tr></thead>' + rows;
+  setFb(el('t-msg'), 'hint', 'Count the atoms of each element in ' + P.F + ' and multiply by its molar mass. Then add the masses to get the molar mass. Press <b>Check the table</b> to see which boxes are right.');
+  each(el('t-table').querySelectorAll('input'), function(inp){ inp.addEventListener('keydown', function(e){ if(e.key === 'Enter') tCheck(); }); });
+}
+function tCountHint(pf, s, n){
+  var nm = lc(s), noP = 0;
+  pf.occ.forEach(function(o){ if(o.el === s) noP += o.n; });
+  if(pf.groups.length && n === noP) return '<b>Recount the ' + nm + '.</b> The subscript after the parentheses multiplies every atom inside them.';
+  if(n === 1 && pf.counts[s] > 1) return '<b>Recount the ' + nm + '.</b> Don’t forget its subscript.';
+  return '<b>Recount the ' + nm + '.</b> Count every ' + s + ' in the formula, including any inside parentheses.';
+}
+function tCheck(){
+  if(!P || P.type !== 'pf') return;
+  var pf = P.pf, filled = 0, wrong = 0, msg = '';
+  function mark(inp, ok){ inp.classList.remove('ok-in', 'no-in'); inp.classList.add(ok ? 'ok-in' : 'no-in'); }
+  pf.order.forEach(function(s, i){
+    var nIn = el('t-n' + i), sIn = el('t-s' + i), need = pf.counts[s], sub = P.cp.by(s).m;
+    [nIn, sIn].forEach(function(x){ x.classList.remove('ok-in', 'no-in'); });
+    var nRaw = nIn.value.trim(), sRaw = sIn.value.trim();
+    if(nRaw){
+      filled++;
+      var nOk = Number(nRaw) === need;
+      mark(nIn, nOk);
+      if(!nOk){ wrong++; if(!msg) msg = tCountHint(pf, s, Number(nRaw)); }
+    }
+    if(sRaw){
+      filled++;
+      var sv = parseNum(sRaw), sOk = sv && Math.abs(sv.v - sub) <= sub * 0.005 + 0.011;
+      mark(sIn, sOk);
+      if(!sOk){ wrong++; if(!msg) msg = '<b>Check the mass of ' + lc(s) + '.</b> Multiply the number of ' + s + ' atoms by ' + EL[s].ms + '.'; }
+    }
+  });
+  var mIn = el('t-M'), mRaw = mIn.value.trim();
+  mIn.classList.remove('ok-in', 'no-in');
+  if(mRaw){
+    filled++;
+    var mv = parseNum(mRaw), mOk = mv && Math.abs(mv.v - P.M) <= 0.5;
+    mark(mIn, mOk);
+    if(!mOk){ wrong++; if(!msg) msg = '<b>Check the molar mass.</b> It’s the sum of the masses of all the elements in one mole.'; }
+  }
+  var tm = el('t-msg');
+  if(!filled) setFb(tm, 'hint', 'Fill in a box first.');
+  else if(wrong) setFb(tm, 'bad', msg);
+  else if(filled === pf.order.length * 2 + 1) setFb(tm, 'good', '<b>The whole table is right.</b> Now divide the mass of ' + lc(P.s) + ' by the molar mass and multiply by 100.');
+  else setFb(tm, 'hint', 'So far, so good. Fill in the rest of the table.');
+}
+el('t-check').addEventListener('click', tCheck);
+el('t-clear').addEventListener('click', function(){ if(P && P.type === 'pf') tBuild(); });
+
+/* ---- fill in the masses (lab data) ---- */
+function dMissing(p){ return p.v === 'comp' ? 'C' : !p.given.a ? 'a' : !p.given.b ? 'b' : 'C'; }
+function dBuild(){
+  var p = P, miss = dMissing(p);
+  function row(key, name){
+    var val = miss === key ? '<input type="text" id="d-in" inputmode="decimal" autocomplete="off" aria-label="' + name + ' in grams"> g' : gtxt(p.h[key]);
+    return '<div' + (key === 'C' ? ' class="hl"' : '') + '><span>' + name + '</span><span>' + val + '</span></div>';
+  }
+  el('d-rows').innerHTML = row('a', 'Mass of ' + lc(p.L.a)) + row('b', 'Mass of ' + lc(p.L.b)) + row('C', 'Mass of the compound (the whole)');
+  setFb(el('d-msg'), 'hint', miss === 'C' ? 'The compound is made of just these two elements. What’s its total mass?' : 'The compound is made of just these two elements. How much of its mass is ' + lc(p.L[miss]) + '?');
+  el('d-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') dCheck(); });
+}
+function dCheck(){
+  if(!P || P.type !== 'lab') return;
+  var p = P, miss = dMissing(p), inp = el('d-in'), raw = inp.value.trim(), msg = el('d-msg');
+  inp.classList.remove('ok-in', 'no-in');
+  if(!raw){ setFb(msg, 'hint', 'Type the missing mass first.'); return; }
+  var g = parseNum(raw), want = p.h[miss] / 100;
+  if(g && Math.abs(g.v - want) <= 0.006){
+    inp.classList.add('ok-in');
+    setFb(msg, 'good', '<b>Right.</b> Now divide: % ' + p.s + ' = ' + gtxt(p.h[p.ask]) + ' ÷ ' + gtxt(p.h.C) + ' × 100.');
+    return;
+  }
+  inp.classList.add('no-in');
+  if(miss !== 'C' && g && Math.abs(g.v - (p.h.C + p.h[miss === 'a' ? 'b' : 'a']) / 100) <= 0.006) setFb(msg, 'bad', '<b>Subtract, don’t add.</b> The ' + lc(p.L[miss === 'a' ? 'b' : 'a']) + ' is part of the compound, so the rest of the compound’s mass is the ' + lc(p.L[miss]) + '.');
+  else if(miss === 'C') setFb(msg, 'bad', '<b>Add the two masses.</b> The compound is made of just ' + lc(p.L.a) + ' and ' + lc(p.L.b) + '.');
+  else setFb(msg, 'bad', '<b>Not quite.</b> Mass of ' + lc(p.L[miss]) + ' = mass of the compound − mass of ' + lc(p.L[miss === 'a' ? 'b' : 'a']) + '.');
+}
+el('d-check').addEventListener('click', dCheck);
+
+/* ---- build the setup (mass problems) ---- */
+function sRender(){
+  if(!P || (P.type !== 'me' && P.type !== 'mc')) return;
+  var fs = factorsFor(P), me = P.type === 'me';
+  var startU = me ? 'g ' + P.F : 'g ' + P.s, target = me ? 'g ' + P.s : 'g ' + P.F;
+  var chain = P.chain.map(function(i){ return fs[i]; });
+  var cu = cancelUnits(startU, chain), parts = [];
+  parts.push(Q(sigHTML(P.given, 3), startU, cu.num[0].x));
+  chain.forEach(function(f, i){ parts.push(TIMES, F(f.t[0], f.t[1], f.b[0], f.b[1], { xt:cu.num[i + 1].x, xb:cu.den[i].x })); });
+  var leftN = cu.num.filter(function(u){ return !u.x; }).map(function(u){ return u.u; });
+  var leftD = cu.den.filter(function(u){ return !u.x; }).map(function(u){ return u.u; });
+  var msg, kind = 'hint';
+  if(!chain.length){
+    msg = 'You have <b>' + startU + '</b> and want <b>' + target + '</b>. Pick a factor with <b>' + startU + '</b> on the bottom.';
+  } else if(leftN.length === 1 && !leftD.length && leftN[0] === target){
+    parts.push(EQ, '<span class="ph">? ' + U(target) + '</span>');
+    msg = '<b>The units work.</b> Everything cancels except <b>' + target + '</b>, the unit you want. Now multiply across the top and divide by the bottom.';
+    kind = 'good';
+  } else if(leftN.length === 1 && !leftD.length){
+    msg = 'You’re at <b>' + leftN[0] + '</b>, but you want <b>' + target + '</b>. That factor used the wrong element. Undo it and pick the one with ' + P.s + ' in it.';
+    kind = 'bad';
+  } else {
+    var prev = cancelUnits(startU, chain.slice(0, -1)), pN = prev.num.filter(function(u){ return !u.x; }), pD = prev.den.filter(function(u){ return !u.x; });
+    var at = pN.length === 1 && !pD.length ? pN[0].u : null, last = chain[chain.length - 1];
+    var fix = !at ? 'Undo back to where the units still worked.'
+      : last.t[1] === at ? 'Undo and flip that factor, so ' + at + ' is on the bottom.'
+      : 'Undo it. You’re at ' + at + ', so the next factor needs <b>' + at + '</b> on the bottom.';
+    msg = '<b>These units don’t cancel.</b> You’d end up with ' + leftN.join(' × ') + (leftD.length ? ' ÷ ' + leftD.join(' ÷ ') : '') + ', which isn’t a real answer. ' + fix;
+    kind = 'bad';
+  }
+  el('s-chain').innerHTML = FL(parts);
+  el('s-opts').innerHTML = fs.map(function(f, i){
+    var lab = (f.t[0] + ' ' + f.t[1] + ' per ' + f.b[0] + ' ' + f.b[1]).replace(/<[^>]+>/g, '');
+    return '<button type="button" class="fopt" data-i="' + i + '" aria-label="Multiply by ' + lab + '"' + (chain.length >= 2 ? ' disabled' : '') + '><span class="frac"><span>' + f.t[0] + ' ' + f.t[1] + '</span><span>' + f.b[0] + ' ' + f.b[1] + '</span></span></button>';
+  }).join('');
+  each(el('s-opts').querySelectorAll('.fopt'), function(b){
+    b.addEventListener('click', function(){ if(P.chain.length < 2){ P.chain.push(Number(b.dataset.i)); sRender(); } });
+  });
+  setFb(el('s-msg'), kind, msg);
+  el('s-undo').disabled = !chain.length;
+  el('s-clear').disabled = !chain.length;
+}
+el('s-undo').addEventListener('click', function(){ P.chain.pop(); sRender(); });
+el('s-clear').addEventListener('click', function(){ P.chain = []; sRender(); });
+
+/* =========================================================
+   9. quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'What does the percent composition of a compound tell you?',
+    opts:['The percent by mass of each element in it','The percent of its atoms that are each element','How pure a sample of it is','How many moles of each element are in 100 g of it'],
+    ans:0,
+    why:'Percent composition is always by mass: each element’s mass ÷ the compound’s mass × 100. Counting atoms gives a different answer, because atoms of different elements have different masses.' },
+  { stem:'What is the percent by mass of oxygen in carbon dioxide, CO<sub>2</sub>?',
+    opts:['27.29%','36.36%','66.67%','72.71%'],
+    ans:3,
+    why:'2(16.00) ÷ 44.01 × 100 = 72.71%. 27.29% is the carbon. 36.36% uses only one O. 66.67% counts atoms: 2 of 3 are O.' },
+  { stem:'A drop of pure water is 11.21% hydrogen by mass. What is the percent hydrogen in a full bathtub of pure water?',
+    opts:['More than 11.21%, because there’s more hydrogen','11.21%, the same as the drop','Less than 11.21%, because the mass is bigger','It depends on how much the water weighs'],
+    ans:1,
+    why:'Every sample of a compound has the same percent composition. The bathtub has more hydrogen and more mass, in the same proportion. That’s the law of definite proportions.' },
+  { stem:'What is the percent by mass of nitrogen in ammonium nitrate, NH<sub>4</sub>NO<sub>3</sub>?',
+    opts:['17.50%','22.22%','35.00%','58.38%'],
+    ans:2,
+    why:'NH<sub>4</sub>NO<sub>3</sub> has two N atoms, one in NH<sub>4</sub> and one in NO<sub>3</sub>: 2(14.01) ÷ 80.06 × 100 = 35.00%. 17.50% counts only one N. 22.22% counts atoms: 2 of 9. 58.38% divides by the mass of the oxygen instead of the whole compound.' },
+  { stem:'A 6.50 g sample of a compound of iron and sulfur contains 4.13 g of iron. What is the percent by mass of sulfur?',
+    opts:['2.37%','36.5%','57.4%','63.5%'],
+    ans:1,
+    why:'The sulfur is 6.50 − 4.13 = 2.37 g, so 2.37 ÷ 6.50 × 100 = 36.5%. 2.37% is just the mass of sulfur with a percent sign. 57.4% divides by the iron instead of the whole sample. 63.5% is the iron.' },
+  { stem:'When 3.00 g of calcium reacts completely with oxygen, it forms 4.20 g of calcium oxide. What is the percent by mass of calcium in calcium oxide?',
+    opts:['28.6%','41.7%','71.4%','250%'],
+    ans:2,
+    why:'The whole is the product: 3.00 ÷ 4.20 × 100 = 71.4%. 28.6% is the oxygen. 41.7% adds 3.00 + 4.20 for the whole, but the calcium is already part of the 4.20 g. 250% divides by the oxygen, 1.20 g.' },
+  { stem:'Iron(III) oxide, Fe<sub>2</sub>O<sub>3</sub>, is 69.94% iron by mass. How many grams of iron are in 40.0 g of Fe<sub>2</sub>O<sub>3</sub>?',
+    opts:['12.0 g','28.0 g','57.2 g','2.80 × 10<sup>3</sup> g'],
+    ans:1,
+    why:'40.0 g × (69.94 g Fe / 100 g Fe<sub>2</sub>O<sub>3</sub>) = 28.0 g Fe. 12.0 g is the oxygen. 57.2 g divides by the percent, which gives more iron than the sample weighs. 2.80 × 10<sup>3</sup> g forgets that a percent is out of 100.' },
+  { stem:'Table salt, NaCl, is 39.34% sodium by mass. How many grams of NaCl contain 1.00 g of sodium?',
+    opts:['0.0254 g','0.393 g','1.65 g','2.54 g'],
+    ans:3,
+    why:'1.00 g Na × (100 g NaCl / 39.34 g Na) = 2.54 g NaCl. The salt has to weigh more than the sodium in it, which rules out 0.0254 g and 0.393 g. 1.65 g uses the percent of chlorine, 60.66%.' },
+  { stem:'Which compound has the greatest percent by mass of oxygen?',
+    opts:['CO','CO<sub>2</sub>','H<sub>2</sub>O','H<sub>2</sub>O<sub>2</sub>'],
+    ans:3,
+    why:'H<sub>2</sub>O<sub>2</sub> is 94.06% O, H<sub>2</sub>O is 88.79%, CO<sub>2</sub> is 72.71% and CO is 57.12%. CO<sub>2</sub> has two O atoms too, but its carbon is much heavier than two hydrogens, so it takes a bigger share of the mass.' },
+  { stem:'A student’s answer for the percent of hydrogen in water is 892%. What went wrong?',
+    opts:['The fraction is upside down: 18.02 ÷ 2.02','They forgot to multiply by 100','They forgot the subscript on H','Nothing. Light elements can be over 100%'],
+    ans:0,
+    why:'18.02 ÷ 2.02 × 100 = 892%. A part can never be more than the whole, so any percent over 100% means the fraction is flipped. The right answer is 2.02 ÷ 18.02 × 100 = 11.21%.' }
+];
+(function buildQuiz(){
+  var host = el('quiz'), html = '';
+  QUIZ.forEach(function(q, qi){
+    html += '<div class="q"><p class="stem">' + (qi + 1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o, oi){ html += '<button type="button" class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  host.innerHTML = html;
+  each(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      each(el('q' + qi).querySelectorAll('.opt'), function(other, i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      setFb(el('qfb' + qi), oi === q.ans ? 'good' : 'bad', '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+    });
+  });
+})();
+
+/* labels in the stacked bars depend on the width they get, so redraw them when it changes */
+var rzT = 0, rzW = window.innerWidth;
+window.addEventListener('resize', function(){
+  if(window.innerWidth === rzW) return;
+  rzW = window.innerWidth; clearTimeout(rzT);
+  rzT = setTimeout(function(){ ssRender(); exRender(EX_CUR); }, 150);
+});
+
+/* boot */
+ssRender();
+fwRender();
+exRender('C8H10N4O2');
+lsNew();
+cmSet('N');
+pNew();
+</script>
+</body>
+</html>
