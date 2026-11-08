@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 3 Practice Exam — Forces</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Physics · Unit 3 · Forces — shared page system
+   (identical block on every Unit 3 page)
+   ========================================================= */
+:root{
+  --ink:#16283C; --ink2:#3D4F63; --mute:#5D6D7E;
+  --paper:#EDF1F4; --card:#FBFCFD; --line:#CBD7E1; --line-soft:#E1E8EE;
+  --acc:#1B6CA8; --acc-dk:#0F4A78; --acc-lite:#D3E4F2;
+  --warm:#9A6410; --warm-lite:#FBEFD6;
+  --ok:#1F6E4D; --ok-bg:#E3F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  /* one colour per force, used on every page */
+  --f-g:#B23A2B;    /* gravity / weight      */
+  --f-n:#1B6CA8;    /* normal                */
+  --f-f:#A86A0C;    /* friction              */
+  --f-t:#1E7F5C;    /* tension               */
+  --f-a:#6B45B0;    /* applied               */
+  --f-air:#3E7C8A;  /* air resistance / drag */
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+  background-image:linear-gradient(to right,rgba(150,178,199,.17) 1px,transparent 1px),linear-gradient(to bottom,rgba(150,178,199,.17) 1px,transparent 1px);
+  background-size:26px 26px}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(237,241,244,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:60px 0 40px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc-dk)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(38px,6.4vw,64px);line-height:1.02;margin:16px 0 0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--acc)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:48ch;color:var(--ink2);margin:20px 0 0}
+
+.board{margin:36px 0 0;padding:22px 24px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.board-cap{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+.board svg{display:block;width:100%;height:auto}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft)}
+.sig-note b{color:var(--acc-dk);font-weight:600}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--acc);color:var(--acc-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(27px,4.2vw,38px);line-height:1.1;margin:0;letter-spacing:-.02em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--acc-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.nw{white-space:nowrap}
+.note{border-left:3px solid var(--warm);background:var(--warm-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.law{font-family:var(--display);font-size:clamp(20px,2.8vw,25px);font-weight:500;line-height:1.35;letter-spacing:-.01em;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:0 4px 4px 0;padding:18px 22px;margin:22px 0}
+.law small{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:6px;font-weight:400}
+
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:24px 0}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:0 4px 4px 0;padding:18px 20px}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard .form{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--acc-dk);margin:2px 0 0;line-height:1.5}
+.rulecard .ex{font-family:var(--body);font-size:14.5px;color:var(--ink);background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:7px 10px;margin-top:10px}
+.rulecard.warn{border-left-color:var(--warm)}
+
+/* force labels: F with a coloured subscript tag */
+.F{font-family:var(--mono);font-weight:600;white-space:nowrap}
+.F.g{color:var(--f-g)} .F.n{color:var(--f-n)} .F.f{color:var(--f-f)} .F.t{color:var(--f-t)} .F.a{color:var(--f-a)} .F.air{color:var(--f-air)} .F.net{color:var(--ink)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.setup{font-size:16px;color:var(--ink2);margin:0 0 14px}
+.scene{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:8px}
+.scene svg{display:block;width:100%;height:auto;max-width:540px;margin:0 auto}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F5F8FA;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--acc-dk);border-color:var(--acc-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--acc)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--acc);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+/* Input boxes: clearly fillable. Placeholder text is a short instruction, never a sample answer. */
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid #93A6B8;border-radius:3px;padding:9px 11px;width:150px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(22,40,60,.12)}
+::placeholder{font-family:var(--body);font-style:italic;font-size:15px;color:#7E8E9D;opacity:1}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:170px}
+.unit{font-family:var(--mono);font-size:15px;color:var(--ink2)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1A4B35}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--acc);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb p{margin:6px 0 0}
+.fb p:first-child{margin-top:0}
+
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-top:14px}
+.cbtn{background:#fff;color:var(--ink);border:1px solid var(--line);font-size:13px;padding:11px 10px;text-align:center}
+.cbtn:hover{background:#fff;color:var(--ink);border-color:var(--acc)}
+.cbtn.yes{background:var(--ok-bg);border-color:var(--ok);color:#1A4B35}
+.cbtn.no{background:var(--no-bg);border-color:var(--no);color:#7E2A1D}
+.cbtn.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.cbtn[disabled]{cursor:default}
+
+.tally-h{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:20px 0 8px}
+.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px}
+.tcell{border:1px solid var(--line-soft);border-radius:3px;padding:7px 10px;background:#fff}
+.tcell .tl{display:block;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.04em}
+.tcell .tv{font-family:var(--mono);font-size:15px;color:var(--ink)}
+.tcell.miss{border-color:#E3B7AE;background:#FDF6F4}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab:hover{background:var(--line-soft);color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--ink);color:#F5F8FA;border-color:var(--ink)}
+.panel{display:none;padding-top:12px}
+.panel.on{display:block}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.tbl{overflow-x:auto;margin:18px 0;-webkit-overflow-scrolling:touch}
+.tbl table{margin:0}
+
+.wo{list-style:none;padding:0;margin:20px 0}
+.wo li{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 18px;margin:10px 0}
+.wo .myth{display:block;font-size:15px;color:var(--no);text-decoration:line-through;text-decoration-color:rgba(169,58,42,.55);margin-bottom:4px}
+.wo .fact{font-size:16px}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45;letter-spacing:0}
+.opt:hover{border-color:var(--acc);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.95}
+.quiz-sum{font-family:var(--mono);font-size:13px;color:var(--ink2);margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft)}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#E9EFF4;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#BCCADA}
+.next .nt{font-family:var(--display);font-weight:600;font-size:24px;color:#fff;margin:0 0 4px;letter-spacing:-.01em}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F5F8FA;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--acc-lite)}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:14px}
+  .scene{padding:2px}
+  .board{padding:16px 14px}
+  .field label{min-width:auto;flex:1 1 100%}
+  .choices{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+/* ======== end shared block ======== */
+
+/* ---- page: exam ---- */
+.bar-score{font-family:var(--mono);font-size:12px;color:var(--acc-dk);margin-left:auto;font-variant-numeric:tabular-nums}
+
+.how{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:30px 0 0}
+@media (max-width:820px){ .how{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:480px){ .how{grid-template-columns:1fr} }
+.how div{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 16px;font-size:15px;color:var(--ink2)}
+.how b{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc-dk);font-weight:500;margin-bottom:4px}
+
+.sec-link{font-size:14.5px;color:var(--mute);margin:6px 0 0}
+
+/* one card per question */
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:20px 22px;margin:18px 0}
+.qcard.right{border-left:3px solid var(--ok)}
+.qcard.wrong{border-left:3px solid var(--no)}
+.qhead{display:flex;gap:10px;align-items:baseline;margin-bottom:6px}
+.qnum{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--acc-dk);white-space:nowrap}
+.qkind{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-left:auto;white-space:nowrap}
+.qcard .stem{font-weight:500;margin:0 0 12px}
+.qfig{margin:0 0 14px}
+.qfig svg{max-width:420px}
+.opt .letter{font-family:var(--mono);font-size:13px;color:var(--mute);margin-right:8px}
+.qcard .field{margin:0}
+.qcard input[disabled],.qcard select[disabled]{background:var(--line-soft);color:var(--ink2)}
+.qcard .chk[disabled],.qcard .chk[disabled]:hover{opacity:.45;cursor:default;background:var(--ink);border-color:var(--ink)}
+select{font-family:var(--mono);font-size:16px;border:1px solid #93A6B8;border-radius:3px;padding:9px 10px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(22,40,60,.12)}
+.work{font-family:var(--mono);font-size:14.5px;line-height:1.7;margin:8px 0 0;padding:8px 12px;background:rgba(255,255,255,.6);border-radius:3px}
+
+/* results */
+.results{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.big-score{font-family:var(--mono);font-size:clamp(34px,7vw,52px);font-weight:500;line-height:1;font-variant-numeric:tabular-nums}
+.big-score small{font-size:.38em;color:var(--mute);font-weight:400;margin-left:8px}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td .tag-ok{color:var(--ok);font-weight:600}
+td .tag-no{color:var(--no);font-weight:600}
+
+@media (max-width:600px){
+  .qcard{padding:16px}
+  .results{padding:16px}
+  .bar-sub{display:none}
+  .bar-score{margin-left:0;width:100%}
+  th,td{padding:7px 6px}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Unit 3 Practice Exam</span>
+    <span class="bar-sub">30 questions · all six topics</span>
+    <span class="bar-score" id="bar-score"></span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 3 · Forces · Practice exam</div>
+  <h1>All of Unit 3, <em>in one sitting.</em></h1>
+  <p class="lede">Thirty questions covering all six topics, from Newton's first law to action-reaction pairs. Every answer is checked as soon as you give it, with an explanation, so you'll know exactly what to go back and study.</p>
+  <div class="how">
+    <div><b>Have out</b>A calculator in degree mode (sin 30 should give 0.5) and scratch paper. Use g = 9.8 m/s² everywhere.</div>
+    <div><b>Multiple choice</b>Click an answer. You get one try, then it shows the right answer and why.</div>
+    <div><b>Type-in</b>Type a number, pick a direction if it asks for one, and press Check. You get one check. Two decimal places is plenty.</div>
+    <div><b>At the end</b>Your score by topic, with a link to the page to review. Your answers stay saved in this browser until you clear them.</div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a topic" id="jump"></nav>
+
+<div id="exam"></div>
+
+<section id="results">
+  <div class="sec-head"><span class="tasktag">Your results</span><h2>How you did</h2></div>
+  <div class="results">
+    <div class="big-score" id="r-total"></div>
+    <p class="smallprint" id="r-note" style="margin-bottom:0"></p>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Topic</th><th>Correct</th><th>Next step</th></tr></thead>
+        <tbody id="r-body"></tbody>
+      </table>
+    </div>
+    <div class="btn-row">
+      <button type="button" class="ghost" id="r-reset">Clear my answers and start over</button>
+    </div>
+  </div>
+
+  <div class="next">
+    <div>
+      <div class="nt">Unit 3 — Forces</div>
+      <p>Go back to any topic page to review and practice more.</p>
+    </div>
+    <a href="/physics/forces/">← Back to Unit 3</a>
+  </div>
+</section>
+
+<footer>
+  <p>Unit 3 practice exam: Newton's first law, net force and F = ma, gravity and the normal force, friction, inclined planes, and Newton's third law. Use g = 9.8 m/s².</p>
+  <p><a href="/physics/forces/">← Unit 3 — Forces</a> · <a href="/physics/forces/newtons-third-law/">← Page 6: Newton's Third Law</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   shared helpers (same on every Unit 3 page)
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function randInt(lo,hi){ return lo + Math.floor(Math.random()*(hi-lo+1)); }
+var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* force colours and labels (match the CSS variables) */
+var FORCE = {
+  g:  { c:'#B23A2B', sym:'F<tspan baseline-shift="sub" font-size="70%">grav</tspan>',   html:'F<sub>grav</sub>',   name:'gravity' },
+  n:  { c:'#1B6CA8', sym:'F<tspan baseline-shift="sub" font-size="70%">norm</tspan>',   html:'F<sub>norm</sub>',   name:'normal force' },
+  f:  { c:'#A86A0C', sym:'F<tspan baseline-shift="sub" font-size="70%">frict</tspan>',   html:'F<sub>frict</sub>',   name:'friction' },
+  t:  { c:'#1E7F5C', sym:'F<tspan baseline-shift="sub" font-size="70%">tens</tspan>',   html:'F<sub>tens</sub>',   name:'tension' },
+  a:  { c:'#6B45B0', sym:'F<tspan baseline-shift="sub" font-size="70%">app</tspan>', html:'F<sub>app</sub>', name:'applied force' },
+  air:{ c:'#3E7C8A', sym:'F<tspan baseline-shift="sub" font-size="70%">air</tspan>', html:'F<sub>air</sub>', name:'air resistance' }
+};
+var SVGNS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs, parent){
+  var n = document.createElementNS(SVGNS, tag);
+  for(var k in attrs) n.setAttribute(k, attrs[k]);
+  if(parent) parent.appendChild(n);
+  return n;
+}
+/* Draw an arrow from (x1,y1) to (x2,y2). Returns the group. */
+function arrow(parent, x1, y1, x2, y2, color, width){
+  var g = svgEl('g', {}, parent), w = width || 4;
+  var dx = x2-x1, dy = y2-y1, L = Math.sqrt(dx*dx+dy*dy) || 1, ux = dx/L, uy = dy/L;
+  var head = Math.min(15, L*0.6), hw = head*0.55;
+  var bx = x2 - ux*head, by = y2 - uy*head;
+  svgEl('line', {x1:x1, y1:y1, x2:bx, y2:by, stroke:color, 'stroke-width':w, 'stroke-linecap':'round'}, g);
+  svgEl('path', {d:'M'+x2+' '+y2+' L'+(bx - uy*hw)+' '+(by + ux*hw)+' L'+(bx + uy*hw)+' '+(by - ux*hw)+' Z', fill:color}, g);
+  return g;
+}
+function label(parent, x, y, html, color, anchor, size){
+  var t = svgEl('text', {x:x, y:y, fill:color||'#16283C', 'font-family':'IBM Plex Mono,monospace', 'font-size':size||15, 'font-weight':600, 'text-anchor':anchor||'middle'}, parent);
+  t.innerHTML = html;
+  return t;
+}
+function clearSvg(svg){ Array.prototype.slice.call(svg.childNodes).forEach(function(n){ if(n.nodeName !== 'desc') svg.removeChild(n); }); }
+
+/* =========================================================
+   free-body diagram renderer
+   forces: [{k:'g'|'n'|'f'|'t'|'a'|'air', d:'up'|'down'|'left'|'right', m:<newtons>}]
+   Arrows start at the box edge, lengths scale with size.
+   Several forces in the same direction are drawn side by side.
+   ========================================================= */
+function drawFBD(svg, forces, opts){
+  opts = opts || {};
+  clearSvg(svg);
+  var W = 520, H = 360, cx = 260, cy = 180, half = 34, maxLen = 96, minLen = 28;
+  /* vertical and horizontal forces are each scaled to their own largest force,
+     so a small sideways push next to a heavy weight is still readable */
+  function axisMax(dirs){ return Math.max.apply(null, forces.filter(function(f){ return dirs.indexOf(f.d) >= 0; }).map(function(f){ return f.m; }).concat([1])); }
+  var sV = maxLen / axisMax(['up','down']), sH = maxLen / axisMax(['left','right']);
+  function len(m, d){ return Math.max(minLen, m * (d === 'up' || d === 'down' ? sV : sH)); }
+  /* box */
+  svgEl('rect', {x:cx-half, y:cy-half, width:half*2, height:half*2, rx:3, fill:'#fff', stroke:'#16283C', 'stroke-width':2.2}, svg);
+  if(opts.name) label(svg, cx, cy + 4, opts.name, '#5D6D7E', 'middle', 11);
+  var groups = { up:[], down:[], left:[], right:[] };
+  forces.forEach(function(f){ groups[f.d].push(f); });
+  Object.keys(groups).forEach(function(d){
+    var list = groups[d], n = list.length;
+    list.forEach(function(f, i){
+      var off = (i - (n-1)/2) * (n > 1 ? 34 : 0);
+      var L = len(f.m, d), c = FORCE[f.k].c, txt = FORCE[f.k].sym + ' ' + f.m + ' N';
+      if(d === 'up'){
+        arrow(svg, cx + off, cy - half, cx + off, cy - half - L, c, 4.5);
+        if(n > 1) label(svg, cx + off + (i === 0 ? -10 : 10), cy - half - L + 13, txt, c, i === 0 ? 'end' : 'start', 18);
+        else label(svg, cx + 12, cy - half - L + 12, txt, c, 'start', 18);
+      } else if(d === 'down'){
+        arrow(svg, cx + off, cy + half, cx + off, cy + half + L, c, 4.5);
+        if(n > 1) label(svg, cx + off + (i === 0 ? -10 : 10), cy + half + L - 4, txt, c, i === 0 ? 'end' : 'start', 18);
+        else label(svg, cx + 12, cy + half + L - 4, txt, c, 'start', 18);
+      } else if(d === 'right'){
+        arrow(svg, cx + half, cy + off, cx + half + L, cy + off, c, 4.5);
+        label(svg, cx + half + L + 8, cy + off + 6, txt, c, 'start', 18);
+      } else {
+        arrow(svg, cx - half, cy + off, cx - half - L, cy + off, c, 4.5);
+        label(svg, cx - half - L - 8, cy + off + 6, txt, c, 'end', 18);
+      }
+    });
+  });
+}
+function sumDir(forces, d){ return forces.filter(function(f){ return f.d === d; }).reduce(function(s,f){ return s + f.m; }, 0); }
+function listDir(forces, d){
+  var l = forces.filter(function(f){ return f.d === d; });
+  if(!l.length) return '0 N';
+  if(l.length === 1) return l[0].m + ' N';
+  return '(' + l.map(function(f){ return f.m; }).join(' + ') + ') N';
+}
+function describeForces(forces){
+  return forces.map(function(f){ return FORCE[f.k].name + ' ' + f.m + ' newtons ' + f.d; }).join(', ') + '.';
+}
+
+/* =========================================================
+   ramp helpers and renderer (same as page 5)
+   ========================================================= */
+function fmt(x){ var r = Math.round(x*100)/100; return String(r); }
+function fmt3(x){ return String(Math.round(x*1000)/1000); }
+function weightOf(m){ return Math.round(m*98)/10; }           /* m × 9.8, no float noise */
+function parseNum(s){ s = String(s).replace(/,/g,'').trim(); if(!/^[-+]?(\d+\.?\d*|\.\d+)/.test(s)) return NaN; return parseFloat(s); }
+function close(x, ans){ return Math.abs(x - ans) <= Math.max(0.011, Math.abs(ans)*0.01); }
+function lock(ids, on){ ids.forEach(function(id){ el(id).disabled = on; }); }
+function onEnter(ids, fn){ ids.forEach(function(id){ el(id).addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); fn(); } }); }); }
+function renderTally(node, types, tally){
+  node.innerHTML = Object.keys(types).map(function(k){
+    var c = tally[k], miss = c.t > c.r;
+    return '<div class="tcell' + (miss ? ' miss' : '') + '"><span class="tl">' + types[k] + '</span><span class="tv">' + c.r + '/' + c.t + '</span></div>';
+  }).join('');
+}
+function newTally(types){ var t = {}; Object.keys(types).forEach(function(k){ t[k] = {r:0,t:0}; }); return t; }
+function clean(x){ return Math.round(x*1e6)/1e6; }              /* trims float noise like 48.99999999 */
+var RAD = Math.PI/180;
+function sinD(t){ return Math.sin(t*RAD); }
+function cosD(t){ return Math.cos(t*RAD); }
+/* split F_grav on a ramp tilted th degrees */
+function splitG(W, th){ return { par:clean(W*sinD(th)), perp:clean(W*cosD(th)) }; }
+
+/* the two pieces of gravity, drawn in gravity's colour with dashed shafts */
+FORCE.gpar  = { c:'#B23A2B', sym:'F<tspan baseline-shift="sub" font-size="70%">grav∥</tspan>', html:'F<sub>grav∥</sub>', name:'parallel piece of gravity' };
+FORCE.gperp = { c:'#B23A2B', sym:'F<tspan baseline-shift="sub" font-size="70%">grav⊥</tspan>', html:'F<sub>grav⊥</sub>', name:'perpendicular piece of gravity' };
+var INC_DIR = { g:'straight down', n:'straight out of the ramp', f:'up the ramp', gpar:'down the ramp', gperp:'into the ramp' };
+
+/* =========================================================
+   inclined-plane renderer
+   The ramp runs down to the right at th degrees, then the floor runs flat.
+   Arrows start at the centre of the box; F_grav is drawn LEN px long and
+   every other force is scaled to it.
+   o = { th, W (F_grav in N), forces:[{k:'g'|'n'|'f'|'gpar'|'gperp', m, ghost}],
+         nums (show N values), split (dotted lines that close the gravity rectangle),
+         tri (gravity triangle with θ marked at the box), axes (tilted dashed axes),
+         angle (text for the ramp-angle mark), tag (top-left caption),
+         cx, cy, len }
+   ========================================================= */
+function drawIncline(svg, o){
+  clearSvg(svg);
+  var cx = o.cx || 230, cy = o.cy || 140, LEN = o.len || 122, half = 26, minLen = 26, FS = 17;
+  var th = o.th || 0, c = cosD(th), s = sinD(th);
+  var d = [c, s], nv = [s, -c], ni = [-s, c], up = [-c, -s];   /* down the ramp, out of it, into it, up it */
+  function at(p, u, t){ return [p[0] + u[0]*t, p[1] + u[1]*t]; }
+  /* labels get a white halo so they stay readable where they cross the ramp line */
+  function lab(parent, x, y, html, col, an, size){
+    var t = label(parent, x, y, html, col, an, size);
+    t.setAttribute('stroke', '#fff'); t.setAttribute('stroke-width', 4); t.setAttribute('stroke-linejoin', 'round'); t.setAttribute('paint-order', 'stroke');
+    return t;
+  }
+  var O = [cx, cy], Q = at(O, nv, -half);                       /* Q: middle of the box's bottom face */
+
+  /* ground: ramp from far up-left down to corner C, then flat floor to the right */
+  var T0 = Math.min(300, (492 - Q[0]) / c, s > 0.001 ? (342 - Q[1]) / s : 1e9);
+  var C = at(Q, d, T0), A = at(Q, d, -900);
+  svgEl('path', {d:'M'+A[0]+' '+A[1]+' L'+C[0]+' '+C[1]+' L900 '+C[1]+' L900 1400 L'+A[0]+' 1400 Z', fill:'#E8EEF3'}, svg);
+  svgEl('path', {d:'M'+A[0]+' '+A[1]+' L'+C[0]+' '+C[1]+' L900 '+C[1], fill:'none', stroke:'#16283C', 'stroke-width':2.2, 'stroke-linejoin':'round'}, svg);
+
+  /* ramp angle, marked at the bottom corner */
+  if(o.angle && th > 0){
+    var R = 46, e1 = [C[0] - R, C[1]], e2 = [C[0] - R*c, C[1] - R*s];
+    svgEl('line', {x1:C[0], y1:C[1], x2:C[0] - R - 34, y2:C[1], stroke:'#7E8E9D', 'stroke-width':1.4, 'stroke-dasharray':'5 4'}, svg);
+    svgEl('path', {d:'M'+e1[0]+' '+e1[1]+' A'+R+' '+R+' 0 0 1 '+e2[0]+' '+e2[1], fill:'none', stroke:'#16283C', 'stroke-width':1.6}, svg);
+    if(th >= 28) label(svg, C[0] - (R+24)*cosD(th/2), C[1] - (R+24)*sinD(th/2) + 5, o.angle, '#16283C', 'middle', 16);
+    else label(svg, C[0] - R + 2, C[1] + 22, o.angle, '#16283C', 'middle', 16);
+  }
+
+  /* tilted axes */
+  if(o.axes){
+    [[d, 175, '∥'], [nv, 132, '⊥']].forEach(function(ax){
+      var p1 = at(O, ax[0], -ax[1]), p2 = at(O, ax[0], ax[1]), pl = at(O, ax[0], ax[1] + 16);
+      svgEl('line', {x1:p1[0], y1:p1[1], x2:p2[0], y2:p2[1], stroke:'#7E8E9D', 'stroke-width':1.5, 'stroke-dasharray':'7 5'}, svg);
+      label(svg, pl[0], pl[1] + 6, ax[2], '#3D4F63', 'middle', 19);
+    });
+  }
+
+  /* box, tilted with the ramp */
+  svgEl('rect', {x:cx-half, y:cy-half, width:half*2, height:half*2, rx:3, fill:'#fff', stroke:'#16283C', 'stroke-width':2.2, transform:'rotate(' + th + ' ' + cx + ' ' + cy + ')'}, svg);
+
+  var W = o.W || 1, scale = LEN / W;
+  function txt(k, m){ return FORCE[k].sym + (o.nums ? ' ' + fmt(m) + ' N' : ''); }
+  function shaft(gr, x1, y1, x2, y2, col, dashed){
+    var a = arrow(gr, x1, y1, x2, y2, col, 4.5);
+    if(dashed){ a.firstChild.setAttribute('stroke-dasharray', '8 5'); a.firstChild.setAttribute('stroke-linecap', 'butt'); }
+    return a;
+  }
+
+  if(o.tri){
+    /* F_grav as the hypotenuse; ⊥ from the box, ∥ from the end of ⊥ to the tip of F_grav */
+    var G = [cx, cy + LEN], P = at(O, ni, LEN*c), col = FORCE.g.c;
+    var mk = at(P, nv, 12), mk2 = at(mk, d, 12), mk3 = at(P, d, 12);
+    svgEl('path', {d:'M'+mk[0]+' '+mk[1]+' L'+mk2[0]+' '+mk2[1]+' L'+mk3[0]+' '+mk3[1], fill:'none', stroke:'#5D6D7E', 'stroke-width':1.4}, svg);
+    shaft(svg, O[0], O[1], G[0], G[1], col, false);
+    shaft(svg, O[0], O[1], P[0], P[1], col, true);
+    shaft(svg, P[0], P[1], G[0], G[1], col, true);
+    var r = 40, a1 = [cx, cy + r], a2 = at(O, ni, r);
+    svgEl('path', {d:'M'+a1[0]+' '+a1[1]+' A'+r+' '+r+' 0 0 1 '+a2[0]+' '+a2[1], fill:'none', stroke:'#16283C', 'stroke-width':1.6}, svg);
+    label(svg, cx - 57*sinD(th/2), cy + 57*cosD(th/2) + 5, 'θ', '#16283C', 'middle', 16);
+    /* each label sits outside its side of the triangle */
+    var mg = [cx + 12, cy + LEN*0.6], mp = at(at(O, ni, LEN*c/2), up, 24), mq = at(at(P, d, LEN*s/2), ni, 22);
+    label(svg, mg[0], mg[1], FORCE.g.sym, col, 'start', 18);
+    label(svg, mg[0], mg[1] + 24, 'hypotenuse', '#5D6D7E', 'start', 13).setAttribute('font-weight', 400);
+    label(svg, mp[0], mp[1], FORCE.gperp.sym, col, 'end', 18);
+    label(svg, mp[0], mp[1] + 24, 'next to θ', '#5D6D7E', 'end', 13).setAttribute('font-weight', 400);
+    label(svg, mq[0], mq[1] + 8, FORCE.gpar.sym, col, 'end', 18);
+    label(svg, mq[0], mq[1] + 32, 'across from θ', '#5D6D7E', 'end', 13).setAttribute('font-weight', 400);
+  } else {
+    var U = { g:[0,1], n:nv, f:up, gpar:d, gperp:ni }, tips = {};
+    if(o.split){
+      /* dotted lines from each piece to the tip of F_grav, closing the rectangle */
+      var G2 = [cx, cy + LEN], tp = at(O, d, LEN*s), tq = at(O, ni, LEN*c);
+      [tp, tq].forEach(function(t){ svgEl('line', {x1:t[0], y1:t[1], x2:G2[0], y2:G2[1], stroke:'#B23A2B', 'stroke-width':1.3, 'stroke-dasharray':'2 4', opacity:.7}, svg); });
+    }
+    o.forces.forEach(function(f){
+      if(f.m < 0.005) return;
+      var u = U[f.k], L = Math.max(minLen, f.m * scale), tip = at(O, u, L), col = FORCE[f.k].c;
+      var gr = svgEl('g', f.ghost ? {opacity:.3} : {}, svg);
+      shaft(gr, O[0], O[1], tip[0], tip[1], col, f.k === 'gpar' || f.k === 'gperp');
+      var x = tip[0], y = tip[1], an;
+      if(f.k === 'f'){
+        /* friction is short and points up the slope, where there's no room: label it on two lines just above the box */
+        lab(gr, cx + 8, cy - 64, FORCE.f.sym, col, 'end', FS);
+        if(o.nums) lab(gr, cx + 8, cy - 40, fmt(f.m) + ' N', col, 'end', FS);
+        return;
+      }
+      if(f.k === 'n'){ x += 10; y += 4; an = 'start'; }
+      else if(f.k === 'g'){ if(th > 45){ x -= 10; an = 'end'; } else { x += 10; an = 'start'; } y += 4; }
+      else if(f.k === 'gperp'){ x -= 10; y += 8; an = 'end'; }
+      else { x += 8; y += 16; an = 'start'; }
+      lab(gr, x, y, txt(f.k, f.m), col, an, FS);
+    });
+    svgEl('circle', {cx:cx, cy:cy, r:3.2, fill:'#16283C'}, svg);
+  }
+  if(o.tag) lab(svg, 16, 28, o.tag, '#5D6D7E', 'start', 14);
+}
+function describeIncline(o){
+  var parts = o.forces.map(function(f){
+    return FORCE[f.k].name + (o.nums ? ' ' + fmt(f.m) + ' newtons' : '') + ' ' + INC_DIR[f.k] + (f.ghost ? ' (faded: it has been split into its two pieces)' : '');
+  });
+  return (o.tag ? 'A ' + o.tag : 'A box') + ' on a ramp tilted ' + o.th + ' degrees. Forces: ' + parts.join(', ') + '.';
+}
+
+/* =========================================================
+   exam helpers
+   ========================================================= */
+function each(list, fn){ Array.prototype.forEach.call(list, fn); }
+/* 'F_grav∥' -> 'F<sub>grav∥</sub>' so the question text stays readable */
+function fx(s){ return String(s).replace(/F_(grav∥|grav⊥|grav|norm|frict|tens|app|air|net)/g, 'F<sub>$1</sub>'); }
+
+/* =========================================================
+   the exam
+   Questions are fixed so the class can go over them together.
+   If you change a question, bump STORE so old saved answers
+   don't land on the wrong question.
+   type 'mc'  : opts, ans (index), why
+   type 'num' : label, unit ('' = no unit), ans, answer, traps, work, why
+   type 'vec' : same as 'num', plus dir, dirName, zero
+   traps: common wrong answers, each with a note on the mistake
+   ========================================================= */
+var STORE = 'jc-physics-u3-exam-v1';
+var TOPICS = [
+  { key:'first', name:"Newton's First Law",         page:'Page 1', url:'/physics/forces/newtons-first-law/' },
+  { key:'net',   name:'Net Force &amp; F = ma',     page:'Page 2', url:'/physics/forces/net-force/' },
+  { key:'gn',    name:'Gravity &amp; Normal Force', page:'Page 3', url:'/physics/forces/gravity-normal/' },
+  { key:'frict', name:'Friction',                   page:'Page 4', url:'/physics/forces/friction/' },
+  { key:'ramp',  name:'Inclined Planes',            page:'Page 5', url:'/physics/forces/inclined-planes/' },
+  { key:'third', name:"Newton's Third Law",         page:'Page 6', url:'/physics/forces/newtons-third-law/' }
+];
+var RADIANS = 'Your calculator looks like it’s in radians mode. Switch it to degrees: sin 30 should give 0.5.';
+
+var EXAM = [
+  /* ---------------- page 1 · Newton's first law ---------------- */
+  { topic:'first', type:'mc',
+    stem:'A box is already sliding to the right across the floor. The free-body diagram shows every force acting on it. What is the box doing?',
+    fig:{ name:'box', forces:[{k:'n',d:'up',m:150},{k:'g',d:'down',m:150},{k:'a',d:'right',m:70},{k:'f',d:'left',m:70}] },
+    opts:['Speeding up to the right','Moving to the right at a constant speed','Slowing down, because friction acts on it','Standing still, because the forces are balanced'],
+    ans:1,
+    why:'Vertical: 150 − 150 = 0. Horizontal: 70 − 70 = 0. Both directions cancel, so F_net = 0 and the velocity doesn’t change. The box was already sliding right, so it keeps sliding right at the same speed. Balanced doesn’t mean standing still.' },
+  { topic:'first', type:'mc',
+    stem:'A rope pulls a sled across the snow. The free-body diagram shows every force acting on it. Are the forces balanced?',
+    fig:{ name:'sled', forces:[{k:'n',d:'up',m:240},{k:'g',d:'down',m:240},{k:'t',d:'right',m:85},{k:'f',d:'left',m:80}] },
+    opts:['Balanced, because the vertical forces cancel','Balanced, because the tension and friction arrows are about the same length','Unbalanced, because the horizontal forces don’t cancel','Unbalanced, because the vertical forces don’t cancel'],
+    ans:2,
+    why:'Vertical: 240 − 240 = 0, but that’s only half the check. Horizontal: 85 − 80 = 5 N right. One direction that doesn’t cancel is enough to make the forces unbalanced. The two arrows look almost the same because 85 N and 80 N are close, so go by the numbers.' },
+  { topic:'first', type:'mc',
+    stem:'Which of these has the <b>most</b> inertia?',
+    opts:['A 0.2 kg baseball thrown at 40 m/s','A 6 kg bowling ball rolling at 8 m/s','A 1 kg toy cart rolling at 3 m/s','A 60 kg boulder sitting still'],
+    ans:3,
+    why:'Inertia depends only on mass, not on speed. The boulder has the most mass, so it has the most inertia, even sitting still. It would be the hardest one to get moving, or to stop once it was moving.' },
+  { topic:'first', type:'mc',
+    stem:'A car driving down a straight road brakes suddenly, and the passengers lurch forward. Why?',
+    opts:['The seats push them forward','Their bodies keep moving forward because of inertia while the car slows down','A force of motion carries them forward','The brakes push them forward'],
+    ans:1,
+    why:'Nothing pushes the passengers forward. They were moving forward with the car, and inertia keeps them moving forward when the car slows down under them. Their seat belts supply the unbalanced force that slows them down with the car.' },
+  { topic:'first', type:'mc',
+    stem:'Which of these has <b>unbalanced</b> forces acting on it?',
+    opts:['A lamp hanging still from a chain','A car on cruise control on a straight, level highway','A skydiver falling at a constant speed','A rock just after it’s dropped off a bridge'],
+    ans:3,
+    why:'The rock has only F_grav acting on it (ignoring air resistance), and nothing cancels it, so it speeds up as it falls. The lamp is at rest, and the car and the skydiver move at a constant speed in a straight line, so their forces are balanced.' },
+
+  /* ---------------- page 2 · net force and F = ma ---------------- */
+  { topic:'net', type:'vec',
+    stem:'Two students push a box across the floor while friction pushes back. What is the net force on the box?',
+    fig:{ name:'box', forces:[{k:'n',d:'up',m:180},{k:'g',d:'down',m:180},{k:'a',d:'right',m:45},{k:'a',d:'right',m:35},{k:'f',d:'left',m:60}] },
+    label:'Net force', unit:'N', dirName:'net force', zero:'F_net = 0',
+    ans:20, dir:'right', answer:'20 N right',
+    traps:[
+      { v:140, m:'It looks like you added all three sideways forces. Forces pointing opposite ways <b>subtract</b>.' },
+      { v:80,  m:'That’s the two pushes added together. Friction pushes back the other way, so subtract it.' },
+      { v:500, m:'It looks like you added every force on the diagram. Only forces pointing the same way add.' },
+      { v:10,  m:'The two pushes point the same way, so they add. Only friction subtracts.' }
+    ],
+    work:['Vertical: 180 N up − 180 N down = 0','Horizontal: (45 + 35) N right − 60 N left = 20 N right','F_net = <b>20 N right</b>'],
+    why:'The two pushes point the same way, so they add first. Friction points the other way, so it subtracts. The net force points toward the bigger side.' },
+  { topic:'net', type:'vec',
+    stem:'A cable pulls an 800 kg elevator upward. The free-body diagram shows every force acting on it. What is the elevator’s acceleration?',
+    fig:{ name:'elevator', forces:[{k:'t',d:'up',m:9040},{k:'g',d:'down',m:7840}] },
+    label:'Acceleration', unit:'m/s²', dirName:'acceleration', zero:'a = 0',
+    ans:1.5, dir:'up', answer:'1.5 m/s² up',
+    traps:[
+      { v:11.3, m:'That’s the tension divided by the mass. Use the <b>net</b> force.' },
+      { v:9.8,  m:'That’s F_grav divided by the mass, which is just g. Use the <b>net</b> force.' },
+      { v:1200, m:'That’s the net force, in N. Divide it by the mass to get the acceleration.' },
+      { v:21.1, m:'It looks like you added the two forces. They point opposite ways, so subtract.' }
+    ],
+    work:['F_net = 9040 N up − 7840 N down = 1200 N up','a = F_net / m = 1200 N / 800 kg = <b>1.5 m/s² up</b>'],
+    why:'The acceleration always points the same way as the net force.' },
+  { topic:'net', type:'mc',
+    stem:'A net force gives a 2 kg cart an acceleration of 6 m/s². The same net force acts on a 6 kg cart. What is the 6 kg cart’s acceleration?',
+    opts:['18 m/s²','6 m/s²','2 m/s²','3 m/s²'],
+    ans:2,
+    why:'The net force is 2 kg × 6 m/s² = 12 N. On the 6 kg cart, a = 12 N / 6 kg = 2 m/s². Three times the mass with the same net force gives one third of the acceleration.' },
+  { topic:'net', type:'num',
+    stem:'What net force does it take to give a 1200 kg car an acceleration of 2.5 m/s²?',
+    label:'Net force', unit:'N',
+    ans:3000, answer:'3000 N',
+    traps:[
+      { v:480,    m:'You divided. F_net = m · a, so multiply the mass by the acceleration.' },
+      { v:11760,  m:'That’s the car’s weight, m × 9.8. Use the acceleration in the problem, 2.5 m/s².' },
+      { v:1202.5, m:'You added. F_net = m · a, so multiply the mass by the acceleration.' }
+    ],
+    work:['F_net = m · a = 1200 kg × 2.5 m/s² = <b>3000 N</b>'] },
+  { topic:'net', type:'num',
+    stem:'A box weighs 196 N. A net force of 50 N acts on it. What is its acceleration?',
+    label:'Acceleration', unit:'m/s²',
+    ans:2.5, answer:'2.5 m/s²',
+    traps:[
+      { v:0.255, m:'You divided by the weight. a = F_net / m needs the <b>mass</b> in kg, not the weight in N.' },
+      { v:3.92,  m:'That’s the weight divided by the net force. Find the mass first, then a = F_net / m.' }
+    ],
+    work:['m = F_grav / g = 196 N / 9.8 = 20 kg','a = F_net / m = 50 N / 20 kg = <b>2.5 m/s²</b>'],
+    why:'Weight is a force in N, not a mass. Find the mass first, then divide.' },
+
+  /* ---------------- page 3 · gravity and normal force ---------------- */
+  { topic:'gn', type:'num',
+    stem:'A 68 kg student stands on a bathroom scale. What is the force of gravity on the student?',
+    label:'Force of gravity', unit:'N',
+    ans:666.4, answer:'666.4 N',
+    traps:[
+      { v:68,   m:'That’s the mass in kg. Multiply by 9.8 to get the weight in N.' },
+      { v:680,  m:'Use g = 9.8 m/s², not 10.' },
+      { v:6.94, m:'You divided. F_grav = m · g, so multiply.' }
+    ],
+    work:['F_grav = m · g = 68 kg × 9.8 m/s² = <b>666.4 N</b>'] },
+  { topic:'gn', type:'mc',
+    stem:'An astronaut weighs 833 N on Earth. What are the astronaut’s mass and weight on the Moon, where g = 1.6 m/s²?',
+    opts:['Mass 85 kg, weight 136 N','Mass 85 kg, weight 833 N','Mass 13.9 kg, weight 136 N','Mass 833 kg, weight 1332.8 N'],
+    ans:0,
+    why:'Find the mass first: m = 833 N / 9.8 = 85 kg. Mass doesn’t change from place to place, so it’s still 85 kg on the Moon. The weight does change: F_grav = 85 kg × 1.6 = 136 N.' },
+  { topic:'gn', type:'num',
+    stem:'A 6 kg box rests on a table. You press straight down on it with 25 N. What is the normal force on the box?',
+    label:'Normal force', unit:'N',
+    ans:83.8, answer:'83.8 N',
+    traps:[
+      { v:58.8, m:'That’s the box’s weight. Your push also presses the box into the table, so the table has to push back harder.' },
+      { v:33.8, m:'You subtracted your push. A push down points the same way as gravity, so it adds.' },
+      { v:31,   m:'You added the push to the mass. Find F_grav = 6 × 9.8 first.' },
+      { v:25,   m:'That’s just your push. The table also holds up the box’s weight.' }
+    ],
+    work:['F_grav = 6 kg × 9.8 = 58.8 N down','Down: 58.8 N + 25 N = 83.8 N','Up = down: F_norm = <b>83.8 N</b> up'],
+    why:'The box isn’t moving up or down, so the table pushes up with whatever it takes to cancel everything pushing down.' },
+  { topic:'gn', type:'mc',
+    stem:'A 15 kg box sits on the floor. You pull straight up on it with 60 N, but it stays on the floor. What is the normal force?',
+    opts:['147 N','207 N','60 N','87 N'],
+    ans:3,
+    why:'F_grav = 15 × 9.8 = 147 N. Your pull holds up 60 N of that, so the floor only has to push up with 147 − 60 = 87 N. A pull up makes the normal force smaller.' },
+  { topic:'gn', type:'mc',
+    stem:'You press a book flat against a wall with a sideways push. Which way does the wall’s normal force on the book point?',
+    opts:['Straight up','Straight down','Straight out from the wall, opposite your push','Into the wall, the same way as your push'],
+    ans:2,
+    why:'The normal force points straight out of the surface. A wall stands straight up and down, so its normal force is sideways, pushing the book away from the wall. Only a floor or a table pushes straight up.' },
+
+  /* ---------------- page 4 · friction ---------------- */
+  { topic:'frict', type:'mc',
+    stem:'Which of these involves <b>kinetic</b> friction?',
+    opts:['A car skidding to a stop with its brakes locked','A car parked on a steep hill','A box riding in the bed of a pickup truck without sliding around','A heavy dresser that won’t budge when you push it'],
+    ans:0,
+    why:'Locked wheels slide along the road, and sliding means kinetic friction. Nothing is sliding in the other three, so their friction is static. The box in the truck is moving, but it isn’t sliding across the truck bed.' },
+  { topic:'frict', type:'mc',
+    stem:'A 300 N crate sits on a level floor, and the coefficient of friction is 0.4. You push the crate sideways with 50 N, and it doesn’t move. How big is the friction force on it?',
+    opts:['0 N','50 N','120 N','170 N'],
+    ans:1,
+    why:'The crate isn’t sliding, so this is static friction, and static friction matches the push: 50 N. That’s why F_net = 0. 120 N is μ · F_norm, which is only for something that’s sliding.' },
+  { topic:'frict', type:'num',
+    stem:'A 45 kg crate slides across a level floor. The coefficient of friction is 0.35. What is the force of friction on the crate?',
+    label:'Force of friction', unit:'N',
+    ans:154.35, answer:'154.35 N',
+    traps:[
+      { v:15.75, m:'That’s μ times the mass. μ multiplies a <b>force</b>: find F_norm first.' },
+      { v:441,   m:'That’s the normal force. Multiply it by μ.' },
+      { v:1260,  m:'You divided by μ. F_frict = μ · F_norm, so multiply.' }
+    ],
+    work:['F_norm = F_grav = 45 kg × 9.8 = 441 N','F_frict = μ · F_norm = 0.35 × 441 N = <b>154.35 N</b>'],
+    why:'Friction points opposite the way the crate slides.' },
+  { topic:'frict', type:'num',
+    stem:'A steady 58.8 N push slides a 20 kg dresser across a level floor at a constant speed. What is the coefficient of friction?',
+    label:'Coefficient of friction μ', unit:'',
+    ans:0.3, answer:'0.3',
+    traps:[
+      { v:2.94, m:'You divided by the mass. μ = F_frict / F_norm, and F_norm is a force in N.' },
+      { v:3.33, m:'That’s upside down. μ = F_frict / F_norm.' }
+    ],
+    work:['Constant speed, so the forces are balanced: F_frict = 58.8 N','F_norm = 20 kg × 9.8 = 196 N','μ = F_frict / F_norm = 58.8 N / 196 N = <b>0.3</b>'],
+    why:'μ has no unit, because it’s one force divided by another.' },
+  { topic:'frict', type:'num',
+    stem:'A 25 kg box is pushed across a level floor with a 120 N force. The coefficient of friction is 0.3. What is the box’s acceleration?',
+    label:'Acceleration', unit:'m/s²',
+    ans:1.86, answer:'1.86 m/s²',
+    traps:[
+      { v:4.8,  m:'That’s the push divided by the mass. Subtract friction first to get the <b>net</b> force.' },
+      { v:4.5,  m:'It looks like friction came out as μ × mass. Use F_frict = μ · F_norm, with F_norm in N.' },
+      { v:7.74, m:'You added friction to the push. Friction pushes back against the push, so subtract it.' },
+      { v:2.94, m:'That’s the friction divided by the mass. Use the net force: the push minus friction.' }
+    ],
+    work:['F_norm = 25 kg × 9.8 = 245 N','F_frict = 0.3 × 245 N = 73.5 N','F_net = 120 N − 73.5 N = 46.5 N','a = F_net / m = 46.5 N / 25 kg = <b>1.86 m/s²</b>'] },
+
+  /* ---------------- page 5 · inclined planes ---------------- */
+  { topic:'ramp', type:'mc',
+    stem:'A box sits on a frictionless ramp. You make the ramp steeper. What happens to F_grav∥ and the normal force?',
+    opts:['F_grav∥ gets bigger, and F_norm gets smaller','Both get bigger','F_grav∥ gets smaller, and F_norm gets bigger','Neither changes, because F_grav stays the same'],
+    ans:0,
+    why:'F_grav∥ = F_grav · sin θ, and sin θ grows as the ramp gets steeper. F_norm = F_grav⊥ = F_grav · cos θ, and cos θ shrinks. F_grav itself doesn’t change. Only the way it splits into the two pieces does.' },
+  { topic:'ramp', type:'num',
+    stem:'A 12 kg box sits on a ramp tilted at 25°. What is F_grav∥, the piece of gravity that pulls it down the ramp?',
+    fig:{ ramp:{ th:25, W:117.6, angle:'25°', tag:'12 kg box', forces:[{k:'g',m:117.6}] } },
+    label:'F_grav∥', unit:'N',
+    ans:49.70, answer:'49.70 N',
+    traps:[
+      { v:106.58, m:'That’s F_grav⊥. The piece <b>along</b> the ramp uses sin θ.' },
+      { v:117.6,  m:'That’s all of F_grav. Multiply it by sin θ to get the piece along the ramp.' },
+      { v:5.07,   m:'You split the mass. Split F_grav, the force in N.' },
+      { v:15.56,  m:RADIANS }
+    ],
+    work:['F_grav = 12 kg × 9.8 = 117.6 N','F_grav∥ = F_grav · sin θ = 117.6 N × sin 25° = <b>49.70 N</b> down the ramp'] },
+  { topic:'ramp', type:'num',
+    stem:'A 40 kg crate slides down a loading ramp tilted at 20°. What is the normal force on the crate?',
+    label:'Normal force', unit:'N',
+    ans:368.36, answer:'368.36 N',
+    traps:[
+      { v:392,    m:'That’s all of F_grav. On a ramp, the normal force only balances the piece of gravity pressing into the ramp, F_grav⊥.' },
+      { v:134.07, m:'That’s F_grav∥. The normal force balances F_grav⊥, which uses cos θ.' },
+      { v:37.59,  m:'You split the mass. Split F_grav, the force in N.' },
+      { v:159.97, m:RADIANS }
+    ],
+    work:['F_grav = 40 kg × 9.8 = 392 N','F_norm = F_grav⊥ = F_grav · cos θ = 392 N × cos 20° = <b>368.36 N</b>'],
+    why:'The crate doesn’t sink into the ramp or lift off it, so the forces on the ⊥ axis cancel. That makes F_norm less than the crate’s weight.' },
+  { topic:'ramp', type:'mc',
+    stem:'A 3 kg block and a 30 kg block slide down the same frictionless ramp, tilted at 35°. What is the acceleration of the 30 kg block?',
+    opts:['56.21 m/s², ten times the 3 kg block’s','5.62 m/s², the same as the 3 kg block’s','0.56 m/s², one tenth of the 3 kg block’s','8.03 m/s², the same as the 3 kg block’s'],
+    ans:1,
+    why:'F_grav = 30 × 9.8 = 294 N, so F_grav∥ = 294 N × sin 35° = 168.63 N and a = 168.63 N / 30 kg = 5.62 m/s². The 30 kg block has ten times the F_grav∥ of the 3 kg block, but also ten times the mass, so both have a = 9.8 × sin 35° = 5.62 m/s². 8.03 m/s² uses cos instead of sin.' },
+  { topic:'ramp', type:'num',
+    stem:'An 8 kg box slides down a ramp tilted at 30°. The coefficient of friction is 0.25. What is the box’s acceleration?',
+    fig:{ ramp:{ th:30, W:78.4, angle:'30°', tag:'8 kg box · μ = 0.25', forces:[{k:'n',m:67.9},{k:'f',m:16.97},{k:'g',m:78.4}] } },
+    label:'Acceleration', unit:'m/s²',
+    ans:2.7782, answer:'2.78 m/s² down the ramp',
+    traps:[
+      { v:4.9,   m:'That leaves out friction. Friction points up the ramp, so subtract it from F_grav∥ first.' },
+      { v:2.45,  m:'It looks like friction came out as μ × F_grav. On a ramp, F_norm = F_grav⊥, so F_frict = μ · F_grav⊥.' },
+      { v:7.02,  m:'You added friction. It points up the ramp, against the sliding, so subtract it.' },
+      { v:4.65,  m:'It looks like friction came out as μ × mass. μ multiplies F_norm, a force in N.' },
+      { v:10.06, m:RADIANS }
+    ],
+    work:['F_grav = 8 kg × 9.8 = 78.4 N','F_grav∥ = 78.4 N × sin 30° = 39.2 N','F_norm = F_grav⊥ = 78.4 N × cos 30° = 67.90 N','F_frict = μ · F_norm = 0.25 × 67.90 N = 16.97 N up the ramp','F_net = 39.2 N − 16.97 N = 22.23 N down the ramp','a = F_net / m = 22.23 N / 8 kg = <b>2.78 m/s²</b> down the ramp'] },
+
+  /* ---------------- page 6 · Newton's third law ---------------- */
+  { topic:'third', type:'mc',
+    stem:'A tow truck’s cable pulls a car forward. If that’s the action, what is the reaction?',
+    opts:['The car pulls backward on the cable','The car pulls forward on the cable','The road’s friction pushes backward on the car','Earth pulls down on the car'],
+    ans:0,
+    why:'Swap the two objects and flip the direction: the cable pulls the car forward, so the car pulls the cable backward, just as hard. Friction and gravity also act on the car, so neither one can be the cable’s partner.' },
+  { topic:'third', type:'mc',
+    stem:'A 2000 kg truck and a 1000 kg car collide head-on. How does the force of the truck on the car compare to the force of the car on the truck?',
+    opts:['The truck’s force is twice as big','The car’s force is twice as big','They’re the same size','It depends on which one was going faster'],
+    ans:2,
+    why:'Truck on car and car on truck are an action-reaction pair, so they’re always the same size, no matter how heavy or fast either one is.' },
+  { topic:'third', type:'mc',
+    stem:'In that same collision, which vehicle has the bigger acceleration?',
+    opts:['The truck, because it pushes harder','The car: the same size force on half the mass gives twice the acceleration','Neither. Equal forces mean equal accelerations.','Neither. The two forces cancel, so neither one accelerates.'],
+    ans:1,
+    why:'From the second law, a = F_net / m. Both feel the same size force, but the car has half the mass, so its acceleration is twice as big. The forces don’t cancel, because they act on different objects.' },
+  { topic:'third', type:'mc',
+    stem:'A rocket fires its engine in deep space, where there’s no air. What pushes the rocket forward?',
+    opts:['The exhaust pushing on the air behind the rocket','Nothing. A rocket can’t speed up where there’s no air.','The exhaust gas pushing forward on the rocket','The rocket’s inertia'],
+    ans:2,
+    why:'The engine pushes hot gas out the back (action), so the gas pushes the rocket forward (reaction). The rocket pushes on its own exhaust, not on air, which is why rockets work in space. Inertia isn’t a force, so it can’t speed anything up.' },
+  { topic:'third', type:'mc',
+    stem:'The forces in an action-reaction pair are equal and opposite. Why don’t they cancel each other out?',
+    opts:['The reaction is always a little smaller than the action','The reaction comes just after the action, so they’re never there at the same time','They do cancel, which is why most objects stay at rest','They act on different objects, so they’re never on the same free-body diagram'],
+    ans:3,
+    why:'Forces only cancel when they act on the same object. One force in the pair acts on each object, so each free-body diagram has only one of them. The two forces are exactly equal, and they start and stop at the same instant.' }
+];
+
+/* =========================================================
+   building and grading
+   ========================================================= */
+var STATE = [];   // per question: null (not answered) | true | false
+var SAVED = {};   // per answered question: { o } or { v, d }, kept in localStorage
+var KIND_LABEL = { mc:'Multiple choice', num:'Type-in', vec:'Type-in' };
+var LETTERS = 'ABCD';
+
+function save(){ try { localStorage.setItem(STORE, JSON.stringify(SAVED)); } catch(e){} }
+function load(){ try { var s = JSON.parse(localStorage.getItem(STORE) || '{}'); return s && typeof s === 'object' ? s : {}; } catch(e){ return {}; } }
+function forget(){ try { localStorage.removeItem(STORE); } catch(e){} }
+
+function figHtml(q, i){
+  if(!q.fig) return '';
+  return '<div class="scene qfig"><svg id="fig' + i + '" viewBox="0 0 520 360" role="img" aria-labelledby="fig' + i + '-desc"><desc id="fig' + i + '-desc"></desc></svg></div>';
+}
+function drawFig(q, i){
+  if(!q.fig) return;
+  if(q.fig.ramp){
+    drawIncline(el('fig' + i), q.fig.ramp);
+    el('fig' + i + '-desc').textContent = describeIncline(q.fig.ramp);
+  } else {
+    drawFBD(el('fig' + i), q.fig.forces, { name:q.fig.name });
+    el('fig' + i + '-desc').textContent = 'Free-body diagram of the ' + q.fig.name + '. ' + describeForces(q.fig.forces);
+  }
+}
+
+function inputHtml(q, i){
+  if(q.type === 'mc'){
+    return '<div class="opts">' + q.opts.map(function(o, oi){
+      return '<button type="button" class="opt" data-q="' + i + '" data-o="' + oi + '"><span class="letter">' + LETTERS[oi] + '</span>' + fx(o) + '</button>';
+    }).join('') + '</div>';
+  }
+  var h = '<div class="field"><label for="q' + i + '-in">' + fx(q.label) + '</label>' +
+    '<input type="text" id="q' + i + '-in" inputmode="decimal" autocomplete="off" placeholder="Type a number">' +
+    '<span class="unit">' + (q.unit || '(no unit)') + '</span>';
+  if(q.type === 'vec'){
+    h += '<select id="q' + i + '-dir" aria-label="Direction of the ' + q.dirName + '"><option value="">Direction…</option>' +
+      ['up','down','left','right'].map(function(d){ return '<option value="' + d + '">' + d + '</option>'; }).join('') +
+      '<option value="none">none (' + q.zero + ')</option></select>';
+  }
+  return h + '</div><div class="btn-row"><button type="button" class="chk" data-q="' + i + '">Check</button></div>';
+}
+
+function buildExam(){
+  var html = '', n = 0;
+  TOPICS.forEach(function(t, ti){
+    html += '<section id="t-' + t.key + '"><div class="sec-head"><span class="tasktag">Part ' + (ti + 1) + '</span><h2>' + t.name + '</h2></div>' +
+      '<p class="sec-link">Review: <a href="' + t.url + '">' + t.page + ': ' + t.name + '</a></p>';
+    EXAM.forEach(function(q, i){
+      if(q.topic !== t.key) return;
+      n++;
+      html += '<div class="qcard" id="card' + i + '"><div class="qhead"><span class="qnum">Question ' + n + '</span><span class="qkind">' + KIND_LABEL[q.type] + '</span></div>' +
+        '<p class="stem">' + fx(q.stem) + '</p>' + figHtml(q, i) + inputHtml(q, i) + '<div class="fb" id="q' + i + '-fb" aria-live="polite"></div></div>';
+    });
+    html += '</section>';
+  });
+  el('exam').innerHTML = html;
+  el('jump').innerHTML = TOPICS.map(function(t){ return '<a href="#t-' + t.key + '">' + t.name + '</a>'; }).join('') + '<a href="#results">Results</a>';
+  STATE = EXAM.map(function(){ return null; });
+  SAVED = {};
+
+  EXAM.forEach(drawFig);
+  each(document.querySelectorAll('.opt'), function(b){ b.addEventListener('click', function(){ answerMc(Number(b.dataset.q), Number(b.dataset.o)); }); });
+  each(document.querySelectorAll('.chk'), function(b){ b.addEventListener('click', function(){ check(Number(b.dataset.q)); }); });
+  EXAM.forEach(function(q, i){
+    each(el('card' + i).querySelectorAll('input, select'), function(inp){
+      inp.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); check(i); } });
+    });
+  });
+  updateScore();
+}
+
+function finish(i, ok, html, answer){
+  STATE[i] = ok;
+  var card = el('card' + i);
+  card.classList.add(ok ? 'right' : 'wrong');
+  each(card.querySelectorAll('input, select, .chk'), function(x){ x.disabled = true; });
+  setFb(el('q' + i + '-fb'), ok ? 'good' : 'bad', html);
+  SAVED[i] = answer;
+  save();
+  updateScore();
+}
+function hint(i, html){ setFb(el('q' + i + '-fb'), 'hint', html); }
+
+function answerMc(i, oi){
+  if(STATE[i] !== null) return;
+  var q = EXAM[i], ok = oi === q.ans, btns = el('card' + i).querySelectorAll('.opt');
+  each(btns, function(b, bi){
+    b.disabled = true;
+    if(bi === q.ans) b.classList.add('reveal');
+  });
+  btns[oi].classList.add(ok ? 'picked-yes' : 'picked-no');
+  finish(i, ok, '<p><b>' + (ok ? 'Correct.' : 'Not this one. The answer is ' + LETTERS[q.ans] + '.') + '</b> ' + fx(q.why) + '</p>', { o:oi });
+}
+
+function check(i){
+  if(STATE[i] !== null || EXAM[i].type === 'mc') return;
+  var q = EXAM[i], raw = el('q' + i + '-in').value, x = parseNum(raw);
+  var d = q.type === 'vec' ? el('q' + i + '-dir').value : '';
+  if(isNaN(x)){ hint(i, 'Type a number in the box. ' + (q.unit ? 'The unit is already there.' : 'μ has no unit.') + ' This try doesn’t count.'); return; }
+  if(q.type === 'vec' && !d){ hint(i, 'Pick a direction too. ' + (q.dirName === 'net force' ? 'A net force' : 'An acceleration') + ' needs a size <b>and</b> a direction. This try doesn’t count.'); return; }
+  x = Math.abs(x);
+  var sizeOk = close(x, q.ans), ok = sizeOk && (q.type !== 'vec' || d === q.dir), note = '';
+  if(!ok){
+    if(sizeOk) note = 'You had the right size, but not the right direction.';
+    else {
+      var trap = (q.traps || []).filter(function(t){ return close(x, t.v); })[0];
+      if(trap) note = fx(trap.m);
+    }
+  }
+  var head = ok ? 'Correct: ' + q.answer + '.' : 'Not quite. The answer is ' + q.answer + '.';
+  finish(i, ok,
+    '<p><b>' + head + '</b>' + (note ? ' ' + note : '') + '</p>' +
+    (q.work ? '<div class="work">' + q.work.map(fx).join('<br>') + '</div>' : '') +
+    (q.why ? '<p>' + fx(q.why) + '</p>' : ''),
+    { v:raw, d:d });
+}
+
+function updateScore(){
+  var done = STATE.filter(function(s){ return s !== null; }).length;
+  var right = STATE.filter(function(s){ return s === true; }).length;
+  el('bar-score').textContent = done + ' of ' + EXAM.length + ' answered · ' + right + ' correct';
+  el('r-total').innerHTML = right + '<small>of ' + EXAM.length + ' correct</small>';
+  el('r-note').textContent = done === EXAM.length
+    ? 'You’ve answered every question. ' + Math.round(right / EXAM.length * 100) + '% overall.'
+    : done + ' of ' + EXAM.length + ' answered so far. Unanswered questions aren’t counted as wrong.';
+  el('r-body').innerHTML = TOPICS.map(function(t){
+    var idx = [];
+    EXAM.forEach(function(q, i){ if(q.topic === t.key) idx.push(i); });
+    var a = idx.filter(function(i){ return STATE[i] !== null; }).length;
+    var c = idx.filter(function(i){ return STATE[i] === true; }).length;
+    var step;
+    if(a < idx.length) step = '<span class="smallprint">' + (idx.length - a) + ' still to answer</span>';
+    else if(c === idx.length) step = '<span class="tag-ok">Solid</span>';
+    else step = '<span class="tag-no">Review</span> <a href="' + t.url + '">' + t.page + ': ' + t.name + '</a>';
+    return '<tr><td><a href="#t-' + t.key + '">' + t.name + '</a></td><td class="n">' + c + ' of ' + idx.length + '</td><td>' + step + '</td></tr>';
+  }).join('');
+}
+
+/* put back answers saved in this browser, by answering them again */
+function restore(){
+  var s = load();
+  EXAM.forEach(function(q, i){
+    var a = s[i];
+    if(!a || typeof a !== 'object') return;
+    if(q.type === 'mc'){
+      if(typeof a.o === 'number' && a.o >= 0 && a.o < q.opts.length) answerMc(i, a.o);
+    } else if(typeof a.v === 'string'){
+      el('q' + i + '-in').value = a.v;
+      if(q.type === 'vec') el('q' + i + '-dir').value = a.d || '';
+      check(i);
+      if(STATE[i] === null){ el('q' + i + '-in').value = ''; hideFb(el('q' + i + '-fb')); }
+    }
+  });
+}
+
+el('r-reset').addEventListener('click', function(){
+  if(STATE.some(function(s){ return s !== null; }) && !window.confirm('Clear all of your answers and start the exam over?')) return;
+  forget();
+  buildExam();
+  window.scrollTo({ top: el('exam').offsetTop - 80, behavior: REDUCED ? 'auto' : 'smooth' });
+});
+
+buildExam();
+restore();
+</script>
+</body>
+</html>
