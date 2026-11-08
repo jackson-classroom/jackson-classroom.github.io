@@ -247,7 +247,7 @@ td .tag-no{color:var(--no);font-weight:600}
   <div class="how">
     <div><b>Have out</b>A calculator in degree mode (sin 30 should give 0.5) and scratch paper. Use g = 9.8 m/s² everywhere.</div>
     <div><b>Multiple choice</b>Click an answer. You get one try, then it shows the right answer and why.</div>
-    <div><b>Type-in</b>Type a number, pick a direction if it asks for one, and press Check. You get one check. Two decimal places is plenty.</div>
+    <div><b>Type-in</b>Type a number, pick a direction if it asks for one, and press Check. You get one check. Keep two decimals in your in-between steps, and round only at the end.</div>
     <div><b>At the end</b>Your score by topic, with a link to the page to review. Your answers stay saved in this browser until you clear them.</div>
   </div>
 </header>
@@ -541,6 +541,8 @@ function describeIncline(o){
 function each(list, fn){ Array.prototype.forEach.call(list, fn); }
 /* 'F_grav∥' -> 'F<sub>grav∥</sub>' so the question text stays readable */
 function fx(s){ return String(s).replace(/F_(grav∥|grav⊥|grav|norm|frict|tens|app|air|net)/g, 'F<sub>$1</sub>'); }
+/* same rule as close(), but a multi-step question can allow a little more for rounding along the way */
+function matches(x, q){ return Math.abs(x - q.ans) <= Math.max(0.011, Math.abs(q.ans) * (q.tol || 0.01)); }
 
 /* =========================================================
    the exam
@@ -548,11 +550,12 @@ function fx(s){ return String(s).replace(/F_(grav∥|grav⊥|grav|norm|frict|ten
    If you change a question, bump STORE so old saved answers
    don't land on the wrong question.
    type 'mc'  : opts, ans (index), why
-   type 'num' : label, unit ('' = no unit), ans, answer, traps, work, why
+   type 'num' : label, unit ('' = no unit), ans, answer, traps, work, why,
+                optional tol (default 1%, like the practice sections)
    type 'vec' : same as 'num', plus dir, dirName, zero
    traps: common wrong answers, each with a note on the mistake
    ========================================================= */
-var STORE = 'jc-physics-u3-exam-v1';
+var STORE = 'jc-physics-u3-exam-v2';
 var TOPICS = [
   { key:'first', name:"Newton's First Law",         page:'Page 1', url:'/physics/forces/newtons-first-law/' },
   { key:'net',   name:'Net Force &amp; F = ma',     page:'Page 2', url:'/physics/forces/net-force/' },
@@ -720,7 +723,7 @@ var EXAM = [
   { topic:'frict', type:'num',
     stem:'A 25 kg box is pushed across a level floor with a 120 N force. The coefficient of friction is 0.3. What is the box’s acceleration?',
     label:'Acceleration', unit:'m/s²',
-    ans:1.86, answer:'1.86 m/s²',
+    ans:1.86, answer:'1.86 m/s²', tol:0.015,
     traps:[
       { v:4.8,  m:'That’s the push divided by the mass. Subtract friction first to get the <b>net</b> force.' },
       { v:4.5,  m:'It looks like friction came out as μ × mass. Use F_frict = μ · F_norm, with F_norm in N.' },
@@ -731,7 +734,7 @@ var EXAM = [
 
   /* ---------------- page 5 · inclined planes ---------------- */
   { topic:'ramp', type:'mc',
-    stem:'A box sits on a frictionless ramp. You make the ramp steeper. What happens to F_grav∥ and the normal force?',
+    stem:'A box slides down a frictionless ramp. You make the ramp steeper. What happens to F_grav∥ and the normal force?',
     opts:['F_grav∥ gets bigger, and F_norm gets smaller','Both get bigger','F_grav∥ gets smaller, and F_norm gets bigger','Neither changes, because F_grav stays the same'],
     ans:0,
     why:'F_grav∥ = F_grav · sin θ, and sin θ grows as the ramp gets steeper. F_norm = F_grav⊥ = F_grav · cos θ, and cos θ shrinks. F_grav itself doesn’t change. Only the way it splits into the two pieces does.' },
@@ -766,9 +769,9 @@ var EXAM = [
     why:'F_grav = 30 × 9.8 = 294 N, so F_grav∥ = 294 N × sin 35° = 168.63 N and a = 168.63 N / 30 kg = 5.62 m/s². The 30 kg block has ten times the F_grav∥ of the 3 kg block, but also ten times the mass, so both have a = 9.8 × sin 35° = 5.62 m/s². 8.03 m/s² uses cos instead of sin.' },
   { topic:'ramp', type:'num',
     stem:'An 8 kg box slides down a ramp tilted at 30°. The coefficient of friction is 0.25. What is the box’s acceleration?',
-    fig:{ ramp:{ th:30, W:78.4, angle:'30°', tag:'8 kg box · μ = 0.25', forces:[{k:'n',m:67.9},{k:'f',m:16.97},{k:'g',m:78.4}] } },
+    fig:{ ramp:{ th:30, W:78.4, angle:'30°', tag:'8 kg box · μ = 0.25', forces:[{k:'n',m:67.9},{k:'f',m:16.98},{k:'g',m:78.4}] } },
     label:'Acceleration', unit:'m/s²',
-    ans:2.7782, answer:'2.78 m/s² down the ramp',
+    ans:2.7782, answer:'2.78 m/s² down the ramp', tol:0.015,
     traps:[
       { v:4.9,   m:'That leaves out friction. Friction points up the ramp, so subtract it from F_grav∥ first.' },
       { v:2.45,  m:'It looks like friction came out as μ × F_grav. On a ramp, F_norm = F_grav⊥, so F_frict = μ · F_grav⊥.' },
@@ -776,7 +779,7 @@ var EXAM = [
       { v:4.65,  m:'It looks like friction came out as μ × mass. μ multiplies F_norm, a force in N.' },
       { v:10.06, m:RADIANS }
     ],
-    work:['F_grav = 8 kg × 9.8 = 78.4 N','F_grav∥ = 78.4 N × sin 30° = 39.2 N','F_norm = F_grav⊥ = 78.4 N × cos 30° = 67.90 N','F_frict = μ · F_norm = 0.25 × 67.90 N = 16.97 N up the ramp','F_net = 39.2 N − 16.97 N = 22.23 N down the ramp','a = F_net / m = 22.23 N / 8 kg = <b>2.78 m/s²</b> down the ramp'] },
+    work:['F_grav = 8 kg × 9.8 = 78.4 N','F_grav∥ = 78.4 N × sin 30° = 39.2 N','F_norm = F_grav⊥ = 78.4 N × cos 30° = 67.90 N','F_frict = μ · F_norm = 0.25 × 67.90 N = 16.98 N up the ramp','F_net = 39.2 N − 16.98 N = 22.22 N down the ramp','a = F_net / m = 22.22 N / 8 kg = <b>2.78 m/s²</b> down the ramp'] },
 
   /* ---------------- page 6 · Newton's third law ---------------- */
   { topic:'third', type:'mc',
@@ -909,7 +912,7 @@ function check(i){
   if(isNaN(x)){ hint(i, 'Type a number in the box. ' + (q.unit ? 'The unit is already there.' : 'μ has no unit.') + ' This try doesn’t count.'); return; }
   if(q.type === 'vec' && !d){ hint(i, 'Pick a direction too. ' + (q.dirName === 'net force' ? 'A net force' : 'An acceleration') + ' needs a size <b>and</b> a direction. This try doesn’t count.'); return; }
   x = Math.abs(x);
-  var sizeOk = close(x, q.ans), ok = sizeOk && (q.type !== 'vec' || d === q.dir), note = '';
+  var sizeOk = matches(x, q), ok = sizeOk && (q.type !== 'vec' || d === q.dir), note = '';
   if(!ok){
     if(sizeOk) note = 'You had the right size, but not the right direction.';
     else {
