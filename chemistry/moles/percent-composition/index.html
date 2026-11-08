@@ -231,18 +231,6 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
 .tt input.no-in,.dm input.no-in{border-color:var(--no);background:var(--no-bg)}
 .dm{max-width:480px}
 
-/* ---------- compare ---------- */
-.cmp{display:grid;gap:8px;margin-top:16px}
-.cmp-row{display:grid;grid-template-columns:minmax(0,12.5em) minmax(0,1fr) 7.5em;gap:14px;align-items:center;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px 12px}
-.cmp-name{font-size:15px;line-height:1.35}
-.cmp-name b{display:block;font-weight:600}
-.cmp-name span{font-size:14px;color:var(--ink2)}
-.cmp-track{height:16px;background:var(--line-soft);border-radius:2px;overflow:hidden}
-.cmp-track i{display:block;height:100%;background:var(--water)}
-.cmp-pct{font-family:var(--mono);font-size:13px;color:var(--ink2);margin-top:4px}
-.cmp-need{text-align:right;font-family:var(--mono);font-size:18px;font-weight:500;color:var(--water-dk);line-height:1.2}
-.cmp-need span{display:block;font-size:11px;font-weight:400;color:var(--mute);letter-spacing:.02em}
-
 /* ---------- periodic table ---------- */
 .tile{position:relative;width:150px;height:172px;background:#fff;border:2px solid var(--ink);border-radius:5px;font-family:var(--body);text-align:center}
 .tile .tz{position:absolute;top:8px;left:11px;font-family:var(--mono);font-size:20px;color:var(--no);border-bottom:2px solid var(--no);line-height:1.1}
@@ -274,10 +262,6 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
 @media (max-width:760px){
   .lab{grid-template-columns:1fr}
   .lab .lab-fig{max-width:340px}
-}
-@media (max-width:640px){
-  .cmp-row{grid-template-columns:minmax(0,1fr) auto;gap:6px 12px}
-  .cmp-row .cmp-mid{grid-column:1 / -1;grid-row:2}
 }
 @media (max-width:600px){
   body{font-size:16px}
@@ -344,7 +328,6 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
   <a href="#formula">From a formula</a>
   <a href="#data">From lab data</a>
   <a href="#use">As a conversion factor</a>
-  <a href="#compare">Which has the most?</a>
   <a href="#watch">Watch-outs</a>
   <a href="#practice">Practice</a>
   <a href="#check">Check yourself</a>
@@ -500,26 +483,6 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
     </div>
   </div>
   <div class="note"><b>Another way to write the same factor.</b> One mole of Fe<sub>2</sub>O<sub>3</sub> has 111.70 g of iron in 159.70 g of compound. The factor (111.70 g Fe / 159.70 g Fe<sub>2</sub>O<sub>3</sub>) is the same ratio as (69.94 g Fe / 100 g Fe<sub>2</sub>O<sub>3</sub>), so either one gives the same answer.</div>
-</section>
-
-<!-- ============ COMPARE ============ -->
-<section id="compare">
-  <div class="sec-head"><span class="tasktag">Compare</span><h2>Which one has the most?</h2></div>
-  <p>Plants need nitrogen to grow, and farmers can buy it in several different compounds. The three numbers on a bag of fertilizer are percents by mass, and the first one is nitrogen. So a bag of urea is labeled 46-0-0. The higher the percent, the less fertilizer a farmer has to buy, haul and spread to get the same amount of nitrogen. Iron ores work the same way.</p>
-  <div class="card">
-    <div class="card-label"><span>Same element, different compounds</span></div>
-    <div class="tabs" role="tablist" aria-label="What to compare" id="cm-tabs">
-      <button type="button" class="tab" role="tab" data-k="N" aria-selected="true">Nitrogen fertilizers</button>
-      <button type="button" class="tab" role="tab" data-k="Fe" aria-selected="false">Iron ores</button>
-    </div>
-    <div class="ss-top">
-      <div><div class="scaf-lab" id="cm-lab"></div><div class="ss-mass" id="cm-t"></div></div>
-    </div>
-    <input type="range" id="cm-range" aria-label="Mass of the element needed">
-    <div class="cmp" id="cm-rows"></div>
-    <div class="fb hint show" id="cm-msg" aria-live="polite"></div>
-    <p class="smallprint" id="cm-note" style="margin-bottom:0"></p>
-  </div>
 </section>
 
 <!-- ============ WATCH ============ -->
@@ -1485,47 +1448,7 @@ function pctLine(sym, pv, pu, wv, wu, ans, nw){ return [L('% ' + sym), EQ, F(pv,
 })();
 
 /* =========================================================
-   6. compare: fertilizers and iron ores
-   ========================================================= */
-var CMP = {
-  N:{ s:'N', what:'nitrogen', min:10, max:200, step:10, def:100,
-      list:[['NH3','anhydrous ammonia','82-0-0'],['CO(NH2)2','urea','46-0-0'],['NH4NO3','ammonium nitrate','34-0-0'],['(NH4)2SO4','ammonium sulfate','21-0-0']],
-      note:'Bag labels are for real products, which aren’t perfectly pure, so they can be a little lower than the pure compound. Pure ammonium nitrate is 35.00% N, but its bags usually say 34-0-0. Anhydrous ammonia is a gas, so it’s stored as a liquid under pressure and injected into the soil.' },
-  Fe:{ s:'Fe', what:'iron', min:100, max:2000, step:100, def:1000,
-      list:[['Fe3O4','magnetite'],['Fe2O3','hematite'],['FeO(OH)','goethite'],['FeCO3','siderite']],
-      note:'These are the pure minerals. Real ore is mixed with rock, so a mine has to dig up even more than this.' }
-};
-var CM = { k:'N', t:100 };
-/* 3 significant figures, with commas instead of scientific notation: 2,070 */
-function kgText(x){ var v = Number(x.toPrecision(3)); return v >= 1000 ? String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : sigHTML(x, 3); }
-function cmRender(){
-  var set = CMP[CM.k], s = set.s, T = CM.t;
-  var items = set.list.map(function(x){ var cp = compOf(x[0]); return { f:x[0], name:x[1], label:x[2], pct:cp.by(s).pct }; });
-  items.sort(function(a, b){ return b.pct - a.pct; });
-  el('cm-lab').textContent = cap(set.what) + ' needed';
-  el('cm-t').textContent = kgText(T) + ' kg';
-  el('cm-rows').innerHTML = items.map(function(it){
-    return '<div class="cmp-row"><div class="cmp-name"><b>' + cap(it.name) + '</b><span>' + fHTML(it.f) + '</span></div>' +
-      '<div class="cmp-mid"><div class="cmp-track" role="img" aria-label="' + fix2(it.pct) + ' percent ' + set.what + '"><i style="width:' + it.pct.toFixed(2) + '%"></i></div>' +
-      '<div class="cmp-pct">' + fix2(it.pct) + '% ' + s + (it.label ? ' · bag label ' + it.label : '') + '</div></div>' +
-      '<div class="cmp-need">' + kgText(T / (it.pct / 100)) + ' kg<span>of ' + it.name + '</span></div></div>';
-  }).join('');
-  var hi = items[0], lo = items[items.length - 1];
-  el('cm-msg').innerHTML = '<b>To get ' + kgText(T) + ' kg of ' + set.what + ', you need ' + kgText(T / (hi.pct / 100)) + ' kg of ' + hi.name + ', but ' + kgText(T / (lo.pct / 100)) + ' kg of ' + lo.name + '.</b> ' +
-    'Each mass is ' + kgText(T) + ' kg ÷ (percent ÷ 100). The lower the percent, the more of the compound it takes.';
-  el('cm-note').textContent = set.note;
-}
-function cmSet(k){
-  var set = CMP[k], r = el('cm-range');
-  CM.k = k; CM.t = set.def;
-  r.min = set.min; r.max = set.max; r.step = set.step; r.value = set.def;
-  cmRender();
-}
-tabs(el('cm-tabs'), function(b){ cmSet(b.dataset.k); });
-el('cm-range').addEventListener('input', function(){ CM.t = Number(this.value); cmRender(); });
-
-/* =========================================================
-   7. periodic table (for the practice section)
+   6. periodic table (for the practice section)
    ========================================================= */
 function ptPos(z){
   if(z === 1) return [1, 1];
@@ -1569,7 +1492,7 @@ function buildPT(host){
 }
 
 /* =========================================================
-   8. practice
+   7. practice
    ========================================================= */
 var pScore = Score(el('p-score'));
 var pKind = 'pf', P = null;
@@ -1878,7 +1801,7 @@ el('s-undo').addEventListener('click', function(){ P.chain.pop(); sRender(); });
 el('s-clear').addEventListener('click', function(){ P.chain = []; sRender(); });
 
 /* =========================================================
-   9. quiz
+   8. quiz
    ========================================================= */
 var QUIZ = [
   { stem:'What does the percent composition of a compound tell you?',
@@ -1956,7 +1879,6 @@ ssRender();
 fwRender();
 exRender('C8H10N4O2');
 lsNew();
-cmSet('N');
 pNew();
 </script>
 </body>
