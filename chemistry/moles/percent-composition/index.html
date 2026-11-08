@@ -115,7 +115,6 @@ table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
 th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft)}
 th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
 td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
-td.dim,th.dim{color:var(--mute)}
 
 .q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
 .q:first-of-type{border-top:none}
@@ -146,30 +145,9 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
 .readrows div.wait span:last-child{color:#A8B4B2}
 
 /* ---------- stacked bars ---------- */
-.sbar{display:flex;height:30px;border:1px solid rgba(19,30,29,.4);border-radius:3px;overflow:hidden;background:#fff}
-.sbar>span{display:flex;align-items:center;justify-content:center;flex:none;min-width:0;overflow:hidden;white-space:nowrap;font-family:var(--mono);font-size:12px;font-weight:500;border-right:1px solid rgba(19,30,29,.4)}
+.sbar{display:flex;height:12px;border:1px solid rgba(19,30,29,.4);border-radius:2px;overflow:hidden;background:#fff}
+.sbar>span{flex:none;border-right:1px solid rgba(19,30,29,.4)}
 .sbar>span:last-child{border-right:none}
-.sbar.thin{height:12px;border-radius:2px}
-.sbar.mute{opacity:.62}
-.sb-lab{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);margin:16px 0 6px}
-.sb-key{display:flex;flex-wrap:wrap;gap:4px 16px;margin:8px 0 0;font-size:14px;color:var(--ink2)}
-.sb-key i{display:inline-block;width:12px;height:12px;border-radius:2px;border:1px solid rgba(19,30,29,.4);margin-right:6px;vertical-align:-1px}
-
-/* ---------- any size sample ---------- */
-.ss-top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-top:16px}
-.ss-mass{font-family:var(--mono);font-size:clamp(22px,4vw,28px);font-weight:500;color:var(--water-dk);margin:2px 0 0}
-.ss-track{position:relative;border:1px dashed var(--line);border-radius:3px;padding:3px;background:repeating-linear-gradient(90deg,transparent 0,transparent calc(10% - 1px),var(--line-soft) calc(10% - 1px),var(--line-soft) 10%)}
-.ss-track>div{transition:width .15s}
-
-/* ---------- break down a compound ---------- */
-.ex-in{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:14px 0 0}
-.ex-in input[type=text]{font-family:var(--body);width:260px;max-width:100%}
-.ex-formula{font-family:var(--body);font-weight:600;font-size:clamp(34px,6vw,46px);line-height:1.1;margin:18px 0 0}
-.ex-t td,.ex-t th{padding:7px 9px;white-space:nowrap}
-.ex-t td.n{text-align:right}
-.ex-t th.n{text-align:right}
-.ex-t tfoot td{border-bottom:none;border-top:2px solid var(--ink);font-weight:600}
-.ex-t td.pc{color:var(--ok);font-weight:600}
 
 /* ---------- worked tables ---------- */
 .tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -274,10 +252,6 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
   .fl{font-size:15px;padding:12px}
   .mmt td,.mmt th{padding:7px 6px}
   .mmt{font-size:14px}
-  .ex-t td,.ex-t th{padding:6px 5px}
-  .ex-t{font-size:14px}
-  .ex-t .dim{display:none}
-  .ex-t th{white-space:normal}
   .tt td,.tt th{padding:6px 3px}
   .tt td.op{padding:6px 1px}
   .tt input[type=text]{width:2.9em;padding:5px 5px}
@@ -286,9 +260,6 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
 @media (prefers-reduced-motion:no-preference){
   .fb.show{animation:pop .18s ease-out}
   @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
-}
-@media (prefers-reduced-motion:reduce){
-  .ss-track>div{transition:none}
 }
 </style>
 </head>
@@ -344,25 +315,7 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
   <div class="rulebox">
     <div class="rulecard"><div class="op">part ÷ whole</div><h4>The whole is the compound</h4><p>The part is the mass of one element. The whole is always the mass of the entire compound.</p></div>
     <div class="rulecard"><div class="op">100%</div><h4>The percents add up to 100%</h4><p>Every element in the compound gets a percent, and together they account for all of the mass.</p></div>
-    <div class="rulecard"><div class="op">any size</div><h4>Same for every sample</h4><p>A drop of water and a swimming pool of water are both 11.21% hydrogen by mass.</p></div>
-  </div>
-
-  <h3>Big sample or small, the percents don’t change</h3>
-  <p>Every molecule of water is the same H<sub>2</sub>O, so every sample of water has the same makeup. That’s true of every compound, and chemists call it the <b>law of definite proportions</b>. Change the size of the sample and watch what changes and what doesn’t.</p>
-  <div class="card">
-    <div class="card-label"><span>Any size sample</span></div>
-    <div class="tabs" role="tablist" aria-label="Compound in the sample" id="ss-tabs"></div>
-    <div class="ss-top">
-      <div><div class="scaf-lab">Sample mass</div><div class="ss-mass" id="ss-g"></div></div>
-      <button type="button" class="ghost small" id="ss-mole">Make it one mole</button>
-    </div>
-    <input type="range" id="ss-range" min="1" max="200" step="1" value="50" aria-label="Sample mass in grams">
-    <div class="sb-lab"><span>Mass of each element</span><span>0 to 200 g</span></div>
-    <div class="ss-track" id="ss-track"></div>
-    <div class="sb-lab"><span>Percent by mass</span><span>0 to 100%</span></div>
-    <div id="ss-pct"></div>
-    <div class="readrows" id="ss-rows" aria-live="polite"></div>
-    <div class="fb hint show" id="ss-msg"></div>
+    <div class="rulecard"><div class="op">any size</div><h4>Same for every sample</h4><p>A drop of water and a swimming pool of water are both 11.21% hydrogen by mass. Chemists call this the <b>law of definite proportions</b>.</p></div>
   </div>
 
   <h3>By mass, not by atoms</h3>
@@ -395,18 +348,6 @@ footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);fo
   </div>
   <div class="note"><b>Rounding.</b> Rounded percents sometimes add up to 99.99% or 100.01%. That’s just rounding. A total like 80% or 115% means something went wrong, so go back and check.</div>
 
-  <h3>Break down any compound</h3>
-  <p>Pick a compound or type a formula. Try H<sub>2</sub>O and then H<sub>2</sub>O<sub>2</sub>, or CO and then CO<sub>2</sub>: the same elements, combined differently, give different percents. The bar underneath shows the split by atoms, so you can see how different it is from the split by mass.</p>
-  <div class="card">
-    <div class="card-label"><span>Break down a compound</span></div>
-    <div class="tabs" role="tablist" aria-label="Example formulas" id="ex-tabs"></div>
-    <div class="ex-in">
-      <input type="text" id="ex-in" autocomplete="off" spellcheck="false" placeholder="Or type a formula, like CO(NH2)2" aria-label="Type a formula">
-      <button type="button" id="ex-go">Break it down</button>
-    </div>
-    <div class="fb" id="ex-fb" aria-live="polite"></div>
-    <div id="ex-out" aria-live="polite"></div>
-  </div>
 </section>
 
 <!-- ============ DATA ============ -->
@@ -721,7 +662,6 @@ function parseFormula(str){
 function hund(sym){ return Math.round(EL[sym].M * 100); }
 function massOf(counts){ var h = 0; for(var s in counts) h += counts[s] * hund(s); return h / 100; }
 function fix2(x){ return (Math.round(x * 100) / 100).toFixed(2); }
-function fix1(x){ return (Math.round(x * 10) / 10).toFixed(1); }
 
 /* percent composition: one row per element, in formula order */
 function compOf(f){
@@ -1024,32 +964,15 @@ function cancelUnits(startUnit, chain){
 /* =========================================================
    drawing helpers
    ========================================================= */
-function shade(hex, amt){
-  var n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255;
-  var t = amt < 0 ? 0 : 255, a = Math.abs(amt);
-  r = Math.round(r + (t - r) * a); g = Math.round(g + (t - g) * a); b = Math.round(b + (t - b) * a);
-  return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-}
-function isLight(col){ return parseInt(col.slice(1, 3), 16) * 0.3 + parseInt(col.slice(3, 5), 16) * 0.59 + parseInt(col.slice(5, 7), 16) * 0.11 > 150; }
 var COLORS = { H:'#F4F6F6', C:'#3F4548', N:'#3B6FD0', O:'#D9473B', S:'#E2C93C', P:'#E08A2C', Cl:'#3FA34D', F:'#8FD16A', Br:'#8B2A1E', I:'#6B2C91',
   Na:'#8E5CC4', K:'#7A4FB0', Li:'#B48AD8', Ca:'#4E8A3A', Mg:'#6FAF5A', Ba:'#2F7D5C', Al:'#A7AFB8', Fe:'#C0662B', Cu:'#C26A3A', Zn:'#7D80B0',
   Ag:'#C9CED3', Cr:'#8A99C7', Mn:'#9C7AC7', Si:'#D9B98C', B:'#F2B5A0', Pb:'#69717D', Au:'#D6A62A', Hg:'#B7BEC4', Ti:'#9AA5AE' };
 function colorOf(s){ return COLORS[s] || '#9AA6A4'; }
-/* a stacked bar. parts: [{ s, w: percent of this bar, lab: text }] ; room: this bar's width as a percent of the space it sits in ;
-   px: that space in pixels, when known, so a label only shows if it fits */
-function sbar(parts, cls, label, room, px){
-  room = room == null ? 100 : room;
-  var h = '<div class="sbar' + (cls ? ' ' + cls : '') + '" role="img" aria-label="' + label + '">';
-  parts.forEach(function(p){
-    var col = colorOf(p.s), w = p.w * room / 100, txt = '';
-    if(p.lab && px){ var sp = w / 100 * px; txt = sp >= p.lab.length * 7.4 + 12 ? p.lab : sp >= p.s.length * 8 + 8 ? p.s : ''; }
-    else if(p.lab) txt = w >= 19 ? p.lab : w >= 4.5 ? p.s : '';
-    h += '<span style="width:' + p.w.toFixed(3) + '%;background:' + col + ';color:' + (isLight(col) ? '#131E1D' : '#FFFFFF') + '">' + txt + '</span>';
-  });
-  return h + '</div>';
-}
-function keyHTML(syms){
-  return '<div class="sb-key">' + syms.map(function(s){ return '<span><i style="background:' + colorOf(s) + '"></i>' + EL[s].name + '</span>'; }).join('') + '</div>';
+/* a thin stacked bar. parts: [{ s, w: percent of the bar }] */
+function sbar(parts, label){
+  return '<div class="sbar" role="img" aria-label="' + label + '">' + parts.map(function(p){
+    return '<span style="width:' + p.w.toFixed(3) + '%;background:' + colorOf(p.s) + '"></span>';
+  }).join('') + '</div>';
 }
 function pctList(cp, words){
   return cp.rows.map(function(r){ return fix2(r.pct) + '% ' + (words ? lc(r.s) : r.s); });
@@ -1064,7 +987,7 @@ var HERO = ['H2O','CO2','NaCl','Fe2O3'];
   var h = '<div class="sig-r head"><span>Compound</span><span>How the mass splits</span></div>';
   HERO.forEach(function(f){
     var cp = compOf(f), parts = cp.rows.map(function(r){ return { s:r.s, w:r.pct }; });
-    h += '<div class="sig-r"><span class="fx">' + fHTML(f) + '</span><span>' + sbar(parts, 'thin', fText(f) + ': ' + pctList(cp, true).join(', ')) +
+    h += '<div class="sig-r"><span class="fx">' + fHTML(f) + '</span><span>' + sbar(parts, fText(f) + ': ' + pctList(cp, true).join(', ')) +
       '<span class="pc">' + pctList(cp).join(' · ') + '</span></span></div>';
   });
   el('hero-rows').innerHTML = h;
@@ -1115,43 +1038,7 @@ var uFe2O3 = fHTML('Fe2O3');
 el('cf-pct').outerHTML = FL([F('69.94', 'g Fe', '100', 'g ' + uFe2O3), '<span class="op">or</span>', F('100', 'g ' + uFe2O3, '69.94', 'g Fe')]);
 
 /* =========================================================
-   1. any size sample
-   ========================================================= */
-var SS_LIST = [['H2O','water'],['CO2','carbon dioxide'],['NaCl','sodium chloride'],['Fe2O3','iron(III) oxide'],['C6H12O6','glucose']];
-var SS = { i:0, g:50, mole:false };
-var SS_MAX = 200;
-function ssRender(){
-  var t = SS_LIST[SS.i], cp = compOf(t[0]), g = SS.g, FH = fHTML(t[0]);
-  el('ss-g').textContent = (SS.mole ? fix2(g) : String(g)) + ' g';
-  var room = g / SS_MAX * 100;
-  var mparts = cp.rows.map(function(r){ return { s:r.s, w:r.pct, lab:r.s + ' ' + fix2(g * r.pct / 100) + ' g' }; });
-  var pparts = cp.rows.map(function(r){ return { s:r.s, w:r.pct, lab:r.s + ' ' + fix1(r.pct) + '%' }; });
-  var masses = cp.rows.map(function(r){ return fix2(g * r.pct / 100) + ' g ' + r.s; });
-  el('ss-track').innerHTML = '<div style="width:' + Math.max(room, 0.8).toFixed(2) + '%">' + sbar(mparts, '', 'In ' + g + ' grams of ' + t[1] + ': ' + masses.join(', '), room, el('ss-track').clientWidth - 8) + '</div>';
-  el('ss-pct').innerHTML = sbar(pparts, '', 'Percent by mass: ' + pctList(cp, true).join(', '), 100, el('ss-pct').clientWidth) + keyHTML(cp.pf.order);
-  var rows = cp.rows.map(function(r){ return '<div><span>' + EL[r.s].name + ' (' + r.s + ')</span><span>' + fix2(g * r.pct / 100) + ' g · ' + fix2(r.pct) + '%</span></div>'; }).join('');
-  el('ss-rows').innerHTML = rows + '<div class="hl"><span>Whole sample</span><span>' + (SS.mole ? fix2(g) : g + '.00') + ' g · 100.00%</span></div>';
-  var msg;
-  if(SS.mole){
-    msg = '<b>One mole of ' + t[1] + ' is ' + fix2(cp.M) + ' g.</b> In one mole, the mass of each element is its row in the molar mass table: ' +
-      andList(cp.rows.map(function(r){ return (r.n > 1 ? r.n + ' × ' + EL[r.s].ms + ' = ' : '') + fix2(r.m) + ' g ' + r.s; })) + '. That’s why the next section uses one mole.';
-  } else {
-    msg = '<b>' + g + ' g of ' + t[1] + ' contains ' + andList(masses) + '.</b> Make the sample bigger or smaller. The masses change, but ' + FH + ' stays ' + andList(pctList(cp)) + '.';
-  }
-  el('ss-msg').innerHTML = msg;
-}
-(function buildSS(){
-  el('ss-tabs').innerHTML = SS_LIST.map(function(t, i){
-    return '<button type="button" class="tab fx" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '">' + fHTML(t[0]) + '</button>';
-  }).join('');
-  tabs(el('ss-tabs'), function(b){ SS.i = Number(b.dataset.i); if(SS.mole) SS.g = compOf(SS_LIST[SS.i][0]).M; ssSync(); });
-  el('ss-range').addEventListener('input', function(){ SS.mole = false; SS.g = Number(this.value); ssRender(); });
-  el('ss-mole').addEventListener('click', function(){ SS.mole = true; SS.g = compOf(SS_LIST[SS.i][0]).M; ssSync(); });
-  function ssSync(){ el('ss-range').value = Math.round(SS.g); ssRender(); }
-})();
-
-/* =========================================================
-   2. percent composition from a formula: worked table
+   1. percent composition from a formula: worked table
    ========================================================= */
 var FW_LIST = [['H2O','water'],['CO2','carbon dioxide'],['NaCl','sodium chloride'],['C6H12O6','glucose'],['Ca(NO3)2','calcium nitrate'],['(NH4)2SO4','ammonium sulfate']];
 var FW = { i:3, step:0 };
@@ -1208,48 +1095,7 @@ function fwRender(){
 })();
 
 /* =========================================================
-   3. break down any compound
-   ========================================================= */
-var EX_T = ['H2O','H2O2','CO','CO2','C8H10N4O2','Ca3(PO4)2'], EX_CUR = 'C8H10N4O2';
-function exRender(f){
-  var out = el('ex-out'), fb = el('ex-fb'), px = out.clientWidth;
-  EX_CUR = f;
-  if(!String(f).trim()){ out.innerHTML = ''; setFb(fb, 'hint', 'Type a formula first, like <b>CO(NH2)2</b>. Numbers become subscripts on their own.'); return; }
-  var pf = parseFormula(f);
-  if(!pf.ok){ out.innerHTML = ''; setFb(fb, 'bad', 'That formula can’t be read: it has ' + pf.err + '.'); return; }
-  /* "H20" is a legal formula, but it was almost certainly meant to be H2O */
-  var z = /([A-Z][a-z]?|\))([2-9])0(?!\d)/.exec(pf.f), alt = z ? pf.f.slice(0, z.index) + z[1] + z[2] + 'O' + pf.f.slice(z.index + z[0].length) : null;
-  if(alt && parseFormula(alt).ok) setFb(fb, 'hint', 'Is that a zero? This reads it as ' + fHTML(pf.f) + '. If you meant ' + fHTML(alt) + ', type a capital letter O.');
-  else if(pf.order.length === 1) setFb(fb, 'hint', 'That’s a single element, so it’s 100% ' + lc(pf.order[0]) + '. Percent composition is interesting for compounds.');
-  else hideFb(fb);
-  var cp = compOf(pf), FH = fHTML(pf.f);
-  var mparts = cp.rows.map(function(r){ return { s:r.s, w:r.pct, lab:r.s + ' ' + fix1(r.pct) + '%' }; });
-  var aparts = cp.rows.map(function(r){ return { s:r.s, w:r.apct, lab:r.s + ' ' + fix1(r.apct) + '%' }; });
-  var rows = cp.rows.map(function(r){
-    return '<tr><td>' + EL[r.s].name + ' (' + r.s + ')</td><td class="n">' + r.n + '</td><td class="n">' + fix2(r.m) + ' g</td><td class="n pc">' + fix2(r.pct) + '%</td><td class="n dim">' + fix1(r.apct) + '%</td></tr>';
-  }).join('');
-  out.innerHTML = '<div class="ex-formula">' + FH + '</div>' +
-    '<div class="sb-lab"><span>By mass: percent composition</span></div>' + sbar(mparts, '', 'By mass: ' + pctList(cp, true).join(', '), 100, px) +
-    '<div class="sb-lab"><span>By atoms, for comparison</span></div>' + sbar(aparts, 'mute', 'By atoms: ' + cp.rows.map(function(r){ return fix1(r.apct) + '% ' + lc(r.s); }).join(', '), 100, px) +
-    keyHTML(cp.pf.order) +
-    '<div class="tbl-scroll"><table class="ex-t"><thead><tr><th>Element</th><th class="n">Atoms</th><th class="n">Mass in 1 mol</th><th class="n">% by mass</th><th class="n dim">% of atoms</th></tr></thead><tbody>' + rows + '</tbody>' +
-    '<tfoot><tr><td>Total</td><td class="n">' + cp.atoms + '</td><td class="n">' + fix2(cp.M) + ' g</td><td class="n">' + roundedSum(cp) + '%</td><td class="n dim">100%</td></tr></tfoot></table></div>';
-}
-(function buildEx(){
-  el('ex-tabs').innerHTML = EX_T.map(function(f, i){
-    return '<button type="button" class="tab fx" role="tab" data-f="' + f + '" aria-selected="' + (i === 4) + '">' + fHTML(f) + '</button>';
-  }).join('');
-  tabs(el('ex-tabs'), function(b){ el('ex-in').value = ''; exRender(b.dataset.f); });
-  function go(){
-    each(el('ex-tabs').querySelectorAll('.tab'), function(o){ o.setAttribute('aria-selected', 'false'); });
-    exRender(el('ex-in').value);
-  }
-  el('ex-go').addEventListener('click', go);
-  el('ex-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') go(); });
-})();
-
-/* =========================================================
-   4. lab: burning magnesium (masses in milligrams)
+   2. lab: burning magnesium (masses in milligrams)
    ========================================================= */
 var MGO = compOf('MgO'), MG_F = MGO.by('Mg').m / MGO.M;
 var LS = null;
@@ -1367,7 +1213,7 @@ function lsCheck(){
 })();
 
 /* =========================================================
-   5. worked examples: lab data, and percent as a factor
+   3. worked examples: lab data, and percent as a factor
    ========================================================= */
 function worked(prefix, list){
   var st = { i:0, step:0 };
@@ -1448,7 +1294,7 @@ function pctLine(sym, pv, pu, wv, wu, ans, nw){ return [L('% ' + sym), EQ, F(pv,
 })();
 
 /* =========================================================
-   6. periodic table (for the practice section)
+   4. periodic table (for the practice section)
    ========================================================= */
 function ptPos(z){
   if(z === 1) return [1, 1];
@@ -1492,7 +1338,7 @@ function buildPT(host){
 }
 
 /* =========================================================
-   7. practice
+   5. practice
    ========================================================= */
 var pScore = Score(el('p-score'));
 var pKind = 'pf', P = null;
@@ -1801,7 +1647,7 @@ el('s-undo').addEventListener('click', function(){ P.chain.pop(); sRender(); });
 el('s-clear').addEventListener('click', function(){ P.chain = []; sRender(); });
 
 /* =========================================================
-   8. quiz
+   6. quiz
    ========================================================= */
 var QUIZ = [
   { stem:'What does the percent composition of a compound tell you?',
@@ -1866,18 +1712,8 @@ var QUIZ = [
   });
 })();
 
-/* labels in the stacked bars depend on the width they get, so redraw them when it changes */
-var rzT = 0, rzW = window.innerWidth;
-window.addEventListener('resize', function(){
-  if(window.innerWidth === rzW) return;
-  rzW = window.innerWidth; clearTimeout(rzT);
-  rzT = setTimeout(function(){ ssRender(); exRender(EX_CUR); }, 150);
-});
-
 /* boot */
-ssRender();
 fwRender();
-exRender('C8H10N4O2');
 lsNew();
 pNew();
 </script>
