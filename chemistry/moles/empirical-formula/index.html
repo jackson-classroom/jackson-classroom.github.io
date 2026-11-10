@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Empirical Formula — The Simplest Ratio of Atoms in a Compound</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#131E1D; --ink2:#3B4A48; --mute:#5F6D6B;
+  --wash:#E3E9E8; --card:#FBFCFB; --line:#C9D3D1; --line-soft:#E0E7E6;
+  --water:#12727F; --water-dk:#0B4E58; --water-lite:#BFDEE2;
+  --brass:#9A6E22; --brass-lite:#F5E9CF;
+  --ok:#26694A; --ok-bg:#E4F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  --lcd:#1E2B29; --lcd-ink:#BFEFD0;
+  --display:"Instrument Serif",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+sup,sub{line-height:0;font-size:.72em}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(227,233,232,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:64px 0 44px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--water-dk)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,7.4vw,74px);line-height:1;margin:16px 0 0;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--water-dk)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:49ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: last page's compounds, run backwards */
+.sig-readout{margin:38px 0 0;padding:24px 26px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.sig-calc{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.sig-grid{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:26px;align-items:center}
+.sig-rows{margin-top:12px;display:grid;gap:8px}
+.sig-r{display:grid;grid-template-columns:minmax(0,1fr) 100px 70px;align-items:center;gap:14px;font-family:var(--mono);font-variant-numeric:tabular-nums;border-bottom:1px dashed var(--line);padding-bottom:8px}
+.sig-r .fx{font-family:var(--body);font-weight:600;font-size:clamp(17px,3.2vw,21px);text-align:right}
+.sig-r .pc{display:block;font-size:12.5px;color:var(--ink2);margin-top:5px;letter-spacing:.01em}
+.sig-r .rt{font-size:14px;color:var(--ink)}
+.sig-r .rt small{display:block;font-size:11.5px;color:var(--water-dk);margin-top:2px}
+.sig-r.head{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);border-bottom:none;padding-bottom:0}
+.sig-r.head span:last-child{text-align:right}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px}
+.sig-note b{color:var(--water-dk);font-weight:600}
+.sig-fig svg{display:block;width:100%;height:auto}
+.sig-cap{font-size:13.5px;line-height:1.45;color:var(--mute);margin:8px 0 0}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--water);color:var(--water-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--water-dk);background:var(--water-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.4vw,40px);line-height:1.08;margin:0;letter-spacing:-.01em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--water-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.note{border-left:3px solid var(--brass);background:var(--brass-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin:24px 0}
+.rulebox.one{grid-template-columns:minmax(0,1fr)}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--water);border-radius:0 4px 4px 0;padding:18px 20px;min-width:0}
+.rulecard .op{font-family:var(--display);font-size:30px;line-height:1.05;color:var(--water-dk)}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard.miss{border-left-color:var(--no)}
+.rulecard.miss h4{margin-top:0}
+.rulecard .wrong{font-family:var(--mono);font-size:14.5px;color:var(--mute);text-decoration:line-through;text-decoration-color:var(--no);text-decoration-thickness:2px;margin:6px 0}
+.rulecard .right{font-family:var(--mono);font-size:14.5px;color:var(--ok);margin:6px 0}
+.rhyme{font-family:var(--display);font-size:clamp(25px,3.8vw,34px);line-height:1.2;color:var(--water-dk)}
+.rhyme span{white-space:nowrap}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.setup{font-size:15px;color:var(--ink2);margin:0 0 14px}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F6F8F7;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--water-dk);border-color:var(--water-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--water)}
+button[disabled]{opacity:.45;cursor:default}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--water);outline-offset:2px}
+button.small{font-size:12px;padding:6px 11px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid #93A5A2;border-radius:3px;padding:9px 11px;width:170px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(19,30,29,.12)}
+.field{display:flex;gap:9px 12px;align-items:center;flex-wrap:wrap;margin:14px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:120px}
+.fx-prev{font-size:14.5px;color:var(--mute);min-height:1.6em}
+input.fx-in{font-family:var(--body);font-weight:500;letter-spacing:.01em}
+kbd.fk,.typing-tip kbd.fk,.fb kbd.fk{font-family:var(--body);font-weight:600;font-size:14.5px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:3px;padding:0 5px}
+.fx-prev b{font-family:var(--body);font-size:20px;font-weight:600;color:var(--ink)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1B4E36}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--water);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb .mono{font-size:15px}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab[aria-selected="true"]{background:var(--ink);color:#F6F8F7;border-color:var(--ink)}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft)}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45}
+.opt:hover{border-color:var(--water);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.94}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+
+.prob{font-size:17.5px;line-height:1.55;margin:4px 0 0}
+.prob b{font-weight:600}
+.scaf{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
+.scaf-lab{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--water-dk)}
+::placeholder{font-family:var(--body);font-style:italic;font-size:14px;color:#7F8D8B;opacity:1}
+.typing-tip{font-size:14px;color:var(--mute);margin:8px 0 0}
+.typing-tip kbd,.fb kbd{font-family:var(--mono);font-size:13px;color:var(--ink2);background:#fff;border:1px solid var(--line);border-radius:3px;padding:1px 5px}
+.fig svg{display:block;width:100%;height:auto}
+.readrows{display:grid;gap:2px;margin:10px 0 0}
+.readrows div{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px dashed var(--line);padding:4px 0;font-size:15.5px}
+.readrows div span:last-child{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.readrows div.wait span:last-child{color:#A8B4B2}
+
+/* ---------- stacked bars ---------- */
+.sbar{display:flex;height:12px;border:1px solid rgba(19,30,29,.4);border-radius:2px;overflow:hidden;background:#fff}
+.sbar>span{flex:none;border-right:1px solid rgba(19,30,29,.4)}
+.sbar>span:last-child{border-right:none}
+
+/* ---------- by mass vs. by atoms ---------- */
+.duo{display:grid;gap:10px;margin:18px 0 6px;max-width:640px}
+.duo-r{display:grid;grid-template-columns:78px minmax(0,1fr) 172px;gap:12px;align-items:center}
+.duo-l{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute)}
+.duo-v{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink2)}
+.duo .sbar{height:20px}
+
+/* ---------- worked tables ---------- */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mmt td,.mmt th{padding:8px 10px}
+.mmt td.n{white-space:nowrap}
+.mmt td.new{background:var(--brass-lite)}
+.mmt td.lo{color:var(--water-dk);font-weight:600}
+.mmt tfoot td{border-bottom:none;border-top:2px solid var(--ink);font-weight:600}
+.mmt .fxc{font-family:var(--body);font-size:19px;color:var(--ok)}
+.mmt .esy{display:none}
+.wk-q{font-size:17px;margin:4px 0 0}
+.wk-text{min-height:4.4em}
+.wk-count{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto}
+.wt{margin:10px 0 2px;font-size:14.5px}
+.wt td,.wt th{padding:5px 8px;border-bottom-color:rgba(19,30,29,.1)}
+
+/* ---------- find the multiplier ---------- */
+.mchips{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-family:var(--mono);font-size:21px;font-variant-numeric:tabular-nums;padding:14px 16px;background:#fff;border:1px solid var(--line-soft);border-radius:3px}
+.mchips b{font-family:var(--body);font-weight:600;margin-right:6px}
+.mchips .sep{color:var(--mute)}
+.mopts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.mopts button{min-width:64px}
+.mopts button.yes,.mopts button.yes:hover{background:var(--ok);border-color:var(--ok);color:#fff;opacity:1}
+.mopts button.no,.mopts button.no:hover{background:var(--no-bg);border-color:var(--no);color:#7E2A1D}
+
+/* ---------- lab: copper and sulfur ---------- */
+.lab{display:grid;grid-template-columns:300px minmax(0,1fr);gap:24px;align-items:start;margin-top:4px}
+.lab-step{font-size:15.5px;color:var(--ink2);margin:0}
+.lab-step b{color:var(--ink)}
+.lab-ask[hidden]{display:none}
+.lab-fig{background:#fff;border:1px solid var(--line-soft);border-radius:3px}
+@media (prefers-reduced-motion:no-preference){
+  .glow{animation:glow .45s ease-in-out infinite alternate}
+  @keyframes glow{from{opacity:.5}to{opacity:1}}
+  .flick{animation:flick .18s ease-in-out infinite alternate;transform-origin:150px 150px}
+  @keyframes flick{from{transform:scaleY(.94)}to{transform:scaleY(1.04)}}
+}
+
+/* ---------- practice scaffold ---------- */
+.tt{margin:10px 0 0;font-size:15px}
+.tt td{padding:6px 7px;white-space:nowrap}
+.tt td.op{color:var(--mute);font-family:var(--mono);padding:6px 2px}
+.tt input[type=text]{font-size:16px;padding:5px 7px;width:3.4em}
+.tt input.wide{width:5.4em}
+.tt input.ok-in{border-color:var(--ok);background:var(--ok-bg)}
+.tt input.no-in{border-color:var(--no);background:var(--no-bg)}
+
+/* ---------- periodic table ---------- */
+.tile{position:relative;width:150px;height:172px;background:#fff;border:2px solid var(--ink);border-radius:5px;font-family:var(--body);text-align:center}
+.tile .tz{position:absolute;top:8px;left:11px;font-family:var(--mono);font-size:20px;color:var(--no);border-bottom:2px solid var(--no);line-height:1.1}
+.tile .ts{display:block;font-size:58px;font-weight:600;line-height:1;padding-top:40px}
+.tile .tn{display:block;font-size:14px;color:var(--ink2);margin-top:4px}
+.tile .tm{display:inline-block;font-family:var(--mono);font-size:19px;color:var(--ok);background:var(--ok-bg);border-radius:3px;padding:0 6px;margin-top:4px}
+.pt-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin-top:6px}
+.pt{display:grid;grid-template-columns:repeat(18,minmax(0,1fr));grid-template-rows:repeat(7,auto) 10px auto auto;gap:2px;min-width:640px}
+.pt .el{font-family:var(--mono);padding:3px 0 2px;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:2px;text-align:center;line-height:1.15;letter-spacing:0;min-width:0}
+.pt .el:hover{border-color:var(--water);background:#F2F8F8;color:var(--ink)}
+.pt .el .z{display:block;font-size:8.5px;color:var(--mute)}
+.pt .el .s{display:block;font-family:var(--body);font-weight:600;font-size:13.5px}
+.pt .el .m{display:block;font-size:8.5px;color:var(--ink2)}
+.pt .el.rad{background:#EEF2F1}
+.pt .el.rad .s{color:var(--ink2)}
+.pt .el.on,.pt .el.on:hover{background:var(--ink);border-color:var(--ink);color:#fff}
+.pt .el.on .z,.pt .el.on .m{color:var(--lcd-ink)}
+.pt .gap{font-family:var(--mono);font-size:9px;color:var(--mute);display:flex;align-items:center;justify-content:center;border:1px dashed var(--line);border-radius:2px;text-align:center;line-height:1.1}
+.pt-detail{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center;margin-top:16px;padding-top:16px;border-top:1px dashed var(--line)}
+.pt-detail .tile{width:118px;height:136px}
+.pt-detail .tile .ts{font-size:44px;padding-top:32px}
+.pt-detail .tile .tz{font-size:16px;color:var(--ink2);border-bottom:none}
+.pt-detail .tile .tm{font-size:16px}
+.pt-facts{font-size:15.5px;min-width:0}
+.pt-facts .mm{font-family:var(--mono);font-size:clamp(22px,4vw,28px);font-weight:500;color:var(--ok)}
+.pt-facts p{margin:6px 0}
+.pt-facts .aside{font-size:14.5px;color:var(--mute)}
+
+@media (max-width:760px){
+  .lab{grid-template-columns:1fr}
+  .lab .lab-fig{max-width:340px}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:16px}
+  .sig-readout{padding:20px 18px}
+  .sig-grid{grid-template-columns:1fr}
+  .sig-fig{max-width:300px;margin:0 auto}
+  .sig-r{grid-template-columns:minmax(0,1fr) 84px;gap:2px 12px}
+  .sig-r>span:first-child{grid-row:1 / span 2}
+  .sig-r .fx{grid-column:2;grid-row:1}
+  .sig-r .rt{grid-column:2;grid-row:2;text-align:right;font-size:12.5px}
+  .sig-r.head>span:nth-child(2){display:none}
+  .sig-r.head>span:first-child{grid-row:auto}
+  .duo-r{grid-template-columns:64px minmax(0,1fr)}
+  .duo-v{grid-column:2}
+  .field label{min-width:auto;flex:1 1 100%}
+  .pt-detail{grid-template-columns:1fr}
+  .mchips{font-size:18px;padding:12px}
+  .rhyme{font-size:24px}
+  .rhyme span{display:block;white-space:normal}
+  .mmt td,.mmt th{padding:7px 6px}
+  .mmt{font-size:14px}
+  .mmt .pcol,.mmt .enm{display:none}
+  .mmt .esy{display:inline;font-weight:600}
+  .tt td,.tt th{padding:6px 3px}
+  .tt td.op{padding:6px 1px}
+  .tt input[type=text]{width:2.9em;padding:5px 5px}
+  .tt input.wide{width:4.6em}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Empirical Formula</span>
+    <span class="bar-sub">Simplest ratio · from percents · multiply ’til whole · from lab data</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 4 · Empirical formula</div>
+  <h1>Percents in, a <em>formula</em> out.</h1>
+  <p class="lede">On the last page, you started with water’s formula, H<sub>2</sub>O, and found that it’s 11.21% hydrogen by mass. Now run it backwards. Given only the percents, you can work out the ratio of atoms in a compound. That ratio, in the simplest whole numbers, is its <b>empirical formula</b>.</p>
+
+  <div class="sig-readout">
+    <div class="sig-grid">
+      <div>
+        <div class="sig-calc">From percents to a formula</div>
+        <div class="sig-rows" id="hero-rows"></div>
+        <div class="sig-note">The same four compounds as the last page, run <b>backwards</b>: percents in, formulas out.</div>
+      </div>
+      <div class="sig-fig">
+        <div class="fig" id="hero-fig"></div>
+        <p class="sig-cap">Water, run backwards. Dividing each mass by its molar mass turns 11.21% hydrogen back into two H atoms for every O atom.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#idea">Simplest ratio</a>
+  <a href="#percents">From percents</a>
+  <a href="#whole">Multiply ’til whole</a>
+  <a href="#data">From lab data</a>
+  <a href="#watch">Watch-outs</a>
+  <a href="#practice">Practice</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ IDEA ============ -->
+<section id="idea">
+  <div class="sec-head"><span class="tasktag">The idea</span><h2>The simplest whole-number ratio</h2></div>
+  <p>A formula is a recipe written in atoms. Fe<sub>2</sub>O<sub>3</sub> means 2 iron atoms for every 3 oxygen atoms. Scale that up to moles and the ratio doesn’t change: 2 mol of iron for every 3 mol of oxygen.</p>
+  <p>When chemists make a new compound, nobody hands them its formula. They can’t count its atoms, but they can weigh things, and molar mass turns grams into moles. The ratio of the moles is the ratio of the atoms. A formula found this way is called the <b>empirical formula</b>: the simplest whole-number ratio of the atoms in a compound. <i>Empirical</i> means “based on measurement.”</p>
+  <div class="rulebox">
+    <div class="rulecard"><div class="op">mol : mol</div><h4>Moles count atoms</h4><p>A mole is a number of particles. 2 mol of H for every 1 mol of O means 2 H atoms for every 1 O atom.</p></div>
+    <div class="rulecard"><div class="op">whole</div><h4>Whole numbers only</h4><p>A formula counts whole atoms. There’s no such thing as half an atom, so every subscript is a whole number.</p></div>
+    <div class="rulecard"><div class="op">simplest</div><h4>As small as possible</h4><p>Reduce the ratio as far as it goes, the way you’d reduce a fraction. 2 : 4 is written 1 : 2.</p></div>
+  </div>
+
+  <h3>Moles, not grams</h3>
+  <p>Sulfur dioxide is 50.05% sulfur and 49.95% oxygen. That’s half and half by mass, but the formula isn’t SO. A sulfur atom has about twice the mass of an oxygen atom, so the same mass of oxygen holds about twice as many atoms. Dividing by molar mass shows it: 1.561 mol of S and 3.122 mol of O, a 1 : 2 ratio. The formula is SO<sub>2</sub>.</p>
+  <div class="duo" id="duo"></div>
+  <p>This is the last page’s big idea in reverse. There, counting atoms gave the wrong percents. Here, comparing grams gives the wrong formula. You have to go through moles.</p>
+</section>
+
+<!-- ============ FROM PERCENTS ============ -->
+<section id="percents">
+  <div class="sec-head"><span class="tasktag">The method</span><h2>Empirical formula from percent composition</h2></div>
+  <p>The method works for any compound, with two elements or five. Chemistry students have memorized it as a rhyme for years:</p>
+  <div class="rulebox one">
+    <div class="rulecard"><div class="rhyme"><span>Percent to mass, mass to mole,</span> <span>divide by small, multiply ’til whole.</span></div></div>
+  </div>
+  <ol>
+    <li><b>Percent to mass.</b> Assume you have exactly 100 g of the compound. Then each percent is a mass in grams: 69.94% Fe becomes 69.94 g Fe.</li>
+    <li><b>Mass to mole.</b> Divide each mass by the element’s molar mass. Keep four significant figures. Don’t round to whole numbers yet.</li>
+    <li><b>Divide by small.</b> Divide every number of moles by the smallest one. The smallest becomes exactly 1.</li>
+    <li><b>Multiply ’til whole.</b> If every number is within about 0.1 of a whole number, round. If not, multiply every number by 2, 3, 4 or 5 until they’re all whole. Those whole numbers are the subscripts.</li>
+  </ol>
+
+  <div class="card">
+    <div class="card-label"><span>Worked example</span><span class="wk-count" id="ew-count"></span></div>
+    <div class="tabs" role="tablist" aria-label="Choose a worked example" id="ew-tabs"></div>
+    <p class="wk-q" id="ew-q"></p>
+    <div class="tbl-scroll"><table class="mmt" id="ew-table"></table></div>
+    <div class="fb hint show wk-text" id="ew-text" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="ew-next">Next step</button>
+      <button type="button" class="ghost" id="ew-prev">Back</button>
+      <button type="button" class="ghost" id="ew-restart">Start over</button>
+    </div>
+  </div>
+  <div class="note"><b>Why 100 g?</b> Every sample of a compound has the same percent composition, so any sample size would give the same formula. With 100 g, each percent is already a number of grams, so there’s nothing to calculate.</div>
+  <div class="note"><b>Check your answer.</b> Find the percent composition of your formula, the way you did on the last page. It should match the percents you started with. For Fe<sub>2</sub>O<sub>3</sub>: 2(55.85) ÷ 159.70 × 100 = 69.94% Fe.&nbsp;✓</div>
+</section>
+
+<!-- ============ MULTIPLY 'TIL WHOLE ============ -->
+<section id="whole">
+  <div class="sec-head"><span class="tasktag">The tricky step</span><h2>Multiply ’til whole</h2></div>
+  <p>After you divide by the smallest, the numbers should be close to whole numbers. Measurements are never perfect, so a value like 1.98 or 3.04 is normal. Round it. But a value like 1.50 or 2.33 isn’t an error. It’s a fraction in disguise.</p>
+  <p>Look at Fe<sub>2</sub>O<sub>3</sub>: 2 Fe for every 3 O. Divide both by the smallest, 2, and you get 1 : 1.5. To get back to whole numbers, multiply every number by 2. The decimal tells you what to multiply by:</p>
+  <div class="rulebox">
+    <div class="rulecard"><div class="op">≈ 1.98</div><h4>Just round</h4><p>Within about 0.1 of a whole number is normal measurement error. 1.98 rounds to 2, and 3.04 rounds to 3.</p></div>
+    <div class="rulecard"><div class="op">.50</div><h4>Multiply by 2</h4><p>Halves. 1.50 × 2 = 3, and 2.50 × 2 = 5.</p></div>
+    <div class="rulecard"><div class="op">.33 or .67</div><h4>Multiply by 3</h4><p>Thirds. 1.33 × 3 = 4, and 2.67 × 3 = 8.</p></div>
+    <div class="rulecard"><div class="op">.25 or .75</div><h4>Multiply by 4</h4><p>Quarters. 1.25 × 4 = 5, and 2.25 × 4 = 9.</p></div>
+    <div class="rulecard"><div class="op">.2 · .4 · .6 · .8</div><h4>Multiply by 5</h4><p>Fifths. 1.20 × 5 = 6, and 2.40 × 5 = 12.</p></div>
+  </div>
+  <p>Multiply <b>every</b> number by the same factor, including the 1. Multiplying just one of them changes the ratio.</p>
+  <div class="note"><b>Never round 1.5 to 2.</b> Round Fe 1 : O 1.5 to 1 : 2 and you get FeO<sub>2</sub>, which would be 63.57% Fe, not the 69.94% you started with. Rounding a fraction gives you the formula of a different compound, or of one that doesn’t exist.</div>
+
+  <div class="card">
+    <div class="card-label"><span>Find the multiplier</span><span class="score" id="m-score">0 of 0</span></div>
+    <p class="setup">Each ratio below is what you get after dividing by the smallest number of moles. What should you do next?</p>
+    <div class="mchips" id="m-ratio" aria-live="polite"></div>
+    <div class="mopts" id="m-opts" role="group" aria-label="Choose what to do next">
+      <button type="button" class="ghost" data-k="1">Just round</button>
+      <button type="button" class="ghost" data-k="2">× 2</button>
+      <button type="button" class="ghost" data-k="3">× 3</button>
+      <button type="button" class="ghost" data-k="4">× 4</button>
+      <button type="button" class="ghost" data-k="5">× 5</button>
+    </div>
+    <div class="fb" id="m-fb" aria-live="polite"></div>
+    <div class="btn-row"><button type="button" class="ghost" id="m-new">Next ratio</button></div>
+    <p class="smallprint" style="margin-bottom:0">Your score counts a ratio as solved when your first pick is right.</p>
+  </div>
+</section>
+
+<!-- ============ FROM LAB DATA ============ -->
+<section id="data">
+  <div class="sec-head"><span class="tasktag">From data</span><h2>Empirical formula from lab data</h2></div>
+  <p>A lab doesn’t give you percents. It gives you masses. That saves a step: skip “percent to mass” and go straight to moles. You just need the mass of each element, which sometimes takes a subtraction first.</p>
+
+  <h3>Lab: copper and sulfur</h3>
+  <p>When copper is heated with sulfur, the two combine into a copper sulfide. Copper can form more than one compound with sulfur, so which one is this? You can’t tell by looking. Run the lab, then let the masses decide.</p>
+  <div class="card">
+    <div class="card-label"><span>Lab: heat copper with sulfur</span></div>
+    <div class="lab">
+      <div class="lab-fig fig" id="ls-fig"></div>
+      <div>
+        <p class="lab-step" id="ls-step" aria-live="polite"></p>
+        <div class="readrows" id="ls-rows"></div>
+        <div class="btn-row">
+          <button type="button" id="ls-go"></button>
+          <button type="button" class="ghost small" id="ls-new">New copper wire</button>
+        </div>
+      </div>
+    </div>
+    <div class="lab-ask" id="ls-ask" hidden>
+      <div class="field">
+        <label for="ls-in">Empirical formula</label>
+        <input type="text" class="fx-in" id="ls-in" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a formula">
+        <span class="fx-prev" id="ls-prev" aria-hidden="true"></span>
+      </div>
+      <div class="btn-row">
+        <button type="button" id="ls-check">Check</button>
+        <button type="button" class="ghost" id="ls-show">Show answer</button>
+      </div>
+    </div>
+    <div class="fb" id="ls-fb" aria-live="polite"></div>
+    <p class="smallprint" style="margin-bottom:0">Real results are rarely this clean. If some of the copper doesn’t react, the product holds too little sulfur and the ratio comes out above 2 : 1. That’s why the lab uses more sulfur than the copper needs.</p>
+  </div>
+
+  <h3>Three kinds of data problems</h3>
+  <p>These are the same three data sets as on the last page. There, you found the percents. Here, find the formulas. Whatever you’re given, find the mass of each element first. Then it’s the same method as before.</p>
+  <div class="card">
+    <div class="card-label"><span>Worked example</span><span class="wk-count" id="dw-count"></span></div>
+    <div class="tabs" role="tablist" aria-label="Choose a worked example" id="dw-tabs"></div>
+    <p class="wk-q" id="dw-q"></p>
+    <div class="tbl-scroll"><table class="mmt" id="dw-table"></table></div>
+    <div class="fb hint show wk-text" id="dw-text" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="dw-next">Next step</button>
+      <button type="button" class="ghost" id="dw-prev">Back</button>
+      <button type="button" class="ghost" id="dw-restart">Start over</button>
+    </div>
+  </div>
+  <div class="note"><b>Compare with the charges.</b> For an ionic compound, you can also predict the formula from the charges of its ions, as you did in Unit 2. Al<sup>3+</sup> and O<sup>2−</sup> give Al<sub>2</sub>O<sub>3</sub>, and the lab agrees. Iron and copper can each form more than one ion, so for them, only the data can tell you which compound you made.</div>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="sec-head"><span class="tasktag">Common mistakes</span><h2>Watch-outs</h2></div>
+  <div class="rulebox">
+    <div class="rulecard miss">
+      <h4>Comparing grams instead of moles</h4>
+      <p>Equal masses don’t mean equal numbers of atoms. Sulfur dioxide is about half sulfur and half oxygen by mass.</p>
+      <div class="wrong">50.05 g S : 49.95 g O ≈ 1 : 1, so SO</div>
+      <div class="right">1.561 mol S : 3.122 mol O = 1 : 2, so SO<sub>2</sub></div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Using percents as subscripts</h4>
+      <p>Subscripts count atoms, not grams. Turn the percents into moles first.</p>
+      <div class="wrong">69.94% Fe, 30.06% O: Fe<sub>70</sub>O<sub>30</sub></div>
+      <div class="right">1.252 mol Fe : 1.879 mol O, so Fe<sub>2</sub>O<sub>3</sub></div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Using 32.00 g/mol for oxygen</h4>
+      <p>You’re counting O atoms in the compound, not O<sub>2</sub> molecules. The same goes for N, H and the halogens.</p>
+      <div class="wrong">30.06 g ÷ 32.00 = 0.9394 mol O</div>
+      <div class="right">30.06 g ÷ 16.00 = 1.879 mol O</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Dividing upside down</h4>
+      <p>Moles = grams ÷ molar mass. The grams go on top.</p>
+      <div class="wrong">55.85 ÷ 69.94 = 0.7985 mol Fe</div>
+      <div class="right">69.94 ÷ 55.85 = 1.252 mol Fe</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Rounding a fraction</h4>
+      <p>Only round a number within about 0.1 of a whole number. 1.50 is exactly halfway.</p>
+      <div class="wrong">Fe 1 : O 1.50 → Fe 1 : O 2, so FeO<sub>2</sub></div>
+      <div class="right">× 2 → Fe 2 : O 3, so Fe<sub>2</sub>O<sub>3</sub></div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Multiplying just one number</h4>
+      <p>Multiply every number by the same factor, or the ratio changes.</p>
+      <div class="wrong">Fe 1 : O 1.50 × 2 → FeO<sub>3</sub></div>
+      <div class="right">Fe 1 × 2 : O 1.50 × 2 → Fe<sub>2</sub>O<sub>3</sub></div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Using the compound’s mass for an element</h4>
+      <p>1.20 g of aluminum reacts with oxygen to make 2.27 g of product. The 2.27 g includes the aluminum.</p>
+      <div class="wrong">1.20 g Al and 2.27 g O</div>
+      <div class="right">1.20 g Al and 2.27 − 1.20 = 1.07 g O</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRACTICE ============ -->
+<section id="practice">
+  <div class="sec-head"><span class="tasktag">Practice</span><h2>Practice</h2></div>
+  <p>Pick a kind of problem, or mix them up. Use the periodic table for molar masses, and type your answer with plain numbers for subscripts, like <kbd class="fk">Fe2O3</kbd>. Under each problem there’s a scaffold if you want it: <b>build the table</b>, one row per element.</p>
+  <p class="smallprint">Your score counts a problem as solved when your first check is right. Using “Show answer” counts as a miss. You can write the elements in any order.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Generated problems</span><span class="score" id="p-score">0 of 0</span></div>
+    <div class="tabs" role="tablist" aria-label="Kind of problem" id="p-tabs">
+      <button type="button" class="tab" role="tab" data-k="pct" aria-selected="true">From percents</button>
+      <button type="button" class="tab" role="tab" data-k="lab" aria-selected="false">From lab data</button>
+      <button type="button" class="tab" role="tab" data-k="mix" aria-selected="false">Mix it up</button>
+    </div>
+    <p class="prob" id="p-prob" style="margin-top:16px"></p>
+    <div class="field">
+      <label for="p-in">Empirical formula</label>
+      <input type="text" class="fx-in" id="p-in" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a formula">
+      <span class="fx-prev" id="p-prev" aria-hidden="true"></span>
+    </div>
+    <p class="typing-tip">Start each element with a capital letter, and type subscripts as plain numbers: <kbd class="fk">Fe2O3</kbd>. Leave out a subscript of 1.</p>
+    <div class="btn-row">
+      <button type="button" id="p-check">Check</button>
+      <button type="button" class="ghost" id="p-show">Show answer</button>
+      <button type="button" class="ghost" id="p-new">New problem</button>
+      <button type="button" class="ghost" id="p-ptbtn" aria-expanded="false">Periodic table</button>
+    </div>
+    <div class="fb" id="p-fb" aria-live="polite"></div>
+    <div id="p-pt" hidden style="margin-top:14px"></div>
+
+    <div class="scaf">
+      <div class="scaf-lab">Build the table</div>
+      <p class="setup" style="margin-top:6px">Fill in as much as you like, then press <b>Check the table</b> to see which boxes are right. Writing the formula is up to you.</p>
+      <div class="tbl-scroll"><table class="tt" id="t-table"></table></div>
+      <div class="btn-row" style="margin-top:10px">
+        <button type="button" class="ghost small" id="t-check">Check the table</button>
+        <button type="button" class="ghost small" id="t-clear">Clear</button>
+      </div>
+      <div class="fb hint show" id="t-msg" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Ten questions on empirical formulas from percents and from lab data, and on getting to whole numbers.</p>
+  <div class="card" id="quiz"></div>
+</section>
+
+<footer>
+  <p>Empirical formulas from percent composition and from lab data. Element data are standard atomic weights rounded to two decimal places. The practice problems are generated fresh every time.</p>
+  <p><a href="/chemistry/moles/">← Unit 4 — Moles</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function each(list, fn){ Array.prototype.forEach.call(list, fn); }
+function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+function tabs(host, onPick){
+  each(host.querySelectorAll('.tab'), function(b){
+    b.addEventListener('click', function(){
+      each(host.querySelectorAll('.tab'), function(o){ o.setAttribute('aria-selected', String(o === b)); });
+      onPick(b);
+    });
+  });
+}
+
+/*CORE-START*/
+/* =========================================================
+   core: elements, formulas, ratios, problems, judging (no DOM)
+   ========================================================= */
+/* symbol, name, standard atomic weight to 2 decimals ; (n) = mass number of a long-lived isotope, no stable isotopes */
+var EL_DATA = 'H,Hydrogen,1.01;He,Helium,4.00;Li,Lithium,6.94;Be,Beryllium,9.01;B,Boron,10.81;C,Carbon,12.01;N,Nitrogen,14.01;O,Oxygen,16.00;F,Fluorine,19.00;Ne,Neon,20.18;Na,Sodium,22.99;Mg,Magnesium,24.31;Al,Aluminum,26.98;Si,Silicon,28.09;P,Phosphorus,30.97;S,Sulfur,32.06;Cl,Chlorine,35.45;Ar,Argon,39.95;K,Potassium,39.10;Ca,Calcium,40.08;Sc,Scandium,44.96;Ti,Titanium,47.87;V,Vanadium,50.94;Cr,Chromium,52.00;Mn,Manganese,54.94;Fe,Iron,55.85;Co,Cobalt,58.93;Ni,Nickel,58.69;Cu,Copper,63.55;Zn,Zinc,65.38;Ga,Gallium,69.72;Ge,Germanium,72.63;As,Arsenic,74.92;Se,Selenium,78.97;Br,Bromine,79.90;Kr,Krypton,83.80;Rb,Rubidium,85.47;Sr,Strontium,87.62;Y,Yttrium,88.91;Zr,Zirconium,91.22;Nb,Niobium,92.91;Mo,Molybdenum,95.95;Tc,Technetium,(98);Ru,Ruthenium,101.07;Rh,Rhodium,102.91;Pd,Palladium,106.42;Ag,Silver,107.87;Cd,Cadmium,112.41;In,Indium,114.82;Sn,Tin,118.71;Sb,Antimony,121.76;Te,Tellurium,127.60;I,Iodine,126.90;Xe,Xenon,131.29;Cs,Cesium,132.91;Ba,Barium,137.33;La,Lanthanum,138.91;Ce,Cerium,140.12;Pr,Praseodymium,140.91;Nd,Neodymium,144.24;Pm,Promethium,(145);Sm,Samarium,150.36;Eu,Europium,151.96;Gd,Gadolinium,157.25;Tb,Terbium,158.93;Dy,Dysprosium,162.50;Ho,Holmium,164.93;Er,Erbium,167.26;Tm,Thulium,168.93;Yb,Ytterbium,173.05;Lu,Lutetium,174.97;Hf,Hafnium,178.49;Ta,Tantalum,180.95;W,Tungsten,183.84;Re,Rhenium,186.21;Os,Osmium,190.23;Ir,Iridium,192.22;Pt,Platinum,195.08;Au,Gold,196.97;Hg,Mercury,200.59;Tl,Thallium,204.38;Pb,Lead,207.2;Bi,Bismuth,208.98;Po,Polonium,(209);At,Astatine,(210);Rn,Radon,(222);Fr,Francium,(223);Ra,Radium,(226);Ac,Actinium,(227);Th,Thorium,232.04;Pa,Protactinium,231.04;U,Uranium,238.03;Np,Neptunium,(237);Pu,Plutonium,(244);Am,Americium,(243);Cm,Curium,(247);Bk,Berkelium,(247);Cf,Californium,(251);Es,Einsteinium,(252);Fm,Fermium,(257);Md,Mendelevium,(258);No,Nobelium,(259);Lr,Lawrencium,(262);Rf,Rutherfordium,(267);Db,Dubnium,(268);Sg,Seaborgium,(269);Bh,Bohrium,(270);Hs,Hassium,(269);Mt,Meitnerium,(278);Ds,Darmstadtium,(281);Rg,Roentgenium,(282);Cn,Copernicium,(285);Nh,Nihonium,(286);Fl,Flerovium,(289);Mc,Moscovium,(290);Lv,Livermorium,(293);Ts,Tennessine,(294);Og,Oganesson,(294)';
+var ELEMENTS = EL_DATA.split(';').map(function(r, i){
+  var p = r.split(','), br = p[2].charAt(0) === '(';
+  return { sym:p[0], name:p[1], z:i + 1, ms:p[2], M:parseFloat(br ? p[2].slice(1) : p[2]), br:br };
+});
+var EL = {};
+ELEMENTS.forEach(function(e){ EL[e.sym] = e; });
+var DIATOMIC = { H:1, N:1, O:1, F:1, Cl:1, Br:1, I:1 };
+function lc(s){ return EL[s].name.toLowerCase(); }
+
+/* ---- formulas ---- */
+var SUBS = '₀₁₂₃₄₅₆₇₈₉';
+function plainDigits(s){ return String(s).replace(/[₀-₉]/g, function(ch){ return String(ch.charCodeAt(0) - 0x2080); }); }
+function fHTML(f){ return String(f).replace(/\d+/g, function(d){ return '<sub>' + d + '</sub>'; }); }
+function fText(f){ return String(f).replace(/\d/g, function(d){ return SUBS.charAt(Number(d)); }); }
+
+/* parseFormula('Ca(NO3)2') -> { ok, f, occ:[{el,n,mult}], counts:{Ca:1,N:2,O:6}, order:['Ca','N','O'], groups:[{inner:'NO3',k:2}] } */
+function parseFormula(str){
+  var s = plainDigits(str).replace(/\s+/g, ''), i = 0, groups = [];
+  if(!s) return { ok:false, err:'nothing in it' };
+  function num(){
+    var m = /^\d+/.exec(s.slice(i));
+    if(!m) return 1;
+    i += m[0].length;
+    var n = parseInt(m[0], 10);
+    if(n === 0) throw 'a subscript of 0';
+    if(m[0].charAt(0) === '0') throw 'a subscript that starts with 0. If you meant the letter O, type a capital O';
+    return n;
+  }
+  function group(depth){
+    var items = [];
+    while(i < s.length){
+      var ch = s.charAt(i);
+      if(ch === '(' || ch === '['){
+        var start = ++i, close = ch === '(' ? ')' : ']';
+        var inner = group(depth + 1);
+        if(s.charAt(i) !== close) throw (s.charAt(i) ? 'brackets that don’t match' : 'a parenthesis that never closes');
+        var end = i++;
+        var k = num();
+        if(!inner.length) throw 'empty parentheses';
+        inner.forEach(function(o){ o.mult *= k; });
+        if(k > 1) groups.push({ inner:s.slice(start, end), k:k });
+        items = items.concat(inner);
+      } else if(ch === ')' || ch === ']'){
+        if(depth === 0) throw 'an extra closing parenthesis';
+        return items;
+      } else if(/[A-Z]/.test(ch)){
+        var sym = ch; i++;
+        if(/[a-z]/.test(s.charAt(i))){ sym += s.charAt(i); i++; }
+        if(!EL[sym]) throw '“' + sym + '”, which isn’t an element symbol';
+        items.push({ el:sym, n:num(), mult:1 });
+      } else if(/[a-z]/.test(ch)){
+        throw 'a lowercase “' + ch + '”. Element symbols start with a capital letter';
+      } else if(/\d/.test(ch)){
+        throw 'a number in front. Leave out coefficients and type just the formula';
+      } else {
+        throw 'the character “' + ch + '”';
+      }
+    }
+    if(depth > 0) throw 'a parenthesis that never closes';
+    return items;
+  }
+  try {
+    var occ = group(0), counts = {}, order = [];
+    occ.forEach(function(o){
+      if(!(o.el in counts)){ counts[o.el] = 0; order.push(o.el); }
+      counts[o.el] += o.n * o.mult;
+    });
+    return { ok:true, f:s, occ:occ, counts:counts, order:order, groups:groups };
+  } catch(e){
+    return { ok:false, err:String(e) };
+  }
+}
+/* add in hundredths so 2.02 + 16.00 is exactly 18.02 */
+function hund(sym){ return Math.round(EL[sym].M * 100); }
+function massOf(counts){ var h = 0; for(var s in counts) h += counts[s] * hund(s); return h / 100; }
+function fix2(x){ return (Math.round(x * 100) / 100).toFixed(2); }
+
+/* percent composition: one row per element, in formula order */
+function compOf(f){
+  var pf = typeof f === 'string' ? parseFormula(f) : f;
+  var M = massOf(pf.counts), rows = [];
+  pf.order.forEach(function(s){
+    var n = pf.counts[s], m = n * hund(s) / 100;
+    rows.push({ s:s, n:n, m:m, pct:m / M * 100 });
+  });
+  return { pf:pf, M:M, rows:rows, by:function(s){ for(var i = 0; i < rows.length; i++) if(rows[i].s === s) return rows[i]; return null; } };
+}
+
+/* ---- numbers ---- */
+function supHTML(n){ return '<sup>' + String(n).replace('-', '−') + '</sup>'; }
+/* round to sf significant figures -> { m:'1.51', e:24 } */
+function sigParts(x, sf){
+  if(x === 0) return { m:(0).toFixed(sf - 1), e:0 };
+  var e = Math.floor(Math.log10(Math.abs(x)));
+  var f = Math.pow(10, sf - 1);
+  var m = Math.round(Math.abs(x) / Math.pow(10, e) * f * (1 + 1e-12)) / f;
+  if(m >= 10){ m = m / 10; e++; }
+  return { m:(x < 0 ? '-' : '') + m.toFixed(sf - 1), e:e };
+}
+function sciHTML(x, sf){ var p = sigParts(x, sf || 3); return p.m + ' × 10' + supHTML(p.e); }
+/* plain decimals between 0.001 and 999 ; scientific notation outside that, or when a trailing zero would be ambiguous */
+function sigHTML(x, sf){
+  sf = sf || 3;
+  var p = sigParts(x, sf);
+  if(p.e >= 3 || p.e < -3) return sciHTML(x, sf);
+  var dp = Math.max(0, sf - 1 - p.e);
+  var s = (Number(p.m) * Math.pow(10, p.e)).toFixed(dp);
+  if(dp === 0 && /0$/.test(s)) return sciHTML(x, sf);
+  return s;
+}
+/* '1.252', '1.252 mol', '69.94 g', '3' -> { v } or null */
+function parseNum(str){
+  var s = String(str || '').trim();
+  if(!s) return null;
+  s = s.replace(/[−–]/g, '-').replace(/,/g, '');
+  s = s.replace(/\s*(%|percent|grams?|g|mol|moles?)\.?(\s*[A-Za-z0-9()₀-₉]+)?\s*$/i, '');
+  s = s.replace(/\s+/g, '');
+  var m = /^[+-]?(\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?$/.exec(s);
+  if(!m) return null;
+  var v = parseFloat(s);
+  return isFinite(v) ? { v:v } : null;
+}
+
+/* ---- ratios ---- */
+function gcd(a, b){ a = Math.abs(a); b = Math.abs(b); while(b){ var t = b; b = a % b; a = t; } return a; }
+function gcdList(a){ return a.reduce(function(g, x){ return gcd(g, x); }, 0); }
+function reduceList(a){ var g = gcdList(a); return g > 1 ? a.map(function(x){ return x / g; }) : a.slice(); }
+function sameList(a, b){ return a.length === b.length && a.every(function(x, i){ return x === b[i]; }); }
+function sig4(x){ return Number(x.toPrecision(4)); }
+function m4(x){ return sigHTML(x, 4); }
+var FRAC = { '1/2':'½', '1/3':'⅓', '2/3':'⅔', '1/4':'¼', '3/4':'¾', '1/5':'⅕', '2/5':'⅖', '3/5':'⅗', '4/5':'⅘', '1/6':'⅙', '5/6':'⅚' };
+/* 1.333 with multiplier 3 -> '1⅓' */
+function fracWord(x, n){
+  var k = Math.round(x * n), w = Math.floor(k / n), num = k - w * n, g = gcd(num, n);
+  if(!num) return String(w);
+  return (w ? w : '') + (FRAC[(num / g) + '/' + (n / g)] || ' ' + num + '/' + n);
+}
+/* simplest whole-number ratio of a list of mole amounts: divide by the smallest, then try × 1 to × 6
+   and take the first where every number is within tol of a whole number */
+function wholeRatio(mol, tol){
+  tol = tol == null ? 0.1 : tol;
+  if(!mol.every(function(x){ return isFinite(x) && x > 0; })) return null;
+  var mn = Math.min.apply(null, mol);
+  var r = mol.map(function(x){ return x / mn; });
+  for(var n = 1; n <= 6; n++){
+    var dev = 0, sub = r.map(function(x){ var y = x * n, w = Math.round(y); dev = Math.max(dev, Math.abs(y - w)); return w; });
+    if(dev <= tol + 1e-9) return { r:r, n:n, sub:reduceList(sub), dev:dev };
+  }
+  return null;
+}
+/* the whole method for one compound: grams -> moles (4 sig figs) -> ratio to the smallest -> whole numbers */
+function solve(syms, g){
+  var mol = g.map(function(x, i){ return sig4(x / EL[syms[i]].M); });
+  var mn = Math.min.apply(null, mol), iMin = mol.indexOf(mn);
+  return { syms:syms, g:g, mol:mol, mn:mn, iMin:iMin, r:mol.map(function(x){ return x / mn; }), w:wholeRatio(mol) };
+}
+function efText(syms, sub){ return syms.map(function(s, i){ return s + (sub[i] > 1 ? sub[i] : ''); }).join(''); }
+function perms(a){
+  if(a.length <= 1) return [a.slice()];
+  var out = [];
+  a.forEach(function(x, i){ perms(a.slice(0, i).concat(a.slice(i + 1))).forEach(function(p){ out.push([x].concat(p)); }); });
+  return out;
+}
+
+/* ---- compounds used in generated problems ----
+   every formula here is already the simplest whole-number ratio, so its empirical formula is its real formula */
+function entry(f, name){
+  var pf = parseFormula(f), syms = pf.order, counts = syms.map(function(s){ return pf.counts[s]; }), ef = efText(syms, counts);
+  return { f:f, name:name, pf:pf, cp:compOf(pf), syms:syms, counts:counts, ef:ef, alt:ef !== f };
+}
+var PCT_BANK = [
+  ['H2O','water'],['CO2','carbon dioxide'],['CO','carbon monoxide'],['N2O','dinitrogen monoxide'],['NO2','nitrogen dioxide'],
+  ['N2O3','dinitrogen trioxide'],['N2O5','dinitrogen pentoxide'],['SO2','sulfur dioxide'],['SO3','sulfur trioxide'],
+  ['NH3','ammonia'],['CH4','methane'],['C3H8','propane'],['C5H12','pentane'],['CCl4','carbon tetrachloride'],
+  ['PCl3','phosphorus trichloride'],['PCl5','phosphorus pentachloride'],['SiO2','silicon dioxide'],
+  ['FeO','iron(II) oxide'],['Fe2O3','iron(III) oxide'],['Fe3O4','magnetite, a magnetic iron ore'],
+  ['CuO','copper(II) oxide'],['Cu2O','copper(I) oxide'],['Cu2S','copper(I) sulfide'],['FeS2','pyrite, also called fool’s gold'],
+  ['Al2O3','aluminum oxide'],['Cr2O3','chromium(III) oxide'],['MnO2','manganese(IV) oxide'],['Mn2O7','manganese(VII) oxide'],
+  ['TiO2','titanium(IV) oxide'],['SnO2','tin(IV) oxide'],['Pb3O4','red lead, an old pigment'],
+  ['MgCl2','magnesium chloride'],['CaCl2','calcium chloride'],['AlCl3','aluminum chloride'],['FeCl3','iron(III) chloride'],
+  ['Na2O','sodium oxide'],['K2O','potassium oxide'],['Ag2O','silver oxide'],['Al2S3','aluminum sulfide'],
+  ['Mg3N2','magnesium nitride'],['Li3N','lithium nitride'],['Ca3P2','calcium phosphide'],
+  ['KNO3','potassium nitrate'],['CaCO3','calcium carbonate'],['Na2CO3','sodium carbonate'],['K2SO4','potassium sulfate'],
+  ['KClO3','potassium chlorate'],['KMnO4','potassium permanganate'],['K2CrO4','potassium chromate'],['K2Cr2O7','potassium dichromate'],
+  ['NaHCO3','sodium hydrogen carbonate'],['NH4NO3','ammonium nitrate'],['(NH4)2SO4','ammonium sulfate'],
+  ['Ca3(PO4)2','calcium phosphate'],['Al2(SO4)3','aluminum sulfate'],
+  ['C2H5OH','ethanol'],['C3H6O','acetone'],['C3H8O3','glycerol'],['C7H6O2','benzoic acid'],['C9H8O4','aspirin']
+].map(function(e){ return entry(e[0], e[1]); });
+/* two-element compounds for lab-data problems, metal first */
+var LAB_BANK = [
+  ['MgO','magnesium oxide'],['CaO','calcium oxide'],['ZnO','zinc oxide'],['CuO','copper(II) oxide'],['Cu2O','copper(I) oxide'],
+  ['Al2O3','aluminum oxide'],['Fe2O3','iron(III) oxide'],['Fe3O4','magnetite, a magnetic iron ore'],['HgO','mercury(II) oxide'],
+  ['Ag2O','silver oxide'],['Li2O','lithium oxide'],['SnO2','tin(IV) oxide'],['Cr2O3','chromium(III) oxide'],
+  ['NaCl','sodium chloride'],['KCl','potassium chloride'],['MgCl2','magnesium chloride'],['CaCl2','calcium chloride'],
+  ['FeCl3','iron(III) chloride'],['AlCl3','aluminum chloride'],['SnCl4','tin(IV) chloride'],
+  ['FeS','iron(II) sulfide'],['ZnS','zinc sulfide'],['PbS','lead(II) sulfide'],['Cu2S','copper(I) sulfide'],['Ag2S','silver sulfide'],
+  ['Al2S3','aluminum sulfide'],['Mg3N2','magnesium nitride'],['Li3N','lithium nitride'],['Ca3N2','calcium nitride']
+].map(function(e){ return entry(e[0], e[1]); });
+
+/* ---- problems ----
+   pct = empirical formula from percent composition
+   lab = empirical formula from masses measured in a lab */
+var LEADS = ['A compound is ', 'Lab analysis shows that a compound is ', 'An unknown compound is '];
+function makeProblem(type, avoid){
+  for(var t = 0; t < 80; t++){
+    var p = type === 'lab' ? makeLab(avoid) : makePct(avoid);
+    if(!p) continue;
+    /* the data must lead cleanly to the right formula, and comparing grams must not give it too */
+    if(!p.sol.w || !sameList(p.sol.w.sub, p.c.counts) || p.sol.w.dev > 0.06) continue;
+    var byMass = wholeRatio(p.g);
+    if(byMass && sameList(byMass.sub, p.c.counts)) continue;
+    return p;
+  }
+  return null;
+}
+function makePct(avoid){
+  var c = pick(PCT_BANK.filter(function(x){ return x.f !== avoid; }));
+  var g = c.cp.rows.map(function(r){ return Number(fix2(r.pct)); });
+  var rest = Math.random() < 0.3;
+  if(rest){
+    var others = 0;
+    for(var i = 0; i < g.length - 1; i++) others += Math.round(g[i] * 100);
+    g[g.length - 1] = (10000 - others) / 100;
+  }
+  return { type:'pct', c:c, syms:c.syms, g:g, pcts:g.map(function(x){ return x.toFixed(2); }), rest:rest, lead:pick(LEADS), sol:solve(c.syms, g) };
+}
+/* lab masses are kept in hundredths of a gram, every mass at least 1.00 g so each has 3 significant figures */
+function makeLab(avoid){
+  var c = pick(LAB_BANK.filter(function(x){ return x.f !== avoid; }));
+  var fa = c.cp.rows[0].m / c.cp.M, fmin = Math.min(fa, 1 - fa);
+  var lo = Math.max(2, 1.1 / fmin), hi = Math.max(25, 1.6 / fmin);
+  var C = Math.round((lo + Math.random() * (hi - lo)) * 100), A = Math.round(C * fa), B = C - A;
+  if(A < 100 || B < 100) return null;
+  var v = pick(['syn','dec','comp']), given;
+  if(v === 'syn') given = { a:1, C:1 };
+  else if(v === 'comp') given = { a:1, b:1 };
+  else given = Math.random() < 0.5 ? { a:1, C:1 } : { b:1, C:1 };
+  var m = { a:A / 100, b:B / 100, C:C / 100 };
+  return { type:'lab', c:c, syms:c.syms, v:v, given:given, m:m, dp:2, g:[m.a, m.b], sol:solve(c.syms, [m.a, m.b]) };
+}
+
+/* ---- judging ----
+   wrong formulas that common mistakes produce ; raw: compare without reducing (percents typed as subscripts) */
+var ORDER = ['swap','whole','pctSub','mass','diatomic','flip','roundEarly','oneOnly','wrongMult','truncate','wholeR','massR','guess'];
+function candidates(p){
+  var syms = p.syms, g = p.g, want = p.c.counts, out = [];
+  var Ms = syms.map(function(s){ return EL[s].M; });
+  function push(code, sub, x, raw){
+    if(!sub) return;
+    var s = raw ? sub : reduceList(sub);
+    if(sameList(reduceList(sub), want)) return;
+    out.push({ code:code, sub:s, x:x || {}, raw:!!raw });
+  }
+  /* a wrong set of moles, taken all the way to whole numbers ; also, with rounded: just rounded, as a student who stops early would */
+  function fromMoles(code, mol, x, rounded){
+    var w = wholeRatio(mol);
+    if(w) push(code, w.sub, x);
+    if(rounded){ var mn = Math.min.apply(null, mol); push(code + 'R', mol.map(function(v){ return Math.max(1, Math.round(v / mn)); }), x); }
+  }
+  /* each number that isn't close to whole, pushed one way: round, up or down */
+  function fracs(how){ return r.map(function(v){ return Math.abs(v - Math.round(v)) <= 0.1 ? Math.round(v) : Math.max(1, how(v)); }); }
+  var r = p.sol.r, n = p.sol.w ? p.sol.w.n : 1;
+  perms(want).forEach(function(q){ push('swap', q); });
+  if(p.type === 'lab'){
+    if(p.given.C && !p.given.b) fromMoles('whole', [p.m.a / Ms[0], p.m.C / Ms[1]], { i:1 }, true);
+    if(p.given.C && !p.given.a) fromMoles('whole', [p.m.C / Ms[0], p.m.b / Ms[1]], { i:0 }, true);
+  } else push('pctSub', g.map(function(v){ return Math.max(1, Math.round(v)); }), {}, true);
+  fromMoles('mass', g, {}, true);
+  var dia = syms.filter(function(s){ return DIATOMIC[s]; });
+  if(dia.length) fromMoles('diatomic', g.map(function(v, i){ return v / (Ms[i] * (DIATOMIC[syms[i]] ? 2 : 1)); }), { d:dia });
+  fromMoles('flip', g.map(function(v, i){ return Ms[i] / v; }));
+  if(n > 1){
+    push('roundEarly', fracs(Math.round));
+    push('roundEarly', fracs(Math.ceil));
+    push('roundEarly', fracs(Math.floor));
+    push('oneOnly', r.map(function(x){ return Math.abs(x - Math.round(x)) <= 0.1 ? Math.round(x) : Math.round(x * n); }));
+    [2, 3, 4, 5].forEach(function(k){ if(k % n) push('wrongMult', r.map(function(x){ return Math.round(x * k); }), { k:k }); });
+  }
+  push('truncate', r.map(function(x){ return Math.max(1, Math.floor(x * n + 1e-6)); }));
+  if(p.sim) push('guess', syms.map(function(){ return 1; }));
+  return out.sort(function(a, b){ return ORDER.indexOf(a.code) - ORDER.indexOf(b.code); });
+}
+/* judge a typed formula -> { code, x } */
+function judgeFormula(p, raw){
+  var s = String(raw || '').trim();
+  if(!s) return { code:'empty', x:{} };
+  if(/\d\s*\.\s*\d|\.\d/.test(plainDigits(s))) return { code:'decimal', x:{} };
+  var hasO = p.syms.indexOf('O') !== -1, zero = /0/.test(plainDigits(s));
+  var pf = parseFormula(s);
+  if(!pf.ok){
+    if(zero && hasO && !/O/.test(s)) return { code:'zeroO', x:{} };
+    return { code:'parse', x:{ err:pf.err } };
+  }
+  var syms = p.syms, want = p.c.counts;
+  var missing = syms.filter(function(x){ return !(x in pf.counts); });
+  var extra = pf.order.filter(function(x){ return syms.indexOf(x) === -1; });
+  if(missing.length || extra.length){
+    if(zero && missing.indexOf('O') !== -1) return { code:'zeroO', x:{} };
+    return { code:'elements', x:{ missing:missing, extra:extra } };
+  }
+  var got = syms.map(function(x){ return pf.counts[x]; });
+  if(sameList(got, want)) return { code:'ok', x:{} };
+  var red = reduceList(got), k = gcdList(got);
+  if(k > 1 && sameList(red, want)) return { code:'notSimplest', x:{ k:k } };
+  var cs = candidates(p);
+  for(var i = 0; i < cs.length; i++){
+    if(cs[i].raw ? sameList(got, cs[i].sub) : sameList(red, cs[i].sub)) return { code:cs[i].code, x:cs[i].x };
+  }
+  return { code:'none', x:{} };
+}
+/*CORE-END*/
+
+/* =========================================================
+   drawing and wording helpers
+   ========================================================= */
+var COLORS = { H:'#F4F6F6', C:'#3F4548', N:'#3B6FD0', O:'#D9473B', S:'#E2C93C', P:'#E08A2C', Cl:'#3FA34D', F:'#8FD16A', Br:'#8B2A1E', I:'#6B2C91',
+  Na:'#8E5CC4', K:'#7A4FB0', Li:'#B48AD8', Ca:'#4E8A3A', Mg:'#6FAF5A', Ba:'#2F7D5C', Al:'#A7AFB8', Fe:'#C0662B', Cu:'#C26A3A', Zn:'#7D80B0',
+  Ag:'#C9CED3', Cr:'#8A99C7', Mn:'#9C7AC7', Si:'#D9B98C', B:'#F2B5A0', Pb:'#69717D', Au:'#D6A62A', Hg:'#B7BEC4', Ti:'#9AA5AE', Sn:'#8E9AA3' };
+function colorOf(s){ return COLORS[s] || '#9AA6A4'; }
+/* a thin stacked bar. parts: [{ s, w: percent of the bar }] */
+function sbar(parts, label){
+  return '<div class="sbar" role="img" aria-label="' + label + '">' + parts.map(function(p){
+    return '<span style="width:' + p.w.toFixed(3) + '%;background:' + colorOf(p.s) + '"></span>';
+  }).join('') + '</div>';
+}
+function andList(a){ return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
+/* a ratio value for display: 2 or 1.50 */
+function rShort(x){ return Math.abs(x - Math.round(x)) < 0.005 ? String(Math.round(x)) : x.toFixed(2); }
+function nameLine(c){ return 'It’s ' + c.name + (c.alt ? ', usually written ' + fHTML(c.f) : '') + '.'; }
+
+/* =========================================================
+   hero
+   ========================================================= */
+(function heroRows(){
+  var h = '<div class="sig-r head"><span>Percent by mass</span><span>Mole ratio</span><span>Formula</span></div>';
+  ['H2O','CO2','NaCl','Fe2O3'].forEach(function(f){
+    var cp = compOf(f), syms = cp.pf.order, g = cp.rows.map(function(r){ return Number(fix2(r.pct)); });
+    var sol = solve(syms, g), w = sol.w;
+    var pcs = cp.rows.map(function(r){ return fix2(r.pct) + '% ' + r.s; });
+    var rt = w.n === 1 ? w.sub.join(' : ') : sol.r.map(rShort).join(' : ') + '<small>× ' + w.n + ' → ' + w.sub.join(' : ') + '</small>';
+    h += '<div class="sig-r"><span>' + sbar(cp.rows.map(function(r){ return { s:r.s, w:r.pct }; }), fText(f) + ': ' + pcs.join(', ')) +
+      '<span class="pc">' + pcs.join(' · ') + '</span></span><span class="rt">' + rt + '</span><span class="fx">' + fHTML(f) + '</span></div>';
+  });
+  el('hero-rows').innerHTML = h;
+})();
+(function heroFig(){
+  var x0 = 20, bw = 260, Hc = '#F4F6F6', Hs = '#8A9896', Oc = '#D9473B', Os = '#8A2A22', pH = 11.21;
+  var mH = sig4(pH / EL.H.M), mO = sig4((100 - pH) / EL.O.M);
+  var mono = 'font-family="IBM Plex Mono,monospace"', sans = 'font-family="IBM Plex Sans,sans-serif" font-weight="600"';
+  var h = '<svg viewBox="0 0 300 246" role="img" aria-label="Water, run backwards. By mass, water is 11.21 percent hydrogen and 88.79 percent oxygen. Dividing by molar mass gives ' + m4(mH) + ' moles of hydrogen atoms and ' + m4(mO) + ' moles of oxygen atoms, a 2 to 1 ratio, so the formula is H2O.">';
+  /* by mass */
+  var wH = bw * pH / 100;
+  h += '<text x="' + x0 + '" y="13" ' + mono + ' font-size="10.5" letter-spacing="1" fill="#5F6D6B">BY MASS</text>';
+  h += '<rect x="' + x0 + '" y="20" width="' + wH.toFixed(1) + '" height="26" fill="' + Hc + '" stroke="' + Hs + '"/>';
+  h += '<rect x="' + (x0 + wH).toFixed(1) + '" y="20" width="' + (bw - wH).toFixed(1) + '" height="26" fill="' + Oc + '" stroke="' + Os + '"/>';
+  h += '<text x="' + (x0 + wH / 2).toFixed(1) + '" y="38" text-anchor="middle" ' + sans + ' font-size="13" fill="#131E1D">H</text>';
+  h += '<text x="' + (x0 + wH + (bw - wH) / 2).toFixed(1) + '" y="38" text-anchor="middle" ' + mono + ' font-weight="500" font-size="13" fill="#fff">O 88.79%</text>';
+  /* the division */
+  h += '<text x="' + x0 + '" y="66" ' + mono + ' font-size="10.8" fill="#3B4A48">11.21 g H ÷ 1.01 = ' + m4(mH) + ' mol H</text>';
+  h += '<text x="' + x0 + '" y="82" ' + mono + ' font-size="10.8" fill="#3B4A48">88.79 g O ÷ 16.00 = ' + m4(mO) + ' mol O</text>';
+  /* by moles of atoms */
+  h += '<text x="' + x0 + '" y="108" ' + mono + ' font-size="10.5" letter-spacing="1" fill="#5F6D6B">BY MOLES OF ATOMS</text>';
+  var third = bw / 3;
+  [[Hc, Hs, 'H'], [Hc, Hs, 'H'], [Oc, Os, 'O']].forEach(function(c, i){
+    h += '<rect x="' + (x0 + i * third).toFixed(1) + '" y="115" width="' + third.toFixed(1) + '" height="26" fill="' + c[0] + '" stroke="' + c[1] + '"/>';
+    h += '<text x="' + (x0 + i * third + third / 2).toFixed(1) + '" y="133" text-anchor="middle" ' + sans + ' font-size="13" fill="' + (c[2] === 'O' ? '#fff' : '#131E1D') + '">' + c[2] + '</text>';
+  });
+  h += '<text x="' + x0 + '" y="158" ' + mono + ' font-size="11" fill="#3B4A48">' + m4(mH) + ' : ' + m4(mO) + ' = 2 : 1</text>';
+  /* the molecule */
+  h += '<line x1="150" y1="196" x2="112" y2="222" stroke="#8A9896" stroke-width="3"/><line x1="150" y1="196" x2="188" y2="222" stroke="#8A9896" stroke-width="3"/>';
+  h += '<circle cx="112" cy="222" r="14" fill="' + Hc + '" stroke="' + Hs + '" stroke-width="1.2"/><circle cx="188" cy="222" r="14" fill="' + Hc + '" stroke="' + Hs + '" stroke-width="1.2"/>';
+  h += '<circle cx="150" cy="194" r="26" fill="' + Oc + '" stroke="' + Os + '" stroke-width="1.2"/>';
+  h += '<text x="150" y="201" text-anchor="middle" ' + sans + ' font-size="19" fill="#fff">O</text>';
+  h += '<text x="112" y="227" text-anchor="middle" ' + sans + ' font-size="13" fill="#131E1D">H</text><text x="188" y="227" text-anchor="middle" ' + sans + ' font-size="13" fill="#131E1D">H</text>';
+  h += '<text x="238" y="200" ' + sans + ' font-size="22" fill="#0B4E58">H<tspan font-size="14" dy="5">2</tspan><tspan dy="-5">O</tspan></text>';
+  h += '</svg>';
+  el('hero-fig').innerHTML = h;
+})();
+
+/* =========================================================
+   the idea: sulfur dioxide by mass and by atoms
+   ========================================================= */
+(function duo(){
+  var cp = compOf('SO2'), pS = cp.by('S').pct;
+  el('duo').innerHTML =
+    '<div class="duo-r"><span class="duo-l">By mass</span>' + sbar([{ s:'S', w:pS }, { s:'O', w:100 - pS }], 'By mass: ' + fix2(pS) + ' percent sulfur, ' + fix2(100 - pS) + ' percent oxygen') +
+      '<span class="duo-v">' + fix2(pS) + '% S · ' + fix2(100 - pS) + '% O</span></div>' +
+    '<div class="duo-r"><span class="duo-l">By atoms</span>' + sbar([{ s:'S', w:100 / 3 }, { s:'O', w:200 / 3 }], 'By atoms: 1 sulfur for every 2 oxygen') +
+      '<span class="duo-v">1 S : 2 O</span></div>';
+})();
+
+/* =========================================================
+   worked examples: a step-through table (from percents, and from lab data)
+   spec: { title, q, syms, gText:[grams as text], pct:true when the grams come from percents, t0, t2, t4 }
+   ========================================================= */
+function cell(show, isNew, html, cls){ return '<td class="n' + (isNew ? ' new' : '') + (cls ? ' ' + cls : '') + '">' + (show ? html : '') + '</td>'; }
+function stepText(spec, st){
+  var sol = spec.sol, syms = sol.syms, w = sol.w, n = w.n, sm = m4(sol.mn);
+  if(st === 0) return spec.t0;
+  if(st === 1) return '<b>Mass to moles.</b> Divide each mass by its molar mass: ' + syms.map(function(s, i){ return s + ': ' + spec.gText[i] + ' ÷ ' + EL[s].ms + ' = ' + m4(sol.mol[i]) + ' mol'; }).join(', ') + '. Keep four significant figures for now.';
+  if(st === 2) return '<b>Divide by the smallest.</b> ' + cap(lc(syms[sol.iMin])) + ' has the fewest moles, ' + sm + ', so divide each number of moles by ' + sm + ': ' +
+    syms.map(function(s, i){ return s + ': ' + m4(sol.mol[i]) + ' ÷ ' + sm + ' = ' + sol.r[i].toFixed(3); }).join(', ') + '.' + (spec.t2 ? ' ' + spec.t2 : '');
+  if(st === 3){
+    if(n === 1){
+      var off = syms.map(function(s, i){ return { s:s, r:sol.r[i], w:w.sub[i] }; }).filter(function(o){ return o.r.toFixed(3) !== o.w.toFixed(3); });
+      if(!off.length) return '<b>Whole numbers already.</b> Every number came out whole, so there’s nothing to round or multiply.';
+      return '<b>Round to whole numbers.</b> Every number is within 0.1 of a whole number, so round: ' + off.map(function(o){ return o.s + ' ' + o.r.toFixed(3) + ' → ' + o.w; }).join(', ') + '.';
+    }
+    var fr = syms.map(function(s, i){ return { s:s, r:sol.r[i] }; }).filter(function(o){ return Math.abs(o.r - Math.round(o.r)) > 0.1; });
+    return '<b>Multiply ’til whole.</b> ' + andList(fr.map(function(o){ return o.s + ' is ' + o.r.toFixed(3) + ', about ' + fracWord(o.r, n); })) +
+      '. That’s too far from a whole number to round, so multiply every number by ' + n + ': ' +
+      syms.map(function(s, i){ var y = sol.r[i] * n; return s + ': ' + sol.r[i].toFixed(3) + ' × ' + n + ' = ' + y.toFixed(3) + (Math.abs(y - w.sub[i]) >= 0.0005 ? ' ≈ ' + w.sub[i] : ''); }).join(', ') + '.';
+  }
+  return '<b>Write the formula.</b> The whole numbers are the subscripts, and a subscript of 1 isn’t written: <b>' + fHTML(efText(syms, w.sub)) + '</b>. ' + (spec.t4 || '');
+}
+function drawTable(prefix, spec, st){
+  var sol = spec.sol, w = sol.w, n = w.n, pc = !!spec.pct, rows = '';
+  sol.syms.forEach(function(s, i){
+    rows += '<tr><td><span class="enm">' + EL[s].name + ' (' + s + ')</span><span class="esy">' + s + '</span></td>' +
+      (pc ? '<td class="n pcol">' + spec.gText[i] + '%</td>' : '') +
+      cell(true, st === 0, spec.gText[i] + ' g') +
+      cell(st >= 1, st === 1, '÷ ' + EL[s].ms) +
+      cell(st >= 1, st === 1, '= ' + m4(sol.mol[i]), st >= 2 && i === sol.iMin ? 'lo' : '') +
+      cell(st >= 2, st === 2, sol.r[i].toFixed(3)) +
+      cell(st >= 3, st === 3, (n > 1 ? '× ' + n + ' → ' : '') + w.sub[i]) + '</tr>';
+  });
+  el(prefix + '-table').innerHTML = '<thead><tr><th>Element</th>' + (pc ? '<th class="pcol">Percent</th>' : '') + '<th>' + (pc ? 'Grams in 100 g' : 'Grams') + '</th><th>÷ g/mol</th><th>= Moles</th><th>÷ smallest</th><th>Whole number</th></tr></thead>' +
+    '<tbody>' + rows + '</tbody><tfoot><tr><td colspan="5">Empirical formula</td>' + (pc ? '<td class="pcol"></td>' : '') +
+    '<td class="' + (st === 4 ? 'new' : '') + '">' + (st >= 4 ? '<span class="fxc">' + fHTML(efText(sol.syms, w.sub)) + '</span>' : '') + '</td></tr></tfoot>';
+}
+function worked(prefix, list){
+  var st = { i:0, step:0 };
+  list.forEach(function(w){
+    w.sol = solve(w.syms, w.gText.map(Number));
+    if(w.pct && !w.t0) w.t0 = '<b>Percent to mass.</b> Assume you have exactly 100 g of the compound. Then each percent is a mass in grams: ' +
+      w.syms.map(function(s, i){ return w.gText[i] + '% ' + s + ' → ' + w.gText[i] + ' g ' + s; }).join(', ') + '.';
+  });
+  el(prefix + '-tabs').innerHTML = list.map(function(w, i){
+    return '<button type="button" class="tab" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '">' + w.title + '</button>';
+  }).join('');
+  function draw(){
+    var w = list[st.i];
+    el(prefix + '-q').innerHTML = w.q;
+    drawTable(prefix, w, st.step);
+    el(prefix + '-text').innerHTML = stepText(w, st.step);
+    el(prefix + '-count').textContent = 'Step ' + (st.step + 1) + ' of 5';
+    el(prefix + '-next').disabled = st.step === 4;
+    el(prefix + '-prev').disabled = st.step === 0;
+  }
+  tabs(el(prefix + '-tabs'), function(b){ st.i = Number(b.dataset.i); st.step = 0; draw(); });
+  el(prefix + '-next').addEventListener('click', function(){ if(st.step < 4){ st.step++; draw(); } });
+  el(prefix + '-prev').addEventListener('click', function(){ if(st.step > 0){ st.step--; draw(); } });
+  el(prefix + '-restart').addEventListener('click', function(){ st.step = 0; draw(); });
+  draw();
+}
+function pctQ(c){ return 'A compound is ' + andList(c.syms.map(function(s){ return fix2(c.cp.by(s).pct) + '% ' + lc(s); })) + ' by mass. What is its empirical formula?'; }
+function pctSpec(f, title, extra){
+  var c = entry(f, ''), spec = { title:title, q:pctQ(c), syms:c.syms, gText:c.cp.rows.map(function(r){ return fix2(r.pct); }), pct:true };
+  for(var k in extra) spec[k] = extra[k];
+  return spec;
+}
+worked('ew', [
+  pctSpec('CH4', 'Two elements', { t4:'That’s methane, the main gas in natural gas.' }),
+  pctSpec('C2H6O', 'Three elements', { t2:'Notice that the smallest isn’t the first element. Divide by whichever one is smallest.', t4:'That’s ethanol, usually written C<sub>2</sub>H<sub>5</sub>OH.' }),
+  pctSpec('Fe2O3', 'Multiply by 2', { t4:'That’s iron(III) oxide, the same compound you started with on the last page.' }),
+  pctSpec('Fe3O4', 'Multiply by 3', { t4:'That’s magnetite, a magnetic iron ore. Iron and oxygen form more than one compound, and the percents tell them apart.' }),
+  pctSpec('C9H8O4', 'Multiply by 4', { t4:'That’s aspirin. Every number was multiplied by 4, including the 1.998 for hydrogen.' })
+]);
+worked('dw', [
+  { title:'Each element given', q:'A sample of a compound contains 3.53 g of iron and 1.52 g of oxygen. What is its empirical formula?', syms:['Fe','O'], gText:['3.53','1.52'],
+    t0:'<b>Find the mass of each element.</b> Both are given: 3.53 g Fe and 1.52 g O. You already have grams, so there’s no need to assume 100 g.',
+    t4:'That’s iron(III) oxide again. The lab found the same compound as the percents did.' },
+  { title:'Breaking it down', q:'A 5.00 g sample of a compound of copper and oxygen is heated with hydrogen gas, which removes all of the oxygen. The copper left behind has a mass of 3.99 g. What is the empirical formula of the compound?', syms:['Cu','O'], gText:['3.99','1.01'],
+    t0:'<b>Find the mass of each element.</b> The copper is 3.99 g. The oxygen is the mass that was removed: 5.00 − 3.99 = 1.01 g.',
+    t4:'That’s copper(II) oxide.' },
+  { title:'Building it up', q:'When 1.20 g of aluminum reacts completely with oxygen, it forms 2.27 g of aluminum oxide. What is its empirical formula?', syms:['Al','O'], gText:['1.20','1.07'],
+    t0:'<b>Find the mass of each element.</b> The aluminum is 1.20 g. The oxygen is the mass the aluminum gained: 2.27 − 1.20 = 1.07 g. Don’t use 2.27 g for the oxygen. That’s the whole compound, and it includes the aluminum.',
+    t4:'That’s the formula you’d predict from the charges of the ions, Al<sup>3+</sup> and O<sup>2−</sup>.' }
+]);
+
+/* =========================================================
+   find the multiplier
+   ========================================================= */
+var mScore = Score(el('m-score')), MD = null;
+function mNew(){
+  var wantMult = Math.random() < 0.75, it = null;
+  for(var t = 0; t < 200 && !it; t++){
+    var c = pick(PCT_BANK), mn = Math.min.apply(null, c.counts), iMin = c.counts.indexOf(mn);
+    var rt = c.counts.map(function(x){ return x / mn; }), n = wholeRatio(rt).n;
+    if((n > 1) !== wantMult) continue;
+    var amp = n === 1 ? 0.05 : n === 2 ? 0.025 : 0.012;
+    var vals = rt.map(function(x, i){
+      if(i === iMin) return 1;
+      var d = (Math.random() * 2 - 1) * amp;
+      if(x === 1) d = Math.abs(d);
+      return Math.round((x + d) * 100) / 100;
+    });
+    var w = wholeRatio(vals);
+    if(!w || w.n !== n || !sameList(w.sub, c.counts) || w.dev > 0.08) continue;
+    if(MD && MD.c === c) continue;
+    it = { c:c, vals:vals, n:n };
+  }
+  MD = it; MD.done = false; MD.scored = false;
+  el('m-ratio').innerHTML = MD.c.syms.map(function(s, i){ return '<span><b>' + s + '</b>' + MD.vals[i].toFixed(2) + '</span>'; }).join('<span class="sep">:</span>');
+  each(el('m-opts').querySelectorAll('button'), function(b){ b.disabled = false; b.className = 'ghost'; });
+  hideFb(el('m-fb'));
+}
+function mList(vals, k){ return vals.map(function(v){ return (v * k).toFixed(2); }).join(' : '); }
+function mPick(btn){
+  if(!MD || MD.done) return;
+  var k = Number(btn.dataset.k), it = MD, n = it.n, c = it.c, ok = k === n, fb = el('m-fb');
+  if(!MD.scored){ MD.scored = true; mScore.add(ok); }
+  btn.className = 'ghost ' + (ok ? 'yes' : 'no');
+  if(ok){
+    MD.done = true;
+    each(el('m-opts').querySelectorAll('button'), function(b){ if(b !== btn) b.disabled = true; });
+    setFb(fb, 'good', '<b>Yes.</b> ' + (n === 1 ? 'Every number is within 0.1 of a whole number, so round: ' : '× ' + n + ' gives ' + mList(it.vals, n) + ', which rounds to ') +
+      c.counts.join(' : ') + '. The formula is <b>' + fHTML(c.ef) + '</b>. ' + nameLine(c));
+    return;
+  }
+  var frac = it.vals.filter(function(v){ return Math.abs(v - Math.round(v)) > 0.1; }).map(function(v){ return v.toFixed(2); });
+  if(k === 1){
+    var rd = it.vals.map(function(v){ return Math.max(1, Math.round(v)); });
+    setFb(fb, 'bad', '<b>Don’t round yet.</b> ' + andList(frac) + (frac.length > 1 ? ' are' : ' is') + ' too far from a whole number. Rounding would give ' + fHTML(efText(c.syms, reduceList(rd))) + ', which is the wrong ratio. Try a multiplier.');
+  } else if(k % n === 0){
+    setFb(fb, 'bad', n === 1 ? '<b>No need to multiply.</b> These are already within 0.1 of whole numbers. × ' + k + ' gives whole numbers too, but not the simplest ones.'
+      : '<b>Whole, but not the simplest.</b> × ' + k + ' gives ' + mList(it.vals, k) + ', and every one of those divides by ' + (k / n) + '. Try a smaller multiplier.');
+  } else {
+    var bad = it.vals.map(function(v){ return v * k; }).filter(function(y){ return Math.abs(y - Math.round(y)) > 0.1; })[0];
+    setFb(fb, 'bad', '<b>Not whole yet.</b> × ' + k + ' gives ' + mList(it.vals, k) + (bad != null ? ', and ' + bad.toFixed(2) + ' still isn’t close to a whole number' : '') + '. Try another factor.');
+  }
+}
+each(el('m-opts').querySelectorAll('button'), function(b){ b.addEventListener('click', function(){ mPick(b); }); });
+el('m-new').addEventListener('click', mNew);
+
+/* =========================================================
+   a typed formula, shown back with real subscripts
+   ========================================================= */
+function previewTo(input, out){
+  input.addEventListener('input', function(){
+    var v = input.value.trim(), pf = v ? parseFormula(v) : null;
+    out.innerHTML = pf && pf.ok ? 'reads as <b>' + fHTML(plainDigits(v).replace(/\s+/g, '')) + '</b>' : '';
+  });
+}
+
+/* =========================================================
+   hints and working, shared by the lab and the practice
+   ========================================================= */
+function gShow(p, i){ return p.type === 'pct' ? p.g[i].toFixed(2) : p.g[i].toFixed(p.dp); }
+function massLines(p){
+  if(p.type !== 'lab' || p.v === 'comp') return '';
+  var m = p.m, t = function(v){ return v.toFixed(p.dp) + ' g'; };
+  if(!p.given.b) return 'Mass of ' + lc(p.syms[1]) + ': ' + t(m.C) + ' − ' + t(m.a) + ' = ' + t(m.b) + '.<br>';
+  return 'Mass of ' + lc(p.syms[0]) + ': ' + t(m.C) + ' − ' + t(m.b) + ' = ' + t(m.a) + '.<br>';
+}
+function workTable(p){
+  var sol = p.sol, n = sol.w.n;
+  var rows = p.syms.map(function(s, i){
+    return '<tr><td><b>' + s + '</b></td><td class="n">' + gShow(p, i) + ' g ÷ ' + EL[s].ms + '</td><td class="n">' + m4(sol.mol[i]) + ' mol</td><td class="n">' + sol.r[i].toFixed(3) + '</td><td class="n">' + (n > 1 ? '× ' + n + ' → ' : '') + sol.w.sub[i] + '</td></tr>';
+  }).join('');
+  return '<div class="tbl-scroll"><table class="mmt wt"><thead><tr><th>El.</th><th>Grams ÷ g/mol</th><th>= Moles</th><th>÷ smallest</th><th>Whole</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+}
+function workFor(p){
+  var pre = '';
+  if(p.type === 'pct'){
+    pre = 'Assume 100 g, so each percent is grams.';
+    if(p.rest){ var k = p.syms.length - 1; pre += ' ' + cap(lc(p.syms[k])) + ' is the rest: 100 − ' + p.pcts.slice(0, -1).join(' − ') + ' = ' + p.pcts[k] + '%.'; }
+    pre += '<br>';
+  } else pre = massLines(p);
+  return '<br>' + pre + workTable(p);
+}
+function hintFor(p, res){
+  var x = res.x || {}, sol = p.sol, syms = p.syms, pct = p.type === 'pct';
+  switch(res.code.replace(/R$/, '')){
+    case 'empty':      return 'Type your answer first.';
+    case 'decimal':    return '<b>Subscripts are whole numbers.</b> If a number isn’t close to a whole number after you divide by the smallest, multiply every number by 2, 3, 4 or 5 until they all are.';
+    case 'parse':      return 'That formula has ' + x.err + '. Type it like <kbd class="fk">Fe2O3</kbd>: a capital letter starts each element, and plain numbers are subscripts.';
+    case 'zeroO':      return 'It looks like you typed a zero (0) where you meant the letter O. Use a capital O for oxygen.';
+    case 'elements':   return '<b>Use the elements in the compound:</b> ' + andList(syms) + (x.extra.length ? ', and nothing else' : '') + '.';
+    case 'notSimplest':return '<b>Right ratio, but not the simplest.</b> Every subscript divides by ' + x.k + '. An empirical formula uses the smallest whole numbers.';
+    case 'swap':       return '<b>Right numbers, wrong elements.</b> Check which subscript goes with which element. Divide each element’s own mass by its own molar mass.';
+    case 'whole':      var ni = lc(syms[x.i]), no = lc(syms[1 - x.i]);
+                       return '<b>Find the mass of the ' + ni + ' first.</b> ' + p.m.C.toFixed(p.dp) + ' g is the mass of the whole compound, and it includes the ' + no + '. Subtract the ' + no + ' to get the ' + ni + '.';
+    case 'pctSub':     return '<b>Percents aren’t subscripts.</b> Subscripts count atoms. Turn each percent into grams (assume 100 g), and then into moles by dividing by the molar mass.';
+    case 'mass':       return '<b>Compare moles, not grams.</b> Atoms of different elements have different masses, so the ratio of grams isn’t the ratio of atoms. Divide each mass by its molar mass first.';
+    case 'diatomic':   var d = x.d[0];
+                       return '<b>Use the molar mass of single atoms.</b> You’re counting ' + d + ' atoms in the compound, so use ' + EL[d].ms + ' g/mol, not ' + fix2(2 * EL[d].M) + ' g/mol for ' + d + '<sub>2</sub>.';
+    case 'flip':       return '<b>Check your division.</b> Moles = grams ÷ molar mass. Dividing the molar mass by the grams turns the ratio upside down.';
+    case 'roundEarly': var fr = syms.map(function(s, i){ return { s:s, r:sol.r[i] }; }).filter(function(o){ return Math.abs(o.r - Math.round(o.r)) > 0.1; });
+                       return '<b>Don’t round that far.</b> After dividing by the smallest, ' + andList(fr.map(function(o){ return o.s + ' is about ' + o.r.toFixed(2); })) + ', which is too far from a whole number to round. Multiply every number by the same small whole number until they’re all whole.';
+    case 'oneOnly':    return '<b>Multiply every number, not just the fraction.</b> If only some of the numbers change, so does the ratio.';
+    case 'wrongMult':  var k = x.k, vals = sol.r.map(function(v){ return v * k; }), bad = vals.filter(function(y){ return Math.abs(y - Math.round(y)) > 0.1; })[0];
+                       return '<b>Check the multiplier.</b> × ' + k + ' gives ' + vals.map(function(y){ return y.toFixed(2); }).join(' : ') + (bad != null ? ', and ' + bad.toFixed(2) + ' isn’t a whole number yet' : '') + '. Try a different factor.';
+    case 'truncate':   var tv = sol.r.map(function(v){ return v * sol.w.n; }).filter(function(y){ var w = Math.round(y); return y < w && w - y <= 0.1; })[0];
+                       return '<b>Round, don’t chop.</b> ' + (tv != null ? tv.toFixed(3) + ' is within 0.1 of ' + Math.round(tv) + ', so it rounds up to ' + Math.round(tv) + '.' : 'Round each number to the nearest whole number.');
+    case 'guess':      return '<b>Let the data decide.</b> Copper forms two sulfides, CuS and Cu<sub>2</sub>S, so you can’t get this one from charges. Find the moles of copper and of sulfur, and compare them.';
+  }
+  return '<b>Not quite.</b> ' + (pct ? 'Assume 100 g, so each percent is grams. ' : 'Find the mass of each element. ') + 'Divide each mass by its molar mass, divide by the smallest, and multiply ’til whole.' + (p.sim ? '' : ' Try building the table below.');
+}
+
+/* =========================================================
+   lab: copper and sulfur (masses in milligrams)
+   ========================================================= */
+var CU2S = entry('Cu2S', 'copper(I) sulfide'), CU_F = CU2S.cp.by('Cu').m / CU2S.cp.M;
+var LS = null;
+function mg3(x){ return (x / 1000).toFixed(3); }
+function lsNew(){
+  var r0 = 24000 + Math.floor(Math.random() * 5000), cu = 1000 + Math.floor(Math.random() * 601), prod = Math.round(cu / CU_F);
+  LS = { r0:r0, r1:r0 + cu, r2:r0 + prod, step:0, done:false };
+  var m = { a:cu / 1000, b:(prod - cu) / 1000, C:prod / 1000 };
+  LS.p = { type:'lab', sim:true, c:CU2S, syms:['Cu','S'], v:'syn', given:{ a:1, C:1 }, m:m, dp:3, g:[m.a, m.b], sol:solve(['Cu','S'], [m.a, m.b]) };
+  el('ls-in').value = '';
+  el('ls-prev').innerHTML = '';
+  hideFb(el('ls-fb'));
+  lsRender();
+}
+/* a digital scale: pan top at y=136 ; contents drawn by caller */
+function scaleSVG(contents, reading, label){
+  return '<svg viewBox="0 0 300 200" role="img" aria-label="' + label + '">' +
+    contents +
+    '<rect x="138" y="140" width="24" height="10" fill="#B5C2C0"/>' +
+    '<rect x="36" y="136" width="228" height="7" rx="3" fill="#C3CDCB" stroke="#9FB0AD"/>' +
+    '<rect x="16" y="150" width="268" height="44" rx="9" fill="#DCE3E2" stroke="#9FB0AD"/>' +
+    '<circle cx="42" cy="172" r="7" fill="#C3CDCB" stroke="#9FB0AD"/><circle cx="64" cy="172" r="7" fill="#C3CDCB" stroke="#9FB0AD"/>' +
+    '<rect x="140" y="159" width="130" height="27" rx="3" fill="#1E2B29"/>' +
+    '<text x="262" y="178.5" text-anchor="end" font-family="IBM Plex Mono,monospace" font-weight="500" font-size="17" fill="#BFEFD0">' + reading + '</text>' +
+    '</svg>';
+}
+var POR = 'fill="#F3F1EA" stroke="#9A958A" stroke-width="1.4"';
+var COIL = 'M126,91 C124,72 139,70 140,86 C141,70 155,70 155,86 C156,70 170,70 169,86 C170,74 177,78 174,91';
+/* crucible on the pan, with its lid beside it ; what: empty, wire, product */
+function crucibleOnPan(what){
+  var h = '<ellipse cx="222" cy="131" rx="30" ry="4.5" ' + POR + '/><rect x="217" y="121.5" width="10" height="6" rx="2" ' + POR + '/>';
+  h += '<path d="M116,92 L184,92 L173,135 L127,135 Z" ' + POR + '/>';
+  h += '<ellipse cx="150" cy="92" rx="34" ry="5.5" fill="#D9D4C7" stroke="#9A958A" stroke-width="1.2"/>';
+  if(what === 'wire') h += '<path d="' + COIL + '" fill="none" stroke="#B5612F" stroke-width="3.6" stroke-linecap="round"/><path d="' + COIL + '" fill="none" stroke="#E9A47A" stroke-width="1" stroke-linecap="round" transform="translate(-0.8,-0.8)"/>';
+  if(what === 'product') h += '<path d="' + COIL + '" fill="none" stroke="#353B3F" stroke-width="5" stroke-linecap="round" stroke-dasharray="9 1.6"/><path d="' + COIL + '" fill="none" stroke="#6D767B" stroke-width="1" stroke-dasharray="3 7" transform="translate(-0.8,-0.8)"/>';
+  h += '<path d="M116,92 A34,5.5 0 0,0 184,92" fill="none" stroke="#9A958A" stroke-width="1.4"/>';
+  return h;
+}
+function heatSVG(){
+  var h = '<svg viewBox="0 0 300 200" role="img" aria-label="In a fume hood, the covered crucible sits on a clay triangle over a Bunsen burner. Small blue flames flicker at the edge of the lid as the extra sulfur burns off.">';
+  /* ring stand */
+  h += '<rect x="34" y="186" width="130" height="8" rx="2" fill="#8A9896"/><rect x="50" y="18" width="6" height="170" fill="#9FB0AD"/>';
+  h += '<rect x="54" y="104" width="66" height="4" fill="#9FB0AD"/><ellipse cx="150" cy="106" rx="34" ry="6" fill="none" stroke="#6F7D7B" stroke-width="3"/>';
+  /* burner and flame */
+  h += '<rect x="143" y="148" width="14" height="38" fill="#6F7D7B"/><ellipse cx="150" cy="188" rx="22" ry="5" fill="#5F6D6B"/>';
+  h += '<g class="flick"><path d="M150,110 C138,124 139,140 143,148 L157,148 C161,140 162,124 150,110 Z" fill="#9CC3F0" fill-opacity=".8"/>' +
+       '<path d="M150,124 C145,132 145,142 147,148 L153,148 C155,142 155,132 150,124 Z" fill="#3B6FD0"/></g>';
+  /* crucible, hot */
+  h += '<path d="M118,70 L182,70 L172,106 L128,106 Z" fill="#E59A6A" stroke="#9A6E22" stroke-width="1.4"/>';
+  h += '<ellipse cx="150" cy="70" rx="32" ry="5" fill="#D98A5C" stroke="#9A6E22" stroke-width="1.2"/>';
+  /* blue sulfur flames at the edge of the lid, then the lid on top */
+  h += '<g class="glow"><path d="M113,68 C108,60 112,52 115,47 C117,54 122,59 118,68 Z" fill="#5B8DEF" fill-opacity=".85"/>' +
+       '<path d="M187,68 C192,60 188,52 185,47 C183,54 178,59 182,68 Z" fill="#5B8DEF" fill-opacity=".85"/>' +
+       '<path d="M128,63 C125,57 128,51 130,48 C132,53 135,57 132,63 Z" fill="#7FA7F5" fill-opacity=".75"/>' +
+       '<path d="M172,63 C175,57 172,51 170,48 C168,53 165,57 168,63 Z" fill="#7FA7F5" fill-opacity=".75"/></g>';
+  h += '<ellipse cx="150" cy="66" rx="36" ry="5" ' + POR + '/><rect x="145" y="56" width="10" height="7" rx="2" ' + POR + '/>';
+  h += '</svg>';
+  return h;
+}
+var LS_STEPS = [
+  '<b>Step 1.</b> The empty crucible and its lid are on the balance. Record the mass.',
+  '<b>Step 2.</b> A coil of copper wire goes in the crucible. The balance now reads the crucible, lid and copper together.',
+  '<b>Step 3.</b> Cover the copper with sulfur powder, more than it needs, and heat it with the lid on, in a fume hood. The copper and sulfur combine. The extra sulfur burns off with a blue flame, as sulfur dioxide gas.',
+  '<b>Step 4.</b> The crucible has cooled. The shiny copper wire has turned into brittle, gray-black copper sulfide. Use the three masses to find its <b>empirical formula</b>.'
+];
+function lsRender(){
+  var st = LS.step, reading = st === 0 ? LS.r0 : st === 1 ? LS.r1 : LS.r2;
+  if(st === 2) el('ls-fig').innerHTML = heatSVG();
+  else {
+    var what = st === 0 ? 'empty' : st === 1 ? 'wire' : 'product';
+    var lab = 'A balance holding the crucible and lid' + (st === 1 ? ' and a coil of copper wire' : st === 3 ? ' and gray-black copper sulfide' : '') + ', reading ' + mg3(reading) + ' grams';
+    el('ls-fig').innerHTML = scaleSVG(crucibleOnPan(what), mg3(reading) + ' g', lab);
+  }
+  el('ls-step').innerHTML = LS_STEPS[st];
+  function row(name, v, on){ return '<div' + (on ? '' : ' class="wait"') + '><span>' + name + '</span><span>' + (on ? mg3(v) + ' g' : '—') + '</span></div>'; }
+  el('ls-rows').innerHTML = row('Crucible and lid', LS.r0, true) + row('Crucible, lid and copper', LS.r1, st >= 1) + row('Crucible, lid and copper sulfide, after heating', LS.r2, st >= 3);
+  var go = el('ls-go');
+  go.textContent = ['Add the copper wire', 'Add sulfur and heat', 'Let it cool, then weigh it', 'Done'][st];
+  go.disabled = st === 3;
+  el('ls-ask').hidden = st < 3;
+}
+function lsWork(){
+  return '<br>Mass of copper: ' + mg3(LS.r1) + ' − ' + mg3(LS.r0) + ' = ' + mg3(LS.r1 - LS.r0) + ' g. Mass of sulfur, the mass the copper gained: ' + mg3(LS.r2) + ' − ' + mg3(LS.r1) + ' = ' + mg3(LS.r2 - LS.r1) + ' g.' +
+    workTable(LS.p) + '<p style="margin:8px 0 0">It’s ' + CU2S.name + ': two copper atoms for every sulfur atom.</p>';
+}
+function lsCheck(){
+  if(LS.done) return;
+  var fb = el('ls-fb'), res = judgeFormula(LS.p, el('ls-in').value);
+  if(res.code === 'ok'){ LS.done = true; setFb(fb, 'good', '<b>Correct: Cu<sub>2</sub>S.</b>' + lsWork()); return; }
+  var h = hintFor(LS.p, res);
+  if(res.code === 'flip' || res.code === 'swap') h += ' Also make sure you subtracted the crucible and lid from each reading.';
+  setFb(fb, res.code === 'empty' || res.code === 'parse' || res.code === 'zeroO' ? 'hint' : 'bad', h);
+}
+(function buildLS(){
+  el('ls-go').addEventListener('click', function(){ if(LS.step < 3){ LS.step++; lsRender(); } });
+  el('ls-new').addEventListener('click', lsNew);
+  el('ls-check').addEventListener('click', lsCheck);
+  el('ls-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') lsCheck(); });
+  previewTo(el('ls-in'), el('ls-prev'));
+  el('ls-show').addEventListener('click', function(){
+    LS.done = true;
+    el('ls-in').value = 'Cu2S';
+    el('ls-prev').innerHTML = 'reads as <b>' + fHTML('Cu2S') + '</b>';
+    setFb(el('ls-fb'), 'hint', '<b>Answer: Cu<sub>2</sub>S.</b>' + lsWork());
+  });
+})();
+
+/* =========================================================
+   periodic table (for the practice section)
+   ========================================================= */
+function ptPos(z){
+  if(z === 1) return [1, 1];
+  if(z === 2) return [1, 18];
+  if(z <= 10) return [2, z <= 4 ? z - 2 : z + 8];
+  if(z <= 18) return [3, z <= 12 ? z - 10 : z];
+  if(z <= 36) return [4, z - 18];
+  if(z <= 54) return [5, z - 36];
+  if(z <= 56) return [6, z - 54];
+  if(z <= 71) return [9, z - 54];
+  if(z <= 86) return [6, z - 68];
+  if(z <= 88) return [7, z - 86];
+  if(z <= 103) return [10, z - 86];
+  return [7, z - 100];
+}
+function tileHTML(e){
+  return '<div class="tile" aria-hidden="true"><span class="tz">' + e.z + '</span><span class="ts">' + e.sym + '</span><span class="tn">' + e.name + '</span><span class="tm">' + e.ms + '</span></div>';
+}
+function ptFacts(e){
+  if(e.br) return '<p><b>' + e.name + '</b> has no stable isotopes. The number in parentheses, ' + e.ms + ', is the mass number of a long-lived isotope, not an average. You won’t need these.</p>';
+  var h = '<div class="mm">' + e.ms + ' g/mol</div><p>1 mol ' + e.sym + ' atoms = <b>' + e.ms + ' g</b></p>';
+  if(DIATOMIC[e.sym]) h += '<p class="aside">' + e.name + ' exists as ' + e.sym + '₂ molecules, but in a compound you count single ' + e.sym + ' atoms, so use ' + e.ms + ' g/mol.</p>';
+  return h;
+}
+function buildPT(host){
+  var cells = '';
+  ELEMENTS.forEach(function(e){
+    var p = ptPos(e.z);
+    cells += '<button type="button" class="el' + (e.br ? ' rad' : '') + '" data-s="' + e.sym + '" style="grid-row:' + p[0] + ';grid-column:' + p[1] + '" aria-label="' + e.name + ', ' + (e.br ? 'no stable isotopes' : e.ms + ' grams per mole') + '">' +
+      '<span class="z">' + e.z + '</span><span class="s">' + e.sym + '</span><span class="m">' + e.ms + '</span></button>';
+  });
+  cells += '<div class="gap" style="grid-row:6;grid-column:3">57–71</div><div class="gap" style="grid-row:7;grid-column:3">89–103</div>';
+  host.innerHTML = '<div class="pt-scroll"><div class="pt">' + cells + '</div></div><div class="pt-detail" aria-live="polite"><p class="smallprint" style="margin:0">Click an element to see its molar mass.</p></div>';
+  var detail = host.querySelector('.pt-detail');
+  each(host.querySelectorAll('.el'), function(b){
+    b.addEventListener('click', function(){
+      each(host.querySelectorAll('.el'), function(o){ o.classList.toggle('on', o === b); });
+      detail.innerHTML = tileHTML(EL[b.dataset.s]) + '<div class="pt-facts">' + ptFacts(EL[b.dataset.s]) + '</div>';
+    });
+  });
+}
+
+/* =========================================================
+   practice
+   ========================================================= */
+var pScore = Score(el('p-score'));
+var pKind = 'pct', P = null;
+var KIND_TYPES = { pct:['pct'], lab:['lab'], mix:['pct','pct','lab'] };
+
+function problemText(p){
+  var q = ' What is its empirical formula?';
+  if(p.type === 'pct'){
+    var parts = p.syms.map(function(s, i){ return '<b>' + p.pcts[i] + '%</b> ' + lc(s); });
+    if(p.rest) return 'A compound of ' + andList(p.syms.map(lc)) + ' is ' + andList(parts.slice(0, -1)) + ' by mass. The rest is ' + lc(p.syms[p.syms.length - 1]) + '.' + q;
+    return p.lead + andList(parts) + ' by mass.' + q;
+  }
+  var nA = lc(p.syms[0]), nB = lc(p.syms[1]), b = function(k){ return '<b>' + p.m[k].toFixed(p.dp) + ' g</b>'; };
+  if(p.v === 'syn') return 'When ' + b('a') + ' of ' + nA + ' reacts completely with ' + nB + ', it forms ' + b('C') + ' of a compound of ' + nA + ' and ' + nB + '.' + q;
+  if(p.v === 'comp') return 'A sample of a compound contains ' + b('a') + ' of ' + nA + ' and ' + b('b') + ' of ' + nB + '.' + q;
+  var gk = p.given.a ? 'a' : 'b';
+  return 'A ' + b('C') + ' sample of a compound of ' + nA + ' and ' + nB + ' is broken down into its elements. It produces ' + b(gk) + ' of ' + lc(p.syms[gk === 'a' ? 0 : 1]) + '.' + q;
+}
+function pNew(){
+  var type = pick(KIND_TYPES[pKind]);
+  P = makeProblem(type, P ? P.c.f : null);
+  P.scored = false; P.done = false;
+  el('p-prob').innerHTML = problemText(P);
+  el('p-in').value = '';
+  el('p-prev').innerHTML = '';
+  hideFb(el('p-fb'));
+  tBuild();
+}
+function pCheck(){
+  if(!P || P.done) return;
+  var fb = el('p-fb'), res = judgeFormula(P, el('p-in').value);
+  if(res.code === 'empty' || res.code === 'parse' || res.code === 'zeroO'){ setFb(fb, 'hint', hintFor(P, res)); return; }
+  var ok = res.code === 'ok';
+  if(!P.scored){ P.scored = true; pScore.add(ok); }
+  if(ok){
+    P.done = true;
+    setFb(fb, 'good', '<b>Correct: ' + fHTML(P.c.ef) + '.</b> ' + nameLine(P.c) + workFor(P));
+    return;
+  }
+  setFb(fb, 'bad', hintFor(P, res));
+}
+function pShow(){
+  if(!P) return;
+  if(!P.scored){ P.scored = true; pScore.add(false); }
+  P.done = true;
+  el('p-in').value = P.c.ef;
+  el('p-prev').innerHTML = 'reads as <b>' + fHTML(P.c.ef) + '</b>';
+  setFb(el('p-fb'), 'hint', '<b>Answer: ' + fHTML(P.c.ef) + '.</b> ' + nameLine(P.c) + workFor(P));
+}
+el('p-check').addEventListener('click', pCheck);
+el('p-show').addEventListener('click', pShow);
+el('p-new').addEventListener('click', pNew);
+el('p-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') pCheck(); });
+previewTo(el('p-in'), el('p-prev'));
+tabs(el('p-tabs'), function(b){ pKind = b.dataset.k; P = null; pNew(); });
+el('p-ptbtn').addEventListener('click', function(){
+  var host = el('p-pt'), open = host.hidden;
+  if(open && !host.dataset.built){ buildPT(host); host.dataset.built = '1'; }
+  host.hidden = !open;
+  this.setAttribute('aria-expanded', String(open));
+  this.textContent = open ? 'Hide periodic table' : 'Periodic table';
+});
+
+/* ---- build the table ---- */
+function tBuild(){
+  var p = P, rows = '<tbody>';
+  p.syms.forEach(function(s, i){
+    var nm = lc(s);
+    rows += '<tr><td><b>' + s + '</b></td>' +
+      '<td><input type="text" class="wide" id="t-g' + i + '" inputmode="decimal" autocomplete="off" aria-label="Grams of ' + nm + '"> g</td>' +
+      '<td class="op">÷</td><td class="n">' + EL[s].ms + '</td><td class="op">=</td>' +
+      '<td><input type="text" class="wide" id="t-m' + i + '" inputmode="decimal" autocomplete="off" aria-label="Moles of ' + nm + '"></td>' +
+      '<td><input type="text" class="wide" id="t-r' + i + '" inputmode="decimal" autocomplete="off" aria-label="Moles of ' + nm + ' divided by the smallest"></td>' +
+      '<td><input type="text" id="t-w' + i + '" inputmode="numeric" autocomplete="off" aria-label="Whole number for ' + nm + '"></td></tr>';
+  });
+  el('t-table').innerHTML = '<thead><tr><th>El.</th><th>Grams</th><th></th><th>g/mol</th><th></th><th>Moles</th><th>÷ smallest</th><th>Whole no.</th></tr></thead>' + rows + '</tbody>';
+  setFb(el('t-msg'), 'hint', p.type === 'pct'
+    ? 'Assume 100 g, so each percent is grams. Then divide by molar mass, divide by the smallest number of moles, and multiply ’til whole.'
+    : 'Find the mass of each element first. Then divide by molar mass, divide by the smallest number of moles, and multiply ’til whole.');
+  each(el('t-table').querySelectorAll('input'), function(inp){ inp.addEventListener('keydown', function(e){ if(e.key === 'Enter') tCheck(); }); });
+}
+function tCheck(){
+  if(!P) return;
+  var p = P, sol = p.sol, n = sol.w.n, filled = 0, wrong = 0, msg = '';
+  function mark(inp, ok){ inp.classList.remove('ok-in', 'no-in'); inp.classList.add(ok ? 'ok-in' : 'no-in'); }
+  function miss(m){ wrong++; if(!msg) msg = m; }
+  p.syms.forEach(function(s, i){
+    var M = EL[s].M, nm = lc(s), ins = ['g', 'm', 'r', 'w'].map(function(k){ return el('t-' + k + i); });
+    ins.forEach(function(x){ x.classList.remove('ok-in', 'no-in'); });
+    var raw = ins.map(function(x){ return x.value.trim(); }), val = raw.map(parseNum);
+    if(raw[0]){
+      filled++;
+      var gOk = val[0] && Math.abs(val[0].v - p.g[i]) <= 0.006;
+      mark(ins[0], gOk);
+      if(!gOk){
+        if(p.type === 'pct') miss(p.rest && i === p.syms.length - 1 ? '<b>Check the grams of ' + nm + '.</b> The percents add up to 100%, so the ' + nm + ' is whatever the others leave.' : '<b>Check the grams of ' + nm + '.</b> In 100 g of the compound, ' + p.pcts[i] + '% is ' + p.pcts[i] + ' g.');
+        else if((i === 0 && !p.given.a) || (i === 1 && !p.given.b)) miss('<b>Check the mass of ' + nm + '.</b> It’s the mass of the compound minus the mass of the ' + lc(p.syms[1 - i]) + '.');
+        else miss('<b>Check the mass of ' + nm + '.</b> It’s given in the problem.');
+      }
+    }
+    if(raw[1]){
+      filled++;
+      var want = p.g[i] / M, v = val[1] && val[1].v, mOk = val[1] && Math.abs(v - want) <= want * 0.006 + 0.00006;
+      mark(ins[1], mOk);
+      if(!mOk){
+        if(v && near(v, p.g[i] * M, 0.01)) miss('<b>Divide, don’t multiply.</b> Moles of ' + nm + ' = grams ÷ ' + EL[s].ms + ' g/mol.');
+        else if(v && near(v, M / p.g[i], 0.01)) miss('<b>Upside down.</b> Moles = grams ÷ molar mass, so the grams of ' + nm + ' go on top.');
+        else if(v && DIATOMIC[s] && near(v, want / 2, 0.01)) miss('<b>Use ' + EL[s].ms + ' g/mol for ' + nm + '.</b> You’re counting ' + s + ' atoms in the compound, not ' + s + '<sub>2</sub> molecules.');
+        else miss('<b>Check the moles of ' + nm + '.</b> Divide its grams by ' + EL[s].ms + ' g/mol.');
+      }
+    }
+    if(raw[2]){
+      filled++;
+      var rv = val[2] && val[2].v, rOk = val[2] && Math.abs(rv - sol.r[i]) <= Math.max(0.012, sol.r[i] * 0.008);
+      mark(ins[2], rOk);
+      if(!rOk){
+        var mx = Math.max.apply(null, sol.mol);
+        if(rv && Math.abs(rv - sol.mol[i] / mx) <= 0.012) miss('<b>Divide by the smallest number of moles</b>, not the largest. After dividing, the smallest should be exactly 1.');
+        else miss('<b>Check ' + nm + ' ÷ smallest.</b> Divide its moles by the smallest number of moles in the table.');
+      }
+    }
+    if(raw[3]){
+      filled++;
+      var wv = Number(raw[3]), wOk = wv === sol.w.sub[i];
+      mark(ins[3], wOk);
+      if(!wOk){
+        if(n > 1 && wv === Math.round(sol.r[i]) && Math.abs(sol.r[i] - wv) > 0.1) miss('<b>' + sol.r[i].toFixed(2) + ' is too far from a whole number to round.</b> Multiply every row by the same small whole number until they’re all whole.');
+        else if(!/^\d+$/.test(raw[3])) miss('<b>Whole numbers only</b> in the last column.');
+        else miss('<b>Check the whole number for ' + nm + '.</b> Use the same multiplier for every element' + (n === 1 ? ', or just round if they’re all close to whole numbers.' : '.'));
+      }
+    }
+  });
+  var tm = el('t-msg');
+  if(!filled) setFb(tm, 'hint', 'Fill in a box first.');
+  else if(wrong) setFb(tm, 'bad', msg);
+  else if(filled === p.syms.length * 4) setFb(tm, 'good', '<b>The whole table is right.</b> The whole numbers are the subscripts. Type the formula above and press <b>Check</b>.');
+  else setFb(tm, 'hint', 'So far, so good. Fill in the rest of the table.');
+}
+function near(x, y, tol){ return y !== 0 && Math.abs(x - y) <= Math.abs(y) * (tol || 0.01); }
+el('t-check').addEventListener('click', tCheck);
+el('t-clear').addEventListener('click', function(){ if(P) tBuild(); });
+
+/* =========================================================
+   quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'What is an empirical formula?',
+    opts:['The ratio of the masses of the elements in a compound','The percent by mass of each element in a compound','The simplest whole-number ratio of the atoms in a compound','Any formula that was measured in a lab'],
+    ans:2,
+    why:'An empirical formula is a ratio of atoms, in the smallest whole numbers. Masses and percents are what you measure on the way to it.' },
+  { stem:'When you start from percent composition, why do you assume a 100 g sample?',
+    opts:['The answer is only right for a sample of exactly 100 g','Molar masses are measured per 100 g','It makes the moles come out to whole numbers','Every sample has the same percents, and with 100 g each percent is already a number of grams'],
+    ans:3,
+    why:'Any sample size gives the same formula, because every sample of a compound has the same percents. With 100 g, 69.94% Fe is simply 69.94 g Fe.' },
+  { stem:'A compound is 63.65% nitrogen and 36.35% oxygen by mass. What is its empirical formula?',
+    opts:['NO','N<sub>2</sub>O','NO<sub>2</sub>','N<sub>7</sub>O<sub>4</sub>'],
+    ans:1,
+    why:'N: 63.65 ÷ 14.01 = 4.543 mol. O: 36.35 ÷ 16.00 = 2.272 mol. Dividing by 2.272 gives 2.000 : 1, so N<sub>2</sub>O. NO<sub>2</sub> has the ratio upside down. N<sub>7</sub>O<sub>4</sub> compares grams instead of moles: 63.65 : 36.35 is about 7 : 4.' },
+  { stem:'After dividing by the smallest number of moles, a student gets Fe 1.000 : O 1.501. What should they do next?',
+    opts:['Round 1.501 to 2, which gives FeO<sub>2</sub>','Round 1.501 to 1, which gives FeO','Multiply both numbers by 2, which gives Fe<sub>2</sub>O<sub>3</sub>','Multiply just 1.501 by 2, which gives FeO<sub>3</sub>'],
+    ans:2,
+    why:'1.501 is about 1½, too far from a whole number to round. Multiply every number by 2: 2.000 : 3.002, so Fe<sub>2</sub>O<sub>3</sub>. Multiplying only one of the numbers changes the ratio.' },
+  { stem:'After dividing by the smallest, a ratio comes out 1 : 2.33. What whole-number ratio does it give?',
+    opts:['1 : 2','2 : 5','3 : 7','4 : 9'],
+    ans:2,
+    why:'2.33 is about 2⅓, so multiply by 3: 3 : 6.99, which is 3 : 7. Rounding gives 1 : 2, a different ratio. × 2 gives 2 : 4.66, and × 4 gives 4 : 9.32, and neither of those is whole.' },
+  { stem:'A compound is 72.36% iron and 27.64% oxygen by mass. What is its empirical formula?',
+    opts:['FeO','Fe<sub>2</sub>O<sub>3</sub>','Fe<sub>4</sub>O<sub>3</sub>','Fe<sub>3</sub>O<sub>4</sub>'],
+    ans:3,
+    why:'Fe: 72.36 ÷ 55.85 = 1.296 mol. O: 27.64 ÷ 16.00 = 1.728 mol. 1.728 ÷ 1.296 = 1.333, about 1⅓, so multiply by 3: Fe<sub>3</sub>O<sub>4</sub>. FeO rounds 1.333 down. Fe<sub>2</sub>O<sub>3</sub> multiplies by 2 and then rounds 2.67 up. Fe<sub>4</sub>O<sub>3</sub> is upside down.' },
+  { stem:'A sample of a compound contains 0.250 mol of nitrogen and 0.625 mol of oxygen. What is its empirical formula?',
+    opts:['N<sub>2</sub>O<sub>5</sub>','NO<sub>2</sub>','NO<sub>3</sub>','N<sub>5</sub>O<sub>2</sub>'],
+    ans:0,
+    why:'You already have moles, so start at “divide by small”: 0.625 ÷ 0.250 = 2.5. Multiply both by 2: N<sub>2</sub>O<sub>5</sub>. NO<sub>2</sub> and NO<sub>3</sub> round 2.5 down or up, and N<sub>5</sub>O<sub>2</sub> is upside down.' },
+  { stem:'To find the moles in 30.06 g of oxygen in a compound, a student writes 30.06 ÷ 32.00 = 0.9394 mol O. What’s wrong?',
+    opts:['Nothing. Oxygen is O<sub>2</sub>, so 32.00 g/mol is right','They should use 16.00 g/mol, because they’re counting O atoms in the compound','They should multiply by 32.00 instead of dividing','They should divide by 100 first'],
+    ans:1,
+    why:'The oxygen in a compound is counted as atoms, so use the molar mass of an O atom: 30.06 ÷ 16.00 = 1.879 mol O. Using 32.00 g/mol cuts the number of oxygen atoms in half.' },
+  { stem:'When 2.00 g of aluminum reacts completely with sulfur, it forms 5.56 g of a compound of aluminum and sulfur. What is its empirical formula?',
+    opts:['AlS<sub>2</sub>','Al<sub>3</sub>S<sub>2</sub>','Al<sub>3</sub>S<sub>7</sub>','Al<sub>2</sub>S<sub>3</sub>'],
+    ans:3,
+    why:'The sulfur is 5.56 − 2.00 = 3.56 g. Al: 2.00 ÷ 26.98 = 0.07413 mol. S: 3.56 ÷ 32.06 = 0.1110 mol. That’s 1 : 1.497, and × 2 gives Al<sub>2</sub>S<sub>3</sub>. AlS<sub>2</sub> rounds 1.5 up. Al<sub>3</sub>S<sub>2</sub> is upside down. Al<sub>3</sub>S<sub>7</sub> uses 5.56 g for the sulfur, but that’s the whole compound.' },
+  { stem:'After dividing by the smallest, a student gets C 2.00, H 5.98 and O 1.00. What is the empirical formula?',
+    opts:['C<sub>2</sub>H<sub>6</sub>O','C<sub>2</sub>H<sub>5</sub>O','CH<sub>3</sub>O','C<sub>4</sub>H<sub>12</sub>O<sub>2</sub>'],
+    ans:0,
+    why:'5.98 is within 0.1 of 6, so round it: C<sub>2</sub>H<sub>6</sub>O. C<sub>2</sub>H<sub>5</sub>O chops off the decimals instead of rounding. CH<sub>3</sub>O divides by 2, which would leave half an oxygen atom. C<sub>4</sub>H<sub>12</sub>O<sub>2</sub> doubles a ratio that was already whole, so it isn’t the simplest.' }
+];
+(function buildQuiz(){
+  var host = el('quiz'), html = '';
+  QUIZ.forEach(function(q, qi){
+    html += '<div class="q"><p class="stem">' + (qi + 1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o, oi){ html += '<button type="button" class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  host.innerHTML = html;
+  each(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      each(el('q' + qi).querySelectorAll('.opt'), function(other, i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      setFb(el('qfb' + qi), oi === q.ans ? 'good' : 'bad', '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+    });
+  });
+})();
+
+/* boot */
+mNew();
+lsNew();
+pNew();
+</script>
+</body>
+</html>
