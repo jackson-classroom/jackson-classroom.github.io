@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.4 Product | AP Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1D2433; --ink2:#3F4859; --mute:#626B7C;
+  --wash:#F1EEE8; --card:#FCFBF9; --line:#D5CFC4; --line-soft:#E6E1D8;
+  --indigo:#3A55A0; --indigo-dk:#273C78; --indigo-lite:#DCE3F4;
+  --amber:#A8670F; --amber-dk:#7A4A08; --amber-lite:#F6E7CB;
+  --ok:#2E6B47; --ok-bg:#E3F0E7;
+  --no:#A63D2F; --no-bg:#F7E5E1;
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:64px}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(241,238,232,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:900px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+.bar a{color:inherit;text-decoration:none}
+
+header.hero{padding:60px 0 36px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--indigo-dk)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(40px,7vw,68px);line-height:1;margin:16px 0 0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--indigo)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:50ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: the learning objectives as a path */
+.board{margin:34px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--card);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.lo{padding:18px 18px 20px;border-left:1px solid var(--line-soft);text-decoration:none;color:var(--ink);display:block;position:relative}
+.lo:first-child{border-left:none}
+.lo:hover{background:#fff}
+.lo .code{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--indigo-dk);background:var(--indigo-lite);border-radius:2px;padding:2px 7px;white-space:nowrap}
+.lo .lq{display:block;font-family:var(--display);font-weight:600;font-size:19px;line-height:1.2;margin:12px 0 6px;letter-spacing:-.01em}
+.lo .d{display:block;font-size:14px;color:var(--mute);line-height:1.45}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:22px 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--indigo);color:var(--indigo-dk)}
+
+section{padding:46px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo-dk);background:var(--indigo-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+.tag.plain{color:var(--ink2);background:var(--line-soft)}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(27px,4.2vw,38px);line-height:1.08;margin:0;letter-spacing:-.02em}
+h3{font-family:var(--display);font-weight:600;font-size:20px;letter-spacing:-.01em;margin:34px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--indigo-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.def{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:0 4px 4px 0;padding:16px 20px;margin:22px 0}
+.def .term{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.def p{margin:6px 0 0;font-size:17px}
+.def .ek{font-family:var(--mono);font-size:11px;color:var(--mute);float:right;margin-left:12px}
+
+.note{border-left:3px solid var(--amber);background:var(--amber-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.pf{border:1px solid var(--line);background:var(--card);border-radius:4px;padding:18px 20px;margin:24px 0}
+.pf .pf-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ok);margin-bottom:4px}
+
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:22px 0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:22px 0}
+.mini{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px 18px}
+.mini .n{font-family:var(--mono);font-size:12px;color:var(--indigo-dk)}
+.mini h4{font-family:var(--body);font-size:16px;font-weight:600;margin:6px 0 4px}
+.mini p{margin:0;font-size:15.5px;color:var(--ink2)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.prompt{font-size:clamp(18px,2.6vw,21px);font-weight:500;line-height:1.45;margin:4px 0 0}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F7F6F3;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--indigo-dk);border-color:var(--indigo-dk)}
+button[disabled]{cursor:default}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--indigo)}
+button:focus-visible,a:focus-visible{outline:2.5px solid var(--indigo);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+/* answer buttons for the drills */
+.pk{display:grid;gap:10px;margin-top:16px}
+.pk.c3{grid-template-columns:repeat(3,1fr)}
+.pk.c4{grid-template-columns:repeat(4,1fr)}
+.pbtn{background:#fff;color:var(--ink);border:1px solid var(--line);border-top:3px solid var(--c,var(--line));font-size:14px;padding:13px 10px;text-align:center;line-height:1.35}
+.pbtn:hover{background:#fff;color:var(--ink);border-color:var(--indigo);border-top-color:var(--c,var(--indigo))}
+.pbtn small{display:block;font-family:var(--body);font-size:13px;color:var(--mute);letter-spacing:0;margin-top:2px}
+.pbtn.yes{background:var(--ok-bg);border-color:var(--ok);color:#1C4A30}
+.pbtn.no{background:var(--no-bg);border-color:var(--no);color:#7A2B20}
+.pbtn.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1C4A30}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7A2B20}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--indigo);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb p{margin:6px 0 0}
+.fb p:first-child{margin-top:0}
+
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45;letter-spacing:0}
+.opt:hover{border-color:var(--indigo);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.96}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto;margin:18px 0;-webkit-overflow-scrolling:touch}
+.tbl table{margin:0}
+
+.q{border-top:1px solid var(--line-soft);padding:22px 0 6px}
+.q:first-child{border-top:none;padding-top:4px}
+.q .qn{font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.06em}
+.q .stem{font-weight:500;margin:4px 0 0}
+.stim{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:14px 16px;margin:0 0 6px}
+.stim p{margin:0 0 8px;font-size:15.5px}
+.stim table{margin:6px 0 0;font-size:14.5px}
+.qsum{font-family:var(--display);font-weight:700;font-size:22px;margin:18px 0 0}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#ECEDEF;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#BFC5CF}
+.next .nt{font-family:var(--display);font-weight:700;font-size:24px;color:#fff;margin:0 0 4px}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F7F6F3;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--indigo-lite)}
+
+/* ---------- 2.4 page ---------- */
+/* six stages of development */
+.stages{list-style:none;padding:0;margin:22px 0 12px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.stg{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 16px;margin:0}
+.stg .sn{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--indigo);color:#fff;font-family:var(--mono);font-size:13px;font-weight:600;vertical-align:middle}
+.stg .sh{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:-.01em;margin-left:8px;vertical-align:middle}
+.stg .sq{display:block;font-weight:600;font-size:15.5px;margin:8px 0 2px}
+.stg p{margin:0;font-size:15px;color:var(--ink2)}
+.loop{display:flex;gap:12px;align-items:flex-start;border:1.5px dashed var(--indigo);border-radius:4px;padding:12px 16px;margin:0 0 22px;font-size:15.5px;color:var(--ink2);background:rgba(220,227,244,.35)}
+.loop svg{flex:none;margin-top:3px}
+.loop b{color:var(--ink)}
+
+/* MVP lab */
+.hyp{background:#fff;border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:0 3px 3px 0;padding:12px 16px;font-size:17px;line-height:1.45}
+.hyp .hyp-l{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-dk);margin-bottom:2px}
+.step-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin:18px 0 0}
+.pieces{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}
+.piece{display:flex;gap:10px;align-items:flex-start;text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);font-family:var(--body);font-size:15px;letter-spacing:0;padding:10px 12px;line-height:1.35}
+.piece:hover{background:#fff;color:var(--ink);border-color:var(--indigo)}
+.piece .box{width:18px;height:18px;border:1.5px solid #B9B2A6;border-radius:3px;flex:none;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:12px;line-height:1;color:#fff;background:#fff}
+.piece[aria-pressed="true"]{border-color:var(--indigo);background:var(--indigo-lite)}
+.piece[aria-pressed="true"] .box{background:var(--indigo);border-color:var(--indigo)}
+.piece[aria-pressed="true"] .box::after{content:"✓"}
+.piece b{font-weight:600;display:block}
+.piece small{display:block;color:var(--mute);font-size:13.5px;margin-top:1px}
+.piece .cost{display:block;font-family:var(--mono);font-size:12px;color:var(--ink2);margin-top:5px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 0}
+.stats.s4{grid-template-columns:repeat(4,1fr)}
+.stat{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:9px 11px}
+.stat .sl{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);line-height:1.3}
+.stat .sv{display:block;font-family:var(--display);font-weight:700;font-size:24px;line-height:1.25;font-variant-numeric:tabular-nums}
+.stat .sv.good{color:var(--ok)}
+.stat .sv.bad{color:var(--no)}
+.results{margin-top:20px;padding-top:4px;border-top:1px solid var(--line-soft)}
+.weeks{display:flex;flex-direction:column;gap:6px;margin:12px 0 0}
+.wk{display:grid;grid-template-columns:62px minmax(0,1fr) 72px;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;color:var(--ink2)}
+.wk .wt{height:18px;background:#fff;border:1px solid var(--line-soft);border-radius:2px;overflow:hidden}
+.wk .wf{height:100%;background:var(--indigo);width:0}
+
+/* brand take-apart */
+.brandlab{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;align-items:start}
+.wrapper{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--line-soft);border-radius:3px}
+.wrapper .hot{cursor:pointer}
+.wrapper .ring{fill:none;stroke:var(--ink);stroke-width:2.5;stroke-dasharray:7 5;opacity:0}
+.wrapper .ring.on{opacity:1}
+.parts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.part{font-family:var(--mono);font-size:12.5px;background:#fff;color:var(--ink2);border:1px solid var(--line);padding:9px 10px;text-align:left}
+.part:hover{background:#fff;color:var(--ink);border-color:var(--indigo)}
+.part[aria-pressed="true"]{background:var(--ink);color:#F7F6F3;border-color:var(--ink)}
+.part .seen{float:right;color:var(--ok)}
+.part[aria-pressed="true"] .seen{color:#9FD3B3}
+.bpanel{margin-top:12px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:14px 16px;min-height:150px}
+.bpanel .bt{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:-.01em;margin:0}
+.bpanel .bs{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.bpanel p{margin:6px 0 0;font-size:15.5px;color:var(--ink2)}
+.bpanel .tm{margin-top:10px;font-size:14.5px;color:var(--ink2);border-top:1px solid var(--line-soft);padding-top:8px}
+.bpanel .tm b{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--indigo-dk);font-weight:500;margin-right:6px}
+
+/* product life cycle */
+.plc{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--line-soft);border-radius:3px}
+.plc .band{cursor:pointer}
+.plc text{font-family:var(--mono);font-size:11px;fill:var(--ink2)}
+.plc .bl{font-size:11px;font-weight:600}
+.plc .bn{display:none;font-family:var(--display);font-size:26px;font-weight:700}
+.plc .ax{stroke:#B9B2A6;stroke-width:1}
+.stabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}
+.stab{background:#fff;color:var(--ink2);border:1px solid var(--line);border-top:3px solid var(--c);font-size:12.5px;padding:9px 6px}
+.stab:hover{background:#fff;color:var(--ink);border-color:var(--c)}
+.stab[aria-pressed="true"]{background:var(--c);color:#fff;border-color:var(--c)}
+.sp{margin-top:12px;background:#fff;border:1px solid var(--line-soft);border-left:4px solid var(--c,var(--indigo));border-radius:0 3px 3px 0;padding:14px 18px}
+.sp .sp-t{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.01em;color:var(--c);margin:0}
+.facts{display:grid;grid-template-columns:150px minmax(0,1fr);gap:6px 16px;margin:10px 0 0;font-size:15.5px}
+.facts dt{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);padding-top:3px}
+.facts dd{margin:0;color:var(--ink)}
+.sp .ex{margin:12px 0 0;padding-top:10px;border-top:1px solid var(--line-soft);font-size:15px;color:var(--ink2)}
+.sp .ex b{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--mute);margin-right:6px}
+
+@media (max-width:760px){
+  .stages{grid-template-columns:1fr 1fr}
+  .brandlab{grid-template-columns:1fr}
+  .stats.s4{grid-template-columns:1fr 1fr}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .bar-sub{display:none}
+  .card{padding:16px}
+  .board{grid-template-columns:1fr}
+  .lo{border-left:none;border-top:1px solid var(--line-soft);padding:14px}
+  .lo:first-child{border-top:none}
+  .lo .lq{font-size:17px}
+  .pk.c3,.pk.c4{grid-template-columns:1fr 1fr}
+  .pieces{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .stats .stat:last-child:nth-child(odd){grid-column:1/-1}
+  .stabs{grid-template-columns:1fr 1fr}
+  .plc text{font-size:18px}
+  .plc .bl{display:none}
+  .plc .bn{display:inline}
+  .facts{grid-template-columns:1fr;gap:0}
+  .facts dt{padding-top:8px}
+}
+@media (max-width:420px){
+  .stages{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+  .wk .wf{transition:width .6s ease-out}
+}
+@media print{ body{background:#fff} .bar,.jump,.btn-row,.next{display:none} }
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title"><a href="/ap-business/unit-2/">2.4 Product</a></span>
+    <span class="bar-sub">Product development · MVPs · product-market fit · branding · generic products · product life cycle</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">AP Business · Unit 2 Marketing · Topic 2.4</div>
+  <h1>The <em>Product</em></h1>
+  <p class="lede">Every product starts as a guess that customers have a problem worth solving. A business tests that guess, builds the product, gives it a name people remember, and keeps adjusting how it markets the product for as long as it’s for sale.</p>
+
+  <div class="board" aria-label="The three learning objectives in this topic">
+    <a class="lo" href="#develop"><span class="code">2.4.A</span><span class="lq">How does an idea become a product?</span><span class="d">Six stages of development, MVPs, product-market fit</span></a>
+    <a class="lo" href="#brand"><span class="code">2.4.B</span><span class="lq">Why does the name matter?</span><span class="d">Brand identity, trademarks, generic products</span></a>
+    <a class="lo" href="#cycle"><span class="code">2.4.C</span><span class="lq">What happens after launch?</span><span class="d">The product life cycle and the marketing at each stage</span></a>
+  </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#develop">Six stages</a>
+    <a href="#stage-card">Which stage?</a>
+    <a href="#mvp">MVP lab</a>
+    <a href="#brand">Brand identity</a>
+    <a href="#generic">Brand or generic</a>
+    <a href="#cycle">Life cycle</a>
+    <a href="#where">Where is it now?</a>
+    <a href="#check">Check yourself</a>
+  </nav>
+</header>
+
+<!-- =========================================================
+     2.4.A  PRODUCT DEVELOPMENT
+     ========================================================= -->
+<section id="develop">
+  <div class="sec-head"><span class="tag">2.4.A</span><h2>From idea to launch: product development</h2></div>
+  <p>A <b>product</b> is what a business offers to solve a customer’s problem or meet a need or want. It can be a <b>good</b> you can hold, like a pair of sneakers, or a <b>service</b> someone does for you, like cleaning them.</p>
+  <p>Getting from an idea to something customers can actually buy happens in stages. Businesses typically work through six:</p>
+
+  <ol class="stages">
+    <li class="stg"><span class="sn">1</span><span class="sh">Ideation</span><span class="sq">Come up with the idea.</span><p>Market research, technical research and development (R&amp;D), and brainstorming.</p></li>
+    <li class="stg"><span class="sn">2</span><span class="sh">Validation</span><span class="sq">Check that customers want it.</span><p>Test the idea with real customers, often with an MVP, before spending big.</p></li>
+    <li class="stg"><span class="sn">3</span><span class="sh">Design</span><span class="sq">Decide exactly what it will be.</span><p>Its features, look, and materials, shaped by what validation taught.</p></li>
+    <li class="stg"><span class="sn">4</span><span class="sh">Messaging</span><span class="sq">Decide how to talk about it.</span><p>The overall marketing strategy, including the <b>value proposition</b>: why customers should choose it.</p></li>
+    <li class="stg"><span class="sn">5</span><span class="sh">Production</span><span class="sq">Figure out how to make it.</span><p>Make it the same way every time, at a cost that leaves room for profit.</p></li>
+    <li class="stg"><span class="sn">6</span><span class="sh">Launch</span><span class="sq">Get it to customers.</span><p>Take orders and distribute the final product.</p></li>
+  </ol>
+  <div class="loop">
+    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66" fill="none" stroke="#3A55A0" stroke-width="2.2" stroke-linecap="round"/><path d="M20 3.5v4.5h-4.5" fill="none" stroke="#3A55A0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span><b>It’s not a straight line.</b> Development is <b>iterative</b>: what a business learns at one stage can send it back to an earlier one. Testers say the backpack is too heavy? Back to design. Production costs too much? Back to design, or even back to the idea.</span>
+  </div>
+
+  <div class="card" id="stage-card">
+    <div class="card-label">Which stage? <span class="score" id="st-score">0 of 0</span></div>
+    <p class="smallprint" style="margin:0 0 10px">A business is working on a new product. Which stage of development is it in?</p>
+    <p class="prompt" id="st-item" aria-live="polite"></p>
+    <div class="pk c3" id="st-opts"></div>
+    <div class="fb" id="st-fb"></div>
+    <div class="btn-row"><button id="st-next">Next scenario →</button></div>
+  </div>
+
+  <h3 id="mvp">Testing the idea: the MVP</h3>
+  <p>Validation is where a business finds out whether its idea holds up with real customers. A common tool is an MVP.</p>
+  <div class="def">
+    <div class="term">Minimum viable product (MVP)</div>
+    <p>The simplest version of a product that real customers can actually use and pay for. Businesses may use an MVP to assess whether a product can achieve <b>product-market fit</b>.</p>
+  </div>
+  <div class="def">
+    <div class="term">Product-market fit</div>
+    <p>Occurs if <b>customer demand is sufficient to generate profit</b>.</p>
+  </div>
+  <div class="grid2">
+    <div class="mini"><span class="n">Minimum</span><h4>Nothing extra</h4><p>Only what it takes to solve the core problem. It should be quick and cheap to build, so a flop costs little.</p></div>
+    <div class="mini"><span class="n">Viable</span><h4>Real enough to buy</h4><p>Customers can actually use it and pay for it. Asking “would you buy this?” isn’t the same as watching people buy.</p></div>
+  </div>
+
+  <div class="card" id="mvp-lab">
+    <div class="card-label">MVP lab · Fresh Kicks</div>
+    <div class="hyp"><span class="hyp-l">Fresh Kicks’ hypothesis</span>Enough students at our school will pay <b>$12</b> to get their sneakers cleaned for the business to make a profit.</div>
+    <p class="smallprint" style="margin:10px 0 0">Two juniors want to start Fresh Kicks, a sneaker-cleaning service. They have ideas for everything below, but they don’t know yet whether anyone will pay. Choose what goes into their MVP, then check it.</p>
+
+    <div class="step-h">What goes in the MVP?</div>
+    <div class="pieces" id="pieces"></div>
+
+    <div class="stats">
+      <div class="stat"><span class="sl">Startup cost</span><span class="sv" id="m-cost">$0</span></div>
+      <div class="stat"><span class="sl">First customer in</span><span class="sv" id="m-time">–</span></div>
+      <div class="stat"><span class="sl">Can students buy it?</span><span class="sv" id="m-buy">No</span></div>
+    </div>
+    <div class="btn-row"><button id="m-check">Check my MVP</button><button class="ghost" id="m-reset">Start over</button></div>
+    <div class="fb" id="m-fb" aria-live="polite"></div>
+
+    <div class="results" id="m-results" hidden>
+      <div class="step-h">Three weeks later</div>
+      <div class="weeks" id="m-weeks"></div>
+      <div class="stats s4">
+        <div class="stat"><span class="sl">Pairs cleaned</span><span class="sv">46</span></div>
+        <div class="stat"><span class="sl">Revenue</span><span class="sv">$552</span></div>
+        <div class="stat"><span class="sl">Costs</span><span class="sv">$137</span></div>
+        <div class="stat"><span class="sl">Profit</span><span class="sv good">$415</span></div>
+      </div>
+      <p class="smallprint" style="margin:8px 0 0">46 pairs × $12 = $552. Costs: $45 in supplies plus $2 a pair in cleaner refills. (This doesn’t count the founders’ time. A real business would weigh that too.)</p>
+      <div class="fb show good">
+        <p><b>A strong sign of product-market fit.</b> Demand was enough to make a profit, and orders grew every week. Now it’s worth spending more.</p>
+        <p><b>The MVP also taught them something.</b> 14 customers asked whether Fresh Kicks could pick up shoes from their lockers. That sends the founders back to <b>design</b> to add pickup. That’s iteration.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     2.4.B  BRANDING
+     ========================================================= -->
+<section id="brand">
+  <div class="sec-head"><span class="tag">2.4.B</span><h2>Making it recognizable: branding</h2></div>
+  <p>Once a product exists, customers need a way to recognize it and tell it apart from rival goods that do the same job. That’s what a brand is for.</p>
+  <div class="def">
+    <span class="ek">2.4.B.3</span>
+    <div class="term">Brand identity</div>
+    <p>Can be conveyed through a <b>name, idea, term, symbol, design</b>, or a combination of these elements, which businesses often protect by <b>trademarking</b>.</p>
+  </div>
+  <p>A <b>trademark</b> gives a business the legal right to stop rivals from using its name, logo, or other brand elements on similar products. Without one, a copycat could sell a look-alike product and confuse customers.</p>
+
+  <div class="card" id="parts-card">
+    <div class="card-label">Take apart a brand <span class="score" id="b-seen">0 of 4 found</span></div>
+    <p class="smallprint" style="margin:0 0 12px">Summit is a made-up granola bar. Tap a part of the wrapper, or use the buttons, to see which brand element it is.</p>
+    <div class="brandlab">
+      <svg class="wrapper" id="wrapper" viewBox="0 0 420 220" role="group" aria-label="A Summit granola bar wrapper: an orange wrapper with a white diagonal stripe, a mountain logo, the name SUMMIT, and the slogan Fuel the climb.">
+        <g class="hot" data-k="design">
+          <polygon points="30,40 18,52 30,64 18,76 30,88 18,100 30,112 18,124 30,136 18,148 30,160 18,172 30,180" fill="#C9661A"/>
+          <polygon points="390,40 402,52 390,64 402,76 390,88 402,100 390,112 402,124 390,136 402,148 390,160 402,172 390,180" fill="#C9661A"/>
+          <rect x="30" y="40" width="360" height="140" fill="#D9731A"/>
+          <polygon points="346,40 374,40 330,180 302,180" fill="#FFF4E6"/>
+        </g>
+        <g class="hot" data-k="symbol">
+          <rect x="52" y="64" width="84" height="76" fill="transparent"/>
+          <polygon points="58,132 88,76 118,132" fill="#FFF4E6"/>
+          <polygon points="96,132 114,98 132,132" fill="#F7D9B5"/>
+          <polygon points="77,96 88,76 99,96 93,92 88,98 83,92" fill="#D9731A"/>
+        </g>
+        <g class="hot" data-k="name">
+          <text x="146" y="114" fill="#fff" style="font-family:var(--display);font-weight:700;font-size:38px;letter-spacing:.01em">SUMMIT</text>
+        </g>
+        <g class="hot" data-k="term">
+          <text x="148" y="142" fill="#FFF4E6" style="font-family:var(--body);font-size:15px;font-style:italic">Fuel the climb.</text>
+        </g>
+        <rect class="ring" data-ring="design" x="12" y="33" width="396" height="154" rx="6"/>
+        <rect class="ring" data-ring="symbol" x="50" y="66" width="88" height="74" rx="4"/>
+        <rect class="ring" data-ring="name" x="140" y="78" width="160" height="46" rx="4"/>
+        <rect class="ring" data-ring="term" x="142" y="126" width="118" height="24" rx="4"/>
+      </svg>
+      <div>
+        <div class="parts" id="parts" role="group" aria-label="Brand elements"></div>
+        <div class="bpanel" id="bpanel" aria-live="polite"></div>
+      </div>
+    </div>
+    <p class="smallprint" style="margin:14px 0 0">The <b>idea</b> is the last element: what the brand stands for. Summit’s idea is <i>real food for people on the move</i>, and every part of the wrapper points back to it.</p>
+  </div>
+
+  <h3>Why businesses invest in a brand</h3>
+  <div class="grid3">
+    <div class="mini"><span class="n">Recognition</span><h4>Easy to find</h4><p>Shoppers spot it fast and know what they’re getting before they read a word.</p></div>
+    <div class="mini"><span class="n">Differentiation</span><h4>Stands apart</h4><p>It looks and sounds different from rival goods that do the same job.</p></div>
+    <div class="mini"><span class="n">Loyalty</span><h4>Brings customers back</h4><p>Customers who trust the name keep buying it, and many will pay more for it.</p></div>
+  </div>
+
+  <h3 id="generic">Brand or generic?</h3>
+  <p>In addition to marketing products under brand names, businesses may sell <b>generic products</b>, because some customers care more about the <b>cost savings</b> that come with generic goods than about branding <span class="smallprint">(2.4.B.4)</span>.</p>
+  <p>Store brands are the most common example: a grocery or drug store’s own cereal, paper towels, or pain reliever, usually on the shelf right next to the name brand. The store spends little on advertising and packaging, so it can charge less.</p>
+
+  <div class="pf">
+    <div class="pf-h">As a shopper</div>
+    <p style="margin:0 0 4px">What does the brand name cost you? Some typical prices <span class="smallprint">(made up, but realistic)</span>:</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Item</th><th class="r">Name brand</th><th class="r">Store brand</th><th class="r">You save</th></tr></thead>
+      <tbody>
+        <tr><td>Pain reliever, 100 tablets</td><td class="r">$11.49</td><td class="r">$4.99</td><td class="r">$6.50</td></tr>
+        <tr><td>Toasted oat cereal, 12 oz</td><td class="r">$5.29</td><td class="r">$3.19</td><td class="r">$2.10</td></tr>
+        <tr><td>Paper towels, 6 rolls</td><td class="r">$12.99</td><td class="r">$8.49</td><td class="r">$4.50</td></tr>
+      </tbody>
+    </table></div>
+    <p style="margin:0">Buy those three once a month and the store brands save you about <b>$157 a year</b>. For medicine, compare the <b>active ingredient</b> on the label: if it’s the same ingredient in the same amount, it works the same way. Sometimes the brand is still worth it to you, for better quality or a feature you care about. The point is to know what the extra money buys.</p>
+  </div>
+</section>
+
+<!-- =========================================================
+     2.4.C  PRODUCT LIFE CYCLE
+     ========================================================= -->
+<section id="cycle">
+  <div class="sec-head"><span class="tag">2.4.C</span><h2>After launch: the product life cycle</h2></div>
+  <div class="def">
+    <span class="ek">2.4.C.1</span>
+    <div class="term">Product life cycle</div>
+    <p>The series of stages a product passes through, from <b>introduction</b> (where the product development stages end) to <b>decline</b>, driven by changes in <b>customer demand</b> over time.</p>
+  </div>
+  <p>Each stage brings different competitive challenges, so businesses change their marketing as the product moves along. Tap each stage to follow Clearflow, a made-up water bottle with a built-in filter.</p>
+
+  <div class="card" id="plc-card">
+    <div class="card-label">The product life cycle</div>
+    <svg class="plc" id="plc" viewBox="0 0 520 236" role="img" aria-label="Sales and revenue over time. Low during introduction, rising quickly during growth, leveling off at the peak during maturity, and falling during decline."></svg>
+    <div class="stabs" id="stabs" role="group" aria-label="Stages of the product life cycle"></div>
+    <div class="sp" id="sp" aria-live="polite"></div>
+  </div>
+
+  <div class="card" id="where">
+    <div class="card-label">Where is it now? <span class="score" id="lc-score">0 of 0</span></div>
+    <p class="smallprint" style="margin:0 0 10px">Which stage of the product life cycle is this product in?</p>
+    <p class="prompt" id="lc-item" aria-live="polite"></p>
+    <div class="pk c4" id="lc-opts"></div>
+    <div class="fb" id="lc-fb"></div>
+    <div class="btn-row"><button id="lc-next">Next product →</button></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     CHECK YOURSELF
+     ========================================================= -->
+<section id="check">
+  <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
+  <p>Twelve multiple-choice questions in the style of the AP Exam, covering all three learning objectives. The first three share one table, like a set-based question on the exam.</p>
+  <div class="card" id="quiz"></div>
+  <div class="btn-row"><button class="ghost" id="quiz-reset">Start over</button></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">Next: 2.5 Price</div>
+      <p>You know how a product is built, branded, and marketed over its life. Next: deciding what to charge for it.</p>
+    </div>
+    <a href="/ap-business/unit-2/">Back to Unit 2 →</a>
+  </div>
+</section>
+
+<footer>
+  <p>Topic 2.4 Product, following the AP Business with Personal Finance course framework (Learning Objectives 2.4.A–2.4.C). Except for general product categories like toothpaste, car GPS units, and DVDs, the businesses, people, products, and prices on this page are fictional. Practice items reshuffle every time you load the page.</p>
+  <p><a href="/ap-business/unit-2/">← Unit 2 — Marketing</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function shuffle(a){ a = a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; node.innerHTML = ''; }
+function money(n){ return '$' + n.toLocaleString('en-US'); }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+/* Cycles through a bank in random order without repeats until it runs out. */
+function Deck(bank){
+  var order = [], i = 0;
+  return { next:function(){ if(i >= order.length){ order = shuffle(bank); i = 0; } return order[i++]; } };
+}
+/* A one-question-at-a-time drill with a fixed set of answer buttons.
+   cfg: {id, bank:[[html, key, why]], keys:[[key, button html, color, name used in feedback]]} */
+function Drill(cfg){
+  var id = cfg.id, deck = Deck(cfg.bank), cur, done, sc = Score(el(id + '-score')), fb = el(id + '-fb'), box = el(id + '-opts');
+  var name = {}; cfg.keys.forEach(function(k){ name[k[0]] = k[3]; });
+  function show(){
+    cur = deck.next(); done = false; hideFb(fb);
+    el(id + '-item').innerHTML = cur[0];
+    box.innerHTML = '';
+    cfg.keys.forEach(function(k){
+      var b = document.createElement('button');
+      b.className = 'pbtn'; b.innerHTML = k[1]; b.setAttribute('data-k', k[0]);
+      if(k[2]) b.style.setProperty('--c', k[2]);
+      b.onclick = function(){ answer(b, k[0]); };
+      box.appendChild(b);
+    });
+  }
+  function answer(b, k){
+    if(done) return; done = true;
+    var ok = k === cur[1]; sc.add(ok);
+    Array.prototype.forEach.call(box.children, function(x){ x.disabled = true; if(!ok && x.getAttribute('data-k') === cur[1]) x.className += ' reveal'; });
+    b.className += ok ? ' yes' : ' no';
+    setFb(fb, ok ? 'good' : 'bad', '<b>' + (ok ? 'Right: ' : 'Not quite. The answer is ') + name[cur[1]] + '.</b> ' + cur[2]);
+    el(id + '-next').focus();
+  }
+  el(id + '-next').onclick = show;
+  show();
+}
+
+/* =========================================================
+   2.4.A  Which stage of development?
+   ========================================================= */
+Drill({
+  id:'st',
+  keys:[['id','Ideation',null,'ideation'],['va','Validation',null,'validation'],['de','Design',null,'design'],
+        ['me','Messaging',null,'messaging'],['pr','Production',null,'production'],['la','Launch',null,'launch']],
+  bank:[
+    ['Two friends fill a whiteboard with 40 ideas for apps that could help students keep track of homework, then circle their three favorites.', 'id', 'Brainstorming new ideas is ideation.'],
+    ['A shoe company’s engineers spend a year in the lab testing a new foam that could make running shoes lighter.', 'id', 'Technical research and development (R&amp;D) is part of ideation: it figures out what <i>could</i> be built.'],
+    ['A startup puts up a simple web page for a smart lunch box and counts how many visitors pay a $10 deposit to reserve one.', 'va', 'Real customers putting down real money tests whether people want it before the startup builds it at scale.'],
+    ['A student hand-makes 20 phone stands and sells them at lunch for a week to see whether anyone buys.', 'va', 'That’s an MVP: a simple version real customers can buy, used to test demand.'],
+    ['Testers said the first version felt cheap, so the team switches to a metal hinge and settles on the final size and colors.', 'de', 'Deciding the final features, look, and materials is design. Notice the iteration: testing sent them back to improve it.'],
+    ['An app team decides the layout of every screen and which features make it into the first full version.', 'de', 'Deciding exactly what the product will be is design.'],
+    ['A drink company settles on one line to build its marketing around: “All the energy of coffee, none of the crash.”', 'me', 'That’s a value proposition: why customers should choose it. Planning it is messaging.'],
+    ['A team decides to market its new planner to busy parents and plans its ads, website, and social posts around saving time.', 'me', 'Planning the overall marketing strategy is messaging.'],
+    ['A bakery tests whether its new cookie can be made 5,000 at a time, with the same taste, for under 40¢ each.', 'pr', 'Making it the same way every time, at a cost that works, is production.'],
+    ['A startup signs a contract with a factory and runs a trial batch to check that every unit comes out the same.', 'pr', 'Setting up consistent manufacturing is production.'],
+    ['A game studio releases its game in online stores and starts filling pre-orders.', 'la', 'Taking orders and getting the final product to customers is launch.'],
+    ['Boxes of a new cereal ship to 2,000 grocery stores, and the company starts taking orders from more stores.', 'la', 'Distributing the final product and taking orders is launch.']
+  ]
+});
+
+/* =========================================================
+   2.4.A  MVP lab
+   ========================================================= */
+(function(){
+  /* role: what the piece lets the business do. extra: not needed to test the hypothesis. */
+  var P = [
+    {k:'machine', n:'Professional cleaning machine', d:'Cleans six pairs at once.', cost:2400, days:21, role:'serve', extra:true},
+    {k:'hand', n:'Clean sneakers by hand', d:'Brushes, cleaner, and towels from the store.', cost:45, days:1, role:'serve'},
+    {k:'app', n:'Custom Fresh Kicks app', d:'Ordering, tracking, and alerts, built by a hired developer.', cost:6000, days:84, role:'buy', extra:true},
+    {k:'form', n:'Take orders and payments', d:'A free online order form, a payment app, and a post in the class group chats.', cost:0, days:1, role:'buy'},
+    {k:'brand', n:'Designer logo, website, and flyers', d:'A professional look before the first sale.', cost:450, days:14, extra:true},
+    {k:'subs', n:'Subscriptions and loyalty points', d:'Monthly plans and rewards software.', cost:180, days:14, extra:true}
+  ];
+  var on = {}, box = el('pieces'), fb = el('m-fb');
+  function when(d){ return d === 0 ? '–' : d === 1 ? '1 day' : d < 7 ? d + ' days' : (d / 7) + ' weeks'; }
+  box.innerHTML = P.map(function(p){
+    return '<button class="piece" data-k="' + p.k + '" aria-pressed="false"><span class="box" aria-hidden="true"></span><span><b>' + p.n + '</b><small>' + p.d + '</small><span class="cost">' + (p.cost ? money(p.cost) : 'Free') + ' · ready in ' + when(p.days) + '</span></span></button>';
+  }).join('');
+  function picked(){ return P.filter(function(p){ return on[p.k]; }); }
+  function has(role){ return picked().some(function(p){ return p.role === role; }); }
+  function update(){
+    var ps = picked(), cost = 0, days = 0;
+    ps.forEach(function(p){ cost += p.cost; days = Math.max(days, p.days); });
+    var buy = has('serve') && has('buy');
+    el('m-cost').textContent = money(cost);
+    el('m-time').textContent = buy ? when(days) : '–';
+    el('m-buy').textContent = buy ? 'Yes' : 'No';
+    el('m-buy').className = 'sv ' + (buy ? 'good' : 'bad');
+    Array.prototype.forEach.call(box.children, function(b){ b.setAttribute('aria-pressed', on[b.getAttribute('data-k')] ? 'true' : 'false'); });
+    return {cost:cost, days:days, buy:buy, extras:ps.filter(function(p){ return p.extra; })};
+  }
+  Array.prototype.forEach.call(box.children, function(b){
+    b.onclick = function(){ var k = b.getAttribute('data-k'); on[k] = !on[k]; update(); hideFb(fb); el('m-results').hidden = true; };
+  });
+  el('m-check').onclick = function(){
+    var s = update(), serve = has('serve'), buy = has('buy');
+    el('m-results').hidden = true;
+    if(!picked().length){ setFb(fb, 'hint', 'Pick the pieces you think Fresh Kicks needs to test its hypothesis first.'); return; }
+    if(!serve && !buy){ setFb(fb, 'bad', '<b>Not viable yet.</b> Students can’t order, and nothing would clean their shoes. An MVP has to be real enough that customers can use it and pay for it, or it can’t test whether they’ll pay.'); return; }
+    if(!serve){ setFb(fb, 'bad', '<b>Not viable yet.</b> Students could place an order, but nothing would clean their shoes. You can’t test whether they’ll pay for a service you can’t deliver.'); return; }
+    if(!buy){ setFb(fb, 'bad', '<b>Not viable yet.</b> You can clean shoes, but students have no way to hear about it, order, or pay. Without real orders, you can’t find out whether they’ll pay $12.'); return; }
+    if(s.extras.length){
+      setFb(fb, 'bad', '<b>Viable, but not minimum.</b> Students could buy it, but you’d spend <b>' + money(s.cost) + '</b> and wait <b>' + when(s.days) + '</b> for the first customer, and you still wouldn’t know whether anyone wants it. If they don’t, that money is gone. Which pieces could wait until students prove they’ll pay?');
+      return;
+    }
+    setFb(fb, 'good', '<b>That’s an MVP.</b> $45 and ready tomorrow. It’s <b>minimum</b> (nothing extra) and <b>viable</b> (students can really order, pay, and get clean shoes). If nobody orders, the founders lose $45, not thousands. <button id="m-run" style="margin-top:10px;display:block">Run it for three weeks →</button>');
+    el('m-run').onclick = run;
+  };
+  function run(){
+    var W = [9, 15, 22];
+    el('m-weeks').innerHTML = W.map(function(n, i){ return '<div class="wk"><span>Week ' + (i + 1) + '</span><div class="wt"><div class="wf"></div></div><span>' + n + ' pairs</span></div>'; }).join('');
+    el('m-results').hidden = false;
+    var fills = el('m-weeks').querySelectorAll('.wf');
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ W.forEach(function(n, i){ fills[i].style.width = (n / 24 * 100) + '%'; }); }); });
+    el('m-results').scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+  el('m-reset').onclick = function(){ on = {}; update(); hideFb(fb); el('m-results').hidden = true; };
+  update();
+})();
+
+/* =========================================================
+   2.4.B  Take apart a brand
+   ========================================================= */
+(function(){
+  var B = {
+    name:{t:'Name', s:'“Summit”', p:'The word customers say, search for, and ask for in the store. A short, memorable name is the backbone of a brand.', tm:'Yes. A trademark stops a rival from selling a granola bar called Summit.'},
+    symbol:{t:'Symbol', s:'The mountain logo', p:'Recognized at a glance, even from across the aisle and even before anyone reads the name.', tm:'Yes. Logos are among the most commonly trademarked brand elements.'},
+    term:{t:'Term', s:'“Fuel the climb.”', p:'A short phrase, or slogan, that customers connect with the product and what it promises.', tm:'Yes. Slogans can be trademarked too.'},
+    design:{t:'Design', s:'The orange wrapper and white stripe', p:'The colors, shapes, and overall look. Loyal customers grab the orange wrapper without even reading it.', tm:'Often. A distinctive look can be protected if customers connect it with the brand.'}
+  };
+  var ORDER = ['name','symbol','term','design'], seen = {}, cur = null;
+  var parts = el('parts'), panel = el('bpanel'), svg = el('wrapper');
+  parts.innerHTML = ORDER.map(function(k){ return '<button class="part" data-k="' + k + '" aria-pressed="false">' + B[k].t + '<span class="seen" aria-hidden="true"></span></button>'; }).join('');
+  function pick(k){
+    cur = k; seen[k] = true;
+    Array.prototype.forEach.call(parts.children, function(b){
+      var kk = b.getAttribute('data-k');
+      b.setAttribute('aria-pressed', kk === k ? 'true' : 'false');
+      b.querySelector('.seen').textContent = seen[kk] ? '✓' : '';
+    });
+    Array.prototype.forEach.call(svg.querySelectorAll('.ring'), function(r){ r.setAttribute('class', 'ring' + (r.getAttribute('data-ring') === k ? ' on' : '')); });
+    var b = B[k];
+    panel.innerHTML = '<div class="bs">Brand element</div><p class="bt">' + b.t + ': ' + b.s + '</p><p>' + b.p + '</p><p class="tm"><b>Trademark?</b>' + b.tm + '</p>';
+    var n = Object.keys(seen).length;
+    el('b-seen').textContent = n + ' of 4 found';
+  }
+  Array.prototype.forEach.call(parts.children, function(b){ b.onclick = function(){ pick(b.getAttribute('data-k')); }; });
+  Array.prototype.forEach.call(svg.querySelectorAll('.hot'), function(g){ g.addEventListener('click', function(){ pick(g.getAttribute('data-k')); }); });
+  panel.innerHTML = '<div class="bs">Brand element</div><p class="bt">Pick a part</p><p>Find all four visible elements: the name, the symbol, the term, and the design.</p>';
+})();
+
+/* =========================================================
+   2.4.C  Product life cycle chart
+   ========================================================= */
+(function(){
+  var NS = 'http://www.w3.org/2000/svg', svg = el('plc');
+  var X0 = 40, X1 = 508, Y0 = 34, Y1 = 204;
+  var S = [
+    {k:'intro', n:'Introduction', a:0, b:.18, c:'#3A55A0', lite:'rgba(58,85,160,.10)',
+      sales:'Usually low. Most customers don’t know the product exists yet.',
+      comp:'Few or no rivals.',
+      chal:'Building awareness and initial demand.',
+      moves:'Ads that explain what it is and why it’s useful, free samples, and launch deals for the first buyers.',
+      ex:'Clearflow hits stores, and most shoppers walk right past it. The company hands out free bottles at gyms and runs short videos showing the filter at work.'},
+    {k:'growth', n:'Growth', a:.18, b:.38, c:'#2E6B47', lite:'rgba(46,107,71,.10)',
+      sales:'Rise at an increasing rate as word spreads.',
+      comp:'Rivals notice the success and launch their own versions.',
+      chal:'Standing out as new rivals arrive.',
+      moves:'Differentiation and advertising: show what makes it better, add sizes or features, and get it into more stores.',
+      ex:'Sales jump every month, and four rival filter bottles appear. Clearflow adds two new sizes and runs ads comparing its filter with theirs.'},
+    {k:'mature', n:'Maturity', a:.38, b:.72, c:'#A8670F', lite:'rgba(168,103,15,.10)',
+      sales:'Flatten. The market is saturated: most people who want one already have one.',
+      comp:'At its toughest. Many rivals fight over the same customers.',
+      chal:'Holding on to market share.',
+      moves:'Build loyalty, keep differentiating, lower prices, and innovate. A new version, flavor, or group of customers can restart growth.',
+      ex:'Clearflow starts a rewards program for replacement filters, cuts its price by $5, and launches a kids’ version to reach new customers.'},
+    {k:'decline', n:'Decline', a:.72, b:1, c:'#A63D2F', lite:'rgba(166,61,47,.10)',
+      sales:'Fall as customers switch to rivals or substitutes.',
+      comp:'Rivals drop out, and substitutes take over.',
+      chal:'Deciding whether the product is still worth keeping.',
+      moves:'Cut costs, redesign it, narrow the focus to its most loyal customers, or discontinue it.',
+      ex:'Customers switch to smart bottles that track how much they drink. Clearflow stops advertising and sells only on its website. (A real case: car GPS units, once phones came with free maps.)'}
+  ];
+  function f(t){ var L = 1 / (1 + Math.exp(-15 * (t - .31))); var D = t < .66 ? 1 : Math.exp(-Math.pow((t - .66) / .26, 2)); return L * D; }
+  function X(t){ return X0 + t * (X1 - X0); }
+  function Y(v){ return Y1 - v * (Y1 - Y0 - 14); }
+  function path(a, b){ var d = '', n = Math.max(2, Math.round((b - a) * 120)); for(var i = 0; i <= n; i++){ var t = a + (b - a) * i / n; d += (i ? ' L' : 'M') + X(t).toFixed(1) + ' ' + Y(f(t)).toFixed(1); } return d; }
+  function mk(tag, at, txt){ var e = document.createElementNS(NS, tag); for(var k in at) e.setAttribute(k, at[k]); if(txt) e.textContent = txt; svg.appendChild(e); return e; }
+
+  var bands = S.map(function(s){
+    var r = mk('rect', {x:X(s.a), y:Y0 - 22, width:X(s.b) - X(s.a), height:Y1 - Y0 + 22, fill:s.lite, 'class':'band'});
+    r.addEventListener('click', function(){ pick(s.k); });
+    return r;
+  });
+  S.forEach(function(s, i){ if(i) mk('line', {x1:X(s.a), y1:Y0 - 22, x2:X(s.a), y2:Y1, stroke:'#E6E1D8', 'stroke-width':1}); });
+  /* full names on wide screens, stage numbers (matching the buttons) on phones */
+  var labels = S.map(function(s){ return mk('text', {x:(X(s.a) + X(s.b)) / 2, y:Y0 - 8, 'text-anchor':'middle', 'class':'bl', fill:s.c}, s.n); });
+  var nums = S.map(function(s, i){ return mk('text', {x:(X(s.a) + X(s.b)) / 2, y:Y0 - 1, 'text-anchor':'middle', 'class':'bn', fill:s.c}, String(i + 1)); });
+  labels.concat(nums).forEach(function(t, i){ t.style.cursor = 'pointer'; t.addEventListener('click', function(){ pick(S[i % 4].k); }); });
+  mk('line', {x1:X0, y1:Y1 + .5, x2:X1, y2:Y1 + .5, 'class':'ax'});
+  mk('line', {x1:X0 + .5, y1:Y0 - 22, x2:X0 + .5, y2:Y1, 'class':'ax'});
+  mk('text', {x:X1, y:Y1 + 20, 'text-anchor':'end'}, 'Time →');
+  mk('text', {x:-(Y0 + Y1) / 2 + 10, y:X0 - 12, transform:'rotate(-90)', 'text-anchor':'middle'}, 'Sales and revenue');
+  mk('path', {d:path(0, 1), fill:'none', stroke:'#CFC8BC', 'stroke-width':3, 'stroke-linecap':'round', 'stroke-linejoin':'round'});
+  var seg = mk('path', {d:'', fill:'none', 'stroke-width':4, 'stroke-linecap':'round', 'stroke-linejoin':'round'});
+  var dot = mk('circle', {r:6, stroke:'#fff', 'stroke-width':2.5});
+
+  var tabs = el('stabs');
+  tabs.innerHTML = S.map(function(s, i){ return '<button class="stab" data-k="' + s.k + '" aria-pressed="false" style="--c:' + s.c + '">' + (i + 1) + ' · ' + s.n + '</button>'; }).join('');
+  Array.prototype.forEach.call(tabs.children, function(b){ b.onclick = function(){ pick(b.getAttribute('data-k')); }; });
+
+  function pick(k){
+    var s = S.filter(function(x){ return x.k === k; })[0];
+    bands.forEach(function(r, i){ r.setAttribute('fill', S[i].k === k ? S[i].lite.replace('.10', '.22') : S[i].lite.replace('.10', '.05')); });
+    labels.forEach(function(t, i){ t.setAttribute('opacity', S[i].k === k ? 1 : .55); nums[i].setAttribute('opacity', S[i].k === k ? 1 : .55); });
+    seg.setAttribute('d', path(s.a, s.b)); seg.setAttribute('stroke', s.c);
+    var m = (s.a + s.b) / 2; dot.setAttribute('cx', X(m)); dot.setAttribute('cy', Y(f(m))); dot.setAttribute('fill', s.c);
+    Array.prototype.forEach.call(tabs.children, function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-k') === k ? 'true' : 'false'); });
+    var sp = el('sp'); sp.style.setProperty('--c', s.c);
+    sp.innerHTML = '<p class="sp-t">' + s.n + '</p><dl class="facts">' +
+      '<dt>Sales and revenue</dt><dd>' + s.sales + '</dd>' +
+      '<dt>Competition</dt><dd>' + s.comp + '</dd>' +
+      '<dt>The challenge</dt><dd>' + s.chal + '</dd>' +
+      '<dt>Marketing moves</dt><dd>' + s.moves + '</dd></dl>' +
+      '<p class="ex"><b>Clearflow</b>' + s.ex + '</p>';
+  }
+  pick('intro');
+})();
+
+/* =========================================================
+   2.4.C  Where is it now?
+   ========================================================= */
+Drill({
+  id:'lc',
+  keys:[['in','Introduction','#3A55A0','introduction'],['gr','Growth','#2E6B47','growth'],['ma','Maturity','#A8670F','maturity'],['de','Decline','#A63D2F','decline']],
+  bank:[
+    ['A company just released a jacket that can charge your phone. Sales are small, and most shoppers have never heard of it.', 'in', 'Low sales and little awareness. The marketing job now is explaining what it is and building initial demand.'],
+    ['A startup’s plant-based egg launched last month. It’s the only product like it in most stores, and sales are still low.', 'in', 'New, few rivals, low sales. Expect free samples and ads that explain the product.'],
+    ['A new study app offers free trials and runs ads explaining what it does, because few people know it exists yet.', 'in', 'Building awareness and initial demand is the challenge of introduction.'],
+    ['Sales of a new protein water doubled this year, and three rival brands just launched copycats.', 'gr', 'Sales rising fast and rivals arriving: growth. The move is to differentiate and advertise what makes it better.'],
+    ['A smart ring’s sales climb faster every quarter. The company adds new colors and runs ads explaining why its ring beats the new rivals.', 'gr', 'Rising at an increasing rate, with new competitors. Differentiation and advertising fit growth.'],
+    ['More and more stores ask to carry a new snack, and its sales rise faster each month.', 'gr', 'Fast-rising sales and wider distribution are signs of growth.'],
+    ['Almost every household already buys toothpaste. Sales have been flat for years, and brands compete on flavor, whitening, and price.', 'ma', 'A saturated market with many rivals: maturity. The fight is over market share, through differentiation and price.'],
+    ['A sneaker’s sales have leveled off. The brand launches a rewards program and a limited-edition color to keep customers coming back.', 'ma', 'Flat sales, and moves to build loyalty and differentiate: maturity.'],
+    ['A streaming service has stopped adding subscribers because most people who want it already have it. It lowers the price of its basic plan to keep customers from switching.', 'ma', 'A saturated market and lower prices to hold market share: maturity.'],
+    ['Sales of car GPS units keep falling as drivers use free maps on their phones instead.', 'de', 'Customers are switching to a substitute. In decline, businesses cut costs, narrow their focus, or discontinue the product.'],
+    ['Sales of a once-popular toy have fallen three years in a row. The company cuts its ad budget and now sells it only online.', 'de', 'Falling sales, and cutting costs while narrowing its focus: decline.'],
+    ['Fewer people buy DVDs every year as they switch to streaming. A movie studio makes fewer discs and sells them mostly to collectors.', 'de', 'Customers are moving to a substitute, and the studio is narrowing its focus to its most loyal buyers: decline.']
+  ]
+});
+
+/* =========================================================
+   Check yourself (AP-style)
+   ========================================================= */
+(function(){
+  var STIM = '<div class="stim"><p><b>Zip</b>, a company that sells electric scooters, tracked its sales and the number of rival scooter brands in its region.</p>' +
+    '<div class="tbl" style="margin:0"><table><thead><tr><th>Year</th><th class="r">Scooters sold</th><th class="r">Rival brands</th></tr></thead><tbody>' +
+    '<tr><td>2020</td><td class="r">1,500</td><td class="r">0</td></tr>' +
+    '<tr><td>2021</td><td class="r">2,800</td><td class="r">1</td></tr>' +
+    '<tr><td>2022</td><td class="r">7,500</td><td class="r">4</td></tr>' +
+    '<tr><td>2023</td><td class="r">18,000</td><td class="r">9</td></tr>' +
+    '<tr><td>2024</td><td class="r">24,000</td><td class="r">12</td></tr>' +
+    '<tr><td>2025</td><td class="r">24,500</td><td class="r">12</td></tr>' +
+    '</tbody></table></div></div>';
+  var Q = [
+    {set:true, stem:'From 2021 to 2023, Zip’s scooters were most likely in which stage of the product life cycle?', a:'Growth, because sales rose at an increasing rate as rivals entered the market', d:['Introduction, because Zip had only a few rivals','Maturity, because Zip’s sales were the highest they had ever been','Decline, because rivals were taking Zip’s customers'], why:'In growth, sales and revenue rise at an increasing rate and rivals launch their own versions (2.4.C). Sales went from 2,800 to 7,500 to 18,000 while rivals grew from 1 to 9.'},
+    {set:true, stem:'Which is the most likely reason Zip’s sales leveled off in 2024 and 2025?', a:'The market became saturated, with many rivals competing for the same customers.', d:['Zip had just introduced the product.','Customers had switched to a substitute product.','Zip stopped selling to new customers.'], why:'Flat sales with many rivals signal maturity: most people who want one already have one (2.4.C). Switching to substitutes would make sales fall, not level off.'},
+    {set:true, stem:'Based on the data for 2024 and 2025, which marketing strategy is most appropriate for Zip?', a:'Build customer loyalty and add new features to protect its market share', d:['Run ads that explain what an electric scooter is','Discontinue the scooter because sales have stopped growing','Stop advertising because sales are at their highest level'], why:'In maturity, businesses emphasize loyalty, differentiation, lower prices, and innovation to hold market share (2.4.C). Explaining the product fits introduction, and flat sales aren’t a reason to quit.'},
+    {stem:'A phone company’s engineers test a new battery material in a lab that could let phones charge twice as fast. Which stage of product development is this?', a:'Ideation', d:['Validation','Production','Launch'], why:'Ideation includes market research, technical research and development (R&D), and brainstorming (2.4.A). Nothing has been tested with customers yet.'},
+    {stem:'A startup sells a simple version of its meal-planning app, with only one core feature, to 200 paying users before building anything more. The main purpose of this approach is to', a:'assess whether the product can achieve product-market fit before investing more resources', d:['protect the app’s name with a trademark','move the app into the maturity stage of the product life cycle','guarantee that the app will be profitable'], why:'An MVP is the simplest version real customers can use and pay for. Businesses use it to assess whether a product can achieve product-market fit (2.4.A). It lowers risk, but it can’t guarantee profit.'},
+    {stem:'Product-market fit occurs when', a:'customer demand for a product is sufficient to generate profit', d:['a product has more features than rival products','a business finishes the production stage','a product’s brand name has been trademarked'], why:'Product-market fit occurs if customer demand is sufficient to generate profit (2.4.A). More features, finished production, or a trademark don’t show demand.'},
+    {stem:'During validation, customers who tried a new backpack say it is too heavy to carry all day. What is the business most likely to do next?', a:'Return to the design stage to make the backpack lighter', d:['Move straight to launch, since validation is finished','Begin selling a generic version of the backpack','Move the backpack into the decline stage'], why:'Product development is iterative: feedback in one stage can send a business back to an earlier one (2.4.A). The weight problem is a design problem.'},
+    {stem:'A team writes, “The only charger that fills your phone in 15 minutes,” and plans its ads, website, and packaging around that promise. Which stage of product development is the team in?', a:'Messaging', d:['Ideation','Validation','Production'], why:'Messaging is planning the overall marketing strategy, including the value proposition: why customers should choose the product (2.4.A).'},
+    {stem:'Which of the following is a business most likely to protect by trademarking?', a:'The name and logo it uses to identify its product', d:['The price it charges for its product','The number of units it produces each month','The results of its customer surveys'], why:'Brand identity can be conveyed through a name, idea, term, symbol, or design, which businesses often protect by trademarking (2.4.B.3).'},
+    {stem:'A grocery store sells its own store-brand cereal on the shelf next to a name-brand cereal for $2 less. Which best explains why the store offers the generic product?', a:'Some customers prioritize cost savings over branding.', d:['Generic products are always higher quality than name brands.','Name brands can’t be sold in grocery stores.','Generic products don’t have to be produced.'], why:'Businesses may sell generic products because some customers prioritize the cost savings associated with generic goods over branding (2.4.B.4).'},
+    {stem:'Which challenge is a business most likely to face during the introduction stage of the product life cycle?', a:'Few customers know the product exists, so sales are low.', d:['The market is saturated with rival products.','Customers are switching to substitute products.','Sales are rising quickly as new rivals enter the market.'], why:'In introduction, sales and revenue are usually low, so marketing focuses on building awareness and initial demand (2.4.C). The other options describe maturity, decline, and growth.'},
+    {stem:'Sales of printed road maps have fallen for years as drivers use navigation apps instead. Which response best fits this stage of the product life cycle?', a:'Cut costs and focus on the small group of customers who still buy them, or stop selling them', d:['Spend heavily on ads to build awareness of what a map is','Increase production to keep up with rising demand','Hand out free samples to attract first-time buyers'], why:'In decline, sales fall as customers switch to substitutes. Businesses cut costs, redesign, narrow their focus, or discontinue the product (2.4.C).'}
+  ];
+  var quiz = el('quiz'), right = 0, answered = 0;
+  function build(){
+    right = 0; answered = 0;
+    quiz.innerHTML = '<div class="q" style="padding-top:4px"><span class="qn">QUESTIONS 1–3 REFER TO THE FOLLOWING INFORMATION</span>' + STIM + '</div>';
+    Q.forEach(function(q, i){
+      var d = document.createElement('div'); d.className = 'q';
+      d.innerHTML = '<span class="qn">QUESTION ' + (i + 1) + '</span><p class="stem">' + esc(q.stem) + '</p>';
+      var opts = document.createElement('div'); opts.className = 'opts';
+      var fb = document.createElement('div'); fb.className = 'fb';
+      shuffle([q.a].concat(q.d)).forEach(function(o, j){
+        var b = document.createElement('button'); b.className = 'opt';
+        b.innerHTML = '<span class="mono" style="color:var(--mute);margin-right:8px">(' + 'ABCD'[j] + ')</span>' + esc(o);
+        if(o === q.a) b.setAttribute('data-a', '1');
+        b.onclick = function(){
+          if(opts.getAttribute('data-done')) return; opts.setAttribute('data-done', '1');
+          var ok = o === q.a; answered++; if(ok) right++;
+          Array.prototype.forEach.call(opts.children, function(x){ x.disabled = true; if(!ok && x.getAttribute('data-a')) x.className += ' reveal'; });
+          b.className += ok ? ' picked-yes' : ' picked-no';
+          setFb(fb, ok ? 'good' : 'bad', '<b>' + (ok ? 'Correct.' : 'Not quite.') + '</b> ' + esc(q.why));
+          sum();
+        };
+        opts.appendChild(b);
+      });
+      d.appendChild(opts); d.appendChild(fb); quiz.appendChild(d);
+    });
+    var s = document.createElement('div'); s.className = 'q'; s.innerHTML = '<p class="qsum" id="qsum" aria-live="polite"></p>'; quiz.appendChild(s);
+    sum();
+  }
+  function sum(){
+    var n = Q.length, t = el('qsum');
+    if(answered < n) t.textContent = right + ' correct out of ' + answered + ' answered · ' + (n - answered) + ' to go';
+    else t.textContent = 'Final: ' + right + ' of ' + n + (right === n ? '. Perfect.' : right >= n - 2 ? '. Strong work.' : '. Review the sections above for the ones you missed.');
+  }
+  el('quiz-reset').onclick = build;
+  build();
+})();
+</script>
+</body>
+</html>
