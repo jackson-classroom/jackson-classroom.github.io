@@ -8,6 +8,29 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/ap-chemistry/topic.css">
+<style>
+.plot{display:block;width:100%;min-width:460px;height:auto;background:#fff;border:1px solid var(--line-soft);border-radius:3px}
+.plot text{font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:13px;fill:#3A4558}
+.plot .tick{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;fill:#5B6577}
+.plot .lab{font-weight:600}
+.ctls{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px 26px;margin:16px 0 0}
+.ctl label{display:flex;justify-content:space-between;gap:10px;font-size:15.5px;color:var(--ink2)}
+.ctl label b{font-family:var(--mono);font-size:13.5px;font-weight:500;color:var(--ink)}
+.ctl input[type=range]{width:100%;margin:8px 0 0;accent-color:var(--acc)}
+table.data{max-width:600px}
+table.data th,table.data td{white-space:nowrap}
+table.data td:first-child{font-family:var(--body);font-size:15px;letter-spacing:0;color:var(--ink2)}
+table.data td.hl{background:var(--acc-lite);font-weight:600}
+table.data td.same{background:var(--ok-bg);color:#1C4A30;font-weight:600}
+.key{display:inline-block;width:22px;height:0;border-top:3px solid;vertical-align:middle;margin-right:7px}
+.sci{white-space:nowrap}
+.law{font-size:clamp(20px,3vw,25px);font-weight:500;white-space:nowrap}
+.parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:14px 0 0}
+.parts .mini p{margin:4px 0 0}
+.calc select.ans{width:auto;min-width:110px}
+#trainer input.ans,#predict input.ans{width:150px}
+.qtext table.bca{max-width:560px}
+</style>
 </head>
 <body>
 
@@ -24,18 +47,227 @@
   <div class="eyebrow">AP Chemistry · Unit 5 Kinetics · Topic 5.2</div>
   <h1>Introduction to <em>Rate Law</em></h1>
   <p class="lede">A rate law tells you exactly how the rate depends on each reactant’s concentration. The exponents, called reaction orders, have to come from experiment, not from the balanced equation.</p>
+  <p class="lo-line"><b>Learning objective 5.2.A</b> Represent experimental data with a consistent rate law expression.</p>
 
   <div class="board" aria-label="Key ideas in this topic">
-    <div class="idea"><span class="code">Q1</span><span class="lq">What does a rate law say?</span><span class="d">rate = k[A]<sup>m</sup>[B]<sup>n</sup>, and what each piece means</span></div>
-    <div class="idea"><span class="code">Q2</span><span class="lq">What are the orders?</span><span class="d">Finding reaction orders from initial-rate data</span></div>
-    <div class="idea"><span class="code">Q3</span><span class="lq">What is k?</span><span class="d">Calculating the rate constant and its units</span></div>
+    <a class="idea" href="#law"><span class="code">Q1</span><span class="lq">What does a rate law say?</span><span class="d">rate = k[A]<sup>m</sup>[B]<sup>n</sup>, and what each piece means</span></a>
+    <a class="idea" href="#initial"><span class="code">Q2</span><span class="lq">What are the orders?</span><span class="d">Finding reaction orders from initial-rate data</span></a>
+    <a class="idea" href="#k"><span class="code">Q3</span><span class="lq">What is k?</span><span class="d">Calculating the rate constant and its units</span></a>
     <div class="board-foot"><span><b>Unit 5</b> Kinetics · 7–9% of the AP Exam</span><span><b>Before this</b> <a href="/ap-chemistry/unit-5/5-1-reaction-rates/">5.1 Reaction Rates</a></span></div>
   </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#law">The rate law</a>
+    <a href="#orders">Reaction orders</a>
+    <a href="#initial">Initial rates</a>
+    <a href="#k">The rate constant</a>
+    <a href="#explore">Order and rate</a>
+    <a href="#predict">Predict the change</a>
+    <a href="#trainer">Find the rate law</a>
+    <a href="#check">Check yourself</a>
+  </nav>
 </header>
 
-<section id="tools">
-  <div class="sec-head"><span class="tag plain">Coming soon</span><h2>Tools and practice</h2></div>
-  <div class="soon-card"><p>Interactive tools, worked examples, and AP-style practice for Topic 5.2 aren’t posted yet. The three questions above are the ones this topic answers.</p></div>
+<!-- =========================================================
+     5.2.A.1 / 5.2.A.2  THE RATE LAW
+     ========================================================= -->
+<section id="law">
+  <div class="sec-head"><span class="tag">5.2.A.1–2</span><h2>What does a rate law say?</h2></div>
+  <p>Topic 5.1 said that a higher reactant concentration makes a reaction faster. A rate law says <i>how much</i> faster.</p>
+  <div class="def">
+    <span class="ek">5.2.A.2</span>
+    <div class="term">Rate law</div>
+    <p>The rate law expresses the rate of a reaction as proportional to the concentration of each reactant raised to a power.</p>
+  </div>
+  <p>For a reaction with reactants A and B:</p>
+  <div class="chain"><span class="law">rate = <i>k</i> [A]<sup><i>m</i></sup> [B]<sup><i>n</i></sup></span></div>
+  <div class="parts">
+    <div class="mini"><div class="n">rate</div><p>How fast the reaction is going, in <i>M</i>/s.</p></div>
+    <div class="mini"><div class="n">[A] and [B]</div><p>The concentrations of the reactants, in <i>M</i>.</p></div>
+    <div class="mini"><div class="n"><i>m</i> and <i>n</i></div><p>The <b>orders</b>. They say how strongly each concentration affects the rate.</p></div>
+    <div class="mini"><div class="n"><i>k</i></div><p>The <b>rate constant</b>. One number for this reaction at this temperature.</p></div>
+  </div>
+  <div class="note"><b>The orders aren’t the coefficients.</b> You can’t read <i>m</i> and <i>n</i> off the balanced equation. They have to be measured. For <span data-eq="2N2O5(g) -> 4NO2(g) + O2(g)"></span> the coefficient is 2, but experiments show rate = <i>k</i>[N<sub>2</sub>O<sub>5</sub>], with an exponent of 1.</div>
+  <div class="def">
+    <span class="ek">5.2.A.1</span>
+    <div class="term">Where the data come from</div>
+    <p>Experimental methods can be used to monitor the amounts of reactants or products of a reaction and to determine its rate.</p>
+  </div>
+  <p>Those are the methods from <a href="/ap-chemistry/unit-5/5-1-reaction-rates/#rate">Topic 5.1</a>: collect a gas, follow a mass or a pressure, or measure absorbance as a color appears or fades. Every rate law starts as a table of measured rates.</p>
+</section>
+
+<!-- =========================================================
+     5.2.A.3  ORDERS
+     ========================================================= -->
+<section id="orders">
+  <div class="sec-head"><span class="tag">5.2.A.3</span><h2>What an order means</h2></div>
+  <div class="def">
+    <span class="ek">5.2.A.3</span>
+    <div class="term">Order</div>
+    <p>The power of each reactant in the rate law is the order of the reaction with respect to that reactant. The sum of the powers is the overall order of the reaction.</p>
+  </div>
+  <p>The order tells you what happens to the rate when you change that one concentration and keep everything else the same. If the concentration is multiplied by some factor, the rate is multiplied by that factor raised to the order.</p>
+  <div class="tablewrap"><table class="bca data">
+    <tr><th>Order in A</th><th>Rate law</th><th>Double [A]</th><th>Triple [A]</th><th>Halve [A]</th></tr>
+    <tr><td>Zero</td><td>rate = <i>k</i></td><td>no change (2<sup>0</sup> = 1)</td><td>no change</td><td>no change</td></tr>
+    <tr><td>First</td><td>rate = <i>k</i>[A]</td><td>rate × 2</td><td>rate × 3</td><td>rate × ½</td></tr>
+    <tr><td>Second</td><td>rate = <i>k</i>[A]<sup>2</sup></td><td>rate × 4</td><td>rate × 9</td><td>rate × ¼</td></tr>
+  </table></div>
+  <ul>
+    <li>An exponent of 1 isn’t written: [A]<sup>1</sup> is just [A].</li>
+    <li>A zero-order reactant is left out of the rate law, because [A]<sup>0</sup> = 1. It still has to be there for the reaction to happen. Its concentration just doesn’t change the rate.</li>
+    <li>In AP Chemistry the orders you’ll find are 0, 1, and 2.</li>
+  </ul>
+  <h3>Overall order</h3>
+  <p>Add the exponents. For rate = <i>k</i>[NO]<sup>2</sup>[H<sub>2</sub>], the reaction is second order in NO, first order in H<sub>2</sub>, and 2 + 1 = <b>third order overall</b>.</p>
+</section>
+
+<!-- =========================================================
+     5.2.A.5  METHOD OF INITIAL RATES
+     ========================================================= -->
+<section id="initial">
+  <div class="sec-head"><span class="tag">5.2.A.5</span><h2>Finding the orders from initial rates</h2></div>
+  <div class="def">
+    <span class="ek">5.2.A.5</span>
+    <div class="term">Method of initial rates</div>
+    <p>Comparing initial rates of a reaction is a method to determine the order with respect to each reactant.</p>
+  </div>
+  <p>Run the reaction several times. Each time, start with different concentrations and measure the rate right at the beginning, when you know the concentrations exactly. Then compare two trials in which <b>only one concentration changed</b>. Whatever happened to the rate was caused by that reactant.</p>
+
+  <h3>Worked example</h3>
+  <p>For <span data-eq="2NO(g) + 2H2(g) -> N2(g) + 2H2O(g)"></span> at a fixed temperature:</p>
+  <div class="tablewrap"><table class="bca data">
+    <tr><th>Trial</th><th>[NO] (<i>M</i>)</th><th>[H<sub>2</sub>] (<i>M</i>)</th><th>Initial rate (<i>M</i>/s)</th></tr>
+    <tr><td>1</td><td>0.10</td><td>0.10</td><td>1.2 × 10<sup>−3</sup></td></tr>
+    <tr><td>2</td><td>0.10</td><td>0.20</td><td>2.4 × 10<sup>−3</sup></td></tr>
+    <tr><td>3</td><td>0.20</td><td>0.10</td><td>4.8 × 10<sup>−3</sup></td></tr>
+  </table></div>
+  <ol>
+    <li><b>Order in H<sub>2</sub>: compare trials 1 and 2.</b> [NO] stays at 0.10 <i>M</i>. [H<sub>2</sub>] doubles and the rate doubles. 2<sup><i>n</i></sup> = 2, so <i>n</i> = 1.</li>
+    <li><b>Order in NO: compare trials 1 and 3.</b> [H<sub>2</sub>] stays at 0.10 <i>M</i>. [NO] doubles and the rate goes up four times. 2<sup><i>m</i></sup> = 4, so <i>m</i> = 2.</li>
+    <li><b>Write the rate law:</b> rate = <i>k</i>[NO]<sup>2</sup>[H<sub>2</sub>]. Notice that the coefficient of H<sub>2</sub> is 2 but its order is 1.</li>
+  </ol>
+  <p>The same comparison written as a ratio, which is the form to show on a free-response question:</p>
+  <div class="chain">
+    <span class="frac"><span>rate<sub>3</sub></span><span>rate<sub>1</sub></span></span><span>=</span>
+    <span class="frac"><span><i>k</i>(0.20)<sup><i>m</i></sup>(0.10)<sup><i>n</i></sup></span><span><i>k</i>(0.10)<sup><i>m</i></sup>(0.10)<sup><i>n</i></sup></span></span><span>=</span>
+    <span class="frac"><span>4.8 × 10<sup>−3</sup></span><span>1.2 × 10<sup>−3</sup></span></span>
+    <span>so 2<sup><i>m</i></sup> = 4 and <i>m</i> = 2</span>
+  </div>
+  <div class="note"><b>Change one thing at a time.</b> If both concentrations differ between two trials, you can’t tell which one changed the rate. Find one order from a clean pair first. Then you can use it to untangle a pair where both changed.</div>
+</section>
+
+<!-- =========================================================
+     5.2.A.4  THE RATE CONSTANT
+     ========================================================= -->
+<section id="k">
+  <div class="sec-head"><span class="tag">5.2.A.4</span><h2>What is <i>k</i>?</h2></div>
+  <div class="def">
+    <span class="ek">5.2.A.4</span>
+    <div class="term">Rate constant</div>
+    <p>The proportionality constant in the rate law is called the rate constant. Its value depends on temperature, and its units reflect the overall reaction order.</p>
+  </div>
+  <h3>Calculating <i>k</i></h3>
+  <p>Once you know the orders, put the numbers from any one trial into the rate law and solve for <i>k</i>. With trial 1 above:</p>
+  <div class="chain">
+    <span><i>k</i> =</span>
+    <span class="frac"><span>rate</span><span>[NO]<sup>2</sup>[H<sub>2</sub>]</span></span><span>=</span>
+    <span class="frac"><span>1.2 × 10<sup>−3</sup> <i>M</i>/s</span><span>(0.10 <i>M</i>)<sup>2</sup>(0.10 <i>M</i>)</span></span>
+    <span>= <b>1.2 <i>M</i><sup>−2</sup> s<sup>−1</sup></b></span>
+  </div>
+  <p>Every trial gives the same <i>k</i>. That’s a good way to check your orders: if two trials give different values, an order is wrong.</p>
+  <p>With <i>k</i> in hand, the rate law predicts the rate for any concentrations at that temperature. If [NO] = 0.30 <i>M</i> and [H<sub>2</sub>] = 0.050 <i>M</i>, rate = (1.2)(0.30)<sup>2</sup>(0.050) = 5.4 × 10<sup>−3</sup> <i>M</i>/s.</p>
+
+  <h3>The units of <i>k</i></h3>
+  <p>The rate is always in <i>M</i>/s, so the units of <i>k</i> have to cancel whatever the concentrations leave behind. That makes them different for each overall order.</p>
+  <div class="tablewrap"><table class="bca data">
+    <tr><th>Overall order</th><th>Example rate law</th><th>Units of <i>k</i></th><th>Also written</th></tr>
+    <tr><td>Zero</td><td>rate = <i>k</i></td><td><i>M</i> s<sup>−1</sup></td><td>mol L<sup>−1</sup> s<sup>−1</sup></td></tr>
+    <tr><td>First</td><td>rate = <i>k</i>[A]</td><td>s<sup>−1</sup></td><td>1/s</td></tr>
+    <tr><td>Second</td><td>rate = <i>k</i>[A][B]</td><td><i>M</i><sup>−1</sup> s<sup>−1</sup></td><td>L mol<sup>−1</sup> s<sup>−1</sup></td></tr>
+    <tr><td>Third</td><td>rate = <i>k</i>[A]<sup>2</sup>[B]</td><td><i>M</i><sup>−2</sup> s<sup>−1</sup></td><td>L<sup>2</sup> mol<sup>−2</sup> s<sup>−1</sup></td></tr>
+  </table></div>
+  <p>The pattern: the power on <i>M</i> is 1 minus the overall order. On the exam, the units of <i>k</i> are a quick way to tell the overall order, and leaving them off a calculated <i>k</i> can cost a point.</p>
+
+  <h3>What changes <i>k</i>, and what doesn’t</h3>
+  <div class="grid2">
+    <div class="mini"><div class="n">Changes <i>k</i></div><h4>Temperature and catalysts</h4><p>Raising the temperature makes <i>k</i> larger, which is how warming a reaction speeds it up. Adding a catalyst also gives a larger <i>k</i>.</p></div>
+    <div class="mini keep"><div class="n">Doesn’t change <i>k</i></div><h4>Concentration</h4><p>Changing a concentration changes the <b>rate</b>, but <i>k</i> stays the same. So does <i>k</i> as the reaction runs and the reactants are used up.</p></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     INTERACTIVE: ORDER AND RATE
+     ========================================================= -->
+<section id="explore">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>How the order shapes the rate</h2></div>
+  <p>Three reactions, one each of zero, first, and second order in A. They all start at the same rate. Use the slider to change [A] and watch what happens to each rate.</p>
+  <div class="card">
+    <div class="card-label"><span>Rate against concentration</span></div>
+    <div class="tablewrap"><svg class="plot" id="x-plot" viewBox="0 0 560 340" role="img" aria-label="Graph of rate against the concentration of A. Zero order is a flat line, first order is a straight line through the origin, and second order is a curve that gets steeper."></svg></div>
+    <div class="ctls">
+      <div class="ctl"><label for="x-f"><span>Multiply [A] by</span><b id="x-fv"></b></label><input type="range" id="x-f" min="0.5" max="4" step="0.5" value="2"></div>
+    </div>
+    <div class="tablewrap"><table class="bca data" id="x-table" aria-live="polite"></table></div>
+  </div>
+  <p>A graph of initial rate against concentration shows the order by its shape: flat for zero order, a straight line through the origin for first order, and an upward curve for second order.</p>
+</section>
+
+<!-- =========================================================
+     DRILL: PREDICT THE CHANGE
+     ========================================================= -->
+<section id="predict">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Predict the change</h2></div>
+  <p>You’re given a rate law and a change in the concentrations. By what factor does the rate change? Enter a number such as 8, 0.25, or 1/4. Enter 1 if the rate stays the same.</p>
+  <div class="card">
+    <div class="card-label"><span>From rate law to rate</span><span class="score" id="p-score">0 solved</span></div>
+    <p class="prompt" id="p-q"></p>
+    <div class="calc">
+      <label for="p1">The rate is multiplied by</label><span><input class="ans" id="p1" inputmode="text" autocomplete="off"></span>
+    </div>
+    <div class="fb" id="p-fb" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="p-check">Check</button>
+      <button type="button" class="ghost" id="p-show">Show the solution</button>
+      <button type="button" class="ghost" id="p-new">New problem →</button>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     TRAINER: FIND THE RATE LAW
+     ========================================================= -->
+<section id="trainer">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Find the rate law from data</h2></div>
+  <p>A new set of initial-rate data each time. Find the order in each reactant, then calculate <i>k</i> and choose its units. Enter <i>k</i> as a number like 0.025 or 2.5e-2. Answers within 2% count.</p>
+  <div class="card">
+    <div class="card-label"><span>Method of initial rates</span><span class="score" id="t-score">0 solved</span></div>
+    <p class="prompt" id="t-q"></p>
+    <div class="tablewrap"><table class="bca data" id="t-table"></table></div>
+    <div class="calc">
+      <label for="t-m">1. Order in A</label><span><select class="ans" id="t-m"><option value="">choose…</option><option>0</option><option>1</option><option>2</option></select></span>
+      <label for="t-n">2. Order in B</label><span><select class="ans" id="t-n"><option value="">choose…</option><option>0</option><option>1</option><option>2</option></select></span>
+      <label for="t-k">3. Value of <i>k</i></label><span><input class="ans" id="t-k" inputmode="text" autocomplete="off"></span>
+      <label for="t-u">4. Units of <i>k</i></label><span><select class="ans" id="t-u"></select></span>
+    </div>
+    <div class="fb" id="t-fb" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="t-check">Check</button>
+      <button type="button" class="ghost" id="t-show">Show the solution</button>
+      <button type="button" class="ghost" id="t-new">New problem →</button>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PRACTICE
+     ========================================================= -->
+<section id="check">
+  <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
+  <p>Eight multiple-choice questions written in AP style, with numbers you can handle without a calculator, then two written responses.</p>
+  <p class="score" id="mc-score" style="margin:0"></p>
+  <div class="card" id="mc"></div>
+  <div class="card" id="frq"></div>
 
   <div class="next">
     <div><p class="nt">Up next: 5.3 Concentration Changes Over Time</p><p>Integrated rate laws · zero-, first-, and second-order graphs · half-life</p></div>
@@ -44,11 +276,264 @@
 </section>
 
 <footer>
-  <p>Topic 5.2 Introduction to Rate Law, following the AP Chemistry course framework.</p>
+  <p>Topic 5.2 Introduction to Rate Law, following the AP Chemistry course framework (Learning Objective 5.2.A). The rate laws shown for real reactions are the experimentally observed ones, and the data tables are calculated from them with rounded rate constants. Practice questions are original and written in AP style, and the trainers generate a new problem every time.</p>
   <p><a href="/ap-chemistry/unit-5/">← Unit 5 — Kinetics</a></p>
 </footer>
 
 </div><!-- /wrap -->
 
+<script src="/ap-chemistry/topic.js"></script>
+<script>
+/* ---------- helpers ---------- */
+function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
+function mark(input, ok){ input.classList.toggle("ok", ok); input.classList.toggle("no", !ok); }
+function neg(s){ return String(s).replace("-", "−"); }
+// 0.0000313 -> "3.1 × 10<sup>−5</sup>"
+function sci(x, n){
+  if(x === 0) return "0";
+  n = n || 2;
+  var e = Math.floor(Math.log10(Math.abs(x))), m = (x / Math.pow(10, e)).toFixed(n - 1);
+  if(Math.abs(+m) >= 10){ e++; m = (x / Math.pow(10, e)).toFixed(n - 1); }
+  return '<span class="sci">' + neg(m) + " × 10<sup>" + neg(e) + "</sup></span>";
+}
+// A value near 1 as a plain decimal, anything else in scientific notation.
+function val(x, n){ return x >= 0.01 && x < 1000 ? String(+x.toPrecision(n || 3)) : sci(x, n || 3); }
+function pw(sym, n){ return n === 0 ? "" : "[" + sym + "]" + (n > 1 ? "<sup>" + n + "</sup>" : ""); }
+function law(m, n, a, b){ return "rate = <i>k</i>" + pw(a || "A", m) + pw(b || "B", n); }
+var ORD = ["zero", "first", "second", "third", "fourth"];
+var UNITS = ["<i>M</i> s<sup>−1</sup>", "s<sup>−1</sup>", "<i>M</i><sup>−1</sup> s<sup>−1</sup>", "<i>M</i><sup>−2</sup> s<sup>−1</sup>", "<i>M</i><sup>−3</sup> s<sup>−1</sup>"];
+var UNITS_TXT = ["M s⁻¹", "s⁻¹", "M⁻¹ s⁻¹", "M⁻² s⁻¹", "M⁻³ s⁻¹"];
+function times(x){ return x === 0.5 ? "½" : x === 0.25 ? "¼" : String(+x.toPrecision(4)); }
+
+/* ---------- interactive: order and rate ---------- */
+(function(){
+  var svg = document.getElementById("x-plot"), sl = document.getElementById("x-f"), table = document.getElementById("x-table");
+  var W = 560, H = 340, L = 58, R = 96, T = 14, B = 46, XM = 4, YM = 16;
+  var S = [{o:0, name:"Zero order", color:"#2E6B47", dash:"2 4"}, {o:1, name:"First order", color:"#1D5FA8", dash:""}, {o:2, name:"Second order", color:"#A8670F", dash:"7 4"}];
+  function X(v){ return L + v / XM * (W - L - R); }
+  function Y(v){ return T + (1 - v / YM) * (H - T - B); }
+  function draw(){
+    var fct = +sl.value, h = "";
+    document.getElementById("x-fv").textContent = "× " + fct;
+    for(var y = 0; y <= YM; y += 4){
+      h += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(y) + '" y2="' + Y(y) + '" stroke="#DFE4EB"/>' +
+           '<text class="tick" x="' + (L - 8) + '" y="' + (Y(y) + 4) + '" text-anchor="end">' + (y ? "× " + y : "0") + "</text>";
+    }
+    for(var x = 0; x <= XM; x++){
+      h += '<line x1="' + X(x) + '" x2="' + X(x) + '" y1="' + (H - B) + '" y2="' + (H - B + 5) + '" stroke="#5B6577"/>' +
+           '<text class="tick" x="' + X(x) + '" y="' + (H - B + 19) + '" text-anchor="middle">' + (x ? "× " + x : "0") + "</text>";
+    }
+    h += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + (H - B) + '" y2="' + (H - B) + '" stroke="#5B6577"/>' +
+         '<line x1="' + L + '" x2="' + L + '" y1="' + T + '" y2="' + (H - B) + '" stroke="#5B6577"/>' +
+         '<text x="' + (L + (W - L - R) / 2) + '" y="' + (H - 8) + '" text-anchor="middle">[A], compared with the start</text>' +
+         '<text transform="translate(14 ' + (T + (H - T - B) / 2) + ') rotate(-90)" text-anchor="middle">Rate, compared with the start</text>' +
+         '<line x1="' + X(fct) + '" x2="' + X(fct) + '" y1="' + T + '" y2="' + (H - B) + '" stroke="#AEB8C6" stroke-dasharray="3 3"/>';
+    S.forEach(function(s){
+      var d = "";
+      for(var v = 0; v <= XM + 1e-9; v += 0.05) d += (v ? "L" : "M") + X(v).toFixed(1) + " " + Y(Math.pow(v, s.o)).toFixed(1);
+      h += '<path d="' + d + '" fill="none" stroke="' + s.color + '" stroke-width="2.5"' + (s.dash ? ' stroke-dasharray="' + s.dash + '"' : "") + ' stroke-linecap="round"/>' +
+           '<text class="lab" x="' + (W - R + 7) + '" y="' + (Y(Math.pow(XM, s.o)) + 4) + '" style="fill:' + s.color + '">' + s.name + "</text>";
+    });
+    S.forEach(function(s){ h += '<circle cx="' + X(fct) + '" cy="' + Y(Math.pow(fct, s.o)) + '" r="5" fill="#fff" stroke="' + s.color + '" stroke-width="2.5"/>'; });
+    svg.innerHTML = h;
+    table.innerHTML = "<tr><th>Order in A</th><th>Rate law</th><th>Work</th><th>Rate is multiplied by</th></tr>" +
+      S.map(function(s){
+        return '<tr><td><span class="key" style="border-top-color:' + s.color + (s.dash ? ";border-top-style:dashed" : "") + '"></span>' + s.name.split(" ")[0] + "</td><td>" + law(s.o, 0) +
+          "</td><td>(" + fct + ")<sup>" + s.o + '</sup></td><td class="hl">' + times(Math.pow(fct, s.o)) + "</td></tr>";
+      }).join("");
+  }
+  sl.addEventListener("input", draw);
+  draw();
+})();
+
+/* ---------- drill: predict the change ---------- */
+(function(){
+  var CH = [[2, "doubled"], [3, "tripled"], [0.5, "halved"], [4, "made four times as large"], [1, "kept the same"]];
+  var P, solved = 0, done, lastKey;
+  var q = document.getElementById("p-q"), inp = document.getElementById("p1"), fb = document.getElementById("p-fb");
+  function read(s){
+    var m = /^\s*(\d*\.?\d+)\s*\/\s*(\d*\.?\d+)\s*$/.exec(s);
+    return m ? +m[1] / +m[2] : APC.num(String(s).replace(/^\s*[x×]\s*/i, ""));
+  }
+  function make(){
+    for(;;){
+      var m = pick([0, 1, 1, 2, 2]), n = pick([0, 1, 1, 2]);
+      if(m + n === 0) continue;
+      var ca = pick(CH), cb = pick(CH);
+      if(ca[0] === 1 && cb[0] === 1) continue;
+      var key = [m, n, ca[0], cb[0]].join();
+      if(key === lastKey) continue;
+      lastKey = key;
+      return {m:m, n:n, ca:ca, cb:cb, ans:Math.pow(ca[0], m) * Math.pow(cb[0], n)};
+    }
+  }
+  function load(){
+    P = make(); done = false;
+    q.innerHTML = "A reaction between A and B has the rate law " + law(P.m, P.n) + ". At constant temperature, [A] is <b>" + P.ca[1] + "</b> and [B] is <b>" + P.cb[1] + "</b>.";
+    inp.value = ""; inp.className = "ans"; fb.className = "fb";
+  }
+  function part(sym, c, o){
+    return "[" + sym + "] is multiplied by " + times(c[0]) + " and the order in " + sym + " is " + o + ", so that gives (" + times(c[0]) + ")<sup>" + o + "</sup> = " + times(Math.pow(c[0], o)) + ".";
+  }
+  function solution(){
+    return "<p>" + part("A", P.ca, P.m) + "</p><p>" + part("B", P.cb, P.n) + "</p><p>Multiply the two: " + times(Math.pow(P.ca[0], P.m)) + " × " + times(Math.pow(P.cb[0], P.n)) +
+      " = <b>" + times(P.ans) + "</b>." + (P.ans === 1 ? " The rate doesn’t change." : "") + "</p>";
+  }
+  document.getElementById("p-check").addEventListener("click", function(){
+    var v = read(inp.value), ok = APC.close(v, P.ans);
+    mark(inp, ok);
+    if(ok){
+      if(!done){ solved++; document.getElementById("p-score").textContent = solved + " solved"; }
+      done = true;
+      fb.className = "fb show good"; fb.innerHTML = "<p><b>Right.</b></p>" + solution(); return;
+    }
+    var msg;
+    if(!isFinite(v)) msg = "That isn’t a number I can read. Try a form like 8, 0.25, or 1/4.";
+    else if(APC.close(v, P.ca[0] * P.cb[0]) && P.ans !== P.ca[0] * P.cb[0]) msg = "That multiplies the two changes together without using the orders. Raise each change to the power of that reactant’s order first.";
+    else if(APC.close(v, P.ca[0] * P.m + P.cb[0] * P.n)) msg = "The order is an exponent, not a multiplier. Tripling a second-order reactant gives 3<sup>2</sup> = 9, not 3 × 2 = 6.";
+    else msg = "Take each reactant in turn: raise the factor its concentration changed by to the power of its order. Then multiply the two results. A reactant that isn’t in the rate law is zero order and has no effect.";
+    fb.className = "fb show bad"; fb.innerHTML = "<b>Not yet.</b> " + msg;
+  });
+  document.getElementById("p-show").addEventListener("click", function(){
+    done = true; inp.value = String(+P.ans.toPrecision(4)); mark(inp, true);
+    fb.className = "fb show hint"; fb.innerHTML = "<p>Here’s the solution. Try the next one on your own.</p>" + solution();
+  });
+  document.getElementById("p-new").addEventListener("click", load);
+  load();
+})();
+
+/* ---------- trainer: find the rate law ---------- */
+(function(){
+  var EQS = ["A + B → C", "2A + B → C + D", "A + 2B → 2C", "A + 3B → 2C", "2A + 2B → C"];
+  var CONC = [0.050, 0.10, 0.20, 0.30], KS = [0.012, 0.025, 0.040, 0.15, 0.30, 0.50, 1.5, 2.0, 4.0, 7.5];
+  var P, solved = 0, done;
+  var q = document.getElementById("t-q"), table = document.getElementById("t-table"), fb = document.getElementById("t-fb"),
+      sm = document.getElementById("t-m"), sn = document.getElementById("t-n"), ik = document.getElementById("t-k"), su = document.getElementById("t-u");
+  su.innerHTML = '<option value="">choose…</option>' + UNITS_TXT.map(function(u, i){ return '<option value="' + i + '">' + u + "</option>"; }).join("");
+  function c2(x){ return (+x.toPrecision(2)).toFixed(x < 0.1 ? 3 : 2); }
+  function make(){
+    var m, n; do { m = pick([0, 1, 2]); n = pick([0, 1, 2]); } while(m + n === 0);
+    var a = pick(CONC), b = pick(CONC), fa = pick([2, 3]), fb2 = pick([2, 3]), k = pick(KS);
+    var rows = [{a:a, b:b}], rest = APC.shuffle([{a:a * fa, b:b, ch:"A"}, {a:a, b:b * fb2, ch:"B"}]);
+    rows = rows.concat(rest);
+    rows.forEach(function(r){ r.rate = k * Math.pow(r.a, m) * Math.pow(r.b, n); });
+    return {eq:pick(EQS), m:m, n:n, k:k, fa:fa, fb:fb2, rows:rows, ta:rows.indexOf(rest[0].ch === "A" ? rest[0] : rest[1]) + 1, tb:rows.indexOf(rest[0].ch === "B" ? rest[0] : rest[1]) + 1};
+  }
+  function load(){
+    P = make(); done = false;
+    q.innerHTML = "Initial rates were measured for the reaction " + P.eq + " at constant temperature.";
+    table.innerHTML = "<tr><th>Trial</th><th>[A] (<i>M</i>)</th><th>[B] (<i>M</i>)</th><th>Initial rate (<i>M</i>/s)</th></tr>" +
+      P.rows.map(function(r, i){ return "<tr><td>" + (i + 1) + "</td><td>" + c2(r.a) + "</td><td>" + c2(r.b) + "</td><td>" + sci(r.rate, 3) + "</td></tr>"; }).join("");
+    [sm, sn, su].forEach(function(s){ s.value = ""; s.className = "ans"; });
+    ik.value = ""; ik.className = "ans"; fb.className = "fb";
+  }
+  function step(sym, trial, fct, o){
+    var r = Math.pow(fct, o);
+    return "<p><b>Order in " + sym + ":</b> compare trials 1 and " + trial + ". Only [" + sym + "] changes. It is multiplied by " + fct + " and the rate is multiplied by " + r +
+      (o === 0 ? " (it doesn’t change)" : "") + ". " + fct + "<sup>x</sup> = " + r + ", so the order is <b>" + o + "</b>.</p>";
+  }
+  function solution(){
+    var r = P.rows[0];
+    return step("A", P.ta, P.fa, P.m) + step("B", P.tb, P.fb, P.n) +
+      "<p><b>Rate law:</b> " + law(P.m, P.n) + ", which is " + ORD[P.m + P.n] + " order overall.</p>" +
+      "<p><b><i>k</i></b> from trial 1: <i>k</i> = " + sci(r.rate, 3) + " / " + (P.m && P.n ? "[" : "") + [P.m ? "(" + c2(r.a) + ")" + (P.m > 1 ? "<sup>2</sup>" : "") : "", P.n ? "(" + c2(r.b) + ")" + (P.n > 1 ? "<sup>2</sup>" : "") : ""].join("") +
+      (P.m && P.n ? "]" : "") + " = <b>" + P.k.toPrecision(2) + " " + UNITS[P.m + P.n] + "</b>. The units have to turn " + (P.m + P.n === 0 ? "nothing" : "<i>M</i>" + (P.m + P.n > 1 ? "<sup>" + (P.m + P.n) + "</sup>" : "")) + " into <i>M</i>/s.</p>";
+  }
+  document.getElementById("t-check").addEventListener("click", function(){
+    var okm = sm.value === String(P.m), okn = sn.value === String(P.n), kv = APC.num(ik.value), okk = APC.close(kv, P.k, 0.02), oku = su.value === String(P.m + P.n);
+    mark(sm, okm); mark(sn, okn); mark(ik, okk); mark(su, oku);
+    if(okm && okn && okk && oku){
+      if(!done){ solved++; document.getElementById("t-score").textContent = solved + " solved"; }
+      done = true;
+      fb.className = "fb show good"; fb.innerHTML = "<p><b>Right.</b> " + law(P.m, P.n) + " with <i>k</i> = " + P.k.toPrecision(2) + " " + UNITS[P.m + P.n] + ".</p>"; return;
+    }
+    var msgs = [];
+    if(!okm) msgs.push("Order in A: compare trials 1 and " + P.ta + ", where only [A] changes. What is [A] multiplied by, and what is the rate multiplied by?");
+    if(!okn) msgs.push("Order in B: compare trials 1 and " + P.tb + ", where only [B] changes.");
+    if(okm && okn){
+      if(!okk) msgs.push(!isFinite(kv) ? "<i>k</i> is empty or isn’t a number I can read. Try a form like 0.025 or 2.5e-2." :
+        "<i>k</i>: put the numbers from any one trial into " + law(P.m, P.n) + " and solve for <i>k</i>. Remember to square a concentration that is second order.");
+      if(!oku) msgs.push("Units: the rate is in <i>M</i>/s and the reaction is " + ORD[P.m + P.n] + " order overall. What does <i>k</i> need to cancel?");
+    } else if(!okk || !oku) msgs.push("Fix the orders first. <i>k</i> and its units depend on them.");
+    fb.className = "fb show bad"; fb.innerHTML = "<p><b>Not yet.</b></p>" + msgs.map(function(m){ return "<p>" + m + "</p>"; }).join("");
+  });
+  document.getElementById("t-show").addEventListener("click", function(){
+    done = true;
+    sm.value = String(P.m); sn.value = String(P.n); ik.value = String(P.k); su.value = String(P.m + P.n);
+    [sm, sn, ik, su].forEach(function(el){ mark(el, true); });
+    fb.className = "fb show hint"; fb.innerHTML = "<p>Here’s the solution. Try the next one on your own.</p>" + solution();
+  });
+  document.getElementById("t-new").addEventListener("click", load);
+  load();
+})();
+
+/* ---------- practice ---------- */
+function dataTable(head, rows){
+  return '<div class="tablewrap"><table class="bca data"><tr>' + head.map(function(h){ return "<th>" + h + "</th>"; }).join("") + "</tr>" +
+    rows.map(function(r){ return "<tr>" + r.map(function(c){ return "<td>" + c + "</td>"; }).join("") + "</tr>"; }).join("") + "</table></div>";
+}
+APC.mc(document.getElementById("mc"), document.getElementById("mc-score"), [
+ {q:"Initial rates were measured for the reaction X + Y → Z at constant temperature." +
+    dataTable(["Trial", "[X] (<i>M</i>)", "[Y] (<i>M</i>)", "Initial rate (<i>M</i>/s)"],
+      [["1", "0.10", "0.10", "2.0 × 10<sup>−4</sup>"], ["2", "0.20", "0.10", "8.0 × 10<sup>−4</sup>"], ["3", "0.20", "0.20", "8.0 × 10<sup>−4</sup>"]]) +
+    "Which of the following is the rate law for the reaction?",
+  c:["rate = <i>k</i>[X][Y]", "rate = <i>k</i>[X]<sup>2</sup>", "rate = <i>k</i>[X]<sup>2</sup>[Y]", "rate = <i>k</i>[X]<sup>2</sup>[Y]<sup>2</sup>"],
+  a:1,
+  e:"From trial 1 to trial 2, [X] doubles and the rate goes up four times, so the reaction is second order in X. From trial 2 to trial 3, [Y] doubles and the rate doesn’t change, so it’s zero order in Y and Y is left out of the rate law."},
+
+ {q:"A reaction has the rate law rate = <i>k</i>[A][B]<sup>2</sup>. What are the units of the rate constant, <i>k</i>?",
+  c:["s<sup>−1</sup>", "<i>M</i> s<sup>−1</sup>", "<i>M</i><sup>−1</sup> s<sup>−1</sup>", "<i>M</i><sup>−2</sup> s<sup>−1</sup>"],
+  a:3,
+  e:"The reaction is third order overall. <i>k</i> = rate / ([A][B]<sup>2</sup>) has units of (<i>M</i>/s) / <i>M</i><sup>3</sup> = <i>M</i><sup>−2</sup> s<sup>−1</sup>."},
+
+ {q:"The reaction [[2NO(g) + O2(g) -> 2NO2(g)]] has the rate law rate = <i>k</i>[NO]<sup>2</sup>[O<sub>2</sub>]. The volume of the container is halved at constant temperature. By what factor does the initial rate change?",
+  c:["It doubles.", "It increases by a factor of 4.", "It increases by a factor of 8.", "It doesn’t change, because <i>k</i> is constant."],
+  a:2,
+  e:"Halving the volume doubles both concentrations. The rate is multiplied by 2<sup>2</sup> × 2 = 8. <i>k</i> really is unchanged, but the rate depends on the concentrations as well."},
+
+ {q:"For a reaction with the rate law rate = <i>k</i>[A][B], which of the following changes the value of the rate constant, <i>k</i>?",
+  c:["Doubling [A]", "Doubling both [A] and [B]", "Running the reaction in a larger container", "Raising the temperature"],
+  a:3,
+  e:"<i>k</i> depends on temperature, not on concentration. The other three changes alter the concentrations, and so the rate, but they leave <i>k</i> the same."},
+
+ {q:"A student writes the rate law for the reaction 2A + B → C as rate = <i>k</i>[A]<sup>2</sup>[B], explaining that the exponents come from the coefficients in the balanced equation. Which of the following is the best response?",
+  c:["The student is correct, because the coefficients show how many particles must collide.",
+     "The student is incorrect, because the exponents must be determined from experimental data.",
+     "The student is incorrect, because the exponents are always 1 for each reactant.",
+     "The student is incorrect, because the product C should also appear in the rate law."],
+  a:1,
+  e:"The orders in a rate law have to be found by experiment, such as by comparing initial rates. They might happen to match the coefficients, but the balanced equation alone can’t tell you."},
+
+ {q:"A reaction is first order in A and has no other reactants. When [A] = 0.15 <i>M</i>, the rate of the reaction is 3.0 × 10<sup>−3</sup> <i>M</i>/s. What is the value of the rate constant?",
+  c:["4.5 × 10<sup>−4</sup> s<sup>−1</sup>", "2.0 × 10<sup>−2</sup> s<sup>−1</sup>", "1.3 × 10<sup>−1</sup> s<sup>−1</sup>", "5.0 × 10<sup>1</sup> s<sup>−1</sup>"],
+  a:1,
+  e:"rate = <i>k</i>[A], so <i>k</i> = (3.0 × 10<sup>−3</sup> <i>M</i>/s) / (0.15 <i>M</i>) = 2.0 × 10<sup>−2</sup> s<sup>−1</sup>. (A) multiplies when it should divide, (C) squares [A], and (D) divides the wrong way round."},
+
+ {q:"In a study of a reaction between A and B, tripling [A] while holding [B] constant triples the initial rate. Tripling [B] while holding [A] constant has no effect on the initial rate. What is the overall order of the reaction?",
+  c:["Zero", "First", "Second", "Third"],
+  a:1,
+  e:"The reaction is first order in A (3<sup>1</sup> = 3) and zero order in B (3<sup>0</sup> = 1). The rate law is rate = <i>k</i>[A], and 1 + 0 = 1."},
+
+ {q:"A student measures the initial rate of a reaction at several concentrations of reactant A, keeping everything else the same. A graph of initial rate against [A] is a straight line that passes through the origin. What is the order of the reaction with respect to A?",
+  c:["Zero, because the graph is a straight line", "First, because the rate is directly proportional to [A]", "Second, because the rate increases as [A] increases", "It can’t be determined without the balanced equation."],
+  a:1,
+  e:"A straight line through the origin means rate = <i>k</i>[A]: doubling [A] doubles the rate. Zero order would give a flat line, and second order would give a curve that gets steeper."}
+]);
+
+APC.frq(document.getElementById("frq"), [
+ {q:"<p>Chlorine dioxide reacts with hydroxide ions in water: [[2ClO2(aq) + 2OH^-(aq) -> ClO3^-(aq) + ClO2^-(aq) + H2O(l)]]. The data below were collected at constant temperature.</p>" +
+    dataTable(["Trial", "[ClO<sub>2</sub>] (<i>M</i>)", "[OH<sup>−</sup>] (<i>M</i>)", "Initial rate (<i>M</i>/s)"],
+      [["1", "0.020", "0.030", "2.76 × 10<sup>−3</sup>"], ["2", "0.060", "0.030", "2.48 × 10<sup>−2</sup>"], ["3", "0.020", "0.090", "8.28 × 10<sup>−3</sup>"]]) +
+    "<p>(a) Determine the order of the reaction with respect to each reactant. Justify your answers.</p><p>(b) Write the rate law for the reaction.</p><p>(c) Calculate the value of the rate constant, <i>k</i>, and include its units.</p><p>(d) Calculate the initial rate when [ClO<sub>2</sub>] = 0.040 <i>M</i> and [OH<sup>−</sup>] = 0.050 <i>M</i>.</p>",
+  m:"<p><b>(a)</b> Trials 1 and 2: [OH<sup>−</sup>] is constant, [ClO<sub>2</sub>] triples, and the rate increases by a factor of (2.48 × 10<sup>−2</sup>) / (2.76 × 10<sup>−3</sup>) = 9. Since 3<sup>2</sup> = 9, the reaction is <b>second order in ClO<sub>2</sub></b>. Trials 1 and 3: [ClO<sub>2</sub>] is constant, [OH<sup>−</sup>] triples, and the rate triples. Since 3<sup>1</sup> = 3, it is <b>first order in OH<sup>−</sup></b>.</p><p><b>(b)</b> rate = <i>k</i>[ClO<sub>2</sub>]<sup>2</sup>[OH<sup>−</sup>]</p><p><b>(c)</b> From trial 1: <i>k</i> = (2.76 × 10<sup>−3</sup> <i>M</i>/s) / ((0.020 <i>M</i>)<sup>2</sup>(0.030 <i>M</i>)) = <b>230 <i>M</i><sup>−2</sup> s<sup>−1</sup></b>.</p><p><b>(d)</b> rate = (230)(0.040)<sup>2</sup>(0.050) = <b>1.8 × 10<sup>−2</sup> <i>M</i>/s</b>.</p><p class='note'><b>Scoring watch-out:</b> in (a), name the two trials you compared and say which concentration was held constant. “The rate went up by 9” alone doesn’t justify the order.</p>"},
+
+ {q:"<p>Hydrogen peroxide oxidizes iodide ions in acidic solution: [[H2O2(aq) + 3I^-(aq) + 2H^+(aq) -> I3^-(aq) + 2H2O(l)]]. The brown I<sub>3</sub><sup>−</sup> ion absorbs visible light, and the other species are colorless. A student measures initial rates at 25 °C.</p>" +
+    dataTable(["Trial", "[H<sub>2</sub>O<sub>2</sub>] (<i>M</i>)", "[I<sup>−</sup>] (<i>M</i>)", "[H<sup>+</sup>] (<i>M</i>)", "Initial rate (<i>M</i>/s)"],
+      [["1", "0.010", "0.010", "0.00050", "1.15 × 10<sup>−6</sup>"], ["2", "0.020", "0.010", "0.00050", "2.30 × 10<sup>−6</sup>"],
+       ["3", "0.010", "0.020", "0.00050", "2.30 × 10<sup>−6</sup>"], ["4", "0.010", "0.010", "0.00100", "1.15 × 10<sup>−6</sup>"]]) +
+    "<p>(a) Describe a measurement the student could make to follow the rate of this reaction.</p><p>(b) Write the rate law for the reaction. Justify the order for each reactant.</p><p>(c) Another student says the order in I<sup>−</sup> should be 3, because the coefficient of I<sup>−</sup> is 3. Explain why this reasoning is incorrect.</p><p>(d) Calculate the value of <i>k</i>, with units.</p><p>(e) Trial 1 is repeated at 40 °C. Predict whether each of the following increases, decreases, or stays the same: the initial rate, the value of <i>k</i>, and the order in H<sub>2</sub>O<sub>2</sub>.</p>",
+  m:"<p><b>(a)</b> Measure the absorbance of the solution over time with a spectrophotometer, at a wavelength that I<sub>3</sub><sup>−</sup> absorbs. Absorbance is proportional to [I<sub>3</sub><sup>−</sup>], so the rate at which absorbance rises gives the rate at which product forms.</p><p><b>(b)</b> <b>rate = <i>k</i>[H<sub>2</sub>O<sub>2</sub>][I<sup>−</sup>]</b>. Trials 1 and 2: only [H<sub>2</sub>O<sub>2</sub>] doubles and the rate doubles, so first order. Trials 1 and 3: only [I<sup>−</sup>] doubles and the rate doubles, so first order. Trials 1 and 4: only [H<sup>+</sup>] doubles and the rate doesn’t change, so zero order.</p><p><b>(c)</b> Orders are determined from experimental data, not from the coefficients of the balanced equation. The data show that doubling [I<sup>−</sup>] doubles the rate, which is first order. Third order would make the rate eight times as large.</p><p><b>(d)</b> From trial 1: <i>k</i> = (1.15 × 10<sup>−6</sup> <i>M</i>/s) / ((0.010 <i>M</i>)(0.010 <i>M</i>)) = <b>1.2 × 10<sup>−2</sup> <i>M</i><sup>−1</sup> s<sup>−1</sup></b> (0.0115 before rounding).</p><p><b>(e)</b> The initial rate <b>increases</b> and <i>k</i> <b>increases</b>, because the rate constant is larger at a higher temperature while the concentrations are the same. The order in H<sub>2</sub>O<sub>2</sub> <b>stays the same</b>.</p>"}
+]);
+</script>
 </body>
 </html>
