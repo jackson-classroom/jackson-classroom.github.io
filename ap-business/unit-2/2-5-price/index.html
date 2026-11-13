@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.5 Price | AP Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1D2433; --ink2:#3F4859; --mute:#626B7C;
+  --wash:#F1EEE8; --card:#FCFBF9; --line:#D5CFC4; --line-soft:#E6E1D8;
+  --indigo:#3A55A0; --indigo-dk:#273C78; --indigo-lite:#DCE3F4;
+  --amber:#A8670F; --amber-dk:#7A4A08; --amber-lite:#F6E7CB;
+  --ok:#2E6B47; --ok-bg:#E3F0E7;
+  --no:#A63D2F; --no-bg:#F7E5E1;
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:64px}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(241,238,232,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:900px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+.bar a{color:inherit;text-decoration:none}
+
+header.hero{padding:60px 0 36px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--indigo-dk)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(40px,7vw,68px);line-height:1;margin:16px 0 0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--indigo)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:50ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: the learning objectives as a path */
+.board{margin:34px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--card);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.lo{padding:18px 18px 20px;border-left:1px solid var(--line-soft);text-decoration:none;color:var(--ink);display:block;position:relative}
+.lo:first-child{border-left:none}
+.lo:hover{background:#fff}
+.lo .code{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--indigo-dk);background:var(--indigo-lite);border-radius:2px;padding:2px 7px;white-space:nowrap}
+.lo .lq{display:block;font-family:var(--display);font-weight:600;font-size:19px;line-height:1.2;margin:12px 0 6px;letter-spacing:-.01em}
+.lo .d{display:block;font-size:14px;color:var(--mute);line-height:1.45}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:22px 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--indigo);color:var(--indigo-dk)}
+
+section{padding:46px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo-dk);background:var(--indigo-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+.tag.plain{color:var(--ink2);background:var(--line-soft)}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(27px,4.2vw,38px);line-height:1.08;margin:0;letter-spacing:-.02em}
+h3{font-family:var(--display);font-weight:600;font-size:20px;letter-spacing:-.01em;margin:34px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--indigo-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.def{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:0 4px 4px 0;padding:16px 20px;margin:22px 0}
+.def .term{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.def p{margin:6px 0 0;font-size:17px}
+.def .ek{font-family:var(--mono);font-size:11px;color:var(--mute);float:right;margin-left:12px}
+
+.note{border-left:3px solid var(--amber);background:var(--amber-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.pf{border:1px solid var(--line);background:var(--card);border-radius:4px;padding:18px 20px;margin:24px 0}
+.pf .pf-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ok);margin-bottom:4px}
+
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:22px 0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:22px 0}
+.mini{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px 18px}
+.mini .n{font-family:var(--mono);font-size:12px;color:var(--indigo-dk)}
+.mini h4{font-family:var(--body);font-size:16px;font-weight:600;margin:6px 0 4px}
+.mini p{margin:0;font-size:15.5px;color:var(--ink2)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.prompt{font-size:clamp(18px,2.6vw,21px);font-weight:500;line-height:1.45;margin:4px 0 0}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F7F6F3;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--indigo-dk);border-color:var(--indigo-dk)}
+button[disabled]{cursor:default}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--indigo)}
+button:focus-visible,a:focus-visible{outline:2.5px solid var(--indigo);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+/* answer buttons for the drills */
+.pk{display:grid;gap:10px;margin-top:16px}
+.pk.c3{grid-template-columns:repeat(3,1fr)}
+.pk.c4{grid-template-columns:repeat(4,1fr)}
+.pbtn{background:#fff;color:var(--ink);border:1px solid var(--line);border-top:3px solid var(--c,var(--line));font-size:14px;padding:13px 10px;text-align:center;line-height:1.35}
+.pbtn:hover{background:#fff;color:var(--ink);border-color:var(--indigo);border-top-color:var(--c,var(--indigo))}
+.pbtn small{display:block;font-family:var(--body);font-size:13px;color:var(--mute);letter-spacing:0;margin-top:2px}
+.pbtn.yes{background:var(--ok-bg);border-color:var(--ok);color:#1C4A30}
+.pbtn.no{background:var(--no-bg);border-color:var(--no);color:#7A2B20}
+.pbtn.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1C4A30}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7A2B20}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--indigo);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb p{margin:6px 0 0}
+.fb p:first-child{margin-top:0}
+
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45;letter-spacing:0}
+.opt:hover{border-color:var(--indigo);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.96}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto;margin:18px 0;-webkit-overflow-scrolling:touch}
+.tbl table{margin:0}
+
+.q{border-top:1px solid var(--line-soft);padding:22px 0 6px}
+.q:first-child{border-top:none;padding-top:4px}
+.q .qn{font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.06em}
+.q .stem{font-weight:500;margin:4px 0 0}
+.stim{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:14px 16px;margin:0 0 6px}
+.stim p{margin:0 0 8px;font-size:15.5px}
+.stim table{margin:6px 0 0;font-size:14.5px}
+.qsum{font-family:var(--display);font-weight:700;font-size:22px;margin:18px 0 0}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#ECEDEF;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#BFC5CF}
+.next .nt{font-family:var(--display);font-weight:700;font-size:24px;color:#fff;margin:0 0 4px}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F7F6F3;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--indigo-lite)}
+
+
+/* ---------- 2.5 page ---------- */
+.slider{margin:14px 0 4px}
+.slider label{display:flex;justify-content:space-between;gap:10px;font-size:15px;color:var(--ink2)}
+.slider label b{font-family:var(--display);font-weight:700;font-size:24px;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1}
+.slider input{width:100%;accent-color:var(--indigo);margin-top:8px}
+.ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px;color:var(--mute)}
+.presets{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.preset{background:#fff;color:var(--ink2);border:1px solid var(--line);font-size:12.5px;padding:9px 6px;line-height:1.35}
+.preset:hover{background:#fff;color:var(--ink);border-color:var(--indigo)}
+.preset[aria-pressed="true"]{background:var(--ink);color:#F7F6F3;border-color:var(--ink)}
+.preset small{display:block;font-size:11.5px;opacity:.8}
+.step-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin:18px 0 0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 0}
+.stat{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:9px 11px}
+.stat .sl{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);line-height:1.3}
+.stat .sv{display:block;font-family:var(--display);font-weight:700;font-size:24px;line-height:1.25;font-variant-numeric:tabular-nums}
+.stat .sv.good{color:var(--ok)}
+.stat .sv.bad{color:var(--no)}
+.mini .best{margin:8px 0 0;padding-top:8px;border-top:1px solid var(--line-soft);font-size:14.5px}
+.mini .best b{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--mute);margin-right:6px}
+
+/* elastic vs. inelastic */
+.el-h{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:-.01em;margin:4px 0 2px}
+.bars{display:grid;grid-template-columns:56px minmax(0,1fr) 44px;gap:6px 10px;align-items:center;font-family:var(--mono);font-size:12px;color:var(--ink2);margin:12px 0 10px}
+.bars .bt{height:16px;background:#fff;border:1px solid var(--line-soft);border-radius:2px;overflow:hidden}
+.bars .bf{height:100%;background:var(--c,var(--indigo))}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .bar-sub{display:none}
+  .card{padding:16px}
+  .board{grid-template-columns:1fr}
+  .lo{border-left:none;border-top:1px solid var(--line-soft);padding:14px}
+  .lo:first-child{border-top:none}
+  .lo .lq{font-size:17px}
+  .pk.c3,.pk.c4{grid-template-columns:1fr 1fr}
+  .stats,.presets{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+@media print{ body{background:#fff} .bar,.jump,.btn-row,.next{display:none} }
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title"><a href="/ap-business/unit-2/">2.5 Price</a></span>
+    <span class="bar-sub">Pricing strategies · per-unit cost · pricing power · elasticity · legal limits</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">AP Business · Unit 2 Marketing · Topic 2.5</div>
+  <h1>The <em>Price</em></h1>
+  <p class="lede">Charge too much and customers buy from a rival. Charge too little and every sale loses money. A business needs a plan for landing in between, and it has to know how much room it really has.</p>
+
+  <div class="board" aria-label="The three learning objectives in this topic">
+    <a class="lo" href="#strategy"><span class="code">2.5.A</span><span class="lq">How does a business pick a price?</span><span class="d">Per-unit cost and four pricing strategies</span></a>
+    <a class="lo" href="#power"><span class="code">2.5.B</span><span class="lq">How high can it go?</span><span class="d">Pricing power and elastic or inelastic demand</span></a>
+    <a class="lo" href="#legal"><span class="code">2.5.C</span><span class="lq">What’s off limits?</span><span class="d">Collusion, price gouging, illegal price discrimination</span></a>
+  </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#strategy">Four strategies</a>
+    <a href="#lab">Price lab</a>
+    <a href="#which">Which strategy?</a>
+    <a href="#power">Pricing power</a>
+    <a href="#legal">Legal limits</a>
+    <a href="#check">Check yourself</a>
+  </nav>
+</header>
+
+<!-- =========================================================
+     2.5.A  PRICING STRATEGIES
+     ========================================================= -->
+<section id="strategy">
+  <div class="sec-head"><span class="tag">2.5.A</span><h2>Choosing a price: pricing strategies</h2></div>
+  <div class="def">
+    <div class="term">Pricing strategy</div>
+    <p>A way of determining <b>how much to charge</b> for a product. Getting the price right is critical to whether a business survives, because price affects how many customers it attracts and keeps, its <b>revenue</b>, and its <b>profit</b>.</p>
+  </div>
+  <p>Every pricing decision starts with one number: the <b>per-unit cost</b>, which is what it costs to produce and distribute <i>one</i> unit of the good or service.</p>
+  <div class="note"><b>The rule that never changes.</b> A low price may help a business gain market share, but a product is <b>not profitable if its price is equal to or lower than its per-unit cost</b>. Sell a $20 hoodie for $20 and you earn nothing. Sell it for $18 and you lose $2 on every sale.</div>
+
+  <h3>Four common strategies</h3>
+  <div class="grid2">
+    <div class="mini"><span class="n">Value-based</span><h4>Start from what customers think it’s worth</h4><p>The price matches the value customers see in the product, even if that’s far above what it costs to make.</p><p class="best"><b>Fits</b>Highly differentiated or one-of-a-kind products.</p></div>
+    <div class="mini"><span class="n">Competitive</span><h4>Start from what rivals charge</h4><p>The price is set at, just under, or just over the price of rival goods.</p><p class="best"><b>Fits</b>Products that are a lot like the competition’s.</p></div>
+    <div class="mini"><span class="n">Cost-based</span><h4>Start from what it costs</h4><p>Take the per-unit cost and add the profit the business wants on each unit (a markup).</p><p class="best"><b>Fits</b>Businesses that know their costs well and want a steady profit on every sale.</p></div>
+    <div class="mini"><span class="n">Penetration</span><h4>Start low to get in</h4><p>A new product launches at a low price, sometimes even below cost, to win customers and market share fast. The price goes up later.</p><p class="best"><b>Fits</b>A new product entering a market that already has rivals.</p></div>
+  </div>
+
+  <div class="card" id="lab">
+    <div class="card-label">Price lab · Northside Thread</div>
+    <p class="smallprint" style="margin:0">Northside Thread sells custom school-spirit hoodies. Each one costs <b>$20</b> to make and ship (its per-unit cost). Rival hoodies sell for <b>$34</b>. Drag the price, or try one of the four strategies, and watch a month of sales.</p>
+
+    <div class="slider"><label for="p-price">Price per hoodie <b id="p-price-v"></b></label><input type="range" id="p-price" min="10" max="50" step="1" value="30"></div>
+    <div class="ticks"><span>$10</span><span>$50</span></div>
+
+    <div class="step-h">Try a strategy</div>
+    <div class="presets" id="presets"></div>
+
+    <div class="stats">
+      <div class="stat"><span class="sl">Profit per hoodie</span><span class="sv" id="p-unit"></span></div>
+      <div class="stat"><span class="sl">Hoodies sold</span><span class="sv" id="p-sold"></span></div>
+      <div class="stat"><span class="sl">Revenue</span><span class="sv" id="p-rev"></span></div>
+      <div class="stat"><span class="sl">Profit this month</span><span class="sv" id="p-profit"></span></div>
+    </div>
+    <p class="smallprint mono" style="margin:8px 0 0" id="p-work"></p>
+    <div class="fb show hint" id="p-fb" aria-live="polite"></div>
+    <p class="smallprint" style="margin:10px 0 0">This is a simple model: every $1 added to the price costs Northside 12 sales a month. Real businesses have to estimate that from market research.</p>
+  </div>
+
+  <div class="card" id="which">
+    <div class="card-label">Which strategy? <span class="score" id="ps-score">0 of 0</span></div>
+    <p class="smallprint" style="margin:0 0 10px">Which pricing strategy is the business using?</p>
+    <p class="prompt" id="ps-item" aria-live="polite"></p>
+    <div class="pk c4" id="ps-opts"></div>
+    <div class="fb" id="ps-fb"></div>
+    <div class="btn-row"><button id="ps-next">Next scenario →</button></div>
+  </div>
+
+  <div class="pf">
+    <div class="pf-h">As a shopper</div>
+    <p style="margin:0">Penetration pricing is aimed at you. A streaming service that advertises “<b>$5 a month</b>” for the first 3 months and then charges $15 costs <b>$150</b> for the first year (3 × $5 + 9 × $15), not $60. Before you sign up, find the price you’ll pay <i>after</i> the introductory deal ends, and decide whether it’s still worth it at that price.</p>
+  </div>
+</section>
+
+<!-- =========================================================
+     2.5.B  PRICING POWER
+     ========================================================= -->
+<section id="power">
+  <div class="sec-head"><span class="tag">2.5.B</span><h2>How high can it go? Pricing power</h2></div>
+  <p>A pricing strategy is the plan. <b>Pricing power</b> is how much freedom a business has to carry it out.</p>
+  <div class="def">
+    <div class="term">Pricing power</div>
+    <p>A business’s ability to <b>raise its price without losing many customers</b>.</p>
+  </div>
+  <p>Three things decide how much pricing power a business has:</p>
+  <div class="grid3">
+    <div class="mini"><span class="n">Competition</span><h4>How many rivals?</h4><p>Few rivals means more pricing power. When customers have many places to buy, a price increase sends them elsewhere.</p></div>
+    <div class="mini"><span class="n">Differentiation</span><h4>How different is it?</h4><p>A product customers see as unique, or a brand they’re loyal to, is hard to replace. A product just like the others isn’t.</p></div>
+    <div class="mini"><span class="n">Price sensitivity</span><h4>How do customers react?</h4><p>If customers barely change what they buy when the price changes, the business has more room to raise it.</p></div>
+  </div>
+
+  <h3>Elastic or inelastic?</h3>
+  <p>Economists have a name for price sensitivity: the <b>elasticity of demand</b>. You won’t calculate it in this course, but you need to know what the two words mean. Here’s what happens when two businesses each raise their price by 20%:</p>
+  <div class="grid2">
+    <div class="mini">
+      <span class="n">Elastic demand</span>
+      <p class="el-h">Customers react a lot</p>
+      <p>A plain white T-shirt, sold by dozens of stores.</p>
+      <div class="bars" style="--c:#A63D2F"><span>Before</span><div class="bt"><div class="bf" style="width:100%"></div></div><span>100</span><span>After</span><div class="bt"><div class="bf" style="width:45%"></div></div><span>45</span></div>
+      <p>Sales drop sharply because shoppers switch to a rival. <b>Little pricing power.</b></p>
+    </div>
+    <div class="mini">
+      <span class="n">Inelastic demand</span>
+      <p class="el-h">Customers barely react</p>
+      <p>Gas from the only station in a small town.</p>
+      <div class="bars" style="--c:#2E6B47"><span>Before</span><div class="bt"><div class="bf" style="width:100%"></div></div><span>100</span><span>After</span><div class="bt"><div class="bf" style="width:93%"></div></div><span>93</span></div>
+      <p>Drivers need it and have nowhere else to go, so most keep buying. <b>A lot of pricing power.</b></p>
+    </div>
+  </div>
+  <p>Demand tends to be <b>inelastic</b> for necessities, products with few substitutes, and brands people are loyal to. It tends to be <b>elastic</b> for luxuries and for products with many close substitutes.</p>
+
+  <div class="card" id="pw-card">
+    <div class="card-label">More or less pricing power? <span class="score" id="pw-score">0 of 0</span></div>
+    <p class="smallprint" style="margin:0 0 10px">Compared with a typical business, does this one have more pricing power or less?</p>
+    <p class="prompt" id="pw-item" aria-live="polite"></p>
+    <div class="pk" id="pw-opts" style="grid-template-columns:1fr 1fr"></div>
+    <div class="fb" id="pw-fb"></div>
+    <div class="btn-row"><button id="pw-next">Next business →</button></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     2.5.C  LEGAL LIMITS
+     ========================================================= -->
+<section id="legal">
+  <div class="sec-head"><span class="tag">2.5.C</span><h2>What’s off limits: legal limits on pricing</h2></div>
+  <p>Businesses are mostly free to choose their own prices, but the law draws three lines.</p>
+  <div class="grid3">
+    <div class="mini"><span class="n">Collusion</span><h4>Rivals agreeing on a price</h4><p>Competitors secretly agree on what to charge instead of competing. Illegal in the United States and many other countries, because customers lose the benefit of competition.</p></div>
+    <div class="mini"><span class="n">Price gouging</span><h4>Cashing in on a crisis</h4><p>Sharply raising the price of something people urgently need during an emergency, like water after a hurricane. Illegal in many U.S. states and other countries.</p></div>
+    <div class="mini"><span class="n">Price discrimination</span><h4>Charging by who you are</h4><p>Charging customers different prices because of a protected status such as race, nationality, or sex. Illegal.</p></div>
+  </div>
+  <div class="note"><b>What’s still legal.</b> Matching a rival’s price on your own isn’t collusion; the <i>agreement</i> is what breaks the law. Raising prices because your costs went up isn’t gouging. And not every price difference is illegal discrimination: matinee tickets, coupons, and student discounts aren’t based on a protected status.</div>
+
+  <div class="card" id="lg-card">
+    <div class="card-label">Legal or not? <span class="score" id="lg-score">0 of 0</span></div>
+    <p class="smallprint" style="margin:0 0 10px">Is this pricing practice legal? If not, which limit does it break?</p>
+    <p class="prompt" id="lg-item" aria-live="polite"></p>
+    <div class="pk c4" id="lg-opts"></div>
+    <div class="fb" id="lg-fb"></div>
+    <div class="btn-row"><button id="lg-next">Next scenario →</button></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     CHECK YOURSELF
+     ========================================================= -->
+<section id="check">
+  <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
+  <p>Ten multiple-choice questions in the style of the AP Exam, covering all three learning objectives. The first three share one table, like a set-based question on the exam.</p>
+  <div class="card" id="quiz"></div>
+  <div class="btn-row"><button class="ghost" id="quiz-reset">Start over</button></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">Next: 2.6 Place and Channels</div>
+      <p>You know how a business decides what to charge. Next: how the product gets to the customer.</p>
+    </div>
+    <a href="/ap-business/unit-2/">Back to Unit 2 →</a>
+  </div>
+</section>
+
+<footer>
+  <p>Topic 2.5 Price, following the AP Business with Personal Finance course framework (Learning Objectives 2.5.A–2.5.C). The businesses, people, products, and prices on this page are fictional. Practice items reshuffle every time you load the page.</p>
+  <p><a href="/ap-business/unit-2/">← Unit 2 — Marketing</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function shuffle(a){ a = a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; node.innerHTML = ''; }
+function money(n){ return (n < 0 ? '−' : '') + '$' + Math.abs(n).toLocaleString('en-US'); }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+/* Cycles through a bank in random order without repeats until it runs out. */
+function Deck(bank){
+  var order = [], i = 0;
+  return { next:function(){ if(i >= order.length){ order = shuffle(bank); i = 0; } return order[i++]; } };
+}
+/* A one-question-at-a-time drill with a fixed set of answer buttons.
+   cfg: {id, bank:[[html, key, why]], keys:[[key, button html, color, name used in feedback]]} */
+function Drill(cfg){
+  var id = cfg.id, deck = Deck(cfg.bank), cur, done, sc = Score(el(id + '-score')), fb = el(id + '-fb'), box = el(id + '-opts');
+  var name = {}; cfg.keys.forEach(function(k){ name[k[0]] = k[3]; });
+  function show(){
+    cur = deck.next(); done = false; hideFb(fb);
+    el(id + '-item').innerHTML = cur[0];
+    box.innerHTML = '';
+    cfg.keys.forEach(function(k){
+      var b = document.createElement('button');
+      b.className = 'pbtn'; b.innerHTML = k[1]; b.setAttribute('data-k', k[0]);
+      if(k[2]) b.style.setProperty('--c', k[2]);
+      b.onclick = function(){ answer(b, k[0]); };
+      box.appendChild(b);
+    });
+  }
+  function answer(b, k){
+    if(done) return; done = true;
+    var ok = k === cur[1]; sc.add(ok);
+    Array.prototype.forEach.call(box.children, function(x){ x.disabled = true; if(!ok && x.getAttribute('data-k') === cur[1]) x.className += ' reveal'; });
+    b.className += ok ? ' yes' : ' no';
+    setFb(fb, ok ? 'good' : 'bad', '<b>' + (ok ? 'Right: ' : 'Not quite. The answer is ') + name[cur[1]] + '.</b> ' + cur[2]);
+    el(id + '-next').focus();
+  }
+  el(id + '-next').onclick = show;
+  show();
+}
+
+/* =========================================================
+   2.5.A  Price lab
+   ========================================================= */
+(function(){
+  var COST = 20, RIVAL = 34;
+  var PRE = [
+    {k:'pen', n:'Penetration', p:18, why:'<b>Penetration pricing.</b> At $18, Northside undercuts every rival and sells the most hoodies it can, but it loses $2 on each one. That only makes sense as a short-term move to win customers, with a plan to raise the price later.'},
+    {k:'cost', n:'Cost-based', p:30, why:'<b>Cost-based pricing.</b> $20 per-unit cost plus a 50% markup ($10) is $30. Simple, and every sale earns the same $10. But it ignores what rivals charge and what customers would pay, so it can leave money on the table.'},
+    {k:'comp', n:'Competitive', p:34, why:'<b>Competitive pricing.</b> Northside matches the $34 its rivals charge. Customers have no price reason to pick a rival, so Northside has to win them some other way.'},
+    {k:'val', n:'Value-based', p:42, why:'<b>Value-based pricing.</b> In a survey, students said a hoodie with their own name and class year is worth $42 to them. Northside sells fewer hoodies but earns $22 on each. This only works because the product is differentiated: a plain hoodie couldn’t charge $8 more than its rivals.'}
+  ];
+  var P = el('p-price'), fb = el('p-fb'), box = el('presets');
+  box.innerHTML = PRE.map(function(s){ return '<button class="preset" data-p="' + s.p + '" aria-pressed="false">' + s.n + '<small>$' + s.p + '</small></button>'; }).join('');
+  function sold(p){ return Math.max(0, 600 - 12 * p); }
+  function update(){
+    var p = +P.value, u = p - COST, q = sold(p), rev = p * q, profit = u * q;
+    el('p-price-v').textContent = money(p);
+    el('p-unit').textContent = money(u); el('p-unit').className = 'sv ' + (u > 0 ? 'good' : 'bad');
+    el('p-sold').textContent = q.toLocaleString('en-US');
+    el('p-rev').textContent = money(rev);
+    el('p-profit').textContent = money(profit); el('p-profit').className = 'sv ' + (profit > 0 ? 'good' : 'bad');
+    el('p-work').textContent = '(' + money(p) + ' price − $20 cost) × ' + q + ' sold = ' + money(profit);
+    var pre = null;
+    Array.prototype.forEach.call(box.children, function(b, i){ var hit = +b.getAttribute('data-p') === p; b.setAttribute('aria-pressed', hit ? 'true' : 'false'); if(hit) pre = PRE[i]; });
+    if(pre){ setFb(fb, pre.k === 'pen' ? 'bad' : 'good', pre.why); return; }
+    if(q === 0) setFb(fb, 'bad', '<b>No sales.</b> At this price nobody buys. A big profit per hoodie is worth nothing if no hoodies sell.');
+    else if(u < 0) setFb(fb, 'bad', '<b>Below per-unit cost.</b> Lots of customers, but Northside loses ' + money(-u) + ' on every hoodie. The more it sells, the more it loses.');
+    else if(u === 0) setFb(fb, 'bad', '<b>Equal to per-unit cost.</b> Northside sells ' + q + ' hoodies and earns exactly nothing. A price equal to per-unit cost is not profitable.');
+    else if(p === 35) setFb(fb, 'good', '<b>The most profit this model allows.</b> Notice it’s not the highest price or the most sales. Raise the price and too many customers leave; lower it and each sale earns too little.');
+    else if(p < RIVAL) setFb(fb, 'hint', '<b>Profitable, and cheaper than rivals.</b> Each hoodie earns ' + money(u) + '. A lower price sells more hoodies but earns less on each one. Is there a price that earns more in total?');
+    else setFb(fb, 'hint', '<b>Priced above rivals.</b> Each hoodie earns ' + money(u) + ', but only ' + q + ' sell. Charging more than the competition only works if customers see extra value.');
+  }
+  P.oninput = update;
+  Array.prototype.forEach.call(box.children, function(b){ b.onclick = function(){ P.value = b.getAttribute('data-p'); update(); }; });
+  update();
+})();
+
+/* =========================================================
+   2.5.A  Which strategy?
+   ========================================================= */
+Drill({
+  id:'ps',
+  keys:[['va','Value-based','#3A55A0','value-based pricing'],['co','Competitive','#A8670F','competitive pricing'],['cb','Cost-based','#2E6B47','cost-based pricing'],['pe','Penetration','#A63D2F','penetration pricing']],
+  bank:[
+    ['A company makes the only backpack with a built-in solar charger. It costs $30 to make, but surveys show hikers think it’s worth $120, so that’s the price.', 'va', 'The price comes from what customers think it’s worth, not from the cost. That works because the product is highly differentiated.'],
+    ['A well-known artist prices her paintings at $2,000 each because that is what collectors are willing to pay, even though paint and canvas cost her $60.', 'va', 'One-of-a-kind products are priced by the value customers see in them.'],
+    ['A gas station owner checks the price at the station across the street every morning and sets his price one cent lower.', 'co', 'The price is set by looking at rivals. Gas is nearly identical from station to station, so price is how stations compete.'],
+    ['A new pizza shop prices its large cheese pizza at $14 because the three other pizza shops in town all charge between $13 and $15.', 'co', 'The price is based on what rival goods cost.'],
+    ['A bakery figures each loaf of bread costs $2.50 to make and sell, then adds $1.50 so it earns the same profit on every loaf.', 'cb', 'Per-unit cost plus a set profit on each unit is cost-based pricing.'],
+    ['A furniture maker adds up materials, labor, and delivery for each table and then adds 40% to get the price.', 'cb', 'Starting from per-unit cost and adding a markup is cost-based pricing.'],
+    ['A new music app launches at $2 a month, far below its rivals’ $11, to sign up as many users as it can. It plans to raise the price next year.', 'pe', 'A low starting price to win market share quickly, with a higher price planned for later.'],
+    ['A new energy drink sells for 99¢ during its first three months in stores, less than it costs to make, to get shoppers to try it instead of the big brands.', 'pe', 'Pricing low, even below per-unit cost, to break into a market with established rivals. It isn’t profitable until the price goes up.']
+  ]
+});
+
+/* =========================================================
+   2.5.B  More or less pricing power?
+   ========================================================= */
+Drill({
+  id:'pw',
+  keys:[['more','More pricing power','#2E6B47','more pricing power'],['less','Less pricing power','#A63D2F','less pricing power']],
+  bank:[
+    ['A farmer sells plain white eggs at a market where eleven other farmers sell the same thing.', 'less', 'Many rivals and no differentiation. Raise the price and shoppers walk to the next table. Demand is elastic.'],
+    ['A drug company makes the only medicine that treats a certain illness.', 'more', 'No competition, and patients need it. Demand is inelastic.'],
+    ['A phone brand has fans so loyal that most of them won’t even look at another brand.', 'more', 'Strong differentiation and brand loyalty make customers less sensitive to price.'],
+    ['One of six nearly identical car washes on the same road.', 'less', 'Customers have five easy substitutes, so they are very sensitive to price.'],
+    ['The only electric company serving a city.', 'more', 'Electricity is a necessity with no substitute seller, so demand is inelastic. (That’s why governments often regulate these prices.)'],
+    ['A store that sells the same brand-name TVs as three other stores at the mall and several websites.', 'less', 'The product is identical everywhere, and shoppers can compare prices in seconds.'],
+    ['A restaurant known for a dish that no one else in the region makes, with a two-month wait for a table.', 'more', 'A unique product with more demand than it can serve. Customers will pay more before they give it up.'],
+    ['A company that sells generic bottled water in a grocery aisle full of other brands.', 'less', 'Lots of close substitutes and little differentiation, so demand is elastic.']
+  ]
+});
+
+/* =========================================================
+   2.5.C  Legal or not?
+   ========================================================= */
+Drill({
+  id:'lg',
+  keys:[['ok','Legal','#2E6B47','legal'],['col','Collusion','#A63D2F','collusion'],['gou','Price gouging','#A63D2F','price gouging'],['dis','Illegal discrimination','#A63D2F','illegal price discrimination']],
+  bank:[
+    ['The owners of the three gas stations in a town meet for lunch and agree that none of them will charge less than $4.50 a gallon.', 'col', 'Rivals agreeing on a price instead of competing is collusion.'],
+    ['Two airlines that fly the same route secretly promise each other not to offer fares below $300.', 'col', 'A secret agreement between competitors about price is collusion.'],
+    ['After a hurricane knocks out a city’s water supply, a store raises the price of a case of bottled water from $5 to $40.', 'gou', 'Sharply raising the price of an urgently needed product during a crisis is price gouging, which is illegal in many states.'],
+    ['During a declared wildfire emergency, a hotel triples its room rates for families who had to evacuate.', 'gou', 'Taking advantage of a spike in demand caused by an emergency is price gouging.'],
+    ['A car dealer quotes higher prices to customers of one nationality than to everyone else for the same car.', 'dis', 'Charging different prices because of a protected status, such as nationality, is illegal.'],
+    ['A repair shop charges women more than men for the same repair on the same car.', 'dis', 'Sex is a protected status, so this price difference is illegal.'],
+    ['A coffee shop sees that the shop next door cut its latte price to $4, so it lowers its own price to $4 too.', 'ok', 'Matching a rival’s price on your own is competitive pricing. There’s no agreement, so it isn’t collusion.'],
+    ['A movie theater charges $8 for afternoon shows and $13 for evening shows.', 'ok', 'The price depends on the showtime, not on a protected status, and anyone can buy either ticket.'],
+    ['A bakery raises its bread price by 30¢ after the price of flour goes up.', 'ok', 'Raising prices to cover higher costs is normal business. There’s no emergency being exploited.'],
+    ['A new gym charges $10 a month, less than it costs to run, to pull members away from older gyms.', 'ok', 'That’s penetration pricing. It may not be profitable at first, but it’s legal.']
+  ]
+});
+
+/* =========================================================
+   Check yourself (AP-style)
+   ========================================================= */
+(function(){
+  var STIM = '<div class="stim"><p><b>Glow</b>, a new company, makes scented candles. Each candle costs <b>$9</b> to produce and distribute. Glow tested four prices, each for one month.</p>' +
+    '<div class="tbl" style="margin:0"><table><thead><tr><th>Price</th><th class="r">Candles sold that month</th></tr></thead><tbody>' +
+    '<tr><td>$8</td><td class="r">900</td></tr>' +
+    '<tr><td>$12</td><td class="r">600</td></tr>' +
+    '<tr><td>$16</td><td class="r">450</td></tr>' +
+    '<tr><td>$20</td><td class="r">200</td></tr>' +
+    '</tbody></table></div></div>';
+  var Q = [
+    {set:true, stem:'Which price earned Glow the most profit for the month?', a:'$16', d:['$8','$12','$20'], why:'Profit is (price − per-unit cost) × units sold. $16: $7 × 450 = $3,150. $20: $11 × 200 = $2,200. $12: $3 × 600 = $1,800. $8: a loss of $1 × 900 = −$900.'},
+    {set:true, stem:'Which statement about the $8 price is most accurate?', a:'It could help Glow gain market share, but it is not profitable because it is below per-unit cost.', d:['It is Glow’s most profitable price because it sold the most candles.','It is an example of value-based pricing.','It is illegal because it is lower than Glow’s per-unit cost.'], why:'A low price may help a business gain market share, but a product is not profitable if its price is equal to or lower than per-unit cost (2.5.A). Selling the most units isn’t the same as earning the most profit, and pricing low is legal.'},
+    {set:true, stem:'When Glow raised its price from $16 to $20, sales fell from 450 candles to 200. This result most strongly suggests that', a:'demand for Glow’s candles is elastic, so Glow has limited pricing power', d:['demand for Glow’s candles is inelastic, so Glow has a lot of pricing power','Glow is colluding with other candle makers','Glow’s per-unit cost increased'], why:'A 25% price increase cost Glow more than half its sales. When customers react strongly to a price change, demand is elastic and pricing power is limited (2.5.B).'},
+    {stem:'A company makes headphones for $40 a pair. Its customers believe the sound quality is far better than any rival’s, so the company charges $250. Which pricing strategy is this?', a:'Value-based pricing', d:['Cost-based pricing','Penetration pricing','Competitive pricing'], why:'The price reflects the value customers see in the product, not its cost. Businesses with highly differentiated products are the most likely to use value-based pricing (2.5.A).'},
+    {stem:'A new meal-kit company enters a market with several established rivals and sets its price well below theirs for its first six months. The most likely goal of this strategy is to', a:'gain market share quickly before raising its price', d:['earn the highest possible profit on each unit right away','show customers that its product is a luxury','avoid breaking price-gouging laws'], why:'Penetration pricing uses a low starting price to attract customers and win market share, with a higher price planned for later (2.5.A).'},
+    {stem:'A business adds up what it costs to produce and distribute one unit of its product and then adds a fixed amount of profit. Which is a weakness of this approach?', a:'It ignores how much customers are willing to pay and what rivals charge.', d:['It guarantees that the business loses money on every sale.','It is illegal in most U.S. states.','It can only be used for services, not goods.'], why:'Cost-based pricing covers the per-unit cost, but the price may end up higher than rivals’ or lower than what customers would have paid (2.5.A).'},
+    {stem:'Which business is likely to have the most pricing power?', a:'A company that sells a patented product with no close substitutes', d:['One of twenty food trucks selling similar tacos in the same lot','A store that sells the same brand of milk as every other store in town','A new business whose product is identical to its rivals’'], why:'Pricing power is greatest when competition is low, the product is differentiated, and customers aren’t very sensitive to price (2.5.B).'},
+    {stem:'Demand for a product is described as inelastic. What does this mean for the business that sells it?', a:'It can raise the price without losing many customers.', d:['A small price increase will cause most customers to stop buying.','It must set its price equal to its per-unit cost.','It cannot legally change its price.'], why:'With inelastic demand, the quantity customers buy changes little when the price changes, which gives the business more pricing power (2.5.B).'},
+    {stem:'The two largest bakeries in a city secretly agree to raise their bread prices to the same amount on the same day. This practice is best described as', a:'collusion', d:['penetration pricing','price gouging','competitive pricing'], why:'Collusion is an agreement between competitors about what price to charge. It is illegal in the United States and many other countries (2.5.C). Competitive pricing means choosing a price on your own after looking at rivals.'},
+    {stem:'Which of the following is an example of price gouging?', a:'A store charges $25 for a $4 bag of ice the day after a storm knocks out power to the region.', d:['A theater charges less for afternoon shows than for evening shows.','A grocery store sells its store-brand cereal for less than the name brand.','A phone company raises the price of its newest model by $50.'], why:'Price gouging is sharply raising the price of a needed product when demand spikes during a crisis. It is illegal in many U.S. states (2.5.C).'}
+  ];
+  var quiz = el('quiz'), right = 0, answered = 0;
+  function build(){
+    right = 0; answered = 0;
+    quiz.innerHTML = '<div class="q" style="padding-top:4px"><span class="qn">QUESTIONS 1–3 REFER TO THE FOLLOWING INFORMATION</span>' + STIM + '</div>';
+    Q.forEach(function(q, i){
+      var d = document.createElement('div'); d.className = 'q';
+      d.innerHTML = '<span class="qn">QUESTION ' + (i + 1) + '</span><p class="stem">' + esc(q.stem) + '</p>';
+      var opts = document.createElement('div'); opts.className = 'opts';
+      var fb = document.createElement('div'); fb.className = 'fb';
+      shuffle([q.a].concat(q.d)).forEach(function(o, j){
+        var b = document.createElement('button'); b.className = 'opt';
+        b.innerHTML = '<span class="mono" style="color:var(--mute);margin-right:8px">(' + 'ABCD'[j] + ')</span>' + esc(o);
+        if(o === q.a) b.setAttribute('data-a', '1');
+        b.onclick = function(){
+          if(opts.getAttribute('data-done')) return; opts.setAttribute('data-done', '1');
+          var ok = o === q.a; answered++; if(ok) right++;
+          Array.prototype.forEach.call(opts.children, function(x){ x.disabled = true; if(!ok && x.getAttribute('data-a')) x.className += ' reveal'; });
+          b.className += ok ? ' picked-yes' : ' picked-no';
+          setFb(fb, ok ? 'good' : 'bad', '<b>' + (ok ? 'Correct.' : 'Not quite.') + '</b> ' + esc(q.why));
+          sum();
+        };
+        opts.appendChild(b);
+      });
+      d.appendChild(opts); d.appendChild(fb); quiz.appendChild(d);
+    });
+    var s = document.createElement('div'); s.className = 'q'; s.innerHTML = '<p class="qsum" id="qsum" aria-live="polite"></p>'; quiz.appendChild(s);
+    sum();
+  }
+  function sum(){
+    var n = Q.length, t = el('qsum');
+    if(answered < n) t.textContent = right + ' correct out of ' + answered + ' answered · ' + (n - answered) + ' to go';
+    else t.textContent = 'Final: ' + right + ' of ' + n + (right === n ? '. Perfect.' : right >= n - 2 ? '. Strong work.' : '. Review the sections above for the ones you missed.');
+  }
+  el('quiz-reset').onclick = build;
+  build();
+})();
+</script>
+</body>
+</html>
