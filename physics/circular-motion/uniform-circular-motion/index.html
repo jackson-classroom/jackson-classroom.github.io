@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uniform Circular Motion — Velocity, Centripetal Acceleration &amp; Net Force</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Physics — shared page system
+   (identical block on every Unit 3 and Unit 4 page)
+   ========================================================= */
+:root{
+  --ink:#16283C; --ink2:#3D4F63; --mute:#5D6D7E;
+  --paper:#EDF1F4; --card:#FBFCFD; --line:#CBD7E1; --line-soft:#E1E8EE;
+  --acc:#1B6CA8; --acc-dk:#0F4A78; --acc-lite:#D3E4F2;
+  --warm:#9A6410; --warm-lite:#FBEFD6;
+  --ok:#1F6E4D; --ok-bg:#E3F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  /* one colour per force, used on every page */
+  --f-g:#B23A2B;    /* gravity / weight      */
+  --f-n:#1B6CA8;    /* normal                */
+  --f-f:#A86A0C;    /* friction              */
+  --f-t:#1E7F5C;    /* tension               */
+  --f-a:#6B45B0;    /* applied               */
+  --f-air:#3E7C8A;  /* air resistance / drag */
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+  background-image:linear-gradient(to right,rgba(150,178,199,.17) 1px,transparent 1px),linear-gradient(to bottom,rgba(150,178,199,.17) 1px,transparent 1px);
+  background-size:26px 26px}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(237,241,244,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:60px 0 40px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc-dk)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(38px,6.4vw,64px);line-height:1.02;margin:16px 0 0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--acc)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:48ch;color:var(--ink2);margin:20px 0 0}
+
+.board{margin:36px 0 0;padding:22px 24px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.board-cap{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+.board svg{display:block;width:100%;height:auto}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft)}
+.sig-note b{color:var(--acc-dk);font-weight:600}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--acc);color:var(--acc-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(27px,4.2vw,38px);line-height:1.1;margin:0;letter-spacing:-.02em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--acc-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.nw{white-space:nowrap}
+.note{border-left:3px solid var(--warm);background:var(--warm-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.law{font-family:var(--display);font-size:clamp(20px,2.8vw,25px);font-weight:500;line-height:1.35;letter-spacing:-.01em;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:0 4px 4px 0;padding:18px 22px;margin:22px 0}
+.law small{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:6px;font-weight:400}
+
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:24px 0}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:0 4px 4px 0;padding:18px 20px}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard .form{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--acc-dk);margin:2px 0 0;line-height:1.5}
+.rulecard .ex{font-family:var(--body);font-size:14.5px;color:var(--ink);background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:7px 10px;margin-top:10px}
+.rulecard.warn{border-left-color:var(--warm)}
+
+/* force labels: F with a coloured subscript tag */
+.F{font-family:var(--mono);font-weight:600;white-space:nowrap}
+.F.g{color:var(--f-g)} .F.n{color:var(--f-n)} .F.f{color:var(--f-f)} .F.t{color:var(--f-t)} .F.a{color:var(--f-a)} .F.air{color:var(--f-air)} .F.net{color:var(--ink)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.setup{font-size:16px;color:var(--ink2);margin:0 0 14px}
+.scene{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:8px}
+.scene svg{display:block;width:100%;height:auto;max-width:540px;margin:0 auto}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F5F8FA;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--acc-dk);border-color:var(--acc-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--acc)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--acc);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+/* Input boxes: clearly fillable. Placeholder text is a short instruction, never a sample answer. */
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid #93A6B8;border-radius:3px;padding:9px 11px;width:150px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(22,40,60,.12)}
+::placeholder{font-family:var(--body);font-style:italic;font-size:15px;color:#7E8E9D;opacity:1}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:170px}
+.unit{font-family:var(--mono);font-size:15px;color:var(--ink2)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1A4B35}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--acc);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb p{margin:6px 0 0}
+.fb p:first-child{margin-top:0}
+
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-top:14px}
+.cbtn{background:#fff;color:var(--ink);border:1px solid var(--line);font-size:13px;padding:11px 10px;text-align:center}
+.cbtn:hover{background:#fff;color:var(--ink);border-color:var(--acc)}
+.cbtn.yes{background:var(--ok-bg);border-color:var(--ok);color:#1A4B35}
+.cbtn.no{background:var(--no-bg);border-color:var(--no);color:#7E2A1D}
+.cbtn.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.cbtn[disabled]{cursor:default}
+
+.tally-h{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:20px 0 8px}
+.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px}
+.tcell{border:1px solid var(--line-soft);border-radius:3px;padding:7px 10px;background:#fff}
+.tcell .tl{display:block;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.04em}
+.tcell .tv{font-family:var(--mono);font-size:15px;color:var(--ink)}
+.tcell.miss{border-color:#E3B7AE;background:#FDF6F4}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab:hover{background:var(--line-soft);color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--ink);color:#F5F8FA;border-color:var(--ink)}
+.panel{display:none;padding-top:12px}
+.panel.on{display:block}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.tbl{overflow-x:auto;margin:18px 0;-webkit-overflow-scrolling:touch}
+.tbl table{margin:0}
+
+.wo{list-style:none;padding:0;margin:20px 0}
+.wo li{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 18px;margin:10px 0}
+.wo .myth{display:block;font-size:15px;color:var(--no);text-decoration:line-through;text-decoration-color:rgba(169,58,42,.55);margin-bottom:4px}
+.wo .fact{font-size:16px}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45;letter-spacing:0}
+.opt:hover{border-color:var(--acc);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.95}
+.quiz-sum{font-family:var(--mono);font-size:13px;color:var(--ink2);margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft)}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#E9EFF4;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#BCCADA}
+.next .nt{font-family:var(--display);font-weight:600;font-size:24px;color:#fff;margin:0 0 4px;letter-spacing:-.01em}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F5F8FA;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--acc-lite)}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:14px}
+  .scene{padding:2px}
+  .board{padding:16px 14px}
+  .field label{min-width:auto;flex:1 1 100%}
+  .choices{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+/* ======== end shared block ======== */
+
+/* ---- page: velocity and acceleration colours (not forces, so not in the force palette) ---- */
+:root{--vel:#16283C;--cen:#A8199B}
+.kv{font-family:var(--mono);font-weight:600;color:var(--vel);white-space:nowrap}
+.ka{font-family:var(--mono);font-weight:600;color:var(--cen);white-space:nowrap}
+
+/* ---- page: method ladder ---- */
+.ladder{list-style:none;padding:0;margin:20px 0;counter-reset:step}
+.ladder li{counter-increment:step;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:baseline;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:12px 16px;margin:8px 0}
+.ladder li::before{content:counter(step);font-family:var(--mono);font-size:13px;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;text-align:center;padding:2px 0}
+.ladder small{display:block;color:var(--mute);font-size:14.5px;margin-top:2px}
+
+/* ---- page: worked example ---- */
+.worked{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:18px;align-items:center}
+@media (max-width:640px){.worked{grid-template-columns:1fr}}
+
+/* ---- page: hero steps ---- */
+.steps{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.steps li{margin:0;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px 14px}
+.steps .sl{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:2px}
+.steps .eq{font-family:var(--mono);font-size:17px;color:var(--ink)}
+
+/* ---- page: ledger (sum per direction) ---- */
+.ledger{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:14px;margin:10px 0 4px;background:transparent}
+.ledger th,.ledger td{padding:6px 8px;border-bottom:1px solid rgba(22,40,60,.12);text-align:left;vertical-align:top}
+.ledger th{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:inherit;opacity:.75;font-weight:500}
+.ledger td.z{font-weight:600}
+
+/* ---- page: work shown in examples and feedback ---- */
+.work{font-family:var(--mono);font-size:14.5px;line-height:1.7;margin:8px 0 0;padding:8px 12px;background:rgba(255,255,255,.6);border-radius:3px}
+.card .work,.worked .work{background:#fff;border:1px solid var(--line-soft)}
+.fb .work{background:rgba(255,255,255,.6);border:none}
+
+/* ---- page: practice ---- */
+.cap{font-size:16px;color:var(--ink2);margin:0 0 10px}
+.cap b{color:var(--ink)}
+.prob{font-size:18px;line-height:1.55;margin:16px 0 0;color:var(--ink)}
+.wide .field label{min-width:250px}
+#pd-svg{max-width:460px}
+input.ok-in{border-color:var(--ok);background:var(--ok-bg)}
+input.no-in{border-color:var(--no);background:var(--no-bg)}
+
+/* ---- page: swing-the-ball sim ---- */
+.sim-ctrl{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
+.sim-ctrl label{font-size:15px;color:var(--ink2);min-width:70px}
+.sim-ctrl input[type=range]{flex:1 1 120px;min-width:110px;accent-color:var(--acc)}
+.sim-ctrl output{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--acc-dk);min-width:84px;font-variant-numeric:tabular-nums}
+.readout{margin:0;font-size:15px}
+.readout th{width:34%;white-space:nowrap}
+.readout td{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.state{font-family:var(--mono);font-size:13.5px;line-height:1.5;padding:10px 12px;border-radius:0 3px 3px 0;margin-top:12px;border-left:3px solid var(--acc);background:var(--acc-lite);color:var(--acc-dk)}
+.state.cut{border-left-color:var(--warm);background:var(--warm-lite);color:#6B4608}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Uniform Circular Motion</span>
+    <span class="bar-sub">Velocity · centripetal acceleration · net force</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 4 · Circular Motion · Page 1</div>
+  <h1>Steady speed. <em>Still accelerating.</em></h1>
+  <p class="lede">An object moving in a circle at a steady speed keeps changing direction, so its velocity keeps changing. That means it's accelerating, toward the center of the circle. And whenever something accelerates, a net force points the same way.</p>
+
+  <div class="board">
+    <div class="board-cap">A ball on a string, seen from above, moving counterclockwise</div>
+    <div class="worked">
+      <div class="scene"><svg id="hero-svg" viewBox="0 0 520 360" role="img" aria-label="A ball on a string moving counterclockwise in a circle, shown at four moments. At each one, the velocity arrow points along the circle and the acceleration arrow points toward the center."></svg></div>
+      <ol class="steps">
+        <li><span class="sl">Velocity · along the circle</span><span class="eq"><span class="kv">v</span> = 2πr / T</span></li>
+        <li><span class="sl">Acceleration · toward the center</span><span class="eq"><span class="ka">a<sub>c</sub></span> = v² / r</span></li>
+        <li><span class="sl">Net force · toward the center</span><span class="eq">F<sub>net</sub> = m · a<sub>c</sub></span></li>
+      </ol>
+    </div>
+    <div class="sig-note">The speed never changes, but the direction does. The velocity points <b>along the circle</b>. The acceleration and the net force point <b>toward the center</b>.</div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#vel">Velocity</a>
+  <a href="#acc">Centripetal acceleration</a>
+  <a href="#net">Net force</a>
+  <a href="#p-dir">Practice: which arrow?</a>
+  <a href="#swing">Swing the ball</a>
+  <a href="#p-calc">Practice: v, a<sub>c</sub>, F<sub>net</sub></a>
+  <a href="#watch">Watch-outs</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ VELOCITY ============ -->
+<section id="vel">
+  <div class="sec-head"><h2>Velocity in a circle</h2></div>
+  <p><b>Uniform circular motion</b> means moving in a circle at a constant speed: a ball whirled on a string, a car going around a roundabout, a kid on a merry-go-round.</p>
+  <p>Velocity is a <b>vector</b>. It has a size (the speed) <i>and</i> a direction. In a circle, the speed can stay the same while the direction changes every instant. So the velocity is always changing.</p>
+
+  <div class="rulebox">
+    <div class="rulecard">
+      <div class="form">along the circle</div>
+      <h4>Which way?</h4>
+      <p>At every instant, the velocity points along the circle, the way the object is moving. That line just touches the circle, at a right angle to the radius. It's called the <b>tangent</b>.</p>
+    </div>
+    <div class="rulecard">
+      <div class="form">v = 2πr / T</div>
+      <h4>How fast?</h4>
+      <p>Speed is distance divided by time. In one trip around, the object travels the circumference, 2πr, in one period, T.</p>
+    </div>
+  </div>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Symbol</th><th>Means</th><th>Unit</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">v</td><td>speed</td><td class="mono">m/s</td></tr>
+      <tr><td class="mono">r</td><td>radius: the distance from the center of the circle to the object</td><td class="mono">m</td></tr>
+      <tr><td class="mono">T</td><td>period: the time for one full trip around</td><td class="mono">s</td></tr>
+      <tr><td class="mono">2πr</td><td>circumference: the distance around the circle once</td><td class="mono">m</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Worked example</h3>
+  <div class="worked">
+    <div class="scene"><svg id="vel-svg" viewBox="0 0 520 300" role="img" aria-label="A merry-go-round seen from above. A kid sits 2 meters from the center. The merry-go-round turns counterclockwise once every 4 seconds. The kid's velocity arrow points along the circle."></svg></div>
+    <div>
+      <p style="margin-top:0">A kid sits 2 m from the center of a merry-go-round. It goes around once every 4 s. How fast is the kid moving?</p>
+      <div class="work">v = 2πr / T<br>v = 2π × 2 m / 4 s<br>v = <b>3.14 m/s</b></div>
+      <p class="smallprint">Direction: along the circle, the way the merry-go-round turns. The speed stays 3.14 m/s, but the direction changes every instant.</p>
+    </div>
+  </div>
+
+  <h3>Let go, and it goes straight</h3>
+  <p>If the string breaks, nothing pulls the ball toward the center anymore. By Newton's first law, it keeps the velocity it had at that instant, so it flies off in a <b>straight line along the tangent</b>. It doesn't fly straight outward, and it doesn't keep curving. You can try it in <a href="#swing">Swing the ball</a> below.</p>
+
+  <div class="note"><b>Use the radius, not the diameter.</b> r is measured from the center of the circle to the object.</div>
+</section>
+
+<!-- ============ ACCELERATION ============ -->
+<section id="acc">
+  <div class="sec-head"><h2>Centripetal acceleration</h2></div>
+  <p>Acceleration is any change in velocity. That includes a change in <b>direction</b>, not just speeding up or slowing down. An object moving in a circle is always changing direction, so it is always accelerating, even when its speed is steady.</p>
+
+  <h3>Which way? Toward the center.</h3>
+  <p>Look at the velocity at two moments, 1 and 2. The arrows are the same length (same speed) but point different ways.</p>
+  <div class="scene"><svg id="dv-svg" viewBox="0 0 520 260" role="img" aria-label="Left: a ball moving counterclockwise on a circle, shown at two moments with velocity arrows v1 and v2 of the same length. Right: the two velocity arrows drawn tail to tail. The change in velocity, delta v, goes from the tip of v1 to the tip of v2 and points straight down, toward the center of the circle."></svg></div>
+  <p>Put them tail to tail. The arrow from the tip of v<sub>1</sub> to the tip of v<sub>2</sub> is the <b>change in velocity</b>, Δv. It points toward the center of the circle. Acceleration points the same way as Δv, so the acceleration points toward the center too.</p>
+  <p>That's why it's called <b>centripetal</b> acceleration. "Centripetal" means "center-seeking."</p>
+
+  <div class="law"><small>Centripetal acceleration</small>An object moving in a circle accelerates toward the center. The faster it goes and the tighter the circle, the bigger the acceleration.<br><span class="mono" style="font-size:.95em">a<sub>c</sub> = v² / r</span></div>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Symbol</th><th>Means</th><th>Unit</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">a<sub>c</sub></td><td>centripetal acceleration, toward the center</td><td class="mono">m/s²</td></tr>
+      <tr><td class="mono">v</td><td>speed</td><td class="mono">m/s</td></tr>
+      <tr><td class="mono">r</td><td>radius</td><td class="mono">m</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Worked example</h3>
+  <p>The kid on the merry-go-round from above is moving at 3.14 m/s, 2 m from the center.</p>
+  <div class="work">a<sub>c</sub> = v² / r<br>a<sub>c</sub> = (3.14 m/s)² / 2 m<br>a<sub>c</sub> = <b>4.93 m/s² toward the center</b></div>
+
+  <h3>The speed is squared</h3>
+  <p>Because v is squared, the speed has a big effect. The radius is on the bottom, so a bigger circle means <i>less</i> acceleration.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Speed</th><th>Radius</th><th>a<sub>c</sub></th><th>Compared to row 1</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">2 m/s</td><td class="mono">1 m</td><td class="mono">4 m/s²</td><td class="mono" style="color:var(--acc-dk)">starting point</td></tr>
+      <tr><td class="mono">4 m/s</td><td class="mono">1 m</td><td class="mono">16 m/s²</td><td class="mono" style="color:var(--acc-dk)">double the speed → 4 × the a<sub>c</sub></td></tr>
+      <tr><td class="mono">6 m/s</td><td class="mono">1 m</td><td class="mono">36 m/s²</td><td class="mono" style="color:var(--acc-dk)">triple the speed → 9 × the a<sub>c</sub></td></tr>
+      <tr><td class="mono">2 m/s</td><td class="mono">2 m</td><td class="mono">2 m/s²</td><td class="mono" style="color:var(--acc-dk)">double the radius → half the a<sub>c</sub></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note"><b>Square the speed first.</b> v² / r means (v × v) / r. Dividing v by r and stopping there is the most common mistake.</div>
+</section>
+
+<!-- ============ NET FORCE ============ -->
+<section id="net">
+  <div class="sec-head"><h2>The net force points to the center</h2></div>
+  <p>Newton's second law says the net force and the acceleration always point the same way. In a circle the acceleration points toward the center, so the <b>net force points toward the center</b> too. Without it, the object would go straight (Newton's first law).</p>
+
+  <div class="law"><small>Newton's second law, in a circle</small>To move in a circle, an object needs a net force pointing toward the center.<br><span class="mono" style="font-size:.95em">F<sub>net</sub> = m · a<sub>c</sub> &nbsp;&nbsp;(toward the center)</span></div>
+
+  <p>The 40 kg kid on the merry-go-round: <span class="mono nw">F<sub>net</sub> = 40 kg × 4.93 m/s² = <b>197.2 N</b></span>, toward the center.</p>
+
+  <h3>Where does the net force come from?</h3>
+  <p>Something real has to pull or push the object toward the center. It's always one of the forces from Unit 3.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Moving in a circle</th><th>The force pointing toward the center</th></tr></thead>
+    <tbody>
+      <tr><td>A ball whirled on a string</td><td><span class="F t">F<sub>tens</sub></span> the string pulls the ball in</td></tr>
+      <tr><td>A car on a flat curve</td><td><span class="F f">F<sub>frict</sub></span> the road grips the tires sideways</td></tr>
+      <tr><td>The Moon going around Earth</td><td><span class="F g">F<sub>grav</sub></span> Earth's gravity pulls the Moon in</td></tr>
+      <tr><td>A rider in a spinning carnival ride</td><td><span class="F n">F<sub>norm</sub></span> the wall pushes the rider in</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Worked example: a car on a curve</h3>
+  <div class="worked">
+    <div class="scene"><svg id="car-svg" viewBox="0 0 520 360" role="img" aria-label="Free-body diagram of a 1200 kilogram car seen from behind. Normal force 11760 newtons up, gravity 11760 newtons down, friction 5400 newtons to the left, toward the center of the curve."></svg></div>
+    <div>
+      <p style="margin-top:0">A 1200 kg car drives around a flat curve with a radius of 50 m at 15 m/s. Seen from behind, the center of the curve is to the left.</p>
+      <table class="ledger">
+        <thead><tr><th>Direction</th><th>Add up</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Vertical</td><td>11760 N up − 11760 N down</td><td class="z">0 N</td></tr>
+          <tr><td>Sideways</td><td>friction only</td><td class="z">5400 N left</td></tr>
+        </tbody>
+      </table>
+      <div class="work">a<sub>c</sub> = v² / r = (15 m/s)² / 50 m = 4.5 m/s²<br>F<sub>net</sub> = m · a<sub>c</sub> = 1200 kg × 4.5 m/s² = <b>5400 N</b></div>
+      <p class="smallprint">The vertical forces cancel. Friction is the only force left, so friction has to supply all 5400 N, pointing toward the center.</p>
+    </div>
+  </div>
+
+  <div class="note"><b>"Centripetal force" isn't a new kind of force.</b> You may hear the net force in a circle called the <i>centripetal force</i>. It's just a name for whatever real force (tension, friction, gravity, or the normal force) points toward the center. Never add an extra "centripetal" arrow to a free-body diagram.</div>
+
+  <h3>There is no outward force</h3>
+  <p>When a car turns left, you feel thrown to the right, into the door. Nothing is pushing you outward. Your body is trying to keep going straight (inertia) while the car turns left underneath you, so the door runs into you. Then the door pushes you <b>inward</b>, toward the center of the turn, and that's what makes you turn with the car.</p>
+</section>
+
+<!-- ============ PRACTICE: WHICH ARROW ============ -->
+<section id="p-dir">
+  <div class="sec-head">
+    <span class="tasktag">Practice 1</span>
+    <h2>Which arrow?</h2>
+  </div>
+  <p>Each diagram is seen from above. Pick the arrow that answers the question. A new diagram is generated every time.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Which arrow?</span><span class="score" id="pd-score">0 of 0</span></div>
+    <p class="cap" id="pd-cap"></p>
+    <div class="scene"><svg id="pd-svg" viewBox="50 0 420 390" role="img" aria-labelledby="pd-desc"><desc id="pd-desc"></desc></svg></div>
+    <p class="prob" id="pd-q"></p>
+    <div class="choices" id="pd-opts">
+      <button class="cbtn" data-l="A">Arrow A</button>
+      <button class="cbtn" data-l="B">Arrow B</button>
+      <button class="cbtn" data-l="C">Arrow C</button>
+      <button class="cbtn" data-l="D">Arrow D</button>
+    </div>
+    <div class="fb" id="pd-fb" aria-live="polite"></div>
+    <div class="btn-row"><button class="ghost" id="pd-next">Next diagram</button></div>
+    <div class="tally-h">Your results by question</div>
+    <div class="tally" id="pd-tally"></div>
+  </div>
+</section>
+
+<!-- ============ SWING THE BALL ============ -->
+<section id="swing">
+  <div class="sec-head">
+    <span class="tasktag">Try it</span>
+    <h2>Swing the ball</h2>
+  </div>
+  <p>A ball on a string goes around in a circle on a frictionless table, seen from above. Change its speed, the radius, and its mass, and watch the numbers. Then cut the string.</p>
+
+  <div class="card">
+    <div class="sim-ctrl">
+      <label for="sw-v">Speed</label>
+      <input type="range" id="sw-v" min="1" max="6" step="0.5" value="2">
+      <output id="sw-v-out" for="sw-v">2.0 m/s</output>
+    </div>
+    <div class="sim-ctrl">
+      <label for="sw-r">Radius</label>
+      <input type="range" id="sw-r" min="0.8" max="2" step="0.1" value="1">
+      <output id="sw-r-out" for="sw-r">1.0 m</output>
+    </div>
+    <div class="sim-ctrl">
+      <label for="sw-m">Mass</label>
+      <input type="range" id="sw-m" min="0.1" max="2" step="0.1" value="0.5">
+      <output id="sw-m-out" for="sw-m">0.5 kg</output>
+    </div>
+    <div class="worked">
+      <div class="scene"><svg id="sw-svg" viewBox="60 0 400 400" role="img" aria-labelledby="sw-desc"><desc id="sw-desc"></desc></svg></div>
+      <div>
+        <table class="readout"><tbody>
+          <tr><th>Period</th><td id="sw-T"></td></tr>
+          <tr><th>Acceleration</th><td><span class="ka">a<sub>c</sub></span> = <span id="sw-a"></span></td></tr>
+          <tr><th>Net force</th><td>F<sub>net</sub> = <span id="sw-F"></span></td></tr>
+        </tbody></table>
+        <div class="state" id="sw-state" aria-live="polite"></div>
+      </div>
+    </div>
+    <div class="btn-row"><button id="sw-cut">Cut the string</button><button class="ghost" id="sw-pause">Pause</button><button class="ghost" id="sw-reset">Reset</button></div>
+    <p class="smallprint">The arrows show direction only. Read the sizes from the table. The net force here is the tension in the string.</p>
+  </div>
+
+  <h3>Things to try</h3>
+  <ol class="ladder">
+    <li><div><b>Double the speed</b> from 2 m/s to 4 m/s. What happens to a<sub>c</sub>?<small>It isn't just twice as big.</small></div></li>
+    <li><div><b>Put the speed back to 2 m/s, then double the radius</b> to 2 m. What happens to a<sub>c</sub> now?</div></li>
+    <li><div><b>Double the mass.</b> Does a<sub>c</sub> change? What about F<sub>net</sub>?</div></li>
+    <li><div><b>Cut the string</b> at a few different spots. Which way does the ball go each time?</div></li>
+  </ol>
+</section>
+
+<!-- ============ PRACTICE: CALCULATE ============ -->
+<section id="p-calc">
+  <div class="sec-head">
+    <span class="tasktag">Practice 2</span>
+    <h2>Speed, acceleration, net force</h2>
+  </div>
+  <p>Work in order. If you're given the period, find the speed first. Then find a<sub>c</sub>, then F<sub>net</sub>. Keep two decimal places on the numbers in between, and round only at the end.</p>
+
+  <div class="card wide">
+    <div class="card-label"><span>v → a<sub>c</sub> → F<sub>net</sub></span><span class="score" id="pc-score">0 of 0</span></div>
+    <p class="cap" id="pc-cap"></p>
+    <div class="scene"><svg id="pc-svg" viewBox="0 0 520 300" role="img" aria-labelledby="pc-desc"><desc id="pc-desc"></desc></svg></div>
+    <div class="field" id="pc-vrow">
+      <label for="pc-v" id="pc-vl"></label>
+      <input type="text" id="pc-v" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">m/s</span>
+    </div>
+    <div class="field">
+      <label for="pc-a" id="pc-al"></label>
+      <input type="text" id="pc-a" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">m/s²</span>
+    </div>
+    <div class="field">
+      <label for="pc-f" id="pc-fl"></label>
+      <input type="text" id="pc-f" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">N, toward the center</span>
+    </div>
+    <div class="fb" id="pc-fb" aria-live="polite"></div>
+    <div class="btn-row"><button id="pc-check">Check</button><button class="ghost" id="pc-next">Next problem</button></div>
+    <div class="tally-h">Your results by step</div>
+    <div class="tally" id="pc-tally"></div>
+  </div>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="sec-head"><h2>Watch-outs</h2></div>
+  <ul class="wo">
+    <li><span class="myth">Constant speed means no acceleration.</span><span class="fact">In a circle the direction keeps changing, so the velocity keeps changing. That's an acceleration, toward the center.</span></li>
+    <li><span class="myth">The acceleration points the way the object is moving.</span><span class="fact">That's the velocity. In uniform circular motion the acceleration points <b>toward the center</b>, at a right angle to the velocity.</span></li>
+    <li><span class="myth">Centrifugal force pushes things outward.</span><span class="fact">There is no outward force. You feel thrown outward because your body keeps trying to go straight while the car or the ride turns.</span></li>
+    <li><span class="myth">When the string breaks, the ball flies straight out, away from the center.</span><span class="fact">It flies off <b>along the tangent</b>, in a straight line, the way it was moving at that instant.</span></li>
+    <li><span class="myth">Centripetal force is one more force to draw on the free-body diagram.</span><span class="fact">It's the net force: a name for whatever real force points toward the center. Draw the tension, friction, gravity, or normal force, never an extra "centripetal" arrow.</span></li>
+    <li><span class="myth">Going twice as fast takes twice the force.</span><span class="fact">The speed is squared. Twice the speed means <b>four times</b> the acceleration, so four times the net force.</span></li>
+  </ul>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Eight questions on velocity, centripetal acceleration, and net force in a circle.</p>
+  <div class="card" id="quiz"></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">That's page 1 of Unit 4</div>
+      <p>More Circular Motion pages will show up on the unit page as we go.</p>
+    </div>
+    <a href="/physics/circular-motion/">Back to Unit 4 →</a>
+  </div>
+</section>
+
+<footer>
+  <p>Uniform circular motion: the velocity points along the tangent (v = 2πr / T), the centripetal acceleration points toward the center (a<sub>c</sub> = v² / r), and so does the net force that causes it (F<sub>net</sub> = m · a<sub>c</sub>). The practice generates new problems every time.</p>
+  <p><a href="/physics/circular-motion/">← Unit 4 — Circular Motion</a> · <a href="/physics/forces/">← Unit 3 — Forces</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   shared helpers (same on every Unit 3 and Unit 4 page)
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function randInt(lo,hi){ return lo + Math.floor(Math.random()*(hi-lo+1)); }
+var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* force colours and labels (match the CSS variables) */
+var FORCE = {
+  g:  { c:'#B23A2B', sym:'F<tspan baseline-shift="sub" font-size="70%">grav</tspan>',   html:'F<sub>grav</sub>',   name:'gravity' },
+  n:  { c:'#1B6CA8', sym:'F<tspan baseline-shift="sub" font-size="70%">norm</tspan>',   html:'F<sub>norm</sub>',   name:'normal force' },
+  f:  { c:'#A86A0C', sym:'F<tspan baseline-shift="sub" font-size="70%">frict</tspan>',   html:'F<sub>frict</sub>',   name:'friction' },
+  t:  { c:'#1E7F5C', sym:'F<tspan baseline-shift="sub" font-size="70%">tens</tspan>',   html:'F<sub>tens</sub>',   name:'tension' },
+  a:  { c:'#6B45B0', sym:'F<tspan baseline-shift="sub" font-size="70%">app</tspan>', html:'F<sub>app</sub>', name:'applied force' },
+  air:{ c:'#3E7C8A', sym:'F<tspan baseline-shift="sub" font-size="70%">air</tspan>', html:'F<sub>air</sub>', name:'air resistance' }
+};
+var SVGNS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs, parent){
+  var n = document.createElementNS(SVGNS, tag);
+  for(var k in attrs) n.setAttribute(k, attrs[k]);
+  if(parent) parent.appendChild(n);
+  return n;
+}
+/* Draw an arrow from (x1,y1) to (x2,y2). Returns the group. */
+function arrow(parent, x1, y1, x2, y2, color, width){
+  var g = svgEl('g', {}, parent), w = width || 4;
+  var dx = x2-x1, dy = y2-y1, L = Math.sqrt(dx*dx+dy*dy) || 1, ux = dx/L, uy = dy/L;
+  var head = Math.min(15, L*0.6), hw = head*0.55;
+  var bx = x2 - ux*head, by = y2 - uy*head;
+  svgEl('line', {x1:x1, y1:y1, x2:bx, y2:by, stroke:color, 'stroke-width':w, 'stroke-linecap':'round'}, g);
+  svgEl('path', {d:'M'+x2+' '+y2+' L'+(bx - uy*hw)+' '+(by + ux*hw)+' L'+(bx + uy*hw)+' '+(by - ux*hw)+' Z', fill:color}, g);
+  return g;
+}
+function label(parent, x, y, html, color, anchor, size){
+  var t = svgEl('text', {x:x, y:y, fill:color||'#16283C', 'font-family':'IBM Plex Mono,monospace', 'font-size':size||15, 'font-weight':600, 'text-anchor':anchor||'middle'}, parent);
+  t.innerHTML = html;
+  return t;
+}
+function clearSvg(svg){ Array.prototype.slice.call(svg.childNodes).forEach(function(n){ if(n.nodeName !== 'desc') svg.removeChild(n); }); }
+
+/* =========================================================
+   free-body diagram renderer
+   forces: [{k:'g'|'n'|'f'|'t'|'a'|'air', d:'up'|'down'|'left'|'right', m:<newtons>}]
+   Arrows start at the box edge, lengths scale with size.
+   Several forces in the same direction are drawn side by side.
+   ========================================================= */
+function drawFBD(svg, forces, opts){
+  opts = opts || {};
+  clearSvg(svg);
+  var W = 520, H = 360, cx = 260, cy = 180, half = 34, maxLen = opts.maxLen || 96, minLen = 28;
+  /* vertical and horizontal forces are each scaled to their own largest force,
+     so a small sideways push next to a heavy weight is still readable */
+  function axisMax(dirs){ return Math.max.apply(null, forces.filter(function(f){ return dirs.indexOf(f.d) >= 0; }).map(function(f){ return f.m; }).concat([1])); }
+  var sV = maxLen / axisMax(['up','down']), sH = maxLen / axisMax(['left','right']);
+  function len(m, d){ return Math.max(minLen, m * (d === 'up' || d === 'down' ? sV : sH)); }
+  /* box */
+  svgEl('rect', {x:cx-half, y:cy-half, width:half*2, height:half*2, rx:3, fill:'#fff', stroke:'#16283C', 'stroke-width':2.2}, svg);
+  if(opts.name) label(svg, cx, cy + 4, opts.name, '#5D6D7E', 'middle', 11);
+  var groups = { up:[], down:[], left:[], right:[] };
+  forces.forEach(function(f){ groups[f.d].push(f); });
+  Object.keys(groups).forEach(function(d){
+    var list = groups[d], n = list.length;
+    list.forEach(function(f, i){
+      var off = (i - (n-1)/2) * (n > 1 ? 34 : 0);
+      var L = len(f.m, d), c = FORCE[f.k].c, txt = FORCE[f.k].sym + ' ' + f.m + ' N';
+      if(d === 'up'){
+        arrow(svg, cx + off, cy - half, cx + off, cy - half - L, c, 4.5);
+        if(n > 1) label(svg, cx + off + (i === 0 ? -10 : 10), cy - half - L + 13, txt, c, i === 0 ? 'end' : 'start', 18);
+        else label(svg, cx + 12, cy - half - L + 12, txt, c, 'start', 18);
+      } else if(d === 'down'){
+        arrow(svg, cx + off, cy + half, cx + off, cy + half + L, c, 4.5);
+        if(n > 1) label(svg, cx + off + (i === 0 ? -10 : 10), cy + half + L - 4, txt, c, i === 0 ? 'end' : 'start', 18);
+        else label(svg, cx + 12, cy + half + L - 4, txt, c, 'start', 18);
+      } else if(d === 'right'){
+        arrow(svg, cx + half, cy + off, cx + half + L, cy + off, c, 4.5);
+        label(svg, cx + half + L + 8, cy + off + 6, txt, c, 'start', 18);
+      } else {
+        arrow(svg, cx - half, cy + off, cx - half - L, cy + off, c, 4.5);
+        label(svg, cx - half - L - 8, cy + off + 6, txt, c, 'end', 18);
+      }
+    });
+  });
+}
+function sumDir(forces, d){ return forces.filter(function(f){ return f.d === d; }).reduce(function(s,f){ return s + f.m; }, 0); }
+function listDir(forces, d){
+  var l = forces.filter(function(f){ return f.d === d; });
+  if(!l.length) return '0 N';
+  if(l.length === 1) return l[0].m + ' N';
+  return '(' + l.map(function(f){ return f.m; }).join(' + ') + ') N';
+}
+function describeForces(forces){
+  return forces.map(function(f){ return FORCE[f.k].name + ' ' + f.m + ' newtons ' + f.d; }).join(', ') + '.';
+}
+
+
+/* =========================================================
+   page helpers
+   ========================================================= */
+function fmt(x){ var r = Math.round(x*100)/100; return String(r); }
+function r2(x){ return Math.round(x*100)/100; }
+function parseNum(s){ s = String(s).replace(/,/g,'').trim(); if(!/^[-+]?(\d+\.?\d*|\.\d+)/.test(s)) return NaN; return parseFloat(s); }
+function close(x, ans){ return Math.abs(x - ans) <= Math.max(0.011, Math.abs(ans)*0.01); }
+function lock(ids, on){ ids.forEach(function(id){ el(id).disabled = on; }); }
+function onEnter(ids, fn){ ids.forEach(function(id){ el(id).addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); fn(); } }); }); }
+function renderTally(node, types, tally){
+  node.innerHTML = Object.keys(types).map(function(k){
+    var c = tally[k], miss = c.t > c.r;
+    return '<div class="tcell' + (miss ? ' miss' : '') + '"><span class="tl">' + types[k] + '</span><span class="tv">' + c.r + '/' + c.t + '</span></div>';
+  }).join('');
+}
+function newTally(types){ var t = {}; Object.keys(types).forEach(function(k){ t[k] = {r:0,t:0}; }); return t; }
+function massLabel(svg, m){ label(svg, 260, 201, m + ' kg', '#16283C', 'middle', 12); }
+
+/* =========================================================
+   circle geometry
+   Angles are in degrees, counterclockwise from the right (like a
+   unit circle). SVG y points down, so the sines flip sign.
+   ========================================================= */
+var VEL = '#16283C', CEN = '#A8199B', GREY = '#93A6B8', INK2 = '#3D4F63', MUTE = '#5D6D7E', OKC = '#1F6E4D', NOC = '#A93A2A', D2R = Math.PI/180;
+function P(cx, cy, rr, deg){ var t = deg*D2R; return { x:cx + rr*Math.cos(t), y:cy - rr*Math.sin(t) }; }
+/* unit vector along the circle, the way the object moves */
+function tanDir(deg, ccw){ var t = deg*D2R; return ccw ? { x:-Math.sin(t), y:-Math.cos(t) } : { x:Math.sin(t), y:Math.cos(t) }; }
+/* unit vector toward the center */
+function inDir(deg){ var t = deg*D2R; return { x:-Math.cos(t), y:Math.sin(t) }; }
+function neg(u){ return { x:-u.x, y:-u.y }; }
+function sub(s, x){ return s + '<tspan baseline-shift="sub" font-size="70%">' + x + '</tspan>'; }
+/* an arrow from point p along unit vector u: starts gap px out, len px long */
+function vec(parent, p, u, gap, len, color, w){ return arrow(parent, p.x + u.x*gap, p.y + u.y*gap, p.x + u.x*(gap+len), p.y + u.y*(gap+len), color, w || 4); }
+function orbit(parent, cx, cy, rr){ svgEl('circle', {cx:cx, cy:cy, r:rr, fill:'none', stroke:GREY, 'stroke-width':1.5, 'stroke-dasharray':'5 6'}, parent); }
+function ballAt(parent, p, rad){ svgEl('circle', {cx:p.x, cy:p.y, r:rad || 10, fill:'#fff', stroke:'#16283C', 'stroke-width':2.2}, parent); }
+function pivot(parent, cx, cy){ svgEl('circle', {cx:cx, cy:cy, r:4, fill:'#16283C'}, parent); }
+/* a curved arrow along a circle, from angle d1 to d2 (less than 180° apart) */
+function arcArrow(parent, cx, cy, rr, d1, d2, color, w){
+  var a = P(cx, cy, rr, d1), b = P(cx, cy, rr, d2), ccw = d2 > d1;
+  svgEl('path', {d:'M' + a.x + ' ' + a.y + ' A' + rr + ' ' + rr + ' 0 0 ' + (ccw ? 0 : 1) + ' ' + b.x + ' ' + b.y, fill:'none', stroke:color, 'stroke-width':w || 2.5, 'stroke-linecap':'round'}, parent);
+  var t = tanDir(d2, ccw), s = 11, hw = s*0.55, tx = b.x + t.x*7, ty = b.y + t.y*7, bx = tx - t.x*s, by = ty - t.y*s;
+  svgEl('path', {d:'M' + tx + ' ' + ty + ' L' + (bx - t.y*hw) + ' ' + (by + t.x*hw) + ' L' + (bx + t.y*hw) + ' ' + (by - t.x*hw) + ' Z', fill:color}, parent);
+}
+/* a text label dist px from p along u, anchored so it sits clear of p */
+function tagAt(parent, p, u, dist, html, color, size){
+  var x = p.x + u.x*dist, y = p.y + u.y*dist, a = u.x > 0.35 ? 'start' : (u.x < -0.35 ? 'end' : 'middle');
+  var dy = a !== 'middle' ? 5 : (u.y < 0 ? -2 : 14);
+  return label(parent, x, y + dy, html, color, a, size);
+}
+
+/* text along the segment a→b (kept upright), offset to the side given by unit vector `side` */
+function lineLabel(parent, a, b, side, html, color, size){
+  var ang = Math.atan2(b.y - a.y, b.x - a.x)/D2R;
+  if(ang > 90) ang -= 180; else if(ang <= -90) ang += 180;
+  var down = { x:-Math.sin(ang*D2R), y:Math.cos(ang*D2R) };   /* the text's own "down", in SVG coordinates */
+  var d = (side.x*down.x + side.y*down.y > 0) ? 17 : 6;
+  var m = { x:(a.x + b.x)/2 + side.x*d, y:(a.y + b.y)/2 + side.y*d };
+  var t = label(parent, m.x, m.y, html, color, 'middle', size);
+  t.setAttribute('transform', 'rotate(' + ang + ' ' + m.x + ' ' + m.y + ')');
+  return t;
+}
+
+/* Top view of an object going around a circle: dashed path, direction arrow
+   on the far side, radius line, and optional velocity arrow and period. */
+function drawSpin(svg, o){
+  clearSvg(svg);
+  var cx = 260, cy = 150, R = 105, p = P(cx, cy, R, o.deg), t = tanDir(o.deg, o.ccw), n = inDir(o.deg), far = o.deg + 180;
+  if(o.disk) svgEl('circle', {cx:cx, cy:cy, r:R + 20, fill:'#EEF3F6', stroke:'#C3CFD9', 'stroke-width':1.5}, svg);
+  orbit(svg, cx, cy, R);
+  arcArrow(svg, cx, cy, R, o.ccw ? far - 26 : far + 26, o.ccw ? far + 26 : far - 26, MUTE, 2.5);
+  if(o.T) tagAt(svg, P(cx, cy, R, far), neg(inDir(far)), 30, o.T, MUTE, 15);
+  svgEl('line', {x1:cx, y1:cy, x2:p.x, y2:p.y, stroke:'#16283C', 'stroke-width':1.5, 'stroke-dasharray':'4 4'}, svg);
+  pivot(svg, cx, cy);
+  /* radius label: along the radius line, on the side away from the velocity arrow */
+  lineLabel(svg, {x:cx, y:cy}, p, neg(t), o.rLabel, '#16283C', 15);
+  if(o.v){ vec(svg, p, t, 13, 58, VEL); tagAt(svg, p, t, 80, o.v, VEL, 15); }
+  ballAt(svg, p, 10);
+  if(o.obj) tagAt(svg, p, neg(n), 22, o.obj, INK2, 15);
+}
+
+/* =========================================================
+   hero + figures
+   ========================================================= */
+(function(){
+  var svg = el('hero-svg'), cx = 260, cy = 180, R = 118, spots = [90, 0, 270, 180];
+  orbit(svg, cx, cy, R);
+  spots.forEach(function(d){ var p = P(cx, cy, R, d); svgEl('line', {x1:cx, y1:cy, x2:p.x, y2:p.y, stroke:'#C3CFD9', 'stroke-width':1.5}, svg); });
+  arcArrow(svg, cx, cy, 40, 105, 165, GREY, 2.5);
+  pivot(svg, cx, cy);
+  spots.forEach(function(d){
+    var p = P(cx, cy, R, d), t = tanDir(d, true), n = inDir(d);
+    vec(svg, p, n, 13, 46, CEN);
+    vec(svg, p, t, 13, 56, VEL);
+    ballAt(svg, p, 10);
+    label(svg, p.x + t.x*84, p.y + t.y*84 + 6, 'v', VEL, 'middle', 18);
+    label(svg, p.x + n.x*38 - t.x*22, p.y + n.y*38 - t.y*22 + 6, sub('a','c'), CEN, 'middle', 18);
+  });
+})();
+
+drawSpin(el('vel-svg'), { deg:35, ccw:true, disk:true, rLabel:'r = 2 m', obj:'kid', v:'v = ?', T:'T = 4 s' });
+
+(function(){
+  var svg = el('dv-svg'), cx = 140, cy = 140, R = 85;
+  orbit(svg, cx, cy, R); pivot(svg, cx, cy);
+  arcArrow(svg, cx, cy, 30, 60, 120, GREY, 2.5);
+  [[45,'1'],[135,'2']].forEach(function(s){
+    var p = P(cx, cy, R, s[0]), t = tanDir(s[0], true);
+    vec(svg, p, t, 12, 58, VEL);
+    ballAt(svg, p, 9);
+    tagAt(svg, p, neg(inDir(s[0])), 18, s[1], MUTE, 15);
+    label(svg, p.x + t.x*86, p.y + t.y*86 + 6, sub('v', s[1]), VEL, 'middle', 18);
+  });
+  label(svg, cx, 252, 'two moments on the circle', MUTE, 'middle', 14);
+  /* the same two arrows, tail to tail */
+  var O = { x:440, y:130 }, L = 110, u1 = tanDir(45, true), u2 = tanDir(135, true);
+  var t1 = { x:O.x + u1.x*L, y:O.y + u1.y*L }, t2 = { x:O.x + u2.x*L, y:O.y + u2.y*L };
+  arrow(svg, O.x, O.y, t1.x, t1.y, VEL, 4);
+  arrow(svg, O.x, O.y, t2.x, t2.y, VEL, 4);
+  arrow(svg, t1.x, t1.y + 3, t2.x, t2.y - 3, CEN, 4);
+  svgEl('circle', {cx:O.x, cy:O.y, r:3, fill:'#16283C'}, svg);
+  label(svg, t1.x + 12, t1.y - 2, sub('v','1'), VEL, 'start', 18);
+  label(svg, t2.x + 12, t2.y + 16, sub('v','2'), VEL, 'start', 18);
+  label(svg, t1.x - 12, (t1.y + t2.y)/2 - 4, 'Δv', CEN, 'end', 19);
+  label(svg, t1.x - 12, (t1.y + t2.y)/2 + 17, 'toward', CEN, 'end', 14);
+  label(svg, t1.x - 12, (t1.y + t2.y)/2 + 34, 'the center', CEN, 'end', 14);
+  label(svg, 400, 252, 'same arrows, tail to tail', MUTE, 'middle', 14);
+})();
+
+drawFBD(el('car-svg'), [{k:'n',d:'up',m:11760},{k:'g',d:'down',m:11760},{k:'f',d:'left',m:5400}], {name:'car', maxLen:70});
+massLabel(el('car-svg'), 1200);
+label(el('car-svg'), 18, 34, '← center of the curve', MUTE, 'start', 13);
+
+/* =========================================================
+   Practice 1 · which arrow?
+   ========================================================= */
+var PD_TYPES = { vel:'Velocity', acc:'Acceleration', net:'Net force', cut:'Let go' };
+var PD_ANS = { vel:'fwd', acc:'in', net:'in', cut:'fwd' };
+var PD_ANGLES = [0, 30, 45, 90, 135, 150, 180, 210, 225, 270, 315, 330];
+var PD_SCENES = {
+  ball:{ obj:'ball', src:'the string (tension)',
+    cap:function(d){ return 'A <b>ball on a string</b> is whirled in a circle on a frictionless table, moving ' + d + '.'; },
+    cut:'The string breaks at this moment.' },
+  car:{ obj:'car', src:'friction from the road',
+    cap:function(d){ return 'A <b>car</b> drives around a circular track at a steady speed, moving ' + d + '.'; },
+    cut:'At this moment the car hits a patch of ice, so the road can’t grip the tires anymore.' },
+  sat:{ obj:'satellite', src:'Earth’s gravity',
+    cap:function(d){ return 'A <b>satellite</b> orbits Earth in a circle at a steady speed, moving ' + d + '.'; } }
+};
+function drawPD(svg, s){
+  clearSvg(svg);
+  var cx = 260, cy = 195, R = 105, p = P(cx, cy, R, s.deg), t = tanDir(s.deg, s.ccw), n = inDir(s.deg), far = s.deg + 180;
+  var dirs = { fwd:t, back:neg(t), 'in':n, out:neg(n) };
+  if(s.scene === 'car'){
+    svgEl('circle', {cx:cx, cy:cy, r:R, fill:'none', stroke:'#DCE4EA', 'stroke-width':34}, svg);
+    svgEl('circle', {cx:cx, cy:cy, r:R, fill:'none', stroke:'#fff', 'stroke-width':2, 'stroke-dasharray':'9 9'}, svg);
+    svgEl('path', {d:'M' + (cx-6) + ' ' + cy + ' H' + (cx+6) + ' M' + cx + ' ' + (cy-6) + ' V' + (cy+6), stroke:MUTE, 'stroke-width':1.5}, svg);
+  } else {
+    orbit(svg, cx, cy, R);
+    if(s.scene === 'sat') svgEl('circle', {cx:cx, cy:cy, r:13, fill:'#2F6F8F'}, svg);
+  }
+  if(s.scene === 'ball'){ svgEl('line', {x1:cx, y1:cy, x2:p.x, y2:p.y, stroke:'#16283C', 'stroke-width':1.5}, svg); pivot(svg, cx, cy); }
+  arcArrow(svg, cx, cy, R, s.ccw ? far - 28 : far + 28, s.ccw ? far + 28 : far - 28, MUTE, 2.5);
+  var ang = Math.atan2(t.y, t.x)/D2R, g;
+  if(s.scene === 'car'){
+    g = svgEl('g', {transform:'translate(' + p.x + ' ' + p.y + ') rotate(' + ang + ')'}, svg);
+    svgEl('rect', {x:-15, y:-8.5, width:30, height:17, rx:4, fill:'#fff', stroke:'#16283C', 'stroke-width':2.2}, g);
+    svgEl('line', {x1:5, y1:-6, x2:5, y2:6, stroke:'#16283C', 'stroke-width':2}, g);   /* windshield: marks the front */
+  } else if(s.scene === 'sat'){
+    g = svgEl('g', {transform:'translate(' + p.x + ' ' + p.y + ') rotate(' + ang + ')'}, svg);
+    svgEl('rect', {x:-13, y:-3, width:26, height:6, fill:'#C3CFD9', stroke:'#16283C', 'stroke-width':1.2}, g);  /* solar panels */
+    svgEl('rect', {x:-6, y:-6, width:12, height:12, rx:2, fill:'#fff', stroke:'#16283C', 'stroke-width':2}, g);
+  } else ballAt(svg, p, 10);
+  ['A','B','C','D'].forEach(function(L){
+    var u = dirs[s.map[L]], c = INK2;
+    if(s.mark) c = L === s.mark.good ? OKC : (L === s.mark.bad ? NOC : '#B5C3CF');
+    vec(svg, p, u, 15, 46, c, 3.5);
+    var q = { x:p.x + u.x*76, y:p.y + u.y*76 };
+    svgEl('circle', {cx:q.x, cy:q.y, r:12, fill:'#fff', stroke:c, 'stroke-width':2}, svg);
+    label(svg, q.x, q.y + 5, L, c, 'middle', 14);
+  });
+}
+function pdDesc(s){
+  var words = { fwd:'along the circle, the same way it is moving', back:'along the circle, opposite to the way it is moving', 'in':'toward the center of the circle', out:'away from the center of the circle' };
+  return 'Top view. A ' + PD_SCENES[s.scene].obj + ' moving ' + (s.ccw ? 'counterclockwise' : 'clockwise') + ' around a circle. ' +
+    ['A','B','C','D'].map(function(L){ return 'Arrow ' + L + ' points ' + words[s.map[L]] + '.'; }).join(' ');
+}
+function pdQuestion(s){
+  var o = PD_SCENES[s.scene].obj;
+  if(s.type === 'vel') return 'Which arrow shows the ' + o + '’s <b>velocity</b> at this moment?';
+  if(s.type === 'acc') return 'Which arrow shows the ' + o + '’s <b>acceleration</b>?';
+  if(s.type === 'net') return 'Which arrow shows the <b>net force</b> on the ' + o + '?';
+  return PD_SCENES[s.scene].cut + ' Which way does the ' + o + ' go right after?';
+}
+function pdWhy(s, k){
+  var o = PD_SCENES[s.scene].obj, src = PD_SCENES[s.scene].src, dw = s.ccw ? 'counterclockwise' : 'clockwise';
+  var W = {
+    vel:{ fwd:'Velocity points along the circle, the way the ' + o + ' is moving. That line just touches the circle, at a right angle to the radius. It’s called the <b>tangent</b>.',
+          back:'That arrow is along the circle, but backwards. The ' + o + ' is moving ' + dw + ', so its velocity points the other way.',
+          'in':'That arrow points toward the center. That’s the direction of the <b>acceleration</b>. The velocity points along the circle, the way the ' + o + ' is moving.',
+          out:'Nothing about the motion points outward. The velocity points along the circle, the way the ' + o + ' is moving.' },
+    acc:{ 'in':'The ' + o + '’s speed isn’t changing, but its direction is. That change points toward the center, so the acceleration does too.',
+          fwd:'That’s the direction of the velocity. The speed is steady, so there’s no acceleration along the motion. The acceleration points toward the center.',
+          back:'An acceleration backwards along the motion would slow the ' + o + ' down. Its speed is steady. The acceleration points toward the center.',
+          out:'The acceleration points toward the center, not away from it. Nothing pulls the ' + o + ' outward.' },
+    net:{ 'in':'The net force points the same way as the acceleration: toward the center. Here it comes from ' + src + '.',
+          fwd:'Nothing has to push the ' + o + ' forward to keep it moving at a steady speed (Newton’s first law). The net force points toward the center, the same way as the acceleration.',
+          back:'A net force backwards would slow the ' + o + ' down. Its speed is steady. The net force points toward the center.',
+          out:'There is no outward force. The net force points toward the center. Here it comes from ' + src + '.' },
+    cut:{ fwd:'With nothing pulling it toward the center, there’s no net force, so its velocity stops changing. The ' + o + ' goes in a straight line along the tangent, the way it was already moving.',
+          out:'It doesn’t fly straight outward. Nothing pushes it out. It keeps the velocity it had, so it goes straight along the tangent.',
+          'in':'Nothing pulls it toward the center anymore, so it can’t curve in. It goes straight along the tangent, the way it was already moving.',
+          back:'It keeps moving the way it was already going: straight along the tangent, not backwards.' }
+  };
+  return W[s.type][k];
+}
+var pdScore = Score(el('pd-score')), pdTally = newTally(PD_TYPES), pdCur = null, pdDone = false;
+var pdBtns = Array.prototype.slice.call(el('pd-opts').querySelectorAll('.cbtn'));
+function pdNew(){
+  var type, scene, guard = 0;
+  do {
+    type = pick(['vel','acc','net','cut']);
+    scene = type === 'cut' ? pick(['ball','car']) : pick(['ball','car','sat']);
+    guard++;
+  } while(pdCur && guard < 10 && type === pdCur.type && scene === pdCur.scene);
+  var kinds = shuffle(['fwd','back','in','out']), map = {};
+  ['A','B','C','D'].forEach(function(L, i){ map[L] = kinds[i]; });
+  var ccw = Math.random() < .5;
+  pdCur = { type:type, scene:scene, deg:pick(PD_ANGLES), ccw:ccw, map:map, mark:null };
+  el('pd-cap').innerHTML = PD_SCENES[scene].cap(ccw ? 'counterclockwise' : 'clockwise') + ' Seen from above.';
+  el('pd-q').innerHTML = pdQuestion(pdCur);
+  drawPD(el('pd-svg'), pdCur);
+  el('pd-desc').textContent = pdDesc(pdCur);
+  pdBtns.forEach(function(b){ b.disabled = false; b.className = 'cbtn'; });
+  pdDone = false;
+  hideFb(el('pd-fb'));
+}
+function pdPick(L){
+  if(pdDone) return;
+  pdDone = true;
+  var s = pdCur, k = s.map[L], want = PD_ANS[s.type], ok = k === want;
+  var good = ['A','B','C','D'].filter(function(x){ return s.map[x] === want; })[0];
+  s.mark = { good:good, bad:ok ? null : L };
+  drawPD(el('pd-svg'), s);
+  pdBtns.forEach(function(b){
+    b.disabled = true;
+    if(b.dataset.l === L) b.classList.add(ok ? 'yes' : 'no');
+    else if(b.dataset.l === good) b.classList.add('reveal');
+  });
+  pdScore.add(ok); pdTally[s.type].t++; if(ok) pdTally[s.type].r++;
+  renderTally(el('pd-tally'), PD_TYPES, pdTally);
+  setFb(el('pd-fb'), ok ? 'good' : 'bad', '<p><b>' + (ok ? 'Right.' : 'Not this one. It’s ' + good + '.') + '</b> ' + pdWhy(s, k) + '</p>');
+}
+pdBtns.forEach(function(b){ b.addEventListener('click', function(){ pdPick(b.dataset.l); }); });
+el('pd-next').addEventListener('click', pdNew);
+
+/* =========================================================
+   Try it · swing the ball
+   ========================================================= */
+(function(){
+  var svg = el('sw-svg'), cx = 260, cy = 200, PX = 80, W = 520, H = 400;   /* PX: pixels per meter */
+  var DEF = { v:2, r:1, m:0.5 };
+  var S = { v:2, r:1, m:0.5, th:60, cut:false, p0:null, u:null, tau:0, paused:REDUCED, seen:true, last:0, state:'' };
+  var sv = el('sw-v'), sr = el('sw-r'), sm = el('sw-m');
+  function read(){
+    S.v = parseFloat(sv.value); S.r = parseFloat(sr.value); S.m = parseFloat(sm.value);
+    el('sw-v-out').textContent = S.v.toFixed(1) + ' m/s';
+    el('sw-r-out').textContent = S.r.toFixed(1) + ' m';
+    el('sw-m-out').textContent = S.m.toFixed(1) + ' kg';
+  }
+  function numbers(){
+    var a = S.v*S.v/S.r;
+    if(S.cut){
+      el('sw-T').textContent = 'not going around anymore';
+      el('sw-a').textContent = '0 m/s²';
+      el('sw-F').textContent = '0 N';
+    } else {
+      el('sw-T').textContent = 'one lap every ' + fmt(2*Math.PI*S.r/S.v) + ' s';
+      el('sw-a').textContent = fmt(S.v) + '² / ' + fmt(S.r) + ' = ' + fmt(a) + ' m/s² toward the center';
+      el('sw-F').textContent = fmt(S.m) + ' × ' + fmt(a) + ' = ' + fmt(S.m*a) + ' N toward the center';
+    }
+    var txt = S.cut ? 'String cut. Nothing pulls the ball in, so there’s no net force and no acceleration. It keeps the velocity it had and goes in a straight line along the tangent.'
+                    : 'The string pulls the ball toward the center, so the net force and the acceleration point to the center. The velocity keeps turning.';
+    if(txt !== S.state){
+      S.state = txt;
+      el('sw-state').textContent = txt;
+      el('sw-state').className = 'state' + (S.cut ? ' cut' : '');
+      el('sw-desc').textContent = S.cut ? 'Top view. The string has been cut. The ball moves off in a straight line along the tangent to the circle.'
+                                        : 'Top view. A ball on a string moving counterclockwise in a circle. The velocity arrow points along the circle and the acceleration arrow points toward the center.';
+    }
+  }
+  function draw(){
+    clearSvg(svg);
+    var R = S.r*PX, p;
+    orbit(svg, cx, cy, R);
+    pivot(svg, cx, cy);
+    if(!S.cut){
+      p = P(cx, cy, R, S.th);
+      var t = tanDir(S.th, true), n = inDir(S.th);
+      svgEl('line', {x1:cx, y1:cy, x2:p.x, y2:p.y, stroke:'#16283C', 'stroke-width':1.6}, svg);
+      vec(svg, p, n, 13, 44, CEN);
+      vec(svg, p, t, 13, 56, VEL);
+      ballAt(svg, p, 11);
+      label(svg, p.x + t.x*84, p.y + t.y*84 + 6, 'v', VEL, 'middle', 17);
+      label(svg, p.x + n.x*30 - t.x*20, p.y + n.y*30 - t.y*20 + 6, sub('a','c'), CEN, 'middle', 17);
+    } else {
+      var d = S.tau*S.v*PX;
+      p = { x:S.p0.x + S.u.x*d, y:S.p0.y + S.u.y*d };
+      svgEl('line', {x1:S.p0.x, y1:S.p0.y, x2:S.p0.x + S.u.x*900, y2:S.p0.y + S.u.y*900, stroke:GREY, 'stroke-width':1.5, 'stroke-dasharray':'3 5'}, svg);
+      svgEl('line', {x1:cx, y1:cy, x2:cx + (S.p0.x - cx)*0.35, y2:cy + (S.p0.y - cy)*0.35, stroke:'#16283C', 'stroke-width':1.6}, svg);   /* what's left of the string */
+      svgEl('circle', {cx:S.p0.x, cy:S.p0.y, r:4, fill:'none', stroke:MUTE, 'stroke-width':1.5}, svg);
+      if(p.x > 40 && p.x < W - 40 && p.y > -20 && p.y < H + 20){
+        vec(svg, p, S.u, 13, 56, VEL);
+        ballAt(svg, p, 11);
+        label(svg, p.x + S.u.x*84, p.y + S.u.y*84 + 6, 'v', VEL, 'middle', 17);
+      }
+    }
+  }
+  function cut(){
+    if(S.cut){ S.cut = false; el('sw-cut').textContent = 'Cut the string'; }
+    else {
+      S.cut = true; S.tau = 0;
+      S.p0 = P(cx, cy, S.r*PX, S.th); S.u = tanDir(S.th, true);
+      if(S.paused) S.tau = 150/(S.v*PX);   /* paused: show the ball part-way along its path */
+      el('sw-cut').textContent = 'Tie it back on';
+    }
+    draw(); numbers();
+  }
+  function retie(){ if(S.cut){ S.cut = false; el('sw-cut').textContent = 'Cut the string'; } }
+  [sv, sr, sm].forEach(function(inp){ inp.addEventListener('input', function(){ read(); retie(); draw(); numbers(); }); });
+  el('sw-cut').addEventListener('click', cut);
+  el('sw-pause').addEventListener('click', function(){
+    S.paused = !S.paused; S.last = 0;
+    el('sw-pause').textContent = S.paused ? 'Play' : 'Pause';
+  });
+  el('sw-reset').addEventListener('click', function(){
+    sv.value = DEF.v; sr.value = DEF.r; sm.value = DEF.m;
+    read(); retie(); S.th = 60; draw(); numbers();
+  });
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ S.seen = es[0].isIntersecting; S.last = 0; }).observe(svg);
+  }
+  function frame(now){
+    var dt = S.last ? Math.min(0.05, (now - S.last)/1000) : 0;
+    S.last = now;
+    if(!S.paused && S.seen && dt > 0){
+      if(!S.cut){ S.th = (S.th + (S.v/S.r)*dt/D2R) % 360; draw(); }
+      else if(S.tau*S.v*PX < 900){ S.tau += dt; draw(); }
+    }
+    requestAnimationFrame(frame);
+  }
+  el('sw-pause').textContent = S.paused ? 'Play' : 'Pause';
+  read(); draw(); numbers();
+  requestAnimationFrame(frame);
+})();
+
+/* =========================================================
+   Practice 2 · v → a_c → F_net
+   ========================================================= */
+var PC_TYPES = { v:'Speed v', a:'Acceleration a<sub>c</sub>', f:'Net force F<sub>net</sub>' };
+var PC_SCENES = [
+  { given:'v', obj:'car', ms:[1000,1200,1500], rs:[40,50,60,80,100], vs:[10,12,15,20], aMax:6, src:'friction from the road on the tires',
+    cap:function(p){ return 'A <b>' + p.m + ' kg car</b> drives around a flat curve with a radius of <b>' + p.r + ' m</b> at a steady <b>' + p.v + ' m/s</b>.'; } },
+  { given:'v', obj:'runner', ms:[50,55,60,70], rs:[20,25,30,36], vs:[5,6,7,8], aMax:4, src:'friction from the track on the runner’s shoes',
+    cap:function(p){ return 'A <b>' + p.m + ' kg runner</b> rounds a curve in the track with a radius of <b>' + p.r + ' m</b> at a steady <b>' + p.v + ' m/s</b>.'; } },
+  { given:'v', obj:'puck', ms:[0.2,0.25,0.5,0.8,1,2], rs:[0.5,0.8,1,1.2,1.5,2], vs:[2,3,4,5,6], aMax:40, src:'the tension in the string',
+    cap:function(p){ return 'A <b>' + p.m + ' kg puck</b> tied to a <b>' + p.r + ' m</b> string slides in a circle on frictionless ice at a steady <b>' + p.v + ' m/s</b>.'; } },
+  { given:'T', obj:'kid', disk:true, ms:[25,30,35,40,45], rs:[1,1.5,2,2.5], Ts:[3,4,5,6], aMax:6, src:'the merry-go-round: the kid holding on, plus friction from the seat',
+    cap:function(p){ return 'A <b>' + p.m + ' kg kid</b> rides a merry-go-round, <b>' + p.r + ' m</b> from the center. It goes around once every <b>' + p.T + ' s</b>.'; } },
+  { given:'T', obj:'toy car', ms:[0.1,0.2,0.25,0.5], rs:[0.3,0.5,0.6,0.8,1], Ts:[1,1.5,2,2.5,3], aMax:20, src:'the outside wall of the track pushing it inward (a normal force)',
+    cap:function(p){ return 'A <b>' + p.m + ' kg toy car</b> races around a circular track with a radius of <b>' + p.r + ' m</b>, making one lap every <b>' + p.T + ' s</b>.'; } },
+  { given:'T', obj:'rider', disk:true, ms:[50,60,70,80], rs:[2,2.5,3], Ts:[2,2.5,3], aMax:30, src:'the wall of the ride pushing on the rider’s back (a normal force)',
+    cap:function(p){ return 'A <b>' + p.m + ' kg rider</b> stands against the wall of a spinning carnival ride with a radius of <b>' + p.r + ' m</b>. The ride spins once every <b>' + p.T + ' s</b>.'; } }
+];
+function pcMake(sc){
+  var p, g = 0;
+  do {
+    p = { m:pick(sc.ms), r:pick(sc.rs) };
+    if(sc.given === 'v') p.v = pick(sc.vs);
+    else { p.T = pick(sc.Ts); p.v = 2*Math.PI*p.r/p.T; }
+    p.a = p.v*p.v/p.r; g++;
+  } while(p.a > sc.aMax && g < 60);
+  p.F = p.m*p.a;
+  /* the same chain worked with two decimals in between, the way a student would */
+  p.v2 = sc.given === 'v' ? p.v : r2(p.v);
+  p.a2 = r2(p.v2*p.v2/p.r);
+  p.F2 = r2(p.m*p.a2);
+  return p;
+}
+var pcScore = Score(el('pc-score')), pcTally = newTally(PC_TYPES), pcCur = null, pcDone = false;
+var PC_INPUTS = ['pc-v','pc-a','pc-f'];
+function pcNew(){
+  var sc, guard = 0;
+  do { sc = pick(PC_SCENES); guard++; } while(pcCur && guard < 10 && sc === pcCur.sc);
+  var p = pcMake(sc), askV = sc.given === 'T';
+  pcCur = { sc:sc, p:p, askV:askV };
+  el('pc-cap').innerHTML = sc.cap(p);
+  drawSpin(el('pc-svg'), { deg:pick([35,145,215,325]), ccw:Math.random() < .5, disk:sc.disk, rLabel:'r = ' + p.r + ' m', obj:p.m + ' kg',
+    v:askV ? null : 'v = ' + p.v + ' m/s', T:askV ? 'T = ' + p.T + ' s' : null });
+  el('pc-desc').textContent = 'Top view of the ' + sc.obj + ' going around a circle of radius ' + p.r + ' meters. ' +
+    (askV ? 'It goes around once every ' + p.T + ' seconds.' : 'Its speed is ' + p.v + ' meters per second.');
+  el('pc-vrow').style.display = askV ? '' : 'none';
+  el('pc-vl').innerHTML = '1 · Speed v';
+  el('pc-al').innerHTML = (askV ? '2' : '1') + ' · Centripetal acceleration a<sub>c</sub>';
+  el('pc-fl').innerHTML = (askV ? '3' : '2') + ' · Net force F<sub>net</sub>';
+  PC_INPUTS.forEach(function(id){ el(id).value = ''; el(id).classList.remove('ok-in','no-in'); });
+  lock(PC_INPUTS.concat(['pc-check']), false); pcDone = false;
+  hideFb(el('pc-fb'));
+}
+function pcCheck(){
+  if(pcDone) return;
+  var c = pcCur, p = c.p, sc = c.sc, askV = c.askV;
+  var xv = askV ? parseNum(el('pc-v').value) : p.v, xa = parseNum(el('pc-a').value), xf = parseNum(el('pc-f').value);
+  if(isNaN(xv) || isNaN(xa) || isNaN(xf)){ setFb(el('pc-fb'),'hint','Fill in every box, in order. Type just the number; the unit is already there.'); return; }
+  xv = Math.abs(xv); xa = Math.abs(xa); xf = Math.abs(xf);
+  /* each step is right if it matches the exact value, the two-decimal chain,
+     or follows correctly from the student's own (right) answer to the step before */
+  var okV = !askV || close(xv, p.v) || close(xv, p.v2);
+  var okA = close(xa, p.a) || close(xa, p.a2) || (askV && okV && close(xa, xv*xv/p.r));
+  var okF = close(xf, p.F) || close(xf, p.F2) || (okA && close(xf, p.m*xa));
+  var all = okV && okA && okF;
+  pcDone = true; lock(PC_INPUTS.concat(['pc-check']), true);
+  if(askV) el('pc-v').classList.add(okV ? 'ok-in' : 'no-in');
+  el('pc-a').classList.add(okA ? 'ok-in' : 'no-in');
+  el('pc-f').classList.add(okF ? 'ok-in' : 'no-in');
+  pcScore.add(all);
+  if(askV){ pcTally.v.t++; if(okV) pcTally.v.r++; }
+  pcTally.a.t++; if(okA) pcTally.a.r++;
+  pcTally.f.t++; if(okF) pcTally.f.r++;
+  renderTally(el('pc-tally'), PC_TYPES, pcTally);
+
+  var tips = [];
+  if(askV && !okV){
+    if(close(xv, p.r/p.T)) tips.push('For v, you divided r by T. In one lap the object travels the whole circumference, 2πr.');
+    else if(close(xv, Math.PI*p.r/p.T)) tips.push('For v, the distance around a circle is 2πr, not πr.');
+    else if(close(xv, 4*Math.PI*p.r/p.T)) tips.push('For v, it looks like you used the diameter. Use the radius in 2πr.');
+    else if(close(xv, 2*Math.PI*p.r*p.T)) tips.push('For v, divide by the period. Don’t multiply.');
+  }
+  if(!okA){
+    if(askV && !okV && close(xa, xv*xv/p.r)) tips.push('Your a<sub>c</sub> is right for your v, so that step’s method is right. Fix v and the rest follows.');
+    else if(close(xa, p.v/p.r) || close(xa, xv/p.r)) tips.push('For a<sub>c</sub>, square the speed first, then divide by r.');
+    else if(close(xa, p.v*p.v*p.r)) tips.push('For a<sub>c</sub>, divide v² by r. Don’t multiply.');
+    else if(close(xa, p.v*p.v/(2*p.r))) tips.push('For a<sub>c</sub>, it looks like you used the diameter. Use the radius.');
+    else if(close(xa, p.v*p.v)) tips.push('For a<sub>c</sub>, don’t forget to divide v² by r.');
+  }
+  if(!okF){
+    if(!okA && close(xf, p.m*xa)) tips.push('Your F<sub>net</sub> is right for your a<sub>c</sub>, so that step’s method is right. Fix a<sub>c</sub> and the rest follows.');
+    else if(close(xf, p.m*9.8)) tips.push('For F<sub>net</sub>, that’s the weight (m · g). In a circle, F<sub>net</sub> = m · a<sub>c</sub>.');
+    else if(close(xf, p.m*p.v)) tips.push('For F<sub>net</sub>, multiply the mass by the acceleration, not the speed.');
+    else if(close(xf, p.a/p.m) || close(xf, p.m/p.a)) tips.push('For F<sub>net</sub>, multiply the mass and the acceleration. Don’t divide.');
+  }
+  var head = all ? (askV ? '<b>All three right.</b>' : '<b>Both right.</b>') : '<b>Not this one.</b> The boxes in red need another look.';
+  var work = [];
+  if(askV) work.push('v = 2πr / T = 2π × ' + p.r + ' m / ' + p.T + ' s = <b>' + fmt(p.v2) + ' m/s</b>');
+  work.push('a<sub>c</sub> = v² / r = (' + fmt(p.v2) + ' m/s)² / ' + p.r + ' m = <b>' + fmt(p.a2) + ' m/s²</b>');
+  work.push('F<sub>net</sub> = m · a<sub>c</sub> = ' + p.m + ' kg × ' + fmt(p.a2) + ' m/s² = <b>' + fmt(p.F2) + ' N</b> toward the center');
+  setFb(el('pc-fb'), all ? 'good' : 'bad', '<p>' + head + (tips.length ? ' ' + tips.join(' ') : '') + '</p><div class="work">' + work.join('<br>') + '</div><p>This net force comes from ' + sc.src + '.</p>');
+}
+el('pc-check').addEventListener('click', pcCheck);
+el('pc-next').addEventListener('click', pcNew);
+onEnter(PC_INPUTS, pcCheck);
+
+/* =========================================================
+   quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'A car drives around a circular track at a steady 20 m/s. Which is true?',
+    opts:['Its velocity is constant, so it isn’t accelerating','Its speed is constant, but it is accelerating','It is accelerating in the direction it’s moving','The net force on it is zero'],
+    ans:1,
+    why:'The speed stays at 20 m/s, but the direction keeps changing, so the velocity changes. That’s an acceleration toward the center, so the net force isn’t zero either.' },
+  { stem:'A kid sits 3 m from the center of a merry-go-round that turns once every 6 s. How fast is the kid moving?',
+    opts:['0.5 m/s','1.57 m/s','3.14 m/s','6.28 m/s'],
+    ans:2,
+    why:'v = 2πr / T = 2π × 3 m / 6 s = 3.14 m/s. 0.5 m/s leaves out the 2π, 1.57 m/s uses πr instead of 2πr, and 6.28 m/s uses the diameter instead of the radius.' },
+  { stem:'A car goes around a curve with a radius of 40 m at 12 m/s. What is its centripetal acceleration?',
+    opts:['0.3 m/s²','1.8 m/s²','3.6 m/s²','480 m/s²'],
+    ans:2,
+    why:'a<sub>c</sub> = v² / r = (12 m/s)² / 40 m = 144 / 40 = 3.6 m/s². 0.3 m/s² forgets to square the speed, 1.8 m/s² uses the diameter, and 480 m/s² multiplies the speed by the radius.' },
+  { stem:'A 1000 kg car rounds a curve with a radius of 50 m at 10 m/s. What is the net force on it?',
+    opts:['200 N toward the center','2000 N toward the center','2000 N in the direction it’s moving','9800 N toward the center'],
+    ans:1,
+    why:'a<sub>c</sub> = (10 m/s)² / 50 m = 2 m/s². F<sub>net</sub> = m · a<sub>c</sub> = 1000 kg × 2 m/s² = 2000 N, toward the center. 9800 N is the car’s weight, and 200 N forgets to square the speed.' },
+  { stem:'A car takes the same curve twice as fast. How does the net force it needs compare?',
+    opts:['It’s the same','It’s twice as big','It’s four times as big','It’s half as big'],
+    ans:2,
+    why:'a<sub>c</sub> = v² / r, so twice the speed gives 2² = 4 times the acceleration. F<sub>net</sub> = m · a<sub>c</sub>, so the net force is 4 times as big too.' },
+  { stem:'A ball is whirled in a circle on a string, seen from above. At the instant the string breaks, the ball is moving due north. Which way does it go?',
+    opts:['North, in a straight line','Straight away from the center of the circle','It keeps going around the circle','It curves outward in a spiral'],
+    ans:0,
+    why:'Once the string breaks, there’s no net force, so the velocity stops changing. The ball keeps going north in a straight line, along the tangent.' },
+  { stem:'A car turns left on a flat road. Which force points toward the center of the turn?',
+    opts:['Friction from the road on the tires','The engine’s force','Centrifugal force','The normal force from the road'],
+    ans:0,
+    why:'The road’s friction on the tires is the only sideways force on the car. The normal force points straight up, the engine is part of the car, and there is no centrifugal force.' },
+  { stem:'You’re riding in a car that turns sharply left, and you slide right, into the door. Why?',
+    opts:['A centrifugal force pushes you to the right','Your body keeps going straight while the car turns left','The car’s acceleration points to the right','Gravity pulls you toward the door'],
+    ans:1,
+    why:'Nothing pushes you right. Your body keeps going straight (inertia) while the car turns left underneath you, so the door runs into you. Then the door pushes you left, toward the center of the turn.' }
+];
+
+(function buildQuiz(){
+  var host = el('quiz'), html = '', answered = 0, right = 0;
+  QUIZ.forEach(function(q,qi){
+    html += '<div class="q"><p class="stem">' + (qi+1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o,oi){ html += '<button class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  html += '<div class="quiz-sum" id="quiz-sum" aria-live="polite"></div>';
+  host.innerHTML = html;
+  Array.prototype.forEach.call(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      Array.prototype.forEach.call(el('q'+qi).querySelectorAll('.opt'), function(other,i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      answered++; if(oi === q.ans) right++;
+      setFb(el('qfb'+qi), oi === q.ans ? 'good' : 'bad',
+        '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+      el('quiz-sum').textContent = right + ' of ' + answered + ' correct' + (answered === QUIZ.length ? ' · reload the page to try again' : '');
+    });
+  });
+})();
+
+/* boot */
+renderTally(el('pd-tally'), PD_TYPES, pdTally);
+renderTally(el('pc-tally'), PC_TYPES, pcTally);
+pdNew(); pcNew();
+</script>
+</body>
+</html>
