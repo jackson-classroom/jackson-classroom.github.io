@@ -8,6 +8,30 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/ap-chemistry/topic.css">
+<style>
+.plot{display:block;width:100%;min-width:460px;height:auto;background:#fff;border:1px solid var(--line-soft);border-radius:3px}
+.plot text{font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:13px;fill:#3A4558}
+.plot .tick{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;fill:#5B6577}
+.plot .lab{font-weight:600}
+.ctls{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px 26px;margin:16px 0 0}
+.ctl label{display:flex;justify-content:space-between;gap:10px;font-size:15.5px;color:var(--ink2)}
+.ctl label b{font-family:var(--mono);font-size:13.5px;font-weight:500;color:var(--ink)}
+.ctl input[type=range]{width:100%;margin:8px 0 0;accent-color:var(--acc)}
+table.bca.rates td:first-child{font-family:var(--body);font-size:15px;letter-spacing:0;color:var(--ink)}
+table.bca.rates th,table.bca.rates td{white-space:nowrap}
+.sci{white-space:nowrap}
+table.bca.rates td.same{background:var(--ok-bg);color:#1C4A30;font-weight:600}
+.key{display:inline-block;width:22px;height:0;border-top:3px solid;vertical-align:middle;margin-right:7px}
+.readout{font-size:15.5px;color:var(--ink2);margin:12px 0 0}
+.readout b{font-family:var(--mono);font-weight:500;font-size:14px;color:var(--ink)}
+.rateeq{font-size:17px}
+#trainer input.ans{width:160px}
+.pick4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+table.data{max-width:560px}
+table.data td:first-child{font-family:var(--body);font-size:15px;letter-spacing:0;color:var(--ink2)}
+.qtext table.bca{max-width:520px}
+@media (max-width:700px){ .pick4{grid-template-columns:1fr 1fr} }
+</style>
 </head>
 <body>
 
@@ -24,18 +48,229 @@
   <div class="eyebrow">AP Chemistry · Unit 5 Kinetics · Topic 5.1</div>
   <h1>Reaction <em>Rates</em></h1>
   <p class="lede">Some reactions are over in a flash and others take years. Reaction rate measures how fast reactants are used up or products appear, and it depends on concentration, temperature, surface area, and catalysts.</p>
+  <p class="lo-line"><b>Learning objective 5.1.A</b> Explain the relationship between the rate of a chemical reaction and experimental parameters.</p>
 
   <div class="board" aria-label="Key ideas in this topic">
-    <div class="idea"><span class="code">Q1</span><span class="lq">How fast is it going?</span><span class="d">Rate as change in concentration over time</span></div>
-    <div class="idea"><span class="code">Q2</span><span class="lq">How do I speed it up?</span><span class="d">Concentration, temperature, surface area, and catalysts</span></div>
-    <div class="idea"><span class="code">Q3</span><span class="lq">How do the rates of different species compare?</span><span class="d">Relating rates with the coefficients in the balanced equation</span></div>
+    <a class="idea" href="#rate"><span class="code">Q1</span><span class="lq">How fast is it going?</span><span class="d">Rate as change in concentration over time</span></a>
+    <a class="idea" href="#factors"><span class="code">Q2</span><span class="lq">How do I speed it up?</span><span class="d">Concentration, temperature, surface area, and catalysts</span></a>
+    <a class="idea" href="#ratios"><span class="code">Q3</span><span class="lq">How do the rates of different species compare?</span><span class="d">Relating rates with the coefficients in the balanced equation</span></a>
     <div class="board-foot"><span><b>Unit 5</b> Kinetics · 7–9% of the AP Exam</span><span><b>Before this</b> <a href="/ap-chemistry/unit-4/4-9-oxidation-reduction-redox-reactions/">4.9 Oxidation-Reduction (Redox) Reactions</a></span></div>
   </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#rate">What rate means</a>
+    <a href="#ratios">Rates and coefficients</a>
+    <a href="#factors">What changes the rate</a>
+    <a href="#graph">Rate from a graph</a>
+    <a href="#trainer">Relating rates</a>
+    <a href="#sort">Which factor?</a>
+    <a href="#check">Check yourself</a>
+  </nav>
 </header>
 
-<section id="tools">
-  <div class="sec-head"><span class="tag plain">Coming soon</span><h2>Tools and practice</h2></div>
-  <div class="soon-card"><p>Interactive tools, worked examples, and AP-style practice for Topic 5.1 aren’t posted yet. The three questions above are the ones this topic answers.</p></div>
+<!-- =========================================================
+     5.1.A.1  WHAT RATE MEANS
+     ========================================================= -->
+<section id="rate">
+  <div class="sec-head"><span class="tag">5.1.A.1</span><h2>How fast is it going?</h2></div>
+  <div class="def">
+    <span class="ek">5.1.A.1</span>
+    <div class="term">Kinetics</div>
+    <p>The kinetics of a chemical reaction is the rate at which an amount of reactants is converted to products per unit of time.</p>
+  </div>
+  <p>A car’s speed is a change in distance divided by a change in time. A reaction’s rate is a change in <b>concentration</b> divided by a change in time, so its usual unit is <b><i>M</i>/s</b> (the same thing as mol/(L·s) or mol L<sup>−1</sup> s<sup>−1</sup>).</p>
+  <div class="chain rateeq">
+    <span>rate of change of A =</span>
+    <span class="frac"><span>Δ[A]</span><span>Δ<i>t</i></span></span>
+    <span>=</span>
+    <span class="frac"><span>[A]<sub>final</sub> − [A]<sub>initial</sub></span><span><i>t</i><sub>final</sub> − <i>t</i><sub>initial</sub></span></span>
+  </div>
+  <p>The square brackets mean “concentration of, in mol/L.” A reactant’s concentration goes down, so its Δ[A]/Δ<i>t</i> is negative. A product’s concentration goes up, so its Δ[A]/Δ<i>t</i> is positive. A rate of <b>disappearance</b> or <b>appearance</b> is reported as a positive number, because the word already tells you the direction.</p>
+
+  <h3>Worked example: average rate from data</h3>
+  <p>Dinitrogen pentoxide decomposes at 55 °C: <span data-eq="2N2O5(g) -> 4NO2(g) + O2(g)"></span>. Its concentration is measured every 100 seconds.</p>
+  <div class="tablewrap"><table class="bca data">
+    <tr><th>Time (s)</th><th>0</th><th>100</th><th>200</th><th>300</th><th>400</th></tr>
+    <tr><td>[N<sub>2</sub>O<sub>5</sub>] (<i>M</i>)</td><td>0.0200</td><td>0.0169</td><td>0.0142</td><td>0.0120</td><td>0.0101</td></tr>
+  </table></div>
+  <div class="chain">
+    <span>First 100 s:</span>
+    <span class="frac"><span>0.0169 <i>M</i> − 0.0200 <i>M</i></span><span>100 s − 0 s</span></span>
+    <span>= −3.1 × 10<sup>−5</sup> <i>M</i>/s</span>
+  </div>
+  <div class="chain">
+    <span>300 s to 400 s:</span>
+    <span class="frac"><span>0.0101 <i>M</i> − 0.0120 <i>M</i></span><span>400 s − 300 s</span></span>
+    <span>= −1.9 × 10<sup>−5</sup> <i>M</i>/s</span>
+  </div>
+  <p>N<sub>2</sub>O<sub>5</sub> disappears at an average rate of 3.1 × 10<sup>−5</sup> <i>M</i>/s at first, but only 1.9 × 10<sup>−5</sup> <i>M</i>/s later on. <b>The reaction slows down as the reactant is used up.</b> That’s true of most reactions, and the reason comes up below: less reactant means a lower concentration.</p>
+
+  <h3>Average rate and instantaneous rate</h3>
+  <p>Because the rate keeps changing, there are two ways to state it. Both are slopes on a graph of concentration against time.</p>
+  <div class="tablewrap"><svg class="plot" id="fig-slope" viewBox="0 0 560 340" role="img" aria-label="Graph of the concentration of N2O5 against time. The curve falls from 0.0200 M at 0 seconds and flattens as it goes. A straight line joining the points at 0 and 400 seconds shows the average rate. A dashed line touching the curve at 400 seconds shows the instantaneous rate, which is less steep."></svg></div>
+  <div class="grid2">
+    <div class="mini"><div class="n">Average rate</div><h4>Slope between two points</h4><p>Δ[A]/Δ<i>t</i> over a whole time interval. It’s the slope of the straight line (a secant) joining two points on the curve.</p></div>
+    <div class="mini"><div class="n">Instantaneous rate</div><h4>Slope at one point</h4><p>The rate at a single moment. It’s the slope of the tangent line that just touches the curve there. The <b>initial rate</b> is the instantaneous rate at <i>t</i> = 0, where the curve is steepest.</p></div>
+  </div>
+  <div class="note"><b>Steeper means faster.</b> Whether the curve goes up or down doesn’t matter. A flat curve means the concentration has stopped changing.</div>
+
+  <h3>How a rate is measured in the lab</h3>
+  <p>You can’t count molecules, so you follow something that changes along with concentration and record it over time.</p>
+  <div class="grid2">
+    <div class="mini"><div class="n">A gas is produced</div><p>Collect the gas and record its volume, track the pressure in a sealed flask, or leave the flask on a balance and record the mass lost.</p></div>
+    <div class="mini"><div class="n">A color changes</div><p>Measure absorbance with a spectrophotometer. By the <a href="/ap-chemistry/unit-3/3-13-beer-lambert-law/">Beer-Lambert law</a>, absorbance is proportional to the concentration of the colored species.</p></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     5.1.A.2  RATES AND COEFFICIENTS
+     ========================================================= -->
+<section id="ratios">
+  <div class="sec-head"><span class="tag">5.1.A.2</span><h2>How do the rates of different species compare?</h2></div>
+  <div class="def">
+    <span class="ek">5.1.A.2</span>
+    <div class="term">Stoichiometry sets the ratio</div>
+    <p>The rates of change of reactant and product concentrations are determined by the stoichiometry in the balanced chemical equation.</p>
+  </div>
+  <p>In <span data-eq="2N2O5(g) -> 4NO2(g) + O2(g)"></span>, every 2 N<sub>2</sub>O<sub>5</sub> that react make 4 NO<sub>2</sub> and 1 O<sub>2</sub>. So in any stretch of time, NO<sub>2</sub> appears twice as fast as N<sub>2</sub>O<sub>5</sub> disappears, and O<sub>2</sub> appears half as fast. It’s the mole ratio from <a href="/ap-chemistry/unit-4/4-5-stoichiometry/">Topic 4.5</a>, applied to rates.</p>
+
+  <h3>Worked example: from one rate to another</h3>
+  <p>In the first 100 s above, N<sub>2</sub>O<sub>5</sub> disappears at 3.1 × 10<sup>−5</sup> <i>M</i>/s. How fast do NO<sub>2</sub> and O<sub>2</sub> appear?</p>
+  <div class="chain">
+    <span>3.1 × 10<sup>−5</sup> <i>M</i>/s N<sub>2</sub>O<sub>5</sub></span><span class="x">×</span>
+    <span class="frac"><span>4 mol NO<sub>2</sub></span><span>2 mol N<sub>2</sub>O<sub>5</sub></span></span>
+    <span>= <b>6.2 × 10<sup>−5</sup> <i>M</i>/s NO<sub>2</sub></b></span>
+  </div>
+  <div class="chain">
+    <span>3.1 × 10<sup>−5</sup> <i>M</i>/s N<sub>2</sub>O<sub>5</sub></span><span class="x">×</span>
+    <span class="frac"><span>1 mol O<sub>2</sub></span><span>2 mol N<sub>2</sub>O<sub>5</sub></span></span>
+    <span>= <b>1.6 × 10<sup>−5</sup> <i>M</i>/s O<sub>2</sub></b></span>
+  </div>
+
+  <h3>One rate for the whole reaction</h3>
+  <p>Three species, three different numbers. To give the reaction a single rate that doesn’t depend on which species you watched, divide each rate of change by that species’ coefficient, and put a minus sign on the reactants so the result is positive.</p>
+  <div class="chain rateeq">
+    <span>rate =</span>
+    <span>−</span><span class="frac"><span>1</span><span>2</span></span><span class="frac"><span>Δ[N<sub>2</sub>O<sub>5</sub>]</span><span>Δ<i>t</i></span></span>
+    <span>=</span>
+    <span class="frac"><span>1</span><span>4</span></span><span class="frac"><span>Δ[NO<sub>2</sub>]</span><span>Δ<i>t</i></span></span>
+    <span>=</span>
+    <span class="frac"><span>Δ[O<sub>2</sub>]</span><span>Δ<i>t</i></span></span>
+  </div>
+  <p>Here all three give 1.6 × 10<sup>−5</sup> <i>M</i>/s. For a general reaction <i>a</i>A + <i>b</i>B → <i>c</i>C + <i>d</i>D:</p>
+  <div class="chain rateeq">
+    <span>rate =</span>
+    <span>−</span><span class="frac"><span>1</span><span><i>a</i></span></span><span class="frac"><span>Δ[A]</span><span>Δ<i>t</i></span></span>
+    <span>=</span>
+    <span>−</span><span class="frac"><span>1</span><span><i>b</i></span></span><span class="frac"><span>Δ[B]</span><span>Δ<i>t</i></span></span>
+    <span>=</span>
+    <span class="frac"><span>1</span><span><i>c</i></span></span><span class="frac"><span>Δ[C]</span><span>Δ<i>t</i></span></span>
+    <span>=</span>
+    <span class="frac"><span>1</span><span><i>d</i></span></span><span class="frac"><span>Δ[D]</span><span>Δ<i>t</i></span></span>
+  </div>
+  <div class="note"><b>Bigger coefficient, faster change.</b> The species with the largest coefficient has the steepest curve. A common mistake is to flip the ratio: check that your answer is larger for the species with the larger coefficient.</div>
+</section>
+
+<!-- =========================================================
+     5.1.A.3  FACTORS
+     ========================================================= -->
+<section id="factors">
+  <div class="sec-head"><span class="tag">5.1.A.3</span><h2>How do I speed it up?</h2></div>
+  <div class="def">
+    <span class="ek">5.1.A.3</span>
+    <div class="term">What rate depends on</div>
+    <p>The rate of a reaction is influenced by reactant concentrations, temperature, surface area, catalysts, and other environmental factors.</p>
+  </div>
+  <p>Particles have to collide before they can react. Each factor below works by changing how often reactant particles collide, or how many of those collisions succeed. <a href="/ap-chemistry/unit-5/5-5-collision-model/">Topic 5.5</a> builds that idea into a full model. For now, know the four factors and which way each one pushes the rate.</p>
+  <div class="grid2">
+    <div class="mini"><div class="n">Concentration</div><h4>More particles in the same space</h4><p>A higher reactant concentration means more collisions every second, so the rate goes up. For gases, squeezing the same amount into a smaller volume raises the pressure and the concentration together.</p></div>
+    <div class="mini"><div class="n">Temperature</div><h4>Faster particles, harder collisions</h4><p>Warmer particles collide a little more often, and far more of the collisions have enough energy to react. Raising the temperature speeds up nearly every reaction.</p></div>
+    <div class="mini"><div class="n">Surface area</div><h4>More of the solid exposed</h4><p>A solid can only react at its surface. Crushing a lump into powder exposes more particles to the other reactant. This matters when the reactants are in different phases, such as a solid in a solution.</p></div>
+    <div class="mini"><div class="n">Catalyst</div><h4>An easier path</h4><p>A catalyst speeds up a reaction without being used up, so it’s still there at the end. It doesn’t appear as a reactant or product in the overall equation. <a href="/ap-chemistry/unit-5/5-11-catalysis/">Topic 5.11</a> explains how.</p></div>
+  </div>
+  <p>The identity of the reactants matters too. Two dissolved ions meeting to form a precipitate react almost instantly, while a reaction that has to break strong covalent bonds can be very slow. Some reactions also speed up in light.</p>
+  <div class="note"><b>Faster isn’t more.</b> These factors change how quickly the products form, not how much forms in the end. The amount of product is still set by the limiting reactant. Powdered zinc and a zinc strip of the same mass make the same amount of H<sub>2</sub> in excess acid. The powder just gets there sooner.</div>
+  <p>This also explains the slowing you saw in the data. As a reaction runs, its reactants are used up, their concentrations fall, and the rate falls with them.</p>
+</section>
+
+<!-- =========================================================
+     INTERACTIVE: RATE FROM A GRAPH
+     ========================================================= -->
+<section id="graph">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Rate from a graph</h2></div>
+  <p>The graph follows all three species in <span data-eq="2N2O5(g) -> 4NO2(g) + O2(g)"></span>. Choose a time interval with the sliders. The straight lines show the average rate of change of each species over that interval, and the table works out the numbers.</p>
+  <div class="card">
+    <div class="card-label"><span>Concentration against time · 55 °C</span></div>
+    <div class="tablewrap"><svg class="plot" id="g-plot" viewBox="0 0 560 340" role="img" aria-label="Graph of concentration against time for N2O5, which falls, and NO2 and O2, which rise. The shaded band is the time interval chosen with the sliders."></svg></div>
+    <div class="ctls">
+      <div class="ctl"><label for="g-t1"><span>Start of interval</span><b id="g-t1v"></b></label><input type="range" id="g-t1" min="0" max="700" step="10" value="0"></div>
+      <div class="ctl"><label for="g-dt"><span>Length of interval, Δ<i>t</i></span><b id="g-dtv"></b></label><input type="range" id="g-dt" min="10" max="400" step="10" value="100"></div>
+    </div>
+    <div class="tablewrap"><table class="bca rates" id="g-table" aria-live="polite"></table></div>
+    <p class="readout" id="g-read"></p>
+  </div>
+  <p>Things to try:</p>
+  <ul>
+    <li>Slide the start of the interval to the right. Every species changes more slowly, but the last column always agrees across the three rows.</li>
+    <li>Compare the NO<sub>2</sub> and O<sub>2</sub> lines. NO<sub>2</sub> is always four times as steep.</li>
+    <li>Shrink Δ<i>t</i> to 10 s. The average rate closes in on the instantaneous rate at the start of the interval, because a very short secant is almost a tangent.</li>
+  </ul>
+  <p>The table works from unrounded concentrations, so a value can differ in its last digit from the worked examples above, which use the rounded data table.</p>
+</section>
+
+<!-- =========================================================
+     TRAINER: RELATING RATES
+     ========================================================= -->
+<section id="trainer">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Relating rates with coefficients</h2></div>
+  <p>A new problem each time. Enter numbers like 3.6e-4 or 3.6 x 10^-4. Use a negative number for a species that’s being used up. Answers within 1% count.</p>
+  <div class="card">
+    <div class="card-label"><span>One rate to another</span><span class="score" id="t-score">0 solved</span></div>
+    <p class="prompt" id="t-q"></p>
+    <div class="calc">
+      <label for="t1" id="t1l"></label><span><input class="ans" id="t1" inputmode="text" autocomplete="off"><span class="unit">M/s</span></span>
+      <label for="t2" id="t2l"></label><span><input class="ans" id="t2" inputmode="text" autocomplete="off"><span class="unit">M/s</span></span>
+    </div>
+    <div class="fb" id="t-fb" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="t-check">Check</button>
+      <button type="button" class="ghost" id="t-show">Show the solution</button>
+      <button type="button" class="ghost" id="t-new">New problem →</button>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SORTER: WHICH FACTOR
+     ========================================================= -->
+<section id="sort">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Which factor is it?</h2></div>
+  <p>Twelve observations, in random order. For each one, choose the factor that best explains the difference in rate.</p>
+  <div class="card" id="sorter">
+    <div class="card-label"><span id="s-count">Observation 1 of 12</span><span class="score" id="s-score">0 correct</span></div>
+    <div id="s-body">
+      <p class="prompt" id="s-prompt"></p>
+      <div class="pick4">
+        <button type="button" class="pbtn" data-pick="conc">Concentration</button>
+        <button type="button" class="pbtn" data-pick="temp">Temperature</button>
+        <button type="button" class="pbtn" data-pick="sa">Surface area</button>
+        <button type="button" class="pbtn" data-pick="cat">Catalyst</button>
+      </div>
+      <div class="fb" id="s-fb" aria-live="polite"></div>
+      <div class="btn-row"><button type="button" id="s-next" hidden>Next observation →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PRACTICE
+     ========================================================= -->
+<section id="check">
+  <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
+  <p>Eight multiple-choice questions written in AP style, with numbers you can handle without a calculator, then two written responses.</p>
+  <p class="score" id="mc-score" style="margin:0"></p>
+  <div class="card" id="mc"></div>
+  <div class="card" id="frq"></div>
 
   <div class="next">
     <div><p class="nt">Up next: 5.2 Introduction to Rate Law</p><p>Rate laws · reaction orders · the method of initial rates · the rate constant k</p></div>
@@ -44,11 +279,322 @@
 </section>
 
 <footer>
-  <p>Topic 5.1 Reaction Rates, following the AP Chemistry course framework.</p>
+  <p>Topic 5.1 Reaction Rates, following the AP Chemistry course framework (Learning Objective 5.1.A). The N<sub>2</sub>O<sub>5</sub> curves are calculated for a first-order decomposition with a rate constant of 1.7 × 10<sup>−3</sup> s<sup>−1</sup>, close to the measured value at 55 °C. Practice questions are original and written in AP style, and the trainer generates a new problem every time.</p>
   <p><a href="/ap-chemistry/unit-5/">← Unit 5 — Kinetics</a></p>
 </footer>
 
 </div><!-- /wrap -->
 
+<script src="/ap-chemistry/topic.js"></script>
+<script>
+/* ---------- helpers ---------- */
+function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
+function f(p){ return APC.term({n:1, f:p.f, z:"", st:""}); }     // a formula, formatted
+function mark(input, ok){ input.classList.toggle("ok", ok); input.classList.toggle("no", !ok); }
+function neg(s){ return String(s).replace("-", "−"); }
+// 0.0000313 -> "3.1 × 10<sup>−5</sup>"
+function sci(x, n){
+  if(x === 0) return "0";
+  n = n || 2;
+  var e = Math.floor(Math.log10(Math.abs(x))), m = (x / Math.pow(10, e)).toFixed(n - 1);
+  if(Math.abs(+m) >= 10){ e++; m = (x / Math.pow(10, e)).toFixed(n - 1); }
+  return '<span class="sci">' + neg(m) + " × 10<sup>" + neg(e) + "</sup></span>";
+}
+var MS = " <i>M</i>/s";
+
+/* ---------- the model: 2 N2O5 -> 4 NO2 + O2, first order in N2O5 ---------- */
+var K = 1.7e-3, C0 = 0.0200, TMAX = 800;
+function n2o5(t){ return C0 * Math.exp(-K * t); }
+var SPECIES = [
+  {name:"N₂O₅", html:"N<sub>2</sub>O<sub>5</sub>", coef:2, sign:-1, color:"#1D5FA8", dash:"",    c:n2o5},
+  {name:"NO₂",  html:"NO<sub>2</sub>",             coef:4, sign:1,  color:"#A8670F", dash:"7 4", c:function(t){ return 2 * (C0 - n2o5(t)); }},
+  {name:"O₂",   html:"O<sub>2</sub>",              coef:1, sign:1,  color:"#2E6B47", dash:"2 4", c:function(t){ return (C0 - n2o5(t)) / 2; }}
+];
+
+/* ---------- plotting ----------
+   plot(svg, {ymax, ystep, species:[...], band:[t1,t2], secants:[[species,t1,t2]], extra:fn(X,Y)}) */
+function plot(svg, o){
+  var W = 560, H = 340, L = 64, R = 62, T = 14, B = 46;
+  function X(t){ return L + t / TMAX * (W - L - R); }
+  function Y(c){ return T + (1 - c / o.ymax) * (H - T - B); }
+  var h = "";
+  if(o.band) h += '<rect x="' + X(o.band[0]) + '" y="' + T + '" width="' + (X(o.band[1]) - X(o.band[0])) + '" height="' + (H - T - B) + '" fill="#DCE7F5" opacity=".6"/>';
+  for(var c = 0; c <= o.ymax + 1e-9; c += o.ystep){
+    h += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(c) + '" y2="' + Y(c) + '" stroke="#DFE4EB"/>' +
+         '<text class="tick" x="' + (L - 8) + '" y="' + (Y(c) + 4) + '" text-anchor="end">' + c.toFixed(3) + "</text>";
+  }
+  for(var t = 0; t <= TMAX; t += 100){
+    h += '<line x1="' + X(t) + '" x2="' + X(t) + '" y1="' + (H - B) + '" y2="' + (H - B + 5) + '" stroke="#5B6577"/>';
+    if(t % 200 === 0) h += '<text class="tick" x="' + X(t) + '" y="' + (H - B + 19) + '" text-anchor="middle">' + t + "</text>";
+  }
+  h += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + (H - B) + '" y2="' + (H - B) + '" stroke="#5B6577"/>' +
+       '<line x1="' + L + '" x2="' + L + '" y1="' + T + '" y2="' + (H - B) + '" stroke="#5B6577"/>' +
+       '<text x="' + (L + (W - L - R) / 2) + '" y="' + (H - 8) + '" text-anchor="middle">Time (s)</text>' +
+       '<text transform="translate(15 ' + (T + (H - T - B) / 2) + ') rotate(-90)" text-anchor="middle">Concentration (M)</text>';
+  o.species.forEach(function(s){
+    var d = "";
+    for(var t = 0; t <= TMAX; t += 10) d += (t ? "L" : "M") + X(t).toFixed(1) + " " + Y(s.c(t)).toFixed(1);
+    h += '<path d="' + d + '" fill="none" stroke="' + s.color + '" stroke-width="2.5"' + (s.dash ? ' stroke-dasharray="' + s.dash + '"' : "") + ' stroke-linecap="round"/>' +
+         '<text class="lab" x="' + (W - R + 7) + '" y="' + (Y(s.c(TMAX)) + 4 + (s.dy || 0)) + '" style="fill:' + s.color + '">' + s.name + "</text>";
+  });
+  (o.secants || []).forEach(function(q){
+    var s = q[0], a = q[1], b = q[2];
+    h += '<line x1="' + X(a) + '" y1="' + Y(s.c(a)) + '" x2="' + X(b) + '" y2="' + Y(s.c(b)) + '" stroke="#151D2E" stroke-width="1.75"/>';
+    [a, b].forEach(function(t){ h += '<circle cx="' + X(t) + '" cy="' + Y(s.c(t)) + '" r="4.5" fill="#fff" stroke="' + s.color + '" stroke-width="2"/>'; });
+  });
+  if(o.extra) h += o.extra(X, Y);
+  svg.innerHTML = h;
+}
+
+/* ---------- static figure: secant and tangent ---------- */
+plot(document.getElementById("fig-slope"), {
+  ymax:0.020, ystep:0.005, species:[SPECIES[0]], secants:[[SPECIES[0], 0, 400]],
+  extra:function(X, Y){
+    var t0 = 400, c0 = n2o5(t0), m = -K * c0, a = 180, b = 720;
+    return '<line x1="' + X(a) + '" y1="' + Y(c0 + m * (a - t0)) + '" x2="' + X(b) + '" y2="' + Y(c0 + m * (b - t0)) + '" stroke="#A8670F" stroke-width="1.75" stroke-dasharray="6 4"/>' +
+      '<circle cx="' + X(t0) + '" cy="' + Y(c0) + '" r="4.5" fill="#fff" stroke="#1D5FA8" stroke-width="2"/>' +
+      '<text x="' + (X(130) + 8) + '" y="' + (Y(0.0176) - 2) + '">Average rate, 0 to 400 s</text>' +
+      '<text class="tick" x="' + (X(130) + 8) + '" y="' + (Y(0.0176) + 14) + '">slope = −2.5 × 10⁻⁵ M/s</text>' +
+      '<text x="' + (X(480) + 4) + '" y="' + (Y(0.0118) - 2) + '" style="fill:#A8670F">Instantaneous rate at 400 s</text>' +
+      '<text class="tick" x="' + (X(480) + 4) + '" y="' + (Y(0.0118) + 14) + '">slope = −1.7 × 10⁻⁵ M/s</text>';
+  }
+});
+
+/* ---------- interactive graph ---------- */
+(function(){
+  var svg = document.getElementById("g-plot"), s1 = document.getElementById("g-t1"), sd = document.getElementById("g-dt"),
+      table = document.getElementById("g-table"), read = document.getElementById("g-read");
+  function signed(x){ return (x > 0 ? "+" : "−") + Math.abs(x).toFixed(4); }
+  function draw(){
+    var t1 = +s1.value, t2 = Math.min(TMAX, t1 + +sd.value), dt = t2 - t1;
+    document.getElementById("g-t1v").textContent = t1 + " s";
+    document.getElementById("g-dtv").textContent = dt + " s (ends at " + t2 + " s)";
+    plot(svg, {ymax:0.040, ystep:0.010, species:SPECIES, band:[t1, t2], secants:SPECIES.map(function(s){ return [s, t1, t2]; })});
+    table.innerHTML = "<tr><th>Species</th><th>Δ[ ] (<i>M</i>)</th><th>Δ[ ]/Δ<i>t</i> (<i>M</i>/s)</th><th>Divide by</th><th>Rate (<i>M</i>/s)</th></tr>" +
+      SPECIES.map(function(s){
+        var d = s.c(t2) - s.c(t1);
+        return '<tr><td><span class="key" style="border-top-color:' + s.color + (s.dash ? ";border-top-style:dashed" : "") + '"></span>' + s.html + "</td><td>" + signed(d) + "</td><td>" + sci(d / dt) +
+          "</td><td>" + (s.sign < 0 ? "−" : "") + s.coef + '</td><td class="same">' + sci(d / dt / (s.sign * s.coef)) + "</td></tr>";
+      }).join("");
+    var avg = (n2o5(t1) - n2o5(t2)) / dt;
+    read.innerHTML = "N<sub>2</sub>O<sub>5</sub> disappears at an average of <b>" + sci(avg, 3) + "</b>" + MS + " over this interval. Its instantaneous rate of disappearance is <b>" +
+      sci(K * n2o5(t1), 3) + "</b>" + MS + " at " + t1 + " s and <b>" + sci(K * n2o5(t2), 3) + "</b>" + MS + " at " + t2 + " s. The average always falls between the two.";
+  }
+  s1.addEventListener("input", draw); sd.addEventListener("input", draw);
+  draw();
+})();
+
+/* ---------- relating-rates trainer ---------- */
+(function(){
+  var BANK = [
+    "2N2O5(g) -> 4NO2(g) + O2(g)",
+    "N2(g) + 3H2(g) -> 2NH3(g)",
+    "4NH3(g) + 5O2(g) -> 4NO(g) + 6H2O(g)",
+    "2NO(g) + O2(g) -> 2NO2(g)",
+    "2HI(g) -> H2(g) + I2(g)",
+    "2NOCl(g) -> 2NO(g) + Cl2(g)",
+    "2O3(g) -> 3O2(g)",
+    "2SO2(g) + O2(g) -> 2SO3(g)",
+    "C3H8(g) + 5O2(g) -> 3CO2(g) + 4H2O(g)",
+    "4PH3(g) -> P4(g) + 6H2(g)",
+    "2N2O(g) -> 2N2(g) + O2(g)",
+    "CH4(g) + 2O2(g) -> CO2(g) + 2H2O(g)"
+  ];
+  var MANT = [1.2, 1.5, 1.8, 2.4, 3.0, 3.6, 4.2, 4.8, 6.0, 7.2, 8.4, 9.0];
+  var P, solved = 0, done, last;
+  var q = document.getElementById("t-q"), fb = document.getElementById("t-fb"),
+      ins = [document.getElementById("t1"), document.getElementById("t2")];
+  function make(){
+    var eq; do { eq = pick(BANK); } while(eq === last);
+    last = eq;
+    var sd = eq.split(" -> ").map(function(s){ return s.split(" + ").map(APC.parse); }), all = sd[0].concat(sd[1]);
+    var g = pick(all), w; do { w = pick(all); } while(w === g || w.n === g.n);
+    var r = pick(MANT) * Math.pow(10, -(2 + Math.floor(Math.random() * 4)));
+    var gR = sd[0].indexOf(g) >= 0, wR = sd[0].indexOf(w) >= 0;
+    return {eq:eq, g:g, w:w, gR:gR, wR:wR, r:r, dw:(wR ? -1 : 1) * r * w.n / g.n, rate:r / g.n};
+  }
+  function load(){
+    P = make(); done = false;
+    q.innerHTML = "For the reaction " + APC.fmt(P.eq) + ", at one moment " + f(P.g) + " is " + (P.gR ? "being used up" : "forming") + " at <b>" + sci(P.r) + "</b>" + MS + ".";
+    document.getElementById("t1l").innerHTML = "1. Rate of change of " + f(P.w) + ", Δ[" + f(P.w) + "]/Δ<i>t</i>, with its sign";
+    document.getElementById("t2l").innerHTML = "2. Rate of the reaction";
+    ins.forEach(function(i){ i.value = ""; i.className = "ans"; });
+    fb.className = "fb";
+  }
+  function solution(){
+    return '<div class="chain"><span>Δ[' + f(P.w) + "]/Δ<i>t</i> = " + (P.wR ? "−" : "+") + sci(P.r) + MS + '</span><span class="x">×</span>' +
+      '<span class="frac"><span>' + P.w.n + " mol " + f(P.w) + "</span><span>" + P.g.n + " mol " + f(P.g) + "</span></span>" +
+      "<span>= <b>" + sci(P.dw) + "</b>" + MS + "</span></div>" +
+      '<div class="chain"><span>rate =</span><span class="frac"><span>' + sci(P.r) + MS + "</span><span>" + P.g.n + "</span></span>" +
+      "<span>= <b>" + sci(P.rate) + "</b>" + MS + "</span></div>" +
+      "<p>" + f(P.w) + " is a " + (P.wR ? "reactant, so its concentration falls and the sign is negative." : "product, so its concentration rises and the sign is positive.") +
+      " The reaction rate divides by the coefficient of " + f(P.g) + ", which is " + P.g.n + ".</p>";
+  }
+  document.getElementById("t-check").addEventListener("click", function(){
+    var v = ins.map(function(i){ return APC.num(i.value); }), want = [P.dw, P.rate], ok = v.map(function(x, k){ return APC.close(x, want[k]); });
+    ok.forEach(function(o, k){ mark(ins[k], o); });
+    if(ok[0] && ok[1]){
+      if(!done){ solved++; document.getElementById("t-score").textContent = solved + " solved"; }
+      done = true;
+      fb.className = "fb show good"; fb.innerHTML = "<p><b>Right.</b></p>" + solution(); return;
+    }
+    var msgs = [];
+    if(!ok[0]){
+      var a = Math.abs(v[0]);
+      if(!isFinite(v[0])) msgs.push("Answer 1 is empty or isn’t a number I can read. Try a form like 3.6e-4 or 3.6 x 10^-4.");
+      else if(APC.close(-v[0], P.dw)) msgs.push("Answer 1 has the right size but the wrong sign. " + f(P.w) + " is a " + (P.wR ? "reactant, so its concentration is falling." : "product, so its concentration is rising."));
+      else if(APC.close(a, P.r * P.g.n / P.w.n)) msgs.push("Answer 1: the ratio is upside down. Multiply by " + P.w.n + " mol " + f(P.w) + " / " + P.g.n + " mol " + f(P.g) + ".");
+      else if(APC.close(a, P.r)) msgs.push("Answer 1: the two species don’t change at the same rate, because their coefficients are different. Use the mole ratio " + P.w.n + " : " + P.g.n + ".");
+      else msgs.push("Answer 1: multiply the given rate by the mole ratio from the coefficients, " + P.w.n + " mol " + f(P.w) + " for every " + P.g.n + " mol " + f(P.g) + ".");
+    }
+    if(!ok[1]){
+      if(!isFinite(v[1])) msgs.push("Answer 2 is empty or isn’t a number I can read.");
+      else if(v[1] < 0) msgs.push("Answer 2: the rate of a reaction is always positive.");
+      else if(APC.close(v[1], P.r)) msgs.push("Answer 2: divide the rate of change of " + f(P.g) + " by its coefficient, " + P.g.n + ".");
+      else msgs.push("Answer 2: the rate of the reaction is any species’ rate of change divided by its own coefficient, made positive.");
+    }
+    fb.className = "fb show bad"; fb.innerHTML = "<p><b>Not yet.</b></p>" + msgs.map(function(m){ return "<p>" + m + "</p>"; }).join("");
+  });
+  document.getElementById("t-show").addEventListener("click", function(){
+    done = true;
+    var e0 = P.dw.toExponential(1), e1 = P.rate.toExponential(1);
+    ins[0].value = e0; ins[1].value = e1; mark(ins[0], true); mark(ins[1], true);
+    fb.className = "fb show hint"; fb.innerHTML = "<p>Here’s the solution. Try the next one on your own.</p>" + solution();
+  });
+  document.getElementById("t-new").addEventListener("click", load);
+  load();
+})();
+
+/* ---------- sorter ---------- */
+(function(){
+  var NAMES = {conc:"Concentration", temp:"Temperature", sa:"Surface area", cat:"Catalyst"};
+  var DECK = APC.shuffle([
+    {t:"Milk left on the counter spoils in a day or two. The same milk lasts for weeks in a refrigerator.", a:"temp",
+     e:"The reactions that spoil food slow down at a lower temperature."},
+    {t:"A pile of flour only smolders when lit, but flour dust hanging in the air of a mill can explode.", a:"sa",
+     e:"Fine dust has an enormous surface exposed to the oxygen in the air, so it burns almost all at once."},
+    {t:"A glowing wooden splint bursts back into flame when it’s lowered into a jar of pure O<sub>2</sub>.", a:"conc",
+     e:"Air is only about 21% O<sub>2</sub>. Pure oxygen is a much higher concentration of a reactant."},
+    {t:"A bottle of hydrogen peroxide decomposes slowly over months. Add a pinch of MnO<sub>2</sub> and it foams with oxygen right away. The MnO<sub>2</sub> is still there afterward.", a:"cat",
+     e:"MnO<sub>2</sub> speeds up the decomposition and isn’t used up. That’s what makes it a catalyst."},
+    {t:"A crushed antacid tablet fizzes away in water much sooner than a whole tablet.", a:"sa",
+     e:"Crushing the tablet exposes far more of the solid to the water."},
+    {t:"A strip of zinc bubbles gently in 1 <i>M</i> HCl and vigorously in 6 <i>M</i> HCl at the same temperature.", a:"conc",
+     e:"6 <i>M</i> acid has six times the concentration of H<sup>+</sup> ions colliding with the zinc surface."},
+    {t:"A glow stick shines brightly in hot water and only dimly in ice water.", a:"temp",
+     e:"The light comes from a chemical reaction, and that reaction runs faster when it’s warm. The warm stick also runs out sooner."},
+    {t:"In a car’s exhaust system, CO and NO pass over platinum and are quickly converted to CO<sub>2</sub> and N<sub>2</sub>. The platinum lasts for the life of the car.", a:"cat",
+     e:"The platinum speeds up the reaction without being used up."},
+    {t:"Starch takes hours to break down in warm water, but an enzyme in saliva breaks it down in seconds at the same temperature.", a:"cat",
+     e:"Enzymes are biological catalysts."},
+    {t:"Thin kindling catches fire from a match, but a thick log of the same wood doesn’t.", a:"sa",
+     e:"The same mass of wood, split thin, has far more surface in contact with the air."},
+    {t:"A mixture of gases in a cylinder reacts faster after a piston squeezes it into half the volume at the same temperature.", a:"conc",
+     e:"The same number of gas particles in half the volume is double the concentration, so collisions are more frequent."},
+    {t:"Potatoes cook faster in a pressure cooker, where the water stays liquid up to about 120 °C, than in an open pot of boiling water at 100 °C.", a:"temp",
+     e:"The name says pressure, but what speeds up the cooking reactions is the higher temperature of the water."}
+  ]);
+  var i = 0, right = 0;
+  var body = document.getElementById("s-body"), prompt = document.getElementById("s-prompt"), fb = document.getElementById("s-fb"),
+      next = document.getElementById("s-next"), count = document.getElementById("s-count"), score = document.getElementById("s-score"),
+      btns = document.querySelectorAll("#sorter .pbtn");
+  function show(){
+    count.textContent = "Observation " + (i + 1) + " of " + DECK.length;
+    prompt.innerHTML = DECK[i].t;
+    btns.forEach(function(b){ b.className = "pbtn"; b.disabled = false; });
+    fb.className = "fb"; next.hidden = true;
+  }
+  btns.forEach(function(b){
+    b.addEventListener("click", function(){
+      var d = DECK[i], ok = b.dataset.pick === d.a;
+      btns.forEach(function(x){ x.disabled = true; if(x.dataset.pick === d.a) x.classList.add(ok ? "yes" : "reveal"); });
+      if(ok) right++; else b.classList.add("no");
+      score.textContent = right + " correct";
+      fb.className = "fb show " + (ok ? "good" : "bad");
+      fb.innerHTML = (ok ? "<b>Right.</b> " : "<b>Not quite.</b> It’s " + NAMES[d.a].toLowerCase() + ". ") + d.e;
+      next.hidden = false;
+      next.textContent = i === DECK.length - 1 ? "See your score →" : "Next observation →";
+    });
+  });
+  next.addEventListener("click", function(){
+    i++;
+    if(i < DECK.length){ show(); return; }
+    count.textContent = "Finished";
+    body.innerHTML = '<p class="prompt">You got ' + right + " of " + DECK.length + ' right.</p><p>' +
+      (right === DECK.length ? "Every one. You can tell the four factors apart." : "Reload the page to try again in a new order.") + "</p>";
+  });
+  show();
+})();
+
+/* ---------- practice ---------- */
+APC.mc(document.getElementById("mc"), document.getElementById("mc-score"), [
+ {q:"Ammonia burns according to the equation [[4NH3(g) + 5O2(g) -> 4NO(g) + 6H2O(g)]]. At a certain moment NH<sub>3</sub> is being consumed at a rate of 0.24 <i>M</i>/s. At what rate is H<sub>2</sub>O being produced at that moment?",
+  c:["0.16 <i>M</i>/s", "0.24 <i>M</i>/s", "0.36 <i>M</i>/s", "1.4 <i>M</i>/s"],
+  a:2,
+  e:"0.24 <i>M</i>/s NH<sub>3</sub> × (6 mol H<sub>2</sub>O / 4 mol NH<sub>3</sub>) = 0.36 <i>M</i>/s. (A) flips the ratio, and (D) multiplies by 6 without dividing by 4."},
+
+ {q:"The concentration of reactant A was measured during the reaction A → products." +
+    '<div class="tablewrap"><table class="bca data"><tr><th>Time (s)</th><th>0</th><th>20</th><th>40</th><th>60</th></tr>' +
+    "<tr><td>[A] (<i>M</i>)</td><td>0.80</td><td>0.56</td><td>0.40</td><td>0.28</td></tr></table></div>" +
+    "What is the average rate of disappearance of A between 20 s and 40 s?",
+  c:["0.0040 <i>M</i>/s", "0.0080 <i>M</i>/s", "0.010 <i>M</i>/s", "0.020 <i>M</i>/s"],
+  a:1,
+  e:"Δ[A] = 0.40 − 0.56 = −0.16 <i>M</i> over 20 s, so A disappears at 0.16 / 20 = 0.0080 <i>M</i>/s. (C) uses the interval from 0 to 40 s, and (D) divides the concentration at 40 s by the 20 s interval."},
+
+ {q:"For the reaction [[N2(g) + 3H2(g) -> 2NH3(g)]], which of the following is equal to −Δ[H<sub>2</sub>]/Δ<i>t</i> ?",
+  c:["(2/3) Δ[NH<sub>3</sub>]/Δ<i>t</i>", "Δ[NH<sub>3</sub>]/Δ<i>t</i>", "(3/2) Δ[NH<sub>3</sub>]/Δ<i>t</i>", "3 Δ[NH<sub>3</sub>]/Δ<i>t</i>"],
+  a:2,
+  e:"Three H<sub>2</sub> are used for every two NH<sub>3</sub> formed, so H<sub>2</sub> disappears 3/2 as fast as NH<sub>3</sub> appears. You can also start from −(1/3) Δ[H<sub>2</sub>]/Δ<i>t</i> = (1/2) Δ[NH<sub>3</sub>]/Δ<i>t</i> and multiply both sides by 3."},
+
+ {q:"A reactant decomposes in a sealed container at constant temperature. A graph of its concentration against time is a curve that gets less steep as time passes. Which of the following best explains the shape of the curve?",
+  c:["The reaction rate decreases because the concentration of the reactant decreases.",
+     "The reaction rate decreases because the products take up space in the container.",
+     "The reaction rate is constant, but less reactant is left to measure.",
+     "The reaction rate increases as products build up."],
+  a:0,
+  e:"The slope of the curve is the rate. As the reactant is used up, its concentration falls and so does the rate, so the curve flattens. A constant rate would give a straight line."},
+
+ {q:"A student studies the reaction of magnesium with hydrochloric acid, using the same mass of Mg and the same volume of acid in each trial." +
+    '<div class="tablewrap"><table class="bca data"><tr><th>Trial</th><th>Form of Mg</th><th>[HCl] (<i>M</i>)</th><th>Temperature (°C)</th></tr>' +
+    "<tr><td>1</td><td>ribbon</td><td>1.0</td><td>20</td></tr><tr><td>2</td><td>powder</td><td>1.0</td><td>20</td></tr>" +
+    "<tr><td>3</td><td>ribbon</td><td>2.0</td><td>40</td></tr><tr><td>4</td><td>ribbon</td><td>1.0</td><td>40</td></tr></table></div>" +
+    "Which two trials should be compared to find the effect of temperature alone on the rate?",
+  c:["Trials 1 and 2", "Trials 1 and 3", "Trials 1 and 4", "Trials 3 and 4"],
+  a:2,
+  e:"Trials 1 and 4 differ only in temperature. Trials 1 and 2 test surface area, trials 3 and 4 test concentration, and trials 1 and 3 change two things at once, so nothing can be concluded from them."},
+
+ {q:"A small amount of solid MnO<sub>2</sub> is added to a solution of hydrogen peroxide, which decomposes according to the equation [[2H2O2(aq) -> 2H2O(l) + O2(g)]]. Oxygen is produced much faster, and all of the MnO<sub>2</sub> is recovered afterward. Compared with the same solution without MnO<sub>2</sub>, the total amount of O<sub>2</sub> produced when the reaction is complete is",
+  c:["greater, because MnO<sub>2</sub> supplies additional oxygen atoms",
+     "greater, because the reaction is faster",
+     "less, because some H<sub>2</sub>O<sub>2</sub> reacts with the MnO<sub>2</sub> instead",
+     "the same, because the amount of H<sub>2</sub>O<sub>2</sub> is the same"],
+  a:3,
+  e:"MnO<sub>2</sub> is a catalyst. It changes how fast O<sub>2</sub> forms, not how much. The amount of O<sub>2</sub> depends only on the amount of H<sub>2</sub>O<sub>2</sub> that decomposes."},
+
+ {q:"On a graph of reactant concentration against time, the instantaneous rate of the reaction at time <i>t</i> can be found from",
+  c:["the concentration at time <i>t</i> divided by <i>t</i>",
+     "the slope of the line tangent to the curve at time <i>t</i>",
+     "the slope of the line joining the point at time zero to the point at time <i>t</i>",
+     "the area under the curve from time zero to time <i>t</i>"],
+  a:1,
+  e:"The rate at a single moment is the slope of the tangent at that point. (C) gives the average rate from time zero to <i>t</i>, which is larger because the reaction was faster earlier on."},
+
+ {q:"In the reaction X → 2Y, the concentration of Y rises from 0 to 0.40 <i>M</i> in the first 50 s. What is the average rate of disappearance of X over that time?",
+  c:["0.0040 <i>M</i>/s", "0.0080 <i>M</i>/s", "0.016 <i>M</i>/s", "0.20 <i>M</i>/s"],
+  a:0,
+  e:"Y appears at 0.40 / 50 = 0.0080 <i>M</i>/s. One X is used for every two Y formed, so X disappears half as fast: 0.0040 <i>M</i>/s. (C) doubles the rate when it should halve it."}
+]);
+
+APC.frq(document.getElementById("frq"), [
+ {q:"<p>A student adds 2.0 g of marble chips to excess 1.0 <i>M</i> HCl in a flask at 25 °C and collects the gas produced: [[CaCO3(s) + 2H^+(aq) -> Ca^2+(aq) + H2O(l) + CO2(g)]].</p>" +
+    '<div class="tablewrap"><table class="bca data"><tr><th>Time (s)</th><th>0</th><th>30</th><th>60</th><th>90</th><th>120</th></tr>' +
+    "<tr><td>Volume of CO<sub>2</sub> (mL)</td><td>0</td><td>48</td><td>78</td><td>96</td><td>105</td></tr></table></div>" +
+    "<p>(a) Calculate the average rate of production of CO<sub>2</sub>, in mL/s, from 0 s to 30 s and from 60 s to 90 s.</p><p>(b) Explain why the two rates in part (a) are different.</p><p>(c) The student repeats the experiment with 2.0 g of powdered marble. Predict how the initial rate and the final volume of CO<sub>2</sub> compare with the first experiment. Justify both predictions.</p><p>(d) Describe one other change, apart from the form of the marble, that would increase the initial rate.</p>",
+  m:"<p><b>(a)</b> 0 to 30 s: (48 − 0) mL / 30 s = <b>1.6 mL/s</b>. 60 to 90 s: (96 − 78) mL / 30 s = <b>0.60 mL/s</b>.</p><p><b>(b)</b> As the reaction goes on, H<sup>+</sup> is used up, so its concentration falls, and the remaining marble has less surface. Fewer collisions happen between H<sup>+</sup> ions and the marble surface each second, so the rate is lower.</p><p><b>(c)</b> The initial rate is <b>greater</b>, because the powder has more surface area in contact with the acid. The final volume is <b>the same</b>, because the acid is in excess and both experiments use the same mass of CaCO<sub>3</sub>, which is the limiting reactant.</p><p><b>(d)</b> Use more concentrated HCl, or carry out the reaction at a higher temperature.</p><p class='note'><b>Scoring watch-out:</b> in (c), “the powder reacts more” doesn’t earn the point. Say what happens to the rate and what happens to the amount, separately.</p>"},
+
+ {q:"<p>Nitrogen monoxide reacts with oxygen in a rigid container at constant temperature: [[2NO(g) + O2(g) -> 2NO2(g)]]. The concentration of NO falls from 0.0100 <i>M</i> to 0.0064 <i>M</i> in the first 120 s. No NO<sub>2</sub> is present at the start.</p><p>(a) Calculate the average rate of disappearance of NO over the first 120 s.</p><p>(b) Calculate the average rate of disappearance of O<sub>2</sub> over the same time.</p><p>(c) Calculate the concentration of NO<sub>2</sub> at 120 s.</p><p>(d) A student claims that the rate of disappearance of NO at exactly 120 s equals the answer to part (a). Do you agree? Justify your answer.</p>",
+  m:"<p><b>(a)</b> Δ[NO] = 0.0064 − 0.0100 = −0.0036 <i>M</i>. Rate of disappearance = 0.0036 <i>M</i> / 120 s = <b>3.0 × 10<sup>−5</sup> <i>M</i>/s</b>.</p><p><b>(b)</b> One O<sub>2</sub> reacts for every two NO: 3.0 × 10<sup>−5</sup> × (1/2) = <b>1.5 × 10<sup>−5</sup> <i>M</i>/s</b>.</p><p><b>(c)</b> Two NO<sub>2</sub> form for every two NO used, so [NO<sub>2</sub>] rises by 0.0036 <i>M</i>: <b>0.0036 <i>M</i></b>.</p><p><b>(d)</b> <b>Disagree.</b> Part (a) is an average over the whole 120 s. The reactant concentrations fall during that time, so the reaction slows down. The rate at exactly 120 s is the slope of the tangent to the curve there, and it’s smaller than the average.</p>"}
+]);
+</script>
 </body>
 </html>
