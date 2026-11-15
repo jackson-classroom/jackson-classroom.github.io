@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Molecular Formulas and Hydrates — From the Simplest Ratio to the Real Formula</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#131E1D; --ink2:#3B4A48; --mute:#5F6D6B;
+  --wash:#E3E9E8; --card:#FBFCFB; --line:#C9D3D1; --line-soft:#E0E7E6;
+  --water:#12727F; --water-dk:#0B4E58; --water-lite:#BFDEE2;
+  --brass:#9A6E22; --brass-lite:#F5E9CF;
+  --ok:#26694A; --ok-bg:#E4F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  --lcd:#1E2B29; --lcd-ink:#BFEFD0;
+  --display:"Instrument Serif",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+sup,sub{line-height:0;font-size:.72em}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(227,233,232,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:64px 0 44px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--water-dk)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,7.4vw,74px);line-height:1;margin:16px 0 0;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--water-dk)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:49ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: last page's compounds, run backwards */
+.sig-readout{margin:38px 0 0;padding:24px 26px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.sig-calc{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.sig-grid{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:26px;align-items:center}
+.sig-rows{margin-top:12px;display:grid;gap:8px}
+.sig-r{display:grid;grid-template-columns:minmax(0,1fr) 100px 70px;align-items:center;gap:14px;font-family:var(--mono);font-variant-numeric:tabular-nums;border-bottom:1px dashed var(--line);padding-bottom:8px}
+.sig-r .fx{font-family:var(--body);font-weight:600;font-size:clamp(17px,3.2vw,21px);text-align:right}
+.sig-r .pc{display:block;font-size:12.5px;color:var(--ink2);margin-top:5px;letter-spacing:.01em}
+.sig-r .rt{font-size:14px;color:var(--ink)}
+.sig-r .rt small{display:block;font-size:11.5px;color:var(--water-dk);margin-top:2px}
+.sig-r.head{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);border-bottom:none;padding-bottom:0}
+.sig-r.head span:last-child{text-align:right}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px}
+.sig-note b{color:var(--water-dk);font-weight:600}
+.sig-fig svg{display:block;width:100%;height:auto}
+.sig-cap{font-size:13.5px;line-height:1.45;color:var(--mute);margin:8px 0 0}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--water);color:var(--water-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--water-dk);background:var(--water-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.4vw,40px);line-height:1.08;margin:0;letter-spacing:-.01em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--water-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.note{border-left:3px solid var(--brass);background:var(--brass-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin:24px 0}
+.rulebox.one{grid-template-columns:minmax(0,1fr)}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--water);border-radius:0 4px 4px 0;padding:18px 20px;min-width:0}
+.rulecard .op{font-family:var(--display);font-size:30px;line-height:1.05;color:var(--water-dk)}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard.miss{border-left-color:var(--no)}
+.rulecard.miss h4{margin-top:0}
+.rulecard .wrong{font-family:var(--mono);font-size:14.5px;color:var(--mute);text-decoration:line-through;text-decoration-color:var(--no);text-decoration-thickness:2px;margin:6px 0}
+.rulecard .right{font-family:var(--mono);font-size:14.5px;color:var(--ok);margin:6px 0}
+.rhyme{font-family:var(--display);font-size:clamp(25px,3.8vw,34px);line-height:1.2;color:var(--water-dk)}
+.rhyme span{white-space:nowrap}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.setup{font-size:15px;color:var(--ink2);margin:0 0 14px}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F6F8F7;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--water-dk);border-color:var(--water-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--water)}
+button[disabled]{opacity:.45;cursor:default}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--water);outline-offset:2px}
+button.small{font-size:12px;padding:6px 11px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid #93A5A2;border-radius:3px;padding:9px 11px;width:170px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(19,30,29,.12)}
+.field{display:flex;gap:9px 12px;align-items:center;flex-wrap:wrap;margin:14px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:120px}
+.fx-prev{font-size:14.5px;color:var(--mute);min-height:1.6em}
+input.fx-in{font-family:var(--body);font-weight:500;letter-spacing:.01em}
+kbd.fk,.typing-tip kbd.fk,.fb kbd.fk{font-family:var(--body);font-weight:600;font-size:14.5px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:3px;padding:0 5px}
+.fx-prev b{font-family:var(--body);font-size:20px;font-weight:600;color:var(--ink)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1B4E36}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--water);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb .mono{font-size:15px}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab[aria-selected="true"]{background:var(--ink);color:#F6F8F7;border-color:var(--ink)}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft)}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45}
+.opt:hover{border-color:var(--water);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.94}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+
+.prob{font-size:17.5px;line-height:1.55;margin:4px 0 0}
+.prob b{font-weight:600}
+.scaf{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
+.scaf-lab{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--water-dk)}
+::placeholder{font-family:var(--body);font-style:italic;font-size:14px;color:#7F8D8B;opacity:1}
+.typing-tip{font-size:14px;color:var(--mute);margin:8px 0 0}
+.typing-tip kbd,.fb kbd{font-family:var(--mono);font-size:13px;color:var(--ink2);background:#fff;border:1px solid var(--line);border-radius:3px;padding:1px 5px}
+.fig svg{display:block;width:100%;height:auto}
+.readrows{display:grid;gap:2px;margin:10px 0 0}
+.readrows div{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px dashed var(--line);padding:4px 0;font-size:15.5px}
+.readrows div span:last-child{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.readrows div.wait span:last-child{color:#A8B4B2}
+
+/* ---------- stacked bars ---------- */
+.sbar{display:flex;height:12px;border:1px solid rgba(19,30,29,.4);border-radius:2px;overflow:hidden;background:#fff}
+.sbar>span{flex:none;border-right:1px solid rgba(19,30,29,.4)}
+.sbar>span:last-child{border-right:none}
+
+/* ---------- by mass vs. by atoms ---------- */
+.duo{display:grid;gap:10px;margin:18px 0 6px;max-width:640px}
+.duo-r{display:grid;grid-template-columns:78px minmax(0,1fr) 172px;gap:12px;align-items:center}
+.duo-l{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute)}
+.duo-v{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink2)}
+.duo .sbar{height:20px}
+
+/* ---------- worked tables ---------- */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mmt td,.mmt th{padding:8px 10px}
+.mmt td.n{white-space:nowrap}
+.mmt td.new{background:var(--brass-lite)}
+.mmt td.lo{color:var(--water-dk);font-weight:600}
+.mmt tfoot td{border-bottom:none;border-top:2px solid var(--ink);font-weight:600}
+.mmt .fxc{font-family:var(--body);font-size:19px;color:var(--ok)}
+.mmt .esy{display:none}
+.wk-q{font-size:17px;margin:4px 0 0}
+.wk-text{min-height:4.4em}
+.wk-count{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto}
+.wt{margin:10px 0 2px;font-size:14.5px}
+.wt td,.wt th{padding:5px 8px;border-bottom-color:rgba(19,30,29,.1)}
+
+/* ---------- find the multiplier ---------- */
+.mchips{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-family:var(--mono);font-size:21px;font-variant-numeric:tabular-nums;padding:14px 16px;background:#fff;border:1px solid var(--line-soft);border-radius:3px}
+.mchips b{font-family:var(--body);font-weight:600;margin-right:6px}
+.mchips .sep{color:var(--mute)}
+.mopts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.mopts button{min-width:64px}
+.mopts button.yes,.mopts button.yes:hover{background:var(--ok);border-color:var(--ok);color:#fff;opacity:1}
+.mopts button.no,.mopts button.no:hover{background:var(--no-bg);border-color:var(--no);color:#7E2A1D}
+
+/* ---------- lab: copper and sulfur ---------- */
+.lab{display:grid;grid-template-columns:300px minmax(0,1fr);gap:24px;align-items:start;margin-top:4px}
+.lab-step{font-size:15.5px;color:var(--ink2);margin:0}
+.lab-step b{color:var(--ink)}
+.lab-ask[hidden]{display:none}
+.lab-fig{background:#fff;border:1px solid var(--line-soft);border-radius:3px}
+@media (prefers-reduced-motion:no-preference){
+  .glow{animation:glow .45s ease-in-out infinite alternate}
+  @keyframes glow{from{opacity:.5}to{opacity:1}}
+  .flick{animation:flick .18s ease-in-out infinite alternate;transform-origin:150px 150px}
+  @keyframes flick{from{transform:scaleY(.94)}to{transform:scaleY(1.04)}}
+}
+
+/* ---------- practice scaffold ---------- */
+.tt{margin:10px 0 0;font-size:15px}
+.tt td{padding:6px 7px;white-space:nowrap}
+.tt td.op{color:var(--mute);font-family:var(--mono);padding:6px 2px}
+.tt input[type=text]{font-size:16px;padding:5px 7px;width:3.4em}
+.tt input.wide{width:5.4em}
+.tt input.ok-in{border-color:var(--ok);background:var(--ok-bg)}
+.tt input.no-in{border-color:var(--no);background:var(--no-bg)}
+
+/* ---------- periodic table ---------- */
+.tile{position:relative;width:150px;height:172px;background:#fff;border:2px solid var(--ink);border-radius:5px;font-family:var(--body);text-align:center}
+.tile .tz{position:absolute;top:8px;left:11px;font-family:var(--mono);font-size:20px;color:var(--no);border-bottom:2px solid var(--no);line-height:1.1}
+.tile .ts{display:block;font-size:58px;font-weight:600;line-height:1;padding-top:40px}
+.tile .tn{display:block;font-size:14px;color:var(--ink2);margin-top:4px}
+.tile .tm{display:inline-block;font-family:var(--mono);font-size:19px;color:var(--ok);background:var(--ok-bg);border-radius:3px;padding:0 6px;margin-top:4px}
+.pt-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin-top:6px}
+.pt{display:grid;grid-template-columns:repeat(18,minmax(0,1fr));grid-template-rows:repeat(7,auto) 10px auto auto;gap:2px;min-width:640px}
+.pt .el{font-family:var(--mono);padding:3px 0 2px;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:2px;text-align:center;line-height:1.15;letter-spacing:0;min-width:0}
+.pt .el:hover{border-color:var(--water);background:#F2F8F8;color:var(--ink)}
+.pt .el .z{display:block;font-size:8.5px;color:var(--mute)}
+.pt .el .s{display:block;font-family:var(--body);font-weight:600;font-size:13.5px}
+.pt .el .m{display:block;font-size:8.5px;color:var(--ink2)}
+.pt .el.rad{background:#EEF2F1}
+.pt .el.rad .s{color:var(--ink2)}
+.pt .el.on,.pt .el.on:hover{background:var(--ink);border-color:var(--ink);color:#fff}
+.pt .el.on .z,.pt .el.on .m{color:var(--lcd-ink)}
+.pt .gap{font-family:var(--mono);font-size:9px;color:var(--mute);display:flex;align-items:center;justify-content:center;border:1px dashed var(--line);border-radius:2px;text-align:center;line-height:1.1}
+.pt-detail{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center;margin-top:16px;padding-top:16px;border-top:1px dashed var(--line)}
+.pt-detail .tile{width:118px;height:136px}
+.pt-detail .tile .ts{font-size:44px;padding-top:32px}
+.pt-detail .tile .tz{font-size:16px;color:var(--ink2);border-bottom:none}
+.pt-detail .tile .tm{font-size:16px}
+.pt-facts{font-size:15.5px;min-width:0}
+.pt-facts .mm{font-family:var(--mono);font-size:clamp(22px,4vw,28px);font-weight:500;color:var(--ok)}
+.pt-facts p{margin:6px 0}
+.pt-facts .aside{font-size:14.5px;color:var(--mute)}
+
+@media (max-width:760px){
+  .lab{grid-template-columns:1fr}
+  .lab .lab-fig{max-width:340px}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:16px}
+  .sig-readout{padding:20px 18px}
+  .sig-grid{grid-template-columns:1fr}
+  .sig-fig{max-width:300px;margin:0 auto}
+  .sig-r{grid-template-columns:minmax(0,1fr) 84px;gap:2px 12px}
+  .sig-r>span:first-child{grid-row:1 / span 2}
+  .sig-r .fx{grid-column:2;grid-row:1}
+  .sig-r .rt{grid-column:2;grid-row:2;text-align:right;font-size:12.5px}
+  .sig-r.head>span:nth-child(2){display:none}
+  .sig-r.head>span:first-child{grid-row:auto}
+  .duo-r{grid-template-columns:64px minmax(0,1fr)}
+  .duo-v{grid-column:2}
+  .field label{min-width:auto;flex:1 1 100%}
+  .pt-detail{grid-template-columns:1fr}
+  .mchips{font-size:18px;padding:12px}
+  .rhyme{font-size:24px}
+  .rhyme span{display:block;white-space:normal}
+  .mmt td,.mmt th{padding:7px 6px}
+  .mmt{font-size:14px}
+  .mmt .pcol,.mmt .enm{display:none}
+  .mmt .esy{display:inline;font-weight:600}
+  .tt td,.tt th{padding:6px 3px}
+  .tt td.op{padding:6px 1px}
+  .tt input[type=text]{width:2.9em;padding:5px 5px}
+  .tt input.wide{width:4.6em}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+/* ---------- this page ---------- */
+.sig-r .nm{display:block;font-family:var(--body);font-weight:600;font-size:15.5px;color:var(--ink)}
+.bigf{font-family:var(--display);font-size:clamp(38px,7vw,58px);line-height:1.1;color:var(--water-dk);text-align:center;padding:14px 0 6px}
+.bigf sub{font-size:.6em}
+.rulecard .op.dot{font-size:64px;line-height:.45;padding-top:4px}
+.blocks{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin:8px 0 16px;min-height:34px}
+.blocks span{font-family:var(--body);font-weight:600;font-size:13.5px;border:1px solid var(--water);background:var(--water-lite);color:var(--water-dk);border-radius:3px;padding:4px 9px}
+.sc-bar{display:grid;gap:6px;margin:16px 0 0}
+.sc-bar .sbar{height:16px}
+.pfx{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:18px 0;max-width:560px}
+.pfx div{background:var(--card);border:1px solid var(--line);border-radius:3px;padding:8px 2px;text-align:center;font-size:15px;color:var(--ink2)}
+.pfx b{display:block;font-family:var(--mono);font-weight:500;font-size:19px;color:var(--water-dk)}
+input.fx-in.wide{width:230px}
+.steps{margin:14px 0 0;padding-left:26px}
+.steps li{margin:6px 0;padding:6px 10px;border-radius:3px;font-size:16px}
+.steps li.now{background:var(--brass-lite)}
+.fb .steps{margin-top:8px;padding-left:22px}
+.fb .steps li{padding:0;margin:7px 0;font-size:15.5px}
+#s-list .steps li{padding:2px 0}
+@media (max-width:600px){
+  .pfx div{font-size:13px}
+  .sig-r .rt small{display:none}
+  #h-table td:first-child{min-width:150px}
+  input.fx-in.wide{width:100%}
+  .steps{padding-left:22px}
+  .steps li{padding:6px 6px}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Molecular Formulas and Hydrates</span>
+    <span class="bar-sub">Empirical vs. molecular · molar mass ÷ empirical mass · hydrates · water of hydration</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 4 · Molecular formulas and hydrates</div>
+  <h1>One ratio, <em>many</em> molecules.</h1>
+  <p class="lede">On the last page, you found a compound’s empirical formula, the simplest ratio of its atoms. But a ratio isn’t the whole story. Formaldehyde, the acid in vinegar and glucose all have the empirical formula CH<sub>2</sub>O. To find the <b>molecular formula</b>, the real number of atoms in one molecule, you need one more measurement: the molar mass. Then you’ll use the same mole ratios on <b>hydrates</b>, crystals with water locked inside.</p>
+
+  <div class="sig-readout">
+    <div class="sig-grid">
+      <div>
+        <div class="sig-calc">One empirical formula, CH<sub>2</sub>O</div>
+        <div class="sig-rows" id="hero-rows"></div>
+        <div class="sig-note">Four different compounds with the <b>same</b> ratio of atoms. Only the molar mass tells them apart.</div>
+      </div>
+      <div class="sig-fig">
+        <div class="fig" id="hero-fig"></div>
+        <p class="sig-cap">Glucose is six CH<sub>2</sub>O units. Dividing its molar mass by the mass of one unit tells you how many there are.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#idea">Empirical vs. molecular</a>
+  <a href="#method">Finding the molecular formula</a>
+  <a href="#hydrates">Hydrates</a>
+  <a href="#hlab">Formula of a hydrate</a>
+  <a href="#watch">Watch-outs</a>
+  <a href="#practice">Practice</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ IDEA ============ -->
+<section id="idea">
+  <div class="sec-head"><span class="tasktag">The idea</span><h2>Empirical formula vs. molecular formula</h2></div>
+  <p>An empirical formula gives the simplest ratio of atoms. For an ionic compound like NaCl or Fe<sub>2</sub>O<sub>3</sub>, that’s all there is to say. An ionic crystal is one big repeating pattern of ions, and its formula gives their ratio.</p>
+  <p>A molecular compound is different. It’s made of separate molecules, and every molecule has a definite number of atoms. The <b>molecular formula</b> gives that actual number. A molecule of hydrogen peroxide has 2 hydrogen atoms and 2 oxygen atoms, so its molecular formula is H<sub>2</sub>O<sub>2</sub>. The ratio 2 : 2 reduces to 1 : 1, so its empirical formula is HO. But there’s no HO molecule in the bottle.</p>
+  <div class="rulebox">
+    <div class="rulecard"><div class="op">HO</div><h4>Empirical formula</h4><p>The simplest whole-number ratio of the atoms. It’s what percent composition gives you.</p></div>
+    <div class="rulecard"><div class="op">H<sub>2</sub>O<sub>2</sub></div><h4>Molecular formula</h4><p>The actual number of each atom in one molecule. It’s what the compound really is.</p></div>
+    <div class="rulecard"><div class="op">× n</div><h4>The link between them</h4><p>The molecular formula is the empirical formula with every subscript multiplied by the same whole number, n. Here, n = 2.</p></div>
+  </div>
+
+  <h3>Same percents, different compounds</h3>
+  <p>Percent composition depends only on the ratio of the atoms. So every compound with the empirical formula CH<sub>2</sub>O has exactly the same percent composition. Percents alone can’t tell you whether you have formaldehyde or glucose. Step through the family and watch what changes and what doesn’t.</p>
+  <div class="card">
+    <div class="card-label"><span>The CH<sub>2</sub>O family</span></div>
+    <p class="setup">Choose how many CH<sub>2</sub>O units go into one molecule.</p>
+    <div class="mopts" id="sc-opts" role="group" aria-label="Number of empirical units in one molecule">
+      <button type="button" class="ghost" data-n="1">× 1</button>
+      <button type="button" class="ghost" data-n="2">× 2</button>
+      <button type="button" class="ghost" data-n="3">× 3</button>
+      <button type="button" class="ghost" data-n="4">× 4</button>
+      <button type="button" class="ghost" data-n="5">× 5</button>
+      <button type="button" class="ghost" data-n="6">× 6</button>
+    </div>
+    <div id="sc-out" aria-live="polite"></div>
+  </div>
+
+  <h3>Sometimes n = 1</h3>
+  <p>Many molecular formulas can’t be reduced. Water is H<sub>2</sub>O, carbon dioxide is CO<sub>2</sub> and propane is C<sub>3</sub>H<sub>8</sub>. For these, the empirical formula and the molecular formula are the same, and n = 1.</p>
+</section>
+
+<!-- ============ METHOD ============ -->
+<section id="method">
+  <div class="sec-head"><span class="tasktag">The method</span><h2>Finding the molecular formula</h2></div>
+  <p>To get from the empirical formula to the molecular formula, you need the compound’s <b>molar mass</b>. It comes from a separate experiment, and a problem will give it to you. One molecule is a whole number of empirical units, so the molar mass is a whole number of empirical formula masses.</p>
+  <div class="rulebox one">
+    <div class="rulecard"><div class="rhyme"><span>n = molar mass</span> <span>÷ empirical formula mass</span></div></div>
+  </div>
+  <ol>
+    <li><b>Find the empirical formula</b>, if you don’t already have it. Use the method from the last page: percent to mass, mass to mole, divide by small, multiply ’til whole.</li>
+    <li><b>Find the empirical formula mass.</b> Add up the atomic masses in the empirical formula, the same way you find any molar mass.</li>
+    <li><b>Divide.</b> The compound’s molar mass ÷ the empirical formula mass = n. It should come out very close to a whole number.</li>
+    <li><b>Multiply every subscript</b> in the empirical formula by n.</li>
+  </ol>
+
+  <div class="card">
+    <div class="card-label"><span>Worked example</span><span class="wk-count" id="mw-count"></span></div>
+    <div class="tabs" role="tablist" aria-label="Choose a worked example" id="mw-tabs"></div>
+    <p class="wk-q" id="mw-q"></p>
+    <div id="mw-steps" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="mw-next">Next step</button>
+      <button type="button" class="ghost" id="mw-prev">Back</button>
+      <button type="button" class="ghost" id="mw-restart">Start over</button>
+    </div>
+  </div>
+  <div class="note"><b>n is a whole number.</b> With real data, n might come out 5.98 or 2.01. Round it. If it comes out 2.5 or 1.33, don’t round. Something went wrong earlier, so recheck the empirical formula and its mass.</div>
+  <div class="note"><b>Check your answer.</b> Find the molar mass of your molecular formula. It should match the molar mass you were given. For C<sub>6</sub>H<sub>6</sub>: 6(12.01) + 6(1.01) = 78.12 g/mol.&nbsp;✓</div>
+</section>
+
+<!-- ============ HYDRATES ============ -->
+<section id="hydrates">
+  <div class="sec-head"><span class="tasktag">A new kind of formula</span><h2>Hydrates</h2></div>
+  <p>Some ionic compounds trap water molecules inside their crystals as they form. The water isn’t just dampness on the surface. It’s part of the crystal structure, and it’s there in a fixed ratio. A compound like this is called a <b>hydrate</b>, and the water in it is called the <b>water of hydration</b>.</p>
+  <p>The bright blue crystals of copper(II) sulfate are a hydrate. For every formula unit of CuSO<sub>4</sub>, the crystal holds exactly 5 water molecules:</p>
+  <div class="bigf">CuSO<sub>4</sub>·5H<sub>2</sub>O</div>
+  <div class="rulebox">
+    <div class="rulecard"><div class="op">CuSO<sub>4</sub></div><h4>The salt</h4><p>The ionic compound, written the usual way. On its own, without water, it’s called the <b>anhydrous</b> salt.</p></div>
+    <div class="rulecard"><div class="op dot">·</div><h4>The dot</h4><p>Read it as “combined with.” It is <b>not</b> a multiplication sign.</p></div>
+    <div class="rulecard"><div class="op">5H<sub>2</sub>O</div><h4>The water of hydration</h4><p>5 water molecules for every 1 formula unit of the salt. The 5 applies to the whole H<sub>2</sub>O: 10 H atoms and 5 O atoms.</p></div>
+  </div>
+
+  <h3>Naming a hydrate</h3>
+  <p>Name the salt the usual way. Then add a prefix for the number of waters, followed by <b>hydrate</b>. CuSO<sub>4</sub>·5H<sub>2</sub>O is <b>copper(II) sulfate pentahydrate</b>. The prefixes are the same ones used to name molecular compounds like carbon dioxide.</p>
+  <div class="pfx" aria-label="Prefixes for 1 through 10">
+    <div><b>1</b>mono</div><div><b>2</b>di</div><div><b>3</b>tri</div><div><b>4</b>tetra</div><div><b>5</b>penta</div>
+    <div><b>6</b>hexa</div><div><b>7</b>hepta</div><div><b>8</b>octa</div><div><b>9</b>nona</div><div><b>10</b>deca</div>
+  </div>
+
+  <div class="card">
+    <div class="card-label"><span>Name to formula</span><span class="score" id="n-score">0 of 0</span></div>
+    <p class="setup">Write the formula of this hydrate. Type a period for the dot, like <kbd class="fk">CuSO4.5H2O</kbd>.</p>
+    <p class="prob" id="n-name"></p>
+    <div class="field">
+      <label for="n-in">Formula</label>
+      <input type="text" class="fx-in wide" id="n-in" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a formula">
+      <span class="fx-prev" id="n-prev" aria-hidden="true"></span>
+    </div>
+    <div class="btn-row">
+      <button type="button" id="n-check">Check</button>
+      <button type="button" class="ghost" id="n-show">Show answer</button>
+      <button type="button" class="ghost" id="n-new">Next hydrate</button>
+    </div>
+    <div class="fb" id="n-fb" aria-live="polite"></div>
+  </div>
+
+  <h3>The molar mass of a hydrate</h3>
+  <p>The water is part of the compound, so it’s part of the molar mass. Find the molar mass of the salt, and then add 18.02 g/mol for every water.</p>
+  <p class="mono">CuSO<sub>4</sub>·5H<sub>2</sub>O: 159.61 + 5(18.02) = 159.61 + 90.10 = 249.71 g/mol</p>
+  <p>From there, the <b>percent water</b> is a percent composition problem, with the water as the part and the hydrate as the whole:</p>
+  <p class="mono">90.10 ÷ 249.71 × 100 = 36.08% water</p>
+  <p>More than a third of the mass of those blue crystals is water. Here are some common hydrates:</p>
+  <div class="tbl-scroll"><table id="h-table"></table></div>
+
+  <h3>Heating a hydrate</h3>
+  <p>The water of hydration is held loosely. Heat a hydrate and the water leaves as steam. The anhydrous salt stays behind:</p>
+  <p class="mono">CuSO<sub>4</sub>·5H<sub>2</sub>O(s) → CuSO<sub>4</sub>(s) + 5H<sub>2</sub>O(g)</p>
+  <p>The anhydrous salt often looks different. Blue CuSO<sub>4</sub>·5H<sub>2</sub>O turns into a white powder. Add a few drops of water and the blue comes back. Cobalt(II) chloride changes from blue to pink as it picks up water, so paper soaked in it is used to show humidity. Anhydrous calcium chloride pulls water out of the air so strongly that it’s sold to keep closets and basements dry.</p>
+</section>
+
+<!-- ============ FORMULA OF A HYDRATE ============ -->
+<section id="hlab">
+  <div class="sec-head"><span class="tasktag">From data</span><h2>Finding the formula of a hydrate</h2></div>
+  <p>How do you know it’s 5 waters and not 4 or 6? Weigh a sample of the hydrate, heat it until the water is gone, and weigh what’s left. The mass that was lost is water. From there, it’s the same idea as an empirical formula. The difference is that you compare the moles of two compounds, the salt and the water, instead of two elements.</p>
+  <ol>
+    <li><b>Find both masses.</b> Mass of water = mass of the hydrate − mass of the anhydrous salt.</li>
+    <li><b>Mass to mole.</b> Divide the mass of the salt by the salt’s molar mass. Divide the mass of the water by 18.02 g/mol.</li>
+    <li><b>Divide by the moles of salt.</b> Moles of water ÷ moles of salt = x, the number of waters for every 1 formula unit of salt.</li>
+    <li><b>Round x and write the formula</b>: the salt, a dot, then x H<sub>2</sub>O.</li>
+  </ol>
+
+  <h3>Lab: heat an unknown hydrate</h3>
+  <div class="card">
+    <div class="card-label"><span>Lab: formula of a hydrate</span></div>
+    <div class="lab">
+      <div class="lab-fig fig" id="l-fig"></div>
+      <div>
+        <p class="lab-step" id="l-step" aria-live="polite"></p>
+        <div class="readrows" id="l-rows"></div>
+        <div class="btn-row">
+          <button type="button" id="l-go"></button>
+          <button type="button" class="ghost small" id="l-new">New hydrate</button>
+        </div>
+      </div>
+    </div>
+    <div class="lab-ask" id="l-ask" hidden>
+      <div class="field">
+        <label for="l-in">Formula of the hydrate</label>
+        <input type="text" class="fx-in wide" id="l-in" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a formula">
+        <span class="fx-prev" id="l-prev" aria-hidden="true"></span>
+      </div>
+      <p class="typing-tip">Type a period for the dot: <kbd class="fk">CuSO4.5H2O</kbd></p>
+      <div class="btn-row">
+        <button type="button" id="l-check">Check</button>
+        <button type="button" class="ghost" id="l-show">Show answer</button>
+      </div>
+    </div>
+    <div class="fb" id="l-fb" aria-live="polite"></div>
+    <p class="smallprint" style="margin-bottom:0">Real results are rarely this clean. If you stop heating too soon, some water is still in the crystals and x comes out too low. That’s why chemists heat, cool, weigh, and then heat again until the mass stops changing. If you heat too strongly, the salt itself can start to break down, and x comes out too high.</p>
+  </div>
+
+  <h3>Three kinds of hydrate problems</h3>
+  <p>A problem might give you the mass before and after heating, the mass of water lost, or the percent water. Whatever you’re given, find the mass of the salt and the mass of the water first. Then it’s the same method.</p>
+  <div class="card">
+    <div class="card-label"><span>Worked example</span><span class="wk-count" id="hw-count"></span></div>
+    <div class="tabs" role="tablist" aria-label="Choose a worked example" id="hw-tabs"></div>
+    <p class="wk-q" id="hw-q"></p>
+    <div id="hw-steps" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="hw-next">Next step</button>
+      <button type="button" class="ghost" id="hw-prev">Back</button>
+      <button type="button" class="ghost" id="hw-restart">Start over</button>
+    </div>
+  </div>
+  <div class="note"><b>The salt gets the 1.</b> A hydrate’s formula is written for 1 formula unit of salt, so always divide by the moles of salt. That’s also the smaller number whenever x is more than 1.</div>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="sec-head"><span class="tasktag">Common mistakes</span><h2>Watch-outs</h2></div>
+  <div class="rulebox">
+    <div class="rulecard miss">
+      <h4>Stopping at the empirical formula</h4>
+      <p>If the problem gives a molar mass, it wants the molecular formula. Hydrogen peroxide’s molar mass is 34.02 g/mol.</p>
+      <div class="wrong">HO (17.01 g/mol)</div>
+      <div class="right">34.02 ÷ 17.01 = 2, so H<sub>2</sub>O<sub>2</sub></div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Dividing upside down</h4>
+      <p>The molar mass goes on top. n is a whole number, never a fraction less than 1.</p>
+      <div class="wrong">13.02 ÷ 78.12 = 0.167</div>
+      <div class="right">78.12 ÷ 13.02 = 6</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Multiplying just one subscript</h4>
+      <p>Multiply every subscript by n, including the ones that are 1.</p>
+      <div class="wrong">CH<sub>2</sub>O × 6 → C<sub>6</sub>H<sub>2</sub>O</div>
+      <div class="right">CH<sub>2</sub>O × 6 → C<sub>6</sub>H<sub>12</sub>O<sub>6</sub></div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Adding n instead of multiplying</h4>
+      <p>n counts whole copies of the empirical formula, so it multiplies.</p>
+      <div class="wrong">NO<sub>2</sub>, n = 2 → N<sub>3</sub>O<sub>4</sub></div>
+      <div class="right">NO<sub>2</sub>, n = 2 → N<sub>2</sub>O<sub>4</sub></div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Leaving the water out of the molar mass</h4>
+      <p>The water of hydration is part of the compound. The dot means “combined with,” so add.</p>
+      <div class="wrong">CuSO<sub>4</sub>·5H<sub>2</sub>O = 159.61 g/mol</div>
+      <div class="right">159.61 + 5(18.02) = 249.71 g/mol</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Using what’s left as the water</h4>
+      <p>5.00 g of a hydrate is heated and 2.44 g is left. What’s left is the salt. The water is what was lost.</p>
+      <div class="wrong">2.44 g of water</div>
+      <div class="right">5.00 − 2.44 = 2.56 g of water</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Using the hydrate’s mass for the salt</h4>
+      <p>The 5.00 g includes the water. Only the 2.44 g left after heating is MgSO<sub>4</sub>.</p>
+      <div class="wrong">5.00 ÷ 120.37 = 0.04154 mol MgSO<sub>4</sub></div>
+      <div class="right">2.44 ÷ 120.37 = 0.02027 mol MgSO<sub>4</sub></div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Dividing the ratio upside down</h4>
+      <p>x is waters per salt, so the moles of water go on top.</p>
+      <div class="wrong">0.02027 ÷ 0.1421 = 0.143</div>
+      <div class="right">0.1421 ÷ 0.02027 = 7.01, so x = 7</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRACTICE ============ -->
+<section id="practice">
+  <div class="sec-head"><span class="tasktag">Practice</span><h2>Practice</h2></div>
+  <p>Pick a kind of problem, or mix them up. Use the periodic table for molar masses. Type subscripts as plain numbers, like <kbd class="fk">C6H12O6</kbd>, and type a period for the dot in a hydrate, like <kbd class="fk">CuSO4.5H2O</kbd>. If you get stuck, there’s a step-by-step guide under each problem.</p>
+  <p class="smallprint">Your score counts a problem as solved when your first check is right. Using “Show answer” counts as a miss. You can write the elements in any order.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Generated problems</span><span class="score" id="p-score">0 of 0</span></div>
+    <div class="tabs" role="tablist" aria-label="Kind of problem" id="p-tabs">
+      <button type="button" class="tab" role="tab" data-k="ef" aria-selected="true">Molecular formula</button>
+      <button type="button" class="tab" role="tab" data-k="pct" aria-selected="false">From percents</button>
+      <button type="button" class="tab" role="tab" data-k="hyd" aria-selected="false">Hydrates</button>
+      <button type="button" class="tab" role="tab" data-k="mix" aria-selected="false">Mix it up</button>
+    </div>
+    <p class="prob" id="p-prob" style="margin-top:16px"></p>
+    <div class="field">
+      <label for="p-in" id="p-lab">Molecular formula</label>
+      <input type="text" class="fx-in wide" id="p-in" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a formula">
+      <span class="fx-prev" id="p-prev" aria-hidden="true"></span>
+    </div>
+    <p class="typing-tip" id="p-tip"></p>
+    <div class="btn-row">
+      <button type="button" id="p-check">Check</button>
+      <button type="button" class="ghost" id="p-show">Show answer</button>
+      <button type="button" class="ghost" id="p-new">New problem</button>
+      <button type="button" class="ghost" id="p-ptbtn" aria-expanded="false">Periodic table</button>
+    </div>
+    <div class="fb" id="p-fb" aria-live="polite"></div>
+    <div id="p-pt" hidden style="margin-top:14px"></div>
+
+    <div class="scaf">
+      <div class="scaf-lab">Step by step</div>
+      <p class="setup" style="margin-top:6px">Stuck? Reveal the work one step at a time. The last steps are left for you.</p>
+      <div id="s-list" aria-live="polite"></div>
+      <div class="btn-row" style="margin-top:10px">
+        <button type="button" class="ghost small" id="s-next">Show the next step</button>
+        <button type="button" class="ghost small" id="s-hide">Hide the steps</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Ten questions on molecular formulas and hydrates.</p>
+  <div class="card" id="quiz"></div>
+</section>
+
+<footer>
+  <p>Molecular formulas from an empirical formula and a molar mass, and the formulas of hydrates. Element data are standard atomic weights rounded to two decimal places, so water is 18.02 g/mol. The practice problems are generated fresh every time.</p>
+  <p><a href="/chemistry/moles/">← Unit 4 — Moles</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function each(list, fn){ Array.prototype.forEach.call(list, fn); }
+function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+function tabs(host, onPick){
+  each(host.querySelectorAll('.tab'), function(b){
+    b.addEventListener('click', function(){
+      each(host.querySelectorAll('.tab'), function(o){ o.setAttribute('aria-selected', String(o === b)); });
+      onPick(b);
+    });
+  });
+}
+
+/*CORE-START*/
+/* =========================================================
+   core: elements, formulas, ratios, problems, judging (no DOM)
+   ========================================================= */
+/* symbol, name, standard atomic weight to 2 decimals ; (n) = mass number of a long-lived isotope, no stable isotopes */
+var EL_DATA = 'H,Hydrogen,1.01;He,Helium,4.00;Li,Lithium,6.94;Be,Beryllium,9.01;B,Boron,10.81;C,Carbon,12.01;N,Nitrogen,14.01;O,Oxygen,16.00;F,Fluorine,19.00;Ne,Neon,20.18;Na,Sodium,22.99;Mg,Magnesium,24.31;Al,Aluminum,26.98;Si,Silicon,28.09;P,Phosphorus,30.97;S,Sulfur,32.06;Cl,Chlorine,35.45;Ar,Argon,39.95;K,Potassium,39.10;Ca,Calcium,40.08;Sc,Scandium,44.96;Ti,Titanium,47.87;V,Vanadium,50.94;Cr,Chromium,52.00;Mn,Manganese,54.94;Fe,Iron,55.85;Co,Cobalt,58.93;Ni,Nickel,58.69;Cu,Copper,63.55;Zn,Zinc,65.38;Ga,Gallium,69.72;Ge,Germanium,72.63;As,Arsenic,74.92;Se,Selenium,78.97;Br,Bromine,79.90;Kr,Krypton,83.80;Rb,Rubidium,85.47;Sr,Strontium,87.62;Y,Yttrium,88.91;Zr,Zirconium,91.22;Nb,Niobium,92.91;Mo,Molybdenum,95.95;Tc,Technetium,(98);Ru,Ruthenium,101.07;Rh,Rhodium,102.91;Pd,Palladium,106.42;Ag,Silver,107.87;Cd,Cadmium,112.41;In,Indium,114.82;Sn,Tin,118.71;Sb,Antimony,121.76;Te,Tellurium,127.60;I,Iodine,126.90;Xe,Xenon,131.29;Cs,Cesium,132.91;Ba,Barium,137.33;La,Lanthanum,138.91;Ce,Cerium,140.12;Pr,Praseodymium,140.91;Nd,Neodymium,144.24;Pm,Promethium,(145);Sm,Samarium,150.36;Eu,Europium,151.96;Gd,Gadolinium,157.25;Tb,Terbium,158.93;Dy,Dysprosium,162.50;Ho,Holmium,164.93;Er,Erbium,167.26;Tm,Thulium,168.93;Yb,Ytterbium,173.05;Lu,Lutetium,174.97;Hf,Hafnium,178.49;Ta,Tantalum,180.95;W,Tungsten,183.84;Re,Rhenium,186.21;Os,Osmium,190.23;Ir,Iridium,192.22;Pt,Platinum,195.08;Au,Gold,196.97;Hg,Mercury,200.59;Tl,Thallium,204.38;Pb,Lead,207.2;Bi,Bismuth,208.98;Po,Polonium,(209);At,Astatine,(210);Rn,Radon,(222);Fr,Francium,(223);Ra,Radium,(226);Ac,Actinium,(227);Th,Thorium,232.04;Pa,Protactinium,231.04;U,Uranium,238.03;Np,Neptunium,(237);Pu,Plutonium,(244);Am,Americium,(243);Cm,Curium,(247);Bk,Berkelium,(247);Cf,Californium,(251);Es,Einsteinium,(252);Fm,Fermium,(257);Md,Mendelevium,(258);No,Nobelium,(259);Lr,Lawrencium,(262);Rf,Rutherfordium,(267);Db,Dubnium,(268);Sg,Seaborgium,(269);Bh,Bohrium,(270);Hs,Hassium,(269);Mt,Meitnerium,(278);Ds,Darmstadtium,(281);Rg,Roentgenium,(282);Cn,Copernicium,(285);Nh,Nihonium,(286);Fl,Flerovium,(289);Mc,Moscovium,(290);Lv,Livermorium,(293);Ts,Tennessine,(294);Og,Oganesson,(294)';
+var ELEMENTS = EL_DATA.split(';').map(function(r, i){
+  var p = r.split(','), br = p[2].charAt(0) === '(';
+  return { sym:p[0], name:p[1], z:i + 1, ms:p[2], M:parseFloat(br ? p[2].slice(1) : p[2]), br:br };
+});
+var EL = {};
+ELEMENTS.forEach(function(e){ EL[e.sym] = e; });
+var DIATOMIC = { H:1, N:1, O:1, F:1, Cl:1, Br:1, I:1 };
+function lc(s){ return EL[s].name.toLowerCase(); }
+
+/* ---- formulas ---- */
+var SUBS = '₀₁₂₃₄₅₆₇₈₉';
+function plainDigits(s){ return String(s).replace(/[₀-₉]/g, function(ch){ return String(ch.charCodeAt(0) - 0x2080); }); }
+function fHTML(f){ return String(f).replace(/\d+/g, function(d){ return '<sub>' + d + '</sub>'; }); }
+function fText(f){ return String(f).replace(/\d/g, function(d){ return SUBS.charAt(Number(d)); }); }
+
+/* parseFormula('Ca(NO3)2') -> { ok, f, occ:[{el,n,mult}], counts:{Ca:1,N:2,O:6}, order:['Ca','N','O'], groups:[{inner:'NO3',k:2}] } */
+function parseFormula(str){
+  var s = plainDigits(str).replace(/\s+/g, ''), i = 0, groups = [];
+  if(!s) return { ok:false, err:'nothing in it' };
+  function num(){
+    var m = /^\d+/.exec(s.slice(i));
+    if(!m) return 1;
+    i += m[0].length;
+    var n = parseInt(m[0], 10);
+    if(n === 0) throw 'a subscript of 0';
+    if(m[0].charAt(0) === '0') throw 'a subscript that starts with 0. If you meant the letter O, type a capital O';
+    return n;
+  }
+  function group(depth){
+    var items = [];
+    while(i < s.length){
+      var ch = s.charAt(i);
+      if(ch === '(' || ch === '['){
+        var start = ++i, close = ch === '(' ? ')' : ']';
+        var inner = group(depth + 1);
+        if(s.charAt(i) !== close) throw (s.charAt(i) ? 'brackets that don’t match' : 'a parenthesis that never closes');
+        var end = i++;
+        var k = num();
+        if(!inner.length) throw 'empty parentheses';
+        inner.forEach(function(o){ o.mult *= k; });
+        if(k > 1) groups.push({ inner:s.slice(start, end), k:k });
+        items = items.concat(inner);
+      } else if(ch === ')' || ch === ']'){
+        if(depth === 0) throw 'an extra closing parenthesis';
+        return items;
+      } else if(/[A-Z]/.test(ch)){
+        var sym = ch; i++;
+        if(/[a-z]/.test(s.charAt(i))){ sym += s.charAt(i); i++; }
+        if(!EL[sym]) throw '“' + sym + '”, which isn’t an element symbol';
+        items.push({ el:sym, n:num(), mult:1 });
+      } else if(/[a-z]/.test(ch)){
+        throw 'a lowercase “' + ch + '”. Element symbols start with a capital letter';
+      } else if(/\d/.test(ch)){
+        throw 'a number in front. Leave out coefficients and type just the formula';
+      } else {
+        throw 'the character “' + ch + '”';
+      }
+    }
+    if(depth > 0) throw 'a parenthesis that never closes';
+    return items;
+  }
+  try {
+    var occ = group(0), counts = {}, order = [];
+    occ.forEach(function(o){
+      if(!(o.el in counts)){ counts[o.el] = 0; order.push(o.el); }
+      counts[o.el] += o.n * o.mult;
+    });
+    return { ok:true, f:s, occ:occ, counts:counts, order:order, groups:groups };
+  } catch(e){
+    return { ok:false, err:String(e) };
+  }
+}
+/* add in hundredths so 2.02 + 16.00 is exactly 18.02 */
+function hund(sym){ return Math.round(EL[sym].M * 100); }
+function massOf(counts){ var h = 0; for(var s in counts) h += counts[s] * hund(s); return h / 100; }
+function fix2(x){ return (Math.round(x * 100) / 100).toFixed(2); }
+
+/* percent composition: one row per element, in formula order */
+function compOf(f){
+  var pf = typeof f === 'string' ? parseFormula(f) : f;
+  var M = massOf(pf.counts), rows = [];
+  pf.order.forEach(function(s){
+    var n = pf.counts[s], m = n * hund(s) / 100;
+    rows.push({ s:s, n:n, m:m, pct:m / M * 100 });
+  });
+  return { pf:pf, M:M, rows:rows, by:function(s){ for(var i = 0; i < rows.length; i++) if(rows[i].s === s) return rows[i]; return null; } };
+}
+
+/* ---- numbers ---- */
+function supHTML(n){ return '<sup>' + String(n).replace('-', '−') + '</sup>'; }
+/* round to sf significant figures -> { m:'1.51', e:24 } */
+function sigParts(x, sf){
+  if(x === 0) return { m:(0).toFixed(sf - 1), e:0 };
+  var e = Math.floor(Math.log10(Math.abs(x)));
+  var f = Math.pow(10, sf - 1);
+  var m = Math.round(Math.abs(x) / Math.pow(10, e) * f * (1 + 1e-12)) / f;
+  if(m >= 10){ m = m / 10; e++; }
+  return { m:(x < 0 ? '-' : '') + m.toFixed(sf - 1), e:e };
+}
+function sciHTML(x, sf){ var p = sigParts(x, sf || 3); return p.m + ' × 10' + supHTML(p.e); }
+/* plain decimals between 0.001 and 999 ; scientific notation outside that, or when a trailing zero would be ambiguous */
+function sigHTML(x, sf){
+  sf = sf || 3;
+  var p = sigParts(x, sf);
+  if(p.e >= 3 || p.e < -3) return sciHTML(x, sf);
+  var dp = Math.max(0, sf - 1 - p.e);
+  var s = (Number(p.m) * Math.pow(10, p.e)).toFixed(dp);
+  if(dp === 0 && /0$/.test(s)) return sciHTML(x, sf);
+  return s;
+}
+/* '1.252', '1.252 mol', '69.94 g', '3' -> { v } or null */
+function parseNum(str){
+  var s = String(str || '').trim();
+  if(!s) return null;
+  s = s.replace(/[−–]/g, '-').replace(/,/g, '');
+  s = s.replace(/\s*(%|percent|grams?|g|mol|moles?)\.?(\s*[A-Za-z0-9()₀-₉]+)?\s*$/i, '');
+  s = s.replace(/\s+/g, '');
+  var m = /^[+-]?(\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?$/.exec(s);
+  if(!m) return null;
+  var v = parseFloat(s);
+  return isFinite(v) ? { v:v } : null;
+}
+
+/* ---- ratios ---- */
+function gcd(a, b){ a = Math.abs(a); b = Math.abs(b); while(b){ var t = b; b = a % b; a = t; } return a; }
+function gcdList(a){ return a.reduce(function(g, x){ return gcd(g, x); }, 0); }
+function reduceList(a){ var g = gcdList(a); return g > 1 ? a.map(function(x){ return x / g; }) : a.slice(); }
+function sameList(a, b){ return a.length === b.length && a.every(function(x, i){ return x === b[i]; }); }
+function sig4(x){ return Number(x.toPrecision(4)); }
+function m4(x){ return sigHTML(x, 4); }
+var FRAC = { '1/2':'½', '1/3':'⅓', '2/3':'⅔', '1/4':'¼', '3/4':'¾', '1/5':'⅕', '2/5':'⅖', '3/5':'⅗', '4/5':'⅘', '1/6':'⅙', '5/6':'⅚' };
+/* 1.333 with multiplier 3 -> '1⅓' */
+function fracWord(x, n){
+  var k = Math.round(x * n), w = Math.floor(k / n), num = k - w * n, g = gcd(num, n);
+  if(!num) return String(w);
+  return (w ? w : '') + (FRAC[(num / g) + '/' + (n / g)] || ' ' + num + '/' + n);
+}
+/* simplest whole-number ratio of a list of mole amounts: divide by the smallest, then try × 1 to × 6
+   and take the first where every number is within tol of a whole number */
+function wholeRatio(mol, tol){
+  tol = tol == null ? 0.1 : tol;
+  if(!mol.every(function(x){ return isFinite(x) && x > 0; })) return null;
+  var mn = Math.min.apply(null, mol);
+  var r = mol.map(function(x){ return x / mn; });
+  for(var n = 1; n <= 6; n++){
+    var dev = 0, sub = r.map(function(x){ var y = x * n, w = Math.round(y); dev = Math.max(dev, Math.abs(y - w)); return w; });
+    if(dev <= tol + 1e-9) return { r:r, n:n, sub:reduceList(sub), dev:dev };
+  }
+  return null;
+}
+/* the whole method for one compound: grams -> moles (4 sig figs) -> ratio to the smallest -> whole numbers */
+function solve(syms, g){
+  var mol = g.map(function(x, i){ return sig4(x / EL[syms[i]].M); });
+  var mn = Math.min.apply(null, mol), iMin = mol.indexOf(mn);
+  return { syms:syms, g:g, mol:mol, mn:mn, iMin:iMin, r:mol.map(function(x){ return x / mn; }), w:wholeRatio(mol) };
+}
+function efText(syms, sub){ return syms.map(function(s, i){ return s + (sub[i] > 1 ? sub[i] : ''); }).join(''); }
+function perms(a){
+  if(a.length <= 1) return [a.slice()];
+  var out = [];
+  a.forEach(function(x, i){ perms(a.slice(0, i).concat(a.slice(i + 1))).forEach(function(p){ out.push([x].concat(p)); }); });
+  return out;
+}
+
+/* =========================================================
+   core for this page: molecular formulas and hydrates (no DOM)
+   ========================================================= */
+var H2O_M = 18.02;
+function countsList(pf, syms){ return syms.map(function(s){ return pf.counts[s]; }); }
+/* '6(12.01) + 6(1.01) = 78.12' */
+function massBreak(pf){
+  return pf.order.map(function(s){ var n = pf.counts[s]; return n > 1 ? n + '(' + EL[s].ms + ')' : EL[s].ms; }).join(' + ') + ' = ' + fix2(massOf(pf.counts));
+}
+
+/* ---- molecular compounds: the real formula, and the empirical formula it reduces to ---- */
+function mol(f, name){
+  var pf = parseFormula(f), syms = pf.order, counts = countsList(pf, syms), n = gcdList(counts);
+  var efCounts = counts.map(function(x){ return x / n; }), ef = efText(syms, efCounts), mf = efText(syms, counts);
+  var efPf = parseFormula(ef);
+  return { f:f, mf:mf, alt:mf !== f, name:name, pf:pf, cp:compOf(pf), syms:syms, counts:counts, n:n,
+    efCounts:efCounts, ef:ef, efPf:efPf, M:massOf(pf.counts), efM:massOf(efPf.counts) };
+}
+var MOL_BANK = [
+  ['H2O2','hydrogen peroxide'],['N2O4','dinitrogen tetroxide'],['N2H4','hydrazine, a rocket fuel'],['C2H6','ethane'],
+  ['C2H4','ethylene'],['C3H6','propene'],['C4H8','butene'],['C6H12','cyclohexane'],['C2H2','acetylene'],['C6H6','benzene'],
+  ['C8H8','styrene'],['C4H10','butane'],['C6H14','hexane'],['C8H18','octane'],['C10H8','naphthalene, used in mothballs'],
+  ['C6H12O6','glucose'],['CH3COOH','acetic acid'],['C3H6O3','lactic acid'],['C2H6O2','ethylene glycol, used in antifreeze'],
+  ['C4H8O2','butanoic acid'],['C6H8O6','vitamin C'],['C4H6O6','tartaric acid'],['C6H10O4','adipic acid, used to make nylon'],
+  ['C8H10N4O2','caffeine'],['P4O10','tetraphosphorus decoxide'],['P4O6','tetraphosphorus hexoxide'],['B2H6','diborane'],
+  ['S2Cl2','disulfur dichloride'],['C2H4Cl2','dichloroethane'],['C6H4Cl2','dichlorobenzene'],['C2F4','tetrafluoroethylene, used to make Teflon'],
+  ['C3H8','propane'],['CO2','carbon dioxide'],['NH3','ammonia'],['C12H22O11','sucrose, table sugar'],['C9H8O4','aspirin']
+].map(function(e){ return mol(e[0], e[1]); });
+
+/* ef  = molecular formula from an empirical formula and a molar mass
+   pct = molecular formula from percent composition and a molar mass */
+function makeMol(type, avoid){
+  for(var t = 0; t < 400; t++){
+    var c = pick(MOL_BANK);
+    if(c.f === avoid) continue;
+    if(c.n === 1 && Math.random() < 0.6) continue;
+    if(type === 'ef') return { type:'ef', c:c };
+    var p = pctProblem(c);
+    if(p) return p;
+  }
+  return null;
+}
+/* the percents, rounded to 2 decimals, must lead cleanly back to the empirical formula */
+function pctProblem(c){
+  var g = c.cp.rows.map(function(r){ return Number(fix2(r.pct)); }), sol = solve(c.syms, g);
+  if(!sol.w || !sameList(sol.w.sub, c.efCounts) || sol.w.dev > 0.06) return null;
+  return { type:'pct', c:c, syms:c.syms, g:g, pcts:g.map(function(x){ return x.toFixed(2); }), sol:sol };
+}
+
+/* judge a typed molecular formula -> { code, x } */
+function judgeMol(p, raw){
+  var s = String(raw || '').trim(), c = p.c;
+  if(!s) return { code:'empty', x:{} };
+  if(/\d\s*\.\s*\d|\.\d/.test(plainDigits(s))) return { code:'decimal', x:{} };
+  var hasO = c.syms.indexOf('O') !== -1, zero = /0/.test(plainDigits(s));
+  var pf = parseFormula(s);
+  if(!pf.ok){
+    if(zero && hasO && !/O/.test(s)) return { code:'zeroO', x:{} };
+    return { code:'parse', x:{ err:pf.err } };
+  }
+  var missing = c.syms.filter(function(x){ return !(x in pf.counts); });
+  var extra = pf.order.filter(function(x){ return c.syms.indexOf(x) === -1; });
+  if(missing.length || extra.length){
+    if(zero && missing.indexOf('O') !== -1) return { code:'zeroO', x:{} };
+    return { code:'elements', x:{ missing:missing, extra:extra } };
+  }
+  var got = countsList(pf, c.syms), n = c.n;
+  if(sameList(got, c.counts)) return { code:'ok', x:{} };
+  var k = gcdList(got);
+  if(sameList(reduceList(got), c.efCounts)) return k === 1 ? { code:'empirical', x:{} } : { code:'wrongN', x:{ k:k, M:massOf(pf.counts), f:efText(c.syms, got) } };
+  if(n > 1 && got.every(function(v, i){ return v === c.efCounts[i] || v === c.counts[i]; })) return { code:'oneOnly', x:{} };
+  if(n > 1 && got.every(function(v, i){ return v === c.efCounts[i] + n; })) return { code:'added', x:{} };
+  if(perms(c.counts).some(function(q){ return sameList(q, got); })) return { code:'swap', x:{} };
+  return { code:p.type === 'pct' ? 'efWrong' : 'ratio', x:{} };
+}
+
+/* ---- hydrates ---- */
+var PREFIX = ['', 'mono', 'di', 'tri', 'tetra', 'penta', 'hexa', 'hepta', 'octa', 'nona', 'deca'];
+function hyd(salt, x, name, note){
+  var pf = parseFormula(salt), Ms = massOf(pf.counts), M = (Math.round(Ms * 100) + x * 1802) / 100;
+  return { salt:salt, x:x, name:name, note:note || '', pf:pf, Ms:Ms, M:M, fw:x * H2O_M / M };
+}
+function hydName(h){ return h.name + ' ' + PREFIX[h.x] + 'hydrate'; }
+function hydHTML(salt, x){ return fHTML(salt) + '·' + (x > 1 ? x : '') + 'H<sub>2</sub>O'; }
+function hydPlain(salt, x){ return salt + '.' + (x > 1 ? x : '') + 'H2O'; }
+var HYD_BANK = [
+  ['CuSO4',5,'copper(II) sulfate'],['MgSO4',7,'magnesium sulfate','Epsom salt'],['CaSO4',2,'calcium sulfate','gypsum'],
+  ['BaCl2',2,'barium chloride'],['CoCl2',6,'cobalt(II) chloride'],['Na2CO3',10,'sodium carbonate','washing soda'],
+  ['CaCl2',2,'calcium chloride'],['CaCl2',6,'calcium chloride'],['FeSO4',7,'iron(II) sulfate'],['ZnSO4',7,'zinc sulfate'],
+  ['NiSO4',6,'nickel(II) sulfate'],['Na2SO4',10,'sodium sulfate','Glauber’s salt'],['MgCl2',6,'magnesium chloride'],
+  ['CuCl2',2,'copper(II) chloride'],['MnSO4',1,'manganese(II) sulfate'],['FeCl3',6,'iron(III) chloride'],
+  ['Ca(NO3)2',4,'calcium nitrate'],['SnCl2',2,'tin(II) chloride'],['NiCl2',6,'nickel(II) chloride'],['Zn(NO3)2',6,'zinc nitrate'],
+  ['Cu(NO3)2',3,'copper(II) nitrate'],['Mg(NO3)2',6,'magnesium nitrate'],['Al(NO3)3',9,'aluminum nitrate'],
+  ['Fe(NO3)3',9,'iron(III) nitrate'],['SrCl2',6,'strontium chloride'],['CoSO4',7,'cobalt(II) sulfate'],
+  ['MnCl2',4,'manganese(II) chloride'],['Ba(OH)2',8,'barium hydroxide'],['LiNO3',3,'lithium nitrate']
+].map(function(e){ return hyd(e[0], e[1], e[2], e[3]); });
+function findHyd(salt, x){ return HYD_BANK.filter(function(h){ return h.salt === salt && h.x === x; })[0]; }
+
+/* masses of a sample, from the hydrate's mass in whole units of 10^-dp g */
+function hydData(h, units, dp){
+  var k = Math.pow(10, dp), A = Math.round(units * h.Ms / h.M);
+  return { hyd:units / k, anh:A / k, w:(units - A) / k };
+}
+function hydSolve(h, m){
+  var ms = sig4(m.anh / h.Ms), mw = sig4(m.w / H2O_M), r = mw / ms;
+  return { ms:ms, mw:mw, r:r, x:Math.round(r) };
+}
+/* v: heat = masses before and after heating ; lost = mass of water lost ; pctw = percent water */
+function hydProblem(h, v, units){
+  var m;
+  if(v === 'pctw'){ var pw = Number(fix2(h.fw * 100)); m = { hyd:100, w:pw, anh:Math.round((100 - pw) * 100) / 100 }; }
+  else m = hydData(h, units, 2);
+  var sol = hydSolve(h, m);
+  if(sol.x !== h.x || Math.abs(sol.r - h.x) > 0.06) return null;
+  if(v !== 'pctw' && (m.anh < 1 || m.w < 1)) return null;
+  return { type:'hyd', v:v, h:h, m:m, dp:2, sol:sol };
+}
+function makeHyd(avoid){
+  for(var t = 0; t < 400; t++){
+    var h = pick(HYD_BANK);
+    if(h.salt === avoid) continue;
+    var fmin = Math.min(h.fw, 1 - h.fw), lo = Math.max(2, 1.05 / fmin), hi = Math.max(lo + 3, 9.5);
+    var p = hydProblem(h, pick(['heat', 'heat', 'lost', 'pctw']), Math.round((lo + Math.random() * (hi - lo)) * 100));
+    if(p) return p;
+  }
+  return null;
+}
+/* wrong values of x that common mistakes produce */
+function hydWrong(p){
+  var h = p.h, m = p.m, out = [];
+  function push(code, v){ var x = Math.round(v); if(isFinite(x) && x >= 1 && x !== h.x) out.push({ code:code, x:x }); }
+  push('hydAsSalt', (m.w / H2O_M) / (m.hyd / h.Ms));
+  push('swapMass', (m.anh / H2O_M) / (m.w / h.Ms));
+  push('hydAsWater', (m.hyd / H2O_M) / (m.anh / h.Ms));
+  return out;
+}
+var DOT = /[·.•*⋅∙]/;
+/* 'CuSO4.5H2O' -> { ok, salt:'CuSO4', pf, x:5 } or { ok:false, code, err } */
+function parseHydrate(raw){
+  var s = plainDigits(String(raw || '')).replace(/\s+/g, '');
+  if(!s) return { ok:false, code:'empty' };
+  var parts = s.split(DOT);
+  if(parts.length === 1) return { ok:false, code:/H2O\)?\d*$/i.test(s) && s.length > 3 ? 'noDot' : 'noWater' };
+  if(parts.length > 2 || !parts[0]) return { ok:false, code:'form' };
+  var pf = parseFormula(parts[0]);
+  if(!pf.ok) return { ok:false, code:'parse', err:pf.err };
+  var m = /^(\d*)H2O$/.exec(parts[1]);
+  if(!m) return { ok:false, code:'water' };
+  var x = m[1] ? parseInt(m[1], 10) : 1;
+  if(x < 1) return { ok:false, code:'water' };
+  return { ok:true, salt:parts[0], pf:pf, x:x };
+}
+/* judge a typed hydrate formula -> { code, x } ; p.m is missing for the naming drill */
+function judgeHyd(p, raw){
+  var h = p.h, r = parseHydrate(raw);
+  if(!r.ok) return { code:r.code, x:{ err:r.err } };
+  var same = Object.keys(h.pf.counts).length === Object.keys(r.pf.counts).length &&
+    Object.keys(h.pf.counts).every(function(s){ return r.pf.counts[s] === h.pf.counts[s]; });
+  if(!same) return { code:'salt', x:{} };
+  if(r.x === h.x) return { code:'ok', x:{} };
+  if(p.m){
+    var cs = hydWrong(p);
+    for(var i = 0; i < cs.length; i++) if(cs[i].x === r.x) return { code:cs[i].code, x:{ got:r.x } };
+  }
+  return { code:'none', x:{ got:r.x } };
+}
+/*CORE-END*/
+
+/* =========================================================
+   drawing and wording helpers
+   ========================================================= */
+var COLORS = { H:'#F4F6F6', C:'#3F4548', N:'#3B6FD0', O:'#D9473B', S:'#E2C93C', P:'#E08A2C', Cl:'#3FA34D', F:'#8FD16A', Br:'#8B2A1E', I:'#6B2C91',
+  Na:'#8E5CC4', K:'#7A4FB0', Li:'#B48AD8', Ca:'#4E8A3A', Mg:'#6FAF5A', Ba:'#2F7D5C', Al:'#A7AFB8', Fe:'#C0662B', Cu:'#C26A3A', Zn:'#7D80B0',
+  Ag:'#C9CED3', Cr:'#8A99C7', Mn:'#9C7AC7', Si:'#D9B98C', B:'#F2B5A0', Pb:'#69717D', Au:'#D6A62A', Hg:'#B7BEC4', Ti:'#9AA5AE', Sn:'#8E9AA3' };
+function colorOf(s){ return COLORS[s] || '#9AA6A4'; }
+/* a thin stacked bar. parts: [{ s, w: percent of the bar }] */
+function sbar(parts, label){
+  return '<div class="sbar" role="img" aria-label="' + label + '">' + parts.map(function(p){
+    return '<span style="width:' + p.w.toFixed(3) + '%;background:' + colorOf(p.s) + '"></span>';
+  }).join('') + '</div>';
+}
+function andList(a){ return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
+/* a ratio value for display: 2 or 1.50 */
+function rShort(x){ return Math.abs(x - Math.round(x)) < 0.005 ? String(Math.round(x)) : x.toFixed(2); }
+function nameLine(c){ return 'It’s ' + c.name + (c.alt ? ', usually written ' + fHTML(c.f) : '') + '.'; }
+function linesHTML(lines, mark){
+  return '<ol class="steps">' + lines.map(function(l, i){ return '<li' + (mark && i === lines.length - 1 ? ' class="now"' : '') + '>' + l + '</li>'; }).join('') + '</ol>';
+}
+
+/* =========================================================
+   hero
+   ========================================================= */
+var FAM = [null,
+  ['formaldehyde', 'a sharp-smelling gas used to preserve specimens'],
+  ['acetic acid', 'the acid in vinegar'],
+  ['lactic acid', 'the acid in sour milk and yogurt'],
+  ['erythrose', 'a small sugar with four carbon atoms'],
+  ['ribose', 'the sugar in RNA'],
+  ['glucose', 'the sugar your blood carries for energy']];
+function famF(n){ var k = n > 1 ? n : ''; return 'C' + k + 'H' + 2 * n + 'O' + k; }
+var CH2O = compOf('CH2O');
+(function heroRows(){
+  var h = '<div class="sig-r head"><span>Compound</span><span>Units of CH₂O</span><span>Formula</span></div>';
+  [1, 2, 3, 6].forEach(function(n){
+    var f = famF(n), M = massOf(parseFormula(f).counts);
+    h += '<div class="sig-r"><span><span class="nm">' + cap(FAM[n][0]) + '</span><span class="pc">' + fix2(M) + ' g/mol</span></span>' +
+      '<span class="rt">× ' + n + '<small>' + fix2(M) + ' ÷ ' + fix2(CH2O.M) + '</small></span><span class="fx">' + fHTML(f) + '</span></div>';
+  });
+  el('hero-rows').innerHTML = h;
+})();
+(function heroFig(){
+  var mono = 'font-family="IBM Plex Mono,monospace"', sans = 'font-family="IBM Plex Sans,sans-serif" font-weight="600"';
+  var unit = function(x, y, w, hh){
+    return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + hh + '" rx="3" fill="#BFDEE2" stroke="#12727F"/>' +
+      '<text x="' + (x + w / 2) + '" y="' + (y + hh / 2 + 5) + '" text-anchor="middle" ' + sans + ' font-size="14" fill="#0B4E58">CH<tspan font-size="10" dy="3">2</tspan><tspan dy="-3">O</tspan></text>';
+  };
+  var h = '<svg viewBox="0 0 300 246" role="img" aria-label="One empirical unit of CH2O has a mass of 30.03 grams per mole. Glucose has a molar mass of 180.18 grams per mole. 180.18 divided by 30.03 is 6, so a glucose molecule is 6 units of CH2O: C6H12O6.">';
+  h += '<text x="20" y="13" ' + mono + ' font-size="10.5" letter-spacing="1" fill="#5F6D6B">ONE EMPIRICAL UNIT</text>';
+  h += unit(20, 20, 82, 30);
+  h += '<text x="112" y="40" ' + mono + ' font-size="11.5" fill="#3B4A48">30.03 g/mol</text>';
+  h += '<text x="20" y="78" ' + mono + ' font-size="10.5" letter-spacing="1" fill="#5F6D6B">GLUCOSE · 180.18 G/MOL</text>';
+  for(var i = 0; i < 6; i++) h += unit(20 + (i % 3) * 88, 85 + Math.floor(i / 3) * 36, 82, 30);
+  h += '<text x="20" y="176" ' + mono + ' font-size="11.5" fill="#3B4A48">180.18 ÷ 30.03 = 6 units</text>';
+  h += '<text x="20" y="222" ' + sans + ' font-size="30" fill="#0B4E58">C<tspan font-size="19" dy="7">6</tspan><tspan dy="-7">H</tspan><tspan font-size="19" dy="7">12</tspan><tspan dy="-7">O</tspan><tspan font-size="19" dy="7">6</tspan></text>';
+  h += '</svg>';
+  el('hero-fig').innerHTML = h;
+})();
+
+/* =========================================================
+   the idea: the CH2O family
+   ========================================================= */
+function scDraw(n){
+  var f = famF(n), M = massOf(parseFormula(f).counts), blocks = '';
+  for(var i = 0; i < n; i++) blocks += '<span>CH<sub>2</sub>O</span>';
+  var pcs = CH2O.rows.map(function(r){ return fix2(r.pct) + '% ' + r.s; });
+  each(el('sc-opts').querySelectorAll('button'), function(b){ b.className = 'ghost' + (Number(b.dataset.n) === n ? ' yes' : ''); b.setAttribute('aria-pressed', String(Number(b.dataset.n) === n)); });
+  el('sc-out').innerHTML = '<div class="bigf">' + fHTML(f) + '</div><div class="blocks">' + blocks + '</div>' +
+    '<div class="readrows">' +
+    '<div><span>Compound</span><span>' + FAM[n][0] + '</span></div>' +
+    '<div><span>Molar mass</span><span>' + n + ' × ' + fix2(CH2O.M) + ' = ' + fix2(M) + ' g/mol</span></div>' +
+    '<div><span>Empirical formula</span><span>CH₂O</span></div>' +
+    '</div>' +
+    '<div class="sc-bar">' + sbar(CH2O.rows.map(function(r){ return { s:r.s, w:r.pct }; }), 'Percent by mass: ' + pcs.join(', ')) +
+    '<span class="duo-v">' + pcs.join(' · ') + ' — the same for all six</span></div>' +
+    '<p class="smallprint" style="margin-bottom:0">' + cap(FAM[n][0]) + ' is ' + FAM[n][1] + '.</p>';
+}
+each(el('sc-opts').querySelectorAll('button'), function(b){ b.addEventListener('click', function(){ scDraw(Number(b.dataset.n)); }); });
+
+/* =========================================================
+   the work for a problem, one line per step
+   ========================================================= */
+function efTable(p){
+  var sol = p.sol, n = sol.w.n;
+  var rows = p.syms.map(function(s, i){
+    return '<tr><td><b>' + s + '</b></td><td class="n">' + p.pcts[i] + ' g ÷ ' + EL[s].ms + '</td><td class="n">' + m4(sol.mol[i]) + ' mol</td><td class="n">' + sol.r[i].toFixed(3) + '</td><td class="n">' + (n > 1 ? '× ' + n + ' → ' : '') + sol.w.sub[i] + '</td></tr>';
+  }).join('');
+  return '<div class="tbl-scroll"><table class="mmt wt"><thead><tr><th>El.</th><th>Grams ÷ g/mol</th><th>= Moles</th><th>÷ smallest</th><th>Whole</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+}
+function molLines(p){
+  var c = p.c, n = c.n, L = [];
+  if(p.type === 'pct') L.push('<b>Find the empirical formula.</b> Assume 100 g, so each percent is a mass in grams. Then it’s mass to mole, divide by small, multiply ’til whole.' + efTable(p) + 'The empirical formula is <b>' + fHTML(c.ef) + '</b>.');
+  L.push('<b>Find the empirical formula mass.</b> ' + fHTML(c.ef) + ': ' + massBreak(c.efPf) + ' g/mol.');
+  L.push('<b>Divide the molar mass by it.</b> n = ' + fix2(c.M) + ' ÷ ' + fix2(c.efM) + ' = ' + (c.M / c.efM).toFixed(2) + ', so n = ' + n + '.' + (n > 1 ? ' One molecule holds ' + n + ' empirical units.' : ''));
+  if(n > 1) L.push('<b>Multiply every subscript by ' + n + '.</b> ' + c.syms.map(function(s, i){ return s + ': ' + c.efCounts[i] + ' × ' + n + ' = ' + c.counts[i]; }).join(', ') + '. The molecular formula is <b>' + fHTML(c.mf) + '</b>. ' + nameLine(c));
+  else L.push('<b>n = 1, so nothing changes.</b> The molecular formula is the same as the empirical formula: <b>' + fHTML(c.mf) + '</b>. ' + nameLine(c));
+  L.push('<b>Check.</b> Molar mass of ' + fHTML(c.mf) + ': ' + massBreak(c.pf) + ' g/mol. That matches the molar mass you were given.&nbsp;✓');
+  return L;
+}
+function hydLines(p){
+  var h = p.h, m = p.m, sol = p.sol, sf = fHTML(h.salt), L = [];
+  function g(v){ return v.toFixed(p.dp) + ' g'; }
+  if(p.pre) L.push(p.pre);
+  if(p.v === 'heat') L.push('<b>Find the mass of the water.</b> The water is the mass that was lost on heating: ' + g(m.hyd) + ' − ' + g(m.anh) + ' = ' + g(m.w) + ' of water.');
+  else if(p.v === 'lost') L.push('<b>Find the mass of the anhydrous salt.</b> It’s what is left after the water is gone: ' + g(m.hyd) + ' − ' + g(m.w) + ' = ' + g(m.anh) + ' of ' + sf + '.');
+  else L.push('<b>Percent to mass.</b> Assume 100 g of the hydrate. Then ' + g(m.w) + ' is water, and the rest is salt: 100 − ' + m.w.toFixed(2) + ' = ' + g(m.anh) + ' of ' + sf + '.');
+  L.push('<b>Moles of anhydrous salt.</b> The molar mass of ' + sf + ' is ' + massBreak(h.pf) + ' g/mol. ' + g(m.anh) + ' ÷ ' + fix2(h.Ms) + ' = ' + m4(sol.ms) + ' mol ' + sf + '.');
+  L.push('<b>Moles of water.</b> ' + g(m.w) + ' ÷ 18.02 = ' + m4(sol.mw) + ' mol H<sub>2</sub>O.');
+  L.push('<b>Divide by the moles of salt.</b> x = ' + m4(sol.mw) + ' ÷ ' + m4(sol.ms) + ' = ' + sol.r.toFixed(2) + ', which rounds to ' + h.x + '. There ' + (h.x === 1 ? 'is 1 water molecule' : 'are ' + h.x + ' water molecules') + ' for every formula unit of ' + sf + '.');
+  L.push('<b>Write the formula.</b> <b>' + hydHTML(h.salt, h.x) + '</b>. It’s ' + hydName(h) + (h.note ? ', also called ' + h.note : '') + '.');
+  return L;
+}
+function hydStem(h){ return 'a hydrate of ' + h.name + ', ' + fHTML(h.salt) + '·<i>x</i>H<sub>2</sub>O'; }
+function problemText(p, bold){
+  var b = function(t){ return bold ? '<b>' + t + '</b>' : t; };
+  if(p.type === 'ef') return 'A compound has the empirical formula ' + b(fHTML(p.c.ef)) + ' and a molar mass of ' + b(fix2(p.c.M) + ' g/mol') + '. What is its molecular formula?';
+  if(p.type === 'pct') return 'A compound is ' + andList(p.syms.map(function(s, i){ return b(p.pcts[i] + '%') + ' ' + lc(s); })) + ' by mass. Its molar mass is ' + b(fix2(p.c.M) + ' g/mol') + '. What is its molecular formula?';
+  var h = p.h, m = p.m, g = function(v){ return b(v.toFixed(p.dp) + ' g'); }, q = ' What is the formula of the hydrate?';
+  if(p.v === 'heat') return 'A ' + g(m.hyd) + ' sample of ' + hydStem(h) + ', is heated until all of the water is gone. ' + g(m.anh) + ' of anhydrous ' + fHTML(h.salt) + ' is left.' + q;
+  if(p.v === 'lost') return 'When a ' + g(m.hyd) + ' sample of ' + hydStem(h) + ', is heated until all of the water is gone, it loses ' + g(m.w) + ' of water.' + q;
+  return cap(hydStem(h)) + ', is ' + b(m.w.toFixed(2) + '%') + ' water by mass.' + q;
+}
+
+/* =========================================================
+   worked examples: step through the lines of work
+   ========================================================= */
+function worked(prefix, list){
+  var st = { i:0, step:0 };
+  el(prefix + '-tabs').innerHTML = list.map(function(w, i){
+    return '<button type="button" class="tab" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '">' + w.title + '</button>';
+  }).join('');
+  function draw(){
+    var w = list[st.i], N = w.lines.length;
+    el(prefix + '-q').innerHTML = w.q;
+    el(prefix + '-steps').innerHTML = linesHTML(w.lines.slice(0, st.step + 1), true);
+    el(prefix + '-count').textContent = 'Step ' + (st.step + 1) + ' of ' + N;
+    el(prefix + '-next').disabled = st.step === N - 1;
+    el(prefix + '-prev').disabled = st.step === 0;
+  }
+  tabs(el(prefix + '-tabs'), function(b){ st.i = Number(b.dataset.i); st.step = 0; draw(); });
+  el(prefix + '-next').addEventListener('click', function(){ if(st.step < list[st.i].lines.length - 1){ st.step++; draw(); } });
+  el(prefix + '-prev').addEventListener('click', function(){ if(st.step > 0){ st.step--; draw(); } });
+  el(prefix + '-restart').addEventListener('click', function(){ st.step = 0; draw(); });
+  draw();
+}
+function wk(title, p){ return { title:title, q:problemText(p, false), lines:p.type === 'hyd' ? hydLines(p) : molLines(p) }; }
+worked('mw', [
+  wk('Empirical formula given', { type:'ef', c:mol('C6H6', 'benzene') }),
+  wk('From percents', pctProblem(mol('H2O2', 'hydrogen peroxide'))),
+  wk('Three elements', pctProblem(mol('CH3COOH', 'acetic acid, the acid in vinegar'))),
+  wk('When n = 1', { type:'ef', c:mol('C3H8', 'propane') })
+]);
+worked('hw', [
+  wk('Before and after heating', hydProblem(findHyd('CuSO4', 5), 'heat', 500)),
+  wk('Water lost', hydProblem(findHyd('Na2CO3', 10), 'lost', 800)),
+  wk('Percent water', hydProblem(findHyd('MgSO4', 7), 'pctw'))
+]);
+
+/* =========================================================
+   common hydrates
+   ========================================================= */
+(function hydTable(){
+  var rows = [['CuSO4', 5], ['MgSO4', 7], ['CaSO4', 2], ['Na2CO3', 10], ['CoCl2', 6], ['CaCl2', 2]].map(function(e){
+    var h = findHyd(e[0], e[1]);
+    return '<tr><td>' + cap(hydName(h)) + (h.note ? '<br><span class="smallprint">' + h.note + '</span>' : '') + '</td><td style="white-space:nowrap">' + hydHTML(h.salt, h.x) + '</td>' +
+      '<td class="n" style="white-space:nowrap">' + fix2(h.Ms) + ' + ' + (h.x > 1 ? h.x + '(18.02)' : '18.02') + ' = ' + fix2(h.M) + '</td><td class="n">' + fix2(h.fw * 100) + '%</td></tr>';
+  }).join('');
+  el('h-table').innerHTML = '<thead><tr><th>Name</th><th>Formula</th><th>Molar mass, g/mol</th><th>Water</th></tr></thead><tbody>' + rows + '</tbody>';
+})();
+
+/* =========================================================
+   a typed formula, shown back with real subscripts
+   ========================================================= */
+function prettyTyped(v){
+  var s = plainDigits(v).replace(/\s+/g, '');
+  if(DOT.test(s)){ var r = parseHydrate(s); return r.ok ? hydHTML(r.salt, r.x) : ''; }
+  return s && parseFormula(s).ok ? fHTML(s) : '';
+}
+function previewTo(input, out){
+  input.addEventListener('input', function(){
+    var h = prettyTyped(input.value);
+    out.innerHTML = h ? 'reads as <b>' + h + '</b>' : '';
+  });
+}
+function setTyped(input, out, plain, html){ input.value = plain; out.innerHTML = 'reads as <b>' + html + '</b>'; }
+
+/* =========================================================
+   hints
+   ========================================================= */
+var SOFT = { empty:1, parse:1, zeroO:1, noDot:1, noWater:1, form:1, water:1 };
+function hintMol(p, res){
+  var c = p.c, x = res.x || {};
+  switch(res.code){
+    case 'empty':     return 'Type your answer first.';
+    case 'decimal':   return '<b>Subscripts are whole numbers.</b> n should come out as a whole number, and so should every subscript.';
+    case 'parse':     return 'That formula has ' + x.err + '. Type it like <kbd class="fk">C6H12O6</kbd>: a capital letter starts each element, and plain numbers are subscripts.';
+    case 'zeroO':     return 'It looks like you typed a zero (0) where you meant the letter O. Use a capital O for oxygen.';
+    case 'elements':  return '<b>Use the elements in the compound:</b> ' + andList(c.syms) + (x.extra.length ? ', and nothing else' : '') + '.';
+    case 'empirical': return '<b>That’s the empirical formula.</b> ' + fHTML(c.ef) + ' has a mass of ' + fix2(c.efM) + ' g/mol, but the compound’s molar mass is ' + fix2(c.M) + ' g/mol. How many empirical units fit in one molecule?';
+    case 'wrongN':    return '<b>Right ratio, wrong size.</b> ' + fHTML(x.f) + ' has a molar mass of ' + fix2(x.M) + ' g/mol, and this compound’s is ' + fix2(c.M) + ' g/mol. Find n = molar mass ÷ empirical formula mass.';
+    case 'oneOnly':   return '<b>Multiply every subscript by n</b>, including the ones that are 1. Changing only some of them changes the ratio of the atoms.';
+    case 'added':     return '<b>Multiply, don’t add.</b> n is the number of whole empirical units in one molecule, so every subscript gets multiplied by n.';
+    case 'swap':      return '<b>Right numbers, wrong elements.</b> Check which subscript goes with which element.';
+    case 'efWrong':   return '<b>The ratio of atoms is off.</b> Find the empirical formula first: percent to mass, mass to mole, divide by small, multiply ’til whole. Then compare its mass with the molar mass.';
+  }
+  return '<b>Keep the ratio of the empirical formula.</b> Multiply every subscript in ' + fHTML(c.ef) + ' by the same whole number, n = molar mass ÷ empirical formula mass.';
+}
+function hintHyd(p, res){
+  var h = p.h, x = res.x || {}, eg = '<kbd class="fk">CuSO4.5H2O</kbd>';
+  switch(res.code){
+    case 'empty':      return 'Type your answer first.';
+    case 'noDot':      return 'Put a period between the salt and the water, like ' + eg + '.';
+    case 'noWater':    return 'A hydrate’s formula has two parts: the salt, then a dot and the number of waters. Type it like ' + eg + '.';
+    case 'form':       return 'Type the salt, one period for the dot, and then the waters, like ' + eg + '. The number of waters is a whole number.';
+    case 'parse':      return 'The salt’s formula has ' + x.err + '. Type it like ' + eg + '.';
+    case 'water':      return 'After the period, type the number of waters and then H2O, like <kbd class="fk">.5H2O</kbd>.';
+    case 'salt':       return p.m ? '<b>Check the salt.</b> This is a hydrate of ' + fHTML(h.salt) + '. Type that first, then a period and the waters.'
+                                  : '<b>Check the formula for ' + h.name + '.</b> Balance the charges of its ions, the way you did in Unit 2. The prefix only tells you the number of waters.';
+    case 'hydAsSalt':  return '<b>Check the moles of salt.</b> The mass of the hydrate includes the water. Use only the mass of the anhydrous salt to find the moles of ' + fHTML(h.salt) + '.';
+    case 'swapMass':   return '<b>Check which mass is which.</b> What’s left after heating is the salt. The mass that was lost is the water.';
+    case 'hydAsWater': return '<b>Check the mass of the water.</b> The water is only the part that was lost on heating, not the whole sample.';
+  }
+  if(!p.m) return '<b>Check the prefix.</b> ' + cap(PREFIX[h.x]) + '- means ' + h.x + '.';
+  return '<b>Check x.</b> x = moles of water ÷ moles of anhydrous salt. Find the mass of each first, then divide each mass by its own molar mass.';
+}
+
+/* =========================================================
+   name to formula
+   ========================================================= */
+var nScore = Score(el('n-score')), ND = null;
+function nNew(){
+  var h;
+  do { h = pick(HYD_BANK); } while(ND && ND.h === h);
+  ND = { h:h, scored:false, done:false };
+  el('n-name').innerHTML = '<b>' + hydName(h) + '</b>';
+  el('n-in').value = ''; el('n-prev').innerHTML = '';
+  hideFb(el('n-fb'));
+}
+function nAnswer(){ var h = ND.h; return '<b>' + hydHTML(h.salt, h.x) + '.</b> ' + cap(h.name) + ' is ' + fHTML(h.salt) + ', and ' + PREFIX[h.x] + '- means ' + h.x + (h.note ? '. It’s also called ' + h.note : '') + '.'; }
+function nCheck(){
+  if(!ND || ND.done) return;
+  var fb = el('n-fb'), res = judgeHyd(ND, el('n-in').value);
+  if(SOFT[res.code]){ setFb(fb, 'hint', hintHyd(ND, res)); return; }
+  var ok = res.code === 'ok';
+  if(!ND.scored){ ND.scored = true; nScore.add(ok); }
+  if(ok){ ND.done = true; setFb(fb, 'good', 'Correct: ' + nAnswer()); }
+  else setFb(fb, 'bad', hintHyd(ND, res));
+}
+el('n-check').addEventListener('click', nCheck);
+el('n-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') nCheck(); });
+el('n-new').addEventListener('click', nNew);
+el('n-show').addEventListener('click', function(){
+  if(!ND.scored){ ND.scored = true; nScore.add(false); }
+  ND.done = true;
+  setTyped(el('n-in'), el('n-prev'), hydPlain(ND.h.salt, ND.h.x), hydHTML(ND.h.salt, ND.h.x));
+  setFb(el('n-fb'), 'hint', 'Answer: ' + nAnswer());
+});
+previewTo(el('n-in'), el('n-prev'));
+
+/* =========================================================
+   lab: heat a hydrate (masses in milligrams)
+   ========================================================= */
+function mg3(x){ return (x / 1000).toFixed(3); }
+/* a digital scale: pan top at y=136 ; contents drawn by caller */
+function scaleSVG(contents, reading, label){
+  return '<svg viewBox="0 0 300 200" role="img" aria-label="' + label + '">' +
+    contents +
+    '<rect x="138" y="140" width="24" height="10" fill="#B5C2C0"/>' +
+    '<rect x="36" y="136" width="228" height="7" rx="3" fill="#C3CDCB" stroke="#9FB0AD"/>' +
+    '<rect x="16" y="150" width="268" height="44" rx="9" fill="#DCE3E2" stroke="#9FB0AD"/>' +
+    '<circle cx="42" cy="172" r="7" fill="#C3CDCB" stroke="#9FB0AD"/><circle cx="64" cy="172" r="7" fill="#C3CDCB" stroke="#9FB0AD"/>' +
+    '<rect x="140" y="159" width="130" height="27" rx="3" fill="#1E2B29"/>' +
+    '<text x="262" y="178.5" text-anchor="end" font-family="IBM Plex Mono,monospace" font-weight="500" font-size="17" fill="#BFEFD0">' + reading + '</text>' +
+    '</svg>';
+}
+var POR = 'fill="#F3F1EA" stroke="#9A958A" stroke-width="1.4"';
+var WHT = { c:'white', f:'#F4F6F5', e:'#A3AFAC' };
+var LAB_SET = [
+  { salt:'CuSO4', x:5, a:{ c:'blue', f:'#2F7FD0', e:'#1B5596' }, b:WHT },
+  { salt:'CoCl2', x:6, a:{ c:'deep pink', f:'#C2477A', e:'#8A2A52' }, b:{ c:'blue', f:'#4A7FD0', e:'#2A559A' } },
+  { salt:'NiSO4', x:6, a:{ c:'blue-green', f:'#2FA08A', e:'#1B6F5E' }, b:{ c:'yellow', f:'#E6D56E', e:'#A8953A' } },
+  { salt:'MgSO4', x:7, a:WHT, b:WHT },
+  { salt:'BaCl2', x:2, a:WHT, b:WHT },
+  { salt:'CaSO4', x:2, a:WHT, b:WHT }
+];
+var LB = null;
+function mound(cx, cy, k){
+  var pts = [[-27, 0], [-19, -9], [-11, -7], [-3, -15], [6, -10], [14, -13], [27, 0]].map(function(q){ return (cx + q[0]) + ',' + (cy + q[1]); });
+  return '<path d="M' + pts.join(' L') + ' Q' + cx + ',' + (cy + 7) + ' ' + (cx - 27) + ',' + cy + ' Z" fill="' + k.f + '" stroke="' + k.e + '" stroke-width="1.2" stroke-linejoin="round"/>';
+}
+function crucibleOnPan(k){
+  var h = '<path d="M116,92 L184,92 L173,135 L127,135 Z" ' + POR + '/>';
+  h += '<ellipse cx="150" cy="92" rx="34" ry="5.5" fill="#D9D4C7" stroke="#9A958A" stroke-width="1.2"/>';
+  if(k) h += mound(150, 93, k);
+  h += '<path d="M116,92 A34,5.5 0 0,0 184,92" fill="none" stroke="#9A958A" stroke-width="1.4"/>';
+  return h;
+}
+function heatSVG(k){
+  var h = '<svg viewBox="0 0 300 200" role="img" aria-label="The crucible sits on a ring stand over a Bunsen burner. Wisps of steam rise from the crystals as the water of hydration leaves.">';
+  h += '<rect x="34" y="186" width="130" height="8" rx="2" fill="#8A9896"/><rect x="50" y="18" width="6" height="170" fill="#9FB0AD"/>';
+  h += '<rect x="54" y="104" width="66" height="4" fill="#9FB0AD"/><ellipse cx="150" cy="106" rx="34" ry="6" fill="none" stroke="#6F7D7B" stroke-width="3"/>';
+  h += '<rect x="143" y="148" width="14" height="38" fill="#6F7D7B"/><ellipse cx="150" cy="188" rx="22" ry="5" fill="#5F6D6B"/>';
+  h += '<g class="flick"><path d="M150,110 C138,124 139,140 143,148 L157,148 C161,140 162,124 150,110 Z" fill="#9CC3F0" fill-opacity=".8"/>' +
+       '<path d="M150,124 C145,132 145,142 147,148 L153,148 C155,142 155,132 150,124 Z" fill="#3B6FD0"/></g>';
+  h += '<path d="M118,70 L182,70 L172,106 L128,106 Z" fill="#E59A6A" stroke="#9A6E22" stroke-width="1.4"/>';
+  h += '<ellipse cx="150" cy="70" rx="32" ry="5" fill="#D98A5C" stroke="#9A6E22" stroke-width="1.2"/>';
+  h += mound(150, 71, k);
+  h += '<path d="M118,70 A32,5 0 0,0 182,70" fill="none" stroke="#9A6E22" stroke-width="1.4"/>';
+  h += '<g class="glow" fill="none" stroke="#8FA3A0" stroke-width="2.6" stroke-linecap="round">' +
+       '<path d="M134,48 C127,40 141,34 134,24"/><path d="M151,44 C144,35 158,28 151,16"/><path d="M168,48 C161,40 175,34 168,24"/></g>';
+  h += '</svg>';
+  return h;
+}
+function lNew(){
+  var s;
+  do { s = pick(LAB_SET); } while(LB && LB.s === s);
+  var h = findHyd(s.salt, s.x), r0 = 24000 + Math.floor(Math.random() * 5000), hm = 2000 + Math.floor(Math.random() * 1501);
+  var m = hydData(h, hm, 3), r1 = r0 + hm, r2 = r0 + Math.round(m.anh * 1000);
+  var p = { type:'hyd', v:'heat', h:h, m:m, dp:3, sol:hydSolve(h, m) };
+  p.pre = '<b>Subtract the crucible.</b> Hydrate: ' + mg3(r1) + ' − ' + mg3(r0) + ' = ' + mg3(hm) + ' g. Anhydrous salt: ' + mg3(r2) + ' − ' + mg3(r0) + ' = ' + mg3(r2 - r0) + ' g.';
+  LB = { s:s, h:h, p:p, r0:r0, r1:r1, r2:r2, step:0, done:false };
+  el('l-in').value = ''; el('l-prev').innerHTML = '';
+  hideFb(el('l-fb'));
+  lRender();
+}
+function lRender(){
+  var st = LB.step, s = LB.s, h = LB.h, reading = st === 0 ? LB.r0 : st === 1 ? LB.r1 : LB.r2;
+  if(st === 2) el('l-fig').innerHTML = heatSVG(s.a);
+  else {
+    var lab = 'A balance holding ' + (st === 0 ? 'an empty crucible' : st === 1 ? 'a crucible of ' + s.a.c + ' hydrate crystals' : 'a crucible of ' + s.b.c + ' anhydrous salt') + ', reading ' + mg3(reading) + ' grams';
+    el('l-fig').innerHTML = scaleSVG(crucibleOnPan(st === 0 ? null : st === 1 ? s.a : s.b), mg3(reading) + ' g', lab);
+  }
+  el('l-step').innerHTML = [
+    '<b>Step 1.</b> The empty crucible is on the balance. Record its mass.',
+    '<b>Step 2.</b> A few grams of the hydrate go in: ' + s.a.c + ' crystals of ' + hydStem(h).replace('a hydrate of ', 'hydrated ') + '. The balance now reads the crucible and the hydrate together.',
+    '<b>Step 3.</b> Heat the crucible over a burner. The water of hydration leaves as steam' + (s.a.c !== s.b.c ? ', and the ' + s.a.c + ' crystals slowly turn ' + s.b.c + '.' : ', and the crystals crumble into a dull ' + s.b.c + ' powder.'),
+    '<b>Step 4.</b> The crucible has cooled. What’s left is anhydrous ' + h.name + ', ' + fHTML(h.salt) + '. Use the three masses to find <i>x</i>, and write the <b>formula of the hydrate</b>.'
+  ][st];
+  function row(name, v, on){ return '<div' + (on ? '' : ' class="wait"') + '><span>' + name + '</span><span>' + (on ? mg3(v) + ' g' : '—') + '</span></div>'; }
+  el('l-rows').innerHTML = row('Crucible', LB.r0, true) + row('Crucible and hydrate', LB.r1, st >= 1) + row('Crucible and anhydrous salt, after heating', LB.r2, st >= 3);
+  var go = el('l-go');
+  go.textContent = ['Add the hydrate', 'Heat it', 'Let it cool, then weigh it', 'Done'][st];
+  go.disabled = st === 3;
+  el('l-ask').hidden = st < 3;
+}
+function lCheck(){
+  if(LB.done) return;
+  var fb = el('l-fb'), res = judgeHyd(LB.p, el('l-in').value);
+  if(res.code === 'ok'){ LB.done = true; setFb(fb, 'good', '<b>Correct: ' + hydHTML(LB.h.salt, LB.h.x) + '.</b>' + linesHTML(hydLines(LB.p))); return; }
+  var hint = hintHyd(LB.p, res);
+  if(!SOFT[res.code] && res.code !== 'salt') hint += ' Make sure you subtracted the crucible from each reading, too.';
+  setFb(fb, SOFT[res.code] ? 'hint' : 'bad', hint);
+}
+el('l-go').addEventListener('click', function(){ if(LB.step < 3){ LB.step++; lRender(); } });
+el('l-new').addEventListener('click', lNew);
+el('l-check').addEventListener('click', lCheck);
+el('l-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') lCheck(); });
+previewTo(el('l-in'), el('l-prev'));
+el('l-show').addEventListener('click', function(){
+  LB.done = true;
+  setTyped(el('l-in'), el('l-prev'), hydPlain(LB.h.salt, LB.h.x), hydHTML(LB.h.salt, LB.h.x));
+  setFb(el('l-fb'), 'hint', '<b>Answer: ' + hydHTML(LB.h.salt, LB.h.x) + '.</b>' + linesHTML(hydLines(LB.p)));
+});
+
+/* =========================================================
+   periodic table (for the practice section)
+   ========================================================= */
+function ptPos(z){
+  if(z === 1) return [1, 1];
+  if(z === 2) return [1, 18];
+  if(z <= 10) return [2, z <= 4 ? z - 2 : z + 8];
+  if(z <= 18) return [3, z <= 12 ? z - 10 : z];
+  if(z <= 36) return [4, z - 18];
+  if(z <= 54) return [5, z - 36];
+  if(z <= 56) return [6, z - 54];
+  if(z <= 71) return [9, z - 54];
+  if(z <= 86) return [6, z - 68];
+  if(z <= 88) return [7, z - 86];
+  if(z <= 103) return [10, z - 86];
+  return [7, z - 100];
+}
+function tileHTML(e){
+  return '<div class="tile" aria-hidden="true"><span class="tz">' + e.z + '</span><span class="ts">' + e.sym + '</span><span class="tn">' + e.name + '</span><span class="tm">' + e.ms + '</span></div>';
+}
+function ptFacts(e){
+  if(e.br) return '<p><b>' + e.name + '</b> has no stable isotopes. The number in parentheses, ' + e.ms + ', is the mass number of a long-lived isotope, not an average. You won’t need these.</p>';
+  var h = '<div class="mm">' + e.ms + ' g/mol</div><p>1 mol ' + e.sym + ' atoms = <b>' + e.ms + ' g</b></p>';
+  if(DIATOMIC[e.sym]) h += '<p class="aside">' + e.name + ' exists as ' + e.sym + '₂ molecules, but in a compound you count single ' + e.sym + ' atoms, so use ' + e.ms + ' g/mol.</p>';
+  return h;
+}
+function buildPT(host){
+  var cells = '';
+  ELEMENTS.forEach(function(e){
+    var p = ptPos(e.z);
+    cells += '<button type="button" class="el' + (e.br ? ' rad' : '') + '" data-s="' + e.sym + '" style="grid-row:' + p[0] + ';grid-column:' + p[1] + '" aria-label="' + e.name + ', ' + (e.br ? 'no stable isotopes' : e.ms + ' grams per mole') + '">' +
+      '<span class="z">' + e.z + '</span><span class="s">' + e.sym + '</span><span class="m">' + e.ms + '</span></button>';
+  });
+  cells += '<div class="gap" style="grid-row:6;grid-column:3">57–71</div><div class="gap" style="grid-row:7;grid-column:3">89–103</div>';
+  host.innerHTML = '<div class="pt-scroll"><div class="pt">' + cells + '</div></div><div class="pt-detail" aria-live="polite"><p class="smallprint" style="margin:0">Click an element to see its molar mass.</p></div>';
+  var detail = host.querySelector('.pt-detail');
+  each(host.querySelectorAll('.el'), function(b){
+    b.addEventListener('click', function(){
+      each(host.querySelectorAll('.el'), function(o){ o.classList.toggle('on', o === b); });
+      detail.innerHTML = tileHTML(EL[b.dataset.s]) + '<div class="pt-facts">' + ptFacts(EL[b.dataset.s]) + '</div>';
+    });
+  });
+}
+
+/* =========================================================
+   practice
+   ========================================================= */
+var pScore = Score(el('p-score'));
+var pKind = 'ef', P = null;
+var KIND_TYPES = { ef:['ef'], pct:['pct'], hyd:['hyd'], mix:['ef', 'pct', 'hyd', 'hyd'] };
+function pPlain(p){ return p.type === 'hyd' ? hydPlain(p.h.salt, p.h.x) : p.c.mf; }
+function pHTML(p){ return p.type === 'hyd' ? hydHTML(p.h.salt, p.h.x) : fHTML(p.c.mf); }
+function sDraw(){
+  var max = P.lines.length - 2;
+  el('s-list').innerHTML = P.shown ? linesHTML(P.lines.slice(0, P.shown)) + (P.shown >= max ? '<p class="smallprint" style="margin-bottom:0">The rest is up to you.</p>' : '') : '';
+  el('s-next').disabled = P.shown >= max;
+  el('s-hide').disabled = !P.shown;
+}
+function pNew(){
+  var type = pick(KIND_TYPES[pKind]);
+  P = type === 'hyd' ? makeHyd(P && P.h ? P.h.salt : null) : makeMol(type, P && P.c ? P.c.f : null);
+  P.scored = false; P.done = false; P.shown = 0;
+  P.lines = P.type === 'hyd' ? hydLines(P) : molLines(P);
+  el('p-prob').innerHTML = problemText(P, true);
+  el('p-lab').textContent = P.type === 'hyd' ? 'Formula of the hydrate' : 'Molecular formula';
+  el('p-tip').innerHTML = P.type === 'hyd' ? 'Type the salt, a period for the dot, and then the waters: <kbd class="fk">CuSO4.5H2O</kbd>'
+    : 'Start each element with a capital letter, and type subscripts as plain numbers: <kbd class="fk">C6H12O6</kbd>';
+  el('p-in').value = ''; el('p-prev').innerHTML = '';
+  hideFb(el('p-fb'));
+  sDraw();
+}
+function pCheck(){
+  if(!P || P.done) return;
+  var fb = el('p-fb'), hyd = P.type === 'hyd';
+  var res = hyd ? judgeHyd(P, el('p-in').value) : judgeMol(P, el('p-in').value);
+  var hint = hyd ? hintHyd(P, res) : hintMol(P, res);
+  if(SOFT[res.code]){ setFb(fb, 'hint', hint); return; }
+  var ok = res.code === 'ok';
+  if(!P.scored){ P.scored = true; pScore.add(ok); }
+  if(ok){ P.done = true; setFb(fb, 'good', '<b>Correct: ' + pHTML(P) + '.</b>' + linesHTML(P.lines)); return; }
+  setFb(fb, 'bad', hint);
+}
+function pShow(){
+  if(!P) return;
+  if(!P.scored){ P.scored = true; pScore.add(false); }
+  P.done = true;
+  setTyped(el('p-in'), el('p-prev'), pPlain(P), pHTML(P));
+  setFb(el('p-fb'), 'hint', '<b>Answer: ' + pHTML(P) + '.</b>' + linesHTML(P.lines));
+}
+el('p-check').addEventListener('click', pCheck);
+el('p-show').addEventListener('click', pShow);
+el('p-new').addEventListener('click', pNew);
+el('p-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') pCheck(); });
+previewTo(el('p-in'), el('p-prev'));
+tabs(el('p-tabs'), function(b){ pKind = b.dataset.k; P = null; pNew(); });
+el('s-next').addEventListener('click', function(){ if(P && P.shown < P.lines.length - 2){ P.shown++; sDraw(); } });
+el('s-hide').addEventListener('click', function(){ if(P){ P.shown = 0; sDraw(); } });
+el('p-ptbtn').addEventListener('click', function(){
+  var host = el('p-pt'), open = host.hidden;
+  if(open && !host.dataset.built){ buildPT(host); host.dataset.built = '1'; }
+  host.hidden = !open;
+  this.setAttribute('aria-expanded', String(open));
+  this.textContent = open ? 'Hide periodic table' : 'Periodic table';
+});
+
+/* =========================================================
+   quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'How is a molecular formula different from an empirical formula?',
+    opts:['It gives the percent by mass of each element','It gives the actual number of each atom in one molecule, not just the simplest ratio','It always has larger subscripts than the empirical formula','It can only be found for ionic compounds'],
+    ans:1,
+    why:'The empirical formula is the simplest ratio of atoms. The molecular formula is the actual count in one molecule. Sometimes they’re the same, as in H<sub>2</sub>O, so the subscripts aren’t always larger.' },
+  { stem:'A compound has the empirical formula CH<sub>2</sub> and a molar mass of 56.12 g/mol. What is its molecular formula?',
+    opts:['CH<sub>2</sub>','C<sub>2</sub>H<sub>4</sub>','C<sub>4</sub>H<sub>2</sub>','C<sub>4</sub>H<sub>8</sub>'],
+    ans:3,
+    why:'CH<sub>2</sub> has a mass of 12.01 + 2(1.01) = 14.03 g/mol. 56.12 ÷ 14.03 = 4, so multiply every subscript by 4: C<sub>4</sub>H<sub>8</sub>. C<sub>4</sub>H<sub>2</sub> multiplies only the carbon.' },
+  { stem:'Which pair of compounds has the same empirical formula?',
+    opts:['H<sub>2</sub>O and H<sub>2</sub>O<sub>2</sub>','CO and CO<sub>2</sub>','C<sub>2</sub>H<sub>2</sub> and C<sub>6</sub>H<sub>6</sub>','CH<sub>4</sub> and C<sub>2</sub>H<sub>6</sub>'],
+    ans:2,
+    why:'C<sub>2</sub>H<sub>2</sub> and C<sub>6</sub>H<sub>6</sub> both reduce to CH. That also means acetylene and benzene have the same percent composition. C<sub>2</sub>H<sub>6</sub> reduces to CH<sub>3</sub>, not CH<sub>4</sub>, and H<sub>2</sub>O<sub>2</sub> reduces to HO.' },
+  { stem:'For which compound is the molecular formula the same as the empirical formula?',
+    opts:['C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>','H<sub>2</sub>O<sub>2</sub>','C<sub>3</sub>H<sub>8</sub>','N<sub>2</sub>O<sub>4</sub>'],
+    ans:2,
+    why:'3 and 8 have no common factor, so C<sub>3</sub>H<sub>8</sub> can’t be reduced, and n = 1. The others reduce to CH<sub>2</sub>O, HO and NO<sub>2</sub>.' },
+  { stem:'A compound’s empirical formula mass is 30.03 g/mol and its molar mass is 90.09 g/mol. A student writes 30.03 ÷ 90.09 = 0.333. What should they have done?',
+    opts:['Rounded 0.333 up to 1','Divided the other way: 90.09 ÷ 30.03 = 3','Multiplied: 30.03 × 90.09','Subtracted: 90.09 − 30.03'],
+    ans:1,
+    why:'n = molar mass ÷ empirical formula mass, so the molar mass goes on top: 90.09 ÷ 30.03 = 3. n is the number of whole empirical units in one molecule, so it’s never less than 1.' },
+  { stem:'A compound is 43.64% phosphorus and 56.36% oxygen by mass. Its molar mass is 283.88 g/mol. What is its molecular formula?',
+    opts:['P<sub>2</sub>O<sub>5</sub>','PO<sub>2</sub>','P<sub>4</sub>O<sub>10</sub>','P<sub>4</sub>O<sub>5</sub>'],
+    ans:2,
+    why:'P: 43.64 ÷ 30.97 = 1.409 mol. O: 56.36 ÷ 16.00 = 3.523 mol. That’s 1 : 2.5, and × 2 gives the empirical formula P<sub>2</sub>O<sub>5</sub>, with a mass of 141.94 g/mol. 283.88 ÷ 141.94 = 2, so the molecular formula is P<sub>4</sub>O<sub>10</sub>. P<sub>2</sub>O<sub>5</sub> stops at the empirical formula.' },
+  { stem:'In the formula CuSO<sub>4</sub>·5H<sub>2</sub>O, what does the 5 tell you?',
+    opts:['Multiply the molar mass of CuSO<sub>4</sub> by 5','There are 5 hydrogen atoms in the formula','There are 5 water molecules for every formula unit of CuSO<sub>4</sub>','The crystals are 5% water by mass'],
+    ans:2,
+    why:'The dot means “combined with.” Every formula unit of CuSO<sub>4</sub> has 5 water molecules with it in the crystal. That’s 10 H atoms, and the crystals are 36.08% water by mass.' },
+  { stem:'What is the name of MgSO<sub>4</sub>·7H<sub>2</sub>O?',
+    opts:['Magnesium sulfate hexahydrate','Magnesium sulfate heptahydrate','Magnesium sulfide heptahydrate','Magnesium sulfate heptaoxide'],
+    ans:1,
+    why:'Name the salt, magnesium sulfate, then add the prefix for 7, hepta-, and “hydrate.” Hexa- means 6, and SO<sub>4</sub><sup>2−</sup> is sulfate, not sulfide.' },
+  { stem:'What percent of CaCl<sub>2</sub>·2H<sub>2</sub>O is water by mass?',
+    opts:['12.26%','24.51%','32.47%','75.49%'],
+    ans:1,
+    why:'The molar mass is 110.98 + 2(18.02) = 147.02 g/mol. Water is 36.04 ÷ 147.02 × 100 = 24.51%. 12.26% counts only one water. 32.47% divides by the mass of the salt alone, and 75.49% is the percent of CaCl<sub>2</sub>.' },
+  { stem:'A 5.00 g sample of a hydrate of magnesium sulfate, MgSO<sub>4</sub>·<i>x</i>H<sub>2</sub>O, is heated until all of the water is gone. 2.44 g of anhydrous MgSO<sub>4</sub> is left. What is the formula of the hydrate?',
+    opts:['MgSO<sub>4</sub>·H<sub>2</sub>O','MgSO<sub>4</sub>·3H<sub>2</sub>O','MgSO<sub>4</sub>·6H<sub>2</sub>O','MgSO<sub>4</sub>·7H<sub>2</sub>O'],
+    ans:3,
+    why:'Water: 5.00 − 2.44 = 2.56 g, and 2.56 ÷ 18.02 = 0.1421 mol. Salt: 2.44 ÷ 120.37 = 0.02027 mol. 0.1421 ÷ 0.02027 = 7.01, so x = 7. Using 5.00 g for the salt gives 3. Mixing up the two masses gives 6. Comparing grams instead of moles gives 1.' }
+];
+(function buildQuiz(){
+  var host = el('quiz'), html = '';
+  QUIZ.forEach(function(q, qi){
+    html += '<div class="q"><p class="stem">' + (qi + 1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o, oi){ html += '<button type="button" class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  host.innerHTML = html;
+  each(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      each(el('q' + qi).querySelectorAll('.opt'), function(other, i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      setFb(el('qfb' + qi), oi === q.ans ? 'good' : 'bad', '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+    });
+  });
+})();
+
+/* boot */
+scDraw(1);
+nNew();
+lNew();
+pNew();
+</script>
+</body>
+</html>
