@@ -8,6 +8,42 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/ap-chemistry/topic.css">
+<style>
+.plot{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--line-soft);border-radius:3px}
+.plot.wide{min-width:460px}
+.plot.qfig{max-width:440px;min-width:300px;margin:12px 0}
+.plot text{font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:13px;fill:#3A4558}
+.plot .tick{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;fill:#5B6577}
+.plot .lab{font-weight:600}
+.ctls{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px 26px;margin:16px 0 0}
+.ctl label{display:flex;justify-content:space-between;gap:10px;font-size:15.5px;color:var(--ink2)}
+.ctl label b{font-family:var(--mono);font-size:13.5px;font-weight:500;color:var(--ink)}
+.ctl input[type=range]{width:100%;margin:8px 0 0;accent-color:var(--acc)}
+table.data{max-width:640px}
+table.data th,table.data td{white-space:nowrap}
+table.data td:first-child{font-family:var(--body);font-size:15px;letter-spacing:0;color:var(--ink2)}
+table.data td.hl{background:var(--acc-lite);font-weight:600}
+table.data td.same{background:var(--ok-bg);color:#1C4A30;font-weight:600}
+table.data.wide{max-width:none}
+.sci{white-space:nowrap}
+.law{font-size:clamp(18px,2.6vw,22px);font-weight:500;white-space:nowrap}
+.calc select.ans{width:auto;min-width:110px;font-family:var(--mono);font-size:15px;padding:7px 9px;border:1px solid var(--line);border-radius:3px;background:#fff;color:var(--ink)}
+.calc select.ans.ok{border-color:var(--ok);background:var(--ok-bg)}
+.calc select.ans.no{border-color:var(--no);background:var(--no-bg)}
+#trainer input.ans,#calc input.ans{width:150px}
+.qtext table.bca{max-width:560px}
+/* Order picker and the three linked graphs */
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg button[aria-pressed="false"]{background:#fff;color:var(--ink);border-color:var(--line)}
+.seg button[aria-pressed="false"]:hover{border-color:var(--acc)}
+.trio{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:16px 0 0}
+.pan{margin:0;border:1px solid var(--line);border-radius:4px;background:#fff;padding:8px 8px 10px}
+.pan .plot{border:none}
+.pan.lin{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
+.pan figcaption{font-size:14.5px;color:var(--ink2);padding:4px 6px 0;line-height:1.4}
+.pan.lin figcaption b{color:var(--acc-dk)}
+.readout{font-size:16px;margin:16px 0 0}
+</style>
 </head>
 <body>
 
@@ -24,18 +60,297 @@
   <div class="eyebrow">AP Chemistry · Unit 5 Kinetics · Topic 5.3</div>
   <h1>Concentration Changes Over <em>Time</em></h1>
   <p class="lede">Graph concentration against time the right way and you get a straight line. Which graph is straight tells you the order of the reaction, and its slope gives you the rate constant.</p>
+  <p class="lo-line"><b>Learning objective 5.3.A</b> Identify the rate law expression of a chemical reaction using data that show how the concentrations of reaction species change over time.</p>
 
   <div class="board" aria-label="Key ideas in this topic">
-    <div class="idea"><span class="code">Q1</span><span class="lq">Which graph is a straight line?</span><span class="d">[A], ln[A], and 1/[A] vs. time for zero-, first-, and second-order reactions</span></div>
-    <div class="idea"><span class="code">Q2</span><span class="lq">What does the slope tell me?</span><span class="d">Getting k from a linear plot</span></div>
-    <div class="idea"><span class="code">Q3</span><span class="lq">How long until half is gone?</span><span class="d">Half-life of a first-order reaction</span></div>
+    <a class="idea" href="#linear"><span class="code">Q1</span><span class="lq">Which graph is a straight line?</span><span class="d">[A], ln[A], and 1/[A] vs. time for zero-, first-, and second-order reactions</span></a>
+    <a class="idea" href="#slope"><span class="code">Q2</span><span class="lq">What does the slope tell me?</span><span class="d">Getting k from a linear plot</span></a>
+    <a class="idea" href="#halflife"><span class="code">Q3</span><span class="lq">How long until half is gone?</span><span class="d">Half-life of a first-order reaction</span></a>
     <div class="board-foot"><span><b>Unit 5</b> Kinetics · 7–9% of the AP Exam</span><span><b>Before this</b> <a href="/ap-chemistry/unit-5/5-2-introduction-to-rate-law/">5.2 Introduction to Rate Law</a></span></div>
   </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#shapes">Shapes of the curves</a>
+    <a href="#linear">Straight-line plots</a>
+    <a href="#slope">Slope and k</a>
+    <a href="#use">Using the equations</a>
+    <a href="#halflife">Half-life</a>
+    <a href="#explore">Three ways to graph</a>
+    <a href="#trainer">Find the order</a>
+    <a href="#calc">Calculations</a>
+    <a href="#check">Check yourself</a>
+  </nav>
 </header>
 
-<section id="tools">
-  <div class="sec-head"><span class="tag plain">Coming soon</span><h2>Tools and practice</h2></div>
-  <div class="soon-card"><p>Interactive tools, worked examples, and AP-style practice for Topic 5.3 aren’t posted yet. The three questions above are the ones this topic answers.</p></div>
+<!-- =========================================================
+     5.3.A.1  SHAPES OF THE CURVES
+     ========================================================= -->
+<section id="shapes">
+  <div class="sec-head"><span class="tag">5.3.A.1</span><h2>What does concentration do over time?</h2></div>
+  <p>Topic 5.2 found a rate law by running several trials and comparing their initial rates. There’s a second way. Run the reaction <b>once</b>, and measure the concentration of a reactant again and again as it gets used up.</p>
+  <div class="def">
+    <span class="ek">5.3.A.1</span>
+    <div class="term">Order from a graph</div>
+    <p>The order of a reaction can be inferred from a graph of concentration of reactant versus time.</p>
+  </div>
+  <p>As the reaction runs, [A] falls. What that does to the rate depends on the order, and that sets the shape of the graph.</p>
+  <div class="tablewrap"><svg class="plot wide" id="fig-shapes" viewBox="0 0 560 340" role="img" aria-label="Graph of the concentration of A against time for three reactions that start at the same concentration and the same rate. The zero-order reaction is a straight line that reaches zero. The first-order reaction is a curve that flattens. The second-order reaction is a curve that flattens sooner and stays highest at the end."></svg></div>
+  <p class="figcap">Three reactions that start at the same concentration and the same rate.</p>
+  <div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+    <div class="mini"><div class="n">Zero order</div><h4>rate = <i>k</i></h4><p>The rate doesn’t depend on [A], so it never slows down. [A] falls along a <b>straight line</b> until it runs out.</p></div>
+    <div class="mini"><div class="n">First order</div><h4>rate = <i>k</i>[A]</h4><p>When half the A is gone, the rate is half as large. The graph is a <b>curve</b> that keeps flattening.</p></div>
+    <div class="mini"><div class="n">Second order</div><h4>rate = <i>k</i>[A]<sup>2</sup></h4><p>When half the A is gone, the rate is only a quarter as large. The curve flattens <b>sooner</b> and has a long tail.</p></div>
+  </div>
+  <p>Zero order is the unusual one. It shows up when something other than concentration limits the rate, such as a reaction that happens on a metal surface that’s already completely covered with reactant.</p>
+  <div class="note"><b>Two curves look a lot alike.</b> You can spot zero order by eye, because its graph is straight. But first- and second-order curves are hard to tell apart just by looking. The fix is to change what goes on the <i>y</i>-axis until the data fall on a straight line.</div>
+</section>
+
+<!-- =========================================================
+     5.3.A.2 / 5.3.A.3  STRAIGHT-LINE PLOTS
+     ========================================================= -->
+<section id="linear">
+  <div class="sec-head"><span class="tag">5.3.A.2–3</span><h2>Which graph is a straight line?</h2></div>
+  <p>Each order has its own <b>integrated rate law</b>, an equation that gives [A] at any time <i>t</i>. Each one can be written in the form <i>y</i> = <i>mx</i> + <i>b</i>, with time on the <i>x</i>-axis. Only the <i>y</i>-axis is different.</p>
+  <div class="def">
+    <span class="ek">5.3.A.2</span>
+    <div class="term">First order</div>
+    <p>If a reaction is first order with respect to a reactant being monitored, a plot of the natural log (ln) of the reactant concentration as a function of time will be linear.</p>
+  </div>
+  <div class="def">
+    <span class="ek">5.3.A.3</span>
+    <div class="term">Second order</div>
+    <p>If a reaction is second order with respect to a reactant being monitored, a plot of the reciprocal of the concentration of that reactant versus time will be linear.</p>
+  </div>
+  <div class="tablewrap"><table class="bca data wide">
+    <tr><th>Order</th><th>Rate law</th><th>Integrated rate law</th><th>Straight-line plot</th><th>Slope</th></tr>
+    <tr><td>Zero</td><td>rate = <i>k</i></td><td>[A]<sub><i>t</i></sub> − [A]<sub>0</sub> = −<i>kt</i></td><td class="hl">[A] vs. time</td><td>−<i>k</i></td></tr>
+    <tr><td>First</td><td>rate = <i>k</i>[A]</td><td>ln[A]<sub><i>t</i></sub> − ln[A]<sub>0</sub> = −<i>kt</i></td><td class="hl">ln[A] vs. time</td><td>−<i>k</i></td></tr>
+    <tr><td>Second</td><td>rate = <i>k</i>[A]<sup>2</sup></td><td>1/[A]<sub><i>t</i></sub> − 1/[A]<sub>0</sub> = <i>kt</i></td><td class="hl">1/[A] vs. time</td><td>+<i>k</i></td></tr>
+  </table></div>
+  <p>[A]<sub>0</sub> is the concentration at the start and [A]<sub><i>t</i></sub> is the concentration at time <i>t</i>. All three equations are on the AP equation sheet, so you don’t have to memorize them. You do need to know which one goes with which order.</p>
+  <p>To see the straight line, move the starting value to the other side. For first order:</p>
+  <div class="chain">
+    <span class="law">ln[A]<sub><i>t</i></sub> = −<i>k</i> · <i>t</i> + ln[A]<sub>0</sub></span>
+    <span class="x">matches</span>
+    <span class="law"><i>y</i> = <i>m</i> · <i>x</i> + <i>b</i></span>
+  </div>
+  <p>So <i>y</i> is ln[A], <i>x</i> is time, the slope is −<i>k</i>, and the <i>y</i>-intercept is ln[A]<sub>0</sub>.</p>
+  <h3>The test</h3>
+  <ol>
+    <li>From the data, make three graphs: [A] vs. time, ln[A] vs. time, and 1/[A] vs. time.</li>
+    <li>See which one is a straight line. Only one will be.</li>
+    <li>That graph tells you the order: [A] is zero, ln[A] is first, 1/[A] is second.</li>
+  </ol>
+  <div class="note"><b>Without graphing:</b> if the times are evenly spaced, a straight line means the <i>y</i>-value changes by the <b>same amount</b> in every interval. Subtract down each column of a data table and look for the column with a constant difference.</div>
+</section>
+
+<!-- =========================================================
+     5.3.A.4  SLOPE AND k
+     ========================================================= -->
+<section id="slope">
+  <div class="sec-head"><span class="tag">5.3.A.4</span><h2>What does the slope tell me?</h2></div>
+  <div class="def">
+    <span class="ek">5.3.A.4</span>
+    <div class="term">Rate constant from the slope</div>
+    <p>The slopes of the concentration versus time data for zeroth-, first-, and second-order reactions can be used to determine the rate constant for the reaction.</p>
+  </div>
+  <p>Once you’ve found the straight line, its slope gives you <i>k</i>. For zero and first order the line slopes down, and <i>k</i> = −slope. For second order the line slopes up, and <i>k</i> = slope. Either way, <i>k</i> is a positive number.</p>
+
+  <h3>Worked example</h3>
+  <p>The decomposition <span data-eq="2N2O5(g) -> 4NO2(g) + O2(g)"></span> from Topic 5.1 was followed for 800 seconds at constant temperature.</p>
+  <div class="tablewrap"><table class="bca data">
+    <tr><th>Time (s)</th><th>[N<sub>2</sub>O<sub>5</sub>] (<i>M</i>)</th><th>ln[N<sub>2</sub>O<sub>5</sub>]</th><th>1/[N<sub>2</sub>O<sub>5</sub>] (<i>M</i><sup>−1</sup>)</th></tr>
+    <tr><td>0</td><td>0.0200</td><td class="same">−3.912</td><td>50.0</td></tr>
+    <tr><td>200</td><td>0.0142</td><td class="same">−4.252</td><td>70.2</td></tr>
+    <tr><td>400</td><td>0.0101</td><td class="same">−4.592</td><td>98.7</td></tr>
+    <tr><td>600</td><td>0.00721</td><td class="same">−4.932</td><td>138.7</td></tr>
+    <tr><td>800</td><td>0.00513</td><td class="same">−5.272</td><td>194.8</td></tr>
+  </table></div>
+  <ol>
+    <li><b>Check [A].</b> Every 200 s it drops by 0.0058, then 0.0041, then 0.0029, then 0.0021. The drops get smaller, so [A] vs. time is a curve. Not zero order.</li>
+    <li><b>Check 1/[A].</b> It rises by 20.2, then 28.5, then 40.0, then 56.1. The steps get bigger, so 1/[A] vs. time is a curve. Not second order.</li>
+    <li><b>Check ln[A].</b> It drops by 0.340 every time. A constant change means ln[A] vs. time is a straight line, so the reaction is <b>first order</b>: rate = <i>k</i>[N<sub>2</sub>O<sub>5</sub>].</li>
+    <li><b>Find <i>k</i> from the slope</b> of the straight line, using the first and last points:</li>
+  </ol>
+  <div class="chain">
+    <span>slope =</span>
+    <span class="frac"><span>(−5.272) − (−3.912)</span><span>800 s − 0 s</span></span><span>=</span>
+    <span class="frac"><span>−1.360</span><span>800 s</span></span>
+    <span>= −1.70 × 10<sup>−3</sup> s<sup>−1</sup></span>
+    <span>so <b><i>k</i> = 1.70 × 10<sup>−3</sup> s<sup>−1</sup></b></span>
+  </div>
+  <div class="tablewrap"><svg class="plot wide" id="fig-ln" viewBox="0 0 560 300" role="img" aria-label="Graph of the natural log of the concentration of N2O5 against time. The five data points fall on a straight line that slopes downward from negative 3.912 at 0 seconds to negative 5.272 at 800 seconds."></svg></div>
+  <p class="figcap">The five ln[N<sub>2</sub>O<sub>5</sub>] values fall on one straight line. Its slope is −<i>k</i>.</p>
+  <p>The units of <i>k</i> match the order, just as in <a href="/ap-chemistry/unit-5/5-2-introduction-to-rate-law/#k">Topic 5.2</a>: <i>M</i> s<sup>−1</sup> for zero order, s<sup>−1</sup> for first, and <i>M</i><sup>−1</sup> s<sup>−1</sup> for second. They’re also the units of each graph’s slope.</p>
+  <div class="note"><b>Why the coefficient 2 didn’t matter.</b> The order came from the data, not from the balanced equation. The equation has 2N<sub>2</sub>O<sub>5</sub>, but the straight ln plot shows the reaction is first order.</div>
+</section>
+
+<!-- =========================================================
+     USING THE INTEGRATED RATE LAWS
+     ========================================================= -->
+<section id="use">
+  <div class="sec-head"><span class="tag">5.3.A.4</span><h2>Using the equations</h2></div>
+  <p>Each integrated rate law connects four things: [A]<sub>0</sub>, [A]<sub><i>t</i></sub>, <i>k</i>, and <i>t</i>. Know any three and you can find the fourth. Pick the equation that matches the order.</p>
+
+  <h3>How much is left? (first order)</h3>
+  <p>For the N<sub>2</sub>O<sub>5</sub> reaction above, <i>k</i> = 1.70 × 10<sup>−3</sup> s<sup>−1</sup> and [N<sub>2</sub>O<sub>5</sub>]<sub>0</sub> = 0.0200 <i>M</i>. What is the concentration after 600 s?</p>
+  <div class="chain">
+    <span>ln[A]<sub><i>t</i></sub> = ln[A]<sub>0</sub> − <i>kt</i></span>
+    <span>= ln(0.0200) − (1.70 × 10<sup>−3</sup> s<sup>−1</sup>)(600 s)</span>
+    <span>= −3.912 − 1.020 = −4.932</span>
+  </div>
+  <div class="chain">
+    <span>[A]<sub><i>t</i></sub> = <i>e</i><sup>−4.932</sup> = <b>0.00721 <i>M</i></b></span>
+  </div>
+  <p>That matches the data table. The last step undoes the natural log with <i>e</i><sup><i>x</i></sup> on your calculator.</p>
+
+  <h3>How long does it take? (second order)</h3>
+  <p>The decomposition <span data-eq="2NO2(g) -> 2NO(g) + O2(g)"></span> is second order in NO<sub>2</sub>, with <i>k</i> = 0.54 <i>M</i><sup>−1</sup> s<sup>−1</sup> at 300 °C. How long does it take [NO<sub>2</sub>] to fall from 0.0100 <i>M</i> to 0.0050 <i>M</i>?</p>
+  <div class="chain">
+    <span class="frac"><span>1</span><span>[A]<sub><i>t</i></sub></span></span><span>−</span>
+    <span class="frac"><span>1</span><span>[A]<sub>0</sub></span></span><span>= <i>kt</i></span>
+    <span class="x">→</span>
+    <span class="frac"><span>1</span><span>0.0050 <i>M</i></span></span><span>−</span>
+    <span class="frac"><span>1</span><span>0.0100 <i>M</i></span></span>
+    <span>= 200 − 100 = 100 <i>M</i><sup>−1</sup></span>
+  </div>
+  <div class="chain">
+    <span><i>t</i> =</span>
+    <span class="frac"><span>100 <i>M</i><sup>−1</sup></span><span>0.54 <i>M</i><sup>−1</sup> s<sup>−1</sup></span></span>
+    <span>= <b>1.9 × 10<sup>2</sup> s</b> (185 s before rounding)</span>
+  </div>
+  <div class="note"><b>Signs to watch.</b> The zero- and first-order equations have −<i>kt</i>, because [A] and ln[A] go down. The second-order equation has +<i>kt</i>, because 1/[A] goes up as [A] goes down. If you get a negative time or a negative <i>k</i>, a subtraction is the wrong way round.</div>
+</section>
+
+<!-- =========================================================
+     5.3.A.5 / 5.3.A.6  HALF-LIFE
+     ========================================================= -->
+<section id="halflife">
+  <div class="sec-head"><span class="tag">5.3.A.5–6</span><h2>How long until half is gone?</h2></div>
+  <p>The <b>half-life</b>, <i>t</i><sub>½</sub>, is the time it takes for the concentration of a reactant to fall to half of what it was.</p>
+  <div class="def">
+    <span class="ek">5.3.A.5</span>
+    <div class="term">Half-life of a first-order reaction</div>
+    <p>Half-life is a critical parameter for first-order reactions because the half-life is constant and related to the rate constant for the reaction by the equation <i>t</i><sub>½</sub> = 0.693/<i>k</i>.</p>
+  </div>
+  <p>The equation comes from the first-order integrated rate law. At one half-life, [A]<sub><i>t</i></sub> is half of [A]<sub>0</sub>:</p>
+  <div class="chain">
+    <span>ln</span>
+    <span class="frac"><span>[A]<sub><i>t</i></sub></span><span>[A]<sub>0</sub></span></span>
+    <span>= ln(½) = −0.693 = −<i>k t</i><sub>½</sub></span>
+    <span class="x">so</span>
+    <span class="law"><i>t</i><sub>½</sub> =</span>
+    <span class="frac law"><span>0.693</span><span><i>k</i></span></span>
+  </div>
+  <p>Notice what <b>isn’t</b> in that equation: the concentration. For a first-order reaction it takes the same time to go from 1.0 <i>M</i> to 0.50 <i>M</i> as from 0.50 <i>M</i> to 0.25 <i>M</i>, or from any amount to half of it.</p>
+  <div class="tablewrap"><table class="bca data">
+    <tr><th>Half-lives passed</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th><i>n</i></th></tr>
+    <tr><td>Fraction remaining</td><td>1</td><td>½</td><td>¼</td><td>⅛</td><td>1⁄16</td><td>(½)<sup><i>n</i></sup></td></tr>
+    <tr><td>Percent remaining</td><td>100%</td><td>50%</td><td>25%</td><td>12.5%</td><td>6.25%</td><td></td></tr>
+  </table></div>
+  <p>For the N<sub>2</sub>O<sub>5</sub> reaction, <i>t</i><sub>½</sub> = 0.693 / (1.70 × 10<sup>−3</sup> s<sup>−1</sup>) = <b>408 s</b>. Check it against the data table: at 400 s the concentration is 0.0101 <i>M</i>, about half of 0.0200 <i>M</i>, and at 800 s it’s 0.00513 <i>M</i>, about a quarter.</p>
+
+  <h3>Radioactive decay</h3>
+  <div class="def">
+    <span class="ek">5.3.A.6</span>
+    <div class="term">Radioactive decay</div>
+    <p>Radioactive decay processes provide an important illustration of first-order kinetics.</p>
+  </div>
+  <p>Every radioactive isotope decays with first-order kinetics, so each one has a fixed half-life. Carbon-14 has a half-life of 5,730 years, which is what makes carbon dating work.</p>
+  <p><b>Example.</b> Iodine-131, used to treat thyroid disease, has a half-life of 8.0 days. How much of a 40. mg sample is left after 24 days?</p>
+  <ul>
+    <li>24 days ÷ 8.0 days = 3 half-lives.</li>
+    <li>40. mg → 20. mg → 10. mg → <b>5.0 mg</b>, which is 40. mg × (½)<sup>3</sup>.</li>
+    <li>If you need <i>k</i>: <i>k</i> = 0.693 / 8.0 days = 0.087 day<sup>−1</sup>.</li>
+  </ul>
+  <div class="grid2">
+    <div class="mini"><div class="n">First order</div><h4>Constant half-life</h4><p>Every half-life takes the same time, whatever the concentration. If the data show a constant half-life, the reaction is first order.</p></div>
+    <div class="mini keep"><div class="n">Zero and second order</div><h4>Half-life changes</h4><p>For zero order, each half-life is shorter than the last. For second order, each one is longer. <i>t</i><sub>½</sub> = 0.693/<i>k</i> works <b>only</b> for first order.</p></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     INTERACTIVE: THREE WAYS TO GRAPH
+     ========================================================= -->
+<section id="explore">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Three ways to graph the same data</h2></div>
+  <p>Choose the order of the reaction A → products. The same run is graphed three ways. Only one of the three is a straight line. Then change [A]<sub>0</sub> and <i>k</i> and watch the slope and the half-lives.</p>
+  <div class="card">
+    <div class="card-label"><span>One reaction, three graphs</span></div>
+    <div class="seg" role="group" aria-label="Order of the reaction">
+      <button type="button" data-o="0" aria-pressed="false">Zero order</button>
+      <button type="button" data-o="1" aria-pressed="true">First order</button>
+      <button type="button" data-o="2" aria-pressed="false">Second order</button>
+    </div>
+    <div class="ctls">
+      <div class="ctl"><label for="e-a"><span>Starting concentration, [A]<sub>0</sub></span><b id="e-av"></b></label><input type="range" id="e-a" min="0.2" max="1" step="0.1" value="1"></div>
+      <div class="ctl"><label for="e-k"><span>Rate constant, <i>k</i></span><b id="e-kv"></b></label><input type="range" id="e-k"></div>
+    </div>
+    <div class="trio">
+      <figure class="pan" id="e-f0"><svg class="plot" id="e-p0" viewBox="0 0 300 250" role="img" aria-label="Graph of the concentration of A against time"></svg><figcaption id="e-c0"></figcaption></figure>
+      <figure class="pan" id="e-f1"><svg class="plot" id="e-p1" viewBox="0 0 300 250" role="img" aria-label="Graph of the natural log of the concentration of A against time"></svg><figcaption id="e-c1"></figcaption></figure>
+      <figure class="pan" id="e-f2"><svg class="plot" id="e-p2" viewBox="0 0 300 250" role="img" aria-label="Graph of the reciprocal of the concentration of A against time"></svg><figcaption id="e-c2"></figcaption></figure>
+    </div>
+    <p class="readout" id="e-read" aria-live="polite"></p>
+    <div class="tablewrap"><table class="bca data" id="e-table"></table></div>
+  </div>
+  <p>Things to try: in first order, change [A]<sub>0</sub> and check that the slope of the ln[A] graph and the half-life stay the same. Then do the same thing in zero order and second order, and watch the half-life change.</p>
+</section>
+
+<!-- =========================================================
+     TRAINER: FIND THE ORDER FROM DATA
+     ========================================================= -->
+<section id="trainer">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Find the order from data</h2></div>
+  <p>A new set of concentration–time data each time. Decide which column would give a straight-line graph, then use it to find <i>k</i>. Enter <i>k</i> as a number like 0.025 or 2.5e-2. Answers within 3% count.</p>
+  <div class="card">
+    <div class="card-label"><span>Concentration over time</span><span class="score" id="t-score">0 solved</span></div>
+    <p class="prompt" id="t-q"></p>
+    <div class="tablewrap"><table class="bca data" id="t-table"></table></div>
+    <div class="calc">
+      <label for="t-o">1. Order in A</label><span><select class="ans" id="t-o"><option value="">choose…</option><option value="0">zero</option><option value="1">first</option><option value="2">second</option></select></span>
+      <label for="t-k">2. Value of <i>k</i></label><span><input class="ans" id="t-k" inputmode="text" autocomplete="off"></span>
+      <label for="t-u">3. Units of <i>k</i></label><span><select class="ans" id="t-u"></select></span>
+    </div>
+    <div class="fb" id="t-fb" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="t-check">Check</button>
+      <button type="button" class="ghost" id="t-show">Show the solution</button>
+      <button type="button" class="ghost" id="t-new">New problem →</button>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     TRAINER: CALCULATIONS
+     ========================================================= -->
+<section id="calc">
+  <div class="sec-head"><span class="tag">Interactive</span><h2>Half-life and concentration calculations</h2></div>
+  <p>Mixed problems that use the integrated rate laws and the half-life equation. You’ll need a calculator for the ones with ln. Enter a number like 0.0125 or 1.25e-2. Answers within 2% count.</p>
+  <div class="card">
+    <div class="card-label"><span id="c-kind">Calculation</span><span class="score" id="c-score">0 solved</span></div>
+    <p class="prompt" id="c-q"></p>
+    <div class="calc">
+      <label for="c1" id="c-lab">Answer</label><span><input class="ans" id="c1" inputmode="text" autocomplete="off"><span class="unit" id="c-unit"></span></span>
+    </div>
+    <div class="fb" id="c-fb" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="c-check">Check</button>
+      <button type="button" class="ghost" id="c-show">Show the solution</button>
+      <button type="button" class="ghost" id="c-new">New problem →</button>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PRACTICE
+     ========================================================= -->
+<section id="check">
+  <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
+  <p>Eight multiple-choice questions written in AP style, with numbers you can handle without a calculator, then two written responses.</p>
+  <p class="score" id="mc-score" style="margin:0"></p>
+  <div class="card" id="mc"></div>
+  <div class="card" id="frq"></div>
 
   <div class="next">
     <div><p class="nt">Up next: 5.4 Elementary Reactions</p><p>Elementary steps · molecularity · rate laws for elementary steps</p></div>
@@ -44,11 +359,415 @@
 </section>
 
 <footer>
-  <p>Topic 5.3 Concentration Changes Over Time, following the AP Chemistry course framework.</p>
+  <p>Topic 5.3 Concentration Changes Over Time, following the AP Chemistry course framework (Learning Objective 5.3.A). The N<sub>2</sub>O<sub>5</sub> data are calculated from the same first-order rate constant used in Topic 5.1, and the other data sets are calculated from rounded rate constants. Practice questions are original and written in AP style, and the trainers generate a new problem every time.</p>
   <p><a href="/ap-chemistry/unit-5/">← Unit 5 — Kinetics</a></p>
 </footer>
 
 </div><!-- /wrap -->
 
+<script src="/ap-chemistry/topic.js"></script>
+<script>
+/* ---------- helpers ---------- */
+function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
+function mark(input, ok){ input.classList.toggle("ok", ok); input.classList.toggle("no", !ok); }
+function neg(s){ return String(s).replace("-", "−"); }
+// 0.0000313 -> "3.1 × 10<sup>−5</sup>"
+function sci(x, n){
+  if(x === 0) return "0";
+  n = n || 2;
+  var e = Math.floor(Math.log10(Math.abs(x))), m = (x / Math.pow(10, e)).toFixed(n - 1);
+  if(Math.abs(+m) >= 10){ e++; m = (x / Math.pow(10, e)).toFixed(n - 1); }
+  return '<span class="sci">' + neg(m) + " × 10<sup>" + neg(e) + "</sup></span>";
+}
+// A value near 1 as a plain decimal to n significant figures, anything else in scientific notation.
+function val(x, n){ return x >= 0.01 && x < 1000 ? APC.sig(x, n || 3) : sci(x, n || 3); }
+var ORD = ["zero", "first", "second"];
+var UNITS = ["<i>M</i> s<sup>−1</sup>", "s<sup>−1</sup>", "<i>M</i><sup>−1</sup> s<sup>−1</sup>"];
+var UNITS_TXT = ["M s⁻¹", "s⁻¹", "M⁻¹ s⁻¹"];
+var PLOTS = ["[A]", "ln[A]", "1/[A]"];
+var BLUE = "#1D5FA8", AMBER = "#A8670F", GREEN = "#2E6B47";
+// [A] at time t for a reaction of order o
+function conc(o, a0, k, t){ return o === 0 ? Math.max(a0 - k * t, 0) : o === 1 ? a0 * Math.exp(-k * t) : 1 / (1 / a0 + k * t); }
+
+/* ---------- plotting ----------
+   chart(svg, {xmax, xstep, ymin, ymax, ystep, xlab, ylab, yfmt, series:[{f, t1, color, dash}], dots:[{x, y, color}], extra:fn(X, Y)})
+   Curves are clipped to the plot area, so a value that runs off the scale just leaves the frame. */
+var CHART_N = 0;
+function chartHTML(o){
+  var W = o.W || 560, H = o.H || 340, L = o.L || 58, R = o.R == null ? 18 : o.R, T = o.T || 14, B = o.B || 46;
+  var ymin = o.ymin || 0, id = "clip" + (++CHART_N), i, v, h;
+  function X(t){ return L + t / o.xmax * (W - L - R); }
+  function Y(y){ return T + (1 - (y - ymin) / (o.ymax - ymin)) * (H - T - B); }
+  h = '<defs><clipPath id="' + id + '"><rect x="' + L + '" y="' + (T - 3) + '" width="' + (W - L - R + 3) + '" height="' + (H - T - B + 6) + '"/></clipPath></defs>';
+  for(i = 0; i <= Math.round((o.ymax - ymin) / o.ystep); i++){
+    v = ymin + i * o.ystep;
+    h += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="#DFE4EB"/>' +
+         '<text class="tick" x="' + (L - 7) + '" y="' + (Y(v) + 4) + '" text-anchor="end">' + (o.yfmt ? o.yfmt(v) : v) + "</text>";
+  }
+  for(i = 0; i <= Math.round(o.xmax / o.xstep); i++){
+    v = i * o.xstep;
+    h += '<line x1="' + X(v) + '" x2="' + X(v) + '" y1="' + (H - B) + '" y2="' + (H - B + 5) + '" stroke="#5B6577"/>' +
+         '<text class="tick" x="' + X(v) + '" y="' + (H - B + 19) + '" text-anchor="middle">' + v + "</text>";
+  }
+  h += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + (H - B) + '" y2="' + (H - B) + '" stroke="#5B6577"/>' +
+       '<line x1="' + L + '" x2="' + L + '" y1="' + T + '" y2="' + (H - B) + '" stroke="#5B6577"/>' +
+       '<text x="' + (L + (W - L - R) / 2) + '" y="' + (H - 8) + '" text-anchor="middle">' + o.xlab + "</text>" +
+       '<text transform="translate(14 ' + (T + (H - T - B) / 2) + ') rotate(-90)" text-anchor="middle">' + o.ylab + "</text>";
+  (o.series || []).forEach(function(s){
+    var d = "", t1 = s.t1 == null ? o.xmax : s.t1, n = 160, started = false;
+    for(i = 0; i <= n; i++){
+      var t = t1 * i / n, y = s.f(t);
+      if(!isFinite(y)) continue;
+      y = Math.max(Math.min(y, o.ymax + 50 * (o.ymax - ymin)), ymin - 50 * (o.ymax - ymin));
+      d += (started ? "L" : "M") + X(t).toFixed(1) + " " + Y(y).toFixed(1);
+      started = true;
+    }
+    h += '<path clip-path="url(#' + id + ')" d="' + d + '" fill="none" stroke="' + s.color + '" stroke-width="2.5"' + (s.dash ? ' stroke-dasharray="' + s.dash + '"' : "") + ' stroke-linecap="round"/>';
+  });
+  if(o.extra) h += o.extra(X, Y);
+  (o.dots || []).forEach(function(p){
+    if(!isFinite(p.y) || p.y > o.ymax || p.y < ymin) return;
+    h += '<circle cx="' + X(p.x).toFixed(1) + '" cy="' + Y(p.y).toFixed(1) + '" r="' + (o.r || 4) + '" fill="#fff" stroke="' + p.color + '" stroke-width="2"/>';
+  });
+  return h;
+}
+function chart(svg, o){ svg.innerHTML = chartHTML(o); }
+
+/* ---------- static figure: the three shapes ---------- */
+chart(document.getElementById("fig-shapes"), {
+  xmax:100, xstep:20, ymax:1, ystep:0.2, R:22, xlab:"Time (s)", ylab:"[A] (M)", yfmt:function(v){ return v.toFixed(2); },
+  series:[{f:function(t){ return conc(0, 1, 0.02, t); }, color:GREEN, dash:"2 4", t1:50},
+          {f:function(t){ return conc(1, 1, 0.02, t); }, color:BLUE},
+          {f:function(t){ return conc(2, 1, 0.02, t); }, color:AMBER, dash:"7 4"}],
+  extra:function(X, Y){
+    return '<text class="lab" x="' + (X(31) - 8) + '" y="' + (Y(0.2) + 4) + '" text-anchor="end" style="fill:' + GREEN + '">Zero order</text>' +
+           '<text class="lab" x="' + X(70) + '" y="' + (Y(0.16) + 20) + '" text-anchor="middle" style="fill:' + BLUE + '">First order</text>' +
+           '<text class="lab" x="' + X(72) + '" y="' + (Y(0.44) - 12) + '" text-anchor="middle" style="fill:' + AMBER + '">Second order</text>';
+  }
+});
+
+/* ---------- static figure: ln[N2O5] against time ---------- */
+(function(){
+  var K = 1.7e-3, C0 = 0.0200, pts = [0, 200, 400, 600, 800].map(function(t){ return {x:t, y:Math.log(C0 * Math.exp(-K * t)), color:BLUE}; });
+  chart(document.getElementById("fig-ln"), {
+    H:300, xmax:800, xstep:200, ymin:-5.5, ymax:-3.5, ystep:0.5, R:26, xlab:"Time (s)", ylab:"ln[N₂O₅]", yfmt:function(v){ return neg(v.toFixed(1)); },
+    series:[{f:function(t){ return Math.log(C0) - K * t; }, color:BLUE}], dots:pts, r:5,
+    extra:function(X, Y){
+      return '<path d="M' + X(200) + " " + Y(pts[1].y) + "H" + X(600) + "V" + Y(pts[3].y) + '" fill="none" stroke="#5B6577" stroke-dasharray="3 3"/>' +
+             '<text x="' + X(400) + '" y="' + (Y(pts[1].y) - 8) + '" text-anchor="middle">run = 400 s</text>' +
+             '<text x="' + (X(600) + 8) + '" y="' + (Y((pts[1].y + pts[3].y) / 2) + 4) + '">rise = −0.680</text>' +
+             '<text class="lab" x="' + X(290) + '" y="' + (Y(-4.9)) + '" text-anchor="middle" style="fill:' + BLUE + '">slope = −k = −1.70 × 10⁻³ s⁻¹</text>';
+    }
+  });
+})();
+
+/* ---------- interactive: three ways to graph ---------- */
+(function(){
+  var CFG = [{min:0.004, max:0.02, step:0.002, k:0.01}, {min:0.01, max:0.06, step:0.005, k:0.03}, {min:0.02, max:0.2, step:0.01, k:0.05}];
+  var order = 1, sa = document.getElementById("e-a"), sk = document.getElementById("e-k"), btns = document.querySelectorAll("#explore .seg button");
+  var PAN = [
+    {ymin:0, ymax:1, ystep:0.2, ylab:"[A] (M)", yfmt:function(v){ return v.toFixed(1); }, g:function(a){ return a; }},
+    {ymin:-5, ymax:0, ystep:1, ylab:"ln[A]", yfmt:function(v){ return neg(v); }, g:function(a){ return Math.log(a); }},
+    {ymin:0, ymax:25, ystep:5, ylab:"1/[A] (M⁻¹)", yfmt:function(v){ return v; }, g:function(a){ return 1 / a; }}
+  ];
+  function setK(){ var c = CFG[order]; sk.min = c.min; sk.max = c.max; sk.step = c.step; sk.value = c.k; }
+  // Length of the nth half-life (n = 1, 2, 3)
+  function half(n, a0, k){ return order === 0 ? a0 / (Math.pow(2, n) * k) : order === 1 ? Math.LN2 / k : Math.pow(2, n - 1) / (k * a0); }
+  function draw(){
+    var a0 = +sa.value, k = +sk.value;
+    CFG[order].k = k;
+    document.getElementById("e-av").innerHTML = a0.toFixed(2) + " <i>M</i>";
+    document.getElementById("e-kv").innerHTML = k.toFixed(3) + " " + UNITS[order];
+    var tEnd = order === 0 ? Math.min(100, a0 / k * 0.9999) : 100;
+    PAN.forEach(function(p, i){
+      var lin = i === order, color = lin ? BLUE : AMBER, dots = [];
+      for(var t = 0; t <= 100; t += 10){ var a = conc(order, a0, k, t); if(i === 0 || a > 1e-9) dots.push({x:t, y:p.g(a), color:color}); }
+      chart(document.getElementById("e-p" + i), {
+        W:300, H:250, L:46, R:12, T:12, B:44, r:3.2, xmax:100, xstep:20, ymin:p.ymin, ymax:p.ymax, ystep:p.ystep, xlab:"Time (s)", ylab:p.ylab, yfmt:p.yfmt,
+        series:[{f:function(t){ return p.g(conc(order, a0, k, t)); }, color:color, t1:i === 0 ? 100 : tEnd}], dots:dots,
+        extra:i ? null : function(X, Y){
+          var h = "", t = 0;
+          for(var n = 1; n <= 3; n++){
+            t += half(n, a0, k);
+            if(t > 100) break;
+            var y = a0 / Math.pow(2, n);
+            h += '<path d="M' + X(0) + " " + Y(y) + "H" + X(t) + "V" + Y(0) + '" fill="none" stroke="#5B6577" stroke-dasharray="3 3"/>' +
+                 '<circle cx="' + X(t) + '" cy="' + Y(y) + '" r="4.5" fill="#151D2E"/>';
+          }
+          return h;
+        }
+      });
+      document.getElementById("e-f" + i).classList.toggle("lin", lin);
+      document.getElementById("e-c" + i).innerHTML = "<b>" + PLOTS[i] + " vs. time:</b> " +
+        (lin ? "straight line. Slope = " + (order === 2 ? "+" : "−") + "<i>k</i> = " + (order === 2 ? "+" : "−") + k.toFixed(3) + " " + UNITS[order] : "curved");
+    });
+    document.getElementById("e-read").innerHTML = "This reaction is <b>" + ORD[order] + " order</b>, so the straight line is <b>" + PLOTS[order] + " vs. time</b>. " +
+      (order === 1 ? "Every half-life is the same length: 0.693 / " + k.toFixed(3) + " s<sup>−1</sup> = " + APC.sig(Math.LN2 / k, 3) + " s." :
+       order === 0 ? "Each half-life is half as long as the one before, because the rate never slows down." :
+                     "Each half-life is twice as long as the one before, because the rate drops off so quickly.");
+    var rows = "", t = 0;
+    for(var n = 1; n <= 3; n++){
+      var hl = half(n, a0, k);
+      rows += "<tr><td>" + ["First", "Second", "Third"][n - 1] + " half-life</td><td>" + APC.sig(a0 / Math.pow(2, n - 1), 3) + " <i>M</i> → " + APC.sig(a0 / Math.pow(2, n), 3) +
+              ' <i>M</i></td><td class="' + (order === 1 ? "same" : "hl") + '">' + APC.sig(hl, 3) + " s</td></tr>";
+    }
+    document.getElementById("e-table").innerHTML = "<tr><th></th><th>[A] falls from</th><th>Time it takes</th></tr>" + rows;
+  }
+  btns.forEach(function(b){
+    b.addEventListener("click", function(){
+      order = +b.dataset.o;
+      btns.forEach(function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      setK(); draw();
+    });
+  });
+  sa.addEventListener("input", draw);
+  sk.addEventListener("input", draw);
+  setK(); draw();
+})();
+
+/* ---------- trainer: find the order from data ---------- */
+(function(){
+  var EQS = ["A → B + C", "2A → B", "A → 2B", "2A → B + C"];
+  var P, solved = 0, done, lastKey;
+  var q = document.getElementById("t-q"), table = document.getElementById("t-table"), fb = document.getElementById("t-fb"),
+      so = document.getElementById("t-o"), ik = document.getElementById("t-k"), su = document.getElementById("t-u");
+  su.innerHTML = '<option value="">choose…</option>' + UNITS_TXT.map(function(u, i){ return '<option value="' + i + '">' + u + "</option>"; }).join("");
+  // Decimal places that show x to n significant figures
+  function places(x, n){ return Math.max(0, n - 1 - Math.floor(Math.log10(Math.abs(x)))); }
+  function make(){
+    var o, a0, dt, key;
+    do { o = pick([0, 1, 1, 2, 2]); a0 = pick([0.100, 0.200, 0.400, 0.500, 0.800]); dt = pick([10, 20, 50, 100]); key = [o, a0, dt].join(); } while(key === lastKey);
+    lastKey = key;
+    var raw = o === 0 ? pick([0.10, 0.15, 0.20]) * a0 / dt : o === 1 ? pick([0.20, 0.25, 0.30, 0.40]) / dt : pick([0.25, 0.40, 0.50]) / (a0 * dt);
+    var k = +raw.toPrecision(2), rows = [];
+    for(var i = 0; i < 5; i++){ var a = conc(o, a0, k, i * dt); rows.push({t:i * dt, v:[a, Math.log(a), 1 / a]}); }
+    // One number of decimal places per column, so the differences down a column line up.
+    var dp = [places(rows[4].v[0], 3), 3, places(rows[0].v[2], 3)];
+    rows.forEach(function(r){ r.s = r.v.map(function(x, j){ return x.toFixed(dp[j]); }); });
+    return {eq:pick(EQS), o:o, a0:a0, dt:dt, k:k, rows:rows, dp:dp};
+  }
+  function load(){
+    P = make(); done = false;
+    q.innerHTML = "The concentration of A was measured over time for the reaction " + P.eq + " at constant temperature.";
+    table.innerHTML = "<tr><th>Time (s)</th><th>[A] (<i>M</i>)</th><th>ln[A]</th><th>1/[A] (<i>M</i><sup>−1</sup>)</th></tr>" +
+      P.rows.map(function(r){ return "<tr><td>" + r.t + "</td><td>" + r.s[0] + "</td><td>" + neg(r.s[1]) + "</td><td>" + r.s[2] + "</td></tr>"; }).join("");
+    [so, su].forEach(function(s){ s.value = ""; s.className = "ans"; });
+    ik.value = ""; ik.className = "ans"; fb.className = "fb";
+  }
+  // Changes down column j, taken from the numbers as printed
+  function diffs(j){
+    var out = [];
+    for(var i = 1; i < 5; i++) out.push(neg((+P.rows[i].s[j] - +P.rows[i - 1].s[j]).toFixed(P.dp[j])));
+    return out;
+  }
+  function kText(){ return val(P.k, 2) + " " + UNITS[P.o]; }
+  function solution(){
+    var h = "<p>Subtract down each column to see how much it changes every " + P.dt + " s.</p>";
+    PLOTS.forEach(function(name, j){
+      h += "<p><b>" + name + ":</b> " + diffs(j).join(", ") + (j === P.o ? ". <b>The same every time</b> (to rounding), so this graph is a straight line." : ". Not constant, so this graph is a curve.") + "</p>";
+    });
+    var y0 = +P.rows[0].s[P.o], y4 = +P.rows[4].s[P.o];
+    h += "<p>" + PLOTS[P.o] + " vs. time is linear, so the reaction is <b>" + ORD[P.o] + " order</b> in A.</p>" +
+         "<p>Slope from the first and last rows: (" + neg(P.rows[4].s[P.o]) + " − " + (y0 < 0 ? "(" + neg(P.rows[0].s[P.o]) + ")" : P.rows[0].s[P.o]) + ") / (" + (4 * P.dt) + " s − 0 s) = " +
+         neg(val(Math.abs((y4 - y0) / (4 * P.dt)), 2).replace(/^/, y4 < y0 ? "-" : "")) + ". " +
+         (P.o === 2 ? "For second order, <i>k</i> = slope" : "For " + ORD[P.o] + " order, <i>k</i> = −slope") + ", so <b><i>k</i> = " + kText() + "</b>.</p>";
+    return h;
+  }
+  document.getElementById("t-check").addEventListener("click", function(){
+    var oko = so.value === String(P.o), kv = APC.num(ik.value), okk = APC.close(kv, P.k, 0.03), oku = su.value === String(P.o);
+    mark(so, oko); mark(ik, okk); mark(su, oku);
+    if(oko && okk && oku){
+      if(!done){ solved++; document.getElementById("t-score").textContent = solved + " solved"; }
+      done = true;
+      fb.className = "fb show good"; fb.innerHTML = "<p><b>Right.</b> " + PLOTS[P.o] + " vs. time is the straight line, so the reaction is " + ORD[P.o] + " order with <i>k</i> = " + kText() + ".</p>"; return;
+    }
+    var msgs = [];
+    if(!oko) msgs.push("Order: the times are evenly spaced, so a straight-line graph means a column that changes by the same amount in every step. Subtract down each of the three columns. Which one has a constant difference?");
+    else {
+      if(!okk) msgs.push(!isFinite(kv) ? "<i>k</i> is empty or isn’t a number I can read. Try a form like 0.025 or 2.5e-2." :
+        APC.close(-kv, P.k, 0.03) ? "<i>k</i> is always positive. The line slopes down, so its slope is −<i>k</i>." :
+        "<i>k</i>: find the slope of the " + PLOTS[P.o] + " column against time. Take the change in " + PLOTS[P.o] + " between two rows and divide it by the change in time.");
+      if(!oku) msgs.push("Units: the slope is a change in " + PLOTS[P.o] + " divided by a time in seconds." + (P.o === 1 ? " A natural log has no units." : ""));
+    }
+    if(!oko && (!okk || !oku)) msgs.push("Find the order first. <i>k</i> and its units depend on it.");
+    fb.className = "fb show bad"; fb.innerHTML = "<p><b>Not yet.</b></p>" + msgs.map(function(m){ return "<p>" + m + "</p>"; }).join("");
+  });
+  document.getElementById("t-show").addEventListener("click", function(){
+    done = true;
+    so.value = String(P.o); ik.value = String(P.k); su.value = String(P.o);
+    [so, ik, su].forEach(function(el){ mark(el, true); });
+    fb.className = "fb show hint"; fb.innerHTML = "<p>Here’s the solution. Try the next one on your own.</p>" + solution();
+  });
+  document.getElementById("t-new").addEventListener("click", load);
+  load();
+})();
+
+/* ---------- trainer: half-life and concentration calculations ---------- */
+(function(){
+  var M = " <i>M</i>";
+  function inv(u){ return u + "<sup>−1</sup>"; }
+  var ISO = [["iodine-131", 8.0, "days"], ["cobalt-60", 5.3, "years"], ["strontium-90", 29, "years"], ["technetium-99m", 6.0, "hours"], ["phosphorus-32", 14, "days"], ["tritium", 12, "years"]];
+  // Each maker returns {kind, q, ans, unit, sol, hint, traps:[[wrong value, message]]}
+  var MAKERS = [
+    function(){ // half-life from k
+      var k = pick([0.0115, 0.0231, 0.0347, 0.0462, 0.0693, 0.139]), u = pick(["s", "min"]), ans = 0.693 / k;
+      return {kind:"Half-life from k", q:"A first-order reaction has a rate constant of " + k + " " + inv(u) + ". What is its half-life?", ans:ans, unit:u,
+        sol:"<p><i>t</i><sub>½</sub> = 0.693 / <i>k</i> = 0.693 / (" + k + " " + inv(u) + ") = <b>" + APC.sig(ans, 3) + " " + u + "</b></p>",
+        hint:"For a first-order reaction, <i>t</i><sub>½</sub> = 0.693 / <i>k</i>.",
+        traps:[[0.693 * k, "That multiplies 0.693 by <i>k</i>. Divide instead: <i>t</i><sub>½</sub> = 0.693 / <i>k</i>."], [k / 0.693, "That’s <i>k</i> / 0.693. It should be the other way up."]]};
+    },
+    function(){ // k from half-life
+      var th = pick([12, 25, 40, 90, 150, 300]), u = pick(["s", "min"]), ans = 0.693 / th;
+      return {kind:"k from half-life", q:"A first-order reaction has a half-life of " + th + " " + u + ". What is its rate constant?", ans:ans, unit:inv(u),
+        sol:"<p><i>t</i><sub>½</sub> = 0.693 / <i>k</i>, so <i>k</i> = 0.693 / <i>t</i><sub>½</sub> = 0.693 / (" + th + " " + u + ") = <b>" + val(ans, 3) + " " + inv(u) + "</b></p>",
+        hint:"Rearrange <i>t</i><sub>½</sub> = 0.693 / <i>k</i> to solve for <i>k</i>.",
+        traps:[[th / 0.693, "That’s <i>t</i><sub>½</sub> / 0.693. It should be 0.693 / <i>t</i><sub>½</sub>."]]};
+    },
+    function(){ // radioactive decay, whole number of half-lives
+      var iso = pick(ISO), n = pick([2, 3, 4, 5]), m0 = pick([8, 20, 48, 64, 100, 160]), t = +(iso[1] * n).toPrecision(3), ans = m0 / Math.pow(2, n), steps = [m0];
+      for(var i = 1; i <= n; i++) steps.push(m0 / Math.pow(2, i));
+      return {kind:"Radioactive decay", q:"The radioactive isotope " + iso[0] + " has a half-life of " + iso[1] + " " + iso[2] + ". A sample contains " + m0 + " mg of " + iso[0] + ". What mass of it remains after " + t + " " + iso[2] + "?", ans:ans, unit:"mg",
+        sol:"<p>" + t + " " + iso[2] + " ÷ " + iso[1] + " " + iso[2] + " = " + n + " half-lives.</p><p>Halve the mass " + n + " times: " + steps.map(function(s){ return +s.toPrecision(4); }).join(" → ") + " mg.</p><p>" + m0 + " mg × (½)<sup>" + n + "</sup> = <b>" + (+ans.toPrecision(4)) + " mg</b></p>",
+        hint:"Radioactive decay is first order, so the half-life is constant. How many half-lives fit into " + t + " " + iso[2] + "? Halve the mass that many times.",
+        traps:[[m0 / n, "That divides the mass by the number of half-lives. Each half-life cuts the mass in half, so divide by 2 once for every half-life."], [m0 / (2 * n), "Halve the mass once for each half-life: that’s dividing by 2<sup>" + n + "</sup>, not by 2 × " + n + "."]]};
+    },
+    function(){ // first order: concentration at time t
+      var k = pick([0.010, 0.020, 0.025, 0.040, 0.050]), t = pick([10, 20, 30, 40, 60]), a0 = pick([0.100, 0.250, 0.500, 0.800]), ans = a0 * Math.exp(-k * t), l0 = Math.log(a0);
+      return {kind:"First order", q:"A reaction is first order in A with <i>k</i> = " + k.toFixed(3) + " s<sup>−1</sup>. If [A]<sub>0</sub> = " + a0.toFixed(3) + M + ", what is [A] after " + t + " s?", ans:ans, unit:"M",
+        sol:"<p>ln[A]<sub><i>t</i></sub> = ln[A]<sub>0</sub> − <i>kt</i> = ln(" + a0.toFixed(3) + ") − (" + k.toFixed(3) + " s<sup>−1</sup>)(" + t + " s) = " + neg(l0.toFixed(3)) + " − " + (k * t).toFixed(3) + " = " + neg((l0 - k * t).toFixed(3)) + "</p><p>[A]<sub><i>t</i></sub> = <i>e</i><sup>" + neg((l0 - k * t).toFixed(3)) + "</sup> = <b>" + APC.sig(ans, 3) + M + "</b></p>",
+        hint:"Use the first-order equation, ln[A]<sub><i>t</i></sub> − ln[A]<sub>0</sub> = −<i>kt</i>. Solve for ln[A]<sub><i>t</i></sub>, then use <i>e</i><sup><i>x</i></sup> to get [A]<sub><i>t</i></sub>.",
+        traps:[[l0 - k * t, "That’s ln[A]<sub><i>t</i></sub>. Use <i>e</i><sup><i>x</i></sup> on your calculator to turn it into a concentration."], [a0 - k * t, "That’s the zero-order equation. First order uses ln[A]."], [a0 * Math.exp(k * t), "The concentration of a reactant has to go down. Check the sign of <i>kt</i>."]]};
+    },
+    function(){ // first order: time to reach a percent
+      var k = pick([0.010, 0.020, 0.025, 0.040, 0.050]), p = pick([75, 40, 20, 10, 5]), u = pick(["s", "min"]), ans = Math.log(100 / p) / k;
+      return {kind:"First order", q:"A reaction is first order in A with <i>k</i> = " + k.toFixed(3) + " " + inv(u) + ". How long does it take for [A] to fall to " + p + "% of its starting value?", ans:ans, unit:u,
+        sol:"<p>If " + p + "% remains, [A]<sub><i>t</i></sub> / [A]<sub>0</sub> = " + (p / 100).toFixed(2) + ".</p><p>ln[A]<sub><i>t</i></sub> − ln[A]<sub>0</sub> = ln(" + (p / 100).toFixed(2) + ") = " + neg(Math.log(p / 100).toFixed(3)) + " = −<i>kt</i></p><p><i>t</i> = " + Math.log(100 / p).toFixed(3) + " / (" + k.toFixed(3) + " " + inv(u) + ") = <b>" + APC.sig(ans, 3) + " " + u + "</b></p>",
+        hint:"You don’t need the actual concentrations. ln[A]<sub><i>t</i></sub> − ln[A]<sub>0</sub> is the same as ln([A]<sub><i>t</i></sub> / [A]<sub>0</sub>), and that ratio is " + (p / 100).toFixed(2) + ". Set it equal to −<i>kt</i>.",
+        traps:[[Math.log(100 / (100 - p)) / k, "Use the fraction that <b>remains</b> (" + (p / 100).toFixed(2) + "), not the fraction that reacted."], [(1 - p / 100) / k, "That treats the reaction as zero order. For first order, take the natural log of the fraction remaining."]]};
+    },
+    function(){ // zero order: concentration at time t
+      var a0 = pick([0.500, 0.800, 1.00]), k = pick([0.0010, 0.0020, 0.0040]), t = pick([20, 50, 100]), ans = a0 - k * t;
+      return {kind:"Zero order", q:"A reaction is zero order in A with <i>k</i> = " + k.toFixed(4) + " <i>M</i> s<sup>−1</sup>. If [A]<sub>0</sub> = " + a0.toFixed(3) + M + ", what is [A] after " + t + " s?", ans:ans, unit:"M",
+        sol:"<p>[A]<sub><i>t</i></sub> = [A]<sub>0</sub> − <i>kt</i> = " + a0.toFixed(3) + M + " − (" + k.toFixed(4) + " <i>M</i> s<sup>−1</sup>)(" + t + " s) = " + a0.toFixed(3) + " − " + (k * t).toFixed(3) + " = <b>" + ans.toFixed(3) + M + "</b></p>",
+        hint:"Use the zero-order equation, [A]<sub><i>t</i></sub> − [A]<sub>0</sub> = −<i>kt</i>. The concentration drops by the same amount every second.",
+        traps:[[k * t, "That’s how much A has reacted. Subtract it from [A]<sub>0</sub> to get what’s left."], [a0 * Math.exp(-k * t), "That’s the first-order equation. Zero order uses [A] itself, with no ln."]]};
+    },
+    function(){ // second order: concentration at time t
+      var a0 = pick([0.100, 0.200, 0.500]), k = pick([0.10, 0.25, 0.50, 0.80]), t = pick([10, 20, 50, 100]), r = 1 / a0 + k * t, ans = 1 / r;
+      return {kind:"Second order", q:"A reaction is second order in A with <i>k</i> = " + k.toFixed(2) + " <i>M</i><sup>−1</sup> s<sup>−1</sup>. If [A]<sub>0</sub> = " + a0.toFixed(3) + M + ", what is [A] after " + t + " s?", ans:ans, unit:"M",
+        sol:"<p>1/[A]<sub><i>t</i></sub> = 1/[A]<sub>0</sub> + <i>kt</i> = 1/(" + a0.toFixed(3) + M + ") + (" + k.toFixed(2) + " <i>M</i><sup>−1</sup> s<sup>−1</sup>)(" + t + " s) = " + APC.sig(1 / a0, 3) + " + " + APC.sig(k * t, 3) + " = " + APC.sig(r, 3) + " <i>M</i><sup>−1</sup></p><p>[A]<sub><i>t</i></sub> = 1 / (" + APC.sig(r, 3) + " <i>M</i><sup>−1</sup>) = <b>" + APC.sig(ans, 3) + M + "</b></p>",
+        hint:"Use the second-order equation, 1/[A]<sub><i>t</i></sub> − 1/[A]<sub>0</sub> = <i>kt</i>. Solve for 1/[A]<sub><i>t</i></sub>, then take the reciprocal.",
+        traps:[[r, "That’s 1/[A]<sub><i>t</i></sub>. Take the reciprocal to get the concentration."], [1 / (1 / a0 - k * t), "For second order, 1/[A] goes <b>up</b> with time: add <i>kt</i> to 1/[A]<sub>0</sub>."], [a0 * Math.exp(-k * t), "That’s the first-order equation. Second order uses 1/[A]."]]};
+    }
+  ];
+  var P, solved = 0, done, last = -1;
+  var q = document.getElementById("c-q"), inp = document.getElementById("c1"), fb = document.getElementById("c-fb");
+  function load(){
+    var i; do { i = Math.floor(Math.random() * MAKERS.length); } while(i === last);
+    last = i; P = MAKERS[i](); done = false;
+    q.innerHTML = P.q;
+    document.getElementById("c-kind").textContent = P.kind;
+    document.getElementById("c-unit").innerHTML = P.unit === "M" ? "<i>M</i>" : P.unit;
+    inp.value = ""; inp.className = "ans"; fb.className = "fb";
+  }
+  document.getElementById("c-check").addEventListener("click", function(){
+    var v = APC.num(inp.value), ok = APC.close(v, P.ans, 0.02);
+    mark(inp, ok);
+    if(ok){
+      if(!done){ solved++; document.getElementById("c-score").textContent = solved + " solved"; }
+      done = true;
+      fb.className = "fb show good"; fb.innerHTML = "<p><b>Right.</b></p>" + P.sol; return;
+    }
+    var msg = P.hint;
+    if(!isFinite(v)) msg = "That isn’t a number I can read. Try a form like 0.0125 or 1.25e-2.";
+    else P.traps.some(function(t){ if(APC.close(v, t[0], 0.02)){ msg = t[1]; return true; } });
+    fb.className = "fb show bad"; fb.innerHTML = "<b>Not yet.</b> " + msg;
+  });
+  document.getElementById("c-show").addEventListener("click", function(){
+    done = true; inp.value = String(+P.ans.toPrecision(3)); mark(inp, true);
+    fb.className = "fb show hint"; fb.innerHTML = "<p>Here’s the solution. Try the next one on your own.</p>" + P.sol;
+  });
+  document.getElementById("c-new").addEventListener("click", load);
+  load();
+})();
+
+/* ---------- practice ---------- */
+function dataTable(head, rows){
+  return '<div class="tablewrap"><table class="bca data"><tr>' + head.map(function(h){ return "<th>" + h + "</th>"; }).join("") + "</tr>" +
+    rows.map(function(r){ return "<tr>" + r.map(function(c){ return "<td>" + c + "</td>"; }).join("") + "</tr>"; }).join("") + "</table></div>";
+}
+// A straight-line graph for a question: 1/[A] against time, rising from 10 to 35 M^-1 in 100 s.
+var Q_FIG = '<div class="tablewrap"><svg class="plot qfig" viewBox="0 0 420 270" role="img" aria-label="Graph of 1 over the concentration of A against time. The points fall on a straight line that rises from 10 inverse molar at 0 seconds to 35 inverse molar at 100 seconds.">' +
+  chartHTML({W:420, H:270, L:50, R:16, xmax:100, xstep:20, ymax:40, ystep:10, xlab:"Time (s)", ylab:"1/[A] (M⁻¹)",
+    series:[{f:function(t){ return 10 + 0.25 * t; }, color:BLUE}],
+    dots:[0, 20, 40, 60, 80, 100].map(function(t){ return {x:t, y:10 + 0.25 * t, color:BLUE}; })}) + "</svg></div>";
+
+APC.mc(document.getElementById("mc"), document.getElementById("mc-score"), [
+ {q:"The concentration of reactant X is measured as the reaction X → products proceeds at constant temperature. A graph of ln[X] versus time is a straight line with a negative slope. Graphs of [X] versus time and 1/[X] versus time are both curved. Which of the following is the rate law for the reaction?",
+  c:["rate = <i>k</i>", "rate = <i>k</i>[X]", "rate = <i>k</i>[X]<sup>2</sup>", "rate = <i>k</i> ln[X]"],
+  a:1,
+  e:"A linear plot of ln[X] versus time means the reaction is first order in X. A zero-order reaction would give a straight line for [X] versus time, and a second-order reaction would give one for 1/[X] versus time."},
+
+ {q:"The graph below shows data collected for the reaction 2A → B at constant temperature." + Q_FIG + "Which of the following gives the rate law for the reaction and the value of the rate constant?",
+  c:["rate = <i>k</i>[A], with <i>k</i> = 0.25 s<sup>−1</sup>",
+     "rate = <i>k</i>[A]<sup>2</sup>, with <i>k</i> = 0.25 <i>M</i><sup>−1</sup> s<sup>−1</sup>",
+     "rate = <i>k</i>[A]<sup>2</sup>, with <i>k</i> = 0.35 <i>M</i><sup>−1</sup> s<sup>−1</sup>",
+     "rate = <i>k</i>[A]<sup>2</sup>, with <i>k</i> = 4.0 <i>M</i><sup>−1</sup> s<sup>−1</sup>"],
+  a:1,
+  e:"1/[A] versus time is linear, so the reaction is second order in A, and the slope equals <i>k</i>. Slope = (35 − 10) <i>M</i><sup>−1</sup> / (100 − 0) s = 0.25 <i>M</i><sup>−1</sup> s<sup>−1</sup>. (C) divides the final value by the time and ignores the starting value, and (D) is the run divided by the rise."},
+
+ {q:"A first-order reaction has a rate constant of 0.0231 min<sup>−1</sup>. What is the half-life of the reaction?",
+  c:["15 min", "30. min", "43 min", "60. min"],
+  a:1,
+  e:"<i>t</i><sub>½</sub> = 0.693 / <i>k</i> = 0.693 / 0.0231 min<sup>−1</sup> = 30. min. (C) is 1/<i>k</i>, which leaves out the 0.693."},
+
+ {q:"A radioactive isotope has a half-life of 6.0 hours. A sample initially contains 80. mg of the isotope. What mass of the isotope remains after 24 hours?",
+  c:["20. mg", "10. mg", "5.0 mg", "3.3 mg"],
+  a:2,
+  e:"Radioactive decay is first order, so the half-life is constant. 24 hours is 4 half-lives: 80. → 40. → 20. → 10. → 5.0 mg. (A) divides by 4, the number of half-lives, and (D) divides by 24."},
+
+ {q:"For a certain reaction, a graph of [A] versus time is a straight line with a slope of −2.0 × 10<sup>−3</sup> <i>M</i>/s. If [A]<sub>0</sub> = 0.50 <i>M</i>, how long does it take for [A] to fall to 0.10 <i>M</i>?",
+  c:["50 s", "200 s", "250 s", "800 s"],
+  a:1,
+  e:"A linear [A] versus time graph means zero order, with <i>k</i> = 2.0 × 10<sup>−3</sup> <i>M</i>/s. [A] has to drop by 0.40 <i>M</i>, and 0.40 <i>M</i> / (2.0 × 10<sup>−3</sup> <i>M</i>/s) = 200 s. (C) is the time to use up all 0.50 <i>M</i>."},
+
+ {q:"The decomposition of a compound is first order. In one experiment the initial concentration of the compound is 0.20 <i>M</i>, and in a second experiment at the same temperature it is 0.40 <i>M</i>. How does the half-life in the second experiment compare with the half-life in the first?",
+  c:["It is half as long, because the reaction is faster at a higher concentration.",
+     "It is the same, because the half-life of a first-order reaction doesn’t depend on concentration.",
+     "It is twice as long, because there is twice as much reactant to use up.",
+     "It is four times as long, because the rate depends on the concentration squared."],
+  a:1,
+  e:"For a first-order reaction, <i>t</i><sub>½</sub> = 0.693 / <i>k</i>. Concentration isn’t in the equation, and <i>k</i> is the same at the same temperature. The second run starts faster, but it also has twice as far to go."},
+
+ {q:"The data below were collected for the reaction A → products at constant temperature." +
+    dataTable(["Time (s)", "[A] (<i>M</i>)"], [["0", "0.80"], ["10.", "0.40"], ["20.", "0.20"], ["30.", "0.10"]]) +
+    "What is the value of the rate constant for the reaction?",
+  c:["0.040 <i>M</i> s<sup>−1</sup>", "0.069 s<sup>−1</sup>", "0.125 <i>M</i><sup>−1</sup> s<sup>−1</sup>", "10. s<sup>−1</sup>"],
+  a:1,
+  e:"[A] is cut in half every 10. s. A constant half-life means first order, so <i>k</i> = 0.693 / <i>t</i><sub>½</sub> = 0.693 / 10. s = 0.069 s<sup>−1</sup>. (A) and (C) would be right for the first interval if the reaction were zero or second order, but those values don’t fit the later intervals."},
+
+ {q:"A reaction A → products is first order in A. A student graphs ln[A] versus time for a run with [A]<sub>0</sub> = 0.10 <i>M</i>. The student then repeats the experiment at the same temperature with [A]<sub>0</sub> = 0.20 <i>M</i>. How does the second graph compare with the first?",
+  c:["It has the same slope and a higher <i>y</i>-intercept.",
+     "It has a steeper slope and the same <i>y</i>-intercept.",
+     "It has a steeper slope and a higher <i>y</i>-intercept.",
+     "It is curved instead of straight."],
+  a:0,
+  e:"The slope is −<i>k</i>, and <i>k</i> depends on temperature, not on concentration, so the slope is unchanged. The <i>y</i>-intercept is ln[A]<sub>0</sub>, which is larger when [A]<sub>0</sub> is larger. The two lines are parallel."}
+]);
+
+APC.frq(document.getElementById("frq"), [
+ {q:"<p>Hydrogen peroxide decomposes in the presence of a catalyst: [[2H2O2(aq) -> 2H2O(l) + O2(g)]]. A student measures [H<sub>2</sub>O<sub>2</sub>] over time at constant temperature.</p>" +
+    dataTable(["Time (min)", "[H<sub>2</sub>O<sub>2</sub>] (<i>M</i>)", "ln[H<sub>2</sub>O<sub>2</sub>]", "1/[H<sub>2</sub>O<sub>2</sub>] (<i>M</i><sup>−1</sup>)"],
+      [["0", "0.800", "−0.223", "1.25"], ["10.", "0.566", "−0.570", "1.77"], ["20.", "0.400", "−0.916", "2.50"], ["30.", "0.283", "−1.263", "3.54"], ["40.", "0.200", "−1.609", "5.00"]]) +
+    "<p>(a) Determine the order of the reaction with respect to H<sub>2</sub>O<sub>2</sub>. Justify your answer using the data.</p><p>(b) Calculate the value of the rate constant, <i>k</i>, and include its units.</p><p>(c) Determine the half-life of the reaction.</p><p>(d) Calculate [H<sub>2</sub>O<sub>2</sub>] at 60. min.</p><p>(e) The experiment is repeated at a higher temperature. Predict whether the half-life is longer, shorter, or the same. Justify your answer.</p>",
+  m:"<p><b>(a)</b> <b>First order.</b> ln[H<sub>2</sub>O<sub>2</sub>] decreases by the same amount, about 0.347, in every 10-minute interval, so a plot of ln[H<sub>2</sub>O<sub>2</sub>] versus time is linear. [H<sub>2</sub>O<sub>2</sub>] drops by 0.234, 0.166, 0.117, and 0.083, and 1/[H<sub>2</sub>O<sub>2</sub>] rises by 0.52, 0.73, 1.04, and 1.46, so neither of those plots is linear. (Also acceptable: the concentration halves every 20. min, and a constant half-life means first order.)</p><p><b>(b)</b> slope = (−1.609 − (−0.223)) / (40. min − 0 min) = −0.0347 min<sup>−1</sup>, and <i>k</i> = −slope = <b>0.0347 min<sup>−1</sup></b>.</p><p><b>(c)</b> <i>t</i><sub>½</sub> = 0.693 / 0.0347 min<sup>−1</sup> = <b>20.0 min</b>. This agrees with the table: 0.800 <i>M</i> → 0.400 <i>M</i> → 0.200 <i>M</i> at 20-minute intervals.</p><p><b>(d)</b> 60. min is three half-lives: 0.800 <i>M</i> × (½)<sup>3</sup> = <b>0.100 <i>M</i></b>. Or ln[H<sub>2</sub>O<sub>2</sub>] = −0.223 − (0.0347)(60.) = −2.305, so [H<sub>2</sub>O<sub>2</sub>] = <i>e</i><sup>−2.305</sup> = 0.100 <i>M</i>.</p><p><b>(e)</b> <b>Shorter.</b> The rate constant is larger at a higher temperature, and <i>t</i><sub>½</sub> = 0.693 / <i>k</i>, so a larger <i>k</i> gives a smaller half-life.</p><p class='note'><b>Scoring watch-out:</b> in (a), “ln is linear” has to be backed up with numbers from the table. In (b), the units come from the time column, which is in minutes here, not seconds.</p>"},
+
+ {q:"<p>Butadiene gas reacts with itself to form a dimer: [[2C4H6(g) -> C8H12(g)]]. The data below were collected at constant temperature.</p>" +
+    dataTable(["Time (s)", "[C<sub>4</sub>H<sub>6</sub>] (<i>M</i>)", "ln[C<sub>4</sub>H<sub>6</sub>]", "1/[C<sub>4</sub>H<sub>6</sub>] (<i>M</i><sup>−1</sup>)"],
+      [["0", "0.01000", "−4.605", "100."], ["1000", "0.00625", "−5.075", "160."], ["2000", "0.00455", "−5.394", "220."], ["3000", "0.00357", "−5.635", "280."]]) +
+    "<p>(a) Which graph would be linear: [C<sub>4</sub>H<sub>6</sub>] versus time, ln[C<sub>4</sub>H<sub>6</sub>] versus time, or 1/[C<sub>4</sub>H<sub>6</sub>] versus time? Justify your answer.</p><p>(b) Write the rate law for the reaction.</p><p>(c) Calculate the value of <i>k</i>, with units.</p><p>(d) Calculate the time at which [C<sub>4</sub>H<sub>6</sub>] = 0.00200 <i>M</i>.</p><p>(e) A student claims that the half-life of this reaction is constant. Do you agree? Justify your answer with a calculation.</p>",
+  m:"<p><b>(a)</b> <b>1/[C<sub>4</sub>H<sub>6</sub>] versus time.</b> 1/[C<sub>4</sub>H<sub>6</sub>] increases by 60. <i>M</i><sup>−1</sup> in every 1000-second interval, which is a constant slope. ln[C<sub>4</sub>H<sub>6</sub>] changes by −0.470, −0.319, and −0.241, and [C<sub>4</sub>H<sub>6</sub>] changes by −0.00375, −0.00170, and −0.00098, so those two graphs are curved.</p><p><b>(b)</b> A linear 1/[A] plot means second order: <b>rate = <i>k</i>[C<sub>4</sub>H<sub>6</sub>]<sup>2</sup></b>.</p><p><b>(c)</b> <i>k</i> = slope = (280. − 100.) <i>M</i><sup>−1</sup> / (3000 − 0) s = <b>0.0600 <i>M</i><sup>−1</sup> s<sup>−1</sup></b>.</p><p><b>(d)</b> 1/[A]<sub><i>t</i></sub> − 1/[A]<sub>0</sub> = <i>kt</i>, so 1/0.00200 − 1/0.01000 = 500. − 100. = 400. <i>M</i><sup>−1</sup>, and <i>t</i> = 400. <i>M</i><sup>−1</sup> / 0.0600 <i>M</i><sup>−1</sup> s<sup>−1</sup> = <b>6.67 × 10<sup>3</sup> s</b>.</p><p><b>(e)</b> <b>Disagree.</b> To fall from 0.01000 <i>M</i> to 0.00500 <i>M</i>, 1/[A] goes from 100. to 200. <i>M</i><sup>−1</sup>, which takes 100. / 0.0600 = 1670 s. To fall from 0.00500 <i>M</i> to 0.00250 <i>M</i>, 1/[A] goes from 200. to 400. <i>M</i><sup>−1</sup>, which takes 200. / 0.0600 = 3330 s. The second half-life is twice as long as the first. Only a first-order reaction has a constant half-life.</p>"}
+]);
+</script>
 </body>
 </html>
