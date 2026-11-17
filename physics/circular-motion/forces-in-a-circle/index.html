@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forces in a Circle — Flat Curves &amp; the Top and Bottom of a Loop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Physics — shared page system
+   (identical block on every Unit 3 and Unit 4 page)
+   ========================================================= */
+:root{
+  --ink:#16283C; --ink2:#3D4F63; --mute:#5D6D7E;
+  --paper:#EDF1F4; --card:#FBFCFD; --line:#CBD7E1; --line-soft:#E1E8EE;
+  --acc:#1B6CA8; --acc-dk:#0F4A78; --acc-lite:#D3E4F2;
+  --warm:#9A6410; --warm-lite:#FBEFD6;
+  --ok:#1F6E4D; --ok-bg:#E3F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  /* one colour per force, used on every page */
+  --f-g:#B23A2B;    /* gravity / weight      */
+  --f-n:#1B6CA8;    /* normal                */
+  --f-f:#A86A0C;    /* friction              */
+  --f-t:#1E7F5C;    /* tension               */
+  --f-a:#6B45B0;    /* applied               */
+  --f-air:#3E7C8A;  /* air resistance / drag */
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+  background-image:linear-gradient(to right,rgba(150,178,199,.17) 1px,transparent 1px),linear-gradient(to bottom,rgba(150,178,199,.17) 1px,transparent 1px);
+  background-size:26px 26px}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(237,241,244,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:60px 0 40px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc-dk)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(38px,6.4vw,64px);line-height:1.02;margin:16px 0 0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--acc)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:48ch;color:var(--ink2);margin:20px 0 0}
+
+.board{margin:36px 0 0;padding:22px 24px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.board-cap{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+.board svg{display:block;width:100%;height:auto}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft)}
+.sig-note b{color:var(--acc-dk);font-weight:600}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--acc);color:var(--acc-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(27px,4.2vw,38px);line-height:1.1;margin:0;letter-spacing:-.02em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--acc-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.nw{white-space:nowrap}
+.note{border-left:3px solid var(--warm);background:var(--warm-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.law{font-family:var(--display);font-size:clamp(20px,2.8vw,25px);font-weight:500;line-height:1.35;letter-spacing:-.01em;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:0 4px 4px 0;padding:18px 22px;margin:22px 0}
+.law small{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:6px;font-weight:400}
+
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:24px 0}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:0 4px 4px 0;padding:18px 20px}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard .form{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--acc-dk);margin:2px 0 0;line-height:1.5}
+.rulecard .ex{font-family:var(--body);font-size:14.5px;color:var(--ink);background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:7px 10px;margin-top:10px}
+.rulecard.warn{border-left-color:var(--warm)}
+
+/* force labels: F with a coloured subscript tag */
+.F{font-family:var(--mono);font-weight:600;white-space:nowrap}
+.F.g{color:var(--f-g)} .F.n{color:var(--f-n)} .F.f{color:var(--f-f)} .F.t{color:var(--f-t)} .F.a{color:var(--f-a)} .F.air{color:var(--f-air)} .F.net{color:var(--ink)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.setup{font-size:16px;color:var(--ink2);margin:0 0 14px}
+.scene{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:8px}
+.scene svg{display:block;width:100%;height:auto;max-width:540px;margin:0 auto}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F5F8FA;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--acc-dk);border-color:var(--acc-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--acc)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--acc);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+/* Input boxes: clearly fillable. Placeholder text is a short instruction, never a sample answer. */
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid #93A6B8;border-radius:3px;padding:9px 11px;width:150px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(22,40,60,.12)}
+::placeholder{font-family:var(--body);font-style:italic;font-size:15px;color:#7E8E9D;opacity:1}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:170px}
+.unit{font-family:var(--mono);font-size:15px;color:var(--ink2)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1A4B35}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--acc);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb p{margin:6px 0 0}
+.fb p:first-child{margin-top:0}
+
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-top:14px}
+.cbtn{background:#fff;color:var(--ink);border:1px solid var(--line);font-size:13px;padding:11px 10px;text-align:center}
+.cbtn:hover{background:#fff;color:var(--ink);border-color:var(--acc)}
+.cbtn.yes{background:var(--ok-bg);border-color:var(--ok);color:#1A4B35}
+.cbtn.no{background:var(--no-bg);border-color:var(--no);color:#7E2A1D}
+.cbtn.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.cbtn[disabled]{cursor:default}
+
+.tally-h{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:20px 0 8px}
+.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px}
+.tcell{border:1px solid var(--line-soft);border-radius:3px;padding:7px 10px;background:#fff}
+.tcell .tl{display:block;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.04em}
+.tcell .tv{font-family:var(--mono);font-size:15px;color:var(--ink)}
+.tcell.miss{border-color:#E3B7AE;background:#FDF6F4}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab:hover{background:var(--line-soft);color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--ink);color:#F5F8FA;border-color:var(--ink)}
+.panel{display:none;padding-top:12px}
+.panel.on{display:block}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.tbl{overflow-x:auto;margin:18px 0;-webkit-overflow-scrolling:touch}
+.tbl table{margin:0}
+
+.wo{list-style:none;padding:0;margin:20px 0}
+.wo li{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 18px;margin:10px 0}
+.wo .myth{display:block;font-size:15px;color:var(--no);text-decoration:line-through;text-decoration-color:rgba(169,58,42,.55);margin-bottom:4px}
+.wo .fact{font-size:16px}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45;letter-spacing:0}
+.opt:hover{border-color:var(--acc);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.95}
+.quiz-sum{font-family:var(--mono);font-size:13px;color:var(--ink2);margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft)}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#E9EFF4;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#BCCADA}
+.next .nt{font-family:var(--display);font-weight:600;font-size:24px;color:#fff;margin:0 0 4px;letter-spacing:-.01em}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F5F8FA;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--acc-lite)}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:14px}
+  .scene{padding:2px}
+  .board{padding:16px 14px}
+  .field label{min-width:auto;flex:1 1 100%}
+  .choices{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+/* ======== end shared block ======== */
+
+/* ---- page: velocity and acceleration colours (not forces, so not in the force palette) ---- */
+:root{--vel:#16283C;--cen:#A8199B}
+.kv{font-family:var(--mono);font-weight:600;color:var(--vel);white-space:nowrap}
+.ka{font-family:var(--mono);font-weight:600;color:var(--cen);white-space:nowrap}
+
+/* ---- page: method ladder ---- */
+.ladder{list-style:none;padding:0;margin:20px 0;counter-reset:step}
+.ladder li{counter-increment:step;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:baseline;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:12px 16px;margin:8px 0}
+.ladder li::before{content:counter(step);font-family:var(--mono);font-size:13px;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;text-align:center;padding:2px 0}
+.ladder small{display:block;color:var(--mute);font-size:14.5px;margin-top:2px}
+
+/* ---- page: worked example ---- */
+.worked{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:18px;align-items:center}
+@media (max-width:640px){.worked{grid-template-columns:1fr}}
+
+/* ---- page: hero steps ---- */
+.steps{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.steps li{margin:0;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px 14px}
+.steps .sl{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:2px}
+.steps .eq{font-family:var(--mono);font-size:17px;color:var(--ink)}
+
+/* ---- page: ledger (sum per direction) ---- */
+.ledger{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:14px;margin:10px 0 4px;background:transparent}
+.ledger th,.ledger td{padding:6px 8px;border-bottom:1px solid rgba(22,40,60,.12);text-align:left;vertical-align:top}
+.ledger th{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:inherit;opacity:.75;font-weight:500}
+.ledger td.z{font-weight:600}
+
+/* ---- page: work shown in examples and feedback ---- */
+.work{font-family:var(--mono);font-size:14.5px;line-height:1.7;margin:8px 0 0;padding:8px 12px;background:rgba(255,255,255,.6);border-radius:3px}
+.card .work,.worked .work{background:#fff;border:1px solid var(--line-soft)}
+.fb .work{background:rgba(255,255,255,.6);border:none}
+
+/* ---- page: practice ---- */
+.cap{font-size:16px;color:var(--ink2);margin:0 0 10px}
+.cap b{color:var(--ink)}
+.prob{font-size:18px;line-height:1.55;margin:16px 0 0;color:var(--ink)}
+.wide .field label{min-width:250px}
+#pd-svg{max-width:460px}
+input.ok-in{border-color:var(--ok);background:var(--ok-bg)}
+input.no-in{border-color:var(--no);background:var(--no-bg)}
+
+/* ---- page: swing-the-ball sim ---- */
+.sim-ctrl{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
+.sim-ctrl label{font-size:15px;color:var(--ink2);min-width:70px}
+.sim-ctrl input[type=range]{flex:1 1 120px;min-width:110px;accent-color:var(--acc)}
+.sim-ctrl output{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--acc-dk);min-width:84px;font-variant-numeric:tabular-nums}
+.readout{margin:0;font-size:15px}
+.readout th{width:34%;white-space:nowrap}
+.readout td{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.state{font-family:var(--mono);font-size:13.5px;line-height:1.5;padding:10px 12px;border-radius:0 3px 3px 0;margin-top:12px;border-left:3px solid var(--acc);background:var(--acc-lite);color:var(--acc-dk)}
+.state.cut{border-left-color:var(--warm);background:var(--warm-lite);color:#6B4608}
+
+/* ---- page 2: segmented choice (object, top/bottom) ---- */
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px;align-items:center}
+.seg .sl{font-size:15px;color:var(--ink2);min-width:70px}
+.loopfig svg{max-width:420px}
+#pv-svg{max-width:440px}
+.eqn{font-family:var(--mono);font-size:16px}
+.opts .opt .eqn{font-size:16px}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Forces in a Circle</span>
+    <span class="bar-sub">Flat curves · the top and bottom of a loop</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 4 · Circular Motion · Page 2</div>
+  <h1>Find the center. <em>Then add it up.</em></h1>
+  <p class="lede">The net force in a circle points toward the center, and it equals m · v² / r. To solve a problem, figure out which real forces point toward the center, which point away, and add them up.</p>
+
+  <div class="board">
+    <div class="board-cap">A ball on a string swung in a vertical circle, seen from the side</div>
+    <div class="worked">
+      <div class="scene loopfig"><svg id="hero-svg" viewBox="0 0 520 420" role="img" aria-label="A ball on a string swung in a vertical circle, shown at the top and at the bottom. At the top, tension and gravity both point down, toward the center. At the bottom, tension points up toward the center and gravity points down, away from the center."></svg></div>
+      <ol class="steps">
+        <li><span class="sl">Flat curve · friction is the net force</span><span class="eq"><span class="F f">F<sub>frict</sub></span> = m · v² / r</span></li>
+        <li><span class="sl">Top of the loop · gravity points to the center</span><span class="eq"><span class="F t">F<sub>tens</sub></span> + <span class="F g">F<sub>grav</sub></span> = m · v² / r</span></li>
+        <li><span class="sl">Bottom of the loop · gravity points away</span><span class="eq"><span class="F t">F<sub>tens</sub></span> − <span class="F g">F<sub>grav</sub></span> = m · v² / r</span></li>
+      </ol>
+    </div>
+    <div class="sig-note">Gravity <b>always points down</b>. At the top of a loop, down is <b>toward the center</b>. At the bottom, down is <b>away from the center</b>.</div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#method">The method</a>
+  <a href="#flat">Flat curves</a>
+  <a href="#loop">Top and bottom of a loop</a>
+  <a href="#coaster">Roller coasters</a>
+  <a href="#sim">Try it</a>
+  <a href="#p-setup">Practice: set it up</a>
+  <a href="#p-solve">Practice: solve it</a>
+  <a href="#watch">Watch-outs</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ METHOD ============ -->
+<section id="method">
+  <div class="sec-head"><h2>One method for every circle</h2></div>
+  <p>On page 1 you found that the net force in a circle points toward the center, and that F<sub>net</sub> = m · a<sub>c</sub>. Since a<sub>c</sub> = v² / r, you can put them together:</p>
+  <div class="law"><small>Newton's second law, in a circle</small>Add up the forces along the line to the center. Forces toward the center count as positive. Forces away from the center count as negative.<br><span class="mono" style="font-size:.95em">(toward the center) − (away from the center) = m · v² / r</span></div>
+
+  <ol class="ladder">
+    <li><div><b>Draw the free-body diagram.</b> Only real forces: <span class="F g">F<sub>grav</sub></span>, <span class="F n">F<sub>norm</sub></span>, <span class="F f">F<sub>frict</sub></span>, <span class="F t">F<sub>tens</sub></span>.<small>Never draw an extra "centripetal force" arrow. The net force is what the real forces add up to.</small></div></li>
+    <li><div><b>Find the center.</b> Which way is the center of the circle from where the object is <i>right now</i>?</div></li>
+    <li><div><b>Sort the forces.</b> Which ones point toward the center? Which point away?<small>Forces at a right angle to that line (like up and down on a flat curve) don't go in this equation. They cancel each other.</small></div></li>
+    <li><div><b>Write the equation:</b> (toward) − (away) = m · v² / r.</div></li>
+    <li><div><b>Plug in and solve</b> for whatever the problem asks for.</div></li>
+  </ol>
+  <p>You'll need two situations: a car on a <a href="#flat">flat curve</a>, and an object at the <a href="#loop">top or bottom of a vertical loop</a>.</p>
+</section>
+
+<!-- ============ FLAT CURVE ============ -->
+<section id="flat">
+  <div class="sec-head"><h2>Flat curve: friction is the net force</h2></div>
+  <p>A car turns on a flat road. Look at it from behind. Gravity pulls it down, the road pushes it up, and the road's friction on the tires pushes it sideways, toward the center of the curve.</p>
+  <ul>
+    <li><b>Up and down cancel.</b> The car isn't going up or down, so <span class="F n">F<sub>norm</sub></span> = <span class="F g">F<sub>grav</sub></span> = m · g.</li>
+    <li><b>Friction is the only force toward the center.</b> So friction <i>is</i> the net force.</li>
+  </ul>
+
+  <div class="rulebox">
+    <div class="rulecard">
+      <div class="form">F<sub>norm</sub> = m · g</div>
+      <h4>Up and down cancel</h4>
+      <p>On flat ground, the normal force equals the weight.</p>
+    </div>
+    <div class="rulecard">
+      <div class="form">F<sub>frict</sub> = m · v² / r</div>
+      <h4>Friction is F<sub>net</sub></h4>
+      <p>The friction needed to make the car turn.</p>
+    </div>
+    <div class="rulecard">
+      <div class="form">F<sub>frict</sub> = μ · F<sub>norm</sub></div>
+      <h4>The most the road can give</h4>
+      <p>From Unit 3. If the curve needs more than this, the car slides.</p>
+    </div>
+  </div>
+
+  <h3>Worked example: how grippy does the road need to be?</h3>
+  <div class="worked">
+    <div class="scene"><svg id="flat1-svg" viewBox="0 0 520 360" role="img" aria-label="Free-body diagram of a 1500 kilogram car seen from behind. Normal force 14700 newtons up, gravity 14700 newtons down, friction 8100 newtons to the left, toward the center of the curve."></svg></div>
+    <div>
+      <p style="margin-top:0">A 1500 kg car takes a flat curve with a radius of 60 m at 18 m/s. What's the smallest μ that keeps it from sliding?</p>
+      <div class="work">
+        F<sub>frict</sub> = m · v² / r<br>
+        F<sub>frict</sub> = 1500 kg × (18 m/s)² / 60 m = <b>8100 N</b><br>
+        F<sub>norm</sub> = m · g = 1500 kg × 9.8 m/s² = 14700 N<br>
+        μ = F<sub>frict</sub> / F<sub>norm</sub> = 8100 N / 14700 N = <b>0.55</b>
+      </div>
+      <p class="smallprint">The tires and road need a coefficient of friction of at least 0.55. Less than that, and the road can't grip hard enough.</p>
+    </div>
+  </div>
+
+  <h3>Worked example: how fast can the car go?</h3>
+  <div class="worked">
+    <div class="scene"><svg id="flat2-svg" viewBox="0 0 520 300" role="img" aria-label="Top view of a car going around a curve with a radius of 40 meters. Its speed is unknown."></svg></div>
+    <div>
+      <p style="margin-top:0">A 1200 kg car drives on a wet, flat curve with a radius of 40 m. The coefficient of friction is 0.5. What's the fastest it can go without sliding?</p>
+      <div class="work">
+        F<sub>norm</sub> = m · g = 1200 kg × 9.8 m/s² = 11760 N<br>
+        F<sub>frict</sub> = μ · F<sub>norm</sub> = 0.5 × 11760 N = 5880 N<br>
+        F<sub>frict</sub> = m · v² / r<br>
+        5880 N = 1200 kg × v² / 40 m<br>
+        v² = 5880 × 40 / 1200 = 196<br>
+        v = √196 = <b>14 m/s</b>
+      </div>
+      <p class="smallprint">Any faster, and the curve needs more friction than the road can give. The car can't turn tightly enough and slides toward the outside of the curve.</p>
+    </div>
+  </div>
+
+  <div class="note"><b>Solving for v:</b> multiply both sides by r, divide by m, then take the square root. Don't stop at v². That's the most common mistake on this kind of problem.</div>
+</section>
+
+<!-- ============ VERTICAL LOOP ============ -->
+<section id="loop">
+  <div class="sec-head"><h2>The top and the bottom of a loop</h2></div>
+  <p>Now stand the circle up: a ball swung on a string in a vertical circle, or a roller coaster going through a loop. Gravity points along the line to the center now, so it goes in the equation.</p>
+  <p>The tricky part: <b>gravity always points down</b>, but the center isn't always below you. At the top of the loop, the center is below, so gravity points toward it. At the bottom, the center is above, so gravity points away from it.</p>
+
+  <div class="rulebox">
+    <div class="rulecard">
+      <div class="form">F<sub>tens</sub> + F<sub>grav</sub> = m · v² / r</div>
+      <h4>At the top</h4>
+      <p>The string pulls down toward the center. Gravity pulls down too, also toward the center. They work together.</p>
+    </div>
+    <div class="rulecard warn">
+      <div class="form">F<sub>tens</sub> − F<sub>grav</sub> = m · v² / r</div>
+      <h4>At the bottom</h4>
+      <p>The string pulls up toward the center. Gravity pulls down, away from the center. It works against the tension.</p>
+    </div>
+  </div>
+
+  <h3>Worked example: at the top</h3>
+  <div class="worked">
+    <div class="scene loopfig"><svg id="top-svg" viewBox="0 0 520 420" role="img" aria-label="A 0.5 kilogram ball at the top of a vertical circle on a 0.8 meter string. Tension 10.73 newtons and gravity 4.9 newtons both point down, toward the center."></svg></div>
+    <div>
+      <p style="margin-top:0">A 0.5 kg ball on a 0.8 m string is swung in a vertical circle. At the top it's moving at 5 m/s. What's the tension?</p>
+      <table class="ledger">
+        <thead><tr><th>Toward the center</th><th>Away</th></tr></thead>
+        <tbody><tr><td>F<sub>tens</sub>, F<sub>grav</sub></td><td>nothing</td></tr></tbody>
+      </table>
+      <div class="work">
+        F<sub>grav</sub> = m · g = 0.5 kg × 9.8 m/s² = 4.9 N<br>
+        m · v² / r = 0.5 kg × (5 m/s)² / 0.8 m = 15.63 N<br>
+        F<sub>tens</sub> + F<sub>grav</sub> = m · v² / r<br>
+        F<sub>tens</sub> + 4.9 N = 15.63 N<br>
+        F<sub>tens</sub> = <b>10.73 N</b>
+      </div>
+      <p class="smallprint">Gravity does 4.9 N of the job, so the string only has to add the rest.</p>
+    </div>
+  </div>
+
+  <h3>Worked example: at the bottom</h3>
+  <div class="worked">
+    <div class="scene loopfig"><svg id="bot-svg" viewBox="0 0 520 420" role="img" aria-label="The same ball at the bottom of the vertical circle. Tension 27.4 newtons points up, toward the center. Gravity 4.9 newtons points down, away from the center."></svg></div>
+    <div>
+      <p style="margin-top:0">At the bottom, the same ball is moving at 6 m/s. What's the tension now?</p>
+      <table class="ledger">
+        <thead><tr><th>Toward the center</th><th>Away</th></tr></thead>
+        <tbody><tr><td>F<sub>tens</sub></td><td>F<sub>grav</sub></td></tr></tbody>
+      </table>
+      <div class="work">
+        F<sub>grav</sub> = 4.9 N<br>
+        m · v² / r = 0.5 kg × (6 m/s)² / 0.8 m = 22.5 N<br>
+        F<sub>tens</sub> − F<sub>grav</sub> = m · v² / r<br>
+        F<sub>tens</sub> − 4.9 N = 22.5 N<br>
+        F<sub>tens</sub> = <b>27.4 N</b>
+      </div>
+      <p class="smallprint">The string has to cancel gravity <i>and</i> supply the 22.5 N net force. That's why a string is most likely to break at the bottom.</p>
+    </div>
+  </div>
+
+  <div class="note"><b>Gravity doesn't flip. The center does.</b> F<sub>grav</sub> points straight down at the top and at the bottom. What changes is whether "down" is toward the center (top, so add it) or away from the center (bottom, so subtract it).</div>
+
+  <h3>Too slow at the top</h3>
+  <p>The slower the ball goes over the top, the less net force it needs, so the smaller the tension. At the slowest possible speed the tension drops to zero and gravity does the whole job by itself: F<sub>grav</sub> = m · v² / r. Any slower, and gravity is <i>more</i> than the circle needs. The string goes slack and the ball falls inside the circle. Try it in <a href="#sim">Try it</a> below.</p>
+</section>
+
+<!-- ============ ROLLER COASTER ============ -->
+<section id="coaster">
+  <div class="sec-head"><h2>Roller coasters: the track pushes instead</h2></div>
+  <p>A roller coaster in a loop works the same way. The only change is that the track pushes on the cart (a <span class="F n">normal force</span>) instead of a string pulling. The track always pushes from the outside of the loop, toward the center.</p>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Where</th><th>Toward the center</th><th>Away</th><th>Equation</th></tr></thead>
+    <tbody>
+      <tr><td>Ball on a string, top</td><td><span class="F t">F<sub>tens</sub></span> <span class="F g">F<sub>grav</sub></span></td><td>—</td><td class="mono">F<sub>tens</sub> + F<sub>grav</sub> = m · v² / r</td></tr>
+      <tr><td>Ball on a string, bottom</td><td><span class="F t">F<sub>tens</sub></span></td><td><span class="F g">F<sub>grav</sub></span></td><td class="mono">F<sub>tens</sub> − F<sub>grav</sub> = m · v² / r</td></tr>
+      <tr><td>Coaster, top of the loop (upside down)</td><td><span class="F n">F<sub>norm</sub></span> <span class="F g">F<sub>grav</sub></span></td><td>—</td><td class="mono">F<sub>norm</sub> + F<sub>grav</sub> = m · v² / r</td></tr>
+      <tr><td>Coaster, bottom of the loop</td><td><span class="F n">F<sub>norm</sub></span></td><td><span class="F g">F<sub>grav</sub></span></td><td class="mono">F<sub>norm</sub> − F<sub>grav</sub> = m · v² / r</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Worked example</h3>
+  <div class="worked">
+    <div class="scene loopfig"><svg id="coaster-svg" viewBox="0 0 520 420" role="img" aria-label="A roller coaster loop with a 600 kilogram cart shown at the top, upside down, and at the bottom. At the top, the normal force from the track (2760 newtons) and gravity (5880 newtons) both point down, toward the center. At the bottom, the normal force (29880 newtons) points up and gravity (5880 newtons) points down."></svg></div>
+    <div>
+      <p style="margin-top:0">A 600 kg cart goes through a loop with a radius of 10 m. It moves at 12 m/s at the top and 20 m/s at the bottom. How hard does the track push on it at each spot?</p>
+      <div class="work">
+        F<sub>grav</sub> = 600 kg × 9.8 m/s² = 5880 N<br>
+        <b>Top:</b> m · v² / r = 600 × 12² / 10 = 8640 N<br>
+        F<sub>norm</sub> + 5880 N = 8640 N<br>
+        F<sub>norm</sub> = <b>2760 N</b> (down)<br>
+        <b>Bottom:</b> m · v² / r = 600 × 20² / 10 = 24000 N<br>
+        F<sub>norm</sub> − 5880 N = 24000 N<br>
+        F<sub>norm</sub> = <b>29880 N</b> (up)
+      </div>
+    </div>
+  </div>
+  <p>At the bottom, the track pushes about 5 times as hard as the cart's weight. Your seat does the same thing to you, which is why you feel squashed into it at the bottom of a loop and nearly weightless at the top.</p>
+</section>
+
+<!-- ============ SIM ============ -->
+<section id="sim">
+  <div class="sec-head">
+    <span class="tasktag">Try it</span>
+    <h2>Top or bottom?</h2>
+  </div>
+  <p>Pick a ball on a string or a roller coaster, pick the top or the bottom of the loop, and change the speed. Watch what the string or the track has to do.</p>
+
+  <div class="card">
+    <div class="seg" role="group" aria-label="Object">
+      <span class="sl">Object</span>
+      <button class="tab" data-kind="string" aria-selected="true">Ball on a string</button>
+      <button class="tab" data-kind="coaster" aria-selected="false">Roller coaster</button>
+    </div>
+    <div class="seg" role="group" aria-label="Where in the loop">
+      <span class="sl">Where</span>
+      <button class="tab" data-pos="top" aria-selected="true">Top</button>
+      <button class="tab" data-pos="bottom" aria-selected="false">Bottom</button>
+    </div>
+    <div class="sim-ctrl">
+      <label for="sm-v">Speed</label>
+      <input type="range" id="sm-v">
+      <output id="sm-v-out" for="sm-v"></output>
+    </div>
+    <div class="sim-ctrl">
+      <label for="sm-r">Radius</label>
+      <input type="range" id="sm-r">
+      <output id="sm-r-out" for="sm-r"></output>
+    </div>
+    <div class="sim-ctrl">
+      <label for="sm-m">Mass</label>
+      <input type="range" id="sm-m">
+      <output id="sm-m-out" for="sm-m"></output>
+    </div>
+    <div class="worked">
+      <div class="scene loopfig"><svg id="sm-svg" viewBox="0 0 520 420" role="img" aria-labelledby="sm-desc"><desc id="sm-desc"></desc></svg></div>
+      <div>
+        <table class="readout"><tbody>
+          <tr><th>Gravity</th><td id="sm-g"></td></tr>
+          <tr><th>Net force needed</th><td id="sm-n"></td></tr>
+          <tr><th>Equation</th><td id="sm-eq"></td></tr>
+          <tr><th id="sm-xl"></th><td id="sm-x"></td></tr>
+        </tbody></table>
+        <div class="state" id="sm-state" aria-live="polite"></div>
+      </div>
+    </div>
+    <p class="smallprint">The arrows are drawn to scale with each other. Gravity is m · g with g = 9.8 m/s².</p>
+  </div>
+
+  <h3>Things to try</h3>
+  <ol class="ladder">
+    <li><div><b>Ball, top:</b> slow it down until the string goes slack. Check the speed against √(g · r).</div></li>
+    <li><div><b>Ball, bottom:</b> slow it all the way down. Does the tension ever get smaller than the weight?<small>Even hanging still, the string has to hold the ball up.</small></div></li>
+    <li><div><b>Roller coaster:</b> at the same speed, compare the push from the track at the top and at the bottom.</div></li>
+  </ol>
+</section>
+
+<!-- ============ PRACTICE: SET UP ============ -->
+<section id="p-setup">
+  <div class="sec-head">
+    <span class="tasktag">Practice 1</span>
+    <h2>Set it up</h2>
+  </div>
+  <p>Before any numbers: which forces point toward the center, and what's the equation? A new situation is generated every time.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Set it up</span><span class="score" id="ps-score">0 of 0</span></div>
+    <p class="cap" id="ps-cap"></p>
+    <div class="scene loopfig"><svg id="ps-svg" viewBox="0 0 520 420" role="img" aria-labelledby="ps-desc"><desc id="ps-desc"></desc></svg></div>
+    <p class="prob" id="ps-q"></p>
+    <div class="opts" id="ps-opts" style="margin-top:14px"></div>
+    <div class="fb" id="ps-fb" aria-live="polite"></div>
+    <div class="btn-row"><button class="ghost" id="ps-next">Next situation</button></div>
+    <div class="tally-h">Your results by situation</div>
+    <div class="tally" id="ps-tally"></div>
+  </div>
+</section>
+
+<!-- ============ PRACTICE: SOLVE ============ -->
+<section id="p-solve">
+  <div class="sec-head">
+    <span class="tasktag">Practice 2</span>
+    <h2>Solve it</h2>
+  </div>
+  <p>Work in the order of the boxes. Use g = 9.8 m/s². Keep two decimal places on the numbers in between, and round only at the end.</p>
+
+  <div class="card wide">
+    <div class="card-label"><span>Solve it</span><span class="score" id="pv-score">0 of 0</span></div>
+    <p class="cap" id="pv-cap"></p>
+    <div class="scene" id="pv-scene"><svg id="pv-svg" viewBox="0 0 520 420" role="img" aria-labelledby="pv-desc"><desc id="pv-desc"></desc></svg></div>
+    <div class="field">
+      <label for="pv-0" id="pv-l0"></label>
+      <input type="text" id="pv-0" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit" id="pv-u0"></span>
+    </div>
+    <div class="field">
+      <label for="pv-1" id="pv-l1"></label>
+      <input type="text" id="pv-1" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit" id="pv-u1"></span>
+    </div>
+    <div class="field">
+      <label for="pv-2" id="pv-l2"></label>
+      <input type="text" id="pv-2" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit" id="pv-u2"></span>
+    </div>
+    <div class="fb" id="pv-fb" aria-live="polite"></div>
+    <div class="btn-row"><button id="pv-check">Check</button><button class="ghost" id="pv-next">Next problem</button></div>
+    <div class="tally-h">Your results by kind of problem</div>
+    <div class="tally" id="pv-tally"></div>
+  </div>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="sec-head"><h2>Watch-outs</h2></div>
+  <ul class="wo">
+    <li><span class="myth">Gravity always gets subtracted.</span><span class="fact">Only when it points away from the center, at the <b>bottom</b>. At the <b>top</b> it points toward the center, so it gets added.</span></li>
+    <li><span class="myth">At the top of the loop, the string (or the track) pushes up to hold the object up.</span><span class="fact">A string can only pull toward the center, which at the top is <b>down</b>. The track is above the upside-down cart, so it pushes <b>down</b> too.</span></li>
+    <li><span class="myth">The tension is m · v² / r.</span><span class="fact">The <b>net force</b> is m · v² / r. In a vertical loop, gravity is part of the net force, so the tension is m · v² / r minus F<sub>grav</sub> at the top, plus F<sub>grav</sub> at the bottom.</span></li>
+    <li><span class="myth">The normal force on a coaster cart always equals its weight.</span><span class="fact">Only when it isn't accelerating up or down. At the bottom of a loop, the track pushes <b>harder</b> than the weight.</span></li>
+    <li><span class="myth">On a flat curve, the normal force pulls the car toward the center.</span><span class="fact">The normal force points straight up. The only sideways force is <b>friction</b>, so friction is the net force.</span></li>
+    <li><span class="myth">You found v², so you're done.</span><span class="fact">Take the square root. A car going 196 m/s around a curve would be going over 400 mph.</span></li>
+  </ul>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Nine questions on flat curves and on the top and bottom of a loop. Use g = 9.8 m/s².</p>
+  <div class="card" id="quiz"></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">That's page 2 of Unit 4</div>
+      <p>More Circular Motion pages will show up on the unit page as we go.</p>
+    </div>
+    <a href="/physics/circular-motion/">Back to Unit 4 →</a>
+  </div>
+</section>
+
+<footer>
+  <p>Forces in a circle: add up the forces toward the center, subtract the ones pointing away, and set the result equal to m · v² / r. On a flat curve, friction is the net force. In a vertical loop, gravity points toward the center at the top and away from it at the bottom. The practice generates new problems every time.</p>
+  <p><a href="/physics/circular-motion/uniform-circular-motion/">← Page 1: Uniform Circular Motion</a> · <a href="/physics/circular-motion/">← Unit 4 — Circular Motion</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   shared helpers (same on every Unit 3 and Unit 4 page)
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function randInt(lo,hi){ return lo + Math.floor(Math.random()*(hi-lo+1)); }
+var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* force colours and labels (match the CSS variables) */
+var FORCE = {
+  g:  { c:'#B23A2B', sym:'F<tspan baseline-shift="sub" font-size="70%">grav</tspan>',   html:'F<sub>grav</sub>',   name:'gravity' },
+  n:  { c:'#1B6CA8', sym:'F<tspan baseline-shift="sub" font-size="70%">norm</tspan>',   html:'F<sub>norm</sub>',   name:'normal force' },
+  f:  { c:'#A86A0C', sym:'F<tspan baseline-shift="sub" font-size="70%">frict</tspan>',   html:'F<sub>frict</sub>',   name:'friction' },
+  t:  { c:'#1E7F5C', sym:'F<tspan baseline-shift="sub" font-size="70%">tens</tspan>',   html:'F<sub>tens</sub>',   name:'tension' },
+  a:  { c:'#6B45B0', sym:'F<tspan baseline-shift="sub" font-size="70%">app</tspan>', html:'F<sub>app</sub>', name:'applied force' },
+  air:{ c:'#3E7C8A', sym:'F<tspan baseline-shift="sub" font-size="70%">air</tspan>', html:'F<sub>air</sub>', name:'air resistance' }
+};
+var SVGNS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs, parent){
+  var n = document.createElementNS(SVGNS, tag);
+  for(var k in attrs) n.setAttribute(k, attrs[k]);
+  if(parent) parent.appendChild(n);
+  return n;
+}
+/* Draw an arrow from (x1,y1) to (x2,y2). Returns the group. */
+function arrow(parent, x1, y1, x2, y2, color, width){
+  var g = svgEl('g', {}, parent), w = width || 4;
+  var dx = x2-x1, dy = y2-y1, L = Math.sqrt(dx*dx+dy*dy) || 1, ux = dx/L, uy = dy/L;
+  var head = Math.min(15, L*0.6), hw = head*0.55;
+  var bx = x2 - ux*head, by = y2 - uy*head;
+  svgEl('line', {x1:x1, y1:y1, x2:bx, y2:by, stroke:color, 'stroke-width':w, 'stroke-linecap':'round'}, g);
+  svgEl('path', {d:'M'+x2+' '+y2+' L'+(bx - uy*hw)+' '+(by + ux*hw)+' L'+(bx + uy*hw)+' '+(by - ux*hw)+' Z', fill:color}, g);
+  return g;
+}
+function label(parent, x, y, html, color, anchor, size){
+  var t = svgEl('text', {x:x, y:y, fill:color||'#16283C', 'font-family':'IBM Plex Mono,monospace', 'font-size':size||15, 'font-weight':600, 'text-anchor':anchor||'middle'}, parent);
+  t.innerHTML = html;
+  return t;
+}
+function clearSvg(svg){ Array.prototype.slice.call(svg.childNodes).forEach(function(n){ if(n.nodeName !== 'desc') svg.removeChild(n); }); }
+
+/* =========================================================
+   free-body diagram renderer
+   forces: [{k:'g'|'n'|'f'|'t'|'a'|'air', d:'up'|'down'|'left'|'right', m:<newtons>}]
+   Arrows start at the box edge, lengths scale with size.
+   Several forces in the same direction are drawn side by side.
+   ========================================================= */
+function drawFBD(svg, forces, opts){
+  opts = opts || {};
+  clearSvg(svg);
+  var W = 520, H = 360, cx = 260, cy = 180, half = 34, maxLen = opts.maxLen || 96, minLen = 28;
+  /* vertical and horizontal forces are each scaled to their own largest force,
+     so a small sideways push next to a heavy weight is still readable */
+  function axisMax(dirs){ return Math.max.apply(null, forces.filter(function(f){ return dirs.indexOf(f.d) >= 0; }).map(function(f){ return f.m; }).concat([1])); }
+  var sV = maxLen / axisMax(['up','down']), sH = maxLen / axisMax(['left','right']);
+  function len(m, d){ return Math.max(minLen, m * (d === 'up' || d === 'down' ? sV : sH)); }
+  /* box */
+  svgEl('rect', {x:cx-half, y:cy-half, width:half*2, height:half*2, rx:3, fill:'#fff', stroke:'#16283C', 'stroke-width':2.2}, svg);
+  if(opts.name) label(svg, cx, cy + 4, opts.name, '#5D6D7E', 'middle', 11);
+  var groups = { up:[], down:[], left:[], right:[] };
+  forces.forEach(function(f){ groups[f.d].push(f); });
+  Object.keys(groups).forEach(function(d){
+    var list = groups[d], n = list.length;
+    list.forEach(function(f, i){
+      var off = (i - (n-1)/2) * (n > 1 ? 34 : 0);
+      var L = len(f.m, d), c = FORCE[f.k].c, txt = FORCE[f.k].sym + ' ' + (f.txt || f.m + ' N');
+      if(d === 'up'){
+        arrow(svg, cx + off, cy - half, cx + off, cy - half - L, c, 4.5);
+        if(n > 1) label(svg, cx + off + (i === 0 ? -10 : 10), cy - half - L + 13, txt, c, i === 0 ? 'end' : 'start', 18);
+        else label(svg, cx + 12, cy - half - L + 12, txt, c, 'start', 18);
+      } else if(d === 'down'){
+        arrow(svg, cx + off, cy + half, cx + off, cy + half + L, c, 4.5);
+        if(n > 1) label(svg, cx + off + (i === 0 ? -10 : 10), cy + half + L - 4, txt, c, i === 0 ? 'end' : 'start', 18);
+        else label(svg, cx + 12, cy + half + L - 4, txt, c, 'start', 18);
+      } else if(d === 'right'){
+        arrow(svg, cx + half, cy + off, cx + half + L, cy + off, c, 4.5);
+        label(svg, cx + half + L + 8, cy + off + 6, txt, c, 'start', 18);
+      } else {
+        arrow(svg, cx - half, cy + off, cx - half - L, cy + off, c, 4.5);
+        label(svg, cx - half - L - 8, cy + off + 6, txt, c, 'end', 18);
+      }
+    });
+  });
+}
+function sumDir(forces, d){ return forces.filter(function(f){ return f.d === d; }).reduce(function(s,f){ return s + f.m; }, 0); }
+function listDir(forces, d){
+  var l = forces.filter(function(f){ return f.d === d; });
+  if(!l.length) return '0 N';
+  if(l.length === 1) return l[0].m + ' N';
+  return '(' + l.map(function(f){ return f.m; }).join(' + ') + ') N';
+}
+function describeForces(forces){
+  return forces.map(function(f){ return FORCE[f.k].name + ' ' + f.m + ' newtons ' + f.d; }).join(', ') + '.';
+}
+
+
+/* =========================================================
+   page helpers
+   ========================================================= */
+function fmt(x){ var r = Math.round(x*100)/100; return String(r); }
+function r2(x){ return Math.round(x*100)/100; }
+function parseNum(s){ s = String(s).replace(/,/g,'').trim(); if(!/^[-+]?(\d+\.?\d*|\.\d+)/.test(s)) return NaN; return parseFloat(s); }
+function close(x, ans){ return Math.abs(x - ans) <= Math.max(0.011, Math.abs(ans)*0.01); }
+function lock(ids, on){ ids.forEach(function(id){ el(id).disabled = on; }); }
+function onEnter(ids, fn){ ids.forEach(function(id){ el(id).addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); fn(); } }); }); }
+function renderTally(node, types, tally){
+  node.innerHTML = Object.keys(types).map(function(k){
+    var c = tally[k], miss = c.t > c.r;
+    return '<div class="tcell' + (miss ? ' miss' : '') + '"><span class="tl">' + types[k] + '</span><span class="tv">' + c.r + '/' + c.t + '</span></div>';
+  }).join('');
+}
+function newTally(types){ var t = {}; Object.keys(types).forEach(function(k){ t[k] = {r:0,t:0}; }); return t; }
+function massLabel(svg, m){ label(svg, 260, 201, m + ' kg', '#16283C', 'middle', 12); }
+
+/* =========================================================
+   circle geometry
+   Angles are in degrees, counterclockwise from the right (like a
+   unit circle). SVG y points down, so the sines flip sign.
+   ========================================================= */
+var VEL = '#16283C', CEN = '#A8199B', GREY = '#93A6B8', INK2 = '#3D4F63', MUTE = '#5D6D7E', OKC = '#1F6E4D', NOC = '#A93A2A', D2R = Math.PI/180;
+function P(cx, cy, rr, deg){ var t = deg*D2R; return { x:cx + rr*Math.cos(t), y:cy - rr*Math.sin(t) }; }
+/* unit vector along the circle, the way the object moves */
+function tanDir(deg, ccw){ var t = deg*D2R; return ccw ? { x:-Math.sin(t), y:-Math.cos(t) } : { x:Math.sin(t), y:Math.cos(t) }; }
+/* unit vector toward the center */
+function inDir(deg){ var t = deg*D2R; return { x:-Math.cos(t), y:Math.sin(t) }; }
+function neg(u){ return { x:-u.x, y:-u.y }; }
+function sub(s, x){ return s + '<tspan baseline-shift="sub" font-size="70%">' + x + '</tspan>'; }
+/* an arrow from point p along unit vector u: starts gap px out, len px long */
+function vec(parent, p, u, gap, len, color, w){ return arrow(parent, p.x + u.x*gap, p.y + u.y*gap, p.x + u.x*(gap+len), p.y + u.y*(gap+len), color, w || 4); }
+function orbit(parent, cx, cy, rr){ svgEl('circle', {cx:cx, cy:cy, r:rr, fill:'none', stroke:GREY, 'stroke-width':1.5, 'stroke-dasharray':'5 6'}, parent); }
+function ballAt(parent, p, rad){ svgEl('circle', {cx:p.x, cy:p.y, r:rad || 10, fill:'#fff', stroke:'#16283C', 'stroke-width':2.2}, parent); }
+function pivot(parent, cx, cy){ svgEl('circle', {cx:cx, cy:cy, r:4, fill:'#16283C'}, parent); }
+/* a curved arrow along a circle, from angle d1 to d2 (less than 180° apart) */
+function arcArrow(parent, cx, cy, rr, d1, d2, color, w){
+  var a = P(cx, cy, rr, d1), b = P(cx, cy, rr, d2), ccw = d2 > d1;
+  svgEl('path', {d:'M' + a.x + ' ' + a.y + ' A' + rr + ' ' + rr + ' 0 0 ' + (ccw ? 0 : 1) + ' ' + b.x + ' ' + b.y, fill:'none', stroke:color, 'stroke-width':w || 2.5, 'stroke-linecap':'round'}, parent);
+  var t = tanDir(d2, ccw), s = 11, hw = s*0.55, tx = b.x + t.x*7, ty = b.y + t.y*7, bx = tx - t.x*s, by = ty - t.y*s;
+  svgEl('path', {d:'M' + tx + ' ' + ty + ' L' + (bx - t.y*hw) + ' ' + (by + t.x*hw) + ' L' + (bx + t.y*hw) + ' ' + (by - t.x*hw) + ' Z', fill:color}, parent);
+}
+/* a text label dist px from p along u, anchored so it sits clear of p */
+function tagAt(parent, p, u, dist, html, color, size){
+  var x = p.x + u.x*dist, y = p.y + u.y*dist, a = u.x > 0.35 ? 'start' : (u.x < -0.35 ? 'end' : 'middle');
+  var dy = a !== 'middle' ? 5 : (u.y < 0 ? -2 : 14);
+  return label(parent, x, y + dy, html, color, a, size);
+}
+
+/* text along the segment a→b (kept upright), offset to the side given by unit vector `side` */
+function lineLabel(parent, a, b, side, html, color, size){
+  var ang = Math.atan2(b.y - a.y, b.x - a.x)/D2R;
+  if(ang > 90) ang -= 180; else if(ang <= -90) ang += 180;
+  var down = { x:-Math.sin(ang*D2R), y:Math.cos(ang*D2R) };   /* the text's own "down", in SVG coordinates */
+  var d = (side.x*down.x + side.y*down.y > 0) ? 17 : 6;
+  var m = { x:(a.x + b.x)/2 + side.x*d, y:(a.y + b.y)/2 + side.y*d };
+  var t = label(parent, m.x, m.y, html, color, 'middle', size);
+  t.setAttribute('transform', 'rotate(' + ang + ' ' + m.x + ' ' + m.y + ')');
+  return t;
+}
+
+/* Top view of an object going around a circle: dashed path, direction arrow
+   on the far side, radius line, and optional velocity arrow and period. */
+function drawSpin(svg, o){
+  clearSvg(svg);
+  var cx = 260, cy = 150, R = 105, p = P(cx, cy, R, o.deg), t = tanDir(o.deg, o.ccw), n = inDir(o.deg), far = o.deg + 180;
+  if(o.disk) svgEl('circle', {cx:cx, cy:cy, r:R + 20, fill:'#EEF3F6', stroke:'#C3CFD9', 'stroke-width':1.5}, svg);
+  orbit(svg, cx, cy, R);
+  arcArrow(svg, cx, cy, R, o.ccw ? far - 26 : far + 26, o.ccw ? far + 26 : far - 26, MUTE, 2.5);
+  if(o.T) tagAt(svg, P(cx, cy, R, far), neg(inDir(far)), 30, o.T, MUTE, 15);
+  svgEl('line', {x1:cx, y1:cy, x2:p.x, y2:p.y, stroke:'#16283C', 'stroke-width':1.5, 'stroke-dasharray':'4 4'}, svg);
+  pivot(svg, cx, cy);
+  /* radius label: along the radius line, on the side away from the velocity arrow */
+  lineLabel(svg, {x:cx, y:cy}, p, neg(t), o.rLabel, '#16283C', 15);
+  if(o.v){ vec(svg, p, t, 13, 58, VEL); tagAt(svg, p, t, 80, o.v, VEL, 15); }
+  ballAt(svg, p, 10);
+  if(o.obj) tagAt(svg, p, neg(n), 22, o.obj, INK2, 15);
+}
+
+/* =========================================================
+   page 2 · side view of a vertical loop
+   o.kind: 'string' | 'coaster'
+   o.at:   [{pos:'top'|'bottom', forces:[{k:'t'|'n'|'g', m:<N>, txt:'...'}], slack:bool, name:'...'}]
+   Gravity is drawn down; every other force points toward the center.
+   ========================================================= */
+var G = 9.8;
+function drawLoop(svg, o){
+  clearSvg(svg);
+  var cx = 260, cy = 195, R = 115, coaster = o.kind === 'coaster', maxLen = o.maxLen || 80, minLen = 22;
+  var big = 1;
+  (o.at || []).forEach(function(a){ (a.forces || []).forEach(function(f){ big = Math.max(big, f.m); }); });
+  if(coaster){
+    svgEl('circle', {cx:cx, cy:cy, r:R + 19, fill:'none', stroke:'#7E8E9D', 'stroke-width':5}, svg);
+    svgEl('line', {x1:24, y1:cy + R + 19, x2:496, y2:cy + R + 19, stroke:'#7E8E9D', 'stroke-width':5, 'stroke-linecap':'round'}, svg);
+    arcArrow(svg, cx, cy, R - 34, 205, 245, MUTE, 2.5);
+  } else {
+    orbit(svg, cx, cy, R);
+    arcArrow(svg, cx, cy, R + 32, 205, 245, MUTE, 2.5);
+  }
+  pivot(svg, cx, cy);
+  label(svg, cx - 10, cy + 5, 'center', MUTE, 'end', 13);
+  (o.at || []).forEach(function(a){
+    var top = a.pos === 'top', p = { x:cx, y:top ? cy - R : cy + R };
+    if(!coaster){
+      svgEl('line', {x1:cx, y1:cy, x2:p.x, y2:p.y, stroke:a.slack ? GREY : '#16283C', 'stroke-width':1.6, 'stroke-dasharray':a.slack ? '3 5' : 'none'}, svg);
+    }
+    var groups = { up:[], down:[] };
+    (a.forces || []).forEach(function(f){
+      var d = f.k === 'g' ? 'down' : (top ? 'down' : 'up');
+      groups[d].push(f);
+    });
+    ['up','down'].forEach(function(d){
+      var list = groups[d], n = list.length;
+      list.forEach(function(f, i){
+        var off = (i - (n-1)/2) * (n > 1 ? 34 : 0), L = Math.max(minLen, f.m / big * maxLen), c = FORCE[f.k].c;
+        var txt = FORCE[f.k].sym + (f.txt ? ' ' + f.txt : '');
+        var x = p.x + off;
+        if(d === 'up'){
+          arrow(svg, x, p.y - 15, x, p.y - 15 - L, c, 4.5);
+          if(n > 1) label(svg, x + (i === 0 ? -10 : 10), p.y - 15 - L + 13, txt, c, i === 0 ? 'end' : 'start', 17);
+          else label(svg, x + 12, p.y - 15 - L + 13, txt, c, 'start', 17);
+        } else {
+          arrow(svg, x, p.y + 15, x, p.y + 15 + L, c, 4.5);
+          if(n > 1) label(svg, x + (i === 0 ? -10 : 10), p.y + 15 + L - 3, txt, c, i === 0 ? 'end' : 'start', 17);
+          else label(svg, x + 12, p.y + 15 + L - 3, txt, c, 'start', 17);
+        }
+      });
+    });
+    if(coaster){
+      var g = svgEl('g', {transform:'translate(' + p.x + ' ' + p.y + ')' + (top ? ' rotate(180)' : '')}, svg);
+      svgEl('rect', {x:-20, y:-11, width:40, height:22, rx:4, fill:'#fff', stroke:'#16283C', 'stroke-width':2.2}, g);
+      svgEl('circle', {cx:-12, cy:13, r:4, fill:'#16283C'}, g);
+      svgEl('circle', {cx:12, cy:13, r:4, fill:'#16283C'}, g);
+    } else ballAt(svg, p, 10);
+    if(a.name) label(svg, top ? p.x - 34 : p.x + 20, p.y + 5, a.name, INK2, top ? 'end' : 'start', 14);
+  });
+}
+function fbdFlat(svg, m, fr, txts){
+  txts = txts || {};
+  var w = r2(m*G);
+  drawFBD(svg, [{k:'n',d:'up',m:w,txt:txts.n},{k:'g',d:'down',m:w,txt:txts.g},{k:'f',d:'left',m:fr,txt:txts.f}], {name:'car', maxLen:70});
+  massLabel(svg, m);
+  label(svg, 18, 34, '← center of the curve', MUTE, 'start', 13);
+}
+
+/* =========================================================
+   figures
+   ========================================================= */
+drawLoop(el('hero-svg'), { kind:'string', maxLen:62, at:[
+  { pos:'top', forces:[{k:'t', m:1}, {k:'g', m:1}] },
+  { pos:'bottom', forces:[{k:'t', m:2.2}, {k:'g', m:1}] } ] });
+fbdFlat(el('flat1-svg'), 1500, 8100);
+drawSpin(el('flat2-svg'), { deg:35, ccw:true, rLabel:'r = 40 m', obj:'car', v:'v = ?' });
+drawLoop(el('top-svg'), { kind:'string', at:[{ pos:'top', name:'0.5 kg', forces:[{k:'t', m:10.73, txt:'10.73 N'}, {k:'g', m:4.9, txt:'4.9 N'}] }] });
+drawLoop(el('bot-svg'), { kind:'string', at:[{ pos:'bottom', name:'0.5 kg', forces:[{k:'t', m:27.4, txt:'27.4 N'}, {k:'g', m:4.9, txt:'4.9 N'}] }] });
+drawLoop(el('coaster-svg'), { kind:'coaster', maxLen:70, at:[
+  { pos:'top', forces:[{k:'n', m:2760, txt:'2760 N'}, {k:'g', m:5880, txt:'5880 N'}] },
+  { pos:'bottom', forces:[{k:'n', m:29880, txt:'29880 N'}, {k:'g', m:5880, txt:'5880 N'}] } ] });
+
+/* =========================================================
+   Try it · top or bottom?
+   ========================================================= */
+(function(){
+  var RANGE = {
+    string: { v:[1,8,0.5,5], r:[0.5,1.5,0.1,0.8], m:[0.1,2,0.1,0.5], vd:1, rd:1, md:1 },
+    coaster:{ v:[4,30,1,14], r:[6,20,1,10], m:[200,1000,50,600], vd:0, rd:0, md:0 }
+  };
+  var S = { kind:'string', pos:'top' };
+  var sv = el('sm-v'), sr = el('sm-r'), sm = el('sm-m');
+  function setRanges(){
+    var R = RANGE[S.kind];
+    [[sv,R.v],[sr,R.r],[sm,R.m]].forEach(function(x){ x[0].min = x[1][0]; x[0].max = x[1][1]; x[0].step = x[1][2]; x[0].value = x[1][3]; });
+  }
+  function upd(){
+    var R = RANGE[S.kind], v = parseFloat(sv.value), r = parseFloat(sr.value), m = parseFloat(sm.value), top = S.pos === 'top';
+    var str = S.kind === 'string', X = str ? 't' : 'n', Xh = FORCE[X].html, Xw = str ? 'tension' : 'push from the track';
+    el('sm-v-out').textContent = v.toFixed(R.vd) + ' m/s';
+    el('sm-r-out').textContent = r.toFixed(R.rd) + ' m';
+    el('sm-m-out').textContent = m.toFixed(R.md) + ' kg';
+    var Fg = m*G, Fn = m*v*v/r, Fx = top ? Fn - Fg : Fn + Fg, slack = top && Fx <= 0.0001;
+    el('sm-g').innerHTML = '<span class="F g">F<sub>grav</sub></span> = ' + fmt(m) + ' × 9.8 = ' + fmt(Fg) + ' N down, ' + (top ? 'toward' : 'away from') + ' the center';
+    el('sm-n').innerHTML = 'm · v² / r = ' + fmt(m) + ' × ' + fmt(v) + '² / ' + fmt(r) + ' = ' + fmt(Fn) + ' N toward the center';
+    el('sm-eq').innerHTML = '<span class="mono">' + Xh + (top ? ' + ' : ' − ') + 'F<sub>grav</sub> = m · v² / r</span>';
+    el('sm-xl').innerHTML = str ? 'Tension' : 'Normal force';
+    el('sm-x').innerHTML = slack ? '<span class="F ' + X + '">' + Xh + '</span> = 0 N (' + (str ? 'string goes slack' : 'cart falls away from the track') + ')'
+                                 : '<span class="F ' + X + '">' + Xh + '</span> = ' + fmt(Fn) + (top ? ' − ' : ' + ') + fmt(Fg) + ' = <b>' + fmt(Fx) + ' N</b> ' + (top ? 'down' : 'up');
+    var vmin = Math.sqrt(G*r), msg;
+    if(slack){
+      msg = 'Too slow for the top. Gravity alone (' + fmt(Fg) + ' N) is more than the ' + fmt(Fn) + ' N this circle needs, so ' +
+        (str ? 'the string goes slack and the ball falls inside the circle.' : 'the cart would fall away from the track if it weren’t locked onto the rail.') +
+        ' The slowest speed that works is when gravity does the whole job: F<sub>grav</sub> = m · v² / r, so v = √(g · r) = ' + fmt(vmin) + ' m/s.';
+    } else if(top){
+      msg = 'At the top, gravity points toward the center, so it does ' + fmt(Fg) + ' N of the job. The ' + Xw + ' only adds the other ' + fmt(Fx) + ' N.' +
+        (str ? '' : ' Riders feel ' + fmt(Fx/Fg) + ' × their weight pressing them into the seat.');
+    } else {
+      msg = 'At the bottom, gravity points away from the center. The ' + Xw + ' has to cancel gravity and supply the net force, so it is ' + fmt(Fx/Fg) + ' × the weight.' +
+        (str ? '' : ' Riders feel ' + fmt(Fx/Fg) + ' × as heavy as normal.');
+    }
+    el('sm-state').innerHTML = msg;
+    el('sm-state').className = 'state' + (slack ? ' cut' : '');
+    var forces = [{k:'g', m:Fg, txt:fmt(Fg) + ' N'}];
+    if(!slack) forces.unshift({k:X, m:Fx, txt:fmt(Fx) + ' N'});
+    drawLoop(el('sm-svg'), { kind:S.kind, maxLen:80, at:[{ pos:S.pos, slack:slack, forces:forces }] });
+    el('sm-desc').textContent = (str ? 'A ball on a string' : 'A roller coaster cart') + ' at the ' + S.pos + ' of a vertical loop. ' +
+      (slack ? 'Only gravity acts, ' + fmt(Fg) + ' newtons down.' :
+       (str ? 'Tension ' : 'Normal force ') + fmt(Fx) + ' newtons ' + (top ? 'down' : 'up') + ', gravity ' + fmt(Fg) + ' newtons down.');
+  }
+  function segs(attr, key){
+    var bs = Array.prototype.slice.call(document.querySelectorAll('#sim [data-' + attr + ']'));
+    bs.forEach(function(b){ b.addEventListener('click', function(){
+      bs.forEach(function(x){ x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
+      var changed = S[key] !== b.dataset[attr];
+      S[key] = b.dataset[attr];
+      if(key === 'kind' && changed) setRanges();
+      upd();
+    }); });
+  }
+  segs('kind', 'kind'); segs('pos', 'pos');
+  [sv, sr, sm].forEach(function(i){ i.addEventListener('input', upd); });
+  setRanges(); upd();
+})();
+
+/* =========================================================
+   Practice 1 · set it up
+   ========================================================= */
+var PS_TYPES = { flat:'Flat curve', stop:'String, top', sbot:'String, bottom', ctop:'Coaster, top', cbot:'Coaster, bottom' };
+var MV = 'm · v² / r';
+function eqH(a, op, b){ return '<span class="eqn">' + a + (b ? ' ' + op + ' ' + b : '') + ' = ' + MV + '</span>'; }
+function psMake(scene){
+  var flat = scene === 'flat', str = scene === 'stop' || scene === 'sbot', top = scene === 'stop' || scene === 'ctop';
+  var type = flat ? pick(['eq','src']) : pick(['eq','eq','grav']);
+  var q = { scene:scene, type:type, top:top, str:str, flat:flat };
+  var Xk = str ? 't' : 'n', X = FORCE[Xk].html, Gh = 'F<sub>grav</sub>';
+  var who = str ? 'the tension' : 'the track’s push', where = top ? 'top' : 'bottom';
+  if(flat){
+    q.cap = 'A <b>car</b> drives around a <b>flat curve</b> at a steady speed. Seen from above.';
+    if(type === 'src'){
+      q.stem = 'Which force is the <b>net force</b> that makes the car turn?';
+      q.opts = [
+        { h:'Friction from the road on the tires', ok:true, why:'Up and down cancel (F<sub>norm</sub> = F<sub>grav</sub>). The only sideways force is friction, so friction is the net force: F<sub>frict</sub> = ' + MV + '.' },
+        { h:'The normal force from the road', why:'The normal force points straight up. It cancels gravity. The force toward the center is friction.' },
+        { h:'Gravity', why:'Gravity points straight down, not toward the center of the curve. It cancels the normal force. Friction is the only sideways force.' },
+        { h:'The engine pushing the car forward', why:'Forward is along the circle, not toward the center. The road’s friction on the tires is what pushes the car sideways, toward the center.' }
+      ];
+    } else {
+      q.stem = 'Which equation is right for the car?';
+      q.opts = [
+        { h:eqH('F<sub>frict</sub>'), ok:true, why:'Friction is the only force toward the center. Up and down cancel, so they don’t go in this equation.' },
+        { h:eqH('F<sub>norm</sub>'), why:'The normal force points up, not toward the center. Friction is the force toward the center.' },
+        { h:eqH('F<sub>frict</sub>', '−', Gh), why:'Gravity points down, not along the line to the center, so it doesn’t go in this equation. It cancels the normal force.' },
+        { h:eqH('F<sub>frict</sub>', '+', 'F<sub>norm</sub>'), why:'The normal force points up, not toward the center. Only friction goes in this equation.' }
+      ];
+    }
+  } else {
+    q.cap = str ? 'A <b>ball on a string</b> is swung in a vertical circle. It’s at the <b>' + where + '</b>.'
+                : 'A <b>roller coaster cart</b> goes through a loop. It’s at the <b>' + where + '</b>' + (top ? ', upside down.' : '.');
+    var why = top ? 'At the top, the center is below the ' + (str ? 'ball' : 'cart') + '. ' + (str ? 'The string pulls' : 'The track is above the cart and pushes') + ' down, toward the center, and gravity points down, also toward the center. Both are positive: ' + X + ' + ' + Gh + ' = ' + MV + '.'
+                  : 'At the bottom, the center is above the ' + (str ? 'ball' : 'cart') + '. ' + (str ? 'The string pulls' : 'The track pushes') + ' up, toward the center. Gravity points down, away from the center, so it’s subtracted: ' + X + ' − ' + Gh + ' = ' + MV + '.';
+    if(type === 'grav'){
+      q.stem = 'Which way does <b>gravity</b> point, compared to the center of the loop?';
+      q.opts = [
+        { h:'Toward the center', ok:top, why:why },
+        { h:'Away from the center', ok:!top, why:why },
+        { h:'Along the circle, the way it’s moving', why:'Gravity always points straight down. At the top and the bottom of the loop, that’s along the line to the center. ' + why },
+        { h:'It depends on how fast it’s going', why:'Gravity is m · g, straight down, no matter how fast. ' + why }
+      ];
+    } else {
+      q.stem = 'Which equation is right at this spot?';
+      q.opts = [
+        { h:eqH(X, '+', Gh), ok:top, why:why },
+        { h:eqH(X, '−', Gh), ok:!top, why:why },
+        { h:eqH(Gh, '−', X), why:(str ? 'The string' : 'The track') + ' always ' + (str ? 'pulls' : 'pushes') + ' toward the center, so ' + X + ' is never the negative one. ' + why },
+        { h:eqH(X), why:'That leaves out gravity. In a vertical loop, gravity points along the line to the center, so it goes in the equation. ' + why }
+      ];
+    }
+  }
+  q.opts = shuffle(q.opts);
+  return q;
+}
+var psScore = Score(el('ps-score')), psTally = newTally(PS_TYPES), psCur = null, psDone = false;
+function psNew(){
+  var scene, g = 0;
+  do { scene = pick(['flat','stop','sbot','ctop','cbot']); g++; } while(psCur && g < 10 && scene === psCur.scene);
+  var q = psMake(scene);
+  psCur = q; psDone = false;
+  el('ps-cap').innerHTML = q.cap;
+  el('ps-q').innerHTML = q.stem;
+  var svg = el('ps-svg');
+  if(q.flat){
+    svg.setAttribute('viewBox', '0 0 520 300');
+    drawSpin(svg, { deg:pick([35,145,215,325]), ccw:Math.random() < .5, rLabel:'r', obj:'car' });
+    el('ps-desc').textContent = 'Top view of a car going around a flat curve.';
+  } else {
+    svg.setAttribute('viewBox', '0 0 520 420');
+    drawLoop(svg, { kind:q.str ? 'string' : 'coaster', at:[{ pos:q.top ? 'top' : 'bottom' }] });
+    el('ps-desc').textContent = 'Side view of a vertical loop. ' + (q.str ? 'A ball on a string' : 'A roller coaster cart') + ' is at the ' + (q.top ? 'top' : 'bottom') + ' of the loop. The center of the loop is ' + (q.top ? 'below' : 'above') + ' it.';
+  }
+  el('ps-opts').innerHTML = q.opts.map(function(o, i){ return '<button class="opt" data-i="' + i + '">' + o.h + '</button>'; }).join('');
+  Array.prototype.forEach.call(el('ps-opts').querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){ psPick(Number(b.dataset.i)); });
+  });
+  hideFb(el('ps-fb'));
+}
+function psPick(i){
+  if(psDone) return;
+  psDone = true;
+  var q = psCur, o = q.opts[i], ok = !!o.ok;
+  Array.prototype.forEach.call(el('ps-opts').querySelectorAll('.opt'), function(b, j){
+    b.disabled = true;
+    if(j === i) b.classList.add(ok ? 'picked-yes' : 'picked-no');
+    else if(q.opts[j].ok) b.classList.add('reveal');
+  });
+  psScore.add(ok); psTally[q.scene].t++; if(ok) psTally[q.scene].r++;
+  renderTally(el('ps-tally'), PS_TYPES, psTally);
+  if(!q.flat){
+    var Fx = q.str ? 't' : 'n';
+    drawLoop(el('ps-svg'), { kind:q.str ? 'string' : 'coaster', at:[{ pos:q.top ? 'top' : 'bottom', forces:[{k:Fx, m:q.top ? 1 : 2.4}, {k:'g', m:1}] }] });
+    el('ps-desc').textContent += ' ' + (q.str ? 'Tension' : 'The normal force') + ' points toward the center. Gravity points down.';
+  }
+  setFb(el('ps-fb'), ok ? 'good' : 'bad', '<p><b>' + (ok ? 'Right.' : 'Not this one.') + '</b> ' + o.why + '</p>');
+}
+el('ps-next').addEventListener('click', psNew);
+
+/* =========================================================
+   Practice 2 · solve it
+   Each problem has three steps. A step is right if it matches the exact
+   answer, the two-decimal chain, or follows correctly from the student's
+   own (right) answers to the steps before.
+   ========================================================= */
+var PV_TYPES = { fneed:'Flat: μ needed', fmax:'Flat: top speed', stop:'String, top', sbot:'String, bottom', ctop:'Coaster, top', cbot:'Coaster, bottom' };
+function pvFlatNeed(){
+  var p, g = 0;
+  do { p = { m:pick([1000,1200,1500,1800]), r:pick([30,40,50,60,80,100]), v:pick([10,12,14,15,16,18,20,22]) }; g++; }
+  while((p.v*p.v/p.r/G < 0.25 || p.v*p.v/p.r/G > 0.9) && g < 80);
+  var m = p.m, r = p.r, v = p.v, a = v*v/r, F = m*a, Fn = m*G, mu = F/Fn;
+  var a2 = r2(a), F2 = r2(m*a2), mu2 = r2(F2/r2(Fn));
+  return { key:'fneed', p:p,
+    cap:'A <b>' + m + ' kg car</b> takes a flat curve with a radius of <b>' + r + ' m</b> at <b>' + v + ' m/s</b>. What’s the smallest coefficient of friction μ that keeps it from sliding?',
+    draw:function(svg){ svg.setAttribute('viewBox','0 0 520 360'); fbdFlat(svg, m, F, {n:'?', g:'?', f:'?'}); },
+    desc:'Free-body diagram of the car seen from behind: normal force up, gravity down, friction toward the center of the curve. The sizes are unknown.',
+    steps:[
+      { lab:'1 · Centripetal acceleration a<sub>c</sub>', unit:'m/s²', ex:a, ch:a2,
+        tip:function(x){ if(close(x, v/r)) return 'For a<sub>c</sub>, square the speed first, then divide by r.'; if(close(x, v*v*r)) return 'For a<sub>c</sub>, divide v² by r. Don’t multiply.'; if(close(x, v*v)) return 'For a<sub>c</sub>, don’t forget to divide by r.'; } },
+      { lab:'2 · Friction needed F<sub>frict</sub>', unit:'N', ex:F, ch:F2, prev:function(xs){ return m*xs[0]; },
+        tip:function(x){ if(close(x, Fn)) return 'For F<sub>frict</sub>, that’s the weight. Friction is the net force here: F<sub>frict</sub> = m · a<sub>c</sub>.'; if(close(x, m*v)) return 'For F<sub>frict</sub>, multiply the mass by a<sub>c</sub>, not by the speed.'; } },
+      { lab:'3 · Smallest μ', unit:'(no unit)', ex:mu, ch:mu2, prev:function(xs){ return xs[1]/Fn; },
+        tip:function(x, xs){ if(close(x, Fn/F) || close(x, Fn/xs[1])) return 'For μ, it’s upside down: μ = F<sub>frict</sub> / F<sub>norm</sub>.'; if(close(x, F/m) || close(x, xs[1]/m)) return 'For μ, divide by the normal force (m · g = ' + fmt(Fn) + ' N), not the mass.'; } }
+    ],
+    work:['a<sub>c</sub> = v² / r = (' + v + ' m/s)² / ' + r + ' m = <b>' + fmt(a2) + ' m/s²</b>',
+          'F<sub>frict</sub> = m · a<sub>c</sub> = ' + m + ' kg × ' + fmt(a2) + ' m/s² = <b>' + fmt(F2) + ' N</b>',
+          'F<sub>norm</sub> = m · g = ' + m + ' kg × 9.8 m/s² = ' + fmt(Fn) + ' N',
+          'μ = F<sub>frict</sub> / F<sub>norm</sub> = ' + fmt(F2) + ' N / ' + fmt(Fn) + ' N = <b>' + fmt(mu2) + '</b>'],
+    after:'Friction is the only force toward the center, so it is the net force.' };
+}
+function pvFlatMax(){
+  var m = pick([800,1000,1200,1500]), mu = pick([0.3,0.4,0.5,0.6,0.7,0.8]), r = pick([20,25,30,40,50,60,80]);
+  var Fn = m*G, Ff = mu*Fn, v = Math.sqrt(Ff*r/m);
+  var Fn2 = r2(Fn), Ff2 = r2(mu*Fn2), v2 = r2(Math.sqrt(Ff2*r/m));
+  return { key:'fmax', p:{m:m, mu:mu, r:r},
+    cap:'A <b>' + m + ' kg car</b> drives on a flat curve with a radius of <b>' + r + ' m</b>. The coefficient of friction between the tires and the road is <b>' + mu + '</b>. What’s the fastest the car can go around the curve without sliding?',
+    draw:function(svg){ svg.setAttribute('viewBox','0 0 520 300'); drawSpin(svg, { deg:pick([35,145,215,325]), ccw:Math.random() < .5, rLabel:'r = ' + r + ' m', obj:m + ' kg', v:'v = ?' }); },
+    desc:'Top view of the car going around a flat curve of radius ' + r + ' meters. Its speed is unknown.',
+    steps:[
+      { lab:'1 · Normal force F<sub>norm</sub>', unit:'N', ex:Fn, ch:Fn2,
+        tip:function(x){ if(close(x, m)) return 'For F<sub>norm</sub>, multiply the mass by g = 9.8 m/s².'; } },
+      { lab:'2 · Most friction F<sub>frict</sub>', unit:'N', ex:Ff, ch:Ff2, prev:function(xs){ return mu*xs[0]; },
+        tip:function(x){ if(close(x, mu*m)) return 'For F<sub>frict</sub>, μ multiplies the normal force in N, not the mass.'; if(close(x, Fn/mu)) return 'For F<sub>frict</sub>, multiply by μ. Don’t divide.'; } },
+      { lab:'3 · Fastest speed v', unit:'m/s', ex:v, ch:v2, prev:function(xs){ return Math.sqrt(xs[1]*r/m); },
+        tip:function(x, xs){ if(close(x, Ff*r/m) || close(x, xs[1]*r/m)) return 'For v, that’s v². Take the square root.'; if(close(x, Math.sqrt(Ff/(m*r))) || close(x, Math.sqrt(Ff*m/r))) return 'For v, solve F<sub>frict</sub> = m · v² / r carefully: v² = F<sub>frict</sub> × r / m.'; if(close(x, Math.sqrt(Ff/m))) return 'For v, don’t forget the radius: v² = F<sub>frict</sub> × r / m.'; } }
+    ],
+    work:['F<sub>norm</sub> = m · g = ' + m + ' kg × 9.8 m/s² = <b>' + fmt(Fn2) + ' N</b>',
+          'F<sub>frict</sub> = μ · F<sub>norm</sub> = ' + mu + ' × ' + fmt(Fn2) + ' N = <b>' + fmt(Ff2) + ' N</b>',
+          'F<sub>frict</sub> = m · v² / r → v² = ' + fmt(Ff2) + ' × ' + r + ' / ' + m + ' = ' + fmt(Ff2*r/m),
+          'v = √' + fmt(Ff2*r/m) + ' = <b>' + fmt(v2) + ' m/s</b>'],
+    after:'Any faster, and the curve needs more friction than the road can give.' };
+}
+function pvLoop(key){
+  var str = key === 'stop' || key === 'sbot', top = key === 'stop' || key === 'ctop';
+  var ms = str ? [0.2,0.25,0.4,0.5,1] : [400,500,600,750,800];
+  var rs = str ? [0.5,0.6,0.8,1,1.2] : [8,10,12,15];
+  var vs = str ? (top ? [4,5,6,7] : [3,4,5,6,7]) : (top ? [12,13,14,15,16,18] : [16,18,20,22,24]);
+  var p, g = 0;
+  do { p = { m:pick(ms), r:pick(rs), v:pick(vs) }; p.a = p.v*p.v/p.r; g++; }
+  while(((top && p.a < 1.25*G) || p.a > (str ? 80 : 50)) && g < 100);
+  var m = p.m, r = p.r, v = p.v, Fg = m*G, Fn = m*v*v/r, Fx = top ? Fn - Fg : Fn + Fg;
+  var Fg2 = r2(Fg), Fn2 = r2(Fn), Fx2 = r2(top ? Fn2 - Fg2 : Fn2 + Fg2);
+  var X = str ? 't' : 'n', Xh = FORCE[X].html, op = top ? ' + ' : ' − ';
+  var obj = str ? 'ball' : 'cart', who = str ? 'tension' : 'normal force';
+  return { key:key, p:p,
+    cap:str ? 'A <b>' + m + ' kg ball</b> on a <b>' + r + ' m</b> string is swung in a vertical circle. At the <b>' + (top ? 'top' : 'bottom') + '</b> it’s moving at <b>' + v + ' m/s</b>. What’s the tension in the string?'
+            : 'A <b>' + m + ' kg</b> roller coaster cart goes through a loop with a radius of <b>' + r + ' m</b>. At the <b>' + (top ? 'top' : 'bottom') + '</b> it’s moving at <b>' + v + ' m/s</b>. How hard does the track push on the cart?',
+    draw:function(svg){ svg.setAttribute('viewBox','0 0 520 420'); drawLoop(svg, { kind:str ? 'string' : 'coaster', at:[{ pos:top ? 'top' : 'bottom', name:str ? m + ' kg' : '', forces:[{k:X, m:Fx, txt:'?'}, {k:'g', m:Fg, txt:'?'}] }] }); },
+    desc:'Side view of a vertical loop. The ' + obj + ' is at the ' + (top ? 'top' : 'bottom') + '. ' + (str ? 'Tension' : 'The normal force') + ' points ' + (top ? 'down' : 'up') + ', toward the center. Gravity points down. The sizes are unknown.',
+    steps:[
+      { lab:'1 · Gravity F<sub>grav</sub>', unit:'N', ex:Fg, ch:Fg2,
+        tip:function(x){ if(close(x, m)) return 'For F<sub>grav</sub>, multiply the mass by g = 9.8 m/s².'; } },
+      { lab:'2 · Net force m · v² / r', unit:'N', ex:Fn, ch:Fn2,
+        tip:function(x){ if(close(x, m*v/r)) return 'For the net force, square the speed first.'; if(close(x, v*v/r)) return 'For the net force, that’s a<sub>c</sub>. Multiply by the mass.'; if(close(x, m*v*v*r)) return 'For the net force, divide by r. Don’t multiply.'; } },
+      { lab:'3 · ' + (str ? 'Tension ' : 'Normal force ') + Xh, unit:'N', ex:Fx, ch:Fx2, prev:function(xs){ return top ? xs[1] - xs[0] : xs[1] + xs[0]; },
+        tip:function(x, xs){
+          if(top && (close(x, Fn + Fg) || close(x, xs[1] + xs[0]))) return 'For the ' + who + ': at the top, gravity points <b>toward</b> the center, so it helps. ' + Xh + ' + F<sub>grav</sub> = m · v² / r, so ' + Xh + ' = m · v² / r − F<sub>grav</sub>.';
+          if(!top && (close(x, Fn - Fg) || close(x, xs[1] - xs[0]))) return 'For the ' + who + ': at the bottom, gravity points <b>away from</b> the center, so it works against the ' + who + '. ' + Xh + ' − F<sub>grav</sub> = m · v² / r, so ' + Xh + ' = m · v² / r + F<sub>grav</sub>.';
+          if(close(x, Fn) || close(x, xs[1])) return 'For the ' + who + ': that’s the net force. In a vertical loop, gravity is part of it, so don’t leave gravity out.';
+          if(close(x, Fg) || close(x, xs[0])) return 'For the ' + who + ': that’s just the weight.';
+        } }
+    ],
+    work:['F<sub>grav</sub> = m · g = ' + m + ' kg × 9.8 m/s² = <b>' + fmt(Fg2) + ' N</b>',
+          'm · v² / r = ' + m + ' kg × (' + v + ' m/s)² / ' + r + ' m = <b>' + fmt(Fn2) + ' N</b>',
+          Xh + op + 'F<sub>grav</sub> = m · v² / r',
+          Xh + op + fmt(Fg2) + ' N = ' + fmt(Fn2) + ' N',
+          Xh + ' = <b>' + fmt(Fx2) + ' N</b> ' + (top ? 'down' : 'up')],
+    after:top ? 'At the top, gravity points toward the center, so it is added to the ' + who + '.'
+              : 'At the bottom, gravity points away from the center, so it is subtracted from the ' + who + '.' };
+}
+var pvScore = Score(el('pv-score')), pvTally = newTally(PV_TYPES), pvCur = null, pvDone = false;
+var PV_INPUTS = ['pv-0','pv-1','pv-2'];
+function pvNew(){
+  var key, g = 0;
+  do { key = pick(Object.keys(PV_TYPES)); g++; } while(pvCur && g < 10 && key === pvCur.key);
+  var q = key === 'fneed' ? pvFlatNeed() : (key === 'fmax' ? pvFlatMax() : pvLoop(key));
+  pvCur = q; pvDone = false;
+  el('pv-cap').innerHTML = q.cap;
+  q.draw(el('pv-svg'));
+  el('pv-desc').textContent = q.desc;
+  q.steps.forEach(function(s, i){ el('pv-l' + i).innerHTML = s.lab; el('pv-u' + i).textContent = s.unit; });
+  PV_INPUTS.forEach(function(id){ el(id).value = ''; el(id).classList.remove('ok-in','no-in'); });
+  lock(PV_INPUTS.concat(['pv-check']), false);
+  hideFb(el('pv-fb'));
+}
+function pvCheck(){
+  if(pvDone) return;
+  var q = pvCur, xs = PV_INPUTS.map(function(id){ return Math.abs(parseNum(el(id).value)); });
+  if(xs.some(isNaN)){ setFb(el('pv-fb'),'hint','Fill in every box, in order. Type just the number; the unit is already there.'); return; }
+  var oks = [], tips = [], allPrev = true;
+  q.steps.forEach(function(s, i){
+    var x = xs[i], ok = close(x, s.ex) || close(x, s.ch), fromYours = s.prev && close(x, s.prev(xs));
+    if(!ok && fromYours && allPrev) ok = true;
+    oks.push(ok);
+    if(!ok){
+      if(fromYours) tips.push('Your step ' + (i+1) + ' is right for your earlier answers, so that step’s method is right. Fix the earlier step and the rest follows.');
+      else { var t = s.tip && s.tip(x, xs); if(t) tips.push(t); }
+    }
+    allPrev = allPrev && ok;
+  });
+  var all = oks.every(Boolean);
+  pvDone = true; lock(PV_INPUTS.concat(['pv-check']), true);
+  PV_INPUTS.forEach(function(id, i){ el(id).classList.add(oks[i] ? 'ok-in' : 'no-in'); });
+  pvScore.add(all); pvTally[q.key].t++; if(all) pvTally[q.key].r++;
+  renderTally(el('pv-tally'), PV_TYPES, pvTally);
+  var head = all ? '<b>All three right.</b>' : '<b>Not this one.</b> The boxes in red need another look.';
+  setFb(el('pv-fb'), all ? 'good' : 'bad', '<p>' + head + (tips.length ? ' ' + tips.join(' ') : '') + '</p><div class="work">' + q.work.join('<br>') + '</div><p>' + q.after + '</p>');
+}
+el('pv-check').addEventListener('click', pvCheck);
+el('pv-next').addEventListener('click', pvNew);
+onEnter(PV_INPUTS, pvCheck);
+
+/* =========================================================
+   quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'A car turns on a flat road at a steady speed. Which force is the net force that makes it turn?',
+    opts:['The normal force from the road','Friction from the road on the tires','Gravity','A centrifugal force'],
+    ans:1,
+    why:'Up and down cancel. The only sideways force is the road’s friction on the tires, so friction is the net force: F<sub>frict</sub> = m · v² / r.' },
+  { stem:'A 1000 kg car drives on a flat curve with a radius of 40 m. The coefficient of friction is 0.5. What’s the fastest it can go without sliding?',
+    opts:['2.21 m/s','14 m/s','19.8 m/s','196 m/s'],
+    ans:1,
+    why:'F<sub>norm</sub> = 1000 × 9.8 = 9800 N. F<sub>frict</sub> = 0.5 × 9800 = 4900 N. 4900 = 1000 × v² / 40, so v² = 196 and v = 14 m/s. 196 m/s forgets the square root, 19.8 m/s leaves out μ, and 2.21 m/s leaves out the radius.' },
+  { stem:'A roller coaster cart is upside down at the top of a loop. Which forces point toward the center of the loop?',
+    opts:['Only gravity','Only the normal force from the track','Both gravity and the normal force','Neither, they both point away'],
+    ans:2,
+    why:'The center is below the cart. Gravity points down, toward the center. The track is above the cart and pushes it down, also toward the center. So F<sub>norm</sub> + F<sub>grav</sub> = m · v² / r.' },
+  { stem:'A ball on a string is at the bottom of a vertical circle. Which way does gravity point, compared to the center?',
+    opts:['Toward the center','Away from the center','Along the circle','It doesn’t act at the bottom'],
+    ans:1,
+    why:'Gravity points down. At the bottom, the center is above the ball, so gravity points away from it. That’s why it’s subtracted: F<sub>tens</sub> − F<sub>grav</sub> = m · v² / r.' },
+  { stem:'A 0.5 kg ball on a 1 m string moves at 4 m/s at the bottom of a vertical circle. What’s the tension?',
+    opts:['3.1 N','4.9 N','8 N','12.9 N'],
+    ans:3,
+    why:'m · v² / r = 0.5 × 16 / 1 = 8 N. F<sub>grav</sub> = 0.5 × 9.8 = 4.9 N. At the bottom: F<sub>tens</sub> − 4.9 = 8, so F<sub>tens</sub> = 12.9 N. 8 N leaves out gravity, and 3.1 N subtracts it instead of adding.' },
+  { stem:'The same ball is at the top of the circle, still moving at 4 m/s. What’s the tension now?',
+    opts:['3.1 N','4.9 N','8 N','12.9 N'],
+    ans:0,
+    why:'At the top, gravity points toward the center and helps: F<sub>tens</sub> + 4.9 = 8, so F<sub>tens</sub> = 3.1 N.' },
+  { stem:'You swing a bucket on a rope in a vertical circle at about the same speed all the way around. Where is the rope most likely to break?',
+    opts:['At the top','At the bottom','Halfway up the side','It’s the same everywhere'],
+    ans:1,
+    why:'At the bottom, gravity points away from the center, so the tension has to cancel gravity and supply the net force: F<sub>tens</sub> = m · v² / r + F<sub>grav</sub>. That’s the biggest tension anywhere in the circle.' },
+  { stem:'A 500 kg coaster cart moves at 20 m/s at the bottom of a loop with a radius of 10 m. How hard does the track push up on it?',
+    opts:['4900 N','15100 N','20000 N','24900 N'],
+    ans:3,
+    why:'m · v² / r = 500 × 400 / 10 = 20000 N. F<sub>grav</sub> = 4900 N. At the bottom: F<sub>norm</sub> − 4900 = 20000, so F<sub>norm</sub> = 24900 N. 20000 N leaves out gravity, and 15100 N subtracts it.' },
+  { stem:'Two cars take the same flat curve on the same road. One is twice as heavy. How do their fastest safe speeds compare?',
+    opts:['The heavier car can go faster','The lighter car can go faster','They’re the same','The heavier car can go twice as fast'],
+    ans:2,
+    why:'The heavier car needs twice the friction to turn (m · v² / r), but it also presses down twice as hard, so the road gives it twice the friction (μ · m · g). The mass cancels, so the fastest speed is the same.' }
+];
+
+(function buildQuiz(){
+  var host = el('quiz'), html = '', answered = 0, right = 0;
+  QUIZ.forEach(function(q,qi){
+    html += '<div class="q"><p class="stem">' + (qi+1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o,oi){ html += '<button class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  html += '<div class="quiz-sum" id="quiz-sum" aria-live="polite"></div>';
+  host.innerHTML = html;
+  Array.prototype.forEach.call(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      Array.prototype.forEach.call(el('q'+qi).querySelectorAll('.opt'), function(other,i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      answered++; if(oi === q.ans) right++;
+      setFb(el('qfb'+qi), oi === q.ans ? 'good' : 'bad',
+        '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+      el('quiz-sum').textContent = right + ' of ' + answered + ' correct' + (answered === QUIZ.length ? ' · reload the page to try again' : '');
+    });
+  });
+})();
+
+/* boot */
+renderTally(el('ps-tally'), PS_TYPES, psTally);
+renderTally(el('pv-tally'), PV_TYPES, pvTally);
+psNew(); pvNew();
+</script>
+</body>
+</html>
