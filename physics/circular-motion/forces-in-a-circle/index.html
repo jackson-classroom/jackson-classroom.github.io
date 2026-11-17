@@ -329,11 +329,11 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
     </div>
   </div>
 
-  <h3>Worked example: how grippy does the road need to be?</h3>
+  <h3>Worked example: find μ</h3>
   <div class="worked">
     <div class="scene"><svg id="flat1-svg" viewBox="0 0 520 360" role="img" aria-label="Free-body diagram of a 1500 kilogram car seen from behind. Normal force 14700 newtons up, gravity 14700 newtons down, friction 8100 newtons to the left, toward the center of the curve."></svg></div>
     <div>
-      <p style="margin-top:0">A 1500 kg car takes a flat curve with a radius of 60 m at 18 m/s. What's the smallest μ that keeps it from sliding?</p>
+      <p style="margin-top:0">A 1500 kg car takes a flat curve with a radius of 60 m at 18 m/s. Find the smallest μ that keeps it from sliding.</p>
       <div class="work">
         F<sub>frict</sub> = m · v² / r<br>
         F<sub>frict</sub> = 1500 kg × (18 m/s)² / 60 m = <b>8100 N</b><br>
@@ -344,11 +344,11 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
     </div>
   </div>
 
-  <h3>Worked example: how fast can the car go?</h3>
+  <h3>Worked example: find the fastest speed</h3>
   <div class="worked">
     <div class="scene"><svg id="flat2-svg" viewBox="0 0 520 300" role="img" aria-label="Top view of a car going around a curve with a radius of 40 meters. Its speed is unknown."></svg></div>
     <div>
-      <p style="margin-top:0">A 1200 kg car drives on a wet, flat curve with a radius of 40 m. The coefficient of friction is 0.5. What's the fastest it can go without sliding?</p>
+      <p style="margin-top:0">A 1200 kg car drives on a wet, flat curve with a radius of 40 m. The coefficient of friction is 0.5. Find the fastest speed v it can have without sliding.</p>
       <div class="work">
         F<sub>norm</sub> = m · g = 1200 kg × 9.8 m/s² = 11760 N<br>
         F<sub>frict</sub> = μ · F<sub>norm</sub> = 0.5 × 11760 N = 5880 N<br>
@@ -387,7 +387,7 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
   <div class="worked">
     <div class="scene loopfig"><svg id="top-svg" viewBox="0 0 520 420" role="img" aria-label="A 0.5 kilogram ball at the top of a vertical circle on a 0.8 meter string. Tension 10.73 newtons and gravity 4.9 newtons both point down, toward the center."></svg></div>
     <div>
-      <p style="margin-top:0">A 0.5 kg ball on a 0.8 m string is swung in a vertical circle. At the top it's moving at 5 m/s. What's the tension?</p>
+      <p style="margin-top:0">A 0.5 kg ball on a 0.8 m string is swung in a vertical circle. At the top it's moving at 5 m/s. Find the tension F<sub>tens</sub>.</p>
       <table class="ledger">
         <thead><tr><th>Toward the center</th><th>Away</th></tr></thead>
         <tbody><tr><td>F<sub>tens</sub>, F<sub>grav</sub></td><td>nothing</td></tr></tbody>
@@ -407,7 +407,7 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
   <div class="worked">
     <div class="scene loopfig"><svg id="bot-svg" viewBox="0 0 520 420" role="img" aria-label="The same ball at the bottom of the vertical circle. Tension 27.4 newtons points up, toward the center. Gravity 4.9 newtons points down, away from the center."></svg></div>
     <div>
-      <p style="margin-top:0">At the bottom, the same ball is moving at 6 m/s. What's the tension now?</p>
+      <p style="margin-top:0">At the bottom, the same ball is moving at 6 m/s. Find the tension F<sub>tens</sub>.</p>
       <table class="ledger">
         <thead><tr><th>Toward the center</th><th>Away</th></tr></thead>
         <tbody><tr><td>F<sub>tens</sub></td><td>F<sub>grav</sub></td></tr></tbody>
@@ -446,7 +446,7 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
   <div class="worked">
     <div class="scene loopfig"><svg id="coaster-svg" viewBox="0 0 520 420" role="img" aria-label="A roller coaster loop with a 600 kilogram cart shown at the top, upside down, and at the bottom. At the top, the normal force from the track (2760 newtons) and gravity (5880 newtons) both point down, toward the center. At the bottom, the normal force (29880 newtons) points up and gravity (5880 newtons) points down."></svg></div>
     <div>
-      <p style="margin-top:0">A 600 kg cart goes through a loop with a radius of 10 m. It moves at 12 m/s at the top and 20 m/s at the bottom. How hard does the track push on it at each spot?</p>
+      <p style="margin-top:0">A 600 kg cart goes through a loop with a radius of 10 m. It moves at 12 m/s at the top and 20 m/s at the bottom. Find the normal force F<sub>norm</sub> at the top and at the bottom.</p>
       <div class="work">
         F<sub>grav</sub> = 600 kg × 9.8 m/s² = 5880 N<br>
         <b>Top:</b> m · v² / r = 600 × 12² / 10 = 8640 N<br>
@@ -1050,7 +1050,7 @@ function pvFlatNeed(){
   var m = p.m, r = p.r, v = p.v, a = v*v/r, F = m*a, Fn = m*G, mu = F/Fn;
   var a2 = r2(a), F2 = r2(m*a2), mu2 = r2(F2/r2(Fn));
   return { key:'fneed', p:p,
-    cap:'A <b>' + m + ' kg car</b> takes a flat curve with a radius of <b>' + r + ' m</b> at <b>' + v + ' m/s</b>. What’s the smallest coefficient of friction μ that keeps it from sliding?',
+    cap:'A <b>' + m + ' kg car</b> takes a flat curve with a radius of <b>' + r + ' m</b> at <b>' + v + ' m/s</b>. Find the smallest μ that keeps it from sliding.',
     draw:function(svg){ svg.setAttribute('viewBox','0 0 520 360'); fbdFlat(svg, m, F, {n:'?', g:'?', f:'?'}); },
     desc:'Free-body diagram of the car seen from behind: normal force up, gravity down, friction toward the center of the curve. The sizes are unknown.',
     steps:[
@@ -1072,7 +1072,7 @@ function pvFlatMax(){
   var Fn = m*G, Ff = mu*Fn, v = Math.sqrt(Ff*r/m);
   var Fn2 = r2(Fn), Ff2 = r2(mu*Fn2), v2 = r2(Math.sqrt(Ff2*r/m));
   return { key:'fmax', p:{m:m, mu:mu, r:r},
-    cap:'A <b>' + m + ' kg car</b> drives on a flat curve with a radius of <b>' + r + ' m</b>. The coefficient of friction between the tires and the road is <b>' + mu + '</b>. What’s the fastest the car can go around the curve without sliding?',
+    cap:'A <b>' + m + ' kg car</b> drives on a flat curve with a radius of <b>' + r + ' m</b>. The coefficient of friction between the tires and the road is <b>' + mu + '</b>. Find the fastest speed v it can have without sliding.',
     draw:function(svg){ svg.setAttribute('viewBox','0 0 520 300'); drawSpin(svg, { deg:pick([35,145,215,325]), ccw:Math.random() < .5, rLabel:'r = ' + r + ' m', obj:m + ' kg', v:'v = ?' }); },
     desc:'Top view of the car going around a flat curve of radius ' + r + ' meters. Its speed is unknown.',
     steps:[
@@ -1102,8 +1102,8 @@ function pvLoop(key){
   var X = str ? 't' : 'n', Xh = FORCE[X].html, op = top ? ' + ' : ' − ';
   var obj = str ? 'ball' : 'cart', who = str ? 'tension' : 'normal force';
   return { key:key, p:p,
-    cap:str ? 'A <b>' + m + ' kg ball</b> on a <b>' + r + ' m</b> string is swung in a vertical circle. At the <b>' + (top ? 'top' : 'bottom') + '</b> it’s moving at <b>' + v + ' m/s</b>. What’s the tension in the string?'
-            : 'A <b>' + m + ' kg</b> roller coaster cart goes through a loop with a radius of <b>' + r + ' m</b>. At the <b>' + (top ? 'top' : 'bottom') + '</b> it’s moving at <b>' + v + ' m/s</b>. How hard does the track push on the cart?',
+    cap:str ? 'A <b>' + m + ' kg ball</b> on a <b>' + r + ' m</b> string is swung in a vertical circle. At the <b>' + (top ? 'top' : 'bottom') + '</b> it’s moving at <b>' + v + ' m/s</b>. Find the tension F<sub>tens</sub>.'
+            : 'A <b>' + m + ' kg</b> roller coaster cart goes through a loop with a radius of <b>' + r + ' m</b>. At the <b>' + (top ? 'top' : 'bottom') + '</b> it’s moving at <b>' + v + ' m/s</b>. Find the normal force F<sub>norm</sub>.',
     draw:function(svg){ svg.setAttribute('viewBox','0 0 520 420'); drawLoop(svg, { kind:str ? 'string' : 'coaster', at:[{ pos:top ? 'top' : 'bottom', name:str ? m + ' kg' : '', forces:[{k:X, m:Fx, txt:'?'}, {k:'g', m:Fg, txt:'?'}] }] }); },
     desc:'Side view of a vertical loop. The ' + obj + ' is at the ' + (top ? 'top' : 'bottom') + '. ' + (str ? 'Tension' : 'The normal force') + ' points ' + (top ? 'down' : 'up') + ', toward the center. Gravity points down. The sizes are unknown.',
     steps:[
@@ -1177,7 +1177,7 @@ var QUIZ = [
     opts:['The normal force from the road','Friction from the road on the tires','Gravity','A centrifugal force'],
     ans:1,
     why:'Up and down cancel. The only sideways force is the road’s friction on the tires, so friction is the net force: F<sub>frict</sub> = m · v² / r.' },
-  { stem:'A 1000 kg car drives on a flat curve with a radius of 40 m. The coefficient of friction is 0.5. What’s the fastest it can go without sliding?',
+  { stem:'A 1000 kg car drives on a flat curve with a radius of 40 m. The coefficient of friction is 0.5. Find the fastest speed v it can have without sliding.',
     opts:['2.21 m/s','14 m/s','19.8 m/s','196 m/s'],
     ans:1,
     why:'F<sub>norm</sub> = 1000 × 9.8 = 9800 N. F<sub>frict</sub> = 0.5 × 9800 = 4900 N. 4900 = 1000 × v² / 40, so v² = 196 and v = 14 m/s. 196 m/s forgets the square root, 19.8 m/s leaves out μ, and 2.21 m/s leaves out the radius.' },
@@ -1189,11 +1189,11 @@ var QUIZ = [
     opts:['Toward the center','Away from the center','Along the circle','It doesn’t act at the bottom'],
     ans:1,
     why:'Gravity points down. At the bottom, the center is above the ball, so gravity points away from it. That’s why it’s subtracted: F<sub>tens</sub> − F<sub>grav</sub> = m · v² / r.' },
-  { stem:'A 0.5 kg ball on a 1 m string moves at 4 m/s at the bottom of a vertical circle. What’s the tension?',
+  { stem:'A 0.5 kg ball on a 1 m string moves at 4 m/s at the bottom of a vertical circle. Find the tension F<sub>tens</sub>.',
     opts:['3.1 N','4.9 N','8 N','12.9 N'],
     ans:3,
     why:'m · v² / r = 0.5 × 16 / 1 = 8 N. F<sub>grav</sub> = 0.5 × 9.8 = 4.9 N. At the bottom: F<sub>tens</sub> − 4.9 = 8, so F<sub>tens</sub> = 12.9 N. 8 N leaves out gravity, and 3.1 N subtracts it instead of adding.' },
-  { stem:'The same ball is at the top of the circle, still moving at 4 m/s. What’s the tension now?',
+  { stem:'The same ball is at the top of the circle, still moving at 4 m/s. Find the tension F<sub>tens</sub>.',
     opts:['3.1 N','4.9 N','8 N','12.9 N'],
     ans:0,
     why:'At the top, gravity points toward the center and helps: F<sub>tens</sub> + 4.9 = 8, so F<sub>tens</sub> = 3.1 N.' },
@@ -1201,7 +1201,7 @@ var QUIZ = [
     opts:['At the top','At the bottom','Halfway up the side','It’s the same everywhere'],
     ans:1,
     why:'At the bottom, gravity points away from the center, so the tension has to cancel gravity and supply the net force: F<sub>tens</sub> = m · v² / r + F<sub>grav</sub>. That’s the biggest tension anywhere in the circle.' },
-  { stem:'A 500 kg coaster cart moves at 20 m/s at the bottom of a loop with a radius of 10 m. How hard does the track push up on it?',
+  { stem:'A 500 kg coaster cart moves at 20 m/s at the bottom of a loop with a radius of 10 m. Find the normal force F<sub>norm</sub>.',
     opts:['4900 N','15100 N','20000 N','24900 N'],
     ans:3,
     why:'m · v² / r = 500 × 400 / 10 = 20000 N. F<sub>grav</sub> = 4900 N. At the bottom: F<sub>norm</sub> − 4900 = 20000, so F<sub>norm</sub> = 24900 N. 20000 N leaves out gravity, and 15100 N subtracts it.' }
