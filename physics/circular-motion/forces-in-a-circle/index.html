@@ -425,8 +425,6 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
 
   <div class="note"><b>Gravity doesn't flip. The center does.</b> F<sub>grav</sub> points straight down at the top and at the bottom. What changes is whether "down" is toward the center (top, so add it) or away from the center (bottom, so subtract it).</div>
 
-  <h3>Too slow at the top</h3>
-  <p>The slower the ball goes over the top, the less net force it needs, so the smaller the tension. At the slowest possible speed the tension drops to zero and gravity does the whole job by itself: F<sub>grav</sub> = m · v² / r. Any slower, and gravity is <i>more</i> than the circle needs. The string goes slack and the ball falls inside the circle. Try it in <a href="#sim">Try it</a> below.</p>
 </section>
 
 <!-- ============ ROLLER COASTER ============ -->
@@ -514,7 +512,7 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
 
   <h3>Things to try</h3>
   <ol class="ladder">
-    <li><div><b>Ball, top:</b> slow it down until the string goes slack. Check the speed against √(g · r).</div></li>
+    <li><div><b>Ball, top:</b> speed it up and slow it down. How does the tension change?<small>Gravity's share stays the same. The string makes up the rest.</small></div></li>
     <li><div><b>Ball, bottom:</b> slow it all the way down. Does the tension ever get smaller than the weight?<small>Even hanging still, the string has to hold the ball up.</small></div></li>
     <li><div><b>Roller coaster:</b> at the same speed, compare the push from the track at the top and at the bottom.</div></li>
   </ol>
@@ -591,7 +589,7 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
 <!-- ============ CHECK ============ -->
 <section id="check">
   <div class="sec-head"><h2>Check yourself</h2></div>
-  <p>Nine questions on flat curves and on the top and bottom of a loop. Use g = 9.8 m/s².</p>
+  <p>Eight questions on flat curves and on the top and bottom of a loop. Use g = 9.8 m/s².</p>
   <div class="card" id="quiz"></div>
 
   <div class="next">
@@ -901,11 +899,11 @@ drawLoop(el('coaster-svg'), { kind:'coaster', maxLen:70, at:[
     el('sm-xl').innerHTML = str ? 'Tension' : 'Normal force';
     el('sm-x').innerHTML = slack ? '<span class="F ' + X + '">' + Xh + '</span> = 0 N (' + (str ? 'string goes slack' : 'cart falls away from the track') + ')'
                                  : '<span class="F ' + X + '">' + Xh + '</span> = ' + fmt(Fn) + (top ? ' − ' : ' + ') + fmt(Fg) + ' = <b>' + fmt(Fx) + ' N</b> ' + (top ? 'down' : 'up');
-    var vmin = Math.sqrt(G*r), msg;
+    var msg;
     if(slack){
       msg = 'Too slow for the top. Gravity alone (' + fmt(Fg) + ' N) is more than the ' + fmt(Fn) + ' N this circle needs, so ' +
         (str ? 'the string goes slack and the ball falls inside the circle.' : 'the cart would fall away from the track if it weren’t locked onto the rail.') +
-        ' The slowest speed that works is when gravity does the whole job: F<sub>grav</sub> = m · v² / r, so v = √(g · r) = ' + fmt(vmin) + ' m/s.';
+        ' Speed it up.';
     } else if(top){
       msg = 'At the top, gravity points toward the center, so it does ' + fmt(Fg) + ' N of the job. The ' + Xw + ' only adds the other ' + fmt(Fx) + ' N.' +
         (str ? '' : ' Riders feel ' + fmt(Fx/Fg) + ' × their weight pressing them into the seat.');
@@ -1206,11 +1204,7 @@ var QUIZ = [
   { stem:'A 500 kg coaster cart moves at 20 m/s at the bottom of a loop with a radius of 10 m. How hard does the track push up on it?',
     opts:['4900 N','15100 N','20000 N','24900 N'],
     ans:3,
-    why:'m · v² / r = 500 × 400 / 10 = 20000 N. F<sub>grav</sub> = 4900 N. At the bottom: F<sub>norm</sub> − 4900 = 20000, so F<sub>norm</sub> = 24900 N. 20000 N leaves out gravity, and 15100 N subtracts it.' },
-  { stem:'Two cars take the same flat curve on the same road. One is twice as heavy. How do their fastest safe speeds compare?',
-    opts:['The heavier car can go faster','The lighter car can go faster','They’re the same','The heavier car can go twice as fast'],
-    ans:2,
-    why:'The heavier car needs twice the friction to turn (m · v² / r), but it also presses down twice as hard, so the road gives it twice the friction (μ · m · g). The mass cancels, so the fastest speed is the same.' }
+    why:'m · v² / r = 500 × 400 / 10 = 20000 N. F<sub>grav</sub> = 4900 N. At the bottom: F<sub>norm</sub> − 4900 = 20000, so F<sub>norm</sub> = 24900 N. 20000 N leaves out gravity, and 15100 N subtracts it.' }
 ];
 
 (function buildQuiz(){
