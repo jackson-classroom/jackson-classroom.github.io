@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mole Ratios — Reading a Balanced Equation in Moles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#131E1D; --ink2:#3B4A48; --mute:#5F6D6B;
+  --wash:#E3E9E8; --card:#FBFCFB; --line:#C9D3D1; --line-soft:#E0E7E6;
+  --water:#12727F; --water-dk:#0B4E58; --water-lite:#BFDEE2;
+  --brass:#9A6E22; --brass-lite:#F5E9CF;
+  --ok:#26694A; --ok-bg:#E4F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  --lcd:#1E2B29; --lcd-ink:#BFEFD0;
+  --display:"Instrument Serif",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+sup,sub{line-height:0;font-size:.72em}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(227,233,232,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:64px 0 44px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--water-dk)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,7.4vw,74px);line-height:1;margin:16px 0 0;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--water-dk)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:49ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature */
+.sig-readout{margin:38px 0 0;padding:24px 26px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.sig-calc{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.sig-grid{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:26px;align-items:center}
+.sig-rows{margin-top:12px;display:grid;gap:8px}
+.sig-r{display:grid;grid-template-columns:minmax(0,1fr) repeat(3,66px);align-items:center;gap:10px;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:14px;border-bottom:1px dashed var(--line);padding-bottom:8px}
+.sig-r>span:not(:first-child){text-align:right;white-space:nowrap}
+.sig-r>span:first-child{font-family:var(--body);color:var(--ink2);font-size:14.5px}
+.sig-r.head{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);border-bottom:none;padding-bottom:0}
+.sig-r.head>span:not(:first-child){font-family:var(--body);font-weight:600;font-size:16px;letter-spacing:0;text-transform:none;color:var(--ink)}
+.sig-r.head>span:first-child{font-family:var(--mono);font-size:11px;color:var(--mute)}
+.sig-r.hl{background:var(--water-lite);border-bottom:none;border-radius:3px;padding:6px 8px;margin:2px -8px 0;color:var(--water-dk);font-weight:500}
+.sig-r.hl>span:first-child{color:var(--water-dk);font-weight:600}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px}
+.sig-note b{color:var(--water-dk);font-weight:600}
+.sig-fig svg{display:block;width:100%;height:auto}
+.sig-cap{font-size:13.5px;line-height:1.45;color:var(--mute);margin:8px 0 0}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--water);color:var(--water-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--water-dk);background:var(--water-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.4vw,40px);line-height:1.08;margin:0;letter-spacing:-.01em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--water-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.note{border-left:3px solid var(--brass);background:var(--brass-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin:24px 0}
+.rulebox.one{grid-template-columns:minmax(0,1fr)}
+.rulebox.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--water);border-radius:0 4px 4px 0;padding:18px 20px;min-width:0}
+.rulecard .op{font-family:var(--display);font-size:30px;line-height:1.05;color:var(--water-dk)}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard.miss{border-left-color:var(--no)}
+.rulecard.miss h4{margin-top:0}
+.rulecard.good{border-left-color:var(--ok)}
+.rulecard.good h4{margin-top:0}
+.rulecard .wrong{font-family:var(--mono);font-size:14.5px;color:var(--mute);text-decoration:line-through;text-decoration-color:var(--no);text-decoration-thickness:2px;margin:6px 0}
+.rulecard .right{font-family:var(--mono);font-size:14.5px;color:var(--ok);margin:6px 0}
+.rhyme{font-family:var(--display);font-size:clamp(25px,3.8vw,34px);line-height:1.2;color:var(--water-dk)}
+.rhyme span{white-space:nowrap}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.setup{font-size:15px;color:var(--ink2);margin:0 0 14px}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F6F8F7;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--water-dk);border-color:var(--water-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--water)}
+button[disabled]{opacity:.45;cursor:default}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--water);outline-offset:2px}
+button.small{font-size:12px;padding:6px 11px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid #93A5A2;border-radius:3px;padding:9px 11px;width:170px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(19,30,29,.12)}
+.field{display:flex;gap:9px 12px;align-items:center;flex-wrap:wrap;margin:14px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:120px}
+.unit-after{font-family:var(--mono);font-size:16px;color:var(--ink2)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1B4E36}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--water);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb .mono{font-size:15px}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab[aria-selected="true"]{background:var(--ink);color:#F6F8F7;border-color:var(--ink)}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45}
+.opt:hover{border-color:var(--water);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.94}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+
+.prob{font-size:17.5px;line-height:1.55;margin:4px 0 0}
+.prob b{font-weight:600}
+.scaf{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
+.scaf-lab{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--water-dk)}
+::placeholder{font-family:var(--body);font-style:italic;font-size:14px;color:#7F8D8B;opacity:1}
+.typing-tip{font-size:14px;color:var(--mute);margin:8px 0 0}
+.typing-tip kbd,.fb kbd{font-family:var(--mono);font-size:13px;color:var(--ink2);background:#fff;border:1px solid var(--line);border-radius:3px;padding:1px 5px}
+.fig svg{display:block;width:100%;height:auto}
+.readrows{display:grid;gap:2px;margin:10px 0 0}
+.readrows div{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px dashed var(--line);padding:4px 0;font-size:15.5px}
+.readrows div span:last-child{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.readrows div.tot{border-bottom:none;border-top:2px solid var(--ink);margin-top:4px;padding-top:6px;font-weight:600}
+.readrows div.tot span:last-child{font-weight:500}
+
+.wk-q{font-size:17px;margin:4px 0 0}
+.wk-count{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto}
+.steps{margin:14px 0 0;padding-left:26px}
+.steps li{margin:6px 0;padding:6px 10px;border-radius:3px;font-size:16px}
+.steps li.now{background:var(--brass-lite)}
+.fb .steps{margin-top:8px;padding-left:22px}
+.fb .steps li{padding:0;margin:7px 0;font-size:15.5px}
+#s-list .steps li{padding:2px 0}
+
+/* ---------- factor-label setups ---------- */
+.fl{display:flex;flex-wrap:wrap;align-items:center;gap:10px 10px;font-family:var(--mono);font-size:16.5px;font-variant-numeric:tabular-nums;padding:14px 16px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;margin-top:12px}
+.fl .qty{white-space:nowrap}
+.fl .frac,.ifrac{display:inline-flex;flex-direction:column;align-items:stretch;text-align:center;border-radius:3px;vertical-align:middle}
+.fl .frac>span,.ifrac>span{padding:3px 8px;white-space:nowrap}
+.fl .frac>span:first-child,.ifrac>span:first-child{border-bottom:2px solid var(--ink)}
+.fl .frac.new{background:var(--brass-lite)}
+.fl .u{color:var(--water-dk)}
+.fl .u.x{color:var(--mute);text-decoration:line-through;text-decoration-color:var(--no);text-decoration-thickness:2.5px}
+.fl .op{color:var(--mute)}
+.fl .ans{background:var(--ok-bg);border-radius:3px;padding:4px 9px;color:var(--ok);font-weight:500;white-space:nowrap}
+.fl .ans .u{color:var(--ok)}
+.fl .ph{color:#A8B4B2;font-family:var(--body);font-style:italic;font-size:14.5px}
+.fb .fl,.steps .fl{font-size:15px;padding:10px 12px;margin:10px 0 2px}
+.ifrac{font-family:var(--mono);font-size:14.5px;font-variant-numeric:tabular-nums}
+.ifrac>span{padding:2px 6px}
+
+/* ---------- equations ---------- */
+.eqn{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 10px;font-family:var(--body);font-weight:500;font-size:clamp(20px,3.6vw,26px);padding:14px 12px;background:#fff;border:1px solid var(--line-soft);border-radius:3px;margin:12px 0 4px}
+.eqn .sp{border-radius:4px;padding:1px 6px;white-space:nowrap;border:2px solid transparent}
+.eqn .k{font-family:var(--mono);font-weight:600;color:var(--brass);margin-right:2px}
+.eqn .sp.have{background:var(--brass-lite);border-color:var(--brass)}
+.eqn .sp.want{background:var(--water-lite);border-color:var(--water)}
+.eqn .sym{color:var(--mute);font-weight:400}
+.eqn.skel .sp{color:var(--ink2)}
+.eqn-tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);text-align:center}
+.prob .eqn{font-size:clamp(19px,3.2vw,23px)}
+.key{display:flex;gap:14px;flex-wrap:wrap;font-size:13.5px;color:var(--mute);justify-content:center;margin-top:6px}
+.key span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.key .kh::before{background:var(--brass-lite);border:2px solid var(--brass)}
+.key .kw::before{background:var(--water-lite);border:2px solid var(--water)}
+
+/* ---------- pickers ---------- */
+.mopts{display:flex;flex-wrap:wrap;gap:8px}
+.mopts button{min-width:64px;font-family:var(--body);font-weight:600;font-size:15px;letter-spacing:0}
+.mopts button.yes,.mopts button.yes:hover{background:var(--ink);border-color:var(--ink);color:#fff}
+.mopts.have-row button.yes{background:var(--brass);border-color:var(--brass)}
+.mopts.want-row button.yes{background:var(--water-dk);border-color:var(--water-dk)}
+.pickrow{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px 14px;align-items:center;margin-top:12px}
+.pickrow>span{font-size:15px;color:var(--ink2)}
+.ropts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+.ropt{background:#fff;color:var(--ink);border:1px solid var(--line);padding:10px 4px;display:flex;justify-content:center}
+.ropt:hover{background:#F2F8F8;color:var(--ink);border-color:var(--water)}
+.ropt .ifrac{font-size:15px}
+.ropt.picked-yes,.ropt.picked-yes:hover{background:var(--ok-bg);border-color:var(--ok);color:var(--ink)}
+.ropt.picked-no,.ropt.picked-no:hover{background:var(--no-bg);border-color:var(--no);color:var(--ink)}
+.ropt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.ropt[disabled]{opacity:1;cursor:default}
+
+/* ---------- batches ---------- */
+.bfig{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px 8px 4px;margin-top:14px}
+.bfig-cap{font-family:var(--mono);font-size:12.5px;color:var(--water-dk);text-align:center;margin:2px 0 6px;min-height:1.4em}
+.bgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 26px;margin-top:6px}
+.bgrid h4{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:500;margin:10px 0 0}
+
+@media (max-width:760px){
+  .sig-grid{grid-template-columns:1fr}
+  .sig-fig{max-width:320px;margin:0 auto}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:16px}
+  .sig-readout{padding:20px 16px}
+  .sig-r{grid-template-columns:minmax(0,1fr) repeat(3,54px);gap:6px;font-size:12.5px}
+  .sig-r>span:first-child{font-size:13px}
+  .sig-r.head>span:not(:first-child){font-size:14px}
+  .rhyme{font-size:24px}
+  .rhyme span{display:block;white-space:normal}
+  .rulebox.two{grid-template-columns:minmax(0,1fr)}
+  .pickrow{grid-template-columns:1fr;gap:6px}
+  .ropts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bgrid{grid-template-columns:1fr;gap:0}
+  .fl{font-size:14.5px;padding:12px 10px;gap:8px}
+  .fl .frac>span{padding:3px 4px}
+  .fb .fl,.steps .fl{font-size:13.5px}
+  .field label{min-width:auto;flex:1 1 100%}
+  .steps{padding-left:22px}
+  .steps li{padding:6px 6px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Mole Ratios</span>
+    <span class="bar-sub">Coefficients as moles · mole ratios · moles of one substance to moles of another</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 4 · Mole ratios</div>
+  <h1>Coefficients count <em>moles</em>.</h1>
+  <p class="lede">So far, you’ve used the mole to count the particles in one substance. A balanced equation connects one substance to another. Its coefficients tell you how many moles of each substance react or form, so you can figure out how much ammonia you’ll get from 6 moles of hydrogen before you ever go into the lab.</p>
+
+  <div class="sig-readout">
+    <div class="sig-grid">
+      <div>
+        <div class="sig-calc">N<sub>2</sub> + 3H<sub>2</sub> → 2NH<sub>3</sub></div>
+        <div class="sig-rows" id="hero-rows"></div>
+        <div class="sig-note">The coefficients are a <b>ratio</b>. It holds for molecules, dozens or moles, at any size.</div>
+      </div>
+      <div class="sig-fig">
+        <div class="fig" id="hero-fig"></div>
+        <p class="sig-cap">One N<sub>2</sub> molecule and three H<sub>2</sub> molecules regroup into two NH<sub>3</sub> molecules. Same atoms, new partners.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#read">Reading an equation</a>
+  <a href="#ratio">Mole ratios</a>
+  <a href="#method">Moles to moles</a>
+  <a href="#balance">Balance first</a>
+  <a href="#watch">Watch-outs</a>
+  <a href="#practice">Practice</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ READ ============ -->
+<section id="read">
+  <div class="sec-head"><span class="tasktag">The idea</span><h2>Reading an equation in moles</h2></div>
+  <p>A balanced equation is a recipe. Take the reaction that makes ammonia, N<sub>2</sub> + 3H<sub>2</sub> → 2NH<sub>3</sub>. The coefficients say that 1 molecule of nitrogen reacts with 3 molecules of hydrogen to make 2 molecules of ammonia. A coefficient with no number written is a 1.</p>
+  <p>Nobody runs a reaction one molecule at a time, though. Scale the recipe up. Make it twice and you use 2 N<sub>2</sub> and 6 H<sub>2</sub> to make 4 NH<sub>3</sub>. Make it a dozen times and it’s 1 dozen N<sub>2</sub>, 3 dozen H<sub>2</sub> and 2 dozen NH<sub>3</sub>. A mole is a counting number, just like a dozen, so the same is true in moles: <b>1 mol N<sub>2</sub> reacts with 3 mol H<sub>2</sub> to make 2 mol NH<sub>3</sub></b>.</p>
+  <div class="rulebox one">
+    <div class="rulecard"><div class="rhyme"><span>Coefficients count particles,</span> <span>so they count moles.</span></div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-label"><span>Scale up the recipe</span></div>
+    <div class="tabs" role="tablist" aria-label="Choose a reaction" id="b-tabs"></div>
+    <div class="mopts" id="b-opts" role="group" aria-label="How many times to run the reaction" style="margin-top:12px">
+      <button type="button" class="ghost" data-n="1">× 1</button>
+      <button type="button" class="ghost" data-n="2">× 2</button>
+      <button type="button" class="ghost" data-n="3">× 3</button>
+      <button type="button" class="ghost" data-n="12">× 1 dozen</button>
+      <button type="button" class="ghost" data-n="mol">× 1 mole</button>
+    </div>
+    <div class="bfig fig" id="b-fig"></div>
+    <div id="b-out" aria-live="polite"></div>
+  </div>
+
+  <h3>Atoms add up. Moles don’t have to.</h3>
+  <p>Count the atoms on each side of any balanced equation and they match. That’s what balancing means, and it’s why mass is conserved. Now count the molecules. In the ammonia reaction, 4 molecules go in and only 2 come out. The atoms regrouped into fewer, bigger molecules. So the moles of reactants don’t have to equal the moles of products. Only the atoms have to match.</p>
+</section>
+
+<!-- ============ RATIO ============ -->
+<section id="ratio">
+  <div class="sec-head"><span class="tasktag">The tool</span><h2>Mole ratios</h2></div>
+  <p>A <b>mole ratio</b> compares the moles of two substances in a balanced equation. Take the coefficients of the two substances and write them as a fraction. In N<sub>2</sub> + 3H<sub>2</sub> → 2NH<sub>3</sub>, every 3 mol of H<sub>2</sub> makes 2 mol of NH<sub>3</sub>, so you can write the ratio either way up:</p>
+  <div id="r-demo"></div>
+  <p>A mole ratio is a conversion factor, like the ones you used with molar mass. There are two differences. It links two <i>different</i> substances, so it’s the bridge from one to the other. And it’s only true for this one reaction. Every pair of substances in an equation has a mole ratio, even two reactants or two products.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Mole ratio finder</span></div>
+    <div class="tabs" role="tablist" aria-label="Choose a reaction" id="r-tabs"></div>
+    <div class="eqn" id="r-eqn"></div>
+    <div class="pickrow"><span>I have moles of</span><div class="mopts have-row" id="r-have" role="group" aria-label="I have moles of"></div></div>
+    <div class="pickrow"><span>I want moles of</span><div class="mopts want-row" id="r-want" role="group" aria-label="I want moles of"></div></div>
+    <div id="r-out" aria-live="polite"></div>
+  </div>
+
+  <h3>Which one do you multiply by?</h3>
+  <p>When you convert, the mole ratio has to cancel what you <b>have</b> and leave what you <b>want</b>. So the substance you’re given goes on the bottom, and the substance you want goes on top.</p>
+  <div class="card">
+    <div class="card-label"><span>Pick the mole ratio</span><span class="score" id="k-score">0 of 0</span></div>
+    <p class="prob" id="k-q"></p>
+    <div class="eqn" id="k-eqn"></div>
+    <div class="key"><span class="kh">You have</span><span class="kw">You want</span></div>
+    <div class="ropts" id="k-opts" role="group" aria-label="Mole ratio choices"></div>
+    <div class="fb" id="k-fb" aria-live="polite"></div>
+    <div class="btn-row"><button type="button" class="ghost" id="k-new">Next one</button></div>
+  </div>
+</section>
+
+<!-- ============ METHOD ============ -->
+<section id="method">
+  <div class="sec-head"><span class="tasktag">The method</span><h2>Moles of one substance to moles of another</h2></div>
+  <p>This is one more factor-label problem. You start with the moles you’re given, multiply by one conversion factor, and the units cancel to leave the moles you want.</p>
+  <div class="rulebox one">
+    <div class="rulecard"><div class="rhyme"><span>Wanted on top,</span> <span>given on the bottom.</span></div></div>
+  </div>
+  <div id="m-gen"></div>
+  <ol>
+    <li><b>Check that the equation is balanced.</b> The mole ratio comes from the coefficients, so they have to be right.</li>
+    <li><b>Start with what you’re given</b>: the number of moles and the substance.</li>
+    <li><b>Multiply by the mole ratio.</b> The coefficient and formula of the substance you want go on top. The coefficient and formula of the substance you’re given go on the bottom, so it cancels.</li>
+    <li><b>Do the math.</b> Multiply by the top coefficient, divide by the bottom one, and round to the same number of significant figures as the amount you were given.</li>
+  </ol>
+
+  <div class="card">
+    <div class="card-label"><span>Worked example</span><span class="wk-count" id="mw-count"></span></div>
+    <div class="tabs" role="tablist" aria-label="Choose a worked example" id="mw-tabs"></div>
+    <p class="wk-q" id="mw-q"></p>
+    <div class="eqn" id="mw-eqn"></div>
+    <div id="mw-steps" aria-live="polite"></div>
+    <div class="btn-row">
+      <button type="button" id="mw-next">Next step</button>
+      <button type="button" class="ghost" id="mw-prev">Back</button>
+      <button type="button" class="ghost" id="mw-restart">Start over</button>
+    </div>
+  </div>
+  <div class="note"><b>Coefficients are exact.</b> A 3 in an equation means exactly 3, not “about 3.” Like the 12 in a dozen, coefficients never limit significant figures. Your answer gets the same number of significant figures as the amount you were given: 0.250 mol × 3 ÷ 2 = 0.375 mol, not 0.4 mol.</div>
+  <div class="note"><b>Sense check.</b> Compare the two coefficients. If the substance you want has the bigger coefficient, your answer should be bigger than the number you started with. If it has the smaller coefficient, your answer should be smaller.</div>
+</section>
+
+<!-- ============ BALANCE ============ -->
+<section id="balance">
+  <div class="sec-head"><span class="tasktag">Before you start</span><h2>Balance first</h2></div>
+  <p>A mole ratio is only as good as the coefficients it comes from. A <b>skeleton equation</b>, one with just the formulas, makes every ratio look like 1 : 1, and that’s almost never right. Here’s the same question worked both ways:</p>
+  <p class="prob">How many moles of O<sub>2</sub> are needed to make <b>4.00 mol H<sub>2</sub>O</b>?</p>
+  <div class="rulebox two" id="bal-cmp"></div>
+  <p>If a problem gives you a skeleton equation, balance it first, the same way you did in Unit 3. Change only the coefficients. Changing a subscript would change the substance itself.</p>
+
+  <h3>Coefficients, not subscripts</h3>
+  <p>Both kinds of numbers are in every equation, and only one kind goes into a mole ratio. The <b>subscript</b> 2 in O<sub>2</sub> says each oxygen molecule has 2 atoms. That’s part of what O<sub>2</sub> is, and it doesn’t change from one reaction to the next. The <b>coefficient</b> in front says how many of those molecules react. In 2H<sub>2</sub> + O<sub>2</sub> → 2H<sub>2</sub>O, the coefficient of O<sub>2</sub> is 1.</p>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="sec-head"><span class="tasktag">Common mistakes</span><h2>Watch-outs</h2></div>
+  <div class="rulebox">
+    <div class="rulecard miss">
+      <h4>Flipping the mole ratio</h4>
+      <p>N<sub>2</sub> + 3H<sub>2</sub> → 2NH<sub>3</sub>. How many moles of NH<sub>3</sub> form from 6.00 mol H<sub>2</sub>? The substance you want goes on top.</p>
+      <div class="wrong">6.00 × 3 ÷ 2 = 9.00 mol NH<sub>3</sub></div>
+      <div class="right">6.00 × 2 ÷ 3 = 4.00 mol NH<sub>3</sub></div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Using a subscript</h4>
+      <p>2H<sub>2</sub> + O<sub>2</sub> → 2H<sub>2</sub>O. The 2 in O<sub>2</sub> counts atoms in one molecule. It isn’t a coefficient.</p>
+      <div class="wrong">2 mol O<sub>2</sub> : 2 mol H<sub>2</sub>O</div>
+      <div class="right">1 mol O<sub>2</sub> : 2 mol H<sub>2</sub>O</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Skipping the balancing</h4>
+      <p>The skeleton H<sub>2</sub> + O<sub>2</sub> → H<sub>2</sub>O makes every ratio 1 : 1. Balance it first.</p>
+      <div class="wrong">1 mol O<sub>2</sub> : 1 mol H<sub>2</sub>O</div>
+      <div class="right">1 mol O<sub>2</sub> : 2 mol H<sub>2</sub>O</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Expecting the moles to add up</h4>
+      <p>Atoms are conserved in a reaction. Molecules, and so moles, are not.</p>
+      <div class="wrong">1 mol N<sub>2</sub> + 3 mol H<sub>2</sub> → 4 mol NH<sub>3</sub></div>
+      <div class="right">1 mol N<sub>2</sub> + 3 mol H<sub>2</sub> → 2 mol NH<sub>3</sub></div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Reading coefficients as grams</h4>
+      <p>Coefficients count particles, not mass. A mole of H<sub>2</sub> and a mole of O<sub>2</sub> have very different masses.</p>
+      <div class="wrong">2 g H<sub>2</sub> + 1 g O<sub>2</sub> → 2 g H<sub>2</sub>O</div>
+      <div class="right">2 mol H<sub>2</sub> + 1 mol O<sub>2</sub> → 2 mol H<sub>2</sub>O</div>
+    </div>
+    <div class="rulecard miss">
+      <h4>Rounding to the coefficients</h4>
+      <p>2Al + 3Cl<sub>2</sub> → 2AlCl<sub>3</sub>, starting from 0.250 mol Al. Coefficients are exact, so keep the given amount’s 3 significant figures.</p>
+      <div class="wrong">0.250 × 3 ÷ 2 = 0.4 mol Cl<sub>2</sub></div>
+      <div class="right">0.250 × 3 ÷ 2 = 0.375 mol Cl<sub>2</sub></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRACTICE ============ -->
+<section id="practice">
+  <div class="sec-head"><span class="tasktag">Practice</span><h2>Practice</h2></div>
+  <p>Pick a kind of problem, or mix them up. Give your answer in moles, rounded to 3 significant figures. If you get stuck, there’s a step-by-step guide under each problem.</p>
+  <p class="smallprint">Your score counts a problem as solved when your first check is right. Using “Show answer” counts as a miss.</p>
+
+  <div class="card">
+    <div class="card-label"><span>Generated problems</span><span class="score" id="p-score">0 of 0</span></div>
+    <div class="tabs" role="tablist" aria-label="Kind of problem" id="p-tabs">
+      <button type="button" class="tab" role="tab" data-k="bal" aria-selected="true">Balanced equation</button>
+      <button type="button" class="tab" role="tab" data-k="skel" aria-selected="false">Balance it first</button>
+      <button type="button" class="tab" role="tab" data-k="mix" aria-selected="false">Mix it up</button>
+    </div>
+    <div class="prob" id="p-prob" style="margin-top:16px"></div>
+    <div class="field">
+      <label for="p-in" id="p-lab">Answer</label>
+      <input type="text" id="p-in" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a number">
+      <span class="unit-after" id="p-unit"></span>
+    </div>
+    <div class="btn-row">
+      <button type="button" id="p-check">Check</button>
+      <button type="button" class="ghost" id="p-show">Show answer</button>
+      <button type="button" class="ghost" id="p-new">New problem</button>
+    </div>
+    <div class="fb" id="p-fb" aria-live="polite"></div>
+
+    <div class="scaf">
+      <div class="scaf-lab">Step by step</div>
+      <p class="setup" style="margin-top:6px">Stuck? Reveal the work one step at a time. The math is left for you.</p>
+      <div id="s-list" aria-live="polite"></div>
+      <div class="btn-row" style="margin-top:10px">
+        <button type="button" class="ghost small" id="s-next">Show the next step</button>
+        <button type="button" class="ghost small" id="s-hide">Hide the steps</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Ten questions on mole ratios.</p>
+  <div class="card" id="quiz"></div>
+</section>
+
+<footer>
+  <p>Mole ratios from balanced equations, and converting moles of one substance to moles of another. This page sticks to moles. The practice problems are generated fresh every time.</p>
+  <p><a href="/chemistry/moles/">← Unit 4 — Moles</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function each(list, fn){ Array.prototype.forEach.call(list, fn); }
+function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+function tabs(host, onPick){
+  each(host.querySelectorAll('.tab'), function(b){
+    b.addEventListener('click', function(){
+      each(host.querySelectorAll('.tab'), function(o){ o.setAttribute('aria-selected', String(o === b)); });
+      onPick(b);
+    });
+  });
+}
+function shuffle(a){ a = a.slice(); for(var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+
+/*CORE-START*/
+/* =========================================================
+   core: formulas, equations, numbers, problems, judging (no DOM)
+   ========================================================= */
+var SYMS = 'H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Fe Cu Zn Ag I Pb Ba Mn Br Sn'.split(' ');
+var IS_EL = {};
+SYMS.forEach(function(s){ IS_EL[s] = 1; });
+function fHTML(f){ return String(f).replace(/\d+/g, function(d){ return '<sub>' + d + '</sub>'; }); }
+var SUBS = '₀₁₂₃₄₅₆₇₈₉';
+function fText(f){ return String(f).replace(/\d/g, function(d){ return SUBS.charAt(Number(d)); }); }
+
+/* atom counts of a formula like 'Al2(SO4)3' -> { Al:2, S:3, O:12 } */
+function atomCounts(f){
+  var i = 0;
+  function num(){ var m = /^\d+/.exec(f.slice(i)); if(!m) return 1; i += m[0].length; return parseInt(m[0], 10); }
+  function group(){
+    var c = {};
+    function add(s, n){ c[s] = (c[s] || 0) + n; }
+    while(i < f.length){
+      var ch = f.charAt(i);
+      if(ch === '('){ i++; var inner = group(); i++; var k = num(); for(var s in inner) add(s, inner[s] * k); }
+      else if(ch === ')') return c;
+      else {
+        var sym = ch; i++;
+        if(/[a-z]/.test(f.charAt(i))){ sym += f.charAt(i); i++; }
+        if(!IS_EL[sym]) throw new Error('unknown element ' + sym + ' in ' + f);
+        add(sym, num());
+      }
+    }
+    return c;
+  }
+  return group();
+}
+
+/* 'N2 + 3H2 -> 2NH3' -> { sp:[{ k, f, role:'r'|'p', i }], nR, desc } */
+function eqn(str, desc){
+  var sides = str.split('->'), sp = [];
+  sides.forEach(function(side, si){
+    side.split(' + ').forEach(function(t){
+      var m = /^(\d*)(.+)$/.exec(t.trim());
+      sp.push({ k:m[1] ? parseInt(m[1], 10) : 1, f:m[2], role:si === 0 ? 'r' : 'p', i:sp.length });
+    });
+  });
+  return { str:str, sp:sp, nR:sp.filter(function(s){ return s.role === 'r'; }).length, desc:desc };
+}
+/* atoms on each side, for coefficients ks (defaults to the balanced ones) */
+function sideAtoms(e, ks){
+  var out = { r:{}, p:{} };
+  e.sp.forEach(function(s, j){
+    var c = atomCounts(s.f), k = ks ? ks[j] : s.k;
+    for(var a in c) out[s.role][a] = (out[s.role][a] || 0) + c[a] * k;
+  });
+  return out;
+}
+function isBalanced(e, ks){
+  var t = sideAtoms(e, ks), keys = Object.keys(t.r).concat(Object.keys(t.p));
+  return keys.every(function(a){ return t.r[a] === t.p[a]; });
+}
+function gcd(a, b){ while(b){ var t = b; b = a % b; a = t; } return a; }
+function isLowest(e){ return e.sp.reduce(function(g, s){ return gcd(g, s.k); }, 0) === 1; }
+
+var EQ_BANK = [
+  ['N2 + 3H2 -> 2NH3', 'the Haber process, which makes ammonia for fertilizer'],
+  ['2H2 + O2 -> 2H2O', 'hydrogen burning in oxygen'],
+  ['2H2O2 -> 2H2O + O2', 'hydrogen peroxide breaking down'],
+  ['CH4 + 2O2 -> CO2 + 2H2O', 'methane, natural gas, burning'],
+  ['C3H8 + 5O2 -> 3CO2 + 4H2O', 'propane burning in a gas grill'],
+  ['2C2H6 + 7O2 -> 4CO2 + 6H2O', 'ethane burning'],
+  ['2C4H10 + 13O2 -> 8CO2 + 10H2O', 'butane burning in a lighter'],
+  ['2C8H18 + 25O2 -> 16CO2 + 18H2O', 'octane burning in a car engine'],
+  ['C2H5OH + 3O2 -> 2CO2 + 3H2O', 'ethanol burning'],
+  ['C6H12O6 + 6O2 -> 6CO2 + 6H2O', 'cellular respiration, which releases energy from glucose'],
+  ['6CO2 + 6H2O -> C6H12O6 + 6O2', 'photosynthesis'],
+  ['4Fe + 3O2 -> 2Fe2O3', 'iron rusting'],
+  ['4Al + 3O2 -> 2Al2O3', 'aluminum reacting with oxygen'],
+  ['2Mg + O2 -> 2MgO', 'magnesium burning'],
+  ['2Al + 3Cl2 -> 2AlCl3', 'aluminum reacting with chlorine'],
+  ['2Na + Cl2 -> 2NaCl', 'sodium reacting with chlorine'],
+  ['2KClO3 -> 2KCl + 3O2', 'potassium chlorate breaking down when heated'],
+  ['2NaN3 -> 2Na + 3N2', 'sodium azide breaking down to fill an airbag'],
+  ['CaCO3 -> CaO + CO2', 'limestone breaking down when heated'],
+  ['Zn + 2HCl -> ZnCl2 + H2', 'zinc reacting with hydrochloric acid'],
+  ['Mg + 2HCl -> MgCl2 + H2', 'magnesium reacting with hydrochloric acid'],
+  ['2Al + 6HCl -> 2AlCl3 + 3H2', 'aluminum reacting with hydrochloric acid'],
+  ['2Na + 2H2O -> 2NaOH + H2', 'sodium reacting with water'],
+  ['Fe2O3 + 3CO -> 2Fe + 3CO2', 'iron ore being turned into iron in a blast furnace'],
+  ['4NH3 + 5O2 -> 4NO + 6H2O', 'the first step in making nitric acid'],
+  ['2SO2 + O2 -> 2SO3', 'sulfur dioxide reacting with oxygen'],
+  ['P4 + 5O2 -> P4O10', 'phosphorus burning'],
+  ['N2 + O2 -> 2NO', 'nitrogen and oxygen reacting in a lightning strike'],
+  ['2CO + O2 -> 2CO2', 'carbon monoxide burning'],
+  ['Pb(NO3)2 + 2KI -> PbI2 + 2KNO3', 'lead(II) nitrate reacting with potassium iodide'],
+  ['2Al + 3CuSO4 -> Al2(SO4)3 + 3Cu', 'aluminum reacting with copper(II) sulfate'],
+  ['H2SO4 + 2NaOH -> Na2SO4 + 2H2O', 'sulfuric acid neutralizing sodium hydroxide'],
+  ['Ca(OH)2 + 2HCl -> CaCl2 + 2H2O', 'calcium hydroxide neutralizing hydrochloric acid'],
+  ['3NO2 + H2O -> 2HNO3 + NO', 'nitrogen dioxide reacting with water'],
+  ['Cu + 2AgNO3 -> Cu(NO3)2 + 2Ag', 'copper reacting with silver nitrate']
+].map(function(a){ return eqn(a[0], a[1]); });
+function findEq(str){ return EQ_BANK.filter(function(e){ return e.str === str; })[0]; }
+/* a skeleton equation makes sense to balance only if it isn't balanced as written */
+function skelOK(e){ return !isBalanced(e, e.sp.map(function(){ return 1; })); }
+
+/* ---- numbers ---- */
+function supHTML(n){ return '<sup>' + String(n).replace('-', '−') + '</sup>'; }
+function sigParts(x, sf){
+  if(x === 0) return { m:(0).toFixed(sf - 1), e:0 };
+  var e = Math.floor(Math.log10(Math.abs(x)));
+  var f = Math.pow(10, sf - 1);
+  var m = Math.round(Math.abs(x) / Math.pow(10, e) * f * (1 + 1e-12)) / f;
+  if(m >= 10){ m = m / 10; e++; }
+  return { m:(x < 0 ? '-' : '') + m.toFixed(sf - 1), e:e };
+}
+function sciHTML(x, sf){ var p = sigParts(x, sf || 3); return p.m + ' × 10' + supHTML(p.e); }
+/* plain decimals between 0.001 and 999 ; scientific notation outside that, or when a trailing zero would be ambiguous */
+function sigHTML(x, sf){
+  sf = sf || 3;
+  var p = sigParts(x, sf);
+  if(p.e >= 3 || p.e < -3) return sciHTML(x, sf);
+  var dp = Math.max(0, sf - 1 - p.e);
+  var s = (Number(p.m) * Math.pow(10, p.e)).toFixed(dp);
+  if(dp === 0 && /0$/.test(s)) return sciHTML(x, sf);
+  return s;
+}
+function sigPlain(x, sf){
+  var h = sigHTML(x, sf || 3), m = /^(-?[\d.]+) × 10<sup>(.+)<\/sup>$/.exec(h);
+  return m ? m[1] + 'e' + m[2].replace('−', '-') : h;
+}
+/* the unrounded value, as a calculator would show it to 5 significant figures */
+function rawText(x){ return String(Number(x.toPrecision(5))); }
+/* significant figures in a typed mantissa */
+function sigCount(mant, sci){
+  var s = mant.replace(/^[+-]/, ''), hasDot = s.indexOf('.') !== -1;
+  var d = s.replace('.', ''), i = d.search(/[1-9]/);
+  if(i === -1) return 1;
+  d = d.slice(i);
+  if(!hasDot && !sci) d = d.replace(/0+$/, '');
+  return d.length;
+}
+var SUPS = { '0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻' };
+/* '2.80', '2.80 mol', '2.80 mol NH3', '2.80 moles of NH3', '2.8e0', '2.80 x 10^0' -> { v, sf } or null */
+function parseNum(str){
+  var s = String(str || '').trim();
+  if(!s) return null;
+  s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+/g, function(t){
+    return '^' + t.split('').map(function(c){ for(var k in SUPS) if(SUPS[k] === c) return k; return c; }).join('');
+  });
+  s = s.replace(/[−–]/g, '-').replace(/,/g, '');
+  s = s.replace(/\s*(moles?|mols?)\.?(\s+of)?(\s+[A-Za-z0-9()₀-₉]+)?\s*$/i, '');
+  s = s.replace(/\s+/g, '').replace(/[×xX*·]/g, 'x');
+  var m = /^([+-]?(\d+\.?\d*|\.\d+))(?:[eE]([+-]?\d+)|x10\^?([+-]?\d+))?$/.exec(s);
+  if(!m) return null;
+  var mant = m[1], ex = m[3] != null ? m[3] : m[4];
+  var v = parseFloat(mant) * (ex != null ? Math.pow(10, Number(ex)) : 1);
+  if(!isFinite(v)) return null;
+  return { v:v, sf:sigCount(mant, ex != null) };
+}
+function near(x, y, tol){ return y !== 0 && Math.abs(x - y) <= Math.abs(y) * (tol || 0.01); }
+/* a random value with 3 significant figures, log-uniform between lo and hi ; no ambiguous trailing zeros */
+function rand3(lo, hi){
+  for(var t = 0; t < 60; t++){
+    var v = Math.exp(Math.log(lo) + Math.random() * (Math.log(hi) - Math.log(lo)));
+    var s = v.toPrecision(3);
+    if(/e/.test(s)) continue;
+    if(Number(s) >= 100 && /0$/.test(s)) continue;
+    return Number(s);
+  }
+  return Number(lo.toPrecision(3));
+}
+
+/* ---- problems: moles of species a -> moles of species b ---- */
+function relation(e, a, b){ var A = e.sp[a], B = e.sp[b]; return A.role + B.role; }
+function prob(e, a, b, G, skel){
+  var A = e.sp[a], B = e.sp[b];
+  return { e:e, a:a, b:b, A:A, B:B, G:G, skel:!!skel, ans:G * B.k / A.k };
+}
+function makeProblem(kind, avoid){
+  for(var t = 0; t < 500; t++){
+    var e = pick(EQ_BANK);
+    if(e === avoid) continue;
+    if(kind === 'skel' && !skelOK(e)) continue;
+    var a = Math.floor(Math.random() * e.sp.length), b = Math.floor(Math.random() * e.sp.length);
+    if(a === b) continue;
+    var A = e.sp[a], B = e.sp[b];
+    if(A.k === B.k && Math.random() < 0.85) continue;
+    var G = rand3(0.1, 20), ans = G * B.k / A.k;
+    if(ans < 0.0100 || ans >= 99.95) continue;
+    if(Number(sigPlain(ans, 3)) >= 100) continue;
+    return prob(e, a, b, G, kind === 'skel');
+  }
+  return null;
+}
+
+/* judge a typed value -> { ok, code } */
+function judge(p, got){
+  if(!got) return { ok:false, code:'unreadable' };
+  var v = got.v, G = p.G, a = p.A.k, b = p.B.k;
+  if(near(v, p.ans)) return { ok:true, code:'ok' };
+  function N(y){ return near(v, y); }
+  if(a !== b && N(G * a / b)) return { ok:false, code:'flip' };
+  if(N(G)) return { ok:false, code:p.skel ? 'unbal' : 'same' };
+  if(b !== 1 && N(G * b)) return { ok:false, code:'multOnly' };
+  if(a !== 1 && N(G / a)) return { ok:false, code:'divOnly' };
+  if(N(G * a * b) || N(G / (a * b))) return { ok:false, code:'both' };
+  for(var i = 0; i < p.e.sp.length; i++){
+    var C = p.e.sp[i];
+    if(i === p.a || i === p.b) continue;
+    if(N(G * C.k / a) || N(G * b / C.k)) return { ok:false, code:'other', x:C };
+  }
+  return { ok:false, code:'none' };
+}
+
+/* ---- mole-ratio choices: { t:top species, tk, bt:bottom species, bk } ---- */
+function ratioKey(r){ return r.t + ':' + r.tk + '/' + r.bt + ':' + r.bk; }
+function makePick(avoid){
+  for(var t = 0; t < 500; t++){
+    var e = pick(EQ_BANK);
+    if(e === avoid || e.sp.length < 3) continue;
+    var a = Math.floor(Math.random() * e.sp.length), b = Math.floor(Math.random() * e.sp.length);
+    if(a === b) continue;
+    var A = e.sp[a], B = e.sp[b];
+    if(A.k === B.k && Math.random() < 0.8) continue;
+    var right = { t:b, tk:B.k, bt:a, bk:A.k, code:'ok' };
+    var cands = [{ t:a, tk:A.k, bt:b, bk:B.k, code:'flip' }];
+    if(A.k !== B.k) cands.push({ t:b, tk:A.k, bt:a, bk:B.k, code:'nums' });
+    e.sp.forEach(function(C, c){
+      if(c === a || c === b) return;
+      cands.push({ t:b, tk:B.k, bt:c, bk:C.k, code:'other', c:c });
+      cands.push({ t:c, tk:C.k, bt:a, bk:A.k, code:'other', c:c });
+    });
+    var seen = {}, opts = [right];
+    seen[ratioKey(right)] = 1;
+    /* always offer the flipped ratio and the swapped numbers, then fill with other substances */
+    cands.slice(0, A.k !== B.k ? 2 : 1).concat(shuffle(cands.slice(A.k !== B.k ? 2 : 1))).forEach(function(c){
+      if(opts.length < 4 && !seen[ratioKey(c)]){ seen[ratioKey(c)] = 1; opts.push(c); }
+    });
+    if(opts.length < 4) continue;
+    return { e:e, a:a, b:b, A:A, B:B, opts:shuffle(opts) };
+  }
+  return null;
+}
+/*CORE-END*/
+
+/* =========================================================
+   drawing and wording helpers
+   ========================================================= */
+function molU(f){ return 'mol ' + fHTML(f); }
+/* an equation; o.have / o.want = species index to highlight ; o.skel = no coefficients */
+function eqHTML(e, o){
+  o = o || {};
+  var h = '', prevRole = 'r';
+  e.sp.forEach(function(s, j){
+    if(j > 0) h += '<span class="sym">' + (s.role !== prevRole ? '→' : '+') + '</span>';
+    prevRole = s.role;
+    var cls = 'sp' + (j === o.have ? ' have' : '') + (j === o.want ? ' want' : '');
+    h += '<span class="' + cls + '">' + (!o.skel && s.k > 1 ? '<span class="k">' + s.k + '</span>' : '') + fHTML(s.f) + '</span>';
+  });
+  return h;
+}
+function eqInline(e){ return e.sp.map(function(s, j){ return (j === e.nR ? '→ ' : j > 0 ? '+ ' : '') + (s.k > 1 ? s.k : '') + fHTML(s.f); }).join(' '); }
+function setEq(node, e, o){ node.innerHTML = eqHTML(e, o); node.className = 'eqn' + (o && o.skel ? ' skel' : ''); }
+
+/* factor-label pieces */
+function U(u, x){ return '<span class="u' + (x ? ' x' : '') + '">' + u + '</span>'; }
+function Q(v, u, x){ return '<span class="qty">' + v + ' ' + U(u, x) + '</span>'; }
+function F(tv, tu, bv, bu, o){ o = o || {}; return '<span class="frac' + (o.nw ? ' new' : '') + '"><span>' + tv + ' ' + U(tu, o.xt) + '</span><span>' + bv + ' ' + U(bu, o.xb) + '</span></span>'; }
+var TIMES = '<span class="op">×</span>', EQS = '<span class="op">=</span>', OR = '<span class="op">or</span>';
+function Ans(v, u){ return '<span class="ans">' + v + ' ' + U(u) + '</span>'; }
+function FL(parts){ return '<div class="fl">' + parts.join('') + '</div>'; }
+function iFrac(tk, tf, bk, bf){ return '<span class="ifrac"><span>' + tk + ' ' + molU(tf) + '</span><span>' + bk + ' ' + molU(bf) + '</span></span>'; }
+function linesHTML(lines, mark){
+  return '<ol class="steps">' + lines.map(function(l, i){ return '<li' + (mark && i === lines.length - 1 ? ' class="now"' : '') + '>' + l + '</li>'; }).join('') + '</ol>';
+}
+
+/* ---- molecules ---- */
+var COLORS = { H:'#F4F6F6', C:'#3F4548', N:'#3B6FD0', O:'#D9473B' };
+/* draw order: [element, dx, dy] ; H atoms are small */
+var GLYPH = {
+  N2:[['N',-7,0],['N',7,0]], H2:[['H',-5,0],['H',5,0]], O2:[['O',-7,0],['O',7,0]],
+  NH3:[['H',0,-11],['H',-10,7],['H',10,7],['N',0,0]],
+  H2O:[['H',-10,7],['H',10,7],['O',0,0]],
+  CH4:[['H',-10,-8],['H',10,-8],['H',-10,8],['H',10,8],['C',0,0]],
+  CO2:[['O',-15,0],['O',15,0],['C',0,0]]
+};
+function glyph(f, x, y){
+  return GLYPH[f].map(function(g){
+    var r = g[0] === 'H' ? 5.5 : 8.5;
+    return '<circle cx="' + (x + g[1]) + '" cy="' + (y + g[2]) + '" r="' + r + '" fill="' + COLORS[g[0]] + '" stroke="#2A3634" stroke-width="1"/>';
+  }).join('');
+}
+/* particles for n batches of an equation: each species is a block of molecules, 3 across */
+function particleSVG(e, n, label){
+  var CW = 42, RH = 36, SYM = 30, x = 6, rowsMax = 0, h = '', blocks = [];
+  e.sp.forEach(function(s){ var c = s.k * n; rowsMax = Math.max(rowsMax, Math.ceil(c / 3)); });
+  var top = 14, H = top + rowsMax * RH + 34;
+  e.sp.forEach(function(s, j){
+    if(j > 0){
+      var arrow = j === e.nR;
+      h += '<text x="' + (x + SYM / 2) + '" y="' + (top + rowsMax * RH / 2 + 7) + '" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="' + (arrow ? 24 : 22) + '" fill="#5F6D6B">' + (arrow ? '→' : '+') + '</text>';
+      x += SYM;
+    }
+    var c = s.k * n, cols = Math.min(c, 3), w = cols * CW, rows = Math.ceil(c / 3), y0 = top + (rowsMax - rows) * RH / 2;
+    for(var i = 0; i < c; i++) h += glyph(s.f, x + (i % 3) * CW + CW / 2, y0 + Math.floor(i / 3) * RH + RH / 2);
+    h += '<text x="' + (x + w / 2) + '" y="' + (top + rowsMax * RH + 22) + '" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-weight="600" font-size="15" fill="#131E1D">' + (c > 1 ? c + ' ' : '') + fText(s.f) + '</text>';
+    x += w;
+  });
+  return '<svg viewBox="0 0 ' + (x + 6) + ' ' + H + '" role="img" aria-label="' + label + '" style="max-width:' + Math.round((x + 6) * 1.35) + 'px;margin:0 auto">' + h + '</svg>';
+}
+function particleLabel(e, n){
+  return e.sp.filter(function(s){ return s.role === 'r'; }).map(function(s){ return s.k * n + ' ' + fText(s.f); }).join(' and ') + ' molecules react to make ' +
+    e.sp.filter(function(s){ return s.role === 'p'; }).map(function(s){ return s.k * n + ' ' + fText(s.f); }).join(' and ') + ' molecules.';
+}
+
+/* =========================================================
+   hero
+   ========================================================= */
+var HABER = findEq('N2 + 3H2 -> 2NH3');
+(function hero(){
+  var h = '<div class="sig-r head"><span>Read it as</span><span>N<sub>2</sub></span><span>H<sub>2</sub></span><span>NH<sub>3</sub></span></div>';
+  h += '<div class="sig-r"><span>Molecules</span><span>1</span><span>3</span><span>2</span></div>';
+  h += '<div class="sig-r"><span>Dozens of molecules</span><span>1 doz</span><span>3 doz</span><span>2 doz</span></div>';
+  h += '<div class="sig-r"><span>Moles</span><span>1 mol</span><span>3 mol</span><span>2 mol</span></div>';
+  h += '<div class="sig-r hl"><span>Scaled up, in moles</span><span>2.50</span><span>7.50</span><span>5.00</span></div>';
+  el('hero-rows').innerHTML = h;
+  el('hero-fig').innerHTML = particleSVG(HABER, 1, particleLabel(HABER, 1));
+})();
+
+/* =========================================================
+   scale up the recipe
+   ========================================================= */
+var B_EQS = [HABER, findEq('2H2 + O2 -> 2H2O'), findEq('CH4 + 2O2 -> CO2 + 2H2O')];
+var BS = { e:HABER, n:1 };
+el('b-tabs').innerHTML = B_EQS.map(function(e, i){ return '<button type="button" class="tab" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '">' + eqInline(e) + '</button>'; }).join('');
+function bDraw(){
+  var e = BS.e, n = BS.n, isMol = n === 'mol', dz = n === 12, mult = isMol ? 1 : n;
+  each(el('b-opts').querySelectorAll('button'), function(b){ var on = b.dataset.n === String(n); b.className = 'ghost' + (on ? ' yes' : ''); b.setAttribute('aria-pressed', String(on)); });
+  var drawN = isMol || dz ? 1 : n;
+  el('b-fig').innerHTML = particleSVG(e, drawN, particleLabel(e, drawN)) +
+    '<div class="bfig-cap">' + (dz ? 'Picture this happening 12 times over.' : isMol ? 'Picture this happening 6.02 × 10' + supHTML(23) + ' times over.' : n === 1 ? 'The recipe, once.' : 'The recipe, ' + n + ' times.') + '</div>';
+  function count(c){
+    if(isMol) return c + ' mol';
+    if(dz) return c + ' dozen = ' + c * 12 + ' molecules';
+    return c + ' molecule' + (c === 1 ? '' : 's');
+  }
+  function rows(role){
+    return e.sp.filter(function(s){ return s.role === role; }).map(function(s){
+      return '<div><span>' + fHTML(s.f) + '</span><span>' + count(s.k * (dz ? 1 : mult)) + '</span></div>';
+    }).join('');
+  }
+  function total(role){ return e.sp.filter(function(s){ return s.role === role; }).reduce(function(t, s){ return t + s.k; }, 0) * mult; }
+  var unitWord = isMol ? ' mol' : ' molecules', tr = total('r'), tp = total('p');
+  var atoms = sideAtoms(e), atomLine = Object.keys(atoms.r).map(function(a){ return a + ' ' + atoms.r[a] * mult + (isMol ? ' mol' : '') + ' → ' + atoms.p[a] * mult + (isMol ? ' mol' : ''); }).join(' · ');
+  var molRead = e.sp.map(function(s, j){ return (j === e.nR ? '→ ' : j > 0 ? '+ ' : '') + s.k + ' mol ' + fHTML(s.f); }).join(' ');
+  el('b-out').innerHTML = '<div class="bgrid"><div><h4>Reactants</h4><div class="readrows">' + rows('r') + '<div class="tot"><span>Total</span><span>' + tr + unitWord + '</span></div></div></div>' +
+    '<div><h4>Products</h4><div class="readrows">' + rows('p') + '<div class="tot"><span>Total</span><span>' + tp + unitWord + '</span></div></div></div></div>' +
+    '<div class="readrows" style="margin-top:14px"><div><span>Atoms in → atoms out</span><span>' + atomLine + ' ✓</span></div>' +
+    '<div><span>' + (isMol ? 'Moles' : 'Molecules') + ' in → out</span><span>' + tr + ' → ' + tp + (tr === tp ? ' (equal this time)' : ' (not equal, and that’s fine)') + '</span></div></div>' +
+    (isMol ? '<p class="smallprint" style="margin-bottom:0">Read the coefficients straight across as moles: ' + molRead + '.</p>' : '');
+}
+tabs(el('b-tabs'), function(b){ BS.e = B_EQS[Number(b.dataset.i)]; bDraw(); });
+each(el('b-opts').querySelectorAll('button'), function(b){ b.addEventListener('click', function(){ BS.n = b.dataset.n === 'mol' ? 'mol' : Number(b.dataset.n); bDraw(); }); });
+
+/* =========================================================
+   mole ratios: demo, finder, picker
+   ========================================================= */
+el('r-demo').innerHTML = FL([F('2', molU('NH3'), '3', molU('H2')), OR, F('3', molU('H2'), '2', molU('NH3'))]);
+el('m-gen').innerHTML = FL([Q('given', 'mol A'), TIMES, F('<span style="color:var(--water-dk)">b</span>', 'mol B', '<span style="color:var(--brass)">a</span>', 'mol A', { xb:1, nw:1 }), EQS, Ans('wanted', 'mol B')]) +
+  '<p class="smallprint" style="margin-top:6px">For the reaction <i>a</i>A + … → <i>b</i>B + …, where <i>a</i> and <i>b</i> are the coefficients of A and B in the balanced equation.</p>';
+
+var R_EQS = [HABER, findEq('CH4 + 2O2 -> CO2 + 2H2O'), findEq('2KClO3 -> 2KCl + 3O2'), findEq('4Fe + 3O2 -> 2Fe2O3')];
+var RS = { e:HABER, have:1, want:2 };
+el('r-tabs').innerHTML = R_EQS.map(function(e, i){ return '<button type="button" class="tab" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '">' + eqInline(e) + '</button>'; }).join('');
+function relWords(e, a, b){
+  var A = e.sp[a], B = e.sp[b], Af = fHTML(A.f), Bf = fHTML(B.f), ka = A.k + ' mol ' + Af, kb = B.k + ' mol ' + Bf;
+  switch(relation(e, a, b)){
+    case 'rp': return 'For every ' + ka + ' that reacts, ' + kb + ' forms.';
+    case 'pr': return 'To make ' + ka + ', ' + kb + ' has to react.';
+    case 'rr': return ka + ' reacts with ' + kb + '.';
+    default:   return 'Every time ' + ka + ' forms, ' + kb + ' forms along with it.';
+  }
+}
+function rDraw(){
+  var e = RS.e, sp = e.sp;
+  setEq(el('r-eqn'), e, { have:RS.have, want:RS.want });
+  function chips(host, key){
+    el(host).innerHTML = sp.map(function(s, j){ return '<button type="button" class="ghost' + (RS[key] === j ? ' yes' : '') + '" data-j="' + j + '" aria-pressed="' + (RS[key] === j) + '">' + fHTML(s.f) + '</button>'; }).join('');
+    each(el(host).querySelectorAll('button'), function(b){ b.addEventListener('click', function(){ RS[key] = Number(b.dataset.j); rDraw(); }); });
+  }
+  chips('r-have', 'have'); chips('r-want', 'want');
+  if(RS.have === RS.want){ el('r-out').innerHTML = '<p class="smallprint">Pick two different substances.</p>'; return; }
+  var A = sp[RS.have], B = sp[RS.want];
+  el('r-out').innerHTML = FL([Q('given', molU(A.f), 1), TIMES, F(B.k, molU(B.f), A.k, molU(A.f), { xb:1, nw:1 }), EQS, Ans('wanted', molU(B.f))]) +
+    '<p style="margin-bottom:0">' + relWords(e, RS.have, RS.want) + (A.k === B.k ? ' The coefficients are equal, so the moles are equal too.' : ' The mole ratio is <b>' + B.k + ' : ' + A.k + '</b>, wanted to given.') + '</p>';
+}
+tabs(el('r-tabs'), function(b){ RS.e = R_EQS[Number(b.dataset.i)]; RS.have = 0; RS.want = RS.e.sp.length - 1; rDraw(); });
+
+var kScore = Score(el('k-score')), KD = null;
+function kNew(){
+  KD = makePick(KD ? KD.e : null);
+  KD.done = false;
+  var Af = fHTML(KD.A.f), Bf = fHTML(KD.B.f);
+  el('k-q').innerHTML = 'You have moles of <b>' + Af + '</b> and you want moles of <b>' + Bf + '</b>. Which mole ratio do you multiply by?';
+  setEq(el('k-eqn'), KD.e, { have:KD.a, want:KD.b });
+  el('k-opts').innerHTML = KD.opts.map(function(o, i){ return '<button type="button" class="ropt" data-i="' + i + '">' + iFrac(o.tk, KD.e.sp[o.t].f, o.bk, KD.e.sp[o.bt].f) + '</button>'; }).join('');
+  each(el('k-opts').querySelectorAll('.ropt'), function(b){ b.addEventListener('click', function(){ kPick(Number(b.dataset.i)); }); });
+  hideFb(el('k-fb'));
+}
+function kPick(i){
+  if(KD.done) return;
+  KD.done = true;
+  var o = KD.opts[i], A = KD.A, B = KD.B, Af = fHTML(A.f), Bf = fHTML(B.f), ok = o.code === 'ok';
+  kScore.add(ok);
+  each(el('k-opts').querySelectorAll('.ropt'), function(b, j){
+    b.disabled = true;
+    if(KD.opts[j].code === 'ok') b.classList.add('reveal');
+    if(j === i) b.classList.add(ok ? 'picked-yes' : 'picked-no');
+  });
+  var right = iFrac(B.k, B.f, A.k, A.f), msg;
+  if(ok) msg = '<b>Yes.</b> You want ' + Bf + ', so it goes on top. You have ' + Af + ', so it goes on the bottom, where it cancels.';
+  else if(o.code === 'flip') msg = '<b>That one’s upside down.</b> With ' + Af + ' on top, mol ' + Af + ' wouldn’t cancel. Put what you want on top: ' + right;
+  else if(o.code === 'nums') msg = '<b>Right substances, wrong numbers.</b> Each coefficient stays with its own substance: ' + A.k + ' for ' + Af + ' and ' + B.k + ' for ' + Bf + '. The right ratio is ' + right;
+  else msg = '<b>That ratio brings in ' + fHTML(KD.e.sp[o.c].f) + '.</b> You’re going from ' + Af + ' to ' + Bf + ', so use only those two: ' + right;
+  setFb(el('k-fb'), ok ? 'good' : 'bad', msg);
+}
+el('k-new').addEventListener('click', kNew);
+
+/* =========================================================
+   the work for a problem, one line per step
+   ========================================================= */
+function askText(p){
+  var G = '<b>' + sigHTML(p.G, 3) + ' mol ' + fHTML(p.A.f) + '</b>', Bf = '<b>' + fHTML(p.B.f) + '</b>';
+  switch(relation(p.e, p.a, p.b)){
+    case 'rp': return 'How many moles of ' + Bf + ' form from ' + G + '?';
+    case 'rr': return 'How many moles of ' + Bf + ' react with ' + G + '?';
+    case 'pr': return 'How many moles of ' + Bf + ' are needed to make ' + G + '?';
+    default:   return 'When ' + G + ' forms, how many moles of ' + Bf + ' form along with it?';
+  }
+}
+function introText(p){
+  return p.skel ? 'Here is the skeleton equation for ' + p.e.desc + '. It isn’t balanced yet.'
+                : 'Here is the balanced equation for ' + p.e.desc + '.';
+}
+function answerHTML(p){ return sigHTML(p.ans, 3) + ' mol ' + fHTML(p.B.f); }
+function solLines(p){
+  var A = p.A, B = p.B, Af = fHTML(A.f), Bf = fHTML(B.f), Gs = sigHTML(p.G, 3), L = [];
+  if(p.skel) L.push('<b>Balance the equation.</b> ' + '<div class="eqn">' + eqHTML(p.e, { have:p.a, want:p.b }) + '</div>');
+  var ones = [A, B].filter(function(s){ return s.k === 1; });
+  L.push('<b>Find the two coefficients.</b> In the balanced equation, ' + Af + ' has a coefficient of ' + A.k + ' and ' + Bf + ' has a coefficient of ' + B.k + '.' +
+    (ones.length ? ' No number written means 1.' : ''));
+  L.push('<b>Write the mole ratio, wanted over given.</b> You want ' + Bf + ', so it goes on top.' + FL([F(B.k, molU(B.f), A.k, molU(A.f), { nw:1 })]));
+  L.push('<b>Set it up.</b> Start with the moles you’re given and multiply by the mole ratio. mol ' + Af + ' cancels, leaving mol ' + Bf + '.' +
+    FL([Q(Gs, molU(A.f), 1), TIMES, F(B.k, molU(B.f), A.k, molU(A.f), { xb:1 }), EQS, '<span class="ph">?</span>']));
+  var r = p.G * B.k / A.k, s3 = sigHTML(p.ans, 3), exact = Math.abs(r - Number(sigPlain(r, 3))) < 1e-9;
+  L.push('<b>Do the math.</b> ' + Gs + ' × ' + B.k + ' ÷ ' + A.k + ' = ' + (exact ? '' : rawText(r) + ', which rounds to ') + s3 + ' mol ' + Bf + ' to 3 significant figures.' +
+    FL([Q(Gs, molU(A.f), 1), TIMES, F(B.k, molU(B.f), A.k, molU(A.f), { xb:1 }), EQS, Ans(s3, molU(B.f))]));
+  var sense;
+  if(B.k > A.k) sense = Bf + ' has the bigger coefficient, so you should get more moles of it than you started with: ' + s3 + ' > ' + Gs + '.&nbsp;✓';
+  else if(B.k < A.k) sense = Bf + ' has the smaller coefficient, so you should get fewer moles of it than you started with: ' + s3 + ' < ' + Gs + '.&nbsp;✓';
+  else sense = 'The coefficients are equal, so the moles are equal.&nbsp;✓';
+  L.push('<b>Sense check.</b> ' + sense);
+  return L;
+}
+
+/* =========================================================
+   worked examples
+   ========================================================= */
+var WK = [
+  { title:'Reactant to product', p:prob(HABER, 1, 2, 4.20) },
+  { title:'Reactant to reactant', p:prob(findEq('C3H8 + 5O2 -> 3CO2 + 4H2O'), 0, 1, 0.350) },
+  { title:'Product to reactant', p:prob(findEq('2NaN3 -> 2Na + 3N2'), 2, 0, 2.50) },
+  { title:'Product to product', p:prob(findEq('C3H8 + 5O2 -> 3CO2 + 4H2O'), 2, 3, 2.40) }
+];
+(function worked(){
+  var st = { i:0, step:0 }, prefix = 'mw';
+  el(prefix + '-tabs').innerHTML = WK.map(function(w, i){
+    return '<button type="button" class="tab" role="tab" data-i="' + i + '" aria-selected="' + (i === 0) + '">' + w.title + '</button>';
+  }).join('');
+  WK.forEach(function(w){ w.lines = solLines(w.p); });
+  function draw(){
+    var w = WK[st.i], N = w.lines.length;
+    el(prefix + '-q').innerHTML = introText(w.p) + ' ' + askText(w.p).replace(/<\/?b>/g, '');
+    setEq(el(prefix + '-eqn'), w.p.e, { have:w.p.a, want:w.p.b });
+    el(prefix + '-steps').innerHTML = linesHTML(w.lines.slice(0, st.step + 1), true);
+    el(prefix + '-count').textContent = 'Step ' + (st.step + 1) + ' of ' + N;
+    el(prefix + '-next').disabled = st.step === N - 1;
+    el(prefix + '-prev').disabled = st.step === 0;
+  }
+  tabs(el(prefix + '-tabs'), function(b){ st.i = Number(b.dataset.i); st.step = 0; draw(); });
+  el(prefix + '-next').addEventListener('click', function(){ if(st.step < WK[st.i].lines.length - 1){ st.step++; draw(); } });
+  el(prefix + '-prev').addEventListener('click', function(){ if(st.step > 0){ st.step--; draw(); } });
+  el(prefix + '-restart').addEventListener('click', function(){ st.step = 0; draw(); });
+  draw();
+})();
+
+/* =========================================================
+   balance first: skeleton vs balanced
+   ========================================================= */
+(function balCompare(){
+  var e = findEq('2H2 + O2 -> 2H2O');
+  el('bal-cmp').innerHTML =
+    '<div class="rulecard miss"><h4>From the skeleton equation</h4><div class="eqn skel">' + eqHTML(e, { skel:true, have:2, want:1 }) + '</div>' +
+      FL([Q('4.00', molU('H2O'), 1), TIMES, F('1', molU('O2'), '1', molU('H2O'), { xb:1 }), EQS, '<span class="qty">4.00 ' + U(molU('O2')) + '</span>']) +
+      '<p style="margin-top:10px">Twice the right amount. The skeleton has 2 O atoms on the left and only 1 on the right, so its 1 : 1 ratio is wrong.</p></div>' +
+    '<div class="rulecard good"><h4>From the balanced equation</h4><div class="eqn">' + eqHTML(e, { have:2, want:1 }) + '</div>' +
+      FL([Q('4.00', molU('H2O'), 1), TIMES, F('1', molU('O2'), '2', molU('H2O'), { xb:1, nw:1 }), EQS, Ans('2.00', molU('O2'))]) +
+      '<p style="margin-top:10px">Every O<sub>2</sub> molecule makes 2 H<sub>2</sub>O molecules, so you need half as many moles of O<sub>2</sub>.</p></div>';
+})();
+
+/* =========================================================
+   hints
+   ========================================================= */
+function hint(p, res){
+  var A = p.A, B = p.B, Af = fHTML(A.f), Bf = fHTML(B.f), ratio = iFrac(B.k, B.f, A.k, A.f);
+  switch(res.code){
+    case 'unreadable': return 'Type a number, like <kbd>2.80</kbd> or <kbd>2.80 mol</kbd>.';
+    case 'flip':     return '<b>Check the mole ratio. It looks upside down.</b> The substance you want, ' + Bf + ', goes on top. The substance you’re given, ' + Af + ', goes on the bottom so it cancels.';
+    case 'same':     return '<b>Use the coefficients.</b> The ratio here isn’t 1 : 1. Find the coefficients of ' + Af + ' and ' + Bf + ' in the balanced equation and build the mole ratio from them.';
+    case 'unbal':    return '<b>Balance the equation first.</b> The skeleton equation makes every ratio look like 1 : 1. Balance it, then use the coefficients of ' + Af + ' and ' + Bf + '.';
+    case 'multOnly': return '<b>Finish the mole ratio.</b> You multiplied by the coefficient of ' + Bf + ', but the coefficient of ' + Af + ' belongs on the bottom of the ratio, so divide by it too.';
+    case 'divOnly':  return '<b>Finish the mole ratio.</b> You divided by the coefficient of ' + Af + ', but the coefficient of ' + Bf + ' belongs on the top of the ratio, so multiply by it too.';
+    case 'both':     return '<b>Check the setup.</b> A mole ratio is a fraction: one coefficient on top and one on the bottom. Multiply by one and divide by the other.';
+    case 'other':    return '<b>Check which coefficients you used.</b> It looks like you used ' + fHTML(res.x.f) + '. You’re going from ' + Af + ' to ' + Bf + ', so use only their two coefficients.';
+  }
+  return '<b>Not quite.</b> Set it up as ' + sigHTML(p.G, 3) + ' mol ' + Af + ' × (__ mol ' + Bf + ' ÷ __ mol ' + Af + '), and fill in the coefficients from the balanced equation.';
+}
+
+/* =========================================================
+   practice
+   ========================================================= */
+var pScore = Score(el('p-score'));
+var pKind = 'bal', P = null;
+function sDraw(){
+  var max = P.lines.length - 2;
+  el('s-list').innerHTML = P.shown ? linesHTML(P.lines.slice(0, P.shown)) + (P.shown >= max ? '<p class="smallprint" style="margin-bottom:0">Now do the math.</p>' : '') : '';
+  el('s-next').disabled = P.shown >= max;
+  el('s-hide').disabled = !P.shown;
+}
+function pNew(){
+  var kind = pKind === 'mix' ? (Math.random() < 0.35 ? 'skel' : 'bal') : pKind;
+  P = makeProblem(kind, P ? P.e : null);
+  P.scored = false; P.done = false; P.shown = 0;
+  P.lines = solLines(P);
+  el('p-prob').innerHTML = '<p class="prob" style="margin:0">' + introText(P) + '</p>' +
+    '<div class="eqn' + (P.skel ? ' skel' : '') + '">' + eqHTML(P.e, { skel:P.skel }) + '</div>' +
+    '<p class="prob">' + askText(P) + '</p>';
+  el('p-lab').innerHTML = 'Moles of ' + fHTML(P.B.f);
+  el('p-unit').innerHTML = 'mol ' + fHTML(P.B.f);
+  el('p-in').value = '';
+  hideFb(el('p-fb'));
+  sDraw();
+}
+function pCheck(){
+  if(!P || P.done) return;
+  var raw = el('p-in').value, fb = el('p-fb');
+  if(!raw.trim()){ setFb(fb, 'hint', 'Type your answer first.'); return; }
+  var got = parseNum(raw), res = judge(P, got);
+  if(res.code === 'unreadable'){ setFb(fb, 'hint', hint(P, res)); return; }
+  if(!P.scored){ P.scored = true; pScore.add(res.ok); }
+  if(res.ok){
+    P.done = true;
+    var sfNote = got.sf !== 3 ? '<br>Your value is right. The amount you were given has 3 significant figures, and coefficients are exact, so round your answer to 3: <b>' + answerHTML(P) + '</b>.' : '';
+    setFb(fb, 'good', '<b>Correct: ' + answerHTML(P) + '.</b>' + sfNote + linesHTML(P.lines));
+    return;
+  }
+  setFb(fb, 'bad', hint(P, res));
+}
+function pShow(){
+  if(!P) return;
+  if(!P.scored){ P.scored = true; pScore.add(false); }
+  P.done = true;
+  el('p-in').value = sigPlain(P.ans, 3);
+  setFb(el('p-fb'), 'hint', '<b>Answer: ' + answerHTML(P) + '.</b>' + linesHTML(P.lines));
+}
+el('p-check').addEventListener('click', pCheck);
+el('p-show').addEventListener('click', pShow);
+el('p-new').addEventListener('click', pNew);
+el('p-in').addEventListener('keydown', function(e){ if(e.key === 'Enter') pCheck(); });
+tabs(el('p-tabs'), function(b){ pKind = b.dataset.k; P = null; pNew(); });
+el('s-next').addEventListener('click', function(){ if(P && P.shown < P.lines.length - 2){ P.shown++; sDraw(); } });
+el('s-hide').addEventListener('click', function(){ if(P){ P.shown = 0; sDraw(); } });
+
+/* =========================================================
+   quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'What do the coefficients in 2H<sub>2</sub> + O<sub>2</sub> → 2H<sub>2</sub>O tell you?',
+    opts:['2 g of H<sub>2</sub> reacts with 1 g of O<sub>2</sub> to make 2 g of H<sub>2</sub>O','2 mol of H<sub>2</sub> reacts with 1 mol of O<sub>2</sub> to make 2 mol of H<sub>2</sub>O','Each water molecule has 2 hydrogen atoms','2 mol of H<sub>2</sub> reacts with 2 mol of O<sub>2</sub>'],
+    ans:1,
+    why:'Coefficients count particles, so they count moles: 2 mol H<sub>2</sub>, 1 mol O<sub>2</sub>, 2 mol H<sub>2</sub>O. They don’t count grams. The 2 hydrogen atoms in each water molecule come from the subscript, and the 2 in O<sub>2</sub> is a subscript too, not a coefficient.' },
+  { stem:'N<sub>2</sub> + 3H<sub>2</sub> → 2NH<sub>3</sub>. You have moles of H<sub>2</sub> and want moles of NH<sub>3</sub>. Which mole ratio do you multiply by?',
+    opts:[iFrac(3, 'H2', 2, 'NH3'), iFrac(2, 'NH3', 3, 'H2'), iFrac(2, 'NH3', 1, 'N2'), iFrac(3, 'NH3', 2, 'H2')],
+    ans:1,
+    why:'Wanted on top, given on the bottom: 2 mol NH<sub>3</sub> over 3 mol H<sub>2</sub>. Then mol H<sub>2</sub> cancels and mol NH<sub>3</sub> is left. The last choice has the right substances but swaps their coefficients.' },
+  { stem:'CH<sub>4</sub> + 2O<sub>2</sub> → CO<sub>2</sub> + 2H<sub>2</sub>O. How many moles of O<sub>2</sub> react with 3.00 mol CH<sub>4</sub>?',
+    opts:['1.50 mol','3.00 mol','6.00 mol','9.00 mol'],
+    ans:2,
+    why:'3.00 mol CH<sub>4</sub> × (2 mol O<sub>2</sub> ÷ 1 mol CH<sub>4</sub>) = 6.00 mol O<sub>2</sub>. 1.50 mol comes from flipping the ratio.' },
+  { stem:'2KClO<sub>3</sub> → 2KCl + 3O<sub>2</sub>. How many moles of KClO<sub>3</sub> are needed to make 4.50 mol O<sub>2</sub>?',
+    opts:['3.00 mol','4.50 mol','6.75 mol','9.00 mol'],
+    ans:0,
+    why:'4.50 mol O<sub>2</sub> × (2 mol KClO<sub>3</sub> ÷ 3 mol O<sub>2</sub>) = 3.00 mol KClO<sub>3</sub>. 6.75 mol comes from flipping the ratio, and 9.00 mol from multiplying by 2 without dividing by 3.' },
+  { stem:'4Fe + 3O<sub>2</sub> → 2Fe<sub>2</sub>O<sub>3</sub>. When 0.600 mol Fe<sub>2</sub>O<sub>3</sub> forms, how many moles of Fe react?',
+    opts:['0.300 mol','0.900 mol','1.20 mol','2.40 mol'],
+    ans:2,
+    why:'0.600 mol Fe<sub>2</sub>O<sub>3</sub> × (4 mol Fe ÷ 2 mol Fe<sub>2</sub>O<sub>3</sub>) = 1.20 mol Fe. 0.900 mol is the O<sub>2</sub> that reacts, and 0.300 mol comes from flipping the ratio.' },
+  { stem:'C<sub>3</sub>H<sub>8</sub> + 5O<sub>2</sub> → 3CO<sub>2</sub> + 4H<sub>2</sub>O. When 2.40 mol CO<sub>2</sub> forms, how many moles of H<sub>2</sub>O form along with it?',
+    opts:['1.80 mol','2.40 mol','3.20 mol','9.60 mol'],
+    ans:2,
+    why:'A mole ratio works between two products, too. 2.40 mol CO<sub>2</sub> × (4 mol H<sub>2</sub>O ÷ 3 mol CO<sub>2</sub>) = 3.20 mol H<sub>2</sub>O. 1.80 mol comes from flipping the ratio.' },
+  { stem:'A student uses the skeleton equation H<sub>2</sub> + O<sub>2</sub> → H<sub>2</sub>O and says that 1.50 mol O<sub>2</sub> makes 1.50 mol H<sub>2</sub>O. How many moles of H<sub>2</sub>O does 1.50 mol O<sub>2</sub> really make?',
+    opts:['0.750 mol','1.50 mol','3.00 mol','4.50 mol'],
+    ans:2,
+    why:'Balance it first: 2H<sub>2</sub> + O<sub>2</sub> → 2H<sub>2</sub>O. Then 1.50 mol O<sub>2</sub> × (2 mol H<sub>2</sub>O ÷ 1 mol O<sub>2</sub>) = 3.00 mol H<sub>2</sub>O. The skeleton equation made the ratio look like 1 : 1.' },
+  { stem:'In N<sub>2</sub> + 3H<sub>2</sub> → 2NH<sub>3</sub>, 4 mol of reactants make only 2 mol of product. Does that break the law of conservation of mass?',
+    opts:['Yes, so the equation must be balanced wrong','Yes, because half of the mass is lost as heat','No, because the atoms are conserved. They regroup into fewer, bigger molecules.','No, because moles and mass are the same thing'],
+    ans:2,
+    why:'Count the atoms: 2 N and 6 H on each side. Atoms, and so mass, are conserved. Molecules aren’t, because 4 small molecules regroup into 2 bigger ones.' },
+  { stem:'2H<sub>2</sub> + O<sub>2</sub> → 2H<sub>2</sub>O. A student writes the mole ratio of O<sub>2</sub> to H<sub>2</sub>O as 2 mol O<sub>2</sub> : 2 mol H<sub>2</sub>O, “because of the 2 in O<sub>2</sub>.” What is the right ratio?',
+    opts:['2 mol O<sub>2</sub> : 2 mol H<sub>2</sub>O','1 mol O<sub>2</sub> : 2 mol H<sub>2</sub>O','2 mol O<sub>2</sub> : 1 mol H<sub>2</sub>O','1 mol O<sub>2</sub> : 1 mol H<sub>2</sub>O'],
+    ans:1,
+    why:'The 2 in O<sub>2</sub> is a subscript. It says each molecule has 2 atoms. Mole ratios come only from coefficients, and the coefficient of O<sub>2</sub> is 1.' },
+  { stem:'2Al + 3Cl<sub>2</sub> → 2AlCl<sub>3</sub>. How many moles of Cl<sub>2</sub> react with 0.250 mol Al?',
+    opts:['0.167 mol','0.375 mol','0.4 mol','0.750 mol'],
+    ans:1,
+    why:'0.250 mol Al × (3 mol Cl<sub>2</sub> ÷ 2 mol Al) = 0.375 mol Cl<sub>2</sub>. Coefficients are exact, so the answer keeps the 3 significant figures of 0.250. 0.4 mol rounds as if the 3 had only 1 significant figure, and 0.167 mol flips the ratio.' }
+];
+(function buildQuiz(){
+  var host = el('quiz'), html = '';
+  QUIZ.forEach(function(q, qi){
+    html += '<div class="q"><p class="stem">' + (qi + 1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o, oi){ html += '<button type="button" class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  host.innerHTML = html;
+  each(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      each(el('q' + qi).querySelectorAll('.opt'), function(other, i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      setFb(el('qfb' + qi), oi === q.ans ? 'good' : 'bad', '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+    });
+  });
+})();
+
+/* boot */
+bDraw();
+rDraw();
+kNew();
+pNew();
+</script>
+</body>
+</html>
