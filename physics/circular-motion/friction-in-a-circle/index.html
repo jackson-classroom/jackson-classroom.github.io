@@ -272,7 +272,7 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
       <ol class="steps">
         <li><span class="sl">Up and down cancel</span><span class="eq"><span class="F n">F<sub>norm</sub></span> = m · g</span></li>
         <li><span class="sl">Friction the turn needs</span><span class="eq"><span class="F f">F<sub>frict</sub></span> = m · v² / r</span></li>
-        <li><span class="sl">Most friction the road can give</span><span class="eq"><span class="F f">F<sub>frict</sub></span> = μ · <span class="F n">F<sub>norm</sub></span></span></li>
+        <li><span class="sl">Maximum friction</span><span class="eq"><span class="F f">F<sub>frict</sub></span> = μ · <span class="F n">F<sub>norm</sub></span></span></li>
       </ol>
     </div>
     <div class="sig-note">If the turn <b>needs</b> more friction than the road <b>can give</b>, the car slides.</div>
@@ -308,7 +308,7 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
   <div class="worked">
     <div class="scene"><svg id="idea-svg" viewBox="0 0 520 360" role="img" aria-label="Free-body diagram of a 1200 kilogram car seen from behind. Normal force 11760 newtons up, gravity 11760 newtons down, friction 5400 newtons to the left, toward the center of the curve."></svg></div>
     <div>
-      <p style="margin-top:0">A 1200 kg car drives around a flat curve with a radius of 50 m at 15 m/s. Find the friction force F<sub>frict</sub> on the car.</p>
+      <p style="margin-top:0">A 1200 kg car drives around a flat curve with a radius of 50 m at 15 m/s. Solve for the friction force.</p>
       <div class="work">
         F<sub>frict</sub> = m · v² / r<br>
         F<sub>frict</sub> = 1200 kg × (15 m/s)² / 50 m<br>
@@ -345,7 +345,7 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
   <p>Static friction can only get so big. The most it can give is μ · F<sub>norm</sub>, and on a flat road F<sub>norm</sub> = m · g. The coefficient μ depends on the tires and the road surface.</p>
 
   <div class="tbl"><table>
-    <thead><tr><th>1200 kg car (F<sub>norm</sub> = 11760 N)</th><th>μ</th><th>Most friction = μ · F<sub>norm</sub></th></tr></thead>
+    <thead><tr><th>1200 kg car (F<sub>norm</sub> = 11760 N)</th><th>μ</th><th>Maximum friction = μ · F<sub>norm</sub></th></tr></thead>
     <tbody>
       <tr><td>Dry road</td><td class="mono">0.8</td><td class="mono">0.8 × 11760 = 9408 N</td></tr>
       <tr><td>Wet road</td><td class="mono">0.5</td><td class="mono">0.5 × 11760 = 5880 N</td></tr>
@@ -360,12 +360,12 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
 <!-- ============ SLIDE ============ -->
 <section id="slide">
   <div class="sec-head"><h2>Will it make the turn?</h2></div>
-  <p>Find both numbers and compare them.</p>
+  <p>Solve for both, then compare them.</p>
 
   <div class="rulebox">
     <div class="rulecard">
       <div class="form">needed ≤ most it can give</div>
-      <h4>The car makes the turn</h4>
+      <h4>The car doesn’t slide</h4>
       <p>Static friction gives exactly what the turn needs, m · v² / r, and the car follows the curve.</p>
     </div>
     <div class="rulecard warn">
@@ -379,7 +379,7 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
   <div class="worked">
     <div class="scene roadfig"><svg id="slide-svg" viewBox="0 0 520 340" role="img" aria-label="Top view of a car on a wet curve with a radius of 25 meters, moving at 15 meters per second. The friction from the road isn't enough, and a dashed skid path leaves the road toward the outside of the curve."></svg></div>
     <div>
-      <p style="margin-top:0">A 1000 kg car takes a flat curve with a radius of 25 m at 15 m/s. The road is wet, μ = 0.5. Does it make the turn?</p>
+      <p style="margin-top:0">A 1000 kg car takes a flat curve with a radius of 25 m at 15 m/s. The coefficient of friction is 0.5. Solve for the friction needed and the maximum friction. Does the car slide?</p>
       <div class="work">
         <b>Needed:</b> m · v² / r = 1000 × 15² / 25 = <b>9000 N</b><br>
         <b>Can give:</b> F<sub>norm</sub> = 1000 × 9.8 = 9800 N<br>
@@ -399,16 +399,16 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
   <p>Every problem uses the same two equations. The only thing that changes is which number you're asked to find.</p>
 
   <ol class="ladder">
-    <li><div><b>Find F<sub>norm</sub> = m · g.</b><small>On a flat road, the normal force is the weight.</small></div></li>
-    <li><div><b>Find the friction.</b> Either from the turn (m · v² / r), or from the road (μ · F<sub>norm</sub>).</div></li>
+    <li><div><b>Solve for F<sub>norm</sub> = m · g.</b><small>On a flat road, the normal force is the weight.</small></div></li>
+    <li><div><b>Solve for the friction.</b> Either from the turn (m · v² / r), or from the road (μ · F<sub>norm</sub>).</div></li>
     <li><div><b>Set F<sub>frict</sub> = m · v² / r and solve</b> for whatever is missing.</div></li>
   </ol>
 
-  <h3>Find the smallest μ</h3>
+  <h3>Solve for μ</h3>
   <div class="worked">
     <div class="scene"><svg id="mu-svg" viewBox="0 0 520 360" role="img" aria-label="Free-body diagram of a 1000 kilogram car seen from behind. Normal force 9800 newtons up, gravity 9800 newtons down, friction 3600 newtons toward the center of the curve."></svg></div>
     <div>
-      <p style="margin-top:0">A 1000 kg car drives around a flat curve with a radius of 40 m at 12 m/s. Find the smallest μ that keeps it from sliding.</p>
+      <p style="margin-top:0">A 1000 kg car drives around a flat curve with a radius of 40 m at 12 m/s without sliding. Solve for the coefficient of friction.</p>
       <div class="work">
         F<sub>frict</sub> = m · v² / r = 1000 × 12² / 40 = <b>3600 N</b><br>
         F<sub>norm</sub> = m · g = 1000 × 9.8 = 9800 N<br>
@@ -418,11 +418,11 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
     </div>
   </div>
 
-  <h3>Find the fastest speed</h3>
+  <h3>Solve for the maximum speed</h3>
   <div class="worked">
     <div class="scene roadfig"><svg id="vmax-svg" viewBox="0 0 520 340" role="img" aria-label="Top view of a car on a flat curve with a radius of 30 meters. Its speed is unknown."></svg></div>
     <div>
-      <p style="margin-top:0">A 1500 kg car drives on a flat curve with a radius of 30 m. The coefficient of friction is 0.6. Find the fastest speed v it can have without sliding.</p>
+      <p style="margin-top:0">A 1500 kg car drives on a flat curve with a radius of 30 m. The coefficient of friction is 0.6. Solve for the maximum speed.</p>
       <div class="work">
         F<sub>norm</sub> = 1500 × 9.8 = 14700 N<br>
         F<sub>frict</sub> = μ · F<sub>norm</sub> = 0.6 × 14700 = 8820 N<br>
@@ -434,11 +434,11 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
     </div>
   </div>
 
-  <h3>Find the tightest curve</h3>
+  <h3>Solve for the minimum radius</h3>
   <div class="worked">
     <div class="scene roadfig"><svg id="rmin-svg" viewBox="0 0 520 340" role="img" aria-label="Top view of a car moving at 20 meters per second on a flat curve. The radius is unknown."></svg></div>
     <div>
-      <p style="margin-top:0">A 1200 kg car is going 20 m/s on a dry road, μ = 0.8. Find the smallest radius r it can turn on without sliding.</p>
+      <p style="margin-top:0">A 1200 kg car is going 20 m/s on a flat curve. The coefficient of friction is 0.8. Solve for the minimum radius.</p>
       <div class="work">
         F<sub>norm</sub> = 1200 × 9.8 = 11760 N<br>
         F<sub>frict</sub> = μ · F<sub>norm</sub> = 0.8 × 11760 = 9408 N<br>
@@ -481,10 +481,10 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
       <div>
         <div class="meter">
           <div class="mrow"><span class="ml">Friction the turn <b>needs</b></span><div><div class="mtrack"><div class="mfill need" id="sm-bn"></div></div><div class="mval" id="sm-n"></div></div></div>
-          <div class="mrow"><span class="ml">Most the road <b>can give</b></span><div><div class="mtrack"><div class="mfill give" id="sm-bg"></div></div><div class="mval" id="sm-g"></div></div></div>
+          <div class="mrow"><span class="ml"><b>Maximum</b> friction</span><div><div class="mtrack"><div class="mfill give" id="sm-bg"></div></div><div class="mval" id="sm-g"></div></div></div>
         </div>
         <table class="readout"><tbody>
-          <tr><th>Fastest safe speed</th><td id="sm-top"></td></tr>
+          <tr><th>Maximum speed</th><td id="sm-top"></td></tr>
         </tbody></table>
         <div class="state" id="sm-state" aria-live="polite"></div>
       </div>
@@ -495,7 +495,7 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
   <h3>Things to try</h3>
   <ol class="ladder">
     <li><div><b>Double the speed</b> from 10 m/s to 20 m/s. How much bigger does the "needs" bar get?<small>Speed is squared, so it's 4 times as big.</small></div></li>
-    <li><div><b>Switch from dry to icy</b> without changing anything else. What happens to the fastest safe speed?</div></li>
+    <li><div><b>Switch from dry to icy</b> without changing anything else. What happens to the maximum speed?</div></li>
     <li><div><b>On the icy road,</b> find a radius and speed that still make the turn.<small>Slow way down, or make the curve much wider.</small></div></li>
   </ol>
 </section>
@@ -506,7 +506,7 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
     <span class="tasktag">Practice 1</span>
     <h2>Will it slide?</h2>
   </div>
-  <p>Find what the turn needs and what the road can give, then decide. Use g = 9.8 m/s². A new problem is generated every time.</p>
+  <p>Solve for the friction needed and the maximum friction, then decide if the car slides. Use g = 9.8 m/s². A new problem is generated every time.</p>
 
   <div class="card wide">
     <div class="card-label"><span>Will it slide?</span><span class="score" id="ws-score">0 of 0</span></div>
@@ -518,13 +518,13 @@ input.no-in{border-color:var(--no);background:var(--no-bg)}
       <span class="unit">N</span>
     </div>
     <div class="field">
-      <label for="ws-1">2 · Most the road can give, μ · F<sub>norm</sub></label>
+      <label for="ws-1">2 · Maximum friction, μ · F<sub>norm</sub></label>
       <input type="text" id="ws-1" inputmode="decimal" autocomplete="off" placeholder="Type a number">
       <span class="unit">N</span>
     </div>
     <div class="verdict" role="group" aria-label="Your answer">
-      <button class="cbtn" id="ws-make">3 · It makes the turn</button>
-      <button class="cbtn" id="ws-skid">3 · It slides</button>
+      <button class="cbtn" id="ws-make">3 · Doesn’t slide</button>
+      <button class="cbtn" id="ws-skid">3 · Slides</button>
     </div>
     <div class="fb" id="ws-fb" aria-live="polite"></div>
     <div class="btn-row"><button class="ghost" id="ws-next">Next problem</button></div>
@@ -889,7 +889,7 @@ var ROADS = [ { n:'dry', mu:0.8 }, { n:'dry', mu:0.7 }, { n:'wet', mu:0.5 }, { n
 /* =========================================================
    Practice 1 · will it slide?
    ========================================================= */
-var WS_TYPES = { make:'Makes the turn', skid:'Slides' };
+var WS_TYPES = { make:'Doesn’t slide', skid:'Slides' };
 var wsScore = Score(el('ws-score')), wsTally = newTally(WS_TYPES), wsCur = null, wsDone = false, WS_IN = ['ws-0','ws-1'];
 function wsMake(){
   var want = Math.random() < .5 ? 'make' : 'skid', p, g = 0;
@@ -906,8 +906,8 @@ function wsMake(){
 function wsNew(){
   var p = wsMake();
   wsCur = p; wsDone = false;
-  el('ws-cap').innerHTML = 'A <b>' + p.m + ' kg ' + p.veh + '</b> takes a flat curve with a radius of <b>' + p.r + ' m</b> at <b>' + p.v + ' m/s</b>. The road is ' + p.road + ', so μ = <b>' + p.mu + '</b>. Does it make the turn?';
-  drawRoad(el('ws-svg'), { rLabel:'r = ' + p.r + ' m', v:p.v + ' m/s', f:'?', note:p.m + ' kg · ' + p.road + ' road · μ = ' + p.mu });
+  el('ws-cap').innerHTML = 'A <b>' + p.m + ' kg ' + p.veh + '</b> takes a flat curve with a radius of <b>' + p.r + ' m</b> at <b>' + p.v + ' m/s</b>. The coefficient of friction is <b>' + p.mu + '</b>. Solve for the friction needed and the maximum friction. Does it slide?';
+  drawRoad(el('ws-svg'), { rLabel:'r = ' + p.r + ' m', v:p.v + ' m/s', f:'?', note:p.m + ' kg · μ = ' + p.mu });
   el('ws-desc').textContent = 'Top view of the ' + p.veh + ' on a flat curve with a radius of ' + p.r + ' meters, moving at ' + p.v + ' meters per second. Friction points toward the center. Its size is unknown.';
   WS_IN.forEach(function(id){ el(id).value = ''; el(id).classList.remove('ok-in','no-in'); });
   lock(WS_IN.concat(['ws-make','ws-skid']), false);
@@ -929,16 +929,16 @@ function wsCheck(choice){
     else if(close(xs[0], m*v*v)) tips.push('For the friction needed, don’t forget to divide by r.');
   }
   if(!ok1){
-    if(close(xs[1], p.mu*p.m)) tips.push('For the most the road can give, μ multiplies the normal force (m · g = ' + fmt(p.Fn) + ' N), not the mass.');
-    else if(close(xs[1], p.Fn)) tips.push('For the most the road can give, that’s F<sub>norm</sub>. Multiply it by μ.');
-    else if(close(xs[1], p.Fn/p.mu)) tips.push('For the most the road can give, multiply by μ. Don’t divide.');
+    if(close(xs[1], p.mu*p.m)) tips.push('For the maximum friction, μ multiplies the normal force (m · g = ' + fmt(p.Fn) + ' N), not the mass.');
+    else if(close(xs[1], p.Fn)) tips.push('For the maximum friction, that’s F<sub>norm</sub>. Multiply it by μ.');
+    else if(close(xs[1], p.Fn/p.mu)) tips.push('For the maximum friction, multiply by μ. Don’t divide.');
   }
   /* a verdict that matches the student's own two numbers is good reasoning */
   if(!okV && (!ok0 || !ok1)){
     var theirs = xs[0] <= xs[1] ? 'make' : 'skid';
     if(theirs === choice) tips.push('Your decision matches your own two numbers, so the comparison is right. Fix the numbers and it changes.');
   } else if(!okV){
-    tips.push('Compare: the turn needs ' + fmt(p.need2) + ' N and the road can give ' + fmt(p.give2) + ' N. ' + (p.key === 'make' ? 'Needed is less, so it makes the turn.' : 'Needed is more, so it slides.'));
+    tips.push('Compare: the friction needed is ' + fmt(p.need2) + ' N and the maximum friction is ' + fmt(p.give2) + ' N. ' + (p.key === 'make' ? 'Needed is less, so it doesn’t slide.' : 'Needed is more, so it slides.'));
   }
   var all = ok0 && ok1 && okV;
   wsDone = true;
@@ -951,15 +951,15 @@ function wsCheck(choice){
   wsScore.add(all); wsTally[p.key].t++; if(all) wsTally[p.key].r++;
   renderTally(el('ws-tally'), WS_TYPES, wsTally);
   var F = p.key === 'make' ? p.need : p.give;
-  drawRoad(el('ws-svg'), { rLabel:'r = ' + p.r + ' m', v:p.v + ' m/s', f:fmt(p.key === 'make' ? p.need2 : p.give2) + ' N', fLen:18 + 60*Math.min(1, F/Math.max(p.need, p.give)), skid:p.key === 'skid', note:p.m + ' kg · ' + p.road + ' road · μ = ' + p.mu });
+  drawRoad(el('ws-svg'), { rLabel:'r = ' + p.r + ' m', v:p.v + ' m/s', f:fmt(p.key === 'make' ? p.need2 : p.give2) + ' N', fLen:18 + 60*Math.min(1, F/Math.max(p.need, p.give)), skid:p.key === 'skid', note:p.m + ' kg · μ = ' + p.mu });
   var work = [
     '<b>Needed:</b> m · v² / r = ' + p.m + ' kg × (' + p.v + ' m/s)² / ' + p.r + ' m = <b>' + fmt(p.need2) + ' N</b>',
-    '<b>Can give:</b> F<sub>norm</sub> = m · g = ' + p.m + ' × 9.8 = ' + fmt(p.Fn2) + ' N',
+    '<b>Maximum:</b> F<sub>norm</sub> = m · g = ' + p.m + ' × 9.8 = ' + fmt(p.Fn2) + ' N',
     'μ · F<sub>norm</sub> = ' + p.mu + ' × ' + fmt(p.Fn2) + ' N = <b>' + fmt(p.give2) + ' N</b>',
-    fmt(p.need2) + ' N ' + (p.key === 'make' ? '&lt;' : '&gt;') + ' ' + fmt(p.give2) + ' N, so <b>' + (p.key === 'make' ? 'it makes the turn' : 'it slides') + '</b>.'
+    fmt(p.need2) + ' N ' + (p.key === 'make' ? '&lt;' : '&gt;') + ' ' + fmt(p.give2) + ' N, so <b>' + (p.key === 'make' ? 'it doesn’t slide' : 'it slides') + '</b>.'
   ];
   var after = p.key === 'make' ? 'Static friction gives exactly the ' + fmt(p.need2) + ' N the turn needs.'
-                               : 'The fastest it could take this curve is √(' + fmt(p.give2) + ' × ' + p.r + ' / ' + p.m + ') = ' + fmt(Math.sqrt(p.give2*p.r/p.m)) + ' m/s.';
+                               : 'The maximum speed on this curve is √(' + fmt(p.give2) + ' × ' + p.r + ' / ' + p.m + ') = ' + fmt(Math.sqrt(p.give2*p.r/p.m)) + ' m/s.';
   var head = all ? '<b>All right.</b>' : '<b>Not this one.</b>' + (ok0 && ok1 ? '' : ' The boxes in red need another look.');
   setFb(el('ws-fb'), all ? 'good' : 'bad', '<p>' + head + (tips.length ? ' ' + tips.join(' ') : '') + '</p><div class="work">' + work.join('<br>') + '</div><p>' + after + '</p>');
 }
@@ -973,7 +973,7 @@ el('ws-next').addEventListener('click', wsNew);
    answer, the two-decimal chain, or follows correctly from the student's
    own (right) answers to the steps before.
    ========================================================= */
-var PV_TYPES = { fneed:'Smallest μ', fmax:'Fastest speed', rmin:'Tightest curve' };
+var PV_TYPES = { fneed:'Solve for μ', fmax:'Maximum speed', rmin:'Minimum radius' };
 function pvFlatNeed(){
   var veh = pick(VEHICLES), p, g = 0;
   do { p = { m:pick(veh.ms), r:pick([30,40,50,60,80,100]), v:pick([10,12,14,15,16,18,20,22]) }; g++; }
@@ -981,7 +981,7 @@ function pvFlatNeed(){
   var m = p.m, r = p.r, v = p.v, a = v*v/r, F = m*a, Fn = m*G, mu = F/Fn;
   var a2 = r2(a), F2 = r2(m*a2), mu2 = r2(F2/r2(Fn));
   return { key:'fneed',
-    cap:'A <b>' + m + ' kg ' + veh.n + '</b> takes a flat curve with a radius of <b>' + r + ' m</b> at <b>' + v + ' m/s</b>. Find the smallest μ that keeps it from sliding.',
+    cap:'A <b>' + m + ' kg ' + veh.n + '</b> takes a flat curve with a radius of <b>' + r + ' m</b> at <b>' + v + ' m/s</b> without sliding. Solve for the coefficient of friction.',
     draw:function(svg){ svg.setAttribute('viewBox','0 0 520 360'); fbdFlat(svg, m, F, {n:'?', g:'?', f:'?'}, veh.n === 'car' ? 'car' : veh.n.split(' ')[0]); },
     desc:'Free-body diagram of the ' + veh.n + ' seen from behind: normal force up, gravity down, friction toward the center of the curve. The sizes are unknown.',
     steps:[
@@ -989,7 +989,7 @@ function pvFlatNeed(){
         tip:function(x){ if(close(x, v/r)) return 'For a<sub>c</sub>, square the speed first, then divide by r.'; if(close(x, v*v*r)) return 'For a<sub>c</sub>, divide v² by r. Don’t multiply.'; if(close(x, v*v)) return 'For a<sub>c</sub>, don’t forget to divide by r.'; } },
       { lab:'2 · Friction needed F<sub>frict</sub>', unit:'N', ex:F, ch:F2, prev:function(xs){ return m*xs[0]; },
         tip:function(x){ if(close(x, Fn)) return 'For F<sub>frict</sub>, that’s the weight. Friction is the net force here: F<sub>frict</sub> = m · a<sub>c</sub>.'; if(close(x, m*v)) return 'For F<sub>frict</sub>, multiply the mass by a<sub>c</sub>, not by the speed.'; } },
-      { lab:'3 · Smallest μ', unit:'(no unit)', ex:mu, ch:mu2, prev:function(xs){ return xs[1]/Fn; },
+      { lab:'3 · Coefficient of friction μ', unit:'(no unit)', ex:mu, ch:mu2, prev:function(xs){ return xs[1]/Fn; },
         tip:function(x, xs){ if(close(x, Fn/F) || close(x, Fn/xs[1])) return 'For μ, it’s upside down: μ = F<sub>frict</sub> / F<sub>norm</sub>.'; if(close(x, F/m) || close(x, xs[1]/m)) return 'For μ, divide by the normal force (m · g = ' + fmt(Fn) + ' N), not the mass.'; } }
     ],
     work:['a<sub>c</sub> = v² / r = (' + v + ' m/s)² / ' + r + ' m = <b>' + fmt(a2) + ' m/s²</b>',
@@ -1003,15 +1003,15 @@ function pvFlatMax(){
   var Fn = m*G, Ff = mu*Fn, v = Math.sqrt(Ff*r/m);
   var Fn2 = r2(Fn), Ff2 = r2(mu*Fn2), v2 = r2(Math.sqrt(Ff2*r/m));
   return { key:'fmax',
-    cap:'A <b>' + m + ' kg ' + veh.n + '</b> drives on a flat curve with a radius of <b>' + r + ' m</b>. The road is ' + road.n + ', so μ = <b>' + mu + '</b>. Find the fastest speed v it can have without sliding.',
+    cap:'A <b>' + m + ' kg ' + veh.n + '</b> drives on a flat curve with a radius of <b>' + r + ' m</b>. The coefficient of friction is <b>' + mu + '</b>. Solve for the maximum speed.',
     draw:function(svg){ svg.setAttribute('viewBox','0 0 520 340'); drawRoad(svg, { rLabel:'r = ' + r + ' m', v:'v = ?', f:true, note:m + ' kg · μ = ' + mu }); },
     desc:'Top view of the ' + veh.n + ' going around a flat curve of radius ' + r + ' meters. Its speed is unknown.',
     steps:[
       { lab:'1 · Normal force F<sub>norm</sub>', unit:'N', ex:Fn, ch:Fn2,
         tip:function(x){ if(close(x, m)) return 'For F<sub>norm</sub>, multiply the mass by g = 9.8 m/s².'; } },
-      { lab:'2 · Most friction F<sub>frict</sub>', unit:'N', ex:Ff, ch:Ff2, prev:function(xs){ return mu*xs[0]; },
+      { lab:'2 · Maximum friction F<sub>frict</sub>', unit:'N', ex:Ff, ch:Ff2, prev:function(xs){ return mu*xs[0]; },
         tip:function(x){ if(close(x, mu*m)) return 'For F<sub>frict</sub>, μ multiplies the normal force in N, not the mass.'; if(close(x, Fn/mu)) return 'For F<sub>frict</sub>, multiply by μ. Don’t divide.'; } },
-      { lab:'3 · Fastest speed v', unit:'m/s', ex:v, ch:v2, prev:function(xs){ return Math.sqrt(xs[1]*r/m); },
+      { lab:'3 · Maximum speed v', unit:'m/s', ex:v, ch:v2, prev:function(xs){ return Math.sqrt(xs[1]*r/m); },
         tip:function(x, xs){ if(close(x, Ff*r/m) || close(x, xs[1]*r/m)) return 'For v, that’s v². Take the square root.'; if(close(x, Math.sqrt(Ff/(m*r))) || close(x, Math.sqrt(Ff*m/r))) return 'For v, solve F<sub>frict</sub> = m · v² / r carefully: v² = F<sub>frict</sub> × r / m.'; if(close(x, Math.sqrt(Ff/m))) return 'For v, don’t forget the radius: v² = F<sub>frict</sub> × r / m.'; } }
     ],
     work:['F<sub>norm</sub> = m · g = ' + m + ' kg × 9.8 m/s² = <b>' + fmt(Fn2) + ' N</b>',
@@ -1027,15 +1027,15 @@ function pvRmin(){
   var mu = road.mu, Fn = m*G, Ff = mu*Fn, r = m*v*v/Ff;
   var Fn2 = r2(Fn), Ff2 = r2(mu*Fn2), rr2 = r2(m*v*v/Ff2);
   return { key:'rmin',
-    cap:'A <b>' + m + ' kg ' + veh.n + '</b> is going <b>' + v + ' m/s</b> on a flat, ' + road.n + ' road, so μ = <b>' + mu + '</b>. Find the smallest radius r it can turn on without sliding.',
+    cap:'A <b>' + m + ' kg ' + veh.n + '</b> is going <b>' + v + ' m/s</b> on a flat curve. The coefficient of friction is <b>' + mu + '</b>. Solve for the minimum radius.',
     draw:function(svg){ svg.setAttribute('viewBox','0 0 520 340'); drawRoad(svg, { rLabel:'r = ?', v:v + ' m/s', f:true, note:m + ' kg · μ = ' + mu }); },
     desc:'Top view of the ' + veh.n + ' moving at ' + v + ' meters per second on a flat curve. The radius is unknown.',
     steps:[
       { lab:'1 · Normal force F<sub>norm</sub>', unit:'N', ex:Fn, ch:Fn2,
         tip:function(x){ if(close(x, m)) return 'For F<sub>norm</sub>, multiply the mass by g = 9.8 m/s².'; } },
-      { lab:'2 · Most friction F<sub>frict</sub>', unit:'N', ex:Ff, ch:Ff2, prev:function(xs){ return mu*xs[0]; },
+      { lab:'2 · Maximum friction F<sub>frict</sub>', unit:'N', ex:Ff, ch:Ff2, prev:function(xs){ return mu*xs[0]; },
         tip:function(x){ if(close(x, mu*m)) return 'For F<sub>frict</sub>, μ multiplies the normal force in N, not the mass.'; if(close(x, Fn/mu)) return 'For F<sub>frict</sub>, multiply by μ. Don’t divide.'; } },
-      { lab:'3 · Smallest radius r', unit:'m', ex:r, ch:rr2, prev:function(xs){ return m*v*v/xs[1]; },
+      { lab:'3 · Minimum radius r', unit:'m', ex:r, ch:rr2, prev:function(xs){ return m*v*v/xs[1]; },
         tip:function(x, xs){ if(close(x, Ff/(m*v*v)) || close(x, xs[1]/(m*v*v))) return 'For r, it’s upside down: r = m · v² / F<sub>frict</sub>.'; if(close(x, m*v/Ff) || close(x, m*v/xs[1])) return 'For r, square the speed first: r = m · v² / F<sub>frict</sub>.'; if(close(x, v*v/Ff) || close(x, v*v/xs[1])) return 'For r, don’t forget the mass: r = m · v² / F<sub>frict</sub>.'; } }
     ],
     work:['F<sub>norm</sub> = m · g = ' + m + ' kg × 9.8 m/s² = <b>' + fmt(Fn2) + ' N</b>',
@@ -1094,7 +1094,7 @@ var QUIZ = [
     opts:['Forward, the way the car is going','Backward, against the motion','Toward the center of the curve','Toward the outside of the curve'],
     ans:2,
     why:'Friction is the only sideways force on the car, and it’s what turns it. The net force in a circle points toward the center, so friction does too.' },
-  { stem:'A 1500 kg car drives around a flat curve with a radius of 60 m at 12 m/s. Find the friction force F<sub>frict</sub> on the car.',
+  { stem:'A 1500 kg car drives around a flat curve with a radius of 60 m at 12 m/s. Solve for the friction force.',
     opts:['300 N','3600 N','14700 N','216000 N'],
     ans:1,
     why:'F<sub>frict</sub> = m · v² / r = 1500 × 144 / 60 = 3600 N. 300 N forgets to square the speed, 216000 N forgets to divide by r, and 14700 N is the weight.' },
@@ -1102,19 +1102,19 @@ var QUIZ = [
     opts:['The same','2 × as much','4 × as much','Half as much'],
     ans:2,
     why:'Friction needed is m · v² / r. The speed is squared, so twice the speed needs 2² = 4 times the friction.' },
-  { stem:'A 1000 kg car is on a flat road with μ = 0.4. Find the most friction the road can give.',
+  { stem:'A 1000 kg car is on a flat road. The coefficient of friction is 0.4. Solve for the maximum friction.',
     opts:['400 N','3920 N','9800 N','24500 N'],
     ans:1,
-    why:'F<sub>norm</sub> = 1000 × 9.8 = 9800 N. Most friction = μ · F<sub>norm</sub> = 0.4 × 9800 = 3920 N. 400 N multiplies μ by the mass instead of the normal force, and 24500 N divides by μ.' },
-  { stem:'A 1200 kg car takes a flat curve with a radius of 40 m at 15 m/s on a wet road (μ = 0.5). What happens?',
-    opts:['It makes the turn: it needs 5880 N and the road can give 6750 N','It slides: it needs 6750 N but the road can only give 5880 N','It makes the turn, because static friction always matches what’s needed','You can’t tell without knowing the engine force'],
+    why:'F<sub>norm</sub> = 1000 × 9.8 = 9800 N. Maximum friction = μ · F<sub>norm</sub> = 0.4 × 9800 = 3920 N. 400 N multiplies μ by the mass instead of the normal force, and 24500 N divides by μ.' },
+  { stem:'A 1200 kg car takes a flat curve with a radius of 40 m at 15 m/s. The coefficient of friction is 0.5. Does the car slide?',
+    opts:['No: it needs 5880 N and the maximum friction is 6750 N','Yes: it needs 6750 N but the maximum friction is only 5880 N','No, because static friction always matches what’s needed','You can’t tell without knowing the engine force'],
     ans:1,
     why:'Needed: 1200 × 15² / 40 = 6750 N. Can give: 0.5 × 1200 × 9.8 = 5880 N. The turn needs more than the road can give, so the car slides. Static friction matches what’s needed only up to its limit.' },
-  { stem:'A 1000 kg car drives on a flat curve with a radius of 20 m. The coefficient of friction is 0.8. Find the fastest speed v it can have without sliding.',
+  { stem:'A 1000 kg car drives on a flat curve with a radius of 20 m. The coefficient of friction is 0.8. Solve for the maximum speed.',
     opts:['2.8 m/s','12.52 m/s','14 m/s','156.8 m/s'],
     ans:1,
     why:'F<sub>norm</sub> = 9800 N. F<sub>frict</sub> = 0.8 × 9800 = 7840 N. 7840 = 1000 × v² / 20, so v² = 156.8 and v = 12.52 m/s. 156.8 m/s forgets the square root, 14 m/s leaves out μ, and 2.8 m/s leaves out the radius.' },
-  { stem:'A road goes from dry to icy. What happens to the fastest speed a car can safely take a curve?',
+  { stem:'A road goes from dry to icy. What happens to the maximum speed a car can take a curve?',
     opts:['It goes up','It goes down','It stays the same','It depends only on the car’s mass'],
     ans:1,
     why:'Ice has a much smaller μ, so the road can give much less friction. With less friction available, the car has to go slower to make the same turn.' },
