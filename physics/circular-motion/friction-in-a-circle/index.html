@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Friction in a Circle — Cars on Flat Curves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Physics — shared page system
+   (identical block on every Unit 3 and Unit 4 page)
+   ========================================================= */
+:root{
+  --ink:#16283C; --ink2:#3D4F63; --mute:#5D6D7E;
+  --paper:#EDF1F4; --card:#FBFCFD; --line:#CBD7E1; --line-soft:#E1E8EE;
+  --acc:#1B6CA8; --acc-dk:#0F4A78; --acc-lite:#D3E4F2;
+  --warm:#9A6410; --warm-lite:#FBEFD6;
+  --ok:#1F6E4D; --ok-bg:#E3F0E8;
+  --no:#A93A2A; --no-bg:#F7E6E2;
+  /* one colour per force, used on every page */
+  --f-g:#B23A2B;    /* gravity / weight      */
+  --f-n:#1B6CA8;    /* normal                */
+  --f-f:#A86A0C;    /* friction              */
+  --f-t:#1E7F5C;    /* tension               */
+  --f-a:#6B45B0;    /* applied               */
+  --f-air:#3E7C8A;  /* air resistance / drag */
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+  background-image:linear-gradient(to right,rgba(150,178,199,.17) 1px,transparent 1px),linear-gradient(to bottom,rgba(150,178,199,.17) 1px,transparent 1px);
+  background-size:26px 26px}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(237,241,244,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:880px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+
+header.hero{padding:60px 0 40px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc-dk)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(38px,6.4vw,64px);line-height:1.02;margin:16px 0 0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--acc)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:48ch;color:var(--ink2);margin:20px 0 0}
+
+.board{margin:36px 0 0;padding:22px 24px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.board-cap{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+.board svg{display:block;width:100%;height:auto}
+.sig-note{font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft)}
+.sig-note b{color:var(--acc-dk);font-weight:600}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--acc);color:var(--acc-dk)}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tasktag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(27px,4.2vw,38px);line-height:1.1;margin:0;letter-spacing:-.02em}
+h3{font-family:var(--body);font-weight:600;font-size:17px;margin:26px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--acc-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.nw{white-space:nowrap}
+.note{border-left:3px solid var(--warm);background:var(--warm-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.law{font-family:var(--display);font-size:clamp(20px,2.8vw,25px);font-weight:500;line-height:1.35;letter-spacing:-.01em;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:0 4px 4px 0;padding:18px 22px;margin:22px 0}
+.law small{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:6px;font-weight:400}
+
+.rulebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:24px 0}
+.rulecard{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:0 4px 4px 0;padding:18px 20px}
+.rulecard h4{font-family:var(--body);font-size:15.5px;font-weight:600;margin:8px 0 6px}
+.rulecard p{margin:0;font-size:15.5px;color:var(--ink2)}
+.rulecard .form{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--acc-dk);margin:2px 0 0;line-height:1.5}
+.rulecard .ex{font-family:var(--body);font-size:14.5px;color:var(--ink);background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:7px 10px;margin-top:10px}
+.rulecard.warn{border-left-color:var(--warm)}
+
+/* force labels: F with a coloured subscript tag */
+.F{font-family:var(--mono);font-weight:600;white-space:nowrap}
+.F.g{color:var(--f-g)} .F.n{color:var(--f-n)} .F.f{color:var(--f-f)} .F.t{color:var(--f-t)} .F.a{color:var(--f-a)} .F.air{color:var(--f-air)} .F.net{color:var(--ink)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.setup{font-size:16px;color:var(--ink2);margin:0 0 14px}
+.scene{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:8px}
+.scene svg{display:block;width:100%;height:auto;max-width:540px;margin:0 auto}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F5F8FA;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--acc-dk);border-color:var(--acc-dk)}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--acc)}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2.5px solid var(--acc);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+/* Input boxes: clearly fillable. Placeholder text is a short instruction, never a sample answer. */
+input[type=text]{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;border:1px solid #93A6B8;border-radius:3px;padding:9px 11px;width:150px;background:#fff;color:var(--ink);box-shadow:inset 0 1px 3px rgba(22,40,60,.12)}
+::placeholder{font-family:var(--body);font-style:italic;font-size:15px;color:#7E8E9D;opacity:1}
+.field{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
+.field label{font-size:15px;color:var(--ink2);min-width:170px}
+.unit{font-family:var(--mono);font-size:15px;color:var(--ink2)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1A4B35}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7E2A1D}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--acc);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb p{margin:6px 0 0}
+.fb p:first-child{margin-top:0}
+
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-top:14px}
+.cbtn{background:#fff;color:var(--ink);border:1px solid var(--line);font-size:13px;padding:11px 10px;text-align:center}
+.cbtn:hover{background:#fff;color:var(--ink);border-color:var(--acc)}
+.cbtn.yes{background:var(--ok-bg);border-color:var(--ok);color:#1A4B35}
+.cbtn.no{background:var(--no-bg);border-color:var(--no);color:#7E2A1D}
+.cbtn.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.cbtn[disabled]{cursor:default}
+
+.tally-h{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:20px 0 8px}
+.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:6px}
+.tcell{border:1px solid var(--line-soft);border-radius:3px;padding:7px 10px;background:#fff}
+.tcell .tl{display:block;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.04em}
+.tcell .tv{font-family:var(--mono);font-size:15px;color:var(--ink)}
+.tcell.miss{border-color:#E3B7AE;background:#FDF6F4}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tab{font-family:var(--mono);font-size:12.5px;background:transparent;color:var(--ink2);border:1px solid var(--line);border-radius:3px;padding:7px 12px}
+.tab:hover{background:var(--line-soft);color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--ink);color:#F5F8FA;border-color:var(--ink)}
+.panel{display:none;padding-top:12px}
+.panel.on{display:block}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.tbl{overflow-x:auto;margin:18px 0;-webkit-overflow-scrolling:touch}
+.tbl table{margin:0}
+
+.wo{list-style:none;padding:0;margin:20px 0}
+.wo li{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 18px;margin:10px 0}
+.wo .myth{display:block;font-size:15px;color:var(--no);text-decoration:line-through;text-decoration-color:rgba(169,58,42,.55);margin-bottom:4px}
+.wo .fact{font-size:16px}
+
+.q{border-top:1px solid var(--line-soft);padding:20px 0 4px}
+.q:first-of-type{border-top:none}
+.q .stem{font-weight:500;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45;letter-spacing:0}
+.opt:hover{border-color:var(--acc);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.95}
+.quiz-sum{font-family:var(--mono);font-size:13px;color:var(--ink2);margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft)}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#E9EFF4;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#BCCADA}
+.next .nt{font-family:var(--display);font-weight:600;font-size:24px;color:#fff;margin:0 0 4px;letter-spacing:-.01em}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F5F8FA;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--acc-lite)}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .card{padding:14px}
+  .scene{padding:2px}
+  .board{padding:16px 14px}
+  .field label{min-width:auto;flex:1 1 100%}
+  .choices{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+/* ======== end shared block ======== */
+
+/* ---- page: velocity and acceleration colours (not forces, so not in the force palette) ---- */
+:root{--vel:#16283C;--cen:#A8199B}
+.kv{font-family:var(--mono);font-weight:600;color:var(--vel);white-space:nowrap}
+.ka{font-family:var(--mono);font-weight:600;color:var(--cen);white-space:nowrap}
+
+/* ---- page: method ladder ---- */
+.ladder{list-style:none;padding:0;margin:20px 0;counter-reset:step}
+.ladder li{counter-increment:step;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:baseline;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:12px 16px;margin:8px 0}
+.ladder li::before{content:counter(step);font-family:var(--mono);font-size:13px;color:var(--acc-dk);background:var(--acc-lite);border-radius:2px;text-align:center;padding:2px 0}
+.ladder small{display:block;color:var(--mute);font-size:14.5px;margin-top:2px}
+
+/* ---- page: worked example ---- */
+.worked{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:18px;align-items:center}
+@media (max-width:640px){.worked{grid-template-columns:1fr}}
+
+/* ---- page: hero steps ---- */
+.steps{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.steps li{margin:0;background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:10px 14px}
+.steps .sl{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:2px}
+.steps .eq{font-family:var(--mono);font-size:17px;color:var(--ink)}
+
+/* ---- page: ledger (sum per direction) ---- */
+.ledger{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:14px;margin:10px 0 4px;background:transparent}
+.ledger th,.ledger td{padding:6px 8px;border-bottom:1px solid rgba(22,40,60,.12);text-align:left;vertical-align:top}
+.ledger th{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:inherit;opacity:.75;font-weight:500}
+.ledger td.z{font-weight:600}
+
+/* ---- page: work shown in examples and feedback ---- */
+.work{font-family:var(--mono);font-size:14.5px;line-height:1.7;margin:8px 0 0;padding:8px 12px;background:rgba(255,255,255,.6);border-radius:3px}
+.card .work,.worked .work{background:#fff;border:1px solid var(--line-soft)}
+.fb .work{background:rgba(255,255,255,.6);border:none}
+
+/* ---- page: practice ---- */
+.cap{font-size:16px;color:var(--ink2);margin:0 0 10px}
+.cap b{color:var(--ink)}
+.prob{font-size:18px;line-height:1.55;margin:16px 0 0;color:var(--ink)}
+.wide .field label{min-width:250px}
+#pd-svg{max-width:460px}
+input.ok-in{border-color:var(--ok);background:var(--ok-bg)}
+input.no-in{border-color:var(--no);background:var(--no-bg)}
+
+/* ---- page: swing-the-ball sim ---- */
+.sim-ctrl{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
+.sim-ctrl label{font-size:15px;color:var(--ink2);min-width:70px}
+.sim-ctrl input[type=range]{flex:1 1 120px;min-width:110px;accent-color:var(--acc)}
+.sim-ctrl output{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--acc-dk);min-width:84px;font-variant-numeric:tabular-nums}
+.readout{margin:0;font-size:15px}
+.readout th{width:34%;white-space:nowrap}
+.readout td{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.state{font-family:var(--mono);font-size:13.5px;line-height:1.5;padding:10px 12px;border-radius:0 3px 3px 0;margin-top:12px;border-left:3px solid var(--acc);background:var(--acc-lite);color:var(--acc-dk)}
+.state.cut{border-left-color:var(--warm);background:var(--warm-lite);color:#6B4608}
+/* ---- page 3: road figures, need-vs-give meter, verdict buttons ---- */
+.roadfig svg{max-width:500px}
+.meter{margin:14px 0 0}
+.mrow{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center;margin:8px 0}
+.mrow .ml{font-size:14.5px;color:var(--ink2);line-height:1.3}
+.mtrack{background:var(--line-soft);border-radius:2px;height:20px;position:relative;overflow:hidden}
+.mfill{height:100%;border-radius:2px;transition:width .15s}
+.mfill.need{background:var(--ink)}
+.mfill.give{background:var(--f-f)}
+.mval{font-family:var(--mono);font-size:13px;color:var(--ink2);margin-top:2px;font-variant-numeric:tabular-nums}
+.verdict{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.verdict .cbtn{flex:1 1 160px;font-size:13.5px}
+@media (max-width:600px){ .mrow{grid-template-columns:1fr;gap:2px} }
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Friction in a Circle</span>
+    <span class="bar-sub">Cars on flat curves · F<sub>frict</sub> = m · v² / r</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Unit 4 · Circular Motion · Page 3</div>
+  <h1>What the turn needs. <em>What the road can give.</em></h1>
+  <p class="lede">When a car turns on a flat road, friction from the road is the only thing pushing it toward the center. Every problem on this page comes down to two numbers: how much friction the turn needs, and how much the road can give.</p>
+
+  <div class="board">
+    <div class="board-cap">A car going around a flat curve, seen from above</div>
+    <div class="worked">
+      <div class="scene roadfig"><svg id="hero-svg" viewBox="0 0 520 340" role="img" aria-label="Top view of a car driving around a flat circular road. Its velocity points along the road. The friction force from the road points from the car toward the center of the circle."></svg></div>
+      <ol class="steps">
+        <li><span class="sl">Up and down cancel</span><span class="eq"><span class="F n">F<sub>norm</sub></span> = m · g</span></li>
+        <li><span class="sl">Friction the turn needs</span><span class="eq"><span class="F f">F<sub>frict</sub></span> = m · v² / r</span></li>
+        <li><span class="sl">Most friction the road can give</span><span class="eq"><span class="F f">F<sub>frict</sub></span> = μ · <span class="F n">F<sub>norm</sub></span></span></li>
+      </ol>
+    </div>
+    <div class="sig-note">If the turn <b>needs</b> more friction than the road <b>can give</b>, the car slides.</div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to a section">
+  <a href="#idea">Friction does the turning</a>
+  <a href="#needed">What the turn needs</a>
+  <a href="#limit">What the road can give</a>
+  <a href="#slide">Will it make the turn?</a>
+  <a href="#types">Three more problems</a>
+  <a href="#sim">Try it</a>
+  <a href="#p-slide">Practice: will it slide?</a>
+  <a href="#p-solve">Practice: solve it</a>
+  <a href="#watch">Watch-outs</a>
+  <a href="#check">Check yourself</a>
+</nav>
+
+<!-- ============ IDEA ============ -->
+<section id="idea">
+  <div class="sec-head"><h2>Friction does the turning</h2></div>
+  <p>Picture a car driving around a flat curve at a steady speed. Look at it from behind, so the center of the curve is off to the left. Three forces act on it:</p>
+  <ul>
+    <li><span class="F g">F<sub>grav</sub></span> pulls it <b>down</b>.</li>
+    <li><span class="F n">F<sub>norm</sub></span> from the road pushes it <b>up</b>. The car isn't moving up or down, so these two cancel: F<sub>norm</sub> = m · g.</li>
+    <li><span class="F f">F<sub>frict</sub></span> from the road on the tires pushes it <b>sideways, toward the center</b>.</li>
+  </ul>
+  <p>Friction is the only force pointing toward the center, so friction <i>is</i> the net force. From page 1, the net force in a circle is m · v² / r. Put those together:</p>
+  <div class="law"><small>Car on a flat curve</small>The friction from the road is the net force that turns the car.<br><span class="mono" style="font-size:.95em">F<sub>frict</sub> = m · v² / r</span></div>
+
+  <h3>Worked example: find the friction</h3>
+  <div class="worked">
+    <div class="scene"><svg id="idea-svg" viewBox="0 0 520 360" role="img" aria-label="Free-body diagram of a 1200 kilogram car seen from behind. Normal force 11760 newtons up, gravity 11760 newtons down, friction 5400 newtons to the left, toward the center of the curve."></svg></div>
+    <div>
+      <p style="margin-top:0">A 1200 kg car drives around a flat curve with a radius of 50 m at 15 m/s. Find the friction force F<sub>frict</sub> on the car.</p>
+      <div class="work">
+        F<sub>frict</sub> = m · v² / r<br>
+        F<sub>frict</sub> = 1200 kg × (15 m/s)² / 50 m<br>
+        F<sub>frict</sub> = 1200 × 225 / 50 = <b>5400 N</b>
+      </div>
+      <p class="smallprint">The road pushes the tires toward the center with 5400 N. That's the whole net force. The normal force and gravity (11760 N each) cancel.</p>
+    </div>
+  </div>
+
+  <div class="note"><b>Which friction is it?</b> The tires roll along the road, but they don't slide <i>sideways</i>. So this is <b>static</b> friction, the kind from Unit 3 that is as big as it needs to be, up to a limit. That limit is μ · F<sub>norm</sub>.</div>
+</section>
+
+<!-- ============ NEEDED ============ -->
+<section id="needed">
+  <div class="sec-head"><h2>How much friction does the turn need?</h2></div>
+  <p>The friction a turn needs is m · v² / r. Two things make that bigger: going <b>faster</b> and turning <b>tighter</b> (a smaller radius).</p>
+
+  <div class="tbl"><table>
+    <thead><tr><th>1200 kg car</th><th>Speed</th><th>Radius</th><th>Friction needed</th><th>Compared to the first row</th></tr></thead>
+    <tbody>
+      <tr><td>Starting point</td><td class="mono">10 m/s</td><td class="mono">50 m</td><td class="mono">2400 N</td><td>—</td></tr>
+      <tr><td>Twice as fast</td><td class="mono">20 m/s</td><td class="mono">50 m</td><td class="mono">9600 N</td><td><b>4 ×</b> as much</td></tr>
+      <tr><td>Twice as fast, twice as wide</td><td class="mono">20 m/s</td><td class="mono">100 m</td><td class="mono">4800 N</td><td>2 × as much</td></tr>
+      <tr><td>Twice as fast, half as wide</td><td class="mono">20 m/s</td><td class="mono">25 m</td><td class="mono">19200 N</td><td><b>8 ×</b> as much</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note"><b>Speed is squared.</b> Double your speed and the turn needs <b>four times</b> the friction, not twice. That's why a curve that feels easy at 25 mph can send you off the road at 50 mph.</div>
+</section>
+
+<!-- ============ LIMIT ============ -->
+<section id="limit">
+  <div class="sec-head"><h2>How much friction can the road give?</h2></div>
+  <p>Static friction can only get so big. The most it can give is μ · F<sub>norm</sub>, and on a flat road F<sub>norm</sub> = m · g. The coefficient μ depends on the tires and the road surface.</p>
+
+  <div class="tbl"><table>
+    <thead><tr><th>1200 kg car (F<sub>norm</sub> = 11760 N)</th><th>μ</th><th>Most friction = μ · F<sub>norm</sub></th></tr></thead>
+    <tbody>
+      <tr><td>Dry road</td><td class="mono">0.8</td><td class="mono">0.8 × 11760 = 9408 N</td></tr>
+      <tr><td>Wet road</td><td class="mono">0.5</td><td class="mono">0.5 × 11760 = 5880 N</td></tr>
+      <tr><td>Snowy road</td><td class="mono">0.3</td><td class="mono">0.3 × 11760 = 3528 N</td></tr>
+      <tr><td>Icy road</td><td class="mono">0.1</td><td class="mono">0.1 × 11760 = 1176 N</td></tr>
+    </tbody>
+  </table></div>
+  <p>Look back at the first table. Turning at 20 m/s on a 50 m curve needs 9600 N. That's just a bit more than even a dry road can give.</p>
+  <div class="note"><b>μ multiplies a force, not a mass.</b> Find F<sub>norm</sub> = m · g in newtons first, then multiply by μ.</div>
+</section>
+
+<!-- ============ SLIDE ============ -->
+<section id="slide">
+  <div class="sec-head"><h2>Will it make the turn?</h2></div>
+  <p>Find both numbers and compare them.</p>
+
+  <div class="rulebox">
+    <div class="rulecard">
+      <div class="form">needed ≤ most it can give</div>
+      <h4>The car makes the turn</h4>
+      <p>Static friction gives exactly what the turn needs, m · v² / r, and the car follows the curve.</p>
+    </div>
+    <div class="rulecard warn">
+      <div class="form">needed &gt; most it can give</div>
+      <h4>The car slides</h4>
+      <p>The road can't push hard enough. The car can't turn as tightly as the road does, so it slides toward the <b>outside</b> of the curve.</p>
+    </div>
+  </div>
+
+  <h3>Worked example: will it slide?</h3>
+  <div class="worked">
+    <div class="scene roadfig"><svg id="slide-svg" viewBox="0 0 520 340" role="img" aria-label="Top view of a car on a wet curve with a radius of 25 meters, moving at 15 meters per second. The friction from the road isn't enough, and a dashed skid path leaves the road toward the outside of the curve."></svg></div>
+    <div>
+      <p style="margin-top:0">A 1000 kg car takes a flat curve with a radius of 25 m at 15 m/s. The road is wet, μ = 0.5. Does it make the turn?</p>
+      <div class="work">
+        <b>Needed:</b> m · v² / r = 1000 × 15² / 25 = <b>9000 N</b><br>
+        <b>Can give:</b> F<sub>norm</sub> = 1000 × 9.8 = 9800 N<br>
+        μ · F<sub>norm</sub> = 0.5 × 9800 = <b>4900 N</b><br>
+        9000 N &gt; 4900 N, so <b>it slides</b>.
+      </div>
+      <p class="smallprint">Slow down to 10 m/s and the turn only needs 1000 × 10² / 25 = 4000 N. That's less than 4900 N, so the car makes it.</p>
+    </div>
+  </div>
+
+  <div class="note"><b>Nothing throws the car outward.</b> When it slides, there just isn't enough friction to pull it around the curve. It goes straighter than the road does, and that carries it to the outside.</div>
+</section>
+
+<!-- ============ TYPES ============ -->
+<section id="types">
+  <div class="sec-head"><h2>Three more problems</h2></div>
+  <p>Every problem uses the same two equations. The only thing that changes is which number you're asked to find.</p>
+
+  <ol class="ladder">
+    <li><div><b>Find F<sub>norm</sub> = m · g.</b><small>On a flat road, the normal force is the weight.</small></div></li>
+    <li><div><b>Find the friction.</b> Either from the turn (m · v² / r), or from the road (μ · F<sub>norm</sub>).</div></li>
+    <li><div><b>Set F<sub>frict</sub> = m · v² / r and solve</b> for whatever is missing.</div></li>
+  </ol>
+
+  <h3>Find the smallest μ</h3>
+  <div class="worked">
+    <div class="scene"><svg id="mu-svg" viewBox="0 0 520 360" role="img" aria-label="Free-body diagram of a 1000 kilogram car seen from behind. Normal force 9800 newtons up, gravity 9800 newtons down, friction 3600 newtons toward the center of the curve."></svg></div>
+    <div>
+      <p style="margin-top:0">A 1000 kg car drives around a flat curve with a radius of 40 m at 12 m/s. Find the smallest μ that keeps it from sliding.</p>
+      <div class="work">
+        F<sub>frict</sub> = m · v² / r = 1000 × 12² / 40 = <b>3600 N</b><br>
+        F<sub>norm</sub> = m · g = 1000 × 9.8 = 9800 N<br>
+        μ = F<sub>frict</sub> / F<sub>norm</sub> = 3600 / 9800 = <b>0.37</b>
+      </div>
+      <p class="smallprint">Any road with μ of at least 0.37 works. A wet road (0.5) is fine. A snowy road (0.3) isn't.</p>
+    </div>
+  </div>
+
+  <h3>Find the fastest speed</h3>
+  <div class="worked">
+    <div class="scene roadfig"><svg id="vmax-svg" viewBox="0 0 520 340" role="img" aria-label="Top view of a car on a flat curve with a radius of 30 meters. Its speed is unknown."></svg></div>
+    <div>
+      <p style="margin-top:0">A 1500 kg car drives on a flat curve with a radius of 30 m. The coefficient of friction is 0.6. Find the fastest speed v it can have without sliding.</p>
+      <div class="work">
+        F<sub>norm</sub> = 1500 × 9.8 = 14700 N<br>
+        F<sub>frict</sub> = μ · F<sub>norm</sub> = 0.6 × 14700 = 8820 N<br>
+        8820 = 1500 × v² / 30<br>
+        v² = 8820 × 30 / 1500 = 176.4<br>
+        v = √176.4 = <b>13.28 m/s</b>
+      </div>
+      <p class="smallprint">Solving for v: multiply by r, divide by m, then take the square root. Don't stop at v².</p>
+    </div>
+  </div>
+
+  <h3>Find the tightest curve</h3>
+  <div class="worked">
+    <div class="scene roadfig"><svg id="rmin-svg" viewBox="0 0 520 340" role="img" aria-label="Top view of a car moving at 20 meters per second on a flat curve. The radius is unknown."></svg></div>
+    <div>
+      <p style="margin-top:0">A 1200 kg car is going 20 m/s on a dry road, μ = 0.8. Find the smallest radius r it can turn on without sliding.</p>
+      <div class="work">
+        F<sub>norm</sub> = 1200 × 9.8 = 11760 N<br>
+        F<sub>frict</sub> = μ · F<sub>norm</sub> = 0.8 × 11760 = 9408 N<br>
+        9408 = 1200 × 20² / r<br>
+        r = 1200 × 400 / 9408 = <b>51.02 m</b>
+      </div>
+      <p class="smallprint">A tighter curve (smaller r) needs more friction than the road can give. A wider one is fine.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SIM ============ -->
+<section id="sim">
+  <div class="sec-head">
+    <span class="tasktag">Try it</span>
+    <h2>Make the turn</h2>
+  </div>
+  <p>A 1200 kg car on a flat curve. Change the speed, the radius, and the road. Watch the two bars: what the turn needs, and what the road can give.</p>
+
+  <div class="card">
+    <div class="seg" role="group" aria-label="Road surface">
+      <span class="sl">Road</span>
+      <button class="tab" data-mu="0.8" aria-selected="true">Dry · μ = 0.8</button>
+      <button class="tab" data-mu="0.5" aria-selected="false">Wet · μ = 0.5</button>
+      <button class="tab" data-mu="0.3" aria-selected="false">Snowy · μ = 0.3</button>
+      <button class="tab" data-mu="0.1" aria-selected="false">Icy · μ = 0.1</button>
+    </div>
+    <div class="sim-ctrl">
+      <label for="sm-v">Speed</label>
+      <input type="range" id="sm-v" min="4" max="35" step="1" value="15">
+      <output id="sm-v-out" for="sm-v"></output>
+    </div>
+    <div class="sim-ctrl">
+      <label for="sm-r">Radius</label>
+      <input type="range" id="sm-r" min="20" max="150" step="5" value="50">
+      <output id="sm-r-out" for="sm-r"></output>
+    </div>
+    <div class="worked">
+      <div class="scene roadfig"><svg id="sm-svg" viewBox="0 0 520 340" role="img" aria-labelledby="sm-desc"><desc id="sm-desc"></desc></svg></div>
+      <div>
+        <div class="meter">
+          <div class="mrow"><span class="ml">Friction the turn <b>needs</b></span><div><div class="mtrack"><div class="mfill need" id="sm-bn"></div></div><div class="mval" id="sm-n"></div></div></div>
+          <div class="mrow"><span class="ml">Most the road <b>can give</b></span><div><div class="mtrack"><div class="mfill give" id="sm-bg"></div></div><div class="mval" id="sm-g"></div></div></div>
+        </div>
+        <table class="readout"><tbody>
+          <tr><th>Fastest safe speed</th><td id="sm-top"></td></tr>
+        </tbody></table>
+        <div class="state" id="sm-state" aria-live="polite"></div>
+      </div>
+    </div>
+    <p class="smallprint">Needed = m · v² / r. Can give = μ · m · g, with g = 9.8 m/s².</p>
+  </div>
+
+  <h3>Things to try</h3>
+  <ol class="ladder">
+    <li><div><b>Double the speed</b> from 10 m/s to 20 m/s. How much bigger does the "needs" bar get?<small>Speed is squared, so it's 4 times as big.</small></div></li>
+    <li><div><b>Switch from dry to icy</b> without changing anything else. What happens to the fastest safe speed?</div></li>
+    <li><div><b>On the icy road,</b> find a radius and speed that still make the turn.<small>Slow way down, or make the curve much wider.</small></div></li>
+  </ol>
+</section>
+
+<!-- ============ PRACTICE 1: WILL IT SLIDE ============ -->
+<section id="p-slide">
+  <div class="sec-head">
+    <span class="tasktag">Practice 1</span>
+    <h2>Will it slide?</h2>
+  </div>
+  <p>Find what the turn needs and what the road can give, then decide. Use g = 9.8 m/s². A new problem is generated every time.</p>
+
+  <div class="card wide">
+    <div class="card-label"><span>Will it slide?</span><span class="score" id="ws-score">0 of 0</span></div>
+    <p class="cap" id="ws-cap"></p>
+    <div class="scene roadfig"><svg id="ws-svg" viewBox="0 0 520 340" role="img" aria-labelledby="ws-desc"><desc id="ws-desc"></desc></svg></div>
+    <div class="field">
+      <label for="ws-0">1 · Friction needed, m · v² / r</label>
+      <input type="text" id="ws-0" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">N</span>
+    </div>
+    <div class="field">
+      <label for="ws-1">2 · Most the road can give, μ · F<sub>norm</sub></label>
+      <input type="text" id="ws-1" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit">N</span>
+    </div>
+    <div class="verdict" role="group" aria-label="Your answer">
+      <button class="cbtn" id="ws-make">3 · It makes the turn</button>
+      <button class="cbtn" id="ws-skid">3 · It slides</button>
+    </div>
+    <div class="fb" id="ws-fb" aria-live="polite"></div>
+    <div class="btn-row"><button class="ghost" id="ws-next">Next problem</button></div>
+    <div class="tally-h">Your results by outcome</div>
+    <div class="tally" id="ws-tally"></div>
+  </div>
+</section>
+
+<!-- ============ PRACTICE 2: SOLVE ============ -->
+<section id="p-solve">
+  <div class="sec-head">
+    <span class="tasktag">Practice 2</span>
+    <h2>Solve it</h2>
+  </div>
+  <p>Work in the order of the boxes. Use g = 9.8 m/s². Keep two decimal places on the numbers in between, and round only at the end.</p>
+
+  <div class="card wide">
+    <div class="card-label"><span>Solve it</span><span class="score" id="pv-score">0 of 0</span></div>
+    <p class="cap" id="pv-cap"></p>
+    <div class="scene" id="pv-scene"><svg id="pv-svg" viewBox="0 0 520 340" role="img" aria-labelledby="pv-desc"><desc id="pv-desc"></desc></svg></div>
+    <div class="field">
+      <label for="pv-0" id="pv-l0"></label>
+      <input type="text" id="pv-0" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit" id="pv-u0"></span>
+    </div>
+    <div class="field">
+      <label for="pv-1" id="pv-l1"></label>
+      <input type="text" id="pv-1" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit" id="pv-u1"></span>
+    </div>
+    <div class="field">
+      <label for="pv-2" id="pv-l2"></label>
+      <input type="text" id="pv-2" inputmode="decimal" autocomplete="off" placeholder="Type a number">
+      <span class="unit" id="pv-u2"></span>
+    </div>
+    <div class="fb" id="pv-fb" aria-live="polite"></div>
+    <div class="btn-row"><button id="pv-check">Check</button><button class="ghost" id="pv-next">Next problem</button></div>
+    <div class="tally-h">Your results by kind of problem</div>
+    <div class="tally" id="pv-tally"></div>
+  </div>
+</section>
+
+<!-- ============ WATCH ============ -->
+<section id="watch">
+  <div class="sec-head"><h2>Watch-outs</h2></div>
+  <ul class="wo">
+    <li><span class="myth">Friction always points backward, against the motion.</span><span class="fact">On a turn at a steady speed, the road's friction on the tires points <b>sideways, toward the center</b> of the curve. That's what turns the car.</span></li>
+    <li><span class="myth">A force throws the car to the outside when it skids.</span><span class="fact">Nothing pushes it out. There just isn't <b>enough friction</b> to pull it around, so it goes straighter than the curve and ends up on the outside.</span></li>
+    <li><span class="myth">The friction on a turning car is always μ · F<sub>norm</sub>.</span><span class="fact">That's the <b>most</b> the road can give. The friction on a car that makes the turn is exactly what it needs: m · v² / r.</span></li>
+    <li><span class="myth">Twice as fast needs twice the friction.</span><span class="fact">Speed is squared. Twice as fast needs <b>four times</b> the friction.</span></li>
+    <li><span class="myth">The most friction is μ × mass.</span><span class="fact">μ multiplies the <b>normal force</b> in newtons. A 1000 kg car with μ = 0.5 can get 0.5 × 9800 N = 4900 N, not 500 N.</span></li>
+    <li><span class="myth">You found v², so you're done.</span><span class="fact">Take the <b>square root</b>. A car going 176 m/s around a curve would be going almost 400 mph.</span></li>
+  </ul>
+</section>
+
+<!-- ============ CHECK ============ -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <p>Eight questions on cars turning on flat curves. Use g = 9.8 m/s².</p>
+  <div class="card" id="quiz"></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">That's page 3 of Unit 4</div>
+      <p>More Circular Motion pages will show up on the unit page as we go.</p>
+    </div>
+    <a href="/physics/circular-motion/">Back to Unit 4 →</a>
+  </div>
+</section>
+
+<footer>
+  <p>Friction in a circle: on a flat curve, the road's friction on the tires is the net force, so F<sub>frict</sub> = m · v² / r. The most the road can give is μ · F<sub>norm</sub>, with F<sub>norm</sub> = m · g. If the turn needs more than that, the car slides toward the outside. The practice generates new problems every time.</p>
+  <p><a href="/physics/circular-motion/forces-in-a-circle/">← Page 2: Forces in a Circle</a> · <a href="/physics/circular-motion/">← Unit 4 — Circular Motion</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   shared helpers (same on every Unit 3 and Unit 4 page)
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function randInt(lo,hi){ return lo + Math.floor(Math.random()*(hi-lo+1)); }
+var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* force colours and labels (match the CSS variables) */
+var FORCE = {
+  g:  { c:'#B23A2B', sym:'F<tspan baseline-shift="sub" font-size="70%">grav</tspan>',   html:'F<sub>grav</sub>',   name:'gravity' },
+  n:  { c:'#1B6CA8', sym:'F<tspan baseline-shift="sub" font-size="70%">norm</tspan>',   html:'F<sub>norm</sub>',   name:'normal force' },
+  f:  { c:'#A86A0C', sym:'F<tspan baseline-shift="sub" font-size="70%">frict</tspan>',   html:'F<sub>frict</sub>',   name:'friction' },
+  t:  { c:'#1E7F5C', sym:'F<tspan baseline-shift="sub" font-size="70%">tens</tspan>',   html:'F<sub>tens</sub>',   name:'tension' },
+  a:  { c:'#6B45B0', sym:'F<tspan baseline-shift="sub" font-size="70%">app</tspan>', html:'F<sub>app</sub>', name:'applied force' },
+  air:{ c:'#3E7C8A', sym:'F<tspan baseline-shift="sub" font-size="70%">air</tspan>', html:'F<sub>air</sub>', name:'air resistance' }
+};
+var SVGNS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs, parent){
+  var n = document.createElementNS(SVGNS, tag);
+  for(var k in attrs) n.setAttribute(k, attrs[k]);
+  if(parent) parent.appendChild(n);
+  return n;
+}
+/* Draw an arrow from (x1,y1) to (x2,y2). Returns the group. */
+function arrow(parent, x1, y1, x2, y2, color, width){
+  var g = svgEl('g', {}, parent), w = width || 4;
+  var dx = x2-x1, dy = y2-y1, L = Math.sqrt(dx*dx+dy*dy) || 1, ux = dx/L, uy = dy/L;
+  var head = Math.min(15, L*0.6), hw = head*0.55;
+  var bx = x2 - ux*head, by = y2 - uy*head;
+  svgEl('line', {x1:x1, y1:y1, x2:bx, y2:by, stroke:color, 'stroke-width':w, 'stroke-linecap':'round'}, g);
+  svgEl('path', {d:'M'+x2+' '+y2+' L'+(bx - uy*hw)+' '+(by + ux*hw)+' L'+(bx + uy*hw)+' '+(by - ux*hw)+' Z', fill:color}, g);
+  return g;
+}
+function label(parent, x, y, html, color, anchor, size){
+  var t = svgEl('text', {x:x, y:y, fill:color||'#16283C', 'font-family':'IBM Plex Mono,monospace', 'font-size':size||15, 'font-weight':600, 'text-anchor':anchor||'middle'}, parent);
+  t.innerHTML = html;
+  return t;
+}
+function clearSvg(svg){ Array.prototype.slice.call(svg.childNodes).forEach(function(n){ if(n.nodeName !== 'desc') svg.removeChild(n); }); }
+
+/* =========================================================
+   free-body diagram renderer
+   forces: [{k:'g'|'n'|'f'|'t'|'a'|'air', d:'up'|'down'|'left'|'right', m:<newtons>}]
+   Arrows start at the box edge, lengths scale with size.
+   Several forces in the same direction are drawn side by side.
+   ========================================================= */
+function drawFBD(svg, forces, opts){
+  opts = opts || {};
+  clearSvg(svg);
+  var W = 520, H = 360, cx = 260, cy = 180, half = 34, maxLen = opts.maxLen || 96, minLen = 28;
+  /* vertical and horizontal forces are each scaled to their own largest force,
+     so a small sideways push next to a heavy weight is still readable */
+  function axisMax(dirs){ return Math.max.apply(null, forces.filter(function(f){ return dirs.indexOf(f.d) >= 0; }).map(function(f){ return f.m; }).concat([1])); }
+  var sV = maxLen / axisMax(['up','down']), sH = maxLen / axisMax(['left','right']);
+  function len(m, d){ return Math.max(minLen, m * (d === 'up' || d === 'down' ? sV : sH)); }
+  /* box */
+  svgEl('rect', {x:cx-half, y:cy-half, width:half*2, height:half*2, rx:3, fill:'#fff', stroke:'#16283C', 'stroke-width':2.2}, svg);
+  if(opts.name) label(svg, cx, cy + 4, opts.name, '#5D6D7E', 'middle', 11);
+  var groups = { up:[], down:[], left:[], right:[] };
+  forces.forEach(function(f){ groups[f.d].push(f); });
+  Object.keys(groups).forEach(function(d){
+    var list = groups[d], n = list.length;
+    list.forEach(function(f, i){
+      var off = (i - (n-1)/2) * (n > 1 ? 34 : 0);
+      var L = len(f.m, d), c = FORCE[f.k].c, txt = FORCE[f.k].sym + ' ' + (f.txt || f.m + ' N');
+      if(d === 'up'){
+        arrow(svg, cx + off, cy - half, cx + off, cy - half - L, c, 4.5);
+        if(n > 1) label(svg, cx + off + (i === 0 ? -10 : 10), cy - half - L + 13, txt, c, i === 0 ? 'end' : 'start', 18);
+        else label(svg, cx + 12, cy - half - L + 12, txt, c, 'start', 18);
+      } else if(d === 'down'){
+        arrow(svg, cx + off, cy + half, cx + off, cy + half + L, c, 4.5);
+        if(n > 1) label(svg, cx + off + (i === 0 ? -10 : 10), cy + half + L - 4, txt, c, i === 0 ? 'end' : 'start', 18);
+        else label(svg, cx + 12, cy + half + L - 4, txt, c, 'start', 18);
+      } else if(d === 'right'){
+        arrow(svg, cx + half, cy + off, cx + half + L, cy + off, c, 4.5);
+        label(svg, cx + half + L + 8, cy + off + 6, txt, c, 'start', 18);
+      } else {
+        arrow(svg, cx - half, cy + off, cx - half - L, cy + off, c, 4.5);
+        label(svg, cx - half - L - 8, cy + off + 6, txt, c, 'end', 18);
+      }
+    });
+  });
+}
+function sumDir(forces, d){ return forces.filter(function(f){ return f.d === d; }).reduce(function(s,f){ return s + f.m; }, 0); }
+function listDir(forces, d){
+  var l = forces.filter(function(f){ return f.d === d; });
+  if(!l.length) return '0 N';
+  if(l.length === 1) return l[0].m + ' N';
+  return '(' + l.map(function(f){ return f.m; }).join(' + ') + ') N';
+}
+function describeForces(forces){
+  return forces.map(function(f){ return FORCE[f.k].name + ' ' + f.m + ' newtons ' + f.d; }).join(', ') + '.';
+}
+
+
+/* =========================================================
+   page helpers
+   ========================================================= */
+function fmt(x){ var r = Math.round(x*100)/100; return String(r); }
+function r2(x){ return Math.round(x*100)/100; }
+function parseNum(s){ s = String(s).replace(/,/g,'').trim(); if(!/^[-+]?(\d+\.?\d*|\.\d+)/.test(s)) return NaN; return parseFloat(s); }
+function close(x, ans){ return Math.abs(x - ans) <= Math.max(0.011, Math.abs(ans)*0.01); }
+function lock(ids, on){ ids.forEach(function(id){ el(id).disabled = on; }); }
+function onEnter(ids, fn){ ids.forEach(function(id){ el(id).addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); fn(); } }); }); }
+function renderTally(node, types, tally){
+  node.innerHTML = Object.keys(types).map(function(k){
+    var c = tally[k], miss = c.t > c.r;
+    return '<div class="tcell' + (miss ? ' miss' : '') + '"><span class="tl">' + types[k] + '</span><span class="tv">' + c.r + '/' + c.t + '</span></div>';
+  }).join('');
+}
+function newTally(types){ var t = {}; Object.keys(types).forEach(function(k){ t[k] = {r:0,t:0}; }); return t; }
+function massLabel(svg, m){ label(svg, 260, 201, m + ' kg', '#16283C', 'middle', 12); }
+
+/* =========================================================
+   circle geometry
+   Angles are in degrees, counterclockwise from the right (like a
+   unit circle). SVG y points down, so the sines flip sign.
+   ========================================================= */
+var VEL = '#16283C', CEN = '#A8199B', GREY = '#93A6B8', INK2 = '#3D4F63', MUTE = '#5D6D7E', OKC = '#1F6E4D', NOC = '#A93A2A', D2R = Math.PI/180;
+function P(cx, cy, rr, deg){ var t = deg*D2R; return { x:cx + rr*Math.cos(t), y:cy - rr*Math.sin(t) }; }
+/* unit vector along the circle, the way the object moves */
+function tanDir(deg, ccw){ var t = deg*D2R; return ccw ? { x:-Math.sin(t), y:-Math.cos(t) } : { x:Math.sin(t), y:Math.cos(t) }; }
+/* unit vector toward the center */
+function inDir(deg){ var t = deg*D2R; return { x:-Math.cos(t), y:Math.sin(t) }; }
+function neg(u){ return { x:-u.x, y:-u.y }; }
+function sub(s, x){ return s + '<tspan baseline-shift="sub" font-size="70%">' + x + '</tspan>'; }
+/* an arrow from point p along unit vector u: starts gap px out, len px long */
+function vec(parent, p, u, gap, len, color, w){ return arrow(parent, p.x + u.x*gap, p.y + u.y*gap, p.x + u.x*(gap+len), p.y + u.y*(gap+len), color, w || 4); }
+function orbit(parent, cx, cy, rr){ svgEl('circle', {cx:cx, cy:cy, r:rr, fill:'none', stroke:GREY, 'stroke-width':1.5, 'stroke-dasharray':'5 6'}, parent); }
+function ballAt(parent, p, rad){ svgEl('circle', {cx:p.x, cy:p.y, r:rad || 10, fill:'#fff', stroke:'#16283C', 'stroke-width':2.2}, parent); }
+function pivot(parent, cx, cy){ svgEl('circle', {cx:cx, cy:cy, r:4, fill:'#16283C'}, parent); }
+/* a curved arrow along a circle, from angle d1 to d2 (less than 180° apart) */
+function arcArrow(parent, cx, cy, rr, d1, d2, color, w){
+  var a = P(cx, cy, rr, d1), b = P(cx, cy, rr, d2), ccw = d2 > d1;
+  svgEl('path', {d:'M' + a.x + ' ' + a.y + ' A' + rr + ' ' + rr + ' 0 0 ' + (ccw ? 0 : 1) + ' ' + b.x + ' ' + b.y, fill:'none', stroke:color, 'stroke-width':w || 2.5, 'stroke-linecap':'round'}, parent);
+  var t = tanDir(d2, ccw), s = 11, hw = s*0.55, tx = b.x + t.x*7, ty = b.y + t.y*7, bx = tx - t.x*s, by = ty - t.y*s;
+  svgEl('path', {d:'M' + tx + ' ' + ty + ' L' + (bx - t.y*hw) + ' ' + (by + t.x*hw) + ' L' + (bx + t.y*hw) + ' ' + (by - t.x*hw) + ' Z', fill:color}, parent);
+}
+/* a text label dist px from p along u, anchored so it sits clear of p */
+function tagAt(parent, p, u, dist, html, color, size){
+  var x = p.x + u.x*dist, y = p.y + u.y*dist, a = u.x > 0.35 ? 'start' : (u.x < -0.35 ? 'end' : 'middle');
+  var dy = a !== 'middle' ? 5 : (u.y < 0 ? -2 : 14);
+  return label(parent, x, y + dy, html, color, a, size);
+}
+
+/* text along the segment a→b (kept upright), offset to the side given by unit vector `side` */
+function lineLabel(parent, a, b, side, html, color, size){
+  var ang = Math.atan2(b.y - a.y, b.x - a.x)/D2R;
+  if(ang > 90) ang -= 180; else if(ang <= -90) ang += 180;
+  var down = { x:-Math.sin(ang*D2R), y:Math.cos(ang*D2R) };   /* the text's own "down", in SVG coordinates */
+  var d = (side.x*down.x + side.y*down.y > 0) ? 17 : 6;
+  var m = { x:(a.x + b.x)/2 + side.x*d, y:(a.y + b.y)/2 + side.y*d };
+  var t = label(parent, m.x, m.y, html, color, 'middle', size);
+  t.setAttribute('transform', 'rotate(' + ang + ' ' + m.x + ' ' + m.y + ')');
+  return t;
+}
+
+/* =========================================================
+   page 3 · top view of a car on a flat circular road
+   The car sits on the right side of the circle, driving down the page
+   (clockwise), so the center is straight to its left.
+   o.rLabel  text on the radius line
+   o.v       text by the velocity arrow (omit for no arrow)
+   o.f       text by the friction arrow (omit for no arrow), o.fLen its length
+   o.skid    true to draw a dashed skid path off the outside of the road
+   o.note    small text in the top-left corner
+   ========================================================= */
+var G = 9.8;
+function drawRoad(svg, o){
+  clearSvg(svg);
+  var cx = 232, cy = 160, R = 128, deg = 0;
+  var p = P(cx, cy, R, deg), t = tanDir(deg, false), n = inDir(deg);
+  /* road */
+  svgEl('circle', {cx:cx, cy:cy, r:R, fill:'none', stroke:'#D5DEE6', 'stroke-width':36}, svg);
+  svgEl('circle', {cx:cx, cy:cy, r:R + 18, fill:'none', stroke:'#93A6B8', 'stroke-width':1.5}, svg);
+  svgEl('circle', {cx:cx, cy:cy, r:R - 18, fill:'none', stroke:'#93A6B8', 'stroke-width':1.5}, svg);
+  svgEl('circle', {cx:cx, cy:cy, r:R, fill:'none', stroke:'#fff', 'stroke-width':2, 'stroke-dasharray':'10 10'}, svg);
+  /* direction of travel, on the far side */
+  arcArrow(svg, cx, cy, R - 40, 200, 160, MUTE, 2.5);
+  /* center and radius (drawn up and to the left, clear of the car's arrows) */
+  pivot(svg, cx, cy);
+  label(svg, cx, cy + 20, 'center', MUTE, 'middle', 13);
+  var rp = P(cx, cy, R, 125);
+  svgEl('line', {x1:cx, y1:cy, x2:rp.x, y2:rp.y, stroke:'#16283C', 'stroke-width':1.5, 'stroke-dasharray':'4 4'}, svg);
+  if(o.rLabel) label(svg, (cx + rp.x)/2 + 10, (cy + rp.y)/2 + 2, o.rLabel, '#16283C', 'start', 15);
+  /* skid path: straighter than the road, so it ends up outside */
+  if(o.skid){
+    var e = { x:p.x + t.x*130 - n.x*70, y:p.y + t.y*130 - n.y*70 }, c = { x:p.x + t.x*80, y:p.y + t.y*80 };
+    svgEl('path', {d:'M' + p.x + ' ' + p.y + ' Q' + c.x + ' ' + c.y + ' ' + e.x + ' ' + e.y, fill:'none', stroke:NOC, 'stroke-width':2.5, 'stroke-dasharray':'7 6'}, svg);
+    label(svg, e.x + 6, e.y - 8, 'slides', NOC, 'start', 14);
+  }
+  /* arrows */
+  if(o.f){
+    var L = o.fLen || 64, a = { x:p.x + n.x*16, y:p.y + n.y*16 }, b = { x:p.x + n.x*(16 + L), y:p.y + n.y*(16 + L) };
+    arrow(svg, a.x, a.y, b.x, b.y, FORCE.f.c, 4.5);
+    label(svg, p.x - 26, p.y - 14, FORCE.f.sym + (o.f === true ? '' : ' ' + o.f), FORCE.f.c, 'end', 15);
+  }
+  if(o.v){ vec(svg, p, t, 24, 50, VEL); tagAt(svg, p, t, 84, o.v, VEL, 15); }
+  /* car, pointing the way it moves */
+  var ang = Math.atan2(t.y, t.x)/D2R, g = svgEl('g', {transform:'translate(' + p.x + ' ' + p.y + ') rotate(' + ang + ')'}, svg);
+  svgEl('rect', {x:-20, y:-11, width:40, height:22, rx:5, fill:'#fff', stroke:'#16283C', 'stroke-width':2.2}, g);
+  svgEl('rect', {x:5, y:-7, width:7, height:14, rx:2, fill:'#C3D3E0', stroke:'#16283C', 'stroke-width':1.2}, g);
+  if(o.obj) label(svg, p.x + 32, p.y - 4, o.obj, INK2, 'start', 14);
+  if(o.note) label(svg, 10, 332, o.note, INK2, 'start', 14);
+}
+/* car seen from behind: normal up, gravity down, friction toward the center (left) */
+function fbdFlat(svg, m, fr, txts, name){
+  txts = txts || {};
+  var w = r2(m*G);
+  drawFBD(svg, [{k:'n',d:'up',m:w,txt:txts.n},{k:'g',d:'down',m:w,txt:txts.g},{k:'f',d:'left',m:fr,txt:txts.f}], {name:name || 'car', maxLen:70});
+  massLabel(svg, m);
+  label(svg, 18, 34, '← center of the curve', MUTE, 'start', 13);
+}
+
+/* =========================================================
+   figures
+   ========================================================= */
+drawRoad(el('hero-svg'), { v:'v', f:true });
+fbdFlat(el('idea-svg'), 1200, 5400);
+drawRoad(el('slide-svg'), { rLabel:'r = 25 m', v:'15 m/s', f:'4900 N', fLen:40, skid:true, note:'Wet road · μ = 0.5' });
+fbdFlat(el('mu-svg'), 1000, 3600);
+drawRoad(el('vmax-svg'), { rLabel:'r = 30 m', v:'v = ?', f:true, note:'μ = 0.6' });
+drawRoad(el('rmin-svg'), { rLabel:'r = ?', v:'20 m/s', f:true, note:'Dry road · μ = 0.8' });
+
+/* =========================================================
+   Try it · make the turn
+   ========================================================= */
+(function(){
+  var M = 1200, mu = 0.8, sv = el('sm-v'), sr = el('sm-r');
+  var NAMES = { '0.8':'dry', '0.5':'wet', '0.3':'snowy', '0.1':'icy' };
+  function upd(){
+    var v = parseFloat(sv.value), r = parseFloat(sr.value);
+    el('sm-v-out').textContent = v + ' m/s';
+    el('sm-r-out').textContent = r + ' m';
+    var need = M*v*v/r, Fn = M*G, give = mu*Fn, top = Math.sqrt(give*r/M), ok = need <= give + 1e-9;
+    var big = Math.max(need, give);
+    el('sm-bn').style.width = (need/big*100) + '%';
+    el('sm-bg').style.width = (give/big*100) + '%';
+    el('sm-n').innerHTML = M + ' × ' + v + '² / ' + r + ' = <b>' + fmt(need) + ' N</b>';
+    el('sm-g').innerHTML = mu + ' × ' + fmt(Fn) + ' = <b>' + fmt(give) + ' N</b>';
+    el('sm-top').innerHTML = '√(' + fmt(give) + ' × ' + r + ' / ' + M + ') = <b>' + fmt(top) + ' m/s</b>';
+    var msg;
+    if(ok){
+      msg = 'Makes the turn. The road can give up to ' + fmt(give) + ' N, and the turn only needs ' + fmt(need) + ' N, so static friction gives exactly ' + fmt(need) + ' N toward the center.';
+    } else {
+      msg = 'Slides! The turn needs ' + fmt(need) + ' N, but the ' + NAMES[String(mu)] + ' road can only give ' + fmt(give) + ' N. The car goes straighter than the curve and slides to the outside. Slow down to ' + fmt(top) + ' m/s or less, or take a wider curve.';
+    }
+    el('sm-state').textContent = msg;
+    el('sm-state').className = 'state' + (ok ? '' : ' cut');
+    var F = ok ? need : give, L = 18 + 72*Math.min(F, 15000)/15000;
+    drawRoad(el('sm-svg'), { rLabel:'r = ' + r + ' m', v:v + ' m/s', f:fmt(F) + ' N', fLen:L, skid:!ok, note:'1200 kg · μ = ' + mu });
+    el('sm-desc').textContent = 'Top view of a 1200 kilogram car at ' + v + ' meters per second on a flat curve with a radius of ' + r + ' meters. ' +
+      (ok ? 'Friction of ' + fmt(need) + ' newtons points toward the center and the car follows the curve.'
+          : 'The road can only give ' + fmt(give) + ' newtons of friction, so the car slides off the outside of the curve.');
+  }
+  var bs = Array.prototype.slice.call(document.querySelectorAll('#sim [data-mu]'));
+  bs.forEach(function(b){ b.addEventListener('click', function(){
+    bs.forEach(function(x){ x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
+    mu = parseFloat(b.dataset.mu); upd();
+  }); });
+  [sv, sr].forEach(function(i){ i.addEventListener('input', upd); });
+  upd();
+})();
+
+/* =========================================================
+   shared problem pieces
+   ========================================================= */
+var VEHICLES = [
+  { n:'car', ms:[900,1000,1200,1500] },
+  { n:'car', ms:[1000,1100,1300,1400] },
+  { n:'pickup truck', ms:[2000,2200,2500] },
+  { n:'minivan', ms:[1800,2000] }
+];
+var ROADS = [ { n:'dry', mu:0.8 }, { n:'dry', mu:0.7 }, { n:'wet', mu:0.5 }, { n:'wet', mu:0.4 }, { n:'snowy', mu:0.3 }, { n:'icy', mu:0.1 } ];
+
+/* =========================================================
+   Practice 1 · will it slide?
+   ========================================================= */
+var WS_TYPES = { make:'Makes the turn', skid:'Slides' };
+var wsScore = Score(el('ws-score')), wsTally = newTally(WS_TYPES), wsCur = null, wsDone = false, WS_IN = ['ws-0','ws-1'];
+function wsMake(){
+  var want = Math.random() < .5 ? 'make' : 'skid', p, g = 0;
+  do {
+    var veh = pick(VEHICLES), road = pick(ROADS);
+    p = { veh:veh.n, m:pick(veh.ms), road:road.n, mu:road.mu, r:pick([20,25,30,40,50,60,80,100]), v:pick([6,8,10,12,14,15,16,18,20,22,25]) };
+    p.need = p.m*p.v*p.v/p.r; p.Fn = p.m*G; p.give = p.mu*p.Fn; p.ratio = p.need/p.give;
+    g++;
+  } while(g < 300 && (Math.abs(p.ratio - 1) < 0.12 || (want === 'make') !== (p.ratio < 1) || p.ratio > 4 || p.ratio < 0.25));
+  p.key = p.ratio < 1 ? 'make' : 'skid';
+  p.need2 = r2(p.need); p.Fn2 = r2(p.Fn); p.give2 = r2(p.mu*p.Fn2);
+  return p;
+}
+function wsNew(){
+  var p = wsMake();
+  wsCur = p; wsDone = false;
+  el('ws-cap').innerHTML = 'A <b>' + p.m + ' kg ' + p.veh + '</b> takes a flat curve with a radius of <b>' + p.r + ' m</b> at <b>' + p.v + ' m/s</b>. The road is ' + p.road + ', so μ = <b>' + p.mu + '</b>. Does it make the turn?';
+  drawRoad(el('ws-svg'), { rLabel:'r = ' + p.r + ' m', v:p.v + ' m/s', f:'?', note:p.m + ' kg · ' + p.road + ' road · μ = ' + p.mu });
+  el('ws-desc').textContent = 'Top view of the ' + p.veh + ' on a flat curve with a radius of ' + p.r + ' meters, moving at ' + p.v + ' meters per second. Friction points toward the center. Its size is unknown.';
+  WS_IN.forEach(function(id){ el(id).value = ''; el(id).classList.remove('ok-in','no-in'); });
+  lock(WS_IN.concat(['ws-make','ws-skid']), false);
+  ['ws-make','ws-skid'].forEach(function(id){ el(id).classList.remove('yes','no','reveal'); });
+  hideFb(el('ws-fb'));
+}
+function wsCheck(choice){
+  if(wsDone) return;
+  var p = wsCur, xs = WS_IN.map(function(id){ return Math.abs(parseNum(el(id).value)); });
+  if(xs.some(isNaN)){ setFb(el('ws-fb'),'hint','Fill in both boxes first, then decide. Type just the number; the unit is already there.'); return; }
+  var ok0 = close(xs[0], p.need) || close(xs[0], p.need2);
+  var ok1 = close(xs[1], p.give) || close(xs[1], p.give2);
+  var okV = choice === p.key, tips = [];
+  if(!ok0){
+    var m = p.m, v = p.v, r = p.r;
+    if(close(xs[0], m*v/r)) tips.push('For the friction needed, square the speed first.');
+    else if(close(xs[0], v*v/r)) tips.push('For the friction needed, that’s a<sub>c</sub>. Multiply by the mass.');
+    else if(close(xs[0], m*v*v*r)) tips.push('For the friction needed, divide by r. Don’t multiply.');
+    else if(close(xs[0], m*v*v)) tips.push('For the friction needed, don’t forget to divide by r.');
+  }
+  if(!ok1){
+    if(close(xs[1], p.mu*p.m)) tips.push('For the most the road can give, μ multiplies the normal force (m · g = ' + fmt(p.Fn) + ' N), not the mass.');
+    else if(close(xs[1], p.Fn)) tips.push('For the most the road can give, that’s F<sub>norm</sub>. Multiply it by μ.');
+    else if(close(xs[1], p.Fn/p.mu)) tips.push('For the most the road can give, multiply by μ. Don’t divide.');
+  }
+  /* a verdict that matches the student's own two numbers is good reasoning */
+  if(!okV && (!ok0 || !ok1)){
+    var theirs = xs[0] <= xs[1] ? 'make' : 'skid';
+    if(theirs === choice) tips.push('Your decision matches your own two numbers, so the comparison is right. Fix the numbers and it changes.');
+  } else if(!okV){
+    tips.push('Compare: the turn needs ' + fmt(p.need2) + ' N and the road can give ' + fmt(p.give2) + ' N. ' + (p.key === 'make' ? 'Needed is less, so it makes the turn.' : 'Needed is more, so it slides.'));
+  }
+  var all = ok0 && ok1 && okV;
+  wsDone = true;
+  lock(WS_IN.concat(['ws-make','ws-skid']), true);
+  el(WS_IN[0]).classList.add(ok0 ? 'ok-in' : 'no-in');
+  el(WS_IN[1]).classList.add(ok1 ? 'ok-in' : 'no-in');
+  var pickedId = choice === 'make' ? 'ws-make' : 'ws-skid', rightId = p.key === 'make' ? 'ws-make' : 'ws-skid';
+  el(pickedId).classList.add(okV ? 'yes' : 'no');
+  if(!okV) el(rightId).classList.add('reveal');
+  wsScore.add(all); wsTally[p.key].t++; if(all) wsTally[p.key].r++;
+  renderTally(el('ws-tally'), WS_TYPES, wsTally);
+  var F = p.key === 'make' ? p.need : p.give;
+  drawRoad(el('ws-svg'), { rLabel:'r = ' + p.r + ' m', v:p.v + ' m/s', f:fmt(p.key === 'make' ? p.need2 : p.give2) + ' N', fLen:18 + 60*Math.min(1, F/Math.max(p.need, p.give)), skid:p.key === 'skid', note:p.m + ' kg · ' + p.road + ' road · μ = ' + p.mu });
+  var work = [
+    '<b>Needed:</b> m · v² / r = ' + p.m + ' kg × (' + p.v + ' m/s)² / ' + p.r + ' m = <b>' + fmt(p.need2) + ' N</b>',
+    '<b>Can give:</b> F<sub>norm</sub> = m · g = ' + p.m + ' × 9.8 = ' + fmt(p.Fn2) + ' N',
+    'μ · F<sub>norm</sub> = ' + p.mu + ' × ' + fmt(p.Fn2) + ' N = <b>' + fmt(p.give2) + ' N</b>',
+    fmt(p.need2) + ' N ' + (p.key === 'make' ? '&lt;' : '&gt;') + ' ' + fmt(p.give2) + ' N, so <b>' + (p.key === 'make' ? 'it makes the turn' : 'it slides') + '</b>.'
+  ];
+  var after = p.key === 'make' ? 'Static friction gives exactly the ' + fmt(p.need2) + ' N the turn needs.'
+                               : 'The fastest it could take this curve is √(' + fmt(p.give2) + ' × ' + p.r + ' / ' + p.m + ') = ' + fmt(Math.sqrt(p.give2*p.r/p.m)) + ' m/s.';
+  var head = all ? '<b>All right.</b>' : '<b>Not this one.</b>' + (ok0 && ok1 ? '' : ' The boxes in red need another look.');
+  setFb(el('ws-fb'), all ? 'good' : 'bad', '<p>' + head + (tips.length ? ' ' + tips.join(' ') : '') + '</p><div class="work">' + work.join('<br>') + '</div><p>' + after + '</p>');
+}
+el('ws-make').addEventListener('click', function(){ wsCheck('make'); });
+el('ws-skid').addEventListener('click', function(){ wsCheck('skid'); });
+el('ws-next').addEventListener('click', wsNew);
+
+/* =========================================================
+   Practice 2 · solve it
+   Each problem has three steps. A step is right if it matches the exact
+   answer, the two-decimal chain, or follows correctly from the student's
+   own (right) answers to the steps before.
+   ========================================================= */
+var PV_TYPES = { fneed:'Smallest μ', fmax:'Fastest speed', rmin:'Tightest curve' };
+function pvFlatNeed(){
+  var veh = pick(VEHICLES), p, g = 0;
+  do { p = { m:pick(veh.ms), r:pick([30,40,50,60,80,100]), v:pick([10,12,14,15,16,18,20,22]) }; g++; }
+  while((p.v*p.v/p.r/G < 0.2 || p.v*p.v/p.r/G > 0.9) && g < 80);
+  var m = p.m, r = p.r, v = p.v, a = v*v/r, F = m*a, Fn = m*G, mu = F/Fn;
+  var a2 = r2(a), F2 = r2(m*a2), mu2 = r2(F2/r2(Fn));
+  return { key:'fneed',
+    cap:'A <b>' + m + ' kg ' + veh.n + '</b> takes a flat curve with a radius of <b>' + r + ' m</b> at <b>' + v + ' m/s</b>. Find the smallest μ that keeps it from sliding.',
+    draw:function(svg){ svg.setAttribute('viewBox','0 0 520 360'); fbdFlat(svg, m, F, {n:'?', g:'?', f:'?'}, veh.n === 'car' ? 'car' : veh.n.split(' ')[0]); },
+    desc:'Free-body diagram of the ' + veh.n + ' seen from behind: normal force up, gravity down, friction toward the center of the curve. The sizes are unknown.',
+    steps:[
+      { lab:'1 · Centripetal acceleration a<sub>c</sub>', unit:'m/s²', ex:a, ch:a2,
+        tip:function(x){ if(close(x, v/r)) return 'For a<sub>c</sub>, square the speed first, then divide by r.'; if(close(x, v*v*r)) return 'For a<sub>c</sub>, divide v² by r. Don’t multiply.'; if(close(x, v*v)) return 'For a<sub>c</sub>, don’t forget to divide by r.'; } },
+      { lab:'2 · Friction needed F<sub>frict</sub>', unit:'N', ex:F, ch:F2, prev:function(xs){ return m*xs[0]; },
+        tip:function(x){ if(close(x, Fn)) return 'For F<sub>frict</sub>, that’s the weight. Friction is the net force here: F<sub>frict</sub> = m · a<sub>c</sub>.'; if(close(x, m*v)) return 'For F<sub>frict</sub>, multiply the mass by a<sub>c</sub>, not by the speed.'; } },
+      { lab:'3 · Smallest μ', unit:'(no unit)', ex:mu, ch:mu2, prev:function(xs){ return xs[1]/Fn; },
+        tip:function(x, xs){ if(close(x, Fn/F) || close(x, Fn/xs[1])) return 'For μ, it’s upside down: μ = F<sub>frict</sub> / F<sub>norm</sub>.'; if(close(x, F/m) || close(x, xs[1]/m)) return 'For μ, divide by the normal force (m · g = ' + fmt(Fn) + ' N), not the mass.'; } }
+    ],
+    work:['a<sub>c</sub> = v² / r = (' + v + ' m/s)² / ' + r + ' m = <b>' + fmt(a2) + ' m/s²</b>',
+          'F<sub>frict</sub> = m · a<sub>c</sub> = ' + m + ' kg × ' + fmt(a2) + ' m/s² = <b>' + fmt(F2) + ' N</b>',
+          'F<sub>norm</sub> = m · g = ' + m + ' kg × 9.8 m/s² = ' + fmt(Fn) + ' N',
+          'μ = F<sub>frict</sub> / F<sub>norm</sub> = ' + fmt(F2) + ' N / ' + fmt(Fn) + ' N = <b>' + fmt(mu2) + '</b>'],
+    after:'Any road with a μ at least this big works. Less than that, and the road can’t grip hard enough.' };
+}
+function pvFlatMax(){
+  var veh = pick(VEHICLES), m = pick(veh.ms), road = pick(ROADS), mu = road.mu, r = pick([20,25,30,40,50,60,80]);
+  var Fn = m*G, Ff = mu*Fn, v = Math.sqrt(Ff*r/m);
+  var Fn2 = r2(Fn), Ff2 = r2(mu*Fn2), v2 = r2(Math.sqrt(Ff2*r/m));
+  return { key:'fmax',
+    cap:'A <b>' + m + ' kg ' + veh.n + '</b> drives on a flat curve with a radius of <b>' + r + ' m</b>. The road is ' + road.n + ', so μ = <b>' + mu + '</b>. Find the fastest speed v it can have without sliding.',
+    draw:function(svg){ svg.setAttribute('viewBox','0 0 520 340'); drawRoad(svg, { rLabel:'r = ' + r + ' m', v:'v = ?', f:true, note:m + ' kg · μ = ' + mu }); },
+    desc:'Top view of the ' + veh.n + ' going around a flat curve of radius ' + r + ' meters. Its speed is unknown.',
+    steps:[
+      { lab:'1 · Normal force F<sub>norm</sub>', unit:'N', ex:Fn, ch:Fn2,
+        tip:function(x){ if(close(x, m)) return 'For F<sub>norm</sub>, multiply the mass by g = 9.8 m/s².'; } },
+      { lab:'2 · Most friction F<sub>frict</sub>', unit:'N', ex:Ff, ch:Ff2, prev:function(xs){ return mu*xs[0]; },
+        tip:function(x){ if(close(x, mu*m)) return 'For F<sub>frict</sub>, μ multiplies the normal force in N, not the mass.'; if(close(x, Fn/mu)) return 'For F<sub>frict</sub>, multiply by μ. Don’t divide.'; } },
+      { lab:'3 · Fastest speed v', unit:'m/s', ex:v, ch:v2, prev:function(xs){ return Math.sqrt(xs[1]*r/m); },
+        tip:function(x, xs){ if(close(x, Ff*r/m) || close(x, xs[1]*r/m)) return 'For v, that’s v². Take the square root.'; if(close(x, Math.sqrt(Ff/(m*r))) || close(x, Math.sqrt(Ff*m/r))) return 'For v, solve F<sub>frict</sub> = m · v² / r carefully: v² = F<sub>frict</sub> × r / m.'; if(close(x, Math.sqrt(Ff/m))) return 'For v, don’t forget the radius: v² = F<sub>frict</sub> × r / m.'; } }
+    ],
+    work:['F<sub>norm</sub> = m · g = ' + m + ' kg × 9.8 m/s² = <b>' + fmt(Fn2) + ' N</b>',
+          'F<sub>frict</sub> = μ · F<sub>norm</sub> = ' + mu + ' × ' + fmt(Fn2) + ' N = <b>' + fmt(Ff2) + ' N</b>',
+          'F<sub>frict</sub> = m · v² / r → v² = ' + fmt(Ff2) + ' × ' + r + ' / ' + m + ' = ' + fmt(Ff2*r/m),
+          'v = √' + fmt(Ff2*r/m) + ' = <b>' + fmt(v2) + ' m/s</b>'],
+    after:'Any faster, and the curve needs more friction than the road can give.' };
+}
+function pvRmin(){
+  var veh = pick(VEHICLES), m = pick(veh.ms), road, v, g = 0;
+  do { road = pick(ROADS); v = pick([8,10,12,14,15,16,18,20,22,25]); g++; }
+  while((v*v/(road.mu*G) < 12 || v*v/(road.mu*G) > 200) && g < 100);
+  var mu = road.mu, Fn = m*G, Ff = mu*Fn, r = m*v*v/Ff;
+  var Fn2 = r2(Fn), Ff2 = r2(mu*Fn2), rr2 = r2(m*v*v/Ff2);
+  return { key:'rmin',
+    cap:'A <b>' + m + ' kg ' + veh.n + '</b> is going <b>' + v + ' m/s</b> on a flat, ' + road.n + ' road, so μ = <b>' + mu + '</b>. Find the smallest radius r it can turn on without sliding.',
+    draw:function(svg){ svg.setAttribute('viewBox','0 0 520 340'); drawRoad(svg, { rLabel:'r = ?', v:v + ' m/s', f:true, note:m + ' kg · μ = ' + mu }); },
+    desc:'Top view of the ' + veh.n + ' moving at ' + v + ' meters per second on a flat curve. The radius is unknown.',
+    steps:[
+      { lab:'1 · Normal force F<sub>norm</sub>', unit:'N', ex:Fn, ch:Fn2,
+        tip:function(x){ if(close(x, m)) return 'For F<sub>norm</sub>, multiply the mass by g = 9.8 m/s².'; } },
+      { lab:'2 · Most friction F<sub>frict</sub>', unit:'N', ex:Ff, ch:Ff2, prev:function(xs){ return mu*xs[0]; },
+        tip:function(x){ if(close(x, mu*m)) return 'For F<sub>frict</sub>, μ multiplies the normal force in N, not the mass.'; if(close(x, Fn/mu)) return 'For F<sub>frict</sub>, multiply by μ. Don’t divide.'; } },
+      { lab:'3 · Smallest radius r', unit:'m', ex:r, ch:rr2, prev:function(xs){ return m*v*v/xs[1]; },
+        tip:function(x, xs){ if(close(x, Ff/(m*v*v)) || close(x, xs[1]/(m*v*v))) return 'For r, it’s upside down: r = m · v² / F<sub>frict</sub>.'; if(close(x, m*v/Ff) || close(x, m*v/xs[1])) return 'For r, square the speed first: r = m · v² / F<sub>frict</sub>.'; if(close(x, v*v/Ff) || close(x, v*v/xs[1])) return 'For r, don’t forget the mass: r = m · v² / F<sub>frict</sub>.'; } }
+    ],
+    work:['F<sub>norm</sub> = m · g = ' + m + ' kg × 9.8 m/s² = <b>' + fmt(Fn2) + ' N</b>',
+          'F<sub>frict</sub> = μ · F<sub>norm</sub> = ' + mu + ' × ' + fmt(Fn2) + ' N = <b>' + fmt(Ff2) + ' N</b>',
+          'F<sub>frict</sub> = m · v² / r → r = ' + m + ' × ' + v + '² / ' + fmt(Ff2),
+          'r = <b>' + fmt(rr2) + ' m</b>'],
+    after:'Any tighter curve (smaller r) needs more friction than the road can give.' };
+}
+var pvScore = Score(el('pv-score')), pvTally = newTally(PV_TYPES), pvCur = null, pvDone = false;
+var PV_INPUTS = ['pv-0','pv-1','pv-2'];
+function pvNew(){
+  var key, g = 0;
+  do { key = pick(Object.keys(PV_TYPES)); g++; } while(pvCur && g < 10 && key === pvCur.key);
+  var q = key === 'fneed' ? pvFlatNeed() : (key === 'fmax' ? pvFlatMax() : pvRmin());
+  pvCur = q; pvDone = false;
+  el('pv-cap').innerHTML = q.cap;
+  q.draw(el('pv-svg'));
+  el('pv-desc').textContent = q.desc;
+  q.steps.forEach(function(s, i){ el('pv-l' + i).innerHTML = s.lab; el('pv-u' + i).textContent = s.unit; });
+  PV_INPUTS.forEach(function(id){ el(id).value = ''; el(id).classList.remove('ok-in','no-in'); });
+  lock(PV_INPUTS.concat(['pv-check']), false);
+  hideFb(el('pv-fb'));
+}
+function pvCheck(){
+  if(pvDone) return;
+  var q = pvCur, xs = PV_INPUTS.map(function(id){ return Math.abs(parseNum(el(id).value)); });
+  if(xs.some(isNaN)){ setFb(el('pv-fb'),'hint','Fill in every box, in order. Type just the number; the unit is already there.'); return; }
+  var oks = [], tips = [], allPrev = true;
+  q.steps.forEach(function(s, i){
+    var x = xs[i], ok = close(x, s.ex) || close(x, s.ch), fromYours = s.prev && close(x, s.prev(xs));
+    if(!ok && fromYours && allPrev) ok = true;
+    oks.push(ok);
+    if(!ok){
+      if(fromYours) tips.push('Your step ' + (i+1) + ' is right for your earlier answers, so that step’s method is right. Fix the earlier step and the rest follows.');
+      else { var t = s.tip && s.tip(x, xs); if(t) tips.push(t); }
+    }
+    allPrev = allPrev && ok;
+  });
+  var all = oks.every(Boolean);
+  pvDone = true; lock(PV_INPUTS.concat(['pv-check']), true);
+  PV_INPUTS.forEach(function(id, i){ el(id).classList.add(oks[i] ? 'ok-in' : 'no-in'); });
+  pvScore.add(all); pvTally[q.key].t++; if(all) pvTally[q.key].r++;
+  renderTally(el('pv-tally'), PV_TYPES, pvTally);
+  var head = all ? '<b>All three right.</b>' : '<b>Not this one.</b> The boxes in red need another look.';
+  setFb(el('pv-fb'), all ? 'good' : 'bad', '<p>' + head + (tips.length ? ' ' + tips.join(' ') : '') + '</p><div class="work">' + q.work.join('<br>') + '</div><p>' + q.after + '</p>');
+}
+el('pv-check').addEventListener('click', pvCheck);
+el('pv-next').addEventListener('click', pvNew);
+onEnter(PV_INPUTS, pvCheck);
+
+/* =========================================================
+   quiz
+   ========================================================= */
+var QUIZ = [
+  { stem:'A car drives around a flat curve at a steady speed. Which way does the friction from the road on the tires point?',
+    opts:['Forward, the way the car is going','Backward, against the motion','Toward the center of the curve','Toward the outside of the curve'],
+    ans:2,
+    why:'Friction is the only sideways force on the car, and it’s what turns it. The net force in a circle points toward the center, so friction does too.' },
+  { stem:'A 1500 kg car drives around a flat curve with a radius of 60 m at 12 m/s. Find the friction force F<sub>frict</sub> on the car.',
+    opts:['300 N','3600 N','14700 N','216000 N'],
+    ans:1,
+    why:'F<sub>frict</sub> = m · v² / r = 1500 × 144 / 60 = 3600 N. 300 N forgets to square the speed, 216000 N forgets to divide by r, and 14700 N is the weight.' },
+  { stem:'A car takes a curve at 10 m/s. Later it takes the same curve at 20 m/s. How much friction does the turn need now?',
+    opts:['The same','2 × as much','4 × as much','Half as much'],
+    ans:2,
+    why:'Friction needed is m · v² / r. The speed is squared, so twice the speed needs 2² = 4 times the friction.' },
+  { stem:'A 1000 kg car is on a flat road with μ = 0.4. Find the most friction the road can give.',
+    opts:['400 N','3920 N','9800 N','24500 N'],
+    ans:1,
+    why:'F<sub>norm</sub> = 1000 × 9.8 = 9800 N. Most friction = μ · F<sub>norm</sub> = 0.4 × 9800 = 3920 N. 400 N multiplies μ by the mass instead of the normal force, and 24500 N divides by μ.' },
+  { stem:'A 1200 kg car takes a flat curve with a radius of 40 m at 15 m/s on a wet road (μ = 0.5). What happens?',
+    opts:['It makes the turn: it needs 5880 N and the road can give 6750 N','It slides: it needs 6750 N but the road can only give 5880 N','It makes the turn, because static friction always matches what’s needed','You can’t tell without knowing the engine force'],
+    ans:1,
+    why:'Needed: 1200 × 15² / 40 = 6750 N. Can give: 0.5 × 1200 × 9.8 = 5880 N. The turn needs more than the road can give, so the car slides. Static friction matches what’s needed only up to its limit.' },
+  { stem:'A 1000 kg car drives on a flat curve with a radius of 20 m. The coefficient of friction is 0.8. Find the fastest speed v it can have without sliding.',
+    opts:['2.8 m/s','12.52 m/s','14 m/s','156.8 m/s'],
+    ans:1,
+    why:'F<sub>norm</sub> = 9800 N. F<sub>frict</sub> = 0.8 × 9800 = 7840 N. 7840 = 1000 × v² / 20, so v² = 156.8 and v = 12.52 m/s. 156.8 m/s forgets the square root, 14 m/s leaves out μ, and 2.8 m/s leaves out the radius.' },
+  { stem:'A road goes from dry to icy. What happens to the fastest speed a car can safely take a curve?',
+    opts:['It goes up','It goes down','It stays the same','It depends only on the car’s mass'],
+    ans:1,
+    why:'Ice has a much smaller μ, so the road can give much less friction. With less friction available, the car has to go slower to make the same turn.' },
+  { stem:'A car takes a curve too fast and skids. Which way does it slide?',
+    opts:['Toward the center of the curve','Toward the outside of the curve','Straight backward','It spins in place'],
+    ans:1,
+    why:'There isn’t enough friction to pull it around the curve, so it goes straighter than the road does. That carries it toward the outside. No force pushes it outward; there just isn’t enough force pulling it in.' }
+];
+
+(function buildQuiz(){
+  var host = el('quiz'), html = '', answered = 0, right = 0;
+  QUIZ.forEach(function(q,qi){
+    html += '<div class="q"><p class="stem">' + (qi+1) + '. ' + q.stem + '</p><div class="opts" id="q' + qi + '">';
+    q.opts.forEach(function(o,oi){ html += '<button class="opt" data-q="' + qi + '" data-o="' + oi + '">' + o + '</button>'; });
+    html += '</div><div class="fb" id="qfb' + qi + '"></div></div>';
+  });
+  html += '<div class="quiz-sum" id="quiz-sum" aria-live="polite"></div>';
+  host.innerHTML = html;
+  Array.prototype.forEach.call(host.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = Number(b.dataset.q), oi = Number(b.dataset.o), q = QUIZ[qi];
+      Array.prototype.forEach.call(el('q'+qi).querySelectorAll('.opt'), function(other,i){
+        other.disabled = true;
+        if(i === q.ans) other.classList.add('reveal');
+      });
+      b.classList.add(oi === q.ans ? 'picked-yes' : 'picked-no');
+      answered++; if(oi === q.ans) right++;
+      setFb(el('qfb'+qi), oi === q.ans ? 'good' : 'bad',
+        '<b>' + (oi === q.ans ? 'Yes.' : 'Not this one.') + '</b> ' + q.why);
+      el('quiz-sum').textContent = right + ' of ' + answered + ' correct' + (answered === QUIZ.length ? ' · reload the page to try again' : '');
+    });
+  });
+})();
+
+/* boot */
+renderTally(el('ws-tally'), WS_TYPES, wsTally);
+renderTally(el('pv-tally'), PV_TYPES, pvTally);
+wsNew(); pvNew();
+</script>
+</body>
+</html>
