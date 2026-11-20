@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2.6 Place and Channels | AP Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1D2433; --ink2:#3F4859; --mute:#626B7C;
+  --wash:#F1EEE8; --card:#FCFBF9; --line:#D5CFC4; --line-soft:#E6E1D8;
+  --indigo:#3A55A0; --indigo-dk:#273C78; --indigo-lite:#DCE3F4;
+  --amber:#A8670F; --amber-dk:#7A4A08; --amber-lite:#F6E7CB;
+  --ok:#2E6B47; --ok-bg:#E3F0E7;
+  --no:#A63D2F; --no-bg:#F7E5E1;
+  --display:"Space Grotesk",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:64px}
+body{margin:0;background:var(--wash);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:50;background:rgba(241,238,232,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:900px;margin:0 auto;padding:10px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bar-title{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink)}
+.bar-sub{font-family:var(--mono);font-size:11.5px;color:var(--mute);letter-spacing:.02em}
+.bar a{color:inherit;text-decoration:none}
+
+header.hero{padding:60px 0 36px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--indigo-dk)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(40px,7vw,68px);line-height:1;margin:16px 0 0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--indigo)}
+.lede{font-size:clamp(18px,2.3vw,21px);max-width:50ch;color:var(--ink2);margin:20px 0 0}
+
+/* hero signature: the learning objectives as a path */
+.board{margin:34px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--card);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.lo{padding:18px 18px 20px;border-left:1px solid var(--line-soft);text-decoration:none;color:var(--ink);display:block;position:relative}
+.lo:first-child{border-left:none}
+.lo:hover{background:#fff}
+.lo .code{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--indigo-dk);background:var(--indigo-lite);border-radius:2px;padding:2px 7px;white-space:nowrap}
+.lo .lq{display:block;font-family:var(--display);font-weight:600;font-size:19px;line-height:1.2;margin:12px 0 6px;letter-spacing:-.01em}
+.lo .d{display:block;font-size:14px;color:var(--mute);line-height:1.45}
+
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:22px 0 8px}
+.jump a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--ink2);border:1px solid var(--line);background:var(--card);border-radius:3px;padding:5px 10px}
+.jump a:hover{border-color:var(--indigo);color:var(--indigo-dk)}
+
+section{padding:46px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo-dk);background:var(--indigo-lite);border-radius:2px;padding:3px 7px;white-space:nowrap}
+.tag.plain{color:var(--ink2);background:var(--line-soft)}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(27px,4.2vw,38px);line-height:1.08;margin:0;letter-spacing:-.02em}
+h3{font-family:var(--display);font-weight:600;font-size:20px;letter-spacing:-.01em;margin:34px 0 8px}
+p{margin:14px 0}
+ul,ol{margin:14px 0;padding-left:22px}
+li{margin:7px 0}
+a{color:var(--indigo-dk)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.def{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:0 4px 4px 0;padding:16px 20px;margin:22px 0}
+.def .term{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.def p{margin:6px 0 0;font-size:17px}
+.def .ek{font-family:var(--mono);font-size:11px;color:var(--mute);float:right;margin-left:12px}
+
+.note{border-left:3px solid var(--amber);background:var(--amber-lite);padding:14px 18px;border-radius:0 3px 3px 0;margin:22px 0;font-size:16px}
+.note b{font-weight:600}
+.pf{border:1px solid var(--line);background:var(--card);border-radius:4px;padding:18px 20px;margin:24px 0}
+.pf .pf-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ok);margin-bottom:4px}
+
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:22px 0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:22px 0}
+.mini{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px 18px}
+.mini .n{font-family:var(--mono);font-size:12px;color:var(--indigo-dk)}
+.mini h4{font-family:var(--body);font-size:16px;font-weight:600;margin:6px 0 4px}
+.mini p{margin:0;font-size:15.5px;color:var(--ink2)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.card-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.score{font-family:var(--mono);font-size:12px;color:var(--mute);margin-left:auto;text-transform:none;letter-spacing:0}
+.smallprint{font-size:14.5px;color:var(--mute)}
+.prompt{font-size:clamp(18px,2.6vw,21px);font-weight:500;line-height:1.45;margin:4px 0 0}
+
+button{font-family:var(--mono);font-size:13px;letter-spacing:.03em;cursor:pointer;background:var(--ink);color:#F7F6F3;border:1px solid var(--ink);border-radius:3px;padding:9px 15px}
+button:hover{background:var(--indigo-dk);border-color:var(--indigo-dk)}
+button[disabled]{cursor:default}
+button.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
+button.ghost:hover{background:var(--line-soft);color:var(--ink);border-color:var(--indigo)}
+button:focus-visible,a:focus-visible{outline:2.5px solid var(--indigo);outline-offset:2px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+/* answer buttons for the drills */
+.pk{display:grid;gap:10px;margin-top:16px}
+.pk.c3{grid-template-columns:repeat(3,1fr)}
+.pk.c4{grid-template-columns:repeat(4,1fr)}
+.pbtn{background:#fff;color:var(--ink);border:1px solid var(--line);border-top:3px solid var(--c,var(--line));font-size:14px;padding:13px 10px;text-align:center;line-height:1.35}
+.pbtn:hover{background:#fff;color:var(--ink);border-color:var(--indigo);border-top-color:var(--c,var(--indigo))}
+.pbtn small{display:block;font-family:var(--body);font-size:13px;color:var(--mute);letter-spacing:0;margin-top:2px}
+.pbtn.yes{background:var(--ok-bg);border-color:var(--ok);color:#1C4A30}
+.pbtn.no{background:var(--no-bg);border-color:var(--no);color:#7A2B20}
+.pbtn.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+
+.fb{margin-top:14px;padding:12px 15px;border-radius:3px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.fb.good{background:var(--ok-bg);border-left:3px solid var(--ok);color:#1C4A30}
+.fb.bad{background:var(--no-bg);border-left:3px solid var(--no);color:#7A2B20}
+.fb.hint{background:var(--line-soft);border-left:3px solid var(--indigo);color:var(--ink2)}
+.fb b{font-weight:600}
+.fb p{margin:6px 0 0}
+.fb p:first-child{margin-top:0}
+
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.opt{text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:11px 14px;font-family:var(--body);font-size:16px;cursor:pointer;line-height:1.45;letter-spacing:0}
+.opt:hover{border-color:var(--indigo);background:#fff;color:var(--ink)}
+.opt.picked-yes{background:var(--ok-bg);border-color:var(--ok)}
+.opt.picked-no{background:var(--no-bg);border-color:var(--no)}
+.opt.reveal{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opt[disabled]{cursor:default;opacity:.96}
+
+table{border-collapse:collapse;width:100%;font-size:15px;margin:18px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto;margin:18px 0;-webkit-overflow-scrolling:touch}
+.tbl table{margin:0}
+
+.q{border-top:1px solid var(--line-soft);padding:22px 0 6px}
+.q:first-child{border-top:none;padding-top:4px}
+.q .qn{font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.06em}
+.q .stem{font-weight:500;margin:4px 0 0}
+.stim{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:14px 16px;margin:0 0 6px}
+.stim p{margin:0 0 8px;font-size:15.5px}
+.stim table{margin:6px 0 0;font-size:14.5px}
+.qsum{font-family:var(--display);font-weight:700;font-size:22px;margin:18px 0 0}
+
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.next{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;background:var(--ink);color:#ECEDEF;border-radius:4px;padding:22px 24px;margin:34px 0 0}
+.next p{margin:0;font-size:16px;color:#BFC5CF}
+.next .nt{font-family:var(--display);font-weight:700;font-size:24px;color:#fff;margin:0 0 4px}
+.next a{font-family:var(--mono);font-size:13px;text-decoration:none;background:#F7F6F3;color:var(--ink);border-radius:3px;padding:10px 16px;white-space:nowrap}
+.next a:hover{background:var(--indigo-lite)}
+
+
+/* ---------- 2.6 page ---------- */
+.board{grid-template-columns:repeat(2,1fr)}
+.step-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin:18px 0 0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 0}
+.stat{background:#fff;border:1px solid var(--line-soft);border-radius:3px;padding:9px 11px}
+.stat .sl{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);line-height:1.3}
+.stat .sv{display:block;font-family:var(--display);font-weight:700;font-size:24px;line-height:1.25;font-variant-numeric:tabular-nums}
+.stat .sv.good{color:var(--ok)}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}
+
+/* supply chain strip */
+.chain{display:flex;align-items:stretch;gap:0;margin:22px 0;font-size:14.5px}
+.chain .st{flex:1;background:var(--card);border:1px solid var(--line);padding:12px 14px;position:relative;color:var(--ink2)}
+.chain .st+.st{border-left:none}
+.chain .st b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:500;margin-bottom:2px}
+.chain .st.hl{background:var(--indigo-lite);border-color:var(--indigo);color:var(--ink)}
+.chain .st.hl b{color:var(--indigo-dk)}
+
+/* channel paths */
+.paths{display:grid;gap:10px;margin:22px 0}
+.path{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 16px}
+.path .ph{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:10px}
+.path .ph .tag{font-size:10.5px}
+.path .ph h4{font-family:var(--body);font-size:16px;font-weight:600;margin:0}
+.flow{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.node{font-family:var(--mono);font-size:12.5px;background:#fff;border:1px solid var(--line);border-radius:3px;padding:6px 10px;white-space:nowrap}
+.node.mid{background:var(--amber-lite);border-color:#E2C48E;color:var(--amber-dk)}
+.node.end{background:var(--ink);border-color:var(--ink);color:#F7F6F3}
+.arr{color:var(--mute);font-family:var(--mono)}
+.path .ex{margin:10px 0 0;font-size:15px;color:var(--ink2)}
+
+/* channel lab */
+.chips{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px}
+.chip{background:#fff;color:var(--ink2);border:1px solid var(--line);font-size:12.5px;padding:9px 6px;line-height:1.35}
+.chip:hover{background:#fff;color:var(--ink);border-color:var(--indigo)}
+.chip[aria-pressed="true"]{background:var(--ink);color:#F7F6F3;border-color:var(--ink)}
+.chip small{display:block;font-size:11px;opacity:.8}
+.split{display:flex;height:34px;border-radius:3px;overflow:hidden;border:1px solid var(--line);margin:8px 0 6px}
+.split div{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;color:#fff;white-space:nowrap;overflow:hidden;transition:flex-grow .25s}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-family:var(--mono);font-size:11.5px;color:var(--ink2)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.crit{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.crit .mini{padding:12px 14px}
+.crit .mini p{font-size:14.5px}
+.dots{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--indigo);float:right}
+
+@media (max-width:600px){
+  .grid4{grid-template-columns:1fr 1fr}
+  .chain{flex-direction:column}
+  .chain .st+.st{border-left:1px solid var(--line);border-top:none}
+  .chips{grid-template-columns:1fr 1fr}
+  .crit{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .bar-sub{display:none}
+  .card{padding:16px}
+  .board{grid-template-columns:1fr}
+  .lo{border-left:none;border-top:1px solid var(--line-soft);padding:14px}
+  .lo:first-child{border-top:none}
+  .lo .lq{font-size:17px}
+  .pk.c3,.pk.c4{grid-template-columns:1fr 1fr}
+  .stats{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+  .fb.show{animation:pop .18s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){ .split div{transition:none} }
+@media print{ body{background:#fff} .bar,.jump,.btn-row,.next{display:none} }
+</style>
+</head>
+<body>
+
+<nav class="bar">
+  <div class="bar-in">
+    <span class="bar-title"><a href="/ap-business/unit-2/">2.6 Place and Channels</a></span>
+    <span class="bar-sub">Place · marketing channels · B2C and B2B · direct and indirect · choosing a channel</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">AP Business · Unit 2 Marketing · Topic 2.6</div>
+  <h1>The <em>Place</em></h1>
+  <p class="lede">A great product at a fair price still has to reach the customer. Sell it yourself, or hand it to stores that already have the shoppers? Each answer changes your profit, your reach, and how much control you keep.</p>
+
+  <div class="board" aria-label="The two learning objectives in this topic">
+    <a class="lo" href="#channels"><span class="code">2.6.A</span><span class="lq">How can a product reach the customer?</span><span class="d">Place, marketing channels, B2C and B2B, direct and indirect</span></a>
+    <a class="lo" href="#choose"><span class="code">2.6.B</span><span class="lq">Which channel should a business use?</span><span class="d">Comparing cost and profit, customer experience, and reach</span></a>
+  </div>
+
+  <nav class="jump" aria-label="Jump to a section">
+    <a href="#channels">Place and channels</a>
+    <a href="#paths">Direct or indirect</a>
+    <a href="#nc-card">Name the channel</a>
+    <a href="#choose">Choosing a channel</a>
+    <a href="#lab">Channel lab</a>
+    <a href="#fit-card">Which fits?</a>
+    <a href="#check">Check yourself</a>
+  </nav>
+</header>
+
+<!-- =========================================================
+     2.6.A  TYPES OF MARKETING CHANNELS
+     ========================================================= -->
+<section id="channels">
+  <div class="sec-head"><span class="tag">2.6.A</span><h2>Place and marketing channels</h2></div>
+  <div class="def">
+    <div class="term">Place</div>
+    <p><b>Where and how customers get access to a product.</b> It’s the “P” of the marketing mix that comes after product and price.</p>
+  </div>
+  <p>The same product can be sold in very different places:</p>
+  <div class="grid4">
+    <div class="mini"><span class="n">Retail stores</span><p>Stores that sell many brands, like a grocery store or a sporting goods chain.</p></div>
+    <div class="mini"><span class="n">Company-owned stores</span><p>A brand’s own shops, where it sells only its own products.</p></div>
+    <div class="mini"><span class="n">Club memberships</span><p>Warehouse clubs that only members can shop at, or monthly subscription clubs.</p></div>
+    <div class="mini"><span class="n">Online</span><p>A company’s own website or app, or a big online marketplace.</p></div>
+  </div>
+
+  <div class="def">
+    <div class="term">Marketing channel (distribution channel)</div>
+    <p><b>All of the individuals and businesses required to deliver a finished product to the final customer.</b> A business’s marketing channels determine its place.</p>
+  </div>
+  <p>A marketing channel is the <b>final stage of a supply chain</b>. Everything before it is about making the product; the channel is about getting the finished product to the person who buys it.</p>
+  <div class="chain" aria-label="Stages of a supply chain">
+    <div class="st"><b>Stage 1</b>Raw materials are gathered</div>
+    <div class="st"><b>Stage 2</b>Parts are made</div>
+    <div class="st"><b>Stage 3</b>The product is finished</div>
+    <div class="st hl"><b>Final stage · marketing channel</b>The finished product reaches the customer</div>
+  </div>
+
+  <h3>Who is the customer? B2C and B2B</h3>
+  <div class="grid2">
+    <div class="mini"><span class="n">B2C · business-to-consumer</span><h4>Consumer products</h4><p>Sold to people for their own use: snacks, phones, shoes. Typical channels are <b>websites</b> and <b>retail stores</b>.</p></div>
+    <div class="mini"><span class="n">B2B · business-to-business</span><h4>Business products</h4><p>Sold to other businesses to run their operations or make their own products: steel beams, cash registers, cleaning supplies for hospitals. A typical channel is an <b>industrial distributor</b>.</p></div>
+  </div>
+  <p>The same company can use both. A paper company might sell notebooks to shoppers through stores (B2C) and printer paper to offices through a distributor (B2B).</p>
+
+  <h3 id="paths">Direct or indirect?</h3>
+  <p>Channels also differ in <b>how many businesses stand between</b> the producer and the final customer. Those in-between businesses are called <b>intermediaries</b>: wholesalers, distributors, and retailers.</p>
+  <div class="paths">
+    <div class="path">
+      <div class="ph"><span class="tag">Direct</span><h4>No intermediaries</h4></div>
+      <div class="flow"><span class="node">Producer</span><span class="arr">→</span><span class="node end">Customer</span></div>
+      <p class="ex">A bakery sells at its own counter. A shoe brand sells through its own website and its own stores.</p>
+    </div>
+    <div class="path">
+      <div class="ph"><span class="tag plain">Indirect</span><h4>One intermediary</h4></div>
+      <div class="flow"><span class="node">Producer</span><span class="arr">→</span><span class="node mid">Retailer</span><span class="arr">→</span><span class="node end">Customer</span></div>
+      <p class="ex">A small hot sauce maker sells cases to a regional grocery chain, which sells bottles to shoppers.</p>
+    </div>
+    <div class="path">
+      <div class="ph"><span class="tag plain">Indirect</span><h4>Two or more intermediaries</h4></div>
+      <div class="flow"><span class="node">Producer</span><span class="arr">→</span><span class="node mid">Wholesaler</span><span class="arr">→</span><span class="node mid">Retailer</span><span class="arr">→</span><span class="node end">Customer</span></div>
+      <p class="ex">A candy maker sells truckloads to a wholesaler, which supplies thousands of gas stations and corner stores.</p>
+    </div>
+    <div class="path">
+      <div class="ph"><span class="tag plain">B2B · indirect</span><h4>Through an industrial distributor</h4></div>
+      <div class="flow"><span class="node">Producer</span><span class="arr">→</span><span class="node mid">Industrial distributor</span><span class="arr">→</span><span class="node end">Business customer</span></div>
+      <p class="ex">A bolt factory sells to a distributor, which stocks construction companies across the state.</p>
+    </div>
+  </div>
+  <div class="note"><b>Every intermediary gets paid.</b> Each one buys the product for less than it sells it for. The more steps in the channel, the smaller the share of the final price the producer keeps. You’ll see this in the channel lab below.</div>
+
+  <div class="card" id="nc-card">
+    <div class="card-label">Name the channel <span class="score" id="nc-score">0 of 0</span></div>
+    <p class="smallprint" style="margin:0 0 10px">Who is the customer, and does the product go through an intermediary?</p>
+    <p class="prompt" id="nc-item" aria-live="polite"></p>
+    <div class="pk c4" id="nc-opts"></div>
+    <div class="fb" id="nc-fb"></div>
+    <div class="btn-row"><button id="nc-next">Next scenario →</button></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     2.6.B  SELECTING A CHANNEL
+     ========================================================= -->
+<section id="choose">
+  <div class="sec-head"><span class="tag">2.6.B</span><h2>Choosing a marketing channel</h2></div>
+  <p>There’s no single best channel. A business picks one, or a mix, by comparing each option on three things:</p>
+  <div class="grid3">
+    <div class="mini"><span class="n">1 · Cost and profit</span><h4>What does it cost, and what’s left?</h4><p>Setting up the channel, running it, and the share intermediaries keep, compared with how much profit it can bring in.</p></div>
+    <div class="mini"><span class="n">2 · Customer experience</span><h4>What happens when they buy?</h4><p>How the product is shown, explained, priced, and supported, and who controls all of that.</p></div>
+    <div class="mini"><span class="n">3 · Reach</span><h4>Can it get to the target customers?</h4><p>Whether the channel delivers the product to the people the business is trying to sell to, and how many of them.</p></div>
+  </div>
+
+  <h3>The trade-off</h3>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>Direct channel</th><th>Indirect channel</th></tr></thead>
+    <tbody>
+      <tr><td><b>Control</b></td><td>Keeps control over pricing and the customer experience</td><td>Intermediaries decide the shelf price, where the product sits, and how it’s presented</td></tr>
+      <tr><td><b>Profit per unit</b></td><td>Keeps the whole price</td><td>Shares the price with each intermediary</td></tr>
+      <tr><td><b>Cost to set up</b></td><td>Can be more costly to establish: the business builds its own stores, website, shipping</td><td>Uses intermediaries’ stores, trucks, and shoppers that already exist</td></tr>
+      <tr><td><b>Reach</b></td><td>Can be more limited</td><td>Can reach many more customers, faster</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="card" id="lab">
+    <div class="card-label">Channel lab · Ridgeline Hot Sauce</div>
+    <p class="smallprint" style="margin:0">Ridgeline makes small-batch hot sauce. A bottle sells for <b>$10</b> wherever it’s sold, and costs Ridgeline <b>$4</b> to make. Pick a channel and see where the $10 goes and what a month looks like.</p>
+
+    <div class="chips" id="chips"></div>
+
+    <div class="step-h">Where the customer’s $10 goes</div>
+    <div class="split" id="split" aria-hidden="true"></div>
+    <div class="legend" id="legend"></div>
+
+    <div class="stats">
+      <div class="stat"><span class="sl">Ridgeline keeps per bottle</span><span class="sv" id="c-unit"></span></div>
+      <div class="stat"><span class="sl">Bottles a month</span><span class="sv" id="c-sold"></span></div>
+      <div class="stat"><span class="sl">Monthly profit</span><span class="sv" id="c-profit"></span></div>
+      <div class="stat"><span class="sl">Cost to set up</span><span class="sv" id="c-setup"></span></div>
+    </div>
+    <p class="smallprint mono" style="margin:8px 0 0" id="c-work"></p>
+
+    <div class="crit">
+      <div class="mini"><span class="n">Cost and profit</span><p id="c-cost"></p></div>
+      <div class="mini"><span class="n">Customer experience <span class="dots" id="c-ctl-d" title="Control"></span></span><p id="c-exp"></p></div>
+      <div class="mini"><span class="n">Reach <span class="dots" id="c-reach-d"></span></span><p id="c-reach"></p></div>
+    </div>
+    <div class="fb show hint" id="c-fb" aria-live="polite"></div>
+    <p class="smallprint" style="margin:10px 0 0">The numbers are a simple model for a fictional business. Dots show how much control Ridgeline keeps and how many target customers the channel reaches. Most real businesses end up using more than one channel.</p>
+  </div>
+
+  <div class="card" id="fit-card">
+    <div class="card-label">Which fits? <span class="score" id="fit-score">0 of 0</span></div>
+    <p class="smallprint" style="margin:0 0 10px">Given what this business cares about most, which kind of channel fits better?</p>
+    <p class="prompt" id="fit-item" aria-live="polite"></p>
+    <div class="pk" id="fit-opts" style="grid-template-columns:1fr 1fr"></div>
+    <div class="fb" id="fit-fb"></div>
+    <div class="btn-row"><button id="fit-next">Next business →</button></div>
+  </div>
+
+  <div class="pf">
+    <div class="pf-h">As a shopper</div>
+    <p style="margin:0">The channel changes what you pay and who helps you after you buy. The same speaker might cost less on a big online marketplace than on the brand’s own site, but if it breaks, you may have to deal with the third-party seller, not the brand. Before you buy, check <b>who is actually selling it</b> and whose return policy and warranty you’ll get.</p>
+  </div>
+</section>
+
+<!-- =========================================================
+     CHECK YOURSELF
+     ========================================================= -->
+<section id="check">
+  <div class="sec-head"><span class="tag plain">AP practice</span><h2>Check yourself</h2></div>
+  <p>Ten multiple-choice questions in the style of the AP Exam, covering both learning objectives. The first three share one table, like a set-based question on the exam.</p>
+  <div class="card" id="quiz"></div>
+  <div class="btn-row"><button class="ghost" id="quiz-reset">Start over</button></div>
+
+  <div class="next">
+    <div>
+      <div class="nt">Next: 2.7 Promotion and Marketing Communications</div>
+      <p>You know how a product reaches the customer. Next: how a business tells customers about it.</p>
+    </div>
+    <a href="/ap-business/unit-2/">Back to Unit 2 →</a>
+  </div>
+</section>
+
+<footer>
+  <p>Topic 2.6 Place and Channels, following the AP Business with Personal Finance course framework (Learning Objectives 2.6.A–2.6.B). The businesses, people, products, and prices on this page are fictional. Practice items reshuffle every time you load the page.</p>
+  <p><a href="/ap-business/unit-2/">← Unit 2 — Marketing</a></p>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* =========================================================
+   helpers
+   ========================================================= */
+function el(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function shuffle(a){ a = a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function setFb(node,kind,html){ node.className = 'fb show ' + kind; node.innerHTML = html; }
+function hideFb(node){ node.className = 'fb'; node.innerHTML = ''; }
+function money(n){ return (n < 0 ? '−' : '') + '$' + Math.abs(n).toLocaleString('en-US'); }
+function Score(node){
+  var r = 0, t = 0;
+  return { add:function(ok){ t++; if(ok) r++; node.textContent = r + ' of ' + t; } };
+}
+/* Cycles through a bank in random order without repeats until it runs out. */
+function Deck(bank){
+  var order = [], i = 0;
+  return { next:function(){ if(i >= order.length){ order = shuffle(bank); i = 0; } return order[i++]; } };
+}
+/* A one-question-at-a-time drill with a fixed set of answer buttons.
+   cfg: {id, bank:[[html, key, why]], keys:[[key, button html, color, name used in feedback]]} */
+function Drill(cfg){
+  var id = cfg.id, deck = Deck(cfg.bank), cur, done, sc = Score(el(id + '-score')), fb = el(id + '-fb'), box = el(id + '-opts');
+  var name = {}; cfg.keys.forEach(function(k){ name[k[0]] = k[3]; });
+  function show(){
+    cur = deck.next(); done = false; hideFb(fb);
+    el(id + '-item').innerHTML = cur[0];
+    box.innerHTML = '';
+    cfg.keys.forEach(function(k){
+      var b = document.createElement('button');
+      b.className = 'pbtn'; b.innerHTML = k[1]; b.setAttribute('data-k', k[0]);
+      if(k[2]) b.style.setProperty('--c', k[2]);
+      b.onclick = function(){ answer(b, k[0]); };
+      box.appendChild(b);
+    });
+  }
+  function answer(b, k){
+    if(done) return; done = true;
+    var ok = k === cur[1]; sc.add(ok);
+    Array.prototype.forEach.call(box.children, function(x){ x.disabled = true; if(!ok && x.getAttribute('data-k') === cur[1]) x.className += ' reveal'; });
+    b.className += ok ? ' yes' : ' no';
+    setFb(fb, ok ? 'good' : 'bad', '<b>' + (ok ? 'Right: ' : 'Not quite. The answer is ') + name[cur[1]] + '.</b> ' + cur[2]);
+    el(id + '-next').focus();
+  }
+  el(id + '-next').onclick = show;
+  show();
+}
+
+/* =========================================================
+   2.6.A  Name the channel
+   ========================================================= */
+Drill({
+  id:'nc',
+  keys:[['cd','B2C · direct','#3A55A0','a direct B2C channel'],['ci','B2C · indirect','#A8670F','an indirect B2C channel'],['bd','B2B · direct','#2E6B47','a direct B2B channel'],['bi','B2B · indirect','#A63D2F','an indirect B2B channel']],
+  bank:[
+    ['A sneaker brand sells its shoes only through its own app and its own stores.', 'cd', 'Consumers buy straight from the brand. No other business is in between.'],
+    ['A family farm sells strawberries to shoppers at a stand at the end of its driveway.', 'cd', 'The producer sells to the final customer itself.'],
+    ['A frozen-pizza maker sells its pizzas to supermarket chains, which sell them to shoppers.', 'ci', 'Shoppers are the final customers, and the supermarket is an intermediary (a retailer).'],
+    ['A toy company sells to a wholesaler, which supplies hundreds of small toy shops that sell to families.', 'ci', 'Two intermediaries, a wholesaler and the toy shops, stand between the producer and the consumer.'],
+    ['A company that makes hospital beds has its own sales team that visits hospitals and sells to them directly.', 'bd', 'The customer is a business (a hospital), and no intermediary is involved.'],
+    ['A software company sells its scheduling program to restaurants through its own website.', 'bd', 'Restaurants are business customers buying straight from the producer.'],
+    ['A factory that makes safety gloves sells them to an industrial distributor, which stocks construction companies and auto shops.', 'bi', 'Business customers, reached through an industrial distributor.'],
+    ['A flour mill sells huge bags of flour to a food-service distributor, which delivers them to bakeries and pizza shops.', 'bi', 'The bakeries are businesses that use the flour to make their own products, and the distributor is an intermediary.']
+  ]
+});
+
+/* =========================================================
+   2.6.B  Channel lab
+   ========================================================= */
+(function(){
+  var PRICE = 10, COST = 4;
+  var COLORS = {cost:'#626B7C', ship:'#8A93A3', fee:'#B7791F', store:'#A8670F', dist:'#7A4A08', keep:'#2E6B47'};
+  var NAMES = {cost:'Cost to make', ship:'Shipping and card fees', fee:'Marketplace fee', store:'Retailer’s share', dist:'Distributor’s share', keep:'Ridgeline keeps'};
+  var CH = [
+    {k:'web', n:'Own website', t:'Direct', parts:{cost:4, ship:1.5, keep:4.5}, sold:150, monthly:250, mlabel:'site and online ads', setup:3000, ctl:3, reach:1,
+     cost:'Keeps the most per bottle of any online option, but a website and ads cost money every month, and sales are small.',
+     exp:'Ridgeline controls everything: the price, the photos, the packaging, and a handwritten thank-you note. It also gets every customer’s email.',
+     rtext:'Only people who already know Ridgeline, or who find it through ads, ever see the site.',
+     fb:'<b>Direct channel.</b> Full control and the biggest share of each sale, but limited reach. A good fit while Ridgeline is building a loyal following, and a good place to sell gift boxes and new flavors.'},
+    {k:'mkt', n:'Farmers markets', t:'Direct', parts:{cost:4, keep:6}, sold:220, monthly:480, mlabel:'booth fees', setup:800, ctl:3, reach:1,
+     cost:'Cheap to start (a tent, a table, a sign) and Ridgeline keeps $6 a bottle, but booth fees and Saturdays at the stand add up.',
+     exp:'Customers taste every flavor and meet the owner. Nothing beats it for experience, and it’s great feedback for new recipes.',
+     rtext:'Only shoppers at a few local markets on weekends.',
+     fb:'<b>Direct channel, company-run.</b> The highest profit per bottle and the best customer experience, but the smallest reach. Fine for a side business; it can’t grow much beyond the owner’s own time.'},
+    {k:'onl', n:'Online marketplace', t:'Indirect', parts:{cost:4, fee:1.5, ship:1.5, keep:3}, sold:700, monthly:300, mlabel:'ads on the marketplace', setup:500, ctl:2, reach:2,
+     cost:'Easy and cheap to set up. The marketplace keeps a fee on every sale, so Ridgeline earns $3 a bottle.',
+     exp:'The marketplace controls the page layout, reviews, and returns. Ridgeline’s bottle shows up next to 200 other hot sauces.',
+     rtext:'Shoppers in every state can find it, if they search for hot sauce and Ridgeline ranks well.',
+     fb:'<b>Indirect channel (the marketplace is the intermediary).</b> Much wider reach than its own site for very little setup cost, but a smaller share of each sale and less control over how customers see the brand.'},
+    {k:'gro', n:'Grocery chain', t:'Indirect', parts:{cost:4, store:4, keep:2}, sold:1400, monthly:300, mlabel:'in-store tastings', setup:2500, ctl:1, reach:2,
+     cost:'The chain buys each bottle for $6 and sells it for $10. Ridgeline keeps $2 a bottle, but sells far more.',
+     exp:'The store decides the shelf, the sale price, and whether Ridgeline stays on the shelf next year. No one is there to explain the sauce.',
+     rtext:'Shoppers at the chain’s 40 stores across the region, people who never would have looked for Ridgeline.',
+     fb:'<b>Indirect channel with one intermediary (a retailer).</b> Less profit per bottle and much less control, but many more bottles sold and a much bigger monthly profit.'},
+    {k:'dis', n:'Distributor', t:'Indirect', parts:{cost:4, dist:1.75, store:3, keep:1.25}, sold:5000, monthly:0, mlabel:'', setup:9000, ctl:1, reach:3,
+     cost:'Ridgeline keeps only $1.25 a bottle, and it needs $9,000 for bigger batches and equipment to make 5,000 bottles a month.',
+     exp:'Ridgeline never meets these customers. Stores it has never visited decide the price and placement.',
+     rtext:'Hundreds of grocery and convenience stores in several states.',
+     fb:'<b>Indirect channel with two intermediaries.</b> The widest reach and the most total profit in this model, but the smallest share of each sale, the least control, and a big upfront cost. If the distributor drops Ridgeline, most of its sales disappear at once.'}
+  ];
+  var box = el('chips'), split = el('split'), legend = el('legend');
+  box.innerHTML = CH.map(function(c, i){ return '<button class="chip" data-i="' + i + '" aria-pressed="false">' + c.n + '<small>' + c.t + '</small></button>'; }).join('');
+  function dots(n){ return '●●●'.slice(0, n) + '○○○'.slice(0, 3 - n); }
+  function cents(n){ return '$' + n.toFixed(2); }
+  function show(i){
+    var c = CH[i], keep = c.parts.keep, profit = keep * c.sold - c.monthly;
+    Array.prototype.forEach.call(box.children, function(b, j){ b.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
+    var keys = Object.keys(c.parts);
+    split.innerHTML = keys.map(function(k){ return '<div style="flex-grow:' + c.parts[k] + ';background:' + COLORS[k] + '">' + (c.parts[k] >= 1.5 ? cents(c.parts[k]) : '') + '</div>'; }).join('');
+    legend.innerHTML = keys.map(function(k){ return '<span><i style="background:' + COLORS[k] + '"></i>' + NAMES[k] + ' ' + cents(c.parts[k]) + '</span>'; }).join('');
+    el('c-unit').textContent = cents(keep);
+    el('c-sold').textContent = c.sold.toLocaleString('en-US');
+    el('c-profit').textContent = money(Math.round(profit)); el('c-profit').className = 'sv good';
+    el('c-setup').textContent = money(c.setup);
+    el('c-work').textContent = cents(keep) + ' × ' + c.sold.toLocaleString('en-US') + ' bottles' + (c.monthly ? ' − ' + money(c.monthly) + ' ' + c.mlabel : '') + ' = ' + money(Math.round(profit)) + ' a month';
+    el('c-cost').textContent = c.cost;
+    el('c-exp').textContent = c.exp; el('c-ctl-d').textContent = 'control ' + dots(c.ctl); el('c-ctl-d').setAttribute('aria-label', 'Control: ' + c.ctl + ' of 3');
+    el('c-reach').textContent = c.rtext; el('c-reach-d').textContent = dots(c.reach); el('c-reach-d').setAttribute('aria-label', 'Reach: ' + c.reach + ' of 3');
+    setFb(el('c-fb'), 'hint', c.fb);
+  }
+  Array.prototype.forEach.call(box.children, function(b){ b.onclick = function(){ show(+b.getAttribute('data-i')); }; });
+  show(0);
+})();
+
+/* =========================================================
+   2.6.B  Which fits?
+   ========================================================= */
+Drill({
+  id:'fit',
+  keys:[['d','Direct channel','#3A55A0','a direct channel'],['i','Indirect channel','#A8670F','an indirect channel']],
+  bank:[
+    ['A luxury watchmaker wants every buyer to get a private fitting, and never wants its watches sold at a discount.', 'd', 'It cares most about controlling the price and the customer experience, which is what a direct channel protects.'],
+    ['A new granola-bar company wants its bars in grocery stores across the country within a year, but can’t afford to open any stores.', 'i', 'It needs wide reach quickly and cheaply. Retailers already have the shelves and the shoppers.'],
+    ['A startup makes custom-fit mouthguards and has to scan each customer’s teeth with its own equipment.', 'd', 'The product can’t be sold without the company’s own process, so it has to control the customer experience.'],
+    ['A small company that makes pencils wants to supply thousands of schools and offices.', 'i', 'An industrial or office-supply distributor can reach thousands of business customers the company could never visit itself.'],
+    ['A furniture brand wants to keep the full price of each sofa and collect data on every customer to plan new designs.', 'd', 'Selling directly keeps the whole price and the customer relationship, including the data.'],
+    ['A soft-drink maker wants its cans in vending machines, gas stations, and corner stores everywhere.', 'i', 'Reaching that many locations takes wholesalers and retailers.'],
+    ['A farmer grows far more potatoes than she could ever sell at a roadside stand.', 'i', 'A wholesaler can buy the whole harvest and get it to stores, which a stand can’t do.'],
+    ['A bakery’s bread goes stale in a day, and the owner wants to talk with every customer about what to bake next.', 'd', 'A short shelf life and a focus on customer feedback both point to selling at its own counter.']
+  ]
+});
+
+/* =========================================================
+   Check yourself (AP-style)
+   ========================================================= */
+(function(){
+  var STIM = '<div class="stim"><p><b>Peak Bottle</b> makes reusable water bottles. Each bottle costs <b>$8</b> to make, and customers pay <b>$30</b> no matter where they buy it. Peak Bottle tested three marketing channels, each for one month.</p>' +
+    '<div class="tbl" style="margin:0"><table><thead><tr><th>Channel</th><th class="r">Peak Bottle receives per bottle</th><th class="r">Bottles sold that month</th></tr></thead><tbody>' +
+    '<tr><td>Peak Bottle’s own website</td><td class="r">$27 (after $3 shipping)</td><td class="r">300</td></tr>' +
+    '<tr><td>A sporting goods chain</td><td class="r">$15</td><td class="r">2,000</td></tr>' +
+    '<tr><td>A wholesaler that supplies gift shops</td><td class="r">$11</td><td class="r">3,500</td></tr>' +
+    '</tbody></table></div></div>';
+  var Q = [
+    {set:true, stem:'Which channel earned Peak Bottle the most profit for the month?', a:'The sporting goods chain', d:['Peak Bottle’s own website','The wholesaler that supplies gift shops','All three channels earned the same profit'], why:'Profit is (amount received − per-unit cost) × bottles sold. Chain: $7 × 2,000 = $14,000. Wholesaler: $3 × 3,500 = $10,500. Website: $19 × 300 = $5,700.'},
+    {set:true, stem:'In the sporting goods chain row, the $15 difference between the $30 the customer pays and the $15 Peak Bottle receives best represents', a:'the share of the price kept by an intermediary in the channel', d:['Peak Bottle’s profit on each bottle','Peak Bottle’s per-unit cost','a fee that is only charged in B2B channels'], why:'The chain is a retailer, an intermediary. It buys each bottle for $15 and sells it for $30, keeping the difference (2.6.A, 2.6.B).'},
+    {set:true, stem:'Peak Bottle wants to engrave each customer’s name on the bottle and include a personal thank-you card. Which is the best evaluation of selling through its own website?', a:'It gives Peak Bottle the most control over the customer experience and the most profit per bottle, but it reaches the fewest customers.', d:['It reaches the most customers and earns the most total profit.','It is an indirect channel, so Peak Bottle cannot control the experience.','It earns the least profit per bottle because Peak Bottle pays for shipping.'], why:'A direct channel keeps control over the price and experience and keeps the most per bottle ($27, even after paying for shipping), but it can be more limited in reach: only 300 bottles (2.6.B).'},
+    {stem:'Which of the following best describes a marketing channel?', a:'All of the individuals and businesses required to deliver a finished product to the final customer', d:['The suppliers that provide raw materials to a factory','The messages a business uses to advertise its product','The strategy a business uses to set its price'], why:'A marketing channel, also called a distribution channel, is made up of everyone needed to get the finished product to the final customer (2.6.A).'},
+    {stem:'A marketing channel is which part of a supply chain?', a:'The final stage', d:['The first stage','The stage where the product is designed','The stage where raw materials are gathered'], why:'Marketing channels are the final stage of a supply chain: delivering the finished product to the customer (2.6.A).'},
+    {stem:'A company makes industrial cleaning chemicals and sells them to a distributor, which delivers them to hospitals and factories. This is an example of', a:'an indirect business-to-business (B2B) channel', d:['a direct business-to-consumer (B2C) channel','an indirect business-to-consumer (B2C) channel','a direct business-to-business (B2B) channel'], why:'The final customers are businesses, and an industrial distributor stands between the producer and those customers (2.6.A).'},
+    {stem:'A cosmetics brand sells only in its own stores and on its own website. Which is the most likely reason?', a:'To keep control over its pricing and the customer experience', d:['Because direct channels always cost the least to set up','To reach the largest possible number of customers','Because cosmetics cannot legally be sold by retailers'], why:'Direct channels let a business control pricing and the customer experience. They can be more costly to establish and more limited in reach (2.6.B).'},
+    {stem:'Which is a disadvantage of an indirect channel for a producer?', a:'The producer receives less per unit and gives up some control over how the product is priced and displayed.', d:['The producer must build and run its own stores.','The product can reach only customers in the producer’s town.','The producer can no longer sell to other businesses.'], why:'Each intermediary keeps part of the price and makes decisions about shelf price and placement (2.6.B).'},
+    {stem:'When a business makes a decision about place, which question is it answering?', a:'Where and how will customers get access to our product?', d:['How much should we charge for our product?','What features should our product have?','What should our advertisements say?'], why:'Place describes where and how customers access a product, such as retail stores, company-owned stores, club memberships, or online (2.6.A).'},
+    {stem:'A small company that makes organic baby food wants parents in every state to be able to buy it within a year, but it has very little money to spend on stores. Which channel decision best fits this goal?', a:'Sell to a distributor that supplies grocery chains nationwide', d:['Open company-owned stores in every state','Sell only from a stand outside its kitchen','Sell only at local farmers markets'], why:'An indirect channel uses intermediaries that already reach customers, so it can deliver the product to target customers widely without the cost of building stores (2.6.B).'}
+  ];
+  var quiz = el('quiz'), right = 0, answered = 0;
+  function build(){
+    right = 0; answered = 0;
+    quiz.innerHTML = '<div class="q" style="padding-top:4px"><span class="qn">QUESTIONS 1–3 REFER TO THE FOLLOWING INFORMATION</span>' + STIM + '</div>';
+    Q.forEach(function(q, i){
+      var d = document.createElement('div'); d.className = 'q';
+      d.innerHTML = '<span class="qn">QUESTION ' + (i + 1) + '</span><p class="stem">' + esc(q.stem) + '</p>';
+      var opts = document.createElement('div'); opts.className = 'opts';
+      var fb = document.createElement('div'); fb.className = 'fb';
+      shuffle([q.a].concat(q.d)).forEach(function(o, j){
+        var b = document.createElement('button'); b.className = 'opt';
+        b.innerHTML = '<span class="mono" style="color:var(--mute);margin-right:8px">(' + 'ABCD'[j] + ')</span>' + esc(o);
+        if(o === q.a) b.setAttribute('data-a', '1');
+        b.onclick = function(){
+          if(opts.getAttribute('data-done')) return; opts.setAttribute('data-done', '1');
+          var ok = o === q.a; answered++; if(ok) right++;
+          Array.prototype.forEach.call(opts.children, function(x){ x.disabled = true; if(!ok && x.getAttribute('data-a')) x.className += ' reveal'; });
+          b.className += ok ? ' picked-yes' : ' picked-no';
+          setFb(fb, ok ? 'good' : 'bad', '<b>' + (ok ? 'Correct.' : 'Not quite.') + '</b> ' + esc(q.why));
+          sum();
+        };
+        opts.appendChild(b);
+      });
+      d.appendChild(opts); d.appendChild(fb); quiz.appendChild(d);
+    });
+    var s = document.createElement('div'); s.className = 'q'; s.innerHTML = '<p class="qsum" id="qsum" aria-live="polite"></p>'; quiz.appendChild(s);
+    sum();
+  }
+  function sum(){
+    var n = Q.length, t = el('qsum');
+    if(answered < n) t.textContent = right + ' correct out of ' + answered + ' answered · ' + (n - answered) + ' to go';
+    else t.textContent = 'Final: ' + right + ' of ' + n + (right === n ? '. Perfect.' : right >= n - 2 ? '. Strong work.' : '. Review the sections above for the ones you missed.');
+  }
+  el('quiz-reset').onclick = build;
+  build();
+})();
+</script>
+</body>
+</html>
